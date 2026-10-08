@@ -2,7 +2,7 @@
   "expo": {
     "name": "AI Learning",
     "slug": "learning-companion",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -10,6 +10,7 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "backgroundColor": "#080808",
         "foregroundImage": "./assets/android-icon-foreground.png",

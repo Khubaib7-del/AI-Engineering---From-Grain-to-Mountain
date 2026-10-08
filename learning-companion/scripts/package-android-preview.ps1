@@ -15,9 +15,11 @@ try {
 } finally { $apkArchive.Dispose() }
 $releaseRoot = Join-Path $appRoot 'releases'
 New-Item -ItemType Directory -Force -Path $releaseRoot | Out-Null
-$apkTarget = Join-Path $releaseRoot 'AI-Learning-1.0.0-android-arm64.apk'
+$appVersion = (Get-Content -LiteralPath (Join-Path $appRoot 'app.json') -Raw | ConvertFrom-Json).expo.version
+$apkName = "AI-Learning-$appVersion-android-arm64.apk"
+$apkTarget = Join-Path $releaseRoot $apkName
 Copy-Item -LiteralPath $apkSource -Destination $apkTarget
 $digest = (Get-FileHash -LiteralPath $apkTarget -Algorithm SHA256).Hash.ToLowerInvariant()
-Set-Content -LiteralPath (Join-Path $releaseRoot 'SHA256SUMS.txt') -Value "$digest  AI-Learning-1.0.0-android-arm64.apk"
+Set-Content -LiteralPath (Join-Path $releaseRoot 'SHA256SUMS.txt') -Value "$digest  $apkName"
 Write-Output "Packaged: $apkTarget"
 Write-Output "SHA256: $digest"
