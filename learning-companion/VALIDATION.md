@@ -95,3 +95,6 @@ Release 1106bca was pushed to main and automatically deployed by Vercel. Product
 ## Authentication follow-up — 8 October 2026
 Saved the production Supabase Site URL and exact /account redirect through the signed-in dashboard. Custom SMTP form prepared for the owner-selected Gmail sender (smtp.gmail.com, SSL port 465); credentials and Save remain a user handoff. An oversized notebook payload was rejected with zero partial rows; fixtures rolled back. Session restoration now ignores obsolete results after newer auth events and clears recovery mode on sign-out. Full email flows and real two-client sync remain pending SMTP credential setup.
 
+
+Live HTTP check (scripts/sync-access-check.mjs) passed: Auth settings reachable, email enabled, automatic confirmation disabled, anonymous notebook SELECT and RPC writes denied. The committed supabase/tests/notebook-access.sql replay passed against the hosted project and rolled back its fixtures.
+

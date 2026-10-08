@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const local=fs.existsSync('.env.local')?Object.fromEntries(fs.readFileSync('.env.local','utf8').split(/\r?\n/).filter(line=>line.includes('=')).map(line=>{const i=line.indexOf('=');return [line.slice(0,i),line.slice(i+1).trim()];})):{};
+const url=process.env.EXPO_PUBLIC_SUPABASE_URL??local.EXPO_PUBLIC_SUPABASE_URL;
+const key=process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY??local.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+assert.ok(url&&key,'Configure the public Supabase client environment first');
+const headers={apikey:key,'Content-Type':'application/json'};
+const settings=await fetch(`${url}/auth/v1/settings`,{headers,signal:AbortSignal.timeout(20000)});
+assert.equal(settings.status,200,'Auth service must be reachable');
+const configuration=await settings.json();
+assert.equal(configuration.external.email,true,'Email authentication must be enabled');
+assert.equal(configuration.mailer_autoconfirm,false,'Email confirmation must stay enabled');
+const read=await fetch(`${url}/rest/v1/learning_notebooks?select=revision`,{headers,signal:AbortSignal.timeout(20000)});
+assert.ok([401,403].includes(read.status),`Anonymous notebook read must be denied, received ${read.status}`);
+const write=await fetch(`${url}/rest/v1/rpc/save_learning_notebook`,{method:'POST',headers,signal:AbortSignal.timeout(20000),body:JSON.stringify({p_user_id:'00000000-0000-4000-a000-000000000001',p_revision:0,p_payload:{version:1,lessons:{},topics:{},verified:{}}})});
+assert.ok([401,403].includes(write.status),`Anonymous notebook write must be denied, received ${write.status}`);
+console.log('PASS live Auth reachable, confirmation enabled, anonymous notebook reads/writes denied. Email delivery and authenticated sync require separate checks.');
