@@ -53,6 +53,7 @@ export function LearningProvider({children,scope='guest'}:{children:React.ReactN
  useEffect(()=>{
   active.current=true;
   void enqueue(async()=>{
+   let initialConnection=false;
    try{
     const raw=await readStored(scope);
     if(raw){const stored=JSON.parse(raw),value=signedIn?stored.state:stored;
@@ -61,9 +62,13 @@ export function LearningProvider({children,scope='guest'}:{children:React.ReactN
      latest.current=restored;revision.current=signedIn?stored.revision:0;dirty.current=signedIn?stored.dirty:false;if(active.current)setState(restored);
     }
     schedule(latest.current);
+    // A first sign-in has no cached revision. Pull before exposing an empty
+    // editable notebook, otherwise a quick first edit creates a false conflict.
+    if(signedIn&&!raw){initialConnection=true;await sync();}
    }catch{writable.current=false;if(active.current)setError('Could not load saved data. Existing data is preserved; import a valid backup to recover.');}
    finally{if(active.current)setLoaded(true);}
-  }).then(()=>syncNow());
+   return initialConnection;
+  }).then(connected=>{if(!connected)void syncNow();});
   const listener=AppState.addEventListener('change',s=>{if(s==='active'){void syncNow();schedule(latest.current,true);}});
   const interval=setInterval(()=>{void syncNow();},30000);
   return()=>{active.current=false;listener.remove();clearInterval(interval);};
