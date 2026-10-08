@@ -1,0 +1,496 @@
+[
+  {
+    "id": "T01",
+    "category": "Runtime/package management",
+    "tools": [
+      "Python",
+      "pip",
+      "venv",
+      "uv",
+      "conda",
+      "Poetry"
+    ],
+    "first": "Use Python + uv; understand pip/venv first",
+    "concepts": "Interpreter, isolated environment, dependency resolution, lockfiles",
+    "stage": "M02",
+    "source": "https://docs.astral.sh/uv/"
+  },
+  {
+    "id": "T02",
+    "category": "Quality and notebooks",
+    "tools": [
+      "pytest",
+      "Ruff",
+      "mypy",
+      "Jupyter",
+      "IPython"
+    ],
+    "first": "pytest + Ruff; notebooks for exploration, scripts for pipelines",
+    "concepts": "Testing, types, linting, debugging, reproducibility",
+    "stage": "M02",
+    "source": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "T03",
+    "category": "Arrays/data",
+    "tools": [
+      "NumPy",
+      "SciPy",
+      "pandas",
+      "Polars",
+      "PyArrow",
+      "DuckDB"
+    ],
+    "first": "NumPy + pandas; DuckDB for SQL over files",
+    "concepts": "Shapes, vectorization, types, missing values, joins, columnar storage",
+    "stage": "M04",
+    "source": "https://wesmckinney.com/book/"
+  },
+  {
+    "id": "T04",
+    "category": "Relational storage",
+    "tools": [
+      "SQLite",
+      "PostgreSQL",
+      "SQLAlchemy",
+      "Alembic"
+    ],
+    "first": "SQLite first, PostgreSQL for services",
+    "concepts": "SQL, schema, transactions, indexes, migrations",
+    "stage": "M04",
+    "source": "https://cs50.harvard.edu/sql/"
+  },
+  {
+    "id": "T05",
+    "category": "Classical ML",
+    "tools": [
+      "scikit-learn",
+      "XGBoost",
+      "LightGBM",
+      "CatBoost",
+      "Optuna"
+    ],
+    "first": "scikit-learn, one boosting library when justified",
+    "concepts": "Splits, baselines, preprocessing, objectives, tuning",
+    "stage": "M07",
+    "source": "https://scikit-learn.org/stable/user_guide.html"
+  },
+  {
+    "id": "T06",
+    "category": "DL runtimes",
+    "tools": [
+      "PyTorch",
+      "JAX",
+      "TensorFlow",
+      "Keras"
+    ],
+    "first": "PyTorch deeply; others for the selected team/role",
+    "concepts": "Autograd, tensor programs, training loops, compilation",
+    "stage": "M08",
+    "source": "https://pytorch.org/tutorials/beginner/basics/intro.html"
+  },
+  {
+    "id": "T07",
+    "category": "Model/data distribution",
+    "tools": [
+      "Hugging Face Hub",
+      "Transformers",
+      "Datasets",
+      "Tokenizers",
+      "Accelerate",
+      "Safetensors"
+    ],
+    "first": "Transformers + Datasets",
+    "concepts": "Model cards, dataset licenses, tokenization, device mapping",
+    "stage": "M09",
+    "source": "https://huggingface.co/learn/llm-course/en/chapter1/1"
+  },
+  {
+    "id": "T08",
+    "category": "Adaptation and training",
+    "tools": [
+      "PEFT",
+      "TRL",
+      "bitsandbytes",
+      "DeepSpeed",
+      "Megatron-LM"
+    ],
+    "first": "PEFT/TRL only when adapting a model",
+    "concepts": "SFT, LoRA, quantization, preference objectives, memory",
+    "stage": "M13",
+    "source": "https://huggingface.co/learn/llm-course/en/chapter1/1"
+  },
+  {
+    "id": "T09",
+    "category": "Vision/media/audio",
+    "tools": [
+      "torchvision",
+      "timm",
+      "OpenCV",
+      "Diffusers",
+      "librosa",
+      "Whisper",
+      "torchaudio"
+    ],
+    "first": "One modality stack for a real task",
+    "concepts": "Image transforms, spectrograms, encoders, diffusion, modality metrics",
+    "stage": "M15",
+    "source": "https://course.fast.ai/"
+  },
+  {
+    "id": "T10",
+    "category": "RL",
+    "tools": [
+      "Gymnasium",
+      "Stable-Baselines3",
+      "CleanRL",
+      "RLlib"
+    ],
+    "first": "One simple environment and one implementation",
+    "concepts": "MDP, rewards, value/policy, exploration, reproducibility",
+    "stage": "M13",
+    "source": "https://huggingface.co/learn/deep-rl-course/en/unit0/introduction"
+  },
+  {
+    "id": "T11",
+    "category": "Model API/access layer",
+    "tools": [
+      "Provider SDKs",
+      "OpenAI-compatible endpoints",
+      "LiteLLM",
+      "OpenRouter"
+    ],
+    "first": "One provider SDK, then optional gateway",
+    "concepts": "Network failures, schemas, model capabilities, accounting",
+    "stage": "M10",
+    "source": "https://fullstackdeeplearning.com/llm-bootcamp/"
+  },
+  {
+    "id": "T12",
+    "category": "Embedding/reranking models",
+    "tools": [
+      "Sentence Transformers",
+      "HF embedding models",
+      "hosted embedding APIs",
+      "cross-encoders"
+    ],
+    "first": "One embedding model and a measured reranker",
+    "concepts": "Representation, normalization, asymmetric retrieval, multilingual performance",
+    "stage": "M11",
+    "source": "https://huggingface.co/learn/llm-course/en/chapter1/1"
+  },
+  {
+    "id": "T13",
+    "category": "Vector indexes",
+    "tools": [
+      "FAISS",
+      "hnswlib",
+      "Annoy",
+      "ScaNN"
+    ],
+    "first": "Exact small baseline, then FAISS/ANN as needed",
+    "concepts": "kNN versus ANN, HNSW/IVF/PQ, recall-memory-latency trade-offs",
+    "stage": "M11",
+    "source": "https://github.com/pgvector/pgvector"
+  },
+  {
+    "id": "T14",
+    "category": "Vector databases",
+    "tools": [
+      "pgvector",
+      "Qdrant",
+      "Weaviate",
+      "Milvus",
+      "Pinecone",
+      "Chroma",
+      "LanceDB",
+      "Redis"
+    ],
+    "first": "pgvector OR Qdrant; compare one alternative",
+    "concepts": "Persistence, filters, updates/deletes, replicas, tenant boundaries",
+    "stage": "M11",
+    "source": "https://qdrant.tech/documentation/"
+  },
+  {
+    "id": "T15",
+    "category": "Lexical/hybrid search",
+    "tools": [
+      "BM25",
+      "Elasticsearch",
+      "OpenSearch",
+      "Lucene",
+      "reciprocal rank fusion"
+    ],
+    "first": "BM25 baseline + optional RRF",
+    "concepts": "Token statistics, rank fusion, filters, reranking",
+    "stage": "M11",
+    "source": "https://github.com/langchain-ai/rag-from-scratch"
+  },
+  {
+    "id": "T16",
+    "category": "Document ingestion",
+    "tools": [
+      "Docling",
+      "Unstructured",
+      "PyMuPDF",
+      "Apache Tika",
+      "Tesseract",
+      "LlamaParse",
+      "Firecrawl"
+    ],
+    "first": "Choose one parser based on corpus; evaluate extraction",
+    "concepts": "OCR/layout, tables, metadata, source offsets, freshness",
+    "stage": "M11",
+    "source": "https://docs.llamaindex.ai/"
+  },
+  {
+    "id": "T17",
+    "category": "RAG orchestration",
+    "tools": [
+      "LlamaIndex",
+      "LangChain",
+      "Haystack",
+      "LightRAG"
+    ],
+    "first": "Plain Python baseline, then one framework",
+    "concepts": "Ingestion/index/query boundaries, component replacement, observable pipelines",
+    "stage": "M11",
+    "source": "https://docs.llamaindex.ai/"
+  },
+  {
+    "id": "T18",
+    "category": "Agent runtime/framework",
+    "tools": [
+      "LangGraph",
+      "smolagents",
+      "PydanticAI",
+      "CrewAI",
+      "provider agent SDKs",
+      "Agno",
+      "OpenAI Agents SDK",
+      "Mastra",
+      "Letta",
+      "Google ADK"
+    ],
+    "first": "Plain loop → LangGraph in depth",
+    "concepts": "State, tools, budgets, checkpoints, replay, review",
+    "stage": "M12",
+    "source": "https://docs.langchain.com/oss/python/langgraph/overview"
+  },
+  {
+    "id": "T19",
+    "category": "Other enterprise agent ecosystems",
+    "tools": [
+      "Microsoft Agent Framework",
+      "AutoGen",
+      "Semantic Kernel"
+    ],
+    "first": "Awareness; verify current migration/support docs before selecting",
+    "concepts": "Contracts, orchestration, interoperability; team-specific adoption",
+    "stage": "M12",
+    "source": "https://huggingface.co/learn/agents-course/en/unit0/introduction"
+  },
+  {
+    "id": "T20",
+    "category": "Program optimization/structured output",
+    "tools": [
+      "DSPy",
+      "Instructor",
+      "Pydantic",
+      "constrained decoding tools"
+    ],
+    "first": "Pydantic/schema validation first; DSPy after a scored task exists",
+    "concepts": "Typed outputs, optimization objectives, validation and repair",
+    "stage": "M10",
+    "source": "https://dspy.ai/"
+  },
+  {
+    "id": "T21",
+    "category": "Tool interoperability",
+    "tools": [
+      "MCP",
+      "JSON Schema",
+      "HTTP APIs",
+      "OpenAPI",
+      "agent-to-agent protocols"
+    ],
+    "first": "HTTP/tool contracts, then MCP",
+    "concepts": "Client/server boundaries, transports, auth, capabilities, versioning",
+    "stage": "M12",
+    "source": "https://modelcontextprotocol.io/docs/getting-started/intro"
+  },
+  {
+    "id": "T22",
+    "category": "Evaluation",
+    "tools": [
+      "Ragas",
+      "DeepEval",
+      "promptfoo",
+      "lm-evaluation-harness",
+      "HELM",
+      "Lighteval"
+    ],
+    "first": "Small gold dataset + deterministic scoring; add one tool",
+    "concepts": "Task metrics, held-out data, judge bias, regression and contamination",
+    "stage": "M10",
+    "source": "https://docs.ragas.io/en/stable/"
+  },
+  {
+    "id": "T23",
+    "category": "Tracing/observability",
+    "tools": [
+      "LangSmith",
+      "Langfuse",
+      "Phoenix",
+      "OpenTelemetry",
+      "Helicone"
+    ],
+    "first": "One tracing tool with safe data handling",
+    "concepts": "Spans, tool traces, token spend, latency, version linkage",
+    "stage": "M10",
+    "source": "https://academy.langchain.com/"
+  },
+  {
+    "id": "T24",
+    "category": "Local/model serving",
+    "tools": [
+      "llama.cpp",
+      "Ollama",
+      "vLLM",
+      "SGLang",
+      "TensorRT-LLM",
+      "ONNX Runtime",
+      "Triton Inference Server"
+    ],
+    "first": "Small local model, then vLLM for GPU service if needed",
+    "concepts": "Quantization, batching, KV cache, TTFT, throughput, memory",
+    "stage": "M17",
+    "source": "https://docs.vllm.ai/en/latest/"
+  },
+  {
+    "id": "T25",
+    "category": "Services/UI",
+    "tools": [
+      "FastAPI",
+      "Pydantic",
+      "Gradio",
+      "Streamlit",
+      "React",
+      "TypeScript"
+    ],
+    "first": "FastAPI + Gradio first; React when custom UX warrants it",
+    "concepts": "Contracts, validation, streaming, loading/errors, usability",
+    "stage": "M03",
+    "source": "https://fastapi.tiangolo.com/tutorial/"
+  },
+  {
+    "id": "T26",
+    "category": "Experiment/model lifecycle",
+    "tools": [
+      "MLflow",
+      "Weights & Biases",
+      "DVC",
+      "Feast"
+    ],
+    "first": "MLflow and versioned datasets; feature store only if needed",
+    "concepts": "Lineage, artifacts, registries, train/serve skew",
+    "stage": "M16",
+    "source": "https://mlflow.org/docs/latest/"
+  },
+  {
+    "id": "T27",
+    "category": "Data/job orchestration",
+    "tools": [
+      "Airflow",
+      "Prefect",
+      "Dagster",
+      "Spark",
+      "Ray",
+      "Kedro"
+    ],
+    "first": "One orchestrator for a real scheduled workload",
+    "concepts": "DAGs, retries, idempotency, backfills, data contracts",
+    "stage": "M16",
+    "source": "https://github.com/DataTalksClub/mlops-zoomcamp"
+  },
+  {
+    "id": "T28",
+    "category": "Deployment/platform",
+    "tools": [
+      "Docker",
+      "Compose",
+      "Kubernetes",
+      "Terraform",
+      "GitHub Actions",
+      "KServe",
+      "BentoML",
+      "Ray Serve"
+    ],
+    "first": "Docker + CI + one deployment target",
+    "concepts": "Images, secrets, rollout, rollback, autoscaling, SLOs",
+    "stage": "M16/M17",
+    "source": "https://madewithml.com/"
+  },
+  {
+    "id": "T29",
+    "category": "Metrics/monitoring",
+    "tools": [
+      "Prometheus",
+      "Grafana",
+      "Evidently",
+      "Great Expectations",
+      "Pandera"
+    ],
+    "first": "Service metrics + simple data checks",
+    "concepts": "Data quality, drift, label delay, alerting and incidents",
+    "stage": "M16",
+    "source": "https://madewithml.com/"
+  },
+  {
+    "id": "T30",
+    "category": "GPU/distributed systems",
+    "tools": [
+      "CUDA",
+      "Triton kernel language",
+      "NCCL",
+      "DDP",
+      "FSDP",
+      "torch.compile",
+      "Ray Train"
+    ],
+    "first": "PyTorch profiling, then DDP; kernels for systems specialty",
+    "concepts": "Memory hierarchy, collectives, parallelism, bottleneck analysis",
+    "stage": "M17",
+    "source": "https://cs336.stanford.edu/"
+  },
+  {
+    "id": "T31",
+    "category": "Safety and isolation",
+    "tools": [
+      "NeMo Guardrails",
+      "Guardrails AI",
+      "Docker isolation",
+      "E2B",
+      "policy/auth layers"
+    ],
+    "first": "Threat model, application permissions and deterministic validation first",
+    "concepts": "Untrusted data, least privilege, sandbox limits, adversarial eval",
+    "stage": "M18",
+    "source": "https://huggingface.co/docs/smolagents/en/index"
+  },
+  {
+    "id": "T32",
+    "category": "Mobile learning app, later",
+    "tools": [
+      "React Native",
+      "Expo",
+      "expo-notifications",
+      "expo-sqlite",
+      "Flutter alternative"
+    ],
+    "first": "Provisional Expo/React Native route, see app specification",
+    "concepts": "Offline data, notifications, permission UX, progress and scheduling",
+    "stage": "After foundations",
+    "source": "https://docs.expo.dev/versions/latest/sdk/notifications/"
+  }
+]
