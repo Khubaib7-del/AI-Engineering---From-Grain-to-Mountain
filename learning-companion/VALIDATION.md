@@ -80,3 +80,10 @@ Added public homepage/download/privacy routes, moved Today to `/today`, and prep
 Typecheck, lint, ten tests and web export passed (4.7 MB JS before compression). Browser checks passed desktop/mobile product/account/download/Today routes, unavailable-backend messaging, guest navigation, overflow, runtime errors, existing lesson/progress/backup flows and guided resource links. Visually inspected the desktop homepage and mobile account screen. Captures: `design/shots/product/`.
 
 These tests ran without a Supabase backend. Hosted schema/RLS, real email/signup/recovery, real cross-device sync, native secure session storage and native account navigation are unverified. Supabase OAuth is authorized but this running session requires a reload to access its tools. See `../supabase/README.md` for the exact next steps. Do not promote this as completed account support or rebuild an APK with unconfigured account settings.
+
+## 8 October — accounts and desktop refinement
+Supabase project provisioned and migration applied. Transaction tests rejected stale writes, wrong-owner writes and malformed payloads; a second account saw zero rows. Anonymous read/write and direct client update grants are absent. Security advisor flags the deliberately authenticated SECURITY DEFINER write RPC; it checks auth.uid ownership, uses an empty search_path and restricts execution. Email flows and full cross-client/native sync remain unverified. Desktop top navigation and split sign-in composition implemented; lint/typecheck and web export passed. Local public environment is ignored by Git.
+
+
+Configured product browser checks passed at widths 390 and 1440: account page, guest entry, product/download routes, no horizontal overflow and no runtime exceptions. Screenshot reviewed: design/shots/product/1440-account.png. No live signup/password recovery or mobile sync claim is made.
+

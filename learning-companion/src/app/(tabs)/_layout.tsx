@@ -1,13 +1,16 @@
-import {Tabs} from 'expo-router';
-import {View} from 'react-native';
+import {Tabs,router} from 'expo-router';
+import {View,Platform,Pressable} from 'react-native';
 import type {ComponentProps} from 'react';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Glass,Icon,Txt,usePalette} from '../../components/ui';
+import {Glass,Icon,Txt,usePalette,useWide} from '../../components/ui';
+import {BrandMark} from '../../components/brand';
 import {MotionPress,SlidingSelection} from '../../components/motion';
 type BottomTabBarProps=Parameters<NonNullable<ComponentProps<typeof Tabs>['tabBar']>>[0];
 function WorkshopDock({state,descriptors,navigation}:BottomTabBarProps) {
  const c=usePalette(),insets=useSafeAreaInsets(),icons=['sunny-outline','map-outline','book-outline','stats-chart-outline'];
+ const wide=useWide();
+ if(Platform.OS==='web'&&wide)return <View style={{position:'absolute',top:0,left:0,right:0,backgroundColor:c.bg,borderBottomWidth:1,borderColor:c.line}}><View style={{width:'100%',maxWidth:1480,alignSelf:'center',paddingHorizontal:40,minHeight:80,flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:24}}><Pressable accessibilityRole="link" accessibilityLabel="Product homepage" onPress={()=>router.push('/')} style={{flexDirection:'row',alignItems:'center',gap:12,minHeight:44}}><BrandMark size={28} color={c.ink}/><Txt size={14} weight="700">GRAIN / MOUNTAIN</Txt></Pressable><View style={{flexDirection:'row',gap:8}}>{state.routes.map((route,i)=><Pressable key={route.key} accessibilityRole="tab" accessibilityLabel={descriptors[route.key].options.title} accessibilityState={{selected:i===state.index}} onPress={()=>navigation.navigate(route.name,route.params)} style={{minHeight:44,paddingHorizontal:20,justifyContent:'center',borderBottomWidth:2,borderColor:i===state.index?c.ink:'transparent'}}><Txt size={14} weight={i===state.index?'600':'400'} color={i===state.index?c.ink:c.muted}>{descriptors[route.key].options.title}</Txt></Pressable>)}</View><Pressable accessibilityRole="link" onPress={()=>router.push('/account')} style={{minHeight:44,justifyContent:'center'}}><Txt size={14}>Account & sync ↗</Txt></Pressable></View></View>;
  return <View pointerEvents="box-none" style={{position:'absolute',bottom:Math.max(16,insets.bottom),left:16,right:16,alignItems:'center'}}><Glass style={{width:'100%',maxWidth:520,borderRadius:28,padding:4}}><SlidingSelection index={state.index} count={state.routes.length} color={c.soft}/><View style={{flexDirection:'row'}}>{state.routes.map((route,i)=>{const selected=i===state.index,options=descriptors[route.key].options;return <MotionPress key={route.key} accessibilityRole="tab" accessibilityLabel={options.title??route.name} accessibilityState={{selected}} onPress={()=>{const event=navigation.emit({type:'tabPress',target:route.key,canPreventDefault:true});if(!selected&&!event.defaultPrevented)navigation.navigate(route.name,route.params);}} onLongPress={()=>navigation.emit({type:'tabLongPress',target:route.key})} style={{flex:1,minHeight:60,alignItems:'center',justifyContent:'center',gap:5}}><Icon name={icons[i]} color={selected?c.accent:c.muted} size={21}/><Txt size={11} weight="600" color={selected?c.accent:c.muted}>{options.title}</Txt></MotionPress>;})}</View></Glass></View>;
 }
 export default function TabLayout(){return <Tabs tabBar={props=><WorkshopDock {...props}/>} screenOptions={{headerShown:false}}><Tabs.Screen name="today" options={{title:'Today'}}/><Tabs.Screen name="path" options={{title:'Path'}}/><Tabs.Screen name="library" options={{title:'Library'}}/><Tabs.Screen name="progress" options={{title:'Progress'}}/></Tabs>;}
