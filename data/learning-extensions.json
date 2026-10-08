@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 1,
+  "prepared": "2026-10-07",
+  "scope": "Optional deeper units; not part of existing 740 topic IDs or the first 28 daily sessions.",
+  "units": [
+    {
+      "id": "X01",
+      "title": "Agent frameworks and contracts",
+      "prerequisites": [
+        "M12"
+      ],
+      "hours": 12,
+      "topics": [
+        {
+          "id": "X01.01",
+          "title": "Rebuild an observation/tool/result loop in plain Python before adding a framework."
+        },
+        {
+          "id": "X01.02",
+          "title": "Compare tool schemas, state, persistence, retries, streaming and termination."
+        },
+        {
+          "id": "X01.03",
+          "title": "Run identical mocked-tool tasks in LangGraph and one contrasting framework."
+        },
+        {
+          "id": "X01.04",
+          "title": "Compare Python and TypeScript ecosystems; distinguish framework, service and model provider."
+        },
+        {
+          "id": "X01.05",
+          "title": "Check license, release/version, provider assumptions, telemetry and self-hosting."
+        },
+        {
+          "id": "X01.06",
+          "title": "Measure overhead, recoverability and testability rather than counting integrations."
+        }
+      ],
+      "assessment": "one baseline plus two implementations, fixed tasks, traces and a decision record. See [framework comparison](16-agent-frameworks-and-protocols.md)."
+    },
+    {
+      "id": "X02",
+      "title": "MCP, skills and plugins",
+      "prerequisites": [
+        "M12",
+        "M18"
+      ],
+      "hours": 14,
+      "topics": [
+        {
+          "id": "X02.01",
+          "title": "Host/client/server boundaries, discovery and capability negotiation."
+        },
+        {
+          "id": "X02.02",
+          "title": "Tools versus resources versus prompts; JSON Schema and structured errors."
+        },
+        {
+          "id": "X02.03",
+          "title": "stdio versus HTTP transport; lifecycle, cancellation and reconnection."
+        },
+        {
+          "id": "X02.04",
+          "title": "Authentication versus authorization; scoped credentials and user consent."
+        },
+        {
+          "id": "X02.05",
+          "title": "Version pinning, schema changes and backward compatibility."
+        },
+        {
+          "id": "X02.06",
+          "title": "Tool-output injection, untrusted metadata and permission checks outside the LLM."
+        },
+        {
+          "id": "X02.07",
+          "title": "Plugin packaging and skill instructions are host-specific; loading text grants no authority."
+        },
+        {
+          "id": "X02.08",
+          "title": "A2A peer-agent contracts versus MCP tool/service connectivity."
+        }
+      ],
+      "assessment": "read-only corpus MCP server with malformed-input, denied-access, disconnect and injection tests. Then add one reversible action behind explicit authorization. [MCP](https://modelcontextprotocol.io/docs/getting-started/intro), [A2A](https://a2a-protocol.org/latest/)."
+    },
+    {
+      "id": "X03",
+      "title": "Agent swarms and coordination",
+      "prerequisites": [
+        "M12",
+        "M18"
+      ],
+      "hours": 16,
+      "topics": [
+        {
+          "id": "X03.01",
+          "title": "Supervisor/worker, handoff, parallel fan-out and shared blackboard patterns."
+        },
+        {
+          "id": "X03.02",
+          "title": "Independent work versus dependencies; async execution and backpressure."
+        },
+        {
+          "id": "X03.03",
+          "title": "Shared memory consistency, provenance, duplicate actions and idempotency."
+        },
+        {
+          "id": "X03.04",
+          "title": "Message/context budgets, noisy coordination and cascading errors."
+        },
+        {
+          "id": "X03.05",
+          "title": "Worker failure, timeout, cancellation and bounded recovery."
+        },
+        {
+          "id": "X03.06",
+          "title": "A single capable agent versus several specialists at equal total budget."
+        },
+        {
+          "id": "X03.07",
+          "title": "Measure speed, success, cost and unwanted actions; stop when delegation hurts."
+        }
+      ],
+      "assessment": "single-agent and three-worker research systems tested on the same unseen tasks. A swarm is an orchestration pattern, not proof of intelligence."
+    },
+    {
+      "id": "X04",
+      "title": "Harness internals and benchmarks",
+      "prerequisites": [
+        "M03",
+        "M12",
+        "M18"
+      ],
+      "hours": 24,
+      "topics": [
+        {
+          "id": "X04.01",
+          "title": "Model adapter, context builder, tool executor and event loop boundaries."
+        },
+        {
+          "id": "X04.02",
+          "title": "Filesystem, shell, patching, Git/worktrees and deterministic verification."
+        },
+        {
+          "id": "X04.03",
+          "title": "Sandbox, secrets, network permissions and irreversible-action gates."
+        },
+        {
+          "id": "X04.04",
+          "title": "Resume, checkpoint, compaction and evidence lost through summaries."
+        },
+        {
+          "id": "X04.05",
+          "title": "Trace one source-code execution path and record the pinned commit."
+        },
+        {
+          "id": "X04.06",
+          "title": "Pick a task-family benchmark and inspect dataset, environment and grader."
+        },
+        {
+          "id": "X04.07",
+          "title": "Hold model fixed while changing harness; hold harness fixed while changing model."
+        },
+        {
+          "id": "X04.08",
+          "title": "Equal budgets, multiple seeds, paired comparisons and contamination controls."
+        },
+        {
+          "id": "X04.09",
+          "title": "UI exposes capabilities; source/traces show actual behavior. Evaluate both later."
+        }
+      ],
+      "assessment": "source reading notes and reproducible baseline/ablation table. See [benchmark and harness guide](17-benchmarks-costs-and-harness-study.md)."
+    },
+    {
+      "id": "X05",
+      "title": "LLM economics and LLMOps",
+      "prerequisites": [
+        "M10",
+        "M12",
+        "M16",
+        "M17"
+      ],
+      "hours": 18,
+      "topics": [
+        {
+          "id": "X05.01",
+          "title": "Input/output/cached tokens, tool calls, retries and reasoning-token billing where exposed."
+        },
+        {
+          "id": "X05.02",
+          "title": "Costs per request, successful task and active user; report failure spend."
+        },
+        {
+          "id": "X05.03",
+          "title": "Budget reservations, parallel overspend, time/step limits and cancellation."
+        },
+        {
+          "id": "X05.04",
+          "title": "Cache invalidation, batching, routing, context trimming and fallback quality."
+        },
+        {
+          "id": "X05.05",
+          "title": "API versus self-hosting: GPU utilization, idle time, storage and operations."
+        },
+        {
+          "id": "X05.06",
+          "title": "TTFT, per-token latency, end-to-end p95 and queue delay."
+        },
+        {
+          "id": "X05.07",
+          "title": "Version prompts, tools, corpus, model and evaluation; canary and rollback."
+        },
+        {
+          "id": "X05.08",
+          "title": "Drift/quality slices, privacy-redacted traces and incident response."
+        }
+      ],
+      "assessment": "ledger, fixed-budget experiment and rollback drill; never optimize only token price while ignoring success."
+    },
+    {
+      "id": "X06",
+      "title": "Open-weight model architecture",
+      "prerequisites": [
+        "M09",
+        "M13",
+        "M14"
+      ],
+      "hours": 24,
+      "topics": [
+        {
+          "id": "X06.01",
+          "title": "Model card, license, tokenizer, config, tensors and reference implementation."
+        },
+        {
+          "id": "X06.02",
+          "title": "Embedding/attention/MLP/norm/residual paths; trace dimensions manually."
+        },
+        {
+          "id": "X06.03",
+          "title": "Dense versus MoE; total versus active parameters, routing and load balance."
+        },
+        {
+          "id": "X06.04",
+          "title": "Positional encoding, attention variants and KV memory calculation."
+        },
+        {
+          "id": "X06.05",
+          "title": "Base/instruct/reasoning/distilled checkpoints and chat templates."
+        },
+        {
+          "id": "X06.06",
+          "title": "Distinguish architecture, pretraining corpus, post-training recipe and runtime."
+        },
+        {
+          "id": "X06.07",
+          "title": "Implement one block at toy scale and compare outputs with a reference."
+        },
+        {
+          "id": "X06.08",
+          "title": "Inspect unavailable data/weights/training details; open weights do not imply reproducible training."
+        }
+      ],
+      "assessment": "architecture walkthrough of a pinned small model and one toy reproduction. Start with [Qwen3](https://github.com/QwenLM/Qwen3), then study [DeepSeek-V3](https://github.com/deepseek-ai/DeepSeek-V3) and [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1) as different architecture/post-training examples. These are study examples, not claims about today's best model."
+    },
+    {
+      "id": "X07",
+      "title": "RAG, cache and memory experiments",
+      "prerequisites": [
+        "M09",
+        "M11",
+        "M12"
+      ],
+      "hours": 16,
+      "topics": [
+        {
+          "id": "X07.01",
+          "title": "Corpus knowledge versus user/session memory; provenance, TTL and deletion."
+        },
+        {
+          "id": "X07.02",
+          "title": "Retrieval, long-context prompting and KV/prefix caching have different roles."
+        },
+        {
+          "id": "X07.03",
+          "title": "Cold/warm cache, cache invalidation and stale facts after corpus updates."
+        },
+        {
+          "id": "X07.04",
+          "title": "Bounded versus growing corpus; context limits and distractor sensitivity."
+        },
+        {
+          "id": "X07.05",
+          "title": "Memory extraction/write/read policies and erroneous remembered facts."
+        },
+        {
+          "id": "X07.06",
+          "title": "Compare citation correctness, answer accuracy, leakage, latency and cost."
+        }
+      ],
+      "assessment": "Compare retrieval, cache and memory on fixed queries, updates and cold-start cost."
+    },
+    {
+      "id": "X08",
+      "title": "Paper reproduction and purposeful product",
+      "prerequisites": [
+        "M12",
+        "M14",
+        "M18"
+      ],
+      "hours": 20,
+      "topics": [
+        {
+          "id": "X08.01",
+          "title": "Separate a paper's contribution from a framework's current features."
+        },
+        {
+          "id": "X08.02",
+          "title": "Reproduce a reduced-scale baseline and one ablation with a held-out split."
+        },
+        {
+          "id": "X08.03",
+          "title": "Write down data limitations, compute budget and failed attempts."
+        },
+        {
+          "id": "X08.04",
+          "title": "Identify a user and recurring workflow; compare with an ordinary scripted solution."
+        },
+        {
+          "id": "X08.05",
+          "title": "Validate usability, quality, permissions and maintenance with actual users."
+        },
+        {
+          "id": "X08.06",
+          "title": "Publish evidence and limitations, not an employment guarantee."
+        }
+      ],
+      "assessment": "a technical report plus a small user-tested tool. Choose one project from [the project review](18-final-year-projects-reviewed.md), not twenty simultaneous projects."
+    }
+  ]
+}
