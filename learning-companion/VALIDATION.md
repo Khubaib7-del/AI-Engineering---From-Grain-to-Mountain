@@ -98,3 +98,7 @@ Saved the production Supabase Site URL and exact /account redirect through the s
 
 Live HTTP check (scripts/sync-access-check.mjs) passed: Auth settings reachable, email enabled, automatic confirmation disabled, anonymous notebook SELECT and RPC writes denied. The committed supabase/tests/notebook-access.sql replay passed against the hosted project and rolled back its fixtures.
 
+
+## SMTP delivery test — 8 October 2026
+User saved a Google app password in Supabase. First delivery failed with Gmail 535 BadCredentials because sender/username did not match the account that generated it. Corrected the non-secret sender/username to the user-specified account, retaining the stored password. A dedicated test signup was then accepted. Sign-in remains correctly blocked until the owner clicks its email confirmation. Test credentials are in ignored .env.auth-test.local; never commit or print that file. scripts/account-live-check.mjs and account-browser-check.mjs are prepared; successful authenticated sync is not yet claimed.
+
