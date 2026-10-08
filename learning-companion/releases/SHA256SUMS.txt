@@ -1,1 +1,1 @@
-83d69defc1ae9f6d0a07444c61976015504292eddc3e4f3528705d391ae25ea1  AI-Learning-1.0.0-android-arm64.apk
+282cd568566b979c65ad0ffd64eb9a127d719d5c0b0a4e84342ac17f6f9eb2b9  AI-Learning-1.1.0-android-arm64.apk

@@ -4,7 +4,7 @@ A prerequisite-led journey from your first program to advanced AI engineering, w
 
 **Platforms:** web application and Android personal preview; iOS target in source, not yet built or device-tested. See [deployment instructions](DEPLOYMENT.md).
 
-**[Open the learning app](https://ai-engineering-grain-to-mountain.vercel.app)** · **[Download the Android preview](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.0.0-preview.1)**
+**[Open the learning app](https://ai-engineering-grain-to-mountain.vercel.app)** · **[Download Android 1.1 with account sync](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.1.0-preview.1)**
 
 Prepared for Khubaib on 2026-10-07. Start from zero, learn the fundamentals in order, build and evaluate useful systems, then develop one deep specialty.
 

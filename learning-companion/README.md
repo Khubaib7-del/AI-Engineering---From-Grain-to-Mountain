@@ -33,7 +33,7 @@ Opt in from Settings on Android/iPhone. Choose 1–4 times, weekdays and quiet h
 
 ## Backups and privacy
 
-There are no analytics, ads, user accounts or cloud sync. Notes and progress stay on the device/browser. External resources follow their hosts' policies. Export from Progress before clearing app data or moving devices. Native export uses the phone share sheet to share JSON text; web downloads a JSON file. Import by pasting that JSON in Settings, then explicitly confirm replacement. Format, IDs, fields and prerequisite integrity are checked. Imported reminders are disabled until enabled on the new device. Stored data is not encrypted by this prototype.
+Guest notes and progress stay on the device/browser. Signing in connects a private Supabase notebook shared by web and updated Android builds. Importing guest progress is an explicit replacement action. Cloud progress excludes device theme and reminder settings. Concurrent offline changes require choosing a version; both snapshots are retained locally for recovery. Native session tokens use encrypted SecureStore chunks; progress itself is stored in local SQLite. There are no ads or behavioral analytics. External resources follow their hosts' policies. Export from Progress before clearing app data or moving devices. Native export uses the phone share sheet to share JSON text; web downloads a JSON file. Import by pasting JSON in Settings, then explicitly confirm replacement. Format, IDs, fields and prerequisite integrity are checked. Imported reminders are disabled until enabled on the new device.
 
 ## Checks
 
@@ -57,7 +57,7 @@ Browser checks use installed Chrome and an isolated fresh profile. They create s
 
 ## Remaining release work
 
-Verify native SQLite persistence, font scaling, keyboard/safe areas, haptics, screen-reader navigation and reminder delivery on an actual Android phone and iPhone. Validate a signed build before distributing it. Web interaction checks cannot substitute for these. Remote backup/sync, adaptive scheduling beyond 28 days, in-app video playback, automatic grading and push infrastructure are future features.
+Account confirmation and password recovery open the public website. After confirming or choosing a new password, return to the app and sign in with that account. See `VALIDATION.md` for native/web integration evidence. Continue physical-phone checks for font scaling, keyboard/safe areas, haptics, screen-reader navigation and reminder delivery. iOS signing and device testing remain separate work. Adaptive scheduling beyond 28 days, in-app video playback, automatic grading and push infrastructure are future features.
 
 Dependency audit now reports 21 affected packages after the scoped Xcode UUID fix, down from 28. Three root advisories remain. See [dependency security review](DEPENDENCY-SECURITY.md) for the unresolved release blockers and [validation](VALIDATION.md) for checks. Do not force npm's suggested downgrade of Expo 57 to 44 or mix Expo Router 58 into SDK57.
 

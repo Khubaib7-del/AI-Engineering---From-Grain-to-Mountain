@@ -6,7 +6,7 @@ Production: **https://ai-engineering-grain-to-mountain.vercel.app**. Published 8
 
 Import this GitHub repository into Vercel. Leave **Root Directory** at the repository root and Framework Preset at **Other**. The root `vercel.json` installs the locked app dependencies, exports the Expo single-page web app and serves `learning-companion/dist`. Its rewrite supports direct links such as `/path`, `/session/D001` and `/module/M00`.
 
-Production and preview builds now use EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY, configured on Vercel. These are public client settings; never expose a service-role key. Web accounts are verified: email confirmation, password recovery, independent browser sync, offline preservation and explicit conflict selection passed. Hosted progress belongs to the signed-in account; reminder settings stay on the device. Guest progress remains local. The published Android 1.0 APK remains local-only. Export a backup in Settings before clearing site storage or moving domains. Course links require internet. Web reminders are not native background notifications.
+Production and preview builds use EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY, configured on Vercel. These are public client settings; never expose a service-role key. Web accounts are verified: email confirmation, password recovery, independent browser sync, offline preservation and explicit conflict selection passed. Android 1.1 uses the same hosted backend; native-to-web and web-to-native notes, offline/session restart, conflicts and guest isolation passed on the Android emulator. Physical-phone sync validation remains separate. Hosted progress belongs to the signed-in account; reminder settings stay on the device. Guest progress remains local. The older Android 1.0 APK remains local-only. Export a backup before clearing storage or updating. Course links require internet. Web reminders are not native background notifications.
 
 The bundled content under `learning-companion/src/content` is committed, so Vercel does not need to read the research documents at build time. After editing curriculum data, run `npm run sync-content` inside the app and commit both source and bundled JSON.
 
@@ -14,7 +14,7 @@ To deploy from an authenticated CLI, run `npx vercel --prod` from the repository
 
 ## Android
 
-Download the APK and SHA256 checksum from the [1.0.0 Android prerelease](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.0.0-preview.1).
+Download the APK and SHA256 checksum from the [1.1.0 Android prerelease](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.1.0-preview.1). Install over 1.0 without uninstalling: package name and signing certificate are preserved, and version code increases to 2. Sign in with the same account on web and Android. In Settings → Account & sync, explicitly import the guest notebook if you want its progress in the account. Confirmation/reset links open the website; return to Android to sign in afterward.
 
 See [personal-preview installation and build instructions](learning-companion/releases/README.md) and [observed validation](learning-companion/VALIDATION.md). APK binaries, signing keys, SDK tools and generated native projects are excluded from Git. Distribute APKs as release attachments rather than source-history blobs. The existing preview uses a development test key and targets ARM64 Android 7.0 or later.
 

@@ -6,7 +6,7 @@ Dedicated project: Grain to Mountain, Khubaib7-del's Org, ap-south-1. Reference:
 
 Email signup requires confirmation. The owner received and confirmed the dedicated test account email through the configured Gmail SMTP sender. Password recovery reached the public website; Auth recorded a successful password update and the old test password was rejected.
 
-Two independent API clients verified shared notebook snapshots, stale conflict rejection and wrong-owner denial. Desktop and phone-sized browser sessions using the rebuilt app and hosted backend verified sign-in, synced notes, offline local preservation, explicit cloud conflict selection and sign-out to the guest notebook. One initial browser sign-in timed out; the diagnostic rerun passed without an app navigation change. Native device sync has not been verified.
+Two independent API clients verified shared notebook snapshots, stale conflict rejection and wrong-owner denial. Desktop and phone-sized browser sessions using the rebuilt app and hosted backend verified sign-in, synced notes, offline local preservation, explicit cloud conflict selection and sign-out to the guest notebook. Android 1.1 emulator checks also passed actual native/web notes in both directions, secure-session/offline SQLite cold restart, explicit conflict selection, sign-out and guest preservation. Physical-phone sync remains a separate device check. See the app validation record for the test-driver corrections and exact limits.
 
 ## Deployment configuration
 
@@ -27,7 +27,8 @@ The app saves locally first and retries on foreground/every 30 seconds. Guest an
 
 - supabase/tests/notebook-access.sql: rollback-only owner, grants, malformed/oversized payload and revision checks; passed remotely.
 - learning-companion/scripts/sync-access-check.mjs: Auth reachable, confirmation enabled, anonymous reads/writes denied; passed.
-- account-live-check.mjs and account-browser-check.mjs: dedicated +grain-test test identity only. Credentials reside in ignored .env.auth-test.local. The original password is invalid after the human recovery test; do not rerun using old credentials or a personal learning account.
-- Android 1.0 APK remains local-only. Build and verify a new signed Android package for native accounts/sync. iOS still requires signing, device testing and distribution.
+- account-live-check.mjs uses the dedicated +grain-test identity; its original password is invalid after the human recovery test. account-browser-check.mjs also supports --native-fixture for an isolated +grain-native identity. Credentials reside only in ignored local files. Never test with personal learning accounts or commit those files.
+- android-web-sync-check.mjs exercises the installed standalone emulator APK and the hosted backend. Seed the old guest notebook with --seed-guest before updating; --account-exit is the focused asynchronous sign-out/guest-preservation check. Wait for account actions to complete before navigation. Keep fixture-mutating browser and native checks sequential.
+- Android 1.0 remains local-only. Android 1.1 adds accounts/sync and preserves update signing. SecureStore chunks avoid historical native payload limits; requests are bounded to 15 seconds; a first uncached account pulls before becoming editable. iOS still requires signing, device testing and distribution.
 
 Sources: [SMTP requirements](https://supabase.com/docs/guides/auth/auth-smtp), [password flows](https://supabase.com/docs/guides/auth/passwords), [PostgREST retry-loop fix](https://supabase.com/docs/guides/troubleshooting/high-cpu-and-infinite-transaction-retries-when-using-custom-error-codes-in-rpc-functions-77326b), [intentional privileged RPC advisor](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable).

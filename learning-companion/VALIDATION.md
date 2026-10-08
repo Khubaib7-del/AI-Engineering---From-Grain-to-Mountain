@@ -112,3 +112,19 @@ Recovery completed through the public website: hosted Auth recorded successful P
 
 Final public product checks passed after release: /, /account, /download and /today at 390/1440px, guest entry, no overflow/runtime exceptions; live Auth access checks passed. Public account screenshot reviewed with the preview notice removed. Functional account release a29ed51 reached Vercel Ready; subsequent Git-ignore-only release does not change app behavior.
 
+
+## Android accounts and sync — 8 October 2026
+
+Implemented encrypted SecureStore chunks for large sessions, preserving the committed session if a refresh write fails. Native foreground refresh starts immediately; web uses its browser lifecycle. Backend requests are bounded to 15 seconds. A first sign-in with no notebook cache pulls the cloud snapshot before exposing editable empty progress; cached/offline notebooks remain available. Version is 1.1.0/code 2.
+
+Typecheck, lint, all 13 unit checks and the 4.7 MB web export passed. Final desktop/mobile product checks and independent browser account checks against the rebuilt app plus hosted backend passed. The Windows build initially failed in native dependencies with Ninja's dirty-manifest loop; the reproducible Expo plugin now applies official verified project-local Ninja 1.13.1 to native libraries as well as the app. SDK binaries were not changed. The final x86_64 app build passed (532 tasks, 33 executed after the prior full build).
+
+Installed the new x86_64 APK over the old 1.0 emulator APK. A seeded guest note survived the update and was copied to the account only after explicit import. Real native sign-in, web-to-Android notes, Android-to-web notes, encrypted session cold launch, offline SQLite notes/session cold launch, reconnection conflict detection and explicit cloud choice passed against the hosted backend. The full driver initially stopped on its final sign-out assertion because it navigated before asynchronous sign-out completed. The corrected targeted --account-exit check passed native sign-in, completed sign-out, and the unchanged original guest note. Driver corrections cover input targeting, keyboard dismissal, distinct links, initial sync and stale UI dumps. Transient UiAutomator null-root messages during remount were test-driver output, not app runtime failures.
+
+Reviewed native account screenshot: design/shots/android-sync/account.png. Tests use only a disposable +grain-native account and isolated emulator/browser data. Keep fixture-mutating browser/native checks sequential. The owner separately reported the old ARM64 1.0 APK running on two phones; that report does not validate 1.1 physical-device sync. New phone artifact/signature/hash is recorded below after its build. Native iOS remains unbuilt and untested.
+
+The disposable native fixture was removed after successful checks using an exact ID/email/purpose guard; its ignored local credentials file was deleted. No personal account or notebook was changed.
+
+## Android 1.1 phone artifact
+
+ARM64 :app:assembleRelease completed successfully in 10m 3s (532 tasks, 60 executed, 472 up-to-date). Packaged releases/AI-Learning-1.1.0-android-arm64.apk: 48,508,315 bytes; SHA256 282cd568566b979c65ad0ffd64eb9a127d719d5c0b0a4e84342ac17f6f9eb2b9. APK v2 signature verifies. Signing certificate SHA256 fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c matches the published 1.0 APK, enabling an in-place update. Manifest: com.khubaib.ailearning, version 1.1.0/code 2, min SDK 24, target SDK 36, ARM64 only. Archive checks verified bundled JS, ARM64 native libraries and hosted public account configuration. This is personal test signing; physical ARM64 sync and notification verification remain device checks.

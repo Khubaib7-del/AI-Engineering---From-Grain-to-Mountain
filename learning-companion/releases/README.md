@@ -1,5 +1,9 @@
 # Android personal preview
 
+**Current release: [Android 1.1 with account sync](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.1.0-preview.1).** Read [update and sync instructions](UPDATE-1.1.md). Install over the existing app, without uninstalling, to preserve local progress. The old 1.0 APK below is retained as historical build evidence and is local-only.
+
+## Historical 1.0 artifact
+
 `AI-Learning-1.0.0-android-arm64.apk` was built successfully on 8 October 2026 (47,748,479 bytes). Its APK v2 signature verifies and it contains the JavaScript bundle and ARM64 native libraries. See `../VALIDATION.md` for startup-test results and limitations; `SHA256SUMS.txt` identifies this exact file.
 
 ## Install a completed APK
