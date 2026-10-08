@@ -87,3 +87,7 @@ Supabase project provisioned and migration applied. Transaction tests rejected s
 
 Configured product browser checks passed at widths 390 and 1440: account page, guest entry, product/download routes, no horizontal overflow and no runtime exceptions. Screenshot reviewed: design/shots/product/1440-account.png. No live signup/password recovery or mobile sync claim is made.
 
+
+## Live product release — 8 October 2026
+Release 1106bca was pushed to main and automatically deployed by Vercel. Production product checks passed against https://ai-engineering-grain-to-mountain.vercel.app at 390px and 1440px: homepage, account preview, download states and guest workspace entry, no overflow or runtime exceptions. Account email flows and end-to-end sync remain unverified; the live account page discloses this. Production/preview public Supabase variables are configured.
+
