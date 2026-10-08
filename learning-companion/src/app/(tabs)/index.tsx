@@ -1,0 +1,25 @@
+import {useState} from 'react';
+import {View} from 'react-native';
+import {router} from 'expo-router';
+import {Button,Eyebrow,Icon,Meter,Panel,Row,Screen,Section,Split,Txt,usePalette,useWide} from '../../components/ui';
+import {MotionPress,Reveal} from '../../components/motion';
+import {LearningOrbit,PracticeMode} from '../../components/workshop';
+import {lessons,modules} from '../../lib/content';
+import {availableLesson} from '../../lib/planner';
+import {useLearning} from '../../lib/store';
+export default function Today() {
+ const {state}=useLearning(),c=usePalette(),wide=useWide(),[mode,setMode]=useState(0),lesson=availableLesson(lessons,state),completed=lessons.filter(l=>state.lessons[l.id]?.completedAt).length;
+ const descriptions=lesson?.tasks.map(t=>t.description)??['Explore your next module.','Build something of your own.','Explain what you discovered.'];
+ return <Screen>
+  <View style={{gap:12}}><Eyebrow>THE LEARNING LAB / {new Date().toLocaleDateString(undefined,{month:'short',day:'numeric'}).toUpperCase()}</Eyebrow><Txt accessibilityRole="header" size={wide?72:43} weight="600" style={{maxWidth:850,letterSpacing:wide?-3:-1.8}}>{'Build a mind.\nThen build anything.'}</Txt><Txt color={c.muted} size={17}>Your private space to understand, experiment, and create.</Txt></View>
+  <View style={{backgroundColor:c.hero,borderRadius:24,borderWidth:1,borderColor:c.line,padding:wide?32:22,gap:24}}>
+   <View style={{flexDirection:wide?'row':'column',alignItems:wide?'center':'stretch',gap:24}}><View style={{flex:wide?1:undefined,gap:20}}><View style={{flexDirection:'row',gap:8,alignItems:'center'}}><View style={{height:8,width:8,borderRadius:4,backgroundColor:c.accent}}/><Eyebrow>{lesson?`EXPERIMENT ${String(lesson.day).padStart(2,'0')} / 28`:'FOUNDATIONS COMPLETE'}</Eyebrow></View><Txt size={wide?38:28} weight="600">{lesson?.title??'Your next chapter starts here.'}</Txt><Txt color={c.muted} size={15}>{lesson?`${lesson.estimatedMinutes} minutes · Watch, build, recall`:'Explore the full curriculum and choose your next build.'}</Txt><View style={{alignSelf:'flex-start'}}><Button title={lesson?'Open lesson':'Continue your path'} testID="open-lesson" icon="arrow-forward" onPress={()=>lesson?router.push(`/session/${lesson.id}`):router.push('/path')}/></View></View>{wide&&<LearningOrbit active={mode} onChange={setMode}/>}</View>
+   <View style={{borderTopWidth:1,borderColor:c.line,paddingTop:20}}><PracticeMode active={mode} onChange={setMode} descriptions={descriptions}/></View>
+  </View>
+  <Split><Panel style={{flex:1.35,gap:20}}><Section title="Your practice board" aside={`${completed} / 28 saved`}/><Txt size={14} color={c.muted}>Each tile is a small experiment. Fill it with something you made.</Txt><View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{lessons.map(l=>{const done=!!state.lessons[l.id]?.completedAt,current=l.id===lesson?.id;return <MotionPress key={l.id} accessibilityRole="button" accessibilityLabel={`Day ${l.day}: ${l.title}${done?', complete':''}`} onPress={()=>router.push(`/session/${l.id}`)} style={{width:wide?45:36,height:wide?45:40,borderRadius:12,alignItems:'center',justifyContent:'center',backgroundColor:done?c.accent:current?c.hero:c.bg,borderWidth:1,borderColor:current?c.accent:c.line}}>{done?<Icon name="checkmark" size={18} color={c.onAccent}/>:<Txt size={12} weight={current?'700':'400'} color={current?c.accent:c.muted}>{String(l.day).padStart(2,'0')}</Txt>}</MotionPress>;})}</View><Meter value={completed/28} label="Completed foundation lessons"/><Eyebrow>YOUR LEARNING JOURNEY</Eyebrow><Txt size={13} color={c.muted}>No streak to protect. Just a body of work to grow.</Txt></Panel>
+   <Panel style={{flex:1,backgroundColor:c.soft,borderColor:c.line,justifyContent:'space-between',gap:20}}><View style={{gap:16}}><Icon name="map-outline" size={32}/><Eyebrow>ZOOM OUT</Eyebrow><Txt size={30} weight="600">{'From “hello world”\nto your own AI.'}</Txt><Txt size={14} color={c.muted}>Four chapters. {modules.length} modules. A map of ideas that connect as you go.</Txt></View><Button title="Explore your path" secondary icon="arrow-forward" onPress={()=>router.push('/path')}/></Panel>
+  </Split>
+  <View style={{gap:12}}><Section title="On your workbench" aside="Up next"/>{lessons.slice(Math.min(completed,25),Math.min(completed,25)+3).map(l=><Reveal key={l.id}><Row title={l.title} leading={String(l.day).padStart(2,'0')} subtitle={`${l.estimatedMinutes} min · ${state.lessons[l.id]?.completedAt?'Work saved':'Watch / Build / Recall'}`} onPress={()=>router.push(`/session/${l.id}`)}/></Reveal>)}</View>
+  <MotionPress accessibilityRole="button" accessibilityLabel="Choose your reminder times" onPress={()=>router.push('/settings')} style={{padding:20,borderRadius:20,borderWidth:1,borderColor:c.line,flexDirection:'row',alignItems:'center',gap:14}}><Icon name="notifications-outline" color={c.accent}/><View style={{flex:1}}><Txt size={15} weight="600">Give your curiosity a time slot.</Txt><Txt size={13} color={c.muted}>Set a rhythm that fits your day.</Txt></View><Icon name="arrow-forward" size={20}/></MotionPress>
+ </Screen>;
+}
