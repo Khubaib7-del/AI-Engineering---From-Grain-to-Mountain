@@ -6,7 +6,7 @@ Production: **https://ai-engineering-grain-to-mountain.vercel.app**. Published 8
 
 Import this GitHub repository into Vercel. Leave **Root Directory** at the repository root and Framework Preset at **Other**. The root `vercel.json` installs the locked app dependencies, exports the Expo single-page web app and serves `learning-companion/dist`. Its rewrite supports direct links such as `/path`, `/session/D001` and `/module/M00`.
 
-Production and preview builds now use EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY, configured on Vercel. These are public client settings; never expose a service-role key. Accounts are a preview: hosted notebook storage is installed, but email confirmation/recovery and end-to-end account sync are still awaiting verification. Guest progress remains local. The published Android 1.0 APK remains local-only. Export a backup in Settings before clearing site storage or moving domains. Course links require internet. Web reminders are not native background notifications.
+Production and preview builds now use EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY, configured on Vercel. These are public client settings; never expose a service-role key. Web accounts are verified: email confirmation, password recovery, independent browser sync, offline preservation and explicit conflict selection passed. Hosted progress belongs to the signed-in account; reminder settings stay on the device. Guest progress remains local. The published Android 1.0 APK remains local-only. Export a backup in Settings before clearing site storage or moving domains. Course links require internet. Web reminders are not native background notifications.
 
 The bundled content under `learning-companion/src/content` is committed, so Vercel does not need to read the research documents at build time. After editing curriculum data, run `npm run sync-content` inside the app and commit both source and bundled JSON.
 
@@ -23,4 +23,5 @@ See [personal-preview installation and build instructions](learning-companion/re
 The Expo source supports an iOS target, but an iOS build, signing, device testing and distribution have not been completed. Do not describe Android's APK as an iPhone download. See the app's `eas.json` for build profiles; Apple signing/distribution requires the appropriate account and setup.
 
 Reference: [Expo website publishing](https://docs.expo.dev/guides/publishing-websites/).
+
 

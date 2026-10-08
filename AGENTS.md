@@ -37,6 +37,7 @@ Keep this workspace focused on learning and its companion application. Do not mi
 
 ## Repository and publishing
 
-Active work: public product website and Supabase accounts/sync. Read `supabase/README.md` before resuming; the client scaffold is tested without a backend, OAuth is authorized, hosted provisioning and integration tests remain. Do not claim or deploy completed sync until those pass. The original Android preview remains local-only.
+Web accounts/sync: hosted project, email confirmation/recovery and two-client integration checks are complete. Read `supabase/README.md` and app `VALIDATION.md` for evidence and the PT409 conflict migration. Remaining native work: the original Android APK is local-only; new native account builds and device tests are still required. Do not claim iOS installation or native sync from browser checks.
 
 Canonical repository: `https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain`, branch `main`. This checkout imports the existing work as focused commits made at publication time; it does not reconstruct or backdate the original development timeline. See `DEPLOYMENT.md` for Vercel and platform status. Preserve the earlier local workspace and its APK until changes are explicitly migrated. Never commit credentials, native signing keys, dependencies, personal backups or generated build directories. APK distribution belongs in a release attachment; the iOS target is not a verified iOS release.
+

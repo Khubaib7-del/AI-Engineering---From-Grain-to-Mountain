@@ -35,5 +35,10 @@ if(mode==='signup'){
  const credentials=JSON.parse(fs.readFileSync(file,'utf8'));
  const {error}=await client().auth.resetPasswordForEmail(credentials.email,{redirectTo:'https://ai-engineering-grain-to-mountain.vercel.app/account'});assert.equal(error,null,error?.message);
  console.log('Password recovery request accepted; open the reset email to verify the live callback.');
-}else throw Error('Use signup, sync, or recovery');
+}else if(mode==='verify-recovery'){
+ const credentials=JSON.parse(fs.readFileSync(file,'utf8'));
+ const {error}=await client().auth.signInWithPassword(credentials);
+ assert.equal(error?.code,'invalid_credentials','The original test password must be rejected after reset');
+ console.log('PASS original test password rejected after the successful recovery password update.');
+}else throw Error('Use signup, sync, recovery, or verify-recovery');
 

@@ -106,3 +106,6 @@ User saved a Google app password in Supabase. First delivery failed with Gmail 5
 ## Confirmed-account sync — 8 October 2026
 Confirmed test account signed in through two independent API clients. Shared snapshots, wrong-owner denial and stale-write rejection passed. Live testing found the documented PostgREST SQLSTATE 40001 retry loop; migration 20261008125444_notebook_conflict_http_status.sql now returns PT409 (HTTP 409). Client recognizes PT409 and disables automatic write retries. Typecheck, lint, all 10 unit checks and web export passed. Browser checks against the rebuilt local export and hosted backend passed at 390/1440px: sign-in, note sync, offline preservation, explicit cloud conflict selection, sign-out to guest. One initial browser sign-in wait timed out; the diagnostic rerun passed without an application change. Password recovery email accepted; final password-save check awaits owner interaction.
 
+
+Recovery completed through the public website: hosted Auth recorded successful PUT /user, and the original test password was subsequently rejected with invalid_credentials. Gmail delivery was confirmed by the owner receiving the confirmation email. Web account functionality is verified; downloadable native app sync is not claimed. The test credentials file remains ignored; old password is no longer valid.
+
