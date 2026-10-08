@@ -109,3 +109,6 @@ Confirmed test account signed in through two independent API clients. Shared sna
 
 Recovery completed through the public website: hosted Auth recorded successful PUT /user, and the original test password was subsequently rejected with invalid_credentials. Gmail delivery was confirmed by the owner receiving the confirmation email. Web account functionality is verified; downloadable native app sync is not claimed. The test credentials file remains ignored; old password is no longer valid.
 
+
+Final public product checks passed after release: /, /account, /download and /today at 390/1440px, guest entry, no overflow/runtime exceptions; live Auth access checks passed. Public account screenshot reviewed with the preview notice removed. Functional account release a29ed51 reached Vercel Ready; subsequent Git-ignore-only release does not change app behavior.
+
