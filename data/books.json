@@ -1,0 +1,86 @@
+[
+  {
+    "id": "B01",
+    "title": "Think Python, third edition",
+    "url": "https://allendowney.github.io/ThinkPython/",
+    "stage": "M01",
+    "access": "Author-hosted HTML/notebooks"
+  },
+  {
+    "id": "B02",
+    "title": "Python for Data Analysis, third edition",
+    "url": "https://wesmckinney.com/book/",
+    "stage": "M04",
+    "access": "Open HTML; book content redistribution restricted"
+  },
+  {
+    "id": "B03",
+    "title": "Mathematics for Machine Learning",
+    "url": "https://mml-book.github.io/",
+    "stage": "M05",
+    "access": "Author-hosted PDF link"
+  },
+  {
+    "id": "B04",
+    "title": "Introduction to Probability, second edition",
+    "url": "https://projects.iq.harvard.edu/stat110/home",
+    "stage": "M06",
+    "access": "Free book linked from author course page"
+  },
+  {
+    "id": "B05",
+    "title": "Introduction to Statistical Learning with Python",
+    "url": "https://www.statlearning.com/",
+    "stage": "M07",
+    "access": "Author-hosted PDF link"
+  },
+  {
+    "id": "B06",
+    "title": "Dive into Deep Learning",
+    "url": "https://d2l.ai/",
+    "stage": "M08/M09",
+    "access": "Free online book"
+  },
+  {
+    "id": "B07",
+    "title": "Deep Learning",
+    "url": "https://www.deeplearningbook.org/",
+    "stage": "M08",
+    "access": "Authorized HTML; no full author-distributed PDF"
+  },
+  {
+    "id": "B08",
+    "title": "Speech and Language Processing, third-edition draft",
+    "url": "https://web.stanford.edu/~jurafsky/slp3/",
+    "stage": "M09/M15",
+    "access": "Author-hosted draft PDF"
+  },
+  {
+    "id": "B09",
+    "title": "Machine Learning Systems, two volumes",
+    "url": "https://mlsysbook.ai/",
+    "stage": "M16/M17",
+    "access": "Author-hosted HTML/PDF/EPUB"
+  },
+  {
+    "id": "B10",
+    "title": "AI Engineering from Scratch, six release volumes",
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch/releases",
+    "stage": "Matching current module",
+    "access": "Downloads linked from inspected repository README; release assets not individually tested"
+  },
+  {
+    "id": "B11",
+    "title": "Made With ML online reference",
+    "url": "https://madewithml.com/",
+    "stage": "M16",
+    "access": "Free practical course/reference"
+  },
+  {
+    "id": "B12",
+    "title": "Convex Optimization — Boyd and Vandenberghe",
+    "url": "https://web.stanford.edu/~boyd/cvxbook/",
+    "stage": "After M05/M06, research depth",
+    "access": "Author-hosted authorized PDF"
+  }
+]
