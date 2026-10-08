@@ -11,6 +11,7 @@ $digest = (Get-FileHash -LiteralPath $apkFile -Algorithm SHA256).Hash.ToLowerInv
 $head = (git rev-parse HEAD).Trim()
 $remoteHead = ((git ls-remote origin refs/heads/main) -split '\s+')[0]
 if ($LASTEXITCODE -ne 0 -or $remoteHead -ne $head) { throw 'Push and verify main before publishing the APK.' }
+Write-Output 'Published source commit verified; preparing draft assets.'
 $credentialLines = "protocol=https`nhost=github.com`n`n" | git credential fill
 if ($LASTEXITCODE -ne 0) { throw 'GitHub credential helper failed.' }
 $fields = @{}
@@ -43,7 +44,8 @@ foreach ($name in @($apkName,'SHA256SUMS.txt')) {
   $expected = 'sha256:'+(Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant()
   if ($existing.digest -ne $expected) { throw "Existing release asset differs: $name. Do not overwrite silently." }
  } else {
-  $asset = Invoke-RestMethod -Method Post -Uri ($uploadBase+'?name='+[uri]::EscapeDataString($name)) -Headers $headers -ContentType 'application/octet-stream' -InFile $file -TimeoutSec 240
+  Write-Output "Uploading $name"
+  $asset = Invoke-RestMethod -Method Post -Uri ($uploadBase+'?name='+[uri]::EscapeDataString($name)) -Headers $headers -ContentType 'application/octet-stream' -InFile $file -HttpVersion 1.1 -TimeoutSec 240
   Write-Output $asset.browser_download_url
  }
 }
