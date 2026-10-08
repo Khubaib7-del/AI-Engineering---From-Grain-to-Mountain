@@ -1,0 +1,105 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const read=n=>JSON.parse(fs.readFileSync(path.join(root,'data',n+'.json'),'utf8'));
+const write=(n,v)=>fs.writeFileSync(path.join(root,'data',n+'.json'),JSON.stringify(v,null,2)+'\n');
+const rows=[
+ ['V18','StatQuest · Statistics Fundamentals','https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9','M06','playlist','https://statquest.org/video_index.html','Elementary algebra; use alongside probability exercises.','Beginner intuition; selected independently from the author index.'],
+ ['V19','StatQuest · Machine Learning','https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF','M07','playlist','https://statquest.org/video_index.html','M05/M06; fit and evaluate models yourself.','Concept companion; it does not replace implementation assignments.'],
+ ['V20','Stanford CS224N · Public 2024 lectures','https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D','M09','playlist','https://web.stanford.edu/class/cs224n/','M05–M08; Python, probability and PyTorch.','2024 public recordings; 2026 class recordings are restricted to enrolled students. Pair with current public notes.'],
+ ['V21','Full Stack Deep Learning · 2022 course','https://fullstackdeeplearning.com/course/2022/','M16/M17','video-course-index','https://fullstackdeeplearning.com/course/2022/','M03/M07/M08; build one trained model first.','Lifecycle, testing, deployment and monitoring. Older APIs require current docs.'],
+ ['V22','DataTalksClub · LLM Zoomcamp','https://www.youtube.com/playlist?list=PL3MmuxUbc_hLZFNgSad56pDBKK8KO0XIv','M11/M12/M16','playlist','https://github.com/DataTalksClub/llm-zoomcamp','M03/M04/M10; HTTP, Python and retrieval basics.','Official repository links this playlist; YouTube fetch failed, so individual videos and availability were not audited.'],
+ ['V23','Berkeley LLM Agents · History and Overview, Shunyu Yao','https://www.youtube.com/watch?v=RM6ZArd2nVc','M12','lecture','https://rdi.berkeley.edu/llm-agents/f24','M09–M12; understand tool calls and evaluation.','2024 research overview; selected through university lecture schedule.'],
+ ['V24','Berkeley LLM Agents · Software Agents, Graham Neubig','https://www.youtube.com/live/f9L9Fkq-8K4','M12/M20','lecture','https://rdi.berkeley.edu/llm-agents/f24','M03/M12/M18; Git, tests, isolation and tool loops.','2024 lecture; concepts inform harness study, APIs are historical.'],
+ ['V25','Berkeley LLM Agents · Compound AI / DSPy, Omar Khattab','https://www.youtube.com/live/JEMYuzrKLUw','M10/M12','lecture','https://rdi.berkeley.edu/llm-agents/f24','M10/M11 and held-out evaluation.','Compare optimized LM programs with hand-written prompts on the same metric.'],
+ ['V26','Qdrant Essentials','https://qdrant.tech/course/essentials/','M11','video-course-index','https://qdrant.tech/course/essentials/','M04/M11; vectors, similarity, retrieval evaluation.','Structured vendor course with videos/labs; useful for index, filtering and hybrid-search implementation, not neutral vendor comparisons.'],
+ ['V27','Deep Learning Systems · CMU course','https://dlsyscourse.org/','M14/M17','course-index','https://dlsyscourse.org/','M03/M05–M08 plus C++ and systems programming.','2026 syllabus refers to supplementary 2022 YouTube recordings; direct playlist URL was not resolved. Build autodiff and an array backend.']
+];
+const videos=read('video-companions');
+for(const [id,title,url,modules,format,source,prerequisites,notes] of rows){const item={id,title,url,modules,format,source,prerequisites,notes,type:'video',language:'English',verification:'official-author-or-university-index-reviewed; full recordings not watched'};const i=videos.findIndex(v=>v.id===id);if(i<0)videos.push(item);else videos[i]=item;}
+write('video-companions',videos);
+const bridges=[
+ {id:'DR01',title:'Hugging Face MCP Course',url:'https://huggingface.co/learn/mcp-course/en/unit0/introduction',modules:'M12/M18',format:'interactive-course',notes:'Protocol exercises complement lectures; not labeled a YouTube playlist.'},
+ {id:'DR02',title:'Haystack tutorials',url:'https://haystack.deepset.ai/tutorials',modules:'M11/M12',format:'tutorial-index',notes:'Use current component/pipeline examples for comparative implementation.'},
+ {id:'DR03',title:'LlamaIndex RAG understanding guide',url:'https://developers.llamaindex.ai/python/framework/understanding/rag/',modules:'M11',format:'documentation-guide',notes:'Trace documents, nodes, retrieval and query assembly with current APIs.'}
+];
+const resources=read('resources');for(const b of bridges){const i=resources.findIndex(r=>r.id===b.id);const v={...b,type:'course',verification:'official-page-reviewed'};if(i<0)resources.push(v);else resources[i]=v;}write('resources',resources);
+write('teaching-resource-review',{reviewed:'2026-10-07',selection:'Independent gap-oriented additions, not a claim of universal best quality.',resources:rows.map(([id,title,url,modules,format,source,prerequisites,notes])=>({id,title,url,modules,format,source,prerequisites,notes})),bridges,limits:'Author links, syllabus and topic fit reviewed. Complete videos, all notebooks and every API version not audited.'});
+// Each semicolon-separated outcome is a granular practice target, not an extra unique core concept.
+const specs=[
+ ['Foundations to executable programs','M00/M01/M02/M03','V10/V11','Explain and debug a Python CLI without generated code.',[
+ ['Computer and environment','Files versus directories; absolute versus relative paths; terminal command and exit status; process versus program; PATH and environment variables'],
+ ['Python control and data','Boolean expressions and conditionals; for/range/enumerate/zip; while and termination; comprehensions and generators; mutability and aliasing'],
+ ['Reusable programs','Function arguments and return values; scope and closures; classes and composition; exceptions and context managers; modules and imports'],
+ ['Reproducible development','Interpreter versus package manager; pip versus uv responsibilities; venv versus global environment; pyproject and lockfiles; pycache versus source files'],
+ ['Software foundations','Git branches and diffs; unit versus integration tests; HTTP JSON and API errors; SQL joins and transactions; async concurrency versus parallelism']]],
+ ['Mathematics and classical ML','M04/M05/M06/M07','V18/V19/V01','A leakage-free tabular baseline with uncertainty and reproducible splits.',[
+ ['Math language','Vectors and matrix shapes; dot products and projections; derivatives and chain rule; gradients and optimization; numerical stability'],
+ ['Probability and statistics','Conditional probability and Bayes; distributions and expectation; variance covariance and sampling; confidence intervals and bootstrap; hypothesis tests and multiple comparisons'],
+ ['Data preparation','Missing values and imputation; categorical encoding; scaling within training folds; imbalance and stratification; label leakage and temporal splits'],
+ ['Model families','Linear and logistic regression; trees and boosted ensembles; neighbors and kernels; clustering and dimensionality reduction; regularization and bias variance'],
+ ['Evaluation and tuning','Baseline versus target metric; precision recall and calibration; cross-validation versus holdout; hyperparameter search and pruning; error analysis and subgroup performance']]],
+ ['Deep learning and model architecture','M08/M09/M13/M14','V08/V12/V20/V27','Train a small transformer and explain each tensor shape and bottleneck.',[
+ ['Tensor and autodiff','Broadcasting and indexing; computational graphs; backward and gradient accumulation; optimizer state; mixed precision and loss scaling'],
+ ['Transformer anatomy','Tokenization and vocabulary; embeddings and positions; causal masking and attention; normalization and residual paths; output head and cross entropy'],
+ ['Architecture branches','Dense versus mixture of experts; routing and expert capacity; grouped query attention; long context position methods; multimodal encoders and fusion'],
+ ['Training lifecycle','Data cleaning and deduplication; pretraining versus supervised tuning; LoRA and QLoRA; preference optimization versus RL; checkpoints and reproducibility'],
+ ['Systems internals','Array layout and device transfers; autodiff engine; matrix multiplication tiling; memory bandwidth versus compute; profiling and kernel correctness']]],
+ ['Retrieval and vector systems','M04/M09/M10/M11','V22/V26/DR02/DR03','Evaluate exact, lexical, dense and hybrid retrieval on a fixed corpus.',[
+ ['Ingestion and chunks','OCR and layout extraction; stable document IDs and provenance; sentence heading and recursive splits; parent child relationships; incremental update and deletion'],
+ ['Embeddings and similarity','Sparse versus dense representation; cosine dot and Euclidean distance; domain and multilingual mismatch; batch sizing and rate limits; embedding migration'],
+ ['Index mechanics','Exact nearest neighbors; HNSW construction and search effort; IVF clusters and probes; quantization error; filter selectivity and ANN recall'],
+ ['Pipeline composition','BM25 and dense baselines; reciprocal rank fusion; reranking and MMR; query decomposition and routing; context packing and citations'],
+ ['Variants and evaluation','Graph versus hierarchical retrieval; corrective and adaptive retrieval; multimodal and agentic retrieval; recall MRR nDCG and grounded answers; unanswerable and adversarial queries']]],
+ ['Memory and context engineering','M10/M11/M12/M18','V23','A memory system with provenance, contradiction handling and verified deletion.',[
+ ['Memory categories','Working versus persistent state; episodic event history; semantic facts; procedural skills; explicit versus inferred memory'],
+ ['Write and retrieval policy','Consent and allowed fields; salience and extraction; timestamps and provenance; relevance recency and importance; tenant scoped retrieval'],
+ ['Maintenance','Consolidation and summaries; contradictory facts; TTL and forgetting; versioning and rollback; deletion propagated to indexes'],
+ ['Context strategies','Truncation versus compaction; prefix caching; external variables and selective reads; recursive context inspection; token budget and stale summaries'],
+ ['Controlled comparison','RAG evidence versus agent memory; cached context cold versus warm; memory enabled versus disabled; poisoning and false remembered facts; correctness privacy latency and cost']]],
+ ['Agent runtimes and harnesses','M03/M10/M12/M18','V23/V24/DR01','Trace one tool task, then reproduce its failure and recovery path.',[
+ ['Single agent loop','Task and success contract; model call and observations; structured tool arguments; bounded retries and stop rules; cancellation and human handoff'],
+ ['Runtime architecture','Model adapter and streaming; tool registry and validation; append only events and replay; dependency injection and plugins; load unload and cleanup'],
+ ['Persistent execution','REPL state and namespaces; subprocess and IPC; async jobs and polling; crash recovery and idempotency; isolation and resource limits'],
+ ['Multi agent coordination','Supervisor and worker contracts; shared versus private state; message passing and joins; race conditions and deadlocks; depth cost and timeout budgets'],
+ ['Adaptation and skills','Trajectory feedback; executable skill packaging; prompt memory and skill updates; held out acceptance tests; rollback versus model weight training']]],
+ ['Protocols and purposeful products','M03/M11/M12/M18/M20','DR01/V24','Deliver one permission-bounded agent that solves a measurable user task.',[
+ ['MCP boundary','Client server and transport; tools resources and prompts; input schemas and errors; authentication and scopes; untrusted server content'],
+ ['Other extension layers','Plugin lifecycle and dependencies; skill instructions and code; agent to agent contracts; protocol version compatibility; capability discovery'],
+ ['Domain workflows','Coding repository inspection and patching; browser navigation and DOM actions; research sources and citations; SQL execution and schema constraints; voice turn taking and interruptions'],
+ ['Product reliability','User task and acceptance rubric; approvals at consequential boundaries; resumable runs and audit trails; human correction and feedback; accessibility and understandable status'],
+ ['Threat model','Prompt injection across documents and tools; secret isolation; least privilege and sandboxing; network and filesystem allowlists; destructive action and data exfiltration tests']]],
+ ['Benchmarking and economics','M06/M10/M12/M16/M17','V25/V22','A two-model/two-harness experiment with uncertainty and cost per success.',[
+ ['Measurement design','Task family and representative sample; frozen split and contamination checks; baseline and ablation; repeated trials and confidence intervals; reproducible model and harness versions'],
+ ['Benchmark categories','Language model task evaluation; repository patch tests; interactive tool and browser tasks; retrieval and answer evaluation; domain specific end to end success'],
+ ['Scoring pitfalls','Pass at one versus pass at k; invalid tests and flaky infrastructure; judge bias and rubric calibration; timeout and refusal accounting; benchmark score versus customer outcomes'],
+ ['Cost ledger','Input output and cached token categories; every retry worker and tool call; provider price snapshot; compute storage and idle GPU time; total cost divided by successful tasks'],
+ ['Optimization','Smaller model routing; context pruning and caching; batching and concurrency; bounded retries and early stop; quality latency and spend Pareto comparison']]],
+ ['MLOps LLMOps and serving','M03/M07/M08/M16/M17/M18','V21/V22/V27','Deploy, observe, roll back and restore a versioned model service.',[
+ ['Data and experiments','Dataset and artifact versioning; experiment tracking and model registry; reproducible training pipeline; feature store point in time joins; lineage and data quality checks'],
+ ['Deployment','FastAPI request contracts; container images and configuration; CI CD and infrastructure as code; canary shadow and rollback; secrets networking and access control'],
+ ['Inference systems','KV cache and memory planning; batching and scheduling; quantization and accuracy loss; tensor versus pipeline parallelism; throughput TTFT and tail latency'],
+ ['Operations','Structured logs metrics and traces; SLO and error budget; drift and quality monitoring; alerting and incident runbooks; backup restore and capacity planning'],
+ ['LLM specific operations','Prompt and tool versioning; retrieval corpus freshness; offline versus online evaluations; human feedback and privacy; gateway routing and provider failures']]],
+ ['Research and specialization','M07/M08/M09/M14/M15/M19/M20','V20/V24/V27','One reproduced baseline, one ablation and a documented useful extension.',[
+ ['Paper reading','Question and hypotheses; assumptions and methodology; dataset and compute budget; baseline and statistical uncertainty; limitations and negative results'],
+ ['Reproduction','Environment and pinned commit; data access and license; small scale sanity run; metric and seed agreement; discrepancy analysis'],
+ ['Optional branches','Vision detection segmentation and tracking; audio speech and real time interaction; recommender ranking and feedback; time series temporal backtesting; reinforcement learning state action reward'],
+ ['Open model study','Architecture versus released weights; tokenizer and configuration; training versus inference code; license and distribution terms; accessible scale versus original compute'],
+ ['Portfolio and FYP','User problem and prior art; evaluation set before implementation; independent contribution beyond cloning; reproducible demo and failure cases; report artifacts and ongoing maintenance']]]
+];
+const domains=specs.map(([title,prereqs,res,assessment,groups],i)=>({id:`D${String(i+1).padStart(2,'0')}`,title,prerequisites:prereqs.split('/'),resources:res.split('/'),assessment,topics:groups.map(([title,leaves],j)=>({id:`D${String(i+1).padStart(2,'0')}.${j+1}`,title,outcomes:leaves.split('; ').map((title,k)=>({id:`D${String(i+1).padStart(2,'0')}.${j+1}.${k+1}`,title}))}))}));
+write('deep-topic-map',{schemaVersion:1,reviewed:'2026-10-07',scope:'Ordered drill-down of the existing curriculum; outcomes overlap the core 740 concepts and are not additive hours or completion IDs. Our educational decomposition, not repository feature claims.',domains});
+let md='# Ecosystem drill-down: beginner to advanced\n\nThis is a deeper teaching map of the existing M00–M20 route, not a replacement. Each domain contains topics and granular practice outcomes. Read prerequisite modules first. Resource IDs resolve through [the teaching additions](23-independent-teaching-resources.md), [existing videos](19-videos-and-agent-papers-in-order.md) and data/video-companions.json. Core 740 IDs and app progress remain stable. These 250 outcomes overlap core topics; they are not 250 newly discovered unique concepts or additional planning hours.\n\n';
+for(const d of domains){md+=`## ${d.id} — ${d.title}\n\nPrerequisites: ${d.prerequisites.join(', ')}. Resources: ${d.resources.join(', ')}.\n\n`;for(const t of d.topics){md+=`### ${t.id} ${t.title}\n\n`+t.outcomes.map(o=>`- [ ] ${o.id} ${o.title}`).join('\n')+'\n\n';}md+=`**Gate:** ${d.assessment}\n\n`;}
+md+='The map is deliberately broader than agent frameworks. Deep specialization is a choice after the shared foundations: research/model systems, production ML, retrieval/agent products, or a domain branch. The core books, courses and papers remain in documents 03–05. New repository study references are in document 20; retrieval and memory distinctions in document 21. Recheck sources before executing old course code.\n';
+fs.writeFileSync(path.join(root,'22-ecosystem-drill-down.md'),md);
+let teaching='# Independently selected teaching additions\n\nReviewed 2026-10-07. These were found to fill gaps, beyond the examples you supplied. Keep one main course per stage; use a companion when an explanation is unclear, then complete the exercise. Selection means fit for this learning route, not an objectively best teacher. Older mathematics and systems explanations remain useful; library APIs need current documentation.\n\n| ID / resource | Format and stage | Prerequisites / use | Access and currency |\n|---|---|---|---|\n';
+for(const [id,title,url,modules,format,source,prerequisites,notes] of rows)teaching+=`| ${id} [${title}](${url}) | ${format}; ${modules} | ${prerequisites} | ${notes} [Author source](${source}) |\n`;
+teaching+='\n## Current documentation bridges\n\n';for(const b of bridges)teaching+=`- ${b.id} [${b.title}](${b.url}) — ${b.modules}. ${b.notes}\n`;
+teaching+='\n## How to study in order\n\nPython and tools → algebra/calculus/probability → classical ML → PyTorch/backpropagation → NLP/transformers → LLM API/evaluation → retrieval → agent loops/protocols → production operations → harness adaptation or model systems specialization. Use the prerequisite map rather than attempting an advanced agent course from day one.\n\nYour CampusX, Krish Naik, Karpathy, CS50P, Andrew Ng, MIT and freeCodeCamp references remain available in the earlier resource documents. The additions supplement them with statistics, NLP, retrieval implementation, production lifecycle, agent research and systems internals. Sources were reviewed for authorship, syllabus and fit; full videos and notebooks were not watched/executed. An index is explicitly labeled when no direct playlist was verified.\n';
+fs.writeFileSync(path.join(root,'23-independent-teaching-resources.md'),teaching);
+const audit=read('source-audit');for(const url of [...rows.map(r=>r[5]),...bridges.map(r=>r.url),'https://github.com/PrimeIntellect-ai/prime-agent','https://arxiv.org/abs/2608.23552','https://arxiv.org/abs/2605.09998','https://github.com/deepseek-ai/deepseek-harness','https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md'])if(!audit.sources.some(s=>s.url===url))audit.sources.push({id:`S${String(audit.sources.length+1).padStart(3,'0')}`,url,retrieved:'2026-10-07',reviewStatus:'primary-page-reviewed',notes:'Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit.'});write('source-audit',audit);
+const modules=new Set(read('curriculum').modules.map(m=>m.id));const ids=new Set([...videos,...resources].map(r=>r.id));let count=0;for(const d of domains){for(const p of d.prerequisites)if(!modules.has(p))throw Error('Bad prerequisite '+p);for(const r of d.resources)if(!ids.has(r))throw Error('Bad resource '+r);for(const t of d.topics)count+=t.outcomes.length;}
+console.log(JSON.stringify({domains:domains.length,topics:domains.reduce((n,d)=>n+d.topics.length,0),outcomes:count,newTeachingResources:rows.length,documentationBridges:bridges.length,totalVideoCompanions:videos.length}));
+

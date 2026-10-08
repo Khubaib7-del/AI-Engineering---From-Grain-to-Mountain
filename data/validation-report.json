@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "modules": 21,
+  "concepts": 740,
+  "estimatedHours": 1720,
+  "courses": 17,
+  "booksOrReferences": 12,
+  "papers": 28,
+  "toolCategories": 32,
+  "illustrativeToolEntries": 174,
+  "firstMonthDays": 28,
+  "videoCompanions": 27,
+  "extensionUnits": 8,
+  "extensionTopics": 58,
+  "reviewedProjectIdeas": 20,
+  "markdownFiles": 26,
+  "depthDomains": 10,
+  "depthTopics": 50,
+  "depthOutcomes": 250,
+  "errors": [],
+  "scope": "Local consistency only; no claim of all external links or code execution being verified."
+}
