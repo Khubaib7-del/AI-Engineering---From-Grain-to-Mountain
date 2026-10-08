@@ -1,0 +1,541 @@
+[
+  {
+    "id": "C01",
+    "title": "CS50’s Introduction to Programming with Python",
+    "url": "https://cs50.harvard.edu/python/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Current course site; syntax is durable. Free study; certification optional."
+  },
+  {
+    "id": "C02",
+    "title": "MIT Missing Semester 2026",
+    "url": "https://missing.csail.mit.edu/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Verified 2026 syllabus and playlist linked by authors."
+  },
+  {
+    "id": "C03",
+    "title": "CS50x",
+    "url": "https://cs50.harvard.edu/x/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Current OpenCourseWare; free study, optional certificate."
+  },
+  {
+    "id": "C04",
+    "title": "CS50 SQL",
+    "url": "https://cs50.harvard.edu/sql/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Current course site, exercises freely accessible."
+  },
+  {
+    "id": "C05",
+    "title": "3Blue1Brown Essence of Linear Algebra",
+    "url": "https://www.3blue1brown.com/topics/linear-algebra",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Foundational series; older recording remains suitable for these concepts."
+  },
+  {
+    "id": "C06",
+    "title": "Harvard Stat 110",
+    "url": "https://projects.iq.harvard.edu/stat110/home",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Author site links videos and a free second-edition textbook; not a 2026 API course."
+  },
+  {
+    "id": "C07",
+    "title": "Statistical Learning with Python (ISLP)",
+    "url": "https://www.statlearning.com/online-courses",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Python edition 2023; stable ML foundations. Free author-linked videos/book; edX certificate unnecessary."
+  },
+  {
+    "id": "C08",
+    "title": "fast.ai Practical Deep Learning for Coders, part 1",
+    "url": "https://course.fast.ai/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Recorded 2022. Strong project-first foundation; use current PyTorch docs for API fixes, not old package pins blindly."
+  },
+  {
+    "id": "C09",
+    "title": "Hugging Face LLM Course",
+    "url": "https://huggingface.co/learn/llm-course/en/chapter1/1",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Living official course; verify package compatibility when running."
+  },
+  {
+    "id": "C10",
+    "title": "Full Stack LLM Bootcamp",
+    "url": "https://fullstackdeeplearning.com/llm-bootcamp/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "April 2023 recordings, explicitly dated by authors. Use for product/systems principles; update every SDK example through current docs."
+  },
+  {
+    "id": "C11",
+    "title": "LangChain RAG from Scratch",
+    "url": "https://github.com/langchain-ai/rag-from-scratch",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Earlier tutorials; current LangChain/LlamaIndex docs are the API authority. Does not imply framework is required."
+  },
+  {
+    "id": "C12",
+    "title": "Hugging Face Agents Course",
+    "url": "https://huggingface.co/learn/agents-course/en/unit0/introduction",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Living official course; prioritize one framework implementation after learning the plain loop."
+  },
+  {
+    "id": "C13",
+    "title": "LangChain Academy — Introduction to LangGraph, Python",
+    "url": "https://academy.langchain.com/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Official course content free; account may be needed. Certification paid and optional."
+  },
+  {
+    "id": "C14",
+    "title": "Stanford CS336 Language Modeling from Scratch, 2026",
+    "url": "https://cs336.stanford.edu/",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Current 2026 site explicitly links recordings. Some full assignments need substantial GPU compute; learning materials are free."
+  },
+  {
+    "id": "C15",
+    "title": "fast.ai Deep Learning Foundations to Stable Diffusion, part 2",
+    "url": "https://course.fast.ai/Lessons/part2.html",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Older foundational course; follow current Diffusers and model-specific documentation for execution."
+  },
+  {
+    "id": "C16",
+    "title": "DataTalksClub MLOps Zoomcamp",
+    "url": "https://github.com/DataTalksClub/mlops-zoomcamp",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Repository actively maintained in 2026; recordings may be from earlier cohorts. Use current main syllabus, date your chosen cohort."
+  },
+  {
+    "id": "C17",
+    "title": "Hugging Face Deep RL Course",
+    "url": "https://huggingface.co/learn/deep-rl-course/en/unit0/introduction",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed",
+    "notes": "Official living course, update environment/library compatibility when running."
+  },
+  {
+    "id": "B01",
+    "title": "Think Python, third edition",
+    "url": "https://allendowney.github.io/ThinkPython/",
+    "stage": "M01",
+    "access": "Author-hosted HTML/notebooks",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B02",
+    "title": "Python for Data Analysis, third edition",
+    "url": "https://wesmckinney.com/book/",
+    "stage": "M04",
+    "access": "Open HTML; book content redistribution restricted",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B03",
+    "title": "Mathematics for Machine Learning",
+    "url": "https://mml-book.github.io/",
+    "stage": "M05",
+    "access": "Author-hosted PDF link",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B04",
+    "title": "Introduction to Probability, second edition",
+    "url": "https://projects.iq.harvard.edu/stat110/home",
+    "stage": "M06",
+    "access": "Free book linked from author course page",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B05",
+    "title": "Introduction to Statistical Learning with Python",
+    "url": "https://www.statlearning.com/",
+    "stage": "M07",
+    "access": "Author-hosted PDF link",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B06",
+    "title": "Dive into Deep Learning",
+    "url": "https://d2l.ai/",
+    "stage": "M08/M09",
+    "access": "Free online book",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B07",
+    "title": "Deep Learning",
+    "url": "https://www.deeplearningbook.org/",
+    "stage": "M08",
+    "access": "Authorized HTML; no full author-distributed PDF",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B08",
+    "title": "Speech and Language Processing, third-edition draft",
+    "url": "https://web.stanford.edu/~jurafsky/slp3/",
+    "stage": "M09/M15",
+    "access": "Author-hosted draft PDF",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B09",
+    "title": "Machine Learning Systems, two volumes",
+    "url": "https://mlsysbook.ai/",
+    "stage": "M16/M17",
+    "access": "Author-hosted HTML/PDF/EPUB",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B10",
+    "title": "AI Engineering from Scratch, six release volumes",
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch/releases",
+    "stage": "Matching current module",
+    "access": "Downloads linked from inspected repository README; release assets not individually tested",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B11",
+    "title": "Made With ML online reference",
+    "url": "https://madewithml.com/",
+    "stage": "M16",
+    "access": "Free practical course/reference",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "B12",
+    "title": "Convex Optimization — Boyd and Vandenberghe",
+    "url": "https://web.stanford.edu/~boyd/cvxbook/",
+    "stage": "After M05/M06, research depth",
+    "access": "Author-hosted authorized PDF",
+    "type": "book-or-reference",
+    "language": "English"
+  },
+  {
+    "id": "P01",
+    "title": "Adam: A Method for Stochastic Optimization",
+    "url": "https://arxiv.org/abs/1412.6980",
+    "type": "paper",
+    "after": "M08",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P02",
+    "title": "Deep Residual Learning for Image Recognition",
+    "url": "https://arxiv.org/abs/1512.03385",
+    "type": "paper",
+    "after": "M08",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P03",
+    "title": "Attention Is All You Need",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "type": "paper",
+    "after": "M09",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P04",
+    "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+    "url": "https://arxiv.org/abs/1810.04805",
+    "type": "paper",
+    "after": "M09",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P05",
+    "title": "Language Models are Few-Shot Learners",
+    "url": "https://arxiv.org/abs/2005.14165",
+    "type": "paper",
+    "after": "M09",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P06",
+    "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+    "url": "https://arxiv.org/abs/2004.04906",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P07",
+    "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P08",
+    "title": "ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT",
+    "url": "https://arxiv.org/abs/2004.12832",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P09",
+    "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+    "url": "https://arxiv.org/abs/2212.10496",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P10",
+    "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+    "url": "https://arxiv.org/abs/2310.11511",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P11",
+    "title": "Corrective Retrieval Augmented Generation",
+    "url": "https://arxiv.org/abs/2401.15884",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P12",
+    "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+    "url": "https://arxiv.org/abs/2404.16130",
+    "type": "paper",
+    "after": "M11",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P13",
+    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+    "url": "https://arxiv.org/abs/2210.03629",
+    "type": "paper",
+    "after": "M12",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P14",
+    "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+    "url": "https://arxiv.org/abs/2302.04761",
+    "type": "paper",
+    "after": "M12",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P15",
+    "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "url": "https://arxiv.org/abs/2106.09685",
+    "type": "paper",
+    "after": "M13",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P16",
+    "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+    "url": "https://arxiv.org/abs/2305.14314",
+    "type": "paper",
+    "after": "M13",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P17",
+    "title": "Training language models to follow instructions with human feedback",
+    "url": "https://arxiv.org/abs/2203.02155",
+    "type": "paper",
+    "after": "M13",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P18",
+    "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+    "url": "https://arxiv.org/abs/2305.18290",
+    "type": "paper",
+    "after": "M13",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P19",
+    "title": "Training Compute-Optimal Large Language Models",
+    "url": "https://arxiv.org/abs/2203.15556",
+    "type": "paper",
+    "after": "M14",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P20",
+    "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+    "url": "https://arxiv.org/abs/2205.14135",
+    "type": "paper",
+    "after": "M17",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P21",
+    "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+    "url": "https://arxiv.org/abs/2309.06180",
+    "type": "paper",
+    "after": "M17",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P22",
+    "title": "Denoising Diffusion Probabilistic Models",
+    "url": "https://arxiv.org/abs/2006.11239",
+    "type": "paper",
+    "after": "M15",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P23",
+    "title": "Datasheets for Datasets",
+    "url": "https://arxiv.org/abs/1803.09010",
+    "type": "paper",
+    "after": "M18",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P24",
+    "title": "Model Cards for Model Reporting",
+    "url": "https://arxiv.org/abs/1810.03993",
+    "type": "paper",
+    "after": "M18",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P25",
+    "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2303.11366",
+    "type": "paper",
+    "modules": "M12",
+    "notes": "After M12. Compare bounded retries with and without reflection at equal call budget.",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P26",
+    "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+    "url": "https://arxiv.org/abs/2304.03442",
+    "type": "paper",
+    "modules": "M12",
+    "notes": "After M12. Build three simulated characters and ablate memory retrieval; report limits of plausibility metrics.",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P27",
+    "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+    "url": "https://arxiv.org/abs/2308.08155",
+    "type": "paper",
+    "modules": "M12",
+    "notes": "After M12. Compare two-agent collaboration and one agent at equal budget; check current framework maintenance guidance.",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "P28",
+    "title": "Don't Do RAG: When Cache-Augmented Generation is All You Need for Knowledge Tasks",
+    "url": "https://arxiv.org/abs/2412.15605",
+    "type": "paper",
+    "modules": "M11",
+    "notes": "After M11. Compare retrieval and cached context on identical queries, cold/warm latency, corpus updates and citations.",
+    "verification": "landing-page-and-abstract-reviewed"
+  },
+  {
+    "id": "R01",
+    "title": "Andrew Ng · Machine Learning Specialization",
+    "url": "https://www.deeplearning.ai/specializations/machine-learning",
+    "type": "course",
+    "modules": "M07",
+    "language": "English",
+    "notes": "Alternative to the primary route; platform audit/lab/certificate access can vary. Do not assume all graded material is free.",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "R02",
+    "title": "Andrew Ng · Deep Learning Specialization",
+    "url": "https://www.deeplearning.ai/specializations/deep-learning",
+    "type": "course",
+    "modules": "M08",
+    "language": "English",
+    "notes": "Alternative to the primary route; platform audit/lab/certificate access can vary. Do not assume all graded material is free.",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "DR01",
+    "title": "Hugging Face MCP Course",
+    "url": "https://huggingface.co/learn/mcp-course/en/unit0/introduction",
+    "modules": "M12/M18",
+    "format": "interactive-course",
+    "notes": "Protocol exercises complement lectures; not labeled a YouTube playlist.",
+    "type": "course",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "DR02",
+    "title": "Haystack tutorials",
+    "url": "https://haystack.deepset.ai/tutorials",
+    "modules": "M11/M12",
+    "format": "tutorial-index",
+    "notes": "Use current component/pipeline examples for comparative implementation.",
+    "type": "course",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "DR03",
+    "title": "LlamaIndex RAG understanding guide",
+    "url": "https://developers.llamaindex.ai/python/framework/understanding/rag/",
+    "modules": "M11",
+    "format": "documentation-guide",
+    "notes": "Trace documents, nodes, retrieval and query assembly with current APIs.",
+    "type": "course",
+    "verification": "official-page-reviewed"
+  }
+]
