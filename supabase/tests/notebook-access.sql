@@ -14,7 +14,7 @@ do $$ begin
   perform public.save_learning_notebook('00000000-0000-4000-a000-000000000001',0,
    '{"version":1,"lessons":{},"topics":{},"verified":{}}');
   raise exception 'Stale write accepted';
- exception when sqlstate '40001' then null; end;
+ exception when sqlstate 'PT409' then null; end;
  begin
   perform public.save_learning_notebook('00000000-0000-4000-a000-000000000002',0,
    '{"version":1,"lessons":{},"topics":{},"verified":{}}');
@@ -43,3 +43,4 @@ do $$ begin
  end if;
 end $$;
 rollback;
+

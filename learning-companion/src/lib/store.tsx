@@ -41,8 +41,8 @@ export function LearningProvider({children,scope='guest'}:{children:React.ReactN
    if(choice==='cloud'||(!choice&&decision==='pull')){
     await persist(cloud,remoteRevision,false);schedule(cloud);
    }else{
-    const {data:saved,error:saveError}=await supabase.rpc('save_learning_notebook',{p_user_id:scope,p_revision:choice==='local'?remoteRevision:revision.current,p_payload:progressOnly(latest.current)}).single<{revision:number}>();
-    if(saveError){if(saveError.code==='40001'){setSyncStatus('conflict');return;}throw saveError;}
+    const {data:saved,error:saveError}=await supabase.rpc('save_learning_notebook',{p_user_id:scope,p_revision:choice==='local'?remoteRevision:revision.current,p_payload:progressOnly(latest.current)}).retry(false).single<{revision:number}>();
+    if(saveError){if(saveError.code==='PT409'||saveError.code==='40001'){setSyncStatus('conflict');return;}throw saveError;}
     if(!active.current)return;
     await persist(latest.current,saved!.revision,false);
    }

@@ -102,3 +102,7 @@ Live HTTP check (scripts/sync-access-check.mjs) passed: Auth settings reachable,
 ## SMTP delivery test — 8 October 2026
 User saved a Google app password in Supabase. First delivery failed with Gmail 535 BadCredentials because sender/username did not match the account that generated it. Corrected the non-secret sender/username to the user-specified account, retaining the stored password. A dedicated test signup was then accepted. Sign-in remains correctly blocked until the owner clicks its email confirmation. Test credentials are in ignored .env.auth-test.local; never commit or print that file. scripts/account-live-check.mjs and account-browser-check.mjs are prepared; successful authenticated sync is not yet claimed.
 
+
+## Confirmed-account sync — 8 October 2026
+Confirmed test account signed in through two independent API clients. Shared snapshots, wrong-owner denial and stale-write rejection passed. Live testing found the documented PostgREST SQLSTATE 40001 retry loop; migration 20261008125444_notebook_conflict_http_status.sql now returns PT409 (HTTP 409). Client recognizes PT409 and disables automatic write retries. Typecheck, lint, all 10 unit checks and web export passed. Browser checks against the rebuilt local export and hosted backend passed at 390/1440px: sign-in, note sync, offline preservation, explicit cloud conflict selection, sign-out to guest. One initial browser sign-in wait timed out; the diagnostic rerun passed without an application change. Password recovery email accepted; final password-save check awaits owner interaction.
+

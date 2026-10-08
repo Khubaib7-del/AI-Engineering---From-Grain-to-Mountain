@@ -12,7 +12,7 @@ const before=await api.from('learning_notebooks').select('revision,payload').eq(
 const base=process.env.PREVIEW_URL??'https://ai-engineering-grain-to-mountain.vercel.app';
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const errors=[];
-async function open(width){const context=await browser.newContext({viewport:{width,height:950}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/account');await page.getByLabel('Email',{exact:true}).fill(credentials.email);await page.getByLabel('Password',{exact:true}).fill(credentials.password);await page.getByRole('button',{name:'Sign in',exact:true}).click();await page.getByTestId('open-lesson').waitFor();await page.goto(base+'/account');await page.getByText('Sync: Up to date',{exact:true}).waitFor();await page.goto(base+'/session/D001');await page.getByLabel('Lesson evidence').waitFor();return {context,page};}
+async function open(width){const context=await browser.newContext({viewport:{width,height:950}}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/account');await page.getByLabel('Email',{exact:true}).fill(credentials.email);await page.getByLabel('Password',{exact:true}).fill(credentials.password);await page.getByRole('button',{name:'Sign in',exact:true}).click();try{await page.getByTestId('open-lesson').waitFor();}catch(e){console.log('Sign-in page diagnostic:',await page.locator('body').innerText());fs.mkdirSync('design/shots/account-tests',{recursive:true});await page.screenshot({path:'design/shots/account-tests/signin-failure.png',fullPage:true});throw e;}await page.goto(base+'/account');await page.getByText('Sync: Up to date',{exact:true}).waitFor();await page.goto(base+'/session/D001');await page.getByLabel('Lesson evidence').waitFor();return {context,page};}
 async function save(page,evidence){await page.getByLabel('Lesson evidence').fill(evidence);await page.getByRole('button',{name:'Save notes',exact:true}).click();await page.getByRole('button',{name:'Notes saved',exact:true}).waitFor();await page.waitForFunction(({key,evidence})=>JSON.parse(localStorage.getItem(key))?.state.lessons.D001?.evidence===evidence,{key,evidence});}
 async function clean(page){await page.waitForFunction(key=>JSON.parse(localStorage.getItem(key))?.dirty===false,key);}
 try{
@@ -31,3 +31,4 @@ try{
  if(!latest.error){const restored=await api.rpc('save_learning_notebook',{p_user_id:userId,p_revision:latest.data.revision,p_payload:before.data?.payload??{version:1,lessons:{},topics:{},verified:{}}});assert.equal(restored.error,null,'Restore the dedicated test notebook');}
  await api.auth.signOut();
 }
+
