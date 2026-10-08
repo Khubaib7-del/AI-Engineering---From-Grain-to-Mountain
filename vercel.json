@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci --prefix learning-companion",
+  "buildCommand": "npm run build:web --prefix learning-companion",
+  "outputDirectory": "learning-companion/dist",
+  "cleanUrls": true,
+  "rewrites": [{ "source": "/:path*", "destination": "/" }]
+}

@@ -1,0 +1,13 @@
+.git
+App Designer
+templates
+*.md
+data
+learning-companion/android
+learning-companion/ios
+learning-companion/node_modules
+learning-companion/design
+learning-companion/releases
+learning-companion/tools
+learning-companion/.expo
+learning-companion/dist
