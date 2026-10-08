@@ -1,0 +1,1396 @@
+{
+  "prepared": "2026-10-07",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://cs50.harvard.edu/python/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "CS50's Introduction to Programming with Python",
+      "characters": 3144,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S002",
+      "url": "https://missing.csail.mit.edu/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "\n    \n      \n        The Missing Semester of Your CS Education\n      \n    \n  ",
+      "characters": 7574,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S003",
+      "url": "https://cs50.harvard.edu/x/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "CS50x 2026",
+      "characters": 4403,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S004",
+      "url": "https://cs50.harvard.edu/sql/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "CS50's Introduction to Databases with SQL",
+      "characters": 3345,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S005",
+      "url": "https://www.3blue1brown.com/topics/linear-algebra",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "3Blue1Brown",
+      "characters": 7401,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S006",
+      "url": "https://projects.iq.harvard.edu/stat110/home",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Statistics 110: Probability | Statistics 110: Probability",
+      "characters": 1357,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S007",
+      "url": "https://www.statlearning.com/online-courses",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Online Courses — An Introduction to Statistical Learning",
+      "characters": 2269,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S008",
+      "url": "https://course.fast.ai/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Practical Deep Learning for Coders - Practical Deep Learning",
+      "characters": 15661,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S009",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter1/1",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Introduction · Hugging Face",
+      "characters": 18361,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S010",
+      "url": "https://fullstackdeeplearning.com/llm-bootcamp/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "LLM Bootcamp - The Full Stack",
+      "characters": 5384,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S011",
+      "url": "https://github.com/langchain-ai/rag-from-scratch",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "GitHub - langchain-ai/rag-from-scratch · GitHub",
+      "characters": 8139,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S012",
+      "url": "https://huggingface.co/learn/agents-course/en/unit0/introduction",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Welcome to the 🤗 AI Agents Course · Hugging Face",
+      "characters": 9907,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S013",
+      "url": "https://academy.langchain.com/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "LangChain Academy",
+      "characters": 4329,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S014",
+      "url": "https://cs336.stanford.edu/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Stanford CS336 | Language Modeling from Scratch",
+      "characters": 13405,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S015",
+      "url": "https://course.fast.ai/Lessons/part2.html",
+      "retrieved": "2026-10-07",
+      "statusCode": null,
+      "title": null,
+      "characters": 0,
+      "reviewStatus": "linked-reference-not-directly-scraped",
+      "notes": ""
+    },
+    {
+      "id": "S016",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "GitHub - DataTalksClub/mlops-zoomcamp: Free MLOps course from DataTalks.Club. Register here 👇🏼 to get notified about the next cohort · GitHub",
+      "characters": 25429,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S017",
+      "url": "https://huggingface.co/learn/deep-rl-course/en/unit0/introduction",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Welcome to the 🤗 Deep Reinforcement Learning Course · Hugging Face",
+      "characters": 9503,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S018",
+      "url": "https://allendowney.github.io/ThinkPython/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Think Python — Think Python",
+      "characters": 6592,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S019",
+      "url": "https://wesmckinney.com/book/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Python for Data Analysis, 3E",
+      "characters": 2595,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S020",
+      "url": "https://mml-book.github.io/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Mathematics for Machine Learning | Companion webpage to the book “Mathematics for Machine Learning”. Copyright 2020 by Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong. Published by Cambridge University Press.",
+      "characters": 5662,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S021",
+      "url": "https://www.statlearning.com/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "An Introduction to Statistical Learning",
+      "characters": 5132,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S022",
+      "url": "https://d2l.ai/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Dive into Deep Learning — Dive into Deep Learning 1.0.3 documentation",
+      "characters": 41457,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S023",
+      "url": "https://www.deeplearningbook.org/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Deep Learning",
+      "characters": 5206,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S024",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Speech and Language Processing",
+      "characters": 8846,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S025",
+      "url": "https://mlsysbook.ai/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Machine Learning Systems",
+      "characters": 5828,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S026",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/releases",
+      "retrieved": "2026-10-07",
+      "statusCode": null,
+      "title": null,
+      "characters": 0,
+      "reviewStatus": "linked-reference-not-directly-scraped",
+      "notes": "Book offering verified in repository README; individual release assets not tested"
+    },
+    {
+      "id": "S027",
+      "url": "https://madewithml.com/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Home - Made With ML by Anyscale",
+      "characters": 13103,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S028",
+      "url": "https://web.stanford.edu/~boyd/cvxbook/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Convex Optimization – Boyd and Vandenberghe",
+      "characters": 2405,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S029",
+      "url": "https://arxiv.org/abs/1412.6980",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[1412.6980] Adam: A Method for Stochastic Optimization",
+      "characters": 8040,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S030",
+      "url": "https://arxiv.org/abs/1512.03385",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[1512.03385] Deep Residual Learning for Image Recognition",
+      "characters": 7629,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S031",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[1706.03762] Attention Is All You Need",
+      "characters": 8567,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S032",
+      "url": "https://arxiv.org/abs/1810.04805",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[1810.04805] BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "characters": 7741,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S033",
+      "url": "https://arxiv.org/abs/2005.14165",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2005.14165] Language Models are Few-Shot Learners",
+      "characters": 10781,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S034",
+      "url": "https://arxiv.org/abs/2004.04906",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2004.04906] Dense Passage Retrieval for Open-Domain Question Answering",
+      "characters": 7816,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S035",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2005.11401] Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "characters": 9324,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S036",
+      "url": "https://arxiv.org/abs/2004.12832",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2004.12832] ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT",
+      "characters": 8230,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S037",
+      "url": "https://arxiv.org/abs/2212.10496",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2212.10496] Precise Zero-Shot Dense Retrieval without Relevance Labels",
+      "characters": 7153,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S038",
+      "url": "https://arxiv.org/abs/2310.11511",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2310.11511] Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "characters": 7596,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S039",
+      "url": "https://arxiv.org/abs/2401.15884",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2401.15884] Corrective Retrieval Augmented Generation",
+      "characters": 7149,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S040",
+      "url": "https://arxiv.org/abs/2404.16130",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2404.16130] From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+      "characters": 8065,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S041",
+      "url": "https://arxiv.org/abs/2210.03629",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2210.03629] ReAct: Synergizing Reasoning and Acting in Language Models",
+      "characters": 8238,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S042",
+      "url": "https://arxiv.org/abs/2302.04761",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2302.04761] Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "characters": 7154,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S043",
+      "url": "https://arxiv.org/abs/2106.09685",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2106.09685] LoRA: Low-Rank Adaptation of Large Language Models",
+      "characters": 8634,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S044",
+      "url": "https://arxiv.org/abs/2305.14314",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2305.14314] QLoRA: Efficient Finetuning of Quantized LLMs",
+      "characters": 7718,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S045",
+      "url": "https://arxiv.org/abs/2203.02155",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2203.02155] Training language models to follow instructions with human feedback",
+      "characters": 8623,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S046",
+      "url": "https://arxiv.org/abs/2305.18290",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2305.18290] Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "characters": 8222,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S047",
+      "url": "https://arxiv.org/abs/2203.15556",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2203.15556] Training Compute-Optimal Large Language Models",
+      "characters": 8544,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S048",
+      "url": "https://arxiv.org/abs/2205.14135",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2205.14135] FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "characters": 7801,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S049",
+      "url": "https://arxiv.org/abs/2309.06180",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2309.06180] Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "characters": 7663,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S050",
+      "url": "https://arxiv.org/abs/2006.11239",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[2006.11239] Denoising Diffusion Probabilistic Models",
+      "characters": 7320,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S051",
+      "url": "https://arxiv.org/abs/1803.09010",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[1803.09010] Datasheets for Datasets",
+      "characters": 8353,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S052",
+      "url": "https://arxiv.org/abs/1810.03993",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "[1810.03993] Model Cards for Model Reporting",
+      "characters": 9552,
+      "reviewStatus": "page-text-retrieved",
+      "notes": "Landing page/abstract verified; not a full experimental reproduction"
+    },
+    {
+      "id": "S053",
+      "url": "https://docs.astral.sh/uv/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "uv",
+      "characters": 7378,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S054",
+      "url": "https://docs.python.org/3/tutorial/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "The Python Tutorial — Python 3.14.8 documentation",
+      "characters": 19702,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S055",
+      "url": "https://scikit-learn.org/stable/user_guide.html",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "User Guide — scikit-learn 1.9.1 documentation",
+      "characters": 44338,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S056",
+      "url": "https://pytorch.org/tutorials/beginner/basics/intro.html",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Learn the Basics — PyTorch Tutorials 2.14.0+cu130 documentation",
+      "characters": 6982,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S057",
+      "url": "https://github.com/pgvector/pgvector",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "GitHub - pgvector/pgvector: Open-source vector similarity search for Postgres · GitHub",
+      "characters": 60493,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S058",
+      "url": "https://qdrant.tech/documentation/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Documentation - Qdrant",
+      "characters": 2775,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S059",
+      "url": "https://docs.llamaindex.ai/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "LlamaIndex Framework, by the makers of LlamaParse | Developer Documentation",
+      "characters": 11010,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S060",
+      "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "LangGraph overview - Docs by LangChain",
+      "characters": 8584,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S061",
+      "url": "https://dspy.ai/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Overview - DSPy",
+      "characters": 8143,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S062",
+      "url": "https://modelcontextprotocol.io/docs/getting-started/intro",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "What is the Model Context Protocol (MCP)? - Model Context Protocol",
+      "characters": 4110,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S063",
+      "url": "https://docs.ragas.io/en/stable/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Ragas",
+      "characters": 4359,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S064",
+      "url": "https://docs.vllm.ai/en/latest/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "vLLM",
+      "characters": 8292,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S065",
+      "url": "https://fastapi.tiangolo.com/tutorial/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Tutorial - User Guide - FastAPI",
+      "characters": 8534,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S066",
+      "url": "https://mlflow.org/docs/latest/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "MLflow Documentation | MLflow AI Platform",
+      "characters": 2576,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S067",
+      "url": "https://huggingface.co/docs/smolagents/en/index",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "smolagents · Hugging Face",
+      "characters": 7130,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S068",
+      "url": "https://docs.expo.dev/versions/latest/sdk/notifications/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Notifications - Expo documentation",
+      "characters": 106645,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S069",
+      "url": "https://github.com/hassanhashmi16/AI-ML-Course",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "GitHub - hassanhashmi16/AI-ML-Course · GitHub",
+      "characters": 8389,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S070",
+      "url": "https://raw.githubusercontent.com/hassanhashmi16/AI-ML-Course/main/AI_Engineer_StepByStep.html",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "AI Engineer + ML Engineer — Course Outline",
+      "characters": 99775,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S071",
+      "url": "https://github.com/hassanhashmi16/AI-ML-Course/tree/main/Phase%200",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "AI-ML-Course/Phase 0 at main · hassanhashmi16/AI-ML-Course · GitHub",
+      "characters": 5506,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S072",
+      "url": "https://github.com/hassanhashmi16/AI-ML-Course/tree/main/Phase%201(AI)",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "AI-ML-Course/Phase 1(AI) at main · hassanhashmi16/AI-ML-Course · GitHub",
+      "characters": 12810,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S073",
+      "url": "https://raw.githubusercontent.com/hassanhashmi16/AI-ML-Course/main/Phase%200/Step11-Generators-Decorators-ContextManagers.md",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": null,
+      "characters": 25509,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S074",
+      "url": "https://raw.githubusercontent.com/hassanhashmi16/AI-ML-Course/main/Phase%201(AI)/STEP%2022/Step22-Chunking-Strategies.md",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": null,
+      "characters": 37177,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S075",
+      "url": "https://raw.githubusercontent.com/hassanhashmi16/AI-ML-Course/main/Phase%201(AI)/STEP%2026/Step26-Retrieval-Quality.md",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": null,
+      "characters": 17045,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S076",
+      "url": "https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/README.md",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": null,
+      "characters": 109145,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S077",
+      "url": "https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/phases/00-setup-and-tooling/01-dev-environment/docs/en.md",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": null,
+      "characters": 7240,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S078",
+      "url": "https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/phases/01-math-foundations/01-linear-algebra-intuition/docs/en.md",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": null,
+      "characters": 16461,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S079",
+      "url": "https://roadmap.sh/ai-engineer",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "AI Engineer Roadmap",
+      "characters": 14368,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S080",
+      "url": "https://roadmap.sh/ai-data-scientist",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "AI and Data Scientist Roadmap",
+      "characters": 17098,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S081",
+      "url": "https://cs50.harvard.edu/python/weeks/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Weeks - CS50's Introduction to Programming with Python",
+      "characters": 943,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S082",
+      "url": "https://www.3blue1brown.com/topics/calculus",
+      "retrieved": "2026-10-07",
+      "statusCode": null,
+      "title": null,
+      "characters": 0,
+      "reviewStatus": "scrape-failed-or-empty",
+      "notes": "Search fallback located official Essence of Calculus intro; topic scrape failed"
+    },
+    {
+      "id": "S083",
+      "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/",
+      "retrieved": "2026-10-07",
+      "statusCode": null,
+      "title": null,
+      "characters": 0,
+      "reviewStatus": "scrape-failed-or-empty",
+      "notes": "Search fallback confirmed official video page; direct course scrape failed"
+    },
+    {
+      "id": "S084",
+      "url": "https://developers.google.com/machine-learning/crash-course",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Machine Learning  |  Google for Developers",
+      "characters": 9146,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S085",
+      "url": "https://stanford-cs336.github.io/spring2025/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Stanford CS336 | Language Modeling from Scratch (2025)",
+      "characters": 14134,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S086",
+      "url": "https://docs.haystack.deepset.ai/docs/intro",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Introduction to Haystack | Haystack Documentation",
+      "characters": 3569,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S087",
+      "url": "https://docs.crewai.com/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "CrewAI Documentation - CrewAI",
+      "characters": 3822,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S088",
+      "url": "https://ai.pydantic.dev/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Pydantic AI | Pydantic Docs",
+      "characters": 35037,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S089",
+      "url": "https://github.com/HKUDS/LightRAG",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "GitHub - HKUDS/LightRAG: [EMNLP2025] LightRAG: Simple and Fast Retrieval-Augmented Generation · GitHub",
+      "characters": 116020,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S090",
+      "url": "https://developer.android.com/develop/ui/views/notifications/notification-permission",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Notification runtime permission  |  Jetpack Compose  |  Android Developers",
+      "characters": 22734,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S091",
+      "url": "https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Getting started with WorkManager  |  Background work  |  Android Developers",
+      "characters": 14007,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S092",
+      "url": "https://docs.expo.dev/versions/latest/sdk/sqlite/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "SQLite - Expo documentation",
+      "characters": 85611,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S093",
+      "url": "https://openai.com/careers/research-engineer-san-francisco/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Research Engineer | OpenAI",
+      "characters": 6233,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S094",
+      "url": "https://openai.com/careers/software-engineer-model-inference-san-francisco/",
+      "retrieved": "2026-10-07",
+      "statusCode": 200,
+      "title": "Software Engineer, Model Inference | OpenAI",
+      "characters": 7480,
+      "reviewStatus": "page-text-retrieved",
+      "notes": ""
+    },
+    {
+      "id": "S095",
+      "url": "https://incompleteideas.net/book/the-book-2nd.html",
+      "retrieved": "2026-10-07",
+      "statusCode": 404,
+      "title": "Site not found · DreamHost",
+      "characters": 300,
+      "reviewStatus": "not-found",
+      "notes": ""
+    },
+    {
+      "id": "S096",
+      "url": "https://github.com/crewAIInc/crewAI",
+      "retrieved": "2026-10-07",
+      "title": "CrewAI",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S097",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "retrieved": "2026-10-07",
+      "title": "LangGraph",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S098",
+      "url": "https://github.com/agno-agi/agno",
+      "retrieved": "2026-10-07",
+      "title": "Agno",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S099",
+      "url": "https://github.com/openai/openai-agents-python",
+      "retrieved": "2026-10-07",
+      "title": "OpenAI Agents SDK",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S100",
+      "url": "https://github.com/huggingface/smolagents",
+      "retrieved": "2026-10-07",
+      "title": "smolagents",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S101",
+      "url": "https://github.com/mastra-ai/mastra",
+      "retrieved": "2026-10-07",
+      "title": "Mastra",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S102",
+      "url": "https://github.com/letta-ai/letta",
+      "retrieved": "2026-10-07",
+      "title": "Letta",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S103",
+      "url": "https://github.com/google/adk-python",
+      "retrieved": "2026-10-07",
+      "title": "Google ADK",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S104",
+      "url": "https://github.com/run-llama/llama_index",
+      "retrieved": "2026-10-07",
+      "title": "LlamaIndex",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S105",
+      "url": "https://github.com/langchain-ai/langgraph-101",
+      "retrieved": "2026-10-07",
+      "title": "1 Multi-agent ops: [LangGraph 101](https://github.com/langchain-ai/langgraph-101)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S106",
+      "url": "https://github.com/langchain-ai/open-swe",
+      "retrieved": "2026-10-07",
+      "title": "2 Coding agent: [Open SWE](https://github.com/langchain-ai/open-swe)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S107",
+      "url": "https://github.com/browser-use/browser-use",
+      "retrieved": "2026-10-07",
+      "title": "3 Browser agent: [browser-use](https://github.com/browser-use/browser-use)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S108",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "retrieved": "2026-10-07",
+      "title": "4 MCP server: [reference servers](https://github.com/modelcontextprotocol/servers)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S109",
+      "url": "https://github.com/qdrant/qdrant",
+      "retrieved": "2026-10-07",
+      "title": "5 Hybrid RAG: [Qdrant](https://github.com/qdrant/qdrant)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S110",
+      "url": "https://github.com/microsoft/graphrag",
+      "retrieved": "2026-10-07",
+      "title": "6 GraphRAG: [Microsoft GraphRAG](https://github.com/microsoft/graphrag)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S111",
+      "url": "https://github.com/docling-project/docling",
+      "retrieved": "2026-10-07",
+      "title": "7 Document ingestion: [Docling](https://github.com/docling-project/docling)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S112",
+      "url": "https://github.com/vibrantlabsai/ragas",
+      "retrieved": "2026-10-07",
+      "title": "8 Eval harness: [Ragas](https://github.com/vibrantlabsai/ragas)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S113",
+      "url": "https://github.com/langfuse/langfuse",
+      "retrieved": "2026-10-07",
+      "title": "9 Observability: [Langfuse](https://github.com/langfuse/langfuse)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S114",
+      "url": "https://github.com/NVIDIA-NeMo/Guardrails",
+      "retrieved": "2026-10-07",
+      "title": "10 Guardrails/red team: [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S115",
+      "url": "https://github.com/unslothai/unsloth",
+      "retrieved": "2026-10-07",
+      "title": "11 LoRA/QLoRA: [Unsloth](https://github.com/unslothai/unsloth)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S116",
+      "url": "https://github.com/vllm-project/vllm",
+      "retrieved": "2026-10-07",
+      "title": "12 Quantize/self-host: [vLLM](https://github.com/vllm-project/vllm)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S117",
+      "url": "https://github.com/BerriAI/litellm",
+      "retrieved": "2026-10-07",
+      "title": "13 Provider gateway: [LiteLLM](https://github.com/BerriAI/litellm)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S118",
+      "url": "https://github.com/evidentlyai/evidently",
+      "retrieved": "2026-10-07",
+      "title": "14 Drift/quality: [Evidently](https://github.com/evidentlyai/evidently)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S119",
+      "url": "https://github.com/feast-dev/feast",
+      "retrieved": "2026-10-07",
+      "title": "15 Feature store: [Feast](https://github.com/feast-dev/feast)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S120",
+      "url": "https://github.com/langchain-ai/text-to-sql-agent",
+      "retrieved": "2026-10-07",
+      "title": "16 Text-to-SQL: [LangChain example](https://github.com/langchain-ai/text-to-sql-agent)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S121",
+      "url": "https://github.com/The-PR-Agent/pr-agent",
+      "retrieved": "2026-10-07",
+      "title": "17 PR review: [PR-Agent](https://github.com/The-PR-Agent/pr-agent)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S122",
+      "url": "https://github.com/pipecat-ai/pipecat",
+      "retrieved": "2026-10-07",
+      "title": "18 Voice agent: [Pipecat](https://github.com/pipecat-ai/pipecat)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S123",
+      "url": "https://github.com/ultralytics/ultralytics",
+      "retrieved": "2026-10-07",
+      "title": "19 Visual inspection: [Ultralytics](https://github.com/ultralytics/ultralytics)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S124",
+      "url": "https://github.com/elizaOS/eliza",
+      "retrieved": "2026-10-07",
+      "title": "20 On-chain agent: [elizaOS](https://github.com/elizaOS/eliza)",
+      "reviewStatus": "official-repository-readme-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S125",
+      "url": "https://karpathy.ai/zero-to-hero.html",
+      "retrieved": "2026-10-07",
+      "title": "Andrej Karpathy · Neural Networks: Zero to Hero",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S126",
+      "url": "https://github.com/karpathy/nn-zero-to-hero",
+      "retrieved": "2026-10-07",
+      "title": "Andrej Karpathy · Build GPT from scratch",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S127",
+      "url": "https://www.freecodecamp.org/news/ultimate-beginners-python-course",
+      "retrieved": "2026-10-07",
+      "title": "freeCodeCamp / Dave Gray · Python for Beginners",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S128",
+      "url": "https://github.com/CodeWithHarry/The-Ultimate-Python-Course",
+      "retrieved": "2026-10-07",
+      "title": "CodeWithHarry · The Ultimate Python Course",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S129",
+      "url": "https://www.learnpytorch.io/",
+      "retrieved": "2026-10-07",
+      "title": "Daniel Bourke · Learn PyTorch for Deep Learning",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S130",
+      "url": "https://www.youtube.com/watch?v=rV3HJ4LEZ7k",
+      "retrieved": "2026-10-07",
+      "title": "Krish Naik · Complete Agentic AI long-form course",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S131",
+      "url": "https://introtodeeplearning.com/",
+      "retrieved": "2026-10-07",
+      "title": "MIT 6.S191 · Introduction to Deep Learning",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S132",
+      "url": "https://cs229.stanford.edu/",
+      "retrieved": "2026-10-07",
+      "title": "Stanford CS229 · Machine Learning lectures and notes",
+      "reviewStatus": "official-creator-page-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S133",
+      "url": "https://www.khanacademy.org/math/statistics-probability",
+      "retrieved": "2026-10-07",
+      "title": "Khan Academy · Statistics and probability bridge",
+      "reviewStatus": "page-text-unavailable",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S134",
+      "url": "https://arxiv.org/abs/2303.11366",
+      "retrieved": "2026-10-07",
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "reviewStatus": "landing-page-and-abstract-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S135",
+      "url": "https://arxiv.org/abs/2304.03442",
+      "retrieved": "2026-10-07",
+      "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+      "reviewStatus": "landing-page-and-abstract-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S136",
+      "url": "https://arxiv.org/abs/2308.08155",
+      "retrieved": "2026-10-07",
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "reviewStatus": "landing-page-and-abstract-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S137",
+      "url": "https://arxiv.org/abs/2412.15605",
+      "retrieved": "2026-10-07",
+      "title": "Don't Do RAG: When Cache-Augmented Generation is All You Need for Knowledge Tasks",
+      "reviewStatus": "landing-page-and-abstract-reviewed",
+      "notes": "Saved-material expansion: README/abstract/creator-page review; no full video or code-execution audit."
+    },
+    {
+      "id": "S138",
+      "url": "https://statquest.org/video_index.html",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S139",
+      "url": "https://web.stanford.edu/class/cs224n/",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S140",
+      "url": "https://fullstackdeeplearning.com/course/2022/",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S141",
+      "url": "https://github.com/DataTalksClub/llm-zoomcamp",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S142",
+      "url": "https://rdi.berkeley.edu/llm-agents/f24",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S143",
+      "url": "https://qdrant.tech/course/essentials/",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S144",
+      "url": "https://dlsyscourse.org/",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S145",
+      "url": "https://huggingface.co/learn/mcp-course/en/unit0/introduction",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S146",
+      "url": "https://haystack.deepset.ai/tutorials",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S147",
+      "url": "https://developers.llamaindex.ai/python/framework/understanding/rag/",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S148",
+      "url": "https://github.com/PrimeIntellect-ai/prime-agent",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S149",
+      "url": "https://arxiv.org/abs/2608.23552",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S150",
+      "url": "https://arxiv.org/abs/2605.09998",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S151",
+      "url": "https://github.com/deepseek-ai/deepseek-harness",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    },
+    {
+      "id": "S152",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md",
+      "retrieved": "2026-10-07",
+      "reviewStatus": "primary-page-reviewed",
+      "notes": "Depth expansion: metadata/syllabus/README/architecture/abstract as applicable; no execution or full-video audit."
+    }
+  ]
+}
