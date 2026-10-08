@@ -23,3 +23,5 @@ learning-companion/dist/
 learning-companion/tools/
 **/test-backup.json
 **/android-ui.xml
+
+supabase/.temp/
