@@ -1,9 +1,10 @@
+const base = process.env.PREVIEW_URL ?? 'http://127.0.0.1:8090';
 import {chromium} from 'playwright-core';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const page=await browser.newPage({viewport:{width:1200,height:900}});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:8090/library');
+await page.goto((base + '/library'));
 const books=page.getByRole('button',{name:'Books',exact:true});await books.waitFor();
 await page.waitForTimeout(400);
 const initialSelection=await page.getByTestId('sliding-selection').first().evaluate(el=>getComputedStyle(el).transform);

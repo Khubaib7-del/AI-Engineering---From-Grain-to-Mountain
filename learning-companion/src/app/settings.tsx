@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { Linking, Platform, Switch, TextInput, View } from 'react-native';
 import { Button, inputStyle, Panel, Screen, Section, Tag, Txt, usePalette } from '../components/ui';
 import { isQuiet, validTime } from '../lib/planner';
@@ -21,6 +22,7 @@ export default function Settings() {
     } catch (e) { setMessage(String(e)); } finally { setBusy(false); }
   };
   return <Screen back action={false} title="Settings" subtitle="Make learning fit your day.">
+    <Panel><Section title="Account & sync" /><Txt>Keep your learning notebook connected across devices, or continue with a notebook stored only here.</Txt><Button title="Open account & sync" onPress={() => router.push('/account')} /><Button title="Product & downloads" secondary onPress={() => router.push('/download')} /></Panel>
     <Panel><Section title="Appearance" /><View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>{(['system', 'light', 'dark'] as const).map(t => <Tag key={t} text={t[0].toUpperCase() + t.slice(1)} active={state.settings.theme === t} onPress={() => { void update(s => ({ ...s, settings: { ...s.settings, theme: t } })); }} />)}</View></Panel>
     <Panel><Section title="Study reminders" /><View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}><Txt style={{ flex: 1 }}>{Platform.OS === 'web' ? 'Available on your phone' : 'Remind me to learn'}</Txt><Switch accessibilityLabel="Enable study reminders" disabled={Platform.OS === 'web' || busy} value={state.settings.reminders && Platform.OS !== 'web'} onValueChange={value => { if (!value) { void update(s => ({ ...s, settings: { ...s.settings, reminders: false } })); } else void saveSettings(true); }} trackColor={{ true: c.accent }} /></View><Txt size={14} color={c.muted}>Local reminders need no account. Schedule the current unfinished lesson for the next 7 days. Reopen the app weekly to refresh; no future lesson is assumed complete.</Txt>
       <Txt weight="600">Times, in your phone’s timezone</Txt><TextInput accessibilityLabel="Reminder times" value={times} onChangeText={setTimes} placeholder="09:00, 20:00" placeholderTextColor={c.muted} style={inputStyle(c)} /><Txt size={14} color={c.muted}>24-hour clock. Up to four times, separated by commas.</Txt>
@@ -31,6 +33,6 @@ export default function Settings() {
     </Panel>
     {!!message && <Txt accessibilityLiveRegion="polite" color={c.accent}>{message}</Txt>}
     <Panel><Section title="Restore a notebook" /><Txt color={c.muted}>Export from Progress first. Import replaces this device’s notebook and turns reminders off until you enable them again.</Txt><TextInput accessibilityLabel="Backup JSON" value={backup} onChangeText={setBackup} multiline placeholder="Paste your exported JSON here" placeholderTextColor={c.muted} style={[inputStyle(c), { minHeight: 120, textAlignVertical: 'top' }]} />{!importing ? <Button title="Review import" secondary disabled={!backup.trim()} onPress={() => setImporting(true)} /> : <View style={{ gap: 12 }}><Txt>Replace the current notebook with this backup?</Txt><Button title="Replace notebook" onPress={() => { void importBackup(backup).then(ok => { if (ok) { setBackup(''); setImporting(false); setMessage('Notebook restored.'); } }); }} /><Button title="Cancel import" secondary onPress={() => setImporting(false)} /></View>}</Panel>
-    <Txt size={14} color={c.muted}>AI Learning · v0.1 · Personal prototype. No sign-in, ads or analytics. Resources require internet; your notebook works offline.</Txt>
+    <Txt size={14} color={c.muted}>AI Learning · Account preview. No ads or behavioral analytics. Linked resources and account sync require internet; your saved notebook remains on this device.</Txt>
   </Screen>;
 }

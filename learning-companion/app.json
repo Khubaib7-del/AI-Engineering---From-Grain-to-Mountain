@@ -28,7 +28,8 @@
       "expo-router",
       "expo-notifications",
       "expo-font",
-      "./plugins/with-short-cmake-paths"
+      "./plugins/with-short-cmake-paths",
+      "expo-secure-store"
     ],
     "scheme": "ai-learning"
   }

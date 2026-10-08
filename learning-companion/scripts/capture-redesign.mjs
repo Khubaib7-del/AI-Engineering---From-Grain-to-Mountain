@@ -1,3 +1,4 @@
+const base = process.env.PREVIEW_URL ?? 'http://127.0.0.1:8090';
 import {chromium} from 'playwright-core';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
@@ -8,11 +9,11 @@ fs.mkdirSync('design/shots/redesign',{recursive:true});
 for(const size of [{name:'desktop',width:1440,height:1080},{name:'mobile',width:390,height:844}]) {
   await page.setViewportSize(size);
   for(const theme of ['light','dark']) {
-    await page.goto('http://127.0.0.1:8090/settings');
+    await page.goto((base + '/settings'));
     await page.getByRole('button',{name:theme==='light'?'Light':'Dark',exact:true}).click();
     await page.waitForFunction(theme=>JSON.parse(localStorage.getItem('ai-learning-v1')).settings.theme===theme,theme);
-    for(const [name,route] of [['today','/'],['path','/path'],['library','/library'],['progress','/progress'],['lesson','/session/D001'],['module','/module/M00'],['settings','/settings']]) {
-      await page.goto('http://127.0.0.1:8090'+route);
+    for(const [name,route] of [['today','/today'],['path','/path'],['library','/library'],['progress','/progress'],['lesson','/session/D001'],['module','/module/M00'],['settings','/settings']]) {
+      await page.goto((base + '')+route);
       await page.getByRole('heading').first().waitFor();
       await page.evaluate(()=>document.fonts.ready);
       await page.waitForTimeout(400); // Allow the deliberate entry transition to settle before layout capture.

@@ -2,7 +2,8 @@ import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, View, Text } from 'react-native';
+import { AuthProvider, useAuth } from '../lib/auth';
 import { LearningProvider } from '../lib/store';
 import { listenForLessons } from '../lib/notifications';
 import { usePalette, dark } from '../components/ui';
@@ -22,4 +23,5 @@ function Navigation() {
   useEffect(() => listenForLessons(id => router.push(`/session/${id}`)), []);
   return <><StatusBar style={c === dark ? 'light' : 'dark'} /><Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg } }}><Stack.Screen name="(tabs)" /><Stack.Screen name="session/[id]" /><Stack.Screen name="module/[id]" /><Stack.Screen name="settings" options={{ presentation: 'modal' }} /></Stack></>;
 }
-export default function RootLayout() { return <SafeAreaProvider><LearningProvider><Navigation /></LearningProvider></SafeAreaProvider>; }
+function AccountNotebook() { const {session,ready}=useAuth(); if(!ready)return <View style={{flex:1,backgroundColor:'#000',justifyContent:'center',alignItems:'center'}}><Text style={{color:'#fff'}}>Opening your notebook…</Text></View>; const scope=session?.user.id??'guest'; return <LearningProvider key={scope} scope={scope}><Navigation /></LearningProvider>; }
+export default function RootLayout() { return <SafeAreaProvider><AuthProvider><AccountNotebook /></AuthProvider></SafeAreaProvider>; }

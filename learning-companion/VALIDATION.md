@@ -72,3 +72,11 @@ Installation on the isolated Android 14 x86_64 emulator succeeded, but ARM trans
 A separate x86_64 release build then completed successfully (532 tasks, `releases/android-emulator-build.log`). It installed and opened Today, then cold-launched with emulator Wi-Fi and mobile data disabled. Navigating to the first lesson displayed its bundled Harvard assignment, 20-minute first step and stopping condition. Visually reviewed `design/shots/android-offline-lesson.png`; AndroidRuntime/ReactNativeJS error logs were empty after this build's launch. The emulator briefly displayed a **System UI** not responding dialog after compilation; dismissed it, then the offline restart/navigation succeeded. This is a functional smoke test, not a native performance certification.
 
 The x86_64 output in `android/app/build/outputs/apk/release/` is for the emulator only. The named ARM64 file in `releases/` retains the hash above and is the phone download. Physical ARM64-device startup, notification delivery and native iOS remain unverified.
+
+## Product website and account scaffold — 2026-10-08
+
+Added public homepage/download/privacy routes, moved Today to `/today`, and prepared Supabase auth plus account-scoped offline storage and revision-checked sync. Existing guest storage keys are preserved. The published 1.0 APK has not acquired these changes.
+
+Typecheck, lint, ten tests and web export passed (4.7 MB JS before compression). Browser checks passed desktop/mobile product/account/download/Today routes, unavailable-backend messaging, guest navigation, overflow, runtime errors, existing lesson/progress/backup flows and guided resource links. Visually inspected the desktop homepage and mobile account screen. Captures: `design/shots/product/`.
+
+These tests ran without a Supabase backend. Hosted schema/RLS, real email/signup/recovery, real cross-device sync, native secure session storage and native account navigation are unverified. Supabase OAuth is authorized but this running session requires a reload to access its tools. See `../supabase/README.md` for the exact next steps. Do not promote this as completed account support or rebuild an APK with unconfigured account settings.
