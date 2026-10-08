@@ -1,6 +1,3 @@
 import * as SecureStore from 'expo-secure-store';
-export const sessionStorage = {
-  getItem: (key: string) => SecureStore.getItemAsync(key),
-  setItem: (key: string, value: string) => SecureStore.setItemAsync(key, value),
-  removeItem: (key: string) => SecureStore.deleteItemAsync(key),
-};
+import {secureSessionStorage} from './secure-session';
+export const sessionStorage = secureSessionStorage(SecureStore);

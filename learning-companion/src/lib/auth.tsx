@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {AppState} from 'react-native';
+import {AppState, Platform} from 'react-native';
 import type {Session} from '@supabase/supabase-js';
 import {supabase} from './supabase';
 const Auth = createContext<{session:Session|null; ready:boolean; recovery:boolean; error:string; finishRecovery:()=>void}>({session:null,ready:false,recovery:false,error:'',finishRecovery:()=>{}});
@@ -12,8 +12,9 @@ export function AuthProvider({children}:{children:React.ReactNode}) {
   // A slow restoration must never replace a newer sign-in or sign-out event.
   const restoreEvent=authEvents;
   void supabase.auth.getSession().then(({data,error:e})=>{if(active&&authEvents===restoreEvent){setSession(data.session);if(e)setError(e.message);setReady(true);}}).catch(()=>{if(active&&authEvents===restoreEvent){setError('Could not restore your sign-in. Your local notebook is preserved.');setReady(true);}});
-  const app=AppState.addEventListener('change',s=>{if(s==='active')supabase?.auth.startAutoRefresh();else supabase?.auth.stopAutoRefresh();});
-  return()=>{active=false;subscription.unsubscribe();app.remove();};
+  if(Platform.OS!=='web'&&AppState.currentState==='active')supabase.auth.startAutoRefresh();
+  const app=Platform.OS!=='web'?AppState.addEventListener('change',s=>{if(s==='active')supabase?.auth.startAutoRefresh();else supabase?.auth.stopAutoRefresh();}):null;
+  return()=>{active=false;subscription.unsubscribe();app?.remove();};
  },[]);
  return <Auth.Provider value={{session,ready,recovery,error,finishRecovery:()=>setRecovery(false)}}>{children}</Auth.Provider>;
 }
