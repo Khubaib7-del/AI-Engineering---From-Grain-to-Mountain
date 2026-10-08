@@ -91,3 +91,7 @@ Configured product browser checks passed at widths 390 and 1440: account page, g
 ## Live product release — 8 October 2026
 Release 1106bca was pushed to main and automatically deployed by Vercel. Production product checks passed against https://ai-engineering-grain-to-mountain.vercel.app at 390px and 1440px: homepage, account preview, download states and guest workspace entry, no overflow or runtime exceptions. Account email flows and end-to-end sync remain unverified; the live account page discloses this. Production/preview public Supabase variables are configured.
 
+
+## Authentication follow-up — 8 October 2026
+Saved the production Supabase Site URL and exact /account redirect through the signed-in dashboard. Custom SMTP form prepared for the owner-selected Gmail sender (smtp.gmail.com, SSL port 465); credentials and Save remain a user handoff. An oversized notebook payload was rejected with zero partial rows; fixtures rolled back. Session restoration now ignores obsolete results after newer auth events and clears recovery mode on sign-out. Full email flows and real two-client sync remain pending SMTP credential setup.
+
