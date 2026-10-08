@@ -4,6 +4,8 @@ A prerequisite-led journey from your first program to advanced AI engineering, w
 
 **Platforms:** web application and Android personal preview; iOS target in source, not yet built or device-tested. See [deployment instructions](DEPLOYMENT.md).
 
+**[Open the learning app](https://ai-engineering-grain-to-mountain.vercel.app)** · **[Download the Android preview](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.0.0-preview.1)**
+
 Prepared for Khubaib on 2026-10-07. Start from zero, learn the fundamentals in order, build and evaluate useful systems, then develop one deep specialty.
 
 This workspace contains 21 modules, 740 core concept checkpoints, 17 primary course selections, 12 free book/reference sources, 28 research papers, 32 tool categories with 174 illustrative entries, portfolio assessments and a first-month plan. Eight optional depth units add 58 checkpoints; 20 saved project ideas are reviewed with prerequisites and evaluations. A working [cross-platform learning app](learning-companion/README.md) bundles the core curriculum, paper catalog and 30 supplementary video/learning resources. Counts describe scope, not completed personal learning; the depth units are documented separately from the app's existing 740 progress IDs.

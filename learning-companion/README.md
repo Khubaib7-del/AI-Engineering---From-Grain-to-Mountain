@@ -23,7 +23,7 @@ Use the QR from Expo on a compatible phone or run a development build. Native fe
 
 The additional eight depth units and 58 checkpoints are documented in [the parent coverage audit](../15-coverage-audit-and-learning-extensions.md). They are not yet individual tracked app lessons; existing topic IDs and personal progress remain stable. This pass updates Library content, not the UI design.
 
-`npm run sync-content` copies the seven source JSON files in the parent `data` folder into `src/content`. The complete path is 21 modules and 740 concepts. Only the first 28 daily sessions are authored; after that, continue through modules and assessments. Hours are planning estimates, not a deadline. Checking a concept means studied; self-assessment means you confirmed the exercise. Neither is an independently graded qualification.
+`npm run sync-content` copies the eight source JSON files in the parent `data` folder into `src/content`. The complete path is 21 modules and 740 concepts. Only the first 28 daily sessions are authored; after that, continue through modules and assessments. Hours are planning estimates, not a deadline. Checking a concept means studied; self-assessment means you confirmed the exercise. Neither is an independently graded qualification.
 
 A lesson needs all three tasks and at least one sentence of evidence before completion. Recall intervals are 1, 3, 7 and 14 days after completion. Reviews are manually confirmed. No AI-generated mastery judgment is used.
 
