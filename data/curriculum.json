@@ -1,0 +1,1396 @@
+{
+  "schemaVersion": 1,
+  "prepared": "2026-10-07",
+  "modules": [
+    {
+      "id": "M00",
+      "title": "Computer and learning foundations",
+      "hours": 35,
+      "prerequisites": [],
+      "course": "C01",
+      "gate": "Explain a file, a process, RAM and storage; create folders, run a script and recover from a typo.",
+      "groups": [
+        {
+          "title": "Computer basics",
+          "topics": [
+            "hardware/software",
+            "CPU versus GPU",
+            "RAM versus disk",
+            "operating system",
+            "files/extensions",
+            "absolute/relative paths",
+            "working directory",
+            "process",
+            "terminal versus editor",
+            "source code versus execution"
+          ]
+        },
+        {
+          "title": "First problem solving",
+          "topics": [
+            "input/output",
+            "algorithms as instructions",
+            "pseudocode",
+            "tracing by hand",
+            "decomposition",
+            "Boolean logic",
+            "reading an error message",
+            "saving and backing up work"
+          ]
+        },
+        {
+          "title": "Math bridge",
+          "topics": [
+            "fractions/percentages",
+            "negative numbers",
+            "algebraic rearrangement",
+            "exponents/logarithms",
+            "functions and graphs",
+            "summation notation",
+            "sets and basic logic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M01",
+      "title": "Python from zero",
+      "hours": 110,
+      "prerequisites": [
+        "M00"
+      ],
+      "course": "C01",
+      "gate": "Build a study tracker CLI from an empty file; explain and change it without generated code.",
+      "groups": [
+        {
+          "title": "Values and expressions",
+          "topics": [
+            "integers/floats",
+            "strings",
+            "booleans/None",
+            "variables/binding",
+            "input/print",
+            "arithmetic/comparison",
+            "conversion",
+            "f-strings",
+            "indentation/comments"
+          ]
+        },
+        {
+          "title": "Control flow",
+          "topics": [
+            "if/elif/else",
+            "truthiness",
+            "and/or/not",
+            "short-circuiting",
+            "for over iterables",
+            "range",
+            "while",
+            "break/continue",
+            "nested loops",
+            "loop termination",
+            "enumerate/zip",
+            "list/dict/set comprehensions"
+          ]
+        },
+        {
+          "title": "Collections and memory",
+          "topics": [
+            "list/tuple/dict/set",
+            "indexing/slicing",
+            "membership",
+            "unpacking",
+            "methods",
+            "mutability/immutability",
+            "aliasing",
+            "shallow/deep copy",
+            "equality versus identity",
+            "hashability",
+            "mutable default argument trap"
+          ]
+        },
+        {
+          "title": "Functions",
+          "topics": [
+            "def/return",
+            "parameters/arguments",
+            "positional/keyword/default",
+            "args/kwargs",
+            "scope",
+            "closures",
+            "pure functions/side effects",
+            "recursion/base case",
+            "docstrings",
+            "type hints"
+          ]
+        },
+        {
+          "title": "Reliable scripts",
+          "topics": [
+            "pathlib",
+            "text/binary files",
+            "encoding/Unicode",
+            "JSON/CSV",
+            "with context manager",
+            "exceptions/try/except/finally",
+            "validation",
+            "assertions",
+            "modules/imports",
+            "main guard"
+          ]
+        },
+        {
+          "title": "Python beyond syntax",
+          "topics": [
+            "class/object/self",
+            "init",
+            "composition versus inheritance",
+            "dataclasses",
+            "iterator versus iterable",
+            "generators/yield",
+            "decorators",
+            "properties",
+            "async/await basics",
+            "standard library collections/datetime/itertools"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "title": "Engineering tools and environments",
+      "hours": 60,
+      "prerequisites": [
+        "M01"
+      ],
+      "course": "C02",
+      "gate": "Recreate a project environment, run tests and resolve a deliberate merge conflict.",
+      "groups": [
+        {
+          "title": "Dependencies",
+          "topics": [
+            "interpreter/version",
+            "pip versus uv",
+            "venv versus conda",
+            "pyproject.toml",
+            "requirements files",
+            "transitive dependencies",
+            "lockfiles",
+            "editable installs",
+            "wheels",
+            ".venv",
+            "__pycache__ versus package cache",
+            "environment activation",
+            "PATH",
+            "secrets in environment variables"
+          ]
+        },
+        {
+          "title": "Shell and Linux",
+          "topics": [
+            "PowerShell basics",
+            "bash and WSL concepts",
+            "cd/pwd/ls",
+            "quoting and pipes",
+            "exit codes",
+            "stdout/stderr",
+            "permissions",
+            "environment variables",
+            "SSH",
+            "grep/rg",
+            "curl",
+            "background processes"
+          ]
+        },
+        {
+          "title": "Git",
+          "topics": [
+            "working tree/stage/commit",
+            "branches",
+            "diff/log",
+            "remote/push/pull",
+            "merge conflicts",
+            "revert versus reset",
+            ".gitignore",
+            "README",
+            "pull requests",
+            "code review"
+          ]
+        },
+        {
+          "title": "Quality",
+          "topics": [
+            "pytest",
+            "fixtures/parametrization",
+            "unit/integration tests",
+            "mocks at network boundaries",
+            "logging",
+            "debugger/breakpoints",
+            "Ruff",
+            "type checking",
+            "profiling",
+            "dependency pinning",
+            "CI basics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "title": "CS, algorithms and backend foundations",
+      "hours": 65,
+      "prerequisites": [
+        "M02"
+      ],
+      "course": "C03",
+      "gate": "Build and test a small HTTP API with validation, pagination and an explained complexity bound.",
+      "groups": [
+        {
+          "title": "Data structures and algorithms",
+          "topics": [
+            "arrays/hash tables",
+            "stack/queue",
+            "trees/graphs",
+            "recursion",
+            "sorting",
+            "binary search",
+            "BFS/DFS",
+            "Big-O time/space",
+            "amortized intuition"
+          ]
+        },
+        {
+          "title": "Systems",
+          "topics": [
+            "process/thread",
+            "concurrency/parallelism",
+            "GIL concept",
+            "memory hierarchy",
+            "network/DNS",
+            "HTTP methods/status",
+            "TLS",
+            "JSON schemas",
+            "REST",
+            "authentication/authorization",
+            "caching",
+            "queues",
+            "retries/backoff",
+            "idempotency"
+          ]
+        },
+        {
+          "title": "Backend and UI",
+          "topics": [
+            "FastAPI routes",
+            "Pydantic validation",
+            "dependency injection",
+            "streaming/SSE",
+            "async I/O",
+            "pagination",
+            "error responses",
+            "HTML/CSS/JavaScript basics",
+            "TypeScript types",
+            "accessible loading/error/source states",
+            "Gradio prototype"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "title": "Data analysis and SQL",
+      "hours": 65,
+      "prerequisites": [
+        "M02"
+      ],
+      "course": "C04",
+      "gate": "Produce a reproducible data-quality report and relational query set on messy data.",
+      "groups": [
+        {
+          "title": "Array computing",
+          "topics": [
+            "NumPy shape/dtype",
+            "indexing",
+            "broadcasting",
+            "vectorization",
+            "reductions",
+            "random seeds",
+            "numerical precision",
+            "copy/view"
+          ]
+        },
+        {
+          "title": "Tabular data",
+          "topics": [
+            "pandas DataFrame/Series",
+            "selection",
+            "joins/groupby",
+            "missing values",
+            "duplicates",
+            "categorical values",
+            "time zones",
+            "CSV/JSON/Parquet",
+            "plotting",
+            "outliers",
+            "EDA",
+            "Polars/DuckDB awareness"
+          ]
+        },
+        {
+          "title": "SQL",
+          "topics": [
+            "SELECT/WHERE/ORDER BY",
+            "GROUP BY/HAVING",
+            "joins",
+            "primary/foreign keys",
+            "constraints",
+            "normalization",
+            "transactions",
+            "indexes",
+            "EXPLAIN",
+            "window functions",
+            "migrations",
+            "parameterized queries",
+            "SQLite then PostgreSQL"
+          ]
+        },
+        {
+          "title": "Data integrity",
+          "topics": [
+            "schema contracts",
+            "provenance",
+            "licensing/consent",
+            "splits by person/time",
+            "leakage",
+            "reproducible snapshots",
+            "labels",
+            "sampling bias"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M05",
+      "title": "Linear algebra and calculus",
+      "hours": 90,
+      "prerequisites": [
+        "M00",
+        "M01"
+      ],
+      "course": "C05",
+      "gate": "Implement linear regression and gradients; check derivatives numerically and explain every tensor shape.",
+      "groups": [
+        {
+          "title": "Linear algebra",
+          "topics": [
+            "scalars/vectors/matrices/tensors",
+            "shape conventions",
+            "dot product",
+            "cosine and normalization",
+            "norms/distances",
+            "matrix multiplication",
+            "transpose",
+            "linear transformations",
+            "span/basis/rank",
+            "orthogonality/projection",
+            "solving systems",
+            "eigenvalues/eigenvectors",
+            "SVD",
+            "PCA",
+            "positive semidefinite matrices"
+          ]
+        },
+        {
+          "title": "Calculus and optimization",
+          "topics": [
+            "limits intuition",
+            "derivative",
+            "partial derivative",
+            "chain rule",
+            "gradient/Jacobian",
+            "Hessian intuition",
+            "integrals/expectations",
+            "finite differences",
+            "gradient descent",
+            "stochastic/minibatch gradients",
+            "learning rate",
+            "convexity",
+            "constrained optimization intuition"
+          ]
+        },
+        {
+          "title": "Numerical work",
+          "topics": [
+            "floating point",
+            "overflow/underflow",
+            "stable softmax/log-sum-exp",
+            "conditioning",
+            "vectorized implementation",
+            "gradient checking"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "title": "Probability, statistics and experiments",
+      "hours": 75,
+      "prerequisites": [
+        "M05"
+      ],
+      "course": "C06",
+      "gate": "Design an A/B test and bootstrap interval; distinguish uncertainty from model confidence.",
+      "groups": [
+        {
+          "title": "Probability",
+          "topics": [
+            "sample space/events",
+            "conditional probability",
+            "independence",
+            "Bayes rule",
+            "random variables",
+            "PMF/PDF/CDF",
+            "expectation/variance/covariance",
+            "Bernoulli/binomial/Gaussian",
+            "law of large numbers",
+            "central limit theorem"
+          ]
+        },
+        {
+          "title": "Statistics",
+          "topics": [
+            "population/sample",
+            "estimation",
+            "likelihood/log-likelihood",
+            "confidence intervals",
+            "bootstrap",
+            "hypothesis tests",
+            "p-values",
+            "effect size/power",
+            "multiple comparisons",
+            "Bayesian intuition",
+            "correlation versus causation"
+          ]
+        },
+        {
+          "title": "Information and experiments",
+          "topics": [
+            "entropy",
+            "cross entropy",
+            "KL divergence",
+            "perplexity",
+            "randomized experiments",
+            "observational confounding",
+            "paired model comparisons",
+            "slice analysis",
+            "uncertainty/calibration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "title": "Classical machine learning",
+      "hours": 100,
+      "prerequisites": [
+        "M04",
+        "M05",
+        "M06"
+      ],
+      "course": "C07",
+      "gate": "Beat a simple baseline with leakage-safe evaluation and explain when the baseline should be kept.",
+      "groups": [
+        {
+          "title": "Learning problem",
+          "topics": [
+            "supervised/unsupervised/self-supervised",
+            "regression/classification/ranking",
+            "training/validation/test",
+            "objective/loss",
+            "inductive bias",
+            "overfit/underfit",
+            "bias/variance",
+            "regularization"
+          ]
+        },
+        {
+          "title": "Algorithms",
+          "topics": [
+            "linear/ridge/lasso regression",
+            "logistic regression",
+            "kNN",
+            "naive Bayes",
+            "decision trees",
+            "random forests",
+            "gradient boosting",
+            "XGBoost/LightGBM awareness",
+            "SVM",
+            "k-means",
+            "DBSCAN",
+            "PCA"
+          ]
+        },
+        {
+          "title": "Training and evaluation",
+          "topics": [
+            "scikit-learn Pipeline",
+            "scaling/imputation/encoding",
+            "cross validation",
+            "stratification/group/time splits",
+            "hyperparameter search",
+            "class imbalance",
+            "MAE/RMSE",
+            "precision/recall/F1",
+            "ROC-AUC/PR-AUC",
+            "calibration",
+            "threshold selection",
+            "error analysis",
+            "interpretability and SHAP caveats"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M08",
+      "title": "Deep learning and PyTorch",
+      "hours": 100,
+      "prerequisites": [
+        "M07"
+      ],
+      "course": "C08",
+      "gate": "Implement a small neural network and train a PyTorch equivalent with matching behavior.",
+      "groups": [
+        {
+          "title": "Neural networks",
+          "topics": [
+            "perceptron/MLP",
+            "activations",
+            "computational graph",
+            "backpropagation",
+            "autograd",
+            "initialization",
+            "SGD/momentum/Adam",
+            "weight decay",
+            "dropout",
+            "batch/layer norm",
+            "residual connections"
+          ]
+        },
+        {
+          "title": "PyTorch",
+          "topics": [
+            "tensors/device/dtype",
+            "Dataset/DataLoader",
+            "nn.Module",
+            "train/eval modes",
+            "zero_grad/backward/step",
+            "no_grad/inference_mode",
+            "checkpointing",
+            "reproducible seeds",
+            "loss functions",
+            "mixed precision",
+            "tensor shape debugging"
+          ]
+        },
+        {
+          "title": "Training diagnosis",
+          "topics": [
+            "overfit one batch",
+            "learning curves",
+            "NaN detection",
+            "gradient clipping",
+            "schedules",
+            "early stopping",
+            "batching",
+            "GPU memory",
+            "throughput profiling",
+            "ablations"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M09",
+      "title": "NLP, transformers and language models",
+      "hours": 90,
+      "prerequisites": [
+        "M08"
+      ],
+      "course": "C09",
+      "gate": "Implement tokenization and causal attention; fine-tune a small text classifier and inspect its errors.",
+      "groups": [
+        {
+          "title": "NLP",
+          "topics": [
+            "text normalization",
+            "Unicode/multilingual data",
+            "n-grams",
+            "TF-IDF/BM25",
+            "word/subword embeddings",
+            "RNN/LSTM intuition",
+            "tokenization/BPE/WordPiece",
+            "padding/truncation",
+            "attention masks"
+          ]
+        },
+        {
+          "title": "Transformers",
+          "topics": [
+            "Q/K/V",
+            "scaled dot-product attention",
+            "multihead attention",
+            "positional embeddings/RoPE",
+            "feedforward blocks",
+            "residual/layer norm",
+            "encoder/decoder/encoder-decoder",
+            "causal mask",
+            "next-token objective"
+          ]
+        },
+        {
+          "title": "Language modeling",
+          "topics": [
+            "pretraining/instruction tuning",
+            "base versus instruct",
+            "context window",
+            "KV cache",
+            "temperature/top-p/top-k",
+            "greedy/beam sampling",
+            "stop tokens",
+            "hallucinations",
+            "perplexity",
+            "HF Transformers/Datasets/Tokenizers"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "title": "LLM applications and evaluation",
+      "hours": 65,
+      "prerequisites": [
+        "M03",
+        "M09"
+      ],
+      "course": "C10",
+      "gate": "Ship a validated extraction service with a held-out evaluation set, retries and a cost report.",
+      "groups": [
+        {
+          "title": "Model interface",
+          "topics": [
+            "provider SDK",
+            "model identifier/version",
+            "messages/roles",
+            "token budgets",
+            "streaming",
+            "structured output/JSON schema",
+            "function calling",
+            "refusals",
+            "finish reasons",
+            "timeouts",
+            "rate limits",
+            "usage accounting"
+          ]
+        },
+        {
+          "title": "Prompt and context",
+          "topics": [
+            "clear task/constraints",
+            "examples",
+            "instructions versus data",
+            "context assembly",
+            "prompt templates/versioning",
+            "long-context trade-offs",
+            "caching",
+            "conversation summaries",
+            "model routing"
+          ]
+        },
+        {
+          "title": "Evaluation",
+          "topics": [
+            "task rubric",
+            "gold dataset",
+            "exact match and semantic measures",
+            "deterministic checks",
+            "human review",
+            "judge calibration/bias",
+            "pairwise/blind judging",
+            "contamination",
+            "cost/latency",
+            "regression suites",
+            "traces"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M11",
+      "title": "Search, embeddings and RAG",
+      "hours": 95,
+      "prerequisites": [
+        "M04",
+        "M10"
+      ],
+      "course": "C11",
+      "gate": "Compare lexical, dense and hybrid search; publish retrieval and answer-quality results with citations.",
+      "groups": [
+        {
+          "title": "Ingestion",
+          "topics": [
+            "HTML/PDF/OCR",
+            "tables/layout",
+            "extraction quality",
+            "normalization",
+            "document IDs",
+            "metadata/ACLs",
+            "incremental updates",
+            "checksums",
+            "provenance"
+          ]
+        },
+        {
+          "title": "Chunks",
+          "topics": [
+            "token/character/sentence splitting",
+            "recursive splitting",
+            "heading-aware splitting",
+            "semantic splitting",
+            "overlap",
+            "size tuning",
+            "tables/code chunks",
+            "parent-child chunks",
+            "neighboring-window expansion",
+            "deduplication",
+            "reconstructing context with offsets"
+          ]
+        },
+        {
+          "title": "Embeddings and indexes",
+          "topics": [
+            "embedding model selection",
+            "dimensionality",
+            "query/document asymmetry",
+            "cosine/dot/L2",
+            "normalization",
+            "batches",
+            "FAISS",
+            "exact versus ANN",
+            "HNSW/IVF/PQ",
+            "pgvector/Qdrant",
+            "index recall/latency",
+            "versioned reindexing"
+          ]
+        },
+        {
+          "title": "Retrieval",
+          "topics": [
+            "BM25",
+            "dense retrieval",
+            "hybrid/RRF",
+            "metadata filters",
+            "reranking/cross-encoders",
+            "MMR/diversity",
+            "query rewriting/decomposition",
+            "HyDE",
+            "multi-query fusion",
+            "parent retrieval",
+            "context compression",
+            "GraphRAG",
+            "multimodal retrieval"
+          ]
+        },
+        {
+          "title": "Answering and evaluation",
+          "topics": [
+            "context packing",
+            "citations/source spans",
+            "abstention",
+            "contradiction handling",
+            "recall@k/MRR/nDCG",
+            "faithfulness",
+            "answer correctness",
+            "freshness",
+            "authorization filtering",
+            "adversarial documents",
+            "component ablation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M12",
+      "title": "Agents, tools and protocols",
+      "hours": 85,
+      "prerequisites": [
+        "M10",
+        "M11"
+      ],
+      "course": "C12",
+      "gate": "Build a bounded tool agent that resumes after failure and respects explicit action permissions.",
+      "groups": [
+        {
+          "title": "Agent core",
+          "topics": [
+            "workflow versus agent",
+            "observation/action loop",
+            "tool schemas",
+            "deterministic routing",
+            "planning",
+            "ReAct",
+            "stopping criteria",
+            "max steps",
+            "budget/time limits",
+            "parallel independent tools",
+            "structured state"
+          ]
+        },
+        {
+          "title": "Reliability and context",
+          "topics": [
+            "persistent checkpoints",
+            "idempotent tools",
+            "retry policy",
+            "human review",
+            "short/long-term memory",
+            "retrieval of memory",
+            "summarization losses",
+            "prompt injection",
+            "sandboxing",
+            "permission boundaries",
+            "audit logs"
+          ]
+        },
+        {
+          "title": "Frameworks and protocols",
+          "topics": [
+            "plain Python baseline",
+            "LangGraph",
+            "LangChain",
+            "LlamaIndex workflows",
+            "smolagents",
+            "CrewAI awareness",
+            "PydanticAI awareness",
+            "MCP client/server",
+            "resources/tools/prompts",
+            "transports",
+            "authentication",
+            "protocol version pinning"
+          ]
+        },
+        {
+          "title": "Agent evaluation",
+          "topics": [
+            "task success",
+            "tool correctness",
+            "side effects",
+            "recovery tests",
+            "trajectory analysis",
+            "simulated tools",
+            "safety cases",
+            "compare agent against deterministic workflow",
+            "multi-agent costs and coordination failure"
+          ]
+        }
+      ],
+      "supplementaryResources": [
+        "C13"
+      ]
+    },
+    {
+      "id": "M13",
+      "title": "Adaptation, post-training and RL",
+      "hours": 95,
+      "prerequisites": [
+        "M09",
+        "M06"
+      ],
+      "course": "C09",
+      "gate": "Compare prompting, retrieval and LoRA on one task; evaluate before and after on held-out data.",
+      "groups": [
+        {
+          "title": "Training data",
+          "topics": [
+            "instruction/chat templates",
+            "supervised labels",
+            "dataset curation/dedup",
+            "packing",
+            "masking labels",
+            "train/eval contamination",
+            "synthetic data quality"
+          ]
+        },
+        {
+          "title": "Adaptation",
+          "topics": [
+            "full fine-tune",
+            "LoRA rank/alpha/target modules",
+            "QLoRA/4-bit storage",
+            "adapters",
+            "PEFT/TRL",
+            "learning rates",
+            "checkpoints",
+            "catastrophic forgetting",
+            "distillation",
+            "merge/evaluate"
+          ]
+        },
+        {
+          "title": "Post-training",
+          "topics": [
+            "SFT",
+            "preference datasets",
+            "reward models",
+            "RLHF concepts",
+            "DPO objective",
+            "reward hacking",
+            "verifiable rewards",
+            "GRPO awareness",
+            "safety evaluation"
+          ]
+        },
+        {
+          "title": "RL foundations",
+          "topics": [
+            "MDP/state/action/reward",
+            "return/discount",
+            "policy/value",
+            "exploration",
+            "bandits",
+            "Bellman equations",
+            "policy gradient",
+            "REINFORCE",
+            "PPO",
+            "offline RL limits"
+          ]
+        }
+      ],
+      "supplementaryResources": [
+        "C17",
+        "P15",
+        "P16",
+        "P17",
+        "P18"
+      ]
+    },
+    {
+      "id": "M14",
+      "title": "LLMs from scratch and research methods",
+      "hours": 110,
+      "prerequisites": [
+        "M13",
+        "M08"
+      ],
+      "course": "C14",
+      "gate": "Train a small decoder model and reproduce one paper result at an explicitly reduced scale.",
+      "groups": [
+        {
+          "title": "End-to-end LM",
+          "topics": [
+            "BPE tokenizer",
+            "corpus cleaning/dedup",
+            "data loader",
+            "causal Transformer",
+            "optimizer/schedule",
+            "training loop",
+            "checkpoint/resume",
+            "perplexity",
+            "sampling",
+            "scaling-law intuition"
+          ]
+        },
+        {
+          "title": "Research practice",
+          "topics": [
+            "reading abstract/method/experiments/limitations",
+            "hypothesis",
+            "baselines",
+            "ablations",
+            "seeds",
+            "uncertainty",
+            "replication versus reproduction",
+            "experiment log",
+            "negative results",
+            "peer review",
+            "technical writing"
+          ]
+        },
+        {
+          "title": "Advanced architectures",
+          "topics": [
+            "mixture of experts/routing",
+            "sparse attention",
+            "state-space model awareness",
+            "retrieval and reasoning training",
+            "architecture trade-offs",
+            "benchmark validity"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M15",
+      "title": "Vision, audio and multimodal branch",
+      "hours": 70,
+      "prerequisites": [
+        "M08",
+        "M09"
+      ],
+      "course": "C15",
+      "gate": "Build one image or speech application and evaluate it on difficult cases.",
+      "groups": [
+        {
+          "title": "Vision",
+          "topics": [
+            "image tensors",
+            "augmentation",
+            "CNNs",
+            "ResNet",
+            "transfer learning",
+            "detection/segmentation concepts",
+            "ViT",
+            "contrastive learning/CLIP"
+          ]
+        },
+        {
+          "title": "Generative media",
+          "topics": [
+            "autoencoders/VAE",
+            "GAN intuition",
+            "diffusion/noise schedule",
+            "denoising",
+            "conditioning",
+            "latent diffusion",
+            "sampling",
+            "Diffusers"
+          ]
+        },
+        {
+          "title": "Audio and multimodal",
+          "topics": [
+            "sample rate/waveform",
+            "STFT/spectrogram",
+            "ASR",
+            "TTS",
+            "diarization awareness",
+            "vision-language models",
+            "document OCR versus VLM",
+            "audio/text/image embeddings",
+            "modality-specific evaluation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M16",
+      "title": "MLOps and data pipelines",
+      "hours": 90,
+      "prerequisites": [
+        "M07",
+        "M03"
+      ],
+      "course": "C16",
+      "gate": "Rebuild, register and deploy a versioned model through CI and catch a deliberate data drift.",
+      "groups": [
+        {
+          "title": "Reproducibility",
+          "topics": [
+            "dataset/version lineage",
+            "DVC awareness",
+            "experiment tracking",
+            "MLflow",
+            "artifact/model registry",
+            "config management",
+            "seeds",
+            "train/serve skew",
+            "data contracts"
+          ]
+        },
+        {
+          "title": "Pipelines",
+          "topics": [
+            "batch/stream",
+            "ETL/ELT",
+            "orchestration",
+            "Airflow/Prefect/Dagster alternatives",
+            "feature stores",
+            "scheduling",
+            "backfills",
+            "data quality",
+            "training triggers"
+          ]
+        },
+        {
+          "title": "Delivery",
+          "topics": [
+            "Docker/images",
+            "Compose",
+            "CI/CD",
+            "model/service/data tests",
+            "staged rollout",
+            "rollback",
+            "batch/online serving",
+            "shadow/canary deployments"
+          ]
+        },
+        {
+          "title": "Monitoring",
+          "topics": [
+            "latency/availability",
+            "data/concept drift",
+            "label delay",
+            "calibration",
+            "performance by slice",
+            "alert thresholds",
+            "retraining governance",
+            "OpenTelemetry",
+            "incident review"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M17",
+      "title": "Serving, cloud and ML systems",
+      "hours": 105,
+      "prerequisites": [
+        "M08",
+        "M16"
+      ],
+      "course": "C14",
+      "gate": "Benchmark an inference service, identify its bottleneck and demonstrate rollback under load.",
+      "groups": [
+        {
+          "title": "Cloud fundamentals",
+          "topics": [
+            "one cloud first",
+            "IAM/least privilege",
+            "object storage",
+            "compute/GPU rental",
+            "networking",
+            "managed databases",
+            "secrets",
+            "budgets",
+            "infrastructure as code"
+          ]
+        },
+        {
+          "title": "Inference",
+          "topics": [
+            "quantization/precision",
+            "ONNX awareness",
+            "llama.cpp",
+            "vLLM",
+            "SGLang awareness",
+            "dynamic/continuous batching",
+            "KV cache",
+            "prefix caching",
+            "speculative decoding",
+            "TTFT/TPOT",
+            "p50/p95/p99",
+            "throughput versus latency",
+            "memory accounting"
+          ]
+        },
+        {
+          "title": "Scale",
+          "topics": [
+            "DDP",
+            "FSDP",
+            "tensor/pipeline/data parallelism",
+            "collectives",
+            "communication bottlenecks",
+            "gradient accumulation",
+            "checkpoint sharding",
+            "fault recovery",
+            "profiling",
+            "CUDA/Triton introduction"
+          ]
+        },
+        {
+          "title": "Operations",
+          "topics": [
+            "Kubernetes concepts",
+            "autoscaling",
+            "resource requests",
+            "queues/backpressure",
+            "health probes",
+            "SLOs",
+            "capacity planning",
+            "multi-tenant isolation",
+            "disaster recovery"
+          ]
+        }
+      ],
+      "supplementaryResources": [
+        "C16",
+        "B09",
+        "P20",
+        "P21"
+      ]
+    },
+    {
+      "id": "M18",
+      "title": "Safety, privacy and responsible engineering",
+      "hours": 40,
+      "prerequisites": [
+        "M10"
+      ],
+      "course": "C16",
+      "gate": "Create a threat model, a red-team test suite and a documented response to failure.",
+      "groups": [
+        {
+          "title": "Security",
+          "topics": [
+            "prompt injection",
+            "untrusted retrieval",
+            "tool output trust",
+            "authN/authZ",
+            "tenant isolation",
+            "secrets",
+            "dependency supply chain",
+            "sandbox escape awareness",
+            "data exfiltration",
+            "rate limits"
+          ]
+        },
+        {
+          "title": "Responsible ML",
+          "topics": [
+            "consent/licensing",
+            "privacy/PII",
+            "fairness/subgroups",
+            "model/data cards",
+            "accessibility",
+            "misuse limits",
+            "uncertainty",
+            "human escalation",
+            "evaluation of harms",
+            "governance"
+          ]
+        },
+        {
+          "title": "Testing defenses",
+          "topics": [
+            "adversarial corpus",
+            "denied-action tests",
+            "output validation",
+            "least privilege",
+            "safe logging",
+            "reproducible risk register",
+            "incident response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M19",
+      "title": "Additional AI domains and role branches",
+      "hours": 45,
+      "prerequisites": [
+        "M07"
+      ],
+      "course": "C07",
+      "gate": "Choose one depth branch and explain what it adds to your target role.",
+      "groups": [
+        {
+          "title": "Breadth map",
+          "topics": [
+            "time series/forecasting",
+            "recommendation/ranking",
+            "graph ML",
+            "anomaly detection",
+            "causal inference",
+            "Bayesian ML",
+            "optimization/search",
+            "symbolic reasoning",
+            "robotics/control",
+            "edge/TinyML",
+            "federated learning"
+          ]
+        },
+        {
+          "title": "Role skills",
+          "topics": [
+            "AI application engineering",
+            "ML engineering",
+            "data science/experimentation",
+            "research engineering",
+            "inference/ML systems",
+            "platform/MLOps",
+            "FDE requirements discovery",
+            "customer integration",
+            "deployment constraints"
+          ]
+        },
+        {
+          "title": "Communication",
+          "topics": [
+            "requirements interviews",
+            "product metrics",
+            "architecture decisions",
+            "technical demos",
+            "cost estimates",
+            "explaining limitations",
+            "writing reproducible case studies"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M20",
+      "title": "Portfolio, specialization and final-year project",
+      "hours": 130,
+      "prerequisites": [
+        "M11",
+        "M12",
+        "M16",
+        "M18"
+      ],
+      "course": "C11",
+      "gate": "Deliver a useful evaluated product and an independent technical report reviewed by another person.",
+      "groups": [
+        {
+          "title": "Evidence",
+          "topics": [
+            "public README",
+            "reproducible setup",
+            "dataset/model license",
+            "architecture",
+            "baseline",
+            "test/eval suite",
+            "benchmark table",
+            "failure cases",
+            "demo",
+            "user feedback",
+            "issue history"
+          ]
+        },
+        {
+          "title": "Specialization",
+          "topics": [
+            "choose applied AI OR model/research OR systems primary",
+            "identify real users",
+            "scoped research question",
+            "capstone timeline",
+            "compute budget",
+            "supervision",
+            "measurable acceptance criteria"
+          ]
+        },
+        {
+          "title": "Career preparation",
+          "topics": [
+            "Python/SQL interview exercises",
+            "ML system design",
+            "model debugging",
+            "paper discussion",
+            "distributed-systems fundamentals for systems roles",
+            "open-source contribution",
+            "technical communication"
+          ]
+        }
+      ]
+    }
+  ]
+}
