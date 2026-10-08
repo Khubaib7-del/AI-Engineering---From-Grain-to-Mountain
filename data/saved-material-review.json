@@ -1,0 +1,260 @@
+{
+  "prepared": "2026-10-07",
+  "source": "User-transcribed Instagram posts; original reels were not accessed.",
+  "frameworks": [
+    {
+      "name": "CrewAI",
+      "url": "https://github.com/crewAIInc/crewAI",
+      "purpose": "Role/task crews and controlled flows",
+      "exercise": "Python, tools, state; compare crew with a deterministic workflow",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "LangGraph",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "purpose": "Stateful graphs, persistence and recovery",
+      "exercise": "Python, state machines, async; interrupt, resume and replay a failed tool",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "Agno",
+      "url": "https://github.com/agno-agi/agno",
+      "purpose": "Agents, teams and operational platform",
+      "exercise": "Python, APIs, storage; inspect what runtime versus service layers own",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "OpenAI Agents SDK",
+      "url": "https://github.com/openai/openai-agents-python",
+      "purpose": "Lightweight orchestration, handoffs and tracing",
+      "exercise": "Python and tool contracts; trace a handoff and test its failure boundary",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "smolagents",
+      "url": "https://github.com/huggingface/smolagents",
+      "purpose": "Compact agents and code actions",
+      "exercise": "Python and sandboxing; compare code execution with typed function tools",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "Mastra",
+      "url": "https://github.com/mastra-ai/mastra",
+      "purpose": "TypeScript agents and workflows",
+      "exercise": "JavaScript/TypeScript, promises, HTTP; implement the same bounded tool task",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "Letta",
+      "url": "https://github.com/letta-ai/letta",
+      "purpose": "Stateful agents and memory",
+      "exercise": "Persistence, retrieval and privacy; test erroneous memory writes and deletion",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "Google ADK",
+      "url": "https://github.com/google/adk-python",
+      "purpose": "Agent development, evaluation and deployment",
+      "exercise": "Python and contracts; compare sequential/parallel orchestration with one agent",
+      "origin": "user-saved-list",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "name": "LlamaIndex",
+      "url": "https://github.com/run-llama/llama_index",
+      "purpose": "Data ingestion/retrieval and workflows",
+      "exercise": "M11; trace document → node → retrieval → cited answer",
+      "origin": "additional-comparison",
+      "verification": "official-repository-readme-reviewed"
+    }
+  ],
+  "projects": [
+    {
+      "id": "SP01",
+      "label": "1 Multi-agent ops: [LangGraph 101](https://github.com/langchain-ai/langgraph-101)",
+      "url": "https://github.com/langchain-ai/langgraph-101",
+      "prerequisites": "M12, X03",
+      "deliverable": "A bounded incident-triage crew using simulated tickets; compare single agent and scripted workflow, correctness and cost. Source is learning notebooks, not a finished ops product.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP02",
+      "label": "2 Coding agent: [Open SWE](https://github.com/langchain-ai/open-swe)",
+      "url": "https://github.com/langchain-ai/open-swe",
+      "prerequisites": "M03/M12/M18, X04",
+      "deliverable": "Resolve small repo issues in isolated worktrees; test success, unauthorized changes, recovery and cost. Study source; do not clone a whole hosted platform first.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP03",
+      "label": "3 Browser agent: [browser-use](https://github.com/browser-use/browser-use)",
+      "url": "https://github.com/browser-use/browser-use",
+      "prerequisites": "M03/M12/M18",
+      "deliverable": "Read-only extraction from a local test site; then gated actions. Score DOM/task outcomes, duplicate clicks and injection resistance.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP04",
+      "label": "4 MCP server: [reference servers](https://github.com/modelcontextprotocol/servers)",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "prerequisites": "M03/M12/M18, X02",
+      "deliverable": "Your own permission-aware corpus server; test schema, access denial, cancellation and reconnect. Reference implementations do not establish production suitability.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP05",
+      "label": "5 Hybrid RAG: [Qdrant](https://github.com/qdrant/qdrant)",
+      "url": "https://github.com/qdrant/qdrant",
+      "prerequisites": "M04/M11",
+      "deliverable": "A licensed niche corpus with BM25/dense/hybrid/rerank ablations; retrieval recall and supported answers. Database alone is not a RAG system.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP06",
+      "label": "6 GraphRAG: [Microsoft GraphRAG](https://github.com/microsoft/graphrag)",
+      "url": "https://github.com/microsoft/graphrag",
+      "prerequisites": "M11/M14",
+      "deliverable": "Compare local fact questions and global synthesis with ordinary RAG; measure indexing cost and graph errors.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP07",
+      "label": "7 Document ingestion: [Docling](https://github.com/docling-project/docling)",
+      "url": "https://github.com/docling-project/docling",
+      "prerequisites": "M04/M11",
+      "deliverable": "Recover tables/headings/citations from messy PDFs; annotate extraction accuracy and inspect downstream retrieval failures.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP08",
+      "label": "8 Eval harness: [Ragas](https://github.com/vibrantlabsai/ragas)",
+      "url": "https://github.com/vibrantlabsai/ragas",
+      "prerequisites": "M06/M10/M11/M12",
+      "deliverable": "Domain gold set, calibrated judges and regression gate; check false passes, judge/human agreement and contamination.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP09",
+      "label": "9 Observability: [Langfuse](https://github.com/langfuse/langfuse)",
+      "url": "https://github.com/langfuse/langfuse",
+      "prerequisites": "M10/M16",
+      "deliverable": "Traces → failure categories → alerts for one real app; test redaction, missing spans and usefulness during an incident.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP10",
+      "label": "10 Guardrails/red team: [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails)",
+      "url": "https://github.com/NVIDIA-NeMo/Guardrails",
+      "prerequisites": "M10/M12/M18",
+      "deliverable": "Threat model and adversarial corpus; report attack success AND benign false refusals. Guardrails do not replace authorization.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP11",
+      "label": "11 LoRA/QLoRA: [Unsloth](https://github.com/unslothai/unsloth)",
+      "url": "https://github.com/unslothai/unsloth",
+      "prerequisites": "M08/M09/M13",
+      "deliverable": "Compare base, prompting and adapter on held-out domain tasks; log VRAM, quality, forgetting and leakage. Check GPU/data/model licenses.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP12",
+      "label": "12 Quantize/self-host: [vLLM](https://github.com/vllm-project/vllm)",
+      "url": "https://github.com/vllm-project/vllm",
+      "prerequisites": "M09/M17",
+      "deliverable": "Benchmark supported quantization/runtime configurations; compare quality, VRAM, throughput and p95 under load. Not every model/quantization is supported.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP13",
+      "label": "13 Provider gateway: [LiteLLM](https://github.com/BerriAI/litellm)",
+      "url": "https://github.com/BerriAI/litellm",
+      "prerequisites": "M03/M10/M17",
+      "deliverable": "Typed routing/fallback with budgets and tenant limits; inject outages and check accounting, retries and output compatibility.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP14",
+      "label": "14 Drift/quality: [Evidently](https://github.com/evidentlyai/evidently)",
+      "url": "https://github.com/evidentlyai/evidently",
+      "prerequisites": "M06/M07/M16",
+      "deliverable": "Delayed-label monitoring with slice metrics; deliberately introduce drift and measure alert precision/recall. Drift alone is not proof of poor accuracy.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP15",
+      "label": "15 Feature store: [Feast](https://github.com/feast-dev/feast)",
+      "url": "https://github.com/feast-dev/feast",
+      "prerequisites": "M04/M07/M16",
+      "deliverable": "Batch + online features with point-in-time joins; demonstrate freshness, train/serve consistency and leakage prevention. Your `/feats` URL is a typo; use `/feast`.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP16",
+      "label": "16 Text-to-SQL: [LangChain example](https://github.com/langchain-ai/text-to-sql-agent)",
+      "url": "https://github.com/langchain-ai/text-to-sql-agent",
+      "prerequisites": "M04/M11/M12/M18",
+      "deliverable": "Read-only domain database; score execution correctness and prohibited queries, schema changes and row exposure.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP17",
+      "label": "17 PR review: [PR-Agent](https://github.com/The-PR-Agent/pr-agent)",
+      "url": "https://github.com/The-PR-Agent/pr-agent",
+      "prerequisites": "M03/M10/M12/M18",
+      "deliverable": "Read-only review suggestions on a labeled bug set; measure actionable findings and false positives. Original Qodo URL redirects here; preserve that provenance.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP18",
+      "label": "18 Voice agent: [Pipecat](https://github.com/pipecat-ai/pipecat)",
+      "url": "https://github.com/pipecat-ai/pipecat",
+      "prerequisites": "M03/M12/M15/M17",
+      "deliverable": "One voice workflow with interruption/recovery; measure turn latency, task success and noisy audio. STT/TTS/API costs and audio consent matter.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP19",
+      "label": "19 Visual inspection: [Ultralytics](https://github.com/ultralytics/ultralytics)",
+      "url": "https://github.com/ultralytics/ultralytics",
+      "prerequisites": "M08/M15/M17",
+      "deliverable": "Licensed local defect dataset; use site/time-separated tests, precision/recall and device latency. Inspect AGPL/commercial terms before distribution.",
+      "verification": "official-repository-readme-reviewed"
+    },
+    {
+      "id": "SP20",
+      "label": "20 On-chain agent: [elizaOS](https://github.com/elizaOS/eliza)",
+      "url": "https://github.com/elizaOS/eliza",
+      "prerequisites": "M03/M12/M18 plus blockchain foundations",
+      "deliverable": "A testnet-only simulated policy workflow; invariant tests, key isolation and transaction gates. Highest additional-domain burden; real-money autonomy is not a beginner exercise.",
+      "verification": "official-repository-readme-reviewed"
+    }
+  ],
+  "papers": [
+    "P13",
+    "P14",
+    "P25",
+    "P26",
+    "P27"
+  ],
+  "corrections": [
+    "Heading says nine frameworks; eight supplied. LlamaIndex is an added comparison.",
+    "feast-dev/feats corrected to feast-dev/feast.",
+    "qodo-ai/pr-agent redirects to The-PR-Agent/pr-agent.",
+    "Perfect likely Prefect; Reddis means Redis; NVIDIA is an ecosystem/vendor."
+  ],
+  "unresolved": [],
+  "resolved": {
+    "MAG": "Memory Augmented Generation; user clarification, no single canonical architecture",
+    "primeAgent": "https://github.com/PrimeIntellect-ai/prime-agent",
+    "deepseekHarness": "https://github.com/deepseek-ai/deepseek-harness"
+  },
+  "limits": "README/abstract/creator-page review only; no all-video viewing, repository execution, benchmark runs or employment guarantees."
+}
