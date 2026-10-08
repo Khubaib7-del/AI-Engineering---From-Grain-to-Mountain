@@ -1,0 +1,1181 @@
+{
+  "schemaVersion": 1,
+  "startDate": null,
+  "timezone": "Asia/Karachi",
+  "days": [
+    {
+      "id": "D001",
+      "day": 1,
+      "title": "Orientation and your first program",
+      "moduleIds": [
+        "M00"
+      ],
+      "topicIds": [
+        "M00.01.05"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 90,
+      "prerequisites": [],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Open the course introduction and Functions/Variables lecture; watch until you can explain input and output."
+        },
+        {
+          "kind": "build",
+          "description": "Create learning-notes.md and hello.py; run it and record the command."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain file, editor, terminal, program and output."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "Open the course introduction and Functions/Variables lecture; watch until you can explain input and output.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Explain file, editor, terminal, program and output.",
+        "smallStep": "Spend 20 minutes on the introduction, then run print(\"Hello\") once. You can continue the rest of this lesson another day.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D002",
+      "day": 2,
+      "title": "Variables and strings",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.01.05"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D001"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Continue week 0: variables, input and string output."
+        },
+        {
+          "kind": "build",
+          "description": "Ask a name and print a formatted greeting; change the variable name."
+        },
+        {
+          "kind": "recall",
+          "description": "Predict three outputs before execution."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "Continue week 0: variables, input and string output.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Predict three outputs before execution.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D003",
+      "day": 3,
+      "title": "Numbers and conversions",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.01.07"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D002"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Study week 0 numeric examples; pause and type them."
+        },
+        {
+          "kind": "build",
+          "description": "Build a unit converter with int/float conversions."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain why input returns text."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "Study week 0 numeric examples; pause and type them.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Explain why input returns text.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D004",
+      "day": 4,
+      "title": "Functions and return values",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D003"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Study the functions part of week 0; pair with Think Python’s functions chapter."
+        },
+        {
+          "kind": "build",
+          "description": "Write a reusable conversion function with parameters and a return value."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain print versus return."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "Study the functions part of week 0; pair with Think Python’s functions chapter.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Explain print versus return.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D005",
+      "day": 5,
+      "title": "Strings and formatting",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.01.08"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D004"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Revisit week 0 examples on string operations and formatting."
+        },
+        {
+          "kind": "build",
+          "description": "Normalize a name and format a report; handle spaces deliberately."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain what changes and what remains a string."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "Revisit week 0 examples on string operations and formatting.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Explain what changes and what remains a string.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D006",
+      "day": 6,
+      "title": "Week 0 practice",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.01.09"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D005"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Review only the parts needed for the official week 0 problem set."
+        },
+        {
+          "kind": "build",
+          "description": "Attempt selected official problems without copying solutions."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain your solution and one failed attempt."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "Review only the parts needed for the official week 0 problem set.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Explain your solution and one failed attempt.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D007",
+      "day": 7,
+      "title": "Review and buffer",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/0/",
+      "estimatedMinutes": 20,
+      "prerequisites": [
+        "D006"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "No new lecture; revisit one confusing section."
+        },
+        {
+          "kind": "build",
+          "description": "Finish or simplify yesterday’s exercise; optional rest after 20 minutes."
+        },
+        {
+          "kind": "recall",
+          "description": "Recall variables, functions and conversion without notes."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 0: Functions and variables",
+        "assignment": "No new lecture; revisit one confusing section.",
+        "readingTitle": "CS50P Week 0 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/0/",
+        "stopWhen": "Recall variables, functions and conversion without notes.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D008",
+      "day": 8,
+      "title": "Comparison and booleans",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.02"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D007"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Begin week 1 Conditionals lecture: comparisons and Boolean results."
+        },
+        {
+          "kind": "build",
+          "description": "Predict and run comparisons of numbers and strings."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain equality versus assignment."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "Begin week 1 Conditionals lecture: comparisons and Boolean results.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "Explain equality versus assignment.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D009",
+      "day": 9,
+      "title": "if, elif and else",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D008"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Continue week 1 branching examples."
+        },
+        {
+          "kind": "build",
+          "description": "Build a grade/classification function including boundary values."
+        },
+        {
+          "kind": "recall",
+          "description": "Trace exactly one selected branch."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "Continue week 1 branching examples.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "Trace exactly one selected branch.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D010",
+      "day": 10,
+      "title": "Logical conditions",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.03"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D009"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Study week 1 examples using and/or."
+        },
+        {
+          "kind": "build",
+          "description": "Write range checks and test inside/outside/boundary cases."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain short-circuiting in a simple case."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "Study week 1 examples using and/or.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "Explain short-circuiting in a simple case.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D011",
+      "day": 11,
+      "title": "Validation and decisions",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D010"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Revisit week 1 problem-set instructions."
+        },
+        {
+          "kind": "build",
+          "description": "Build a decision table and implement it with functions."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain why an ambiguous requirement needs a written rule."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "Revisit week 1 problem-set instructions.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "Explain why an ambiguous requirement needs a written rule.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D012",
+      "day": 12,
+      "title": "Week 1 practice",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D011"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Use lecture/shorts only when stuck on a concept."
+        },
+        {
+          "kind": "build",
+          "description": "Attempt selected official conditionals problems."
+        },
+        {
+          "kind": "recall",
+          "description": "List tests that distinguish correct from almost-correct."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "Use lecture/shorts only when stuck on a concept.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "List tests that distinguish correct from almost-correct.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D013",
+      "day": 13,
+      "title": "Independent conditional mini-project",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.08"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D012"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Read your notes, then close them."
+        },
+        {
+          "kind": "build",
+          "description": "Build a simple study-session recommender from available minutes and energy."
+        },
+        {
+          "kind": "recall",
+          "description": "Change a rule independently and show the new cases."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "Read your notes, then close them.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "Change a rule independently and show the new cases.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D014",
+      "day": 14,
+      "title": "Review and buffer",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/1/",
+      "estimatedMinutes": 20,
+      "prerequisites": [
+        "D013"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "No new lecture."
+        },
+        {
+          "kind": "build",
+          "description": "Repair one bug or take a rest; write a brief weekly review."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain conditions and function behavior aloud."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 1: Conditionals",
+        "assignment": "No new lecture.",
+        "readingTitle": "CS50P Week 1 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/1/",
+        "stopWhen": "Explain conditions and function behavior aloud.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D015",
+      "day": 15,
+      "title": "while loops",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.07"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D014"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Begin week 2 Loops: repeat-until examples."
+        },
+        {
+          "kind": "build",
+          "description": "Repeat a prompt safely and explain how the loop ends."
+        },
+        {
+          "kind": "recall",
+          "description": "Trace the loop variable after each iteration."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "Begin week 2 Loops: repeat-until examples.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Trace the loop variable after each iteration.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D016",
+      "day": 16,
+      "title": "for and range",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.05"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D015"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Continue week 2 for/range examples."
+        },
+        {
+          "kind": "build",
+          "description": "Generate a small study schedule with a for loop."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain iterable versus loop counter informally."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "Continue week 2 for/range examples.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Explain iterable versus loop counter informally.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D017",
+      "day": 17,
+      "title": "Lists and indexing",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.03.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D016"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Study the lists examples in week 2; pair with Think Python Lists."
+        },
+        {
+          "kind": "build",
+          "description": "Store tasks in a list, index and update them."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain mutation and an out-of-range error."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "Study the lists examples in week 2; pair with Think Python Lists.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Explain mutation and an out-of-range error.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D018",
+      "day": 18,
+      "title": "Dictionaries",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.03.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D017"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Study week 2 dictionary examples; pair with Think Python Dictionaries."
+        },
+        {
+          "kind": "build",
+          "description": "Represent a task with title, minutes and completion fields."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain key lookup versus list indexing."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "Study week 2 dictionary examples; pair with Think Python Dictionaries.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Explain key lookup versus list indexing.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D019",
+      "day": 19,
+      "title": "Iteration patterns",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.10"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D018"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Revisit loop patterns; use Python reference for enumerate/zip if needed."
+        },
+        {
+          "kind": "build",
+          "description": "List numbered tasks; iterate over dictionary items."
+        },
+        {
+          "kind": "recall",
+          "description": "Predict outputs of one nested loop."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "Revisit loop patterns; use Python reference for enumerate/zip if needed.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Predict outputs of one nested loop.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D020",
+      "day": 20,
+      "title": "Week 2 practice",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.02.09"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D019"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Read selected official week 2 problem-set instructions."
+        },
+        {
+          "kind": "build",
+          "description": "Attempt exercises; keep a mistake log."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain why a loop terminates and its edge cases."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "Read selected official week 2 problem-set instructions.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Explain why a loop terminates and its edge cases.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D021",
+      "day": 21,
+      "title": "Review and buffer",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.03.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/2/",
+      "estimatedMinutes": 20,
+      "prerequisites": [
+        "D020"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "No new lecture."
+        },
+        {
+          "kind": "build",
+          "description": "Rebuild one loop exercise from an empty file or rest."
+        },
+        {
+          "kind": "recall",
+          "description": "Recall list/dictionary differences and loop choice."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 2: Loops",
+        "assignment": "No new lecture.",
+        "readingTitle": "CS50P Week 2 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/2/",
+        "stopWhen": "Recall list/dictionary differences and loop choice.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D022",
+      "day": 22,
+      "title": "Exceptions",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.05.07"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D021"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Begin week 3 Exceptions lecture."
+        },
+        {
+          "kind": "build",
+          "description": "Handle invalid numeric input with a focused try/except."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain normal input versus exceptional failure."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "Begin week 3 Exceptions lecture.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Explain normal input versus exceptional failure.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D023",
+      "day": 23,
+      "title": "Safe input helper",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.05.08"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D022"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Continue week 3 exception-handling patterns."
+        },
+        {
+          "kind": "build",
+          "description": "Write a function that validates minutes and retries politely."
+        },
+        {
+          "kind": "recall",
+          "description": "Avoid catching unrelated errors; explain your choice."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "Continue week 3 exception-handling patterns.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Avoid catching unrelated errors; explain your choice.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D024",
+      "day": 24,
+      "title": "Program decomposition",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.07"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D023"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Review week 0 functions and week 2 collections selectively."
+        },
+        {
+          "kind": "build",
+          "description": "Draft add/list/complete functions for an in-memory tracker."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain inputs, outputs and side effects of each function."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "Review week 0 functions and week 2 collections selectively.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Explain inputs, outputs and side effects of each function.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D025",
+      "day": 25,
+      "title": "Tracker implementation",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.07"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D024"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "No new full lecture; consult only necessary reference sections."
+        },
+        {
+          "kind": "build",
+          "description": "Implement the in-memory tracker; write example test cases."
+        },
+        {
+          "kind": "recall",
+          "description": "Demonstrate invalid command and empty task list behavior."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "No new full lecture; consult only necessary reference sections.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Demonstrate invalid command and empty task list behavior.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D026",
+      "day": 26,
+      "title": "Debug and improve",
+      "moduleIds": [
+        "M02"
+      ],
+      "topicIds": [
+        "M02.04.04"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D025"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Revisit one concept identified by yesterday’s bugs."
+        },
+        {
+          "kind": "build",
+          "description": "Fix one deliberate bug; add a small feature without asking for a full solution."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain the cause of the bug and why the fix works."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "Revisit one concept identified by yesterday’s bugs.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Explain the cause of the bug and why the fix works.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D027",
+      "day": 27,
+      "title": "Month-one demonstration",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.09"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D026"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "Review notes, not a new course."
+        },
+        {
+          "kind": "build",
+          "description": "Prepare a README and a short local demonstration; clearly state that file persistence/tests come later."
+        },
+        {
+          "kind": "recall",
+          "description": "Explain every function in the tracker."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "Review notes, not a new course.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Explain every function in the tracker.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    },
+    {
+      "id": "D028",
+      "day": 28,
+      "title": "Assessment and next plan",
+      "moduleIds": [
+        "M01"
+      ],
+      "topicIds": [
+        "M01.04.01"
+      ],
+      "resourceId": "C01",
+      "resourceUrl": "https://cs50.harvard.edu/python/weeks/3/",
+      "estimatedMinutes": 90,
+      "prerequisites": [
+        "D027"
+      ],
+      "tasks": [
+        {
+          "kind": "watch_or_read",
+          "description": "No new lecture."
+        },
+        {
+          "kind": "build",
+          "description": "Rebuild a small part without assistance; identify weak topics and plan the next four weeks."
+        },
+        {
+          "kind": "recall",
+          "description": "Pass only what you can explain and alter independently."
+        }
+      ],
+      "completionEvidence": "Saved working code or review notes plus a brief explanation; completion manually confirmed.",
+      "status": "not_started",
+      "study": {
+        "title": "Harvard CS50P · Week 3: Exceptions",
+        "assignment": "No new lecture.",
+        "readingTitle": "CS50P Week 3 written notes",
+        "readingUrl": "https://cs50.harvard.edu/python/notes/3/",
+        "stopWhen": "Pass only what you can explain and alter independently.",
+        "smallStep": "Study one relevant example for 20 minutes, change it yourself, and write what you understood. Continue this same lesson next time if needed.",
+        "playlistUrl": "https://www.youtube.com/playlist?list=PLhQjrBD2T3817j24-GogXmWqO5Q5vYy0V"
+      }
+    }
+  ]
+}

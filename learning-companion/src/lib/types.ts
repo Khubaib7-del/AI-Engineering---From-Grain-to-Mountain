@@ -1,0 +1,9 @@
+export type Task = { kind: string; description: string };
+export type StudyLink = {title:string;url:string};
+export type StudyGuide = {moduleId:string;primary:StudyLink;reading:StudyLink;optional:StudyLink[];assignment:string;finish:string;access:string;checked:string};
+export type Lesson = { id: string; day: number; title: string; moduleIds: string[]; topicIds: string[]; resourceId: string; resourceUrl: string; estimatedMinutes: number; prerequisites: string[]; tasks: Task[]; completionEvidence: string; study?:{title:string;assignment:string;readingTitle:string;readingUrl:string;stopWhen:string;smallStep:string;playlistUrl:string} };
+export type Module = { id: string; title: string; hours: number; prerequisites: string[]; course: string; gate: string; groups: { title: string; topics: string[] }[] };
+export type Resource = { id: string; title: string; url: string; type: string; language?: string; notes?: string; modules?: string; video?: string };
+export type LessonWork = { tasks: boolean[]; evidence: string; completedAt?: string; reviews: string[] };
+export type Settings = { theme: 'system' | 'light' | 'dark'; reminders: boolean; times: string[]; weekdays: number[]; quietStart: string; quietEnd: string };
+export type LearningState = { version: 1; lessons: Record<string, LessonWork>; topics: Record<string, boolean>; verified: Record<string, string>; settings: Settings };
