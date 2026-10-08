@@ -1,0 +1,10 @@
+import {chromium} from 'playwright-core';
+import fs from 'node:fs';
+fs.mkdirSync('design/references',{recursive:true});
+const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1000}});
+await page.goto('https://hoplite.sh',{waitUntil:'domcontentloaded'});
+await page.waitForTimeout(4000);
+await page.screenshot({path:'design/references/hoplite-desktop.png'});
+console.log(await page.locator('body').evaluate(el=>({background:getComputedStyle(el).backgroundColor,font:getComputedStyle(el).fontFamily})));
+await browser.close();

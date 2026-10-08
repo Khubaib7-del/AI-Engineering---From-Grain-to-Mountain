@@ -1,0 +1,176 @@
+[
+  {
+    "name": "today",
+    "fails": [],
+    "warns": [],
+    "facts": {
+      "fonts": {
+        "Arial": 16
+      },
+      "sizes": [
+        32,
+        20,
+        17,
+        14,
+        12
+      ],
+      "weights": [
+        "400",
+        "600",
+        "700",
+        "800"
+      ],
+      "leftEdges": 3,
+      "accentHues": [
+        168
+      ],
+      "cards": 1
+    }
+  },
+  {
+    "name": "lesson",
+    "fails": [],
+    "warns": [
+      "Text inside the system's safe areas: \"03\" (home indicator); \"Explain file, editor, te\" (home indicator); \"›\" (home indicator)"
+    ],
+    "facts": {
+      "fonts": {
+        "Arial": 20
+      },
+      "sizes": [
+        38,
+        24,
+        17,
+        14
+      ],
+      "weights": [
+        "400",
+        "600",
+        "700",
+        "800"
+      ],
+      "leftEdges": 3,
+      "accentHues": [
+        168
+      ],
+      "cards": 1
+    }
+  },
+  {
+    "name": "path",
+    "fails": [],
+    "warns": [],
+    "facts": {
+      "fonts": {
+        "Arial": 16
+      },
+      "sizes": [
+        38,
+        20,
+        17,
+        14,
+        12
+      ],
+      "weights": [
+        "400",
+        "600",
+        "700",
+        "800"
+      ],
+      "leftEdges": 3,
+      "accentHues": [
+        168
+      ],
+      "cards": 1
+    }
+  },
+  {
+    "name": "progress",
+    "fails": [],
+    "warns": [
+      "Text inside the system's safe areas: \"Start the first lesson\" (home indicator)"
+    ],
+    "facts": {
+      "fonts": {
+        "Arial": 12
+      },
+      "sizes": [
+        48,
+        38,
+        20,
+        17,
+        14,
+        12
+      ],
+      "weights": [
+        "400",
+        "700",
+        "800"
+      ],
+      "leftEdges": 3,
+      "accentHues": [
+        168
+      ],
+      "cards": 1
+    }
+  },
+  {
+    "name": "today-dark",
+    "fails": [],
+    "warns": [],
+    "facts": {
+      "fonts": {
+        "Arial": 16
+      },
+      "sizes": [
+        32,
+        20,
+        17,
+        14,
+        12
+      ],
+      "weights": [
+        "400",
+        "600",
+        "700",
+        "800"
+      ],
+      "leftEdges": 3,
+      "accentHues": [
+        168,
+        144
+      ],
+      "cards": 1
+    }
+  },
+  {
+    "name": "first-run",
+    "fails": [],
+    "warns": [
+      "Text inside the system's safe areas: \"28 starter lessons. Then\" (home indicator)"
+    ],
+    "facts": {
+      "fonts": {
+        "Arial": 11
+      },
+      "sizes": [
+        38,
+        20,
+        17,
+        15,
+        14,
+        12
+      ],
+      "weights": [
+        "400",
+        "700",
+        "800"
+      ],
+      "leftEdges": 2,
+      "accentHues": [
+        168
+      ],
+      "cards": 1
+    }
+  }
+]

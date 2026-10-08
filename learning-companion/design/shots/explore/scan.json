@@ -1,0 +1,87 @@
+[
+  {
+    "name": "field-guide",
+    "fails": [],
+    "warns": [],
+    "facts": {
+      "fonts": {
+        "Arial": 3,
+        "Georgia": 3
+      },
+      "sizes": [
+        46,
+        29,
+        17,
+        15,
+        14,
+        13
+      ],
+      "weights": [
+        "400",
+        "500",
+        "600",
+        "700"
+      ],
+      "leftEdges": 1,
+      "accentHues": [],
+      "cards": 0
+    }
+  },
+  {
+    "name": "observatory",
+    "fails": [],
+    "warns": [],
+    "facts": {
+      "fonts": {
+        "Arial": 6
+      },
+      "sizes": [
+        48,
+        46,
+        17,
+        15,
+        14,
+        13
+      ],
+      "weights": [
+        "400",
+        "500",
+        "600",
+        "700"
+      ],
+      "leftEdges": 1,
+      "accentHues": [],
+      "cards": 0
+    }
+  },
+  {
+    "name": "workbench",
+    "fails": [],
+    "warns": [],
+    "facts": {
+      "fonts": {
+        "Arial": 3,
+        "Arial Rounded MT Bold": 5
+      },
+      "sizes": [
+        46,
+        30,
+        17,
+        15,
+        14,
+        13
+      ],
+      "weights": [
+        "400",
+        "500",
+        "600",
+        "700"
+      ],
+      "leftEdges": 1,
+      "accentHues": [
+        168
+      ],
+      "cards": 0
+    }
+  }
+]
