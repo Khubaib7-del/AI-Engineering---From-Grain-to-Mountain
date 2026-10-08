@@ -1,0 +1,1491 @@
+{
+  "schemaVersion": 1,
+  "reviewed": "2026-10-07",
+  "scope": "Ordered drill-down of the existing curriculum; outcomes overlap the core 740 concepts and are not additive hours or completion IDs. Our educational decomposition, not repository feature claims.",
+  "domains": [
+    {
+      "id": "D01",
+      "title": "Foundations to executable programs",
+      "prerequisites": [
+        "M00",
+        "M01",
+        "M02",
+        "M03"
+      ],
+      "resources": [
+        "V10",
+        "V11"
+      ],
+      "assessment": "Explain and debug a Python CLI without generated code.",
+      "topics": [
+        {
+          "id": "D01.1",
+          "title": "Computer and environment",
+          "outcomes": [
+            {
+              "id": "D01.1.1",
+              "title": "Files versus directories"
+            },
+            {
+              "id": "D01.1.2",
+              "title": "absolute versus relative paths"
+            },
+            {
+              "id": "D01.1.3",
+              "title": "terminal command and exit status"
+            },
+            {
+              "id": "D01.1.4",
+              "title": "process versus program"
+            },
+            {
+              "id": "D01.1.5",
+              "title": "PATH and environment variables"
+            }
+          ]
+        },
+        {
+          "id": "D01.2",
+          "title": "Python control and data",
+          "outcomes": [
+            {
+              "id": "D01.2.1",
+              "title": "Boolean expressions and conditionals"
+            },
+            {
+              "id": "D01.2.2",
+              "title": "for/range/enumerate/zip"
+            },
+            {
+              "id": "D01.2.3",
+              "title": "while and termination"
+            },
+            {
+              "id": "D01.2.4",
+              "title": "comprehensions and generators"
+            },
+            {
+              "id": "D01.2.5",
+              "title": "mutability and aliasing"
+            }
+          ]
+        },
+        {
+          "id": "D01.3",
+          "title": "Reusable programs",
+          "outcomes": [
+            {
+              "id": "D01.3.1",
+              "title": "Function arguments and return values"
+            },
+            {
+              "id": "D01.3.2",
+              "title": "scope and closures"
+            },
+            {
+              "id": "D01.3.3",
+              "title": "classes and composition"
+            },
+            {
+              "id": "D01.3.4",
+              "title": "exceptions and context managers"
+            },
+            {
+              "id": "D01.3.5",
+              "title": "modules and imports"
+            }
+          ]
+        },
+        {
+          "id": "D01.4",
+          "title": "Reproducible development",
+          "outcomes": [
+            {
+              "id": "D01.4.1",
+              "title": "Interpreter versus package manager"
+            },
+            {
+              "id": "D01.4.2",
+              "title": "pip versus uv responsibilities"
+            },
+            {
+              "id": "D01.4.3",
+              "title": "venv versus global environment"
+            },
+            {
+              "id": "D01.4.4",
+              "title": "pyproject and lockfiles"
+            },
+            {
+              "id": "D01.4.5",
+              "title": "pycache versus source files"
+            }
+          ]
+        },
+        {
+          "id": "D01.5",
+          "title": "Software foundations",
+          "outcomes": [
+            {
+              "id": "D01.5.1",
+              "title": "Git branches and diffs"
+            },
+            {
+              "id": "D01.5.2",
+              "title": "unit versus integration tests"
+            },
+            {
+              "id": "D01.5.3",
+              "title": "HTTP JSON and API errors"
+            },
+            {
+              "id": "D01.5.4",
+              "title": "SQL joins and transactions"
+            },
+            {
+              "id": "D01.5.5",
+              "title": "async concurrency versus parallelism"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "title": "Mathematics and classical ML",
+      "prerequisites": [
+        "M04",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "resources": [
+        "V18",
+        "V19",
+        "V01"
+      ],
+      "assessment": "A leakage-free tabular baseline with uncertainty and reproducible splits.",
+      "topics": [
+        {
+          "id": "D02.1",
+          "title": "Math language",
+          "outcomes": [
+            {
+              "id": "D02.1.1",
+              "title": "Vectors and matrix shapes"
+            },
+            {
+              "id": "D02.1.2",
+              "title": "dot products and projections"
+            },
+            {
+              "id": "D02.1.3",
+              "title": "derivatives and chain rule"
+            },
+            {
+              "id": "D02.1.4",
+              "title": "gradients and optimization"
+            },
+            {
+              "id": "D02.1.5",
+              "title": "numerical stability"
+            }
+          ]
+        },
+        {
+          "id": "D02.2",
+          "title": "Probability and statistics",
+          "outcomes": [
+            {
+              "id": "D02.2.1",
+              "title": "Conditional probability and Bayes"
+            },
+            {
+              "id": "D02.2.2",
+              "title": "distributions and expectation"
+            },
+            {
+              "id": "D02.2.3",
+              "title": "variance covariance and sampling"
+            },
+            {
+              "id": "D02.2.4",
+              "title": "confidence intervals and bootstrap"
+            },
+            {
+              "id": "D02.2.5",
+              "title": "hypothesis tests and multiple comparisons"
+            }
+          ]
+        },
+        {
+          "id": "D02.3",
+          "title": "Data preparation",
+          "outcomes": [
+            {
+              "id": "D02.3.1",
+              "title": "Missing values and imputation"
+            },
+            {
+              "id": "D02.3.2",
+              "title": "categorical encoding"
+            },
+            {
+              "id": "D02.3.3",
+              "title": "scaling within training folds"
+            },
+            {
+              "id": "D02.3.4",
+              "title": "imbalance and stratification"
+            },
+            {
+              "id": "D02.3.5",
+              "title": "label leakage and temporal splits"
+            }
+          ]
+        },
+        {
+          "id": "D02.4",
+          "title": "Model families",
+          "outcomes": [
+            {
+              "id": "D02.4.1",
+              "title": "Linear and logistic regression"
+            },
+            {
+              "id": "D02.4.2",
+              "title": "trees and boosted ensembles"
+            },
+            {
+              "id": "D02.4.3",
+              "title": "neighbors and kernels"
+            },
+            {
+              "id": "D02.4.4",
+              "title": "clustering and dimensionality reduction"
+            },
+            {
+              "id": "D02.4.5",
+              "title": "regularization and bias variance"
+            }
+          ]
+        },
+        {
+          "id": "D02.5",
+          "title": "Evaluation and tuning",
+          "outcomes": [
+            {
+              "id": "D02.5.1",
+              "title": "Baseline versus target metric"
+            },
+            {
+              "id": "D02.5.2",
+              "title": "precision recall and calibration"
+            },
+            {
+              "id": "D02.5.3",
+              "title": "cross-validation versus holdout"
+            },
+            {
+              "id": "D02.5.4",
+              "title": "hyperparameter search and pruning"
+            },
+            {
+              "id": "D02.5.5",
+              "title": "error analysis and subgroup performance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "title": "Deep learning and model architecture",
+      "prerequisites": [
+        "M08",
+        "M09",
+        "M13",
+        "M14"
+      ],
+      "resources": [
+        "V08",
+        "V12",
+        "V20",
+        "V27"
+      ],
+      "assessment": "Train a small transformer and explain each tensor shape and bottleneck.",
+      "topics": [
+        {
+          "id": "D03.1",
+          "title": "Tensor and autodiff",
+          "outcomes": [
+            {
+              "id": "D03.1.1",
+              "title": "Broadcasting and indexing"
+            },
+            {
+              "id": "D03.1.2",
+              "title": "computational graphs"
+            },
+            {
+              "id": "D03.1.3",
+              "title": "backward and gradient accumulation"
+            },
+            {
+              "id": "D03.1.4",
+              "title": "optimizer state"
+            },
+            {
+              "id": "D03.1.5",
+              "title": "mixed precision and loss scaling"
+            }
+          ]
+        },
+        {
+          "id": "D03.2",
+          "title": "Transformer anatomy",
+          "outcomes": [
+            {
+              "id": "D03.2.1",
+              "title": "Tokenization and vocabulary"
+            },
+            {
+              "id": "D03.2.2",
+              "title": "embeddings and positions"
+            },
+            {
+              "id": "D03.2.3",
+              "title": "causal masking and attention"
+            },
+            {
+              "id": "D03.2.4",
+              "title": "normalization and residual paths"
+            },
+            {
+              "id": "D03.2.5",
+              "title": "output head and cross entropy"
+            }
+          ]
+        },
+        {
+          "id": "D03.3",
+          "title": "Architecture branches",
+          "outcomes": [
+            {
+              "id": "D03.3.1",
+              "title": "Dense versus mixture of experts"
+            },
+            {
+              "id": "D03.3.2",
+              "title": "routing and expert capacity"
+            },
+            {
+              "id": "D03.3.3",
+              "title": "grouped query attention"
+            },
+            {
+              "id": "D03.3.4",
+              "title": "long context position methods"
+            },
+            {
+              "id": "D03.3.5",
+              "title": "multimodal encoders and fusion"
+            }
+          ]
+        },
+        {
+          "id": "D03.4",
+          "title": "Training lifecycle",
+          "outcomes": [
+            {
+              "id": "D03.4.1",
+              "title": "Data cleaning and deduplication"
+            },
+            {
+              "id": "D03.4.2",
+              "title": "pretraining versus supervised tuning"
+            },
+            {
+              "id": "D03.4.3",
+              "title": "LoRA and QLoRA"
+            },
+            {
+              "id": "D03.4.4",
+              "title": "preference optimization versus RL"
+            },
+            {
+              "id": "D03.4.5",
+              "title": "checkpoints and reproducibility"
+            }
+          ]
+        },
+        {
+          "id": "D03.5",
+          "title": "Systems internals",
+          "outcomes": [
+            {
+              "id": "D03.5.1",
+              "title": "Array layout and device transfers"
+            },
+            {
+              "id": "D03.5.2",
+              "title": "autodiff engine"
+            },
+            {
+              "id": "D03.5.3",
+              "title": "matrix multiplication tiling"
+            },
+            {
+              "id": "D03.5.4",
+              "title": "memory bandwidth versus compute"
+            },
+            {
+              "id": "D03.5.5",
+              "title": "profiling and kernel correctness"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "title": "Retrieval and vector systems",
+      "prerequisites": [
+        "M04",
+        "M09",
+        "M10",
+        "M11"
+      ],
+      "resources": [
+        "V22",
+        "V26",
+        "DR02",
+        "DR03"
+      ],
+      "assessment": "Evaluate exact, lexical, dense and hybrid retrieval on a fixed corpus.",
+      "topics": [
+        {
+          "id": "D04.1",
+          "title": "Ingestion and chunks",
+          "outcomes": [
+            {
+              "id": "D04.1.1",
+              "title": "OCR and layout extraction"
+            },
+            {
+              "id": "D04.1.2",
+              "title": "stable document IDs and provenance"
+            },
+            {
+              "id": "D04.1.3",
+              "title": "sentence heading and recursive splits"
+            },
+            {
+              "id": "D04.1.4",
+              "title": "parent child relationships"
+            },
+            {
+              "id": "D04.1.5",
+              "title": "incremental update and deletion"
+            }
+          ]
+        },
+        {
+          "id": "D04.2",
+          "title": "Embeddings and similarity",
+          "outcomes": [
+            {
+              "id": "D04.2.1",
+              "title": "Sparse versus dense representation"
+            },
+            {
+              "id": "D04.2.2",
+              "title": "cosine dot and Euclidean distance"
+            },
+            {
+              "id": "D04.2.3",
+              "title": "domain and multilingual mismatch"
+            },
+            {
+              "id": "D04.2.4",
+              "title": "batch sizing and rate limits"
+            },
+            {
+              "id": "D04.2.5",
+              "title": "embedding migration"
+            }
+          ]
+        },
+        {
+          "id": "D04.3",
+          "title": "Index mechanics",
+          "outcomes": [
+            {
+              "id": "D04.3.1",
+              "title": "Exact nearest neighbors"
+            },
+            {
+              "id": "D04.3.2",
+              "title": "HNSW construction and search effort"
+            },
+            {
+              "id": "D04.3.3",
+              "title": "IVF clusters and probes"
+            },
+            {
+              "id": "D04.3.4",
+              "title": "quantization error"
+            },
+            {
+              "id": "D04.3.5",
+              "title": "filter selectivity and ANN recall"
+            }
+          ]
+        },
+        {
+          "id": "D04.4",
+          "title": "Pipeline composition",
+          "outcomes": [
+            {
+              "id": "D04.4.1",
+              "title": "BM25 and dense baselines"
+            },
+            {
+              "id": "D04.4.2",
+              "title": "reciprocal rank fusion"
+            },
+            {
+              "id": "D04.4.3",
+              "title": "reranking and MMR"
+            },
+            {
+              "id": "D04.4.4",
+              "title": "query decomposition and routing"
+            },
+            {
+              "id": "D04.4.5",
+              "title": "context packing and citations"
+            }
+          ]
+        },
+        {
+          "id": "D04.5",
+          "title": "Variants and evaluation",
+          "outcomes": [
+            {
+              "id": "D04.5.1",
+              "title": "Graph versus hierarchical retrieval"
+            },
+            {
+              "id": "D04.5.2",
+              "title": "corrective and adaptive retrieval"
+            },
+            {
+              "id": "D04.5.3",
+              "title": "multimodal and agentic retrieval"
+            },
+            {
+              "id": "D04.5.4",
+              "title": "recall MRR nDCG and grounded answers"
+            },
+            {
+              "id": "D04.5.5",
+              "title": "unanswerable and adversarial queries"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "title": "Memory and context engineering",
+      "prerequisites": [
+        "M10",
+        "M11",
+        "M12",
+        "M18"
+      ],
+      "resources": [
+        "V23"
+      ],
+      "assessment": "A memory system with provenance, contradiction handling and verified deletion.",
+      "topics": [
+        {
+          "id": "D05.1",
+          "title": "Memory categories",
+          "outcomes": [
+            {
+              "id": "D05.1.1",
+              "title": "Working versus persistent state"
+            },
+            {
+              "id": "D05.1.2",
+              "title": "episodic event history"
+            },
+            {
+              "id": "D05.1.3",
+              "title": "semantic facts"
+            },
+            {
+              "id": "D05.1.4",
+              "title": "procedural skills"
+            },
+            {
+              "id": "D05.1.5",
+              "title": "explicit versus inferred memory"
+            }
+          ]
+        },
+        {
+          "id": "D05.2",
+          "title": "Write and retrieval policy",
+          "outcomes": [
+            {
+              "id": "D05.2.1",
+              "title": "Consent and allowed fields"
+            },
+            {
+              "id": "D05.2.2",
+              "title": "salience and extraction"
+            },
+            {
+              "id": "D05.2.3",
+              "title": "timestamps and provenance"
+            },
+            {
+              "id": "D05.2.4",
+              "title": "relevance recency and importance"
+            },
+            {
+              "id": "D05.2.5",
+              "title": "tenant scoped retrieval"
+            }
+          ]
+        },
+        {
+          "id": "D05.3",
+          "title": "Maintenance",
+          "outcomes": [
+            {
+              "id": "D05.3.1",
+              "title": "Consolidation and summaries"
+            },
+            {
+              "id": "D05.3.2",
+              "title": "contradictory facts"
+            },
+            {
+              "id": "D05.3.3",
+              "title": "TTL and forgetting"
+            },
+            {
+              "id": "D05.3.4",
+              "title": "versioning and rollback"
+            },
+            {
+              "id": "D05.3.5",
+              "title": "deletion propagated to indexes"
+            }
+          ]
+        },
+        {
+          "id": "D05.4",
+          "title": "Context strategies",
+          "outcomes": [
+            {
+              "id": "D05.4.1",
+              "title": "Truncation versus compaction"
+            },
+            {
+              "id": "D05.4.2",
+              "title": "prefix caching"
+            },
+            {
+              "id": "D05.4.3",
+              "title": "external variables and selective reads"
+            },
+            {
+              "id": "D05.4.4",
+              "title": "recursive context inspection"
+            },
+            {
+              "id": "D05.4.5",
+              "title": "token budget and stale summaries"
+            }
+          ]
+        },
+        {
+          "id": "D05.5",
+          "title": "Controlled comparison",
+          "outcomes": [
+            {
+              "id": "D05.5.1",
+              "title": "RAG evidence versus agent memory"
+            },
+            {
+              "id": "D05.5.2",
+              "title": "cached context cold versus warm"
+            },
+            {
+              "id": "D05.5.3",
+              "title": "memory enabled versus disabled"
+            },
+            {
+              "id": "D05.5.4",
+              "title": "poisoning and false remembered facts"
+            },
+            {
+              "id": "D05.5.5",
+              "title": "correctness privacy latency and cost"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D06",
+      "title": "Agent runtimes and harnesses",
+      "prerequisites": [
+        "M03",
+        "M10",
+        "M12",
+        "M18"
+      ],
+      "resources": [
+        "V23",
+        "V24",
+        "DR01"
+      ],
+      "assessment": "Trace one tool task, then reproduce its failure and recovery path.",
+      "topics": [
+        {
+          "id": "D06.1",
+          "title": "Single agent loop",
+          "outcomes": [
+            {
+              "id": "D06.1.1",
+              "title": "Task and success contract"
+            },
+            {
+              "id": "D06.1.2",
+              "title": "model call and observations"
+            },
+            {
+              "id": "D06.1.3",
+              "title": "structured tool arguments"
+            },
+            {
+              "id": "D06.1.4",
+              "title": "bounded retries and stop rules"
+            },
+            {
+              "id": "D06.1.5",
+              "title": "cancellation and human handoff"
+            }
+          ]
+        },
+        {
+          "id": "D06.2",
+          "title": "Runtime architecture",
+          "outcomes": [
+            {
+              "id": "D06.2.1",
+              "title": "Model adapter and streaming"
+            },
+            {
+              "id": "D06.2.2",
+              "title": "tool registry and validation"
+            },
+            {
+              "id": "D06.2.3",
+              "title": "append only events and replay"
+            },
+            {
+              "id": "D06.2.4",
+              "title": "dependency injection and plugins"
+            },
+            {
+              "id": "D06.2.5",
+              "title": "load unload and cleanup"
+            }
+          ]
+        },
+        {
+          "id": "D06.3",
+          "title": "Persistent execution",
+          "outcomes": [
+            {
+              "id": "D06.3.1",
+              "title": "REPL state and namespaces"
+            },
+            {
+              "id": "D06.3.2",
+              "title": "subprocess and IPC"
+            },
+            {
+              "id": "D06.3.3",
+              "title": "async jobs and polling"
+            },
+            {
+              "id": "D06.3.4",
+              "title": "crash recovery and idempotency"
+            },
+            {
+              "id": "D06.3.5",
+              "title": "isolation and resource limits"
+            }
+          ]
+        },
+        {
+          "id": "D06.4",
+          "title": "Multi agent coordination",
+          "outcomes": [
+            {
+              "id": "D06.4.1",
+              "title": "Supervisor and worker contracts"
+            },
+            {
+              "id": "D06.4.2",
+              "title": "shared versus private state"
+            },
+            {
+              "id": "D06.4.3",
+              "title": "message passing and joins"
+            },
+            {
+              "id": "D06.4.4",
+              "title": "race conditions and deadlocks"
+            },
+            {
+              "id": "D06.4.5",
+              "title": "depth cost and timeout budgets"
+            }
+          ]
+        },
+        {
+          "id": "D06.5",
+          "title": "Adaptation and skills",
+          "outcomes": [
+            {
+              "id": "D06.5.1",
+              "title": "Trajectory feedback"
+            },
+            {
+              "id": "D06.5.2",
+              "title": "executable skill packaging"
+            },
+            {
+              "id": "D06.5.3",
+              "title": "prompt memory and skill updates"
+            },
+            {
+              "id": "D06.5.4",
+              "title": "held out acceptance tests"
+            },
+            {
+              "id": "D06.5.5",
+              "title": "rollback versus model weight training"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D07",
+      "title": "Protocols and purposeful products",
+      "prerequisites": [
+        "M03",
+        "M11",
+        "M12",
+        "M18",
+        "M20"
+      ],
+      "resources": [
+        "DR01",
+        "V24"
+      ],
+      "assessment": "Deliver one permission-bounded agent that solves a measurable user task.",
+      "topics": [
+        {
+          "id": "D07.1",
+          "title": "MCP boundary",
+          "outcomes": [
+            {
+              "id": "D07.1.1",
+              "title": "Client server and transport"
+            },
+            {
+              "id": "D07.1.2",
+              "title": "tools resources and prompts"
+            },
+            {
+              "id": "D07.1.3",
+              "title": "input schemas and errors"
+            },
+            {
+              "id": "D07.1.4",
+              "title": "authentication and scopes"
+            },
+            {
+              "id": "D07.1.5",
+              "title": "untrusted server content"
+            }
+          ]
+        },
+        {
+          "id": "D07.2",
+          "title": "Other extension layers",
+          "outcomes": [
+            {
+              "id": "D07.2.1",
+              "title": "Plugin lifecycle and dependencies"
+            },
+            {
+              "id": "D07.2.2",
+              "title": "skill instructions and code"
+            },
+            {
+              "id": "D07.2.3",
+              "title": "agent to agent contracts"
+            },
+            {
+              "id": "D07.2.4",
+              "title": "protocol version compatibility"
+            },
+            {
+              "id": "D07.2.5",
+              "title": "capability discovery"
+            }
+          ]
+        },
+        {
+          "id": "D07.3",
+          "title": "Domain workflows",
+          "outcomes": [
+            {
+              "id": "D07.3.1",
+              "title": "Coding repository inspection and patching"
+            },
+            {
+              "id": "D07.3.2",
+              "title": "browser navigation and DOM actions"
+            },
+            {
+              "id": "D07.3.3",
+              "title": "research sources and citations"
+            },
+            {
+              "id": "D07.3.4",
+              "title": "SQL execution and schema constraints"
+            },
+            {
+              "id": "D07.3.5",
+              "title": "voice turn taking and interruptions"
+            }
+          ]
+        },
+        {
+          "id": "D07.4",
+          "title": "Product reliability",
+          "outcomes": [
+            {
+              "id": "D07.4.1",
+              "title": "User task and acceptance rubric"
+            },
+            {
+              "id": "D07.4.2",
+              "title": "approvals at consequential boundaries"
+            },
+            {
+              "id": "D07.4.3",
+              "title": "resumable runs and audit trails"
+            },
+            {
+              "id": "D07.4.4",
+              "title": "human correction and feedback"
+            },
+            {
+              "id": "D07.4.5",
+              "title": "accessibility and understandable status"
+            }
+          ]
+        },
+        {
+          "id": "D07.5",
+          "title": "Threat model",
+          "outcomes": [
+            {
+              "id": "D07.5.1",
+              "title": "Prompt injection across documents and tools"
+            },
+            {
+              "id": "D07.5.2",
+              "title": "secret isolation"
+            },
+            {
+              "id": "D07.5.3",
+              "title": "least privilege and sandboxing"
+            },
+            {
+              "id": "D07.5.4",
+              "title": "network and filesystem allowlists"
+            },
+            {
+              "id": "D07.5.5",
+              "title": "destructive action and data exfiltration tests"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D08",
+      "title": "Benchmarking and economics",
+      "prerequisites": [
+        "M06",
+        "M10",
+        "M12",
+        "M16",
+        "M17"
+      ],
+      "resources": [
+        "V25",
+        "V22"
+      ],
+      "assessment": "A two-model/two-harness experiment with uncertainty and cost per success.",
+      "topics": [
+        {
+          "id": "D08.1",
+          "title": "Measurement design",
+          "outcomes": [
+            {
+              "id": "D08.1.1",
+              "title": "Task family and representative sample"
+            },
+            {
+              "id": "D08.1.2",
+              "title": "frozen split and contamination checks"
+            },
+            {
+              "id": "D08.1.3",
+              "title": "baseline and ablation"
+            },
+            {
+              "id": "D08.1.4",
+              "title": "repeated trials and confidence intervals"
+            },
+            {
+              "id": "D08.1.5",
+              "title": "reproducible model and harness versions"
+            }
+          ]
+        },
+        {
+          "id": "D08.2",
+          "title": "Benchmark categories",
+          "outcomes": [
+            {
+              "id": "D08.2.1",
+              "title": "Language model task evaluation"
+            },
+            {
+              "id": "D08.2.2",
+              "title": "repository patch tests"
+            },
+            {
+              "id": "D08.2.3",
+              "title": "interactive tool and browser tasks"
+            },
+            {
+              "id": "D08.2.4",
+              "title": "retrieval and answer evaluation"
+            },
+            {
+              "id": "D08.2.5",
+              "title": "domain specific end to end success"
+            }
+          ]
+        },
+        {
+          "id": "D08.3",
+          "title": "Scoring pitfalls",
+          "outcomes": [
+            {
+              "id": "D08.3.1",
+              "title": "Pass at one versus pass at k"
+            },
+            {
+              "id": "D08.3.2",
+              "title": "invalid tests and flaky infrastructure"
+            },
+            {
+              "id": "D08.3.3",
+              "title": "judge bias and rubric calibration"
+            },
+            {
+              "id": "D08.3.4",
+              "title": "timeout and refusal accounting"
+            },
+            {
+              "id": "D08.3.5",
+              "title": "benchmark score versus customer outcomes"
+            }
+          ]
+        },
+        {
+          "id": "D08.4",
+          "title": "Cost ledger",
+          "outcomes": [
+            {
+              "id": "D08.4.1",
+              "title": "Input output and cached token categories"
+            },
+            {
+              "id": "D08.4.2",
+              "title": "every retry worker and tool call"
+            },
+            {
+              "id": "D08.4.3",
+              "title": "provider price snapshot"
+            },
+            {
+              "id": "D08.4.4",
+              "title": "compute storage and idle GPU time"
+            },
+            {
+              "id": "D08.4.5",
+              "title": "total cost divided by successful tasks"
+            }
+          ]
+        },
+        {
+          "id": "D08.5",
+          "title": "Optimization",
+          "outcomes": [
+            {
+              "id": "D08.5.1",
+              "title": "Smaller model routing"
+            },
+            {
+              "id": "D08.5.2",
+              "title": "context pruning and caching"
+            },
+            {
+              "id": "D08.5.3",
+              "title": "batching and concurrency"
+            },
+            {
+              "id": "D08.5.4",
+              "title": "bounded retries and early stop"
+            },
+            {
+              "id": "D08.5.5",
+              "title": "quality latency and spend Pareto comparison"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D09",
+      "title": "MLOps LLMOps and serving",
+      "prerequisites": [
+        "M03",
+        "M07",
+        "M08",
+        "M16",
+        "M17",
+        "M18"
+      ],
+      "resources": [
+        "V21",
+        "V22",
+        "V27"
+      ],
+      "assessment": "Deploy, observe, roll back and restore a versioned model service.",
+      "topics": [
+        {
+          "id": "D09.1",
+          "title": "Data and experiments",
+          "outcomes": [
+            {
+              "id": "D09.1.1",
+              "title": "Dataset and artifact versioning"
+            },
+            {
+              "id": "D09.1.2",
+              "title": "experiment tracking and model registry"
+            },
+            {
+              "id": "D09.1.3",
+              "title": "reproducible training pipeline"
+            },
+            {
+              "id": "D09.1.4",
+              "title": "feature store point in time joins"
+            },
+            {
+              "id": "D09.1.5",
+              "title": "lineage and data quality checks"
+            }
+          ]
+        },
+        {
+          "id": "D09.2",
+          "title": "Deployment",
+          "outcomes": [
+            {
+              "id": "D09.2.1",
+              "title": "FastAPI request contracts"
+            },
+            {
+              "id": "D09.2.2",
+              "title": "container images and configuration"
+            },
+            {
+              "id": "D09.2.3",
+              "title": "CI CD and infrastructure as code"
+            },
+            {
+              "id": "D09.2.4",
+              "title": "canary shadow and rollback"
+            },
+            {
+              "id": "D09.2.5",
+              "title": "secrets networking and access control"
+            }
+          ]
+        },
+        {
+          "id": "D09.3",
+          "title": "Inference systems",
+          "outcomes": [
+            {
+              "id": "D09.3.1",
+              "title": "KV cache and memory planning"
+            },
+            {
+              "id": "D09.3.2",
+              "title": "batching and scheduling"
+            },
+            {
+              "id": "D09.3.3",
+              "title": "quantization and accuracy loss"
+            },
+            {
+              "id": "D09.3.4",
+              "title": "tensor versus pipeline parallelism"
+            },
+            {
+              "id": "D09.3.5",
+              "title": "throughput TTFT and tail latency"
+            }
+          ]
+        },
+        {
+          "id": "D09.4",
+          "title": "Operations",
+          "outcomes": [
+            {
+              "id": "D09.4.1",
+              "title": "Structured logs metrics and traces"
+            },
+            {
+              "id": "D09.4.2",
+              "title": "SLO and error budget"
+            },
+            {
+              "id": "D09.4.3",
+              "title": "drift and quality monitoring"
+            },
+            {
+              "id": "D09.4.4",
+              "title": "alerting and incident runbooks"
+            },
+            {
+              "id": "D09.4.5",
+              "title": "backup restore and capacity planning"
+            }
+          ]
+        },
+        {
+          "id": "D09.5",
+          "title": "LLM specific operations",
+          "outcomes": [
+            {
+              "id": "D09.5.1",
+              "title": "Prompt and tool versioning"
+            },
+            {
+              "id": "D09.5.2",
+              "title": "retrieval corpus freshness"
+            },
+            {
+              "id": "D09.5.3",
+              "title": "offline versus online evaluations"
+            },
+            {
+              "id": "D09.5.4",
+              "title": "human feedback and privacy"
+            },
+            {
+              "id": "D09.5.5",
+              "title": "gateway routing and provider failures"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D10",
+      "title": "Research and specialization",
+      "prerequisites": [
+        "M07",
+        "M08",
+        "M09",
+        "M14",
+        "M15",
+        "M19",
+        "M20"
+      ],
+      "resources": [
+        "V20",
+        "V24",
+        "V27"
+      ],
+      "assessment": "One reproduced baseline, one ablation and a documented useful extension.",
+      "topics": [
+        {
+          "id": "D10.1",
+          "title": "Paper reading",
+          "outcomes": [
+            {
+              "id": "D10.1.1",
+              "title": "Question and hypotheses"
+            },
+            {
+              "id": "D10.1.2",
+              "title": "assumptions and methodology"
+            },
+            {
+              "id": "D10.1.3",
+              "title": "dataset and compute budget"
+            },
+            {
+              "id": "D10.1.4",
+              "title": "baseline and statistical uncertainty"
+            },
+            {
+              "id": "D10.1.5",
+              "title": "limitations and negative results"
+            }
+          ]
+        },
+        {
+          "id": "D10.2",
+          "title": "Reproduction",
+          "outcomes": [
+            {
+              "id": "D10.2.1",
+              "title": "Environment and pinned commit"
+            },
+            {
+              "id": "D10.2.2",
+              "title": "data access and license"
+            },
+            {
+              "id": "D10.2.3",
+              "title": "small scale sanity run"
+            },
+            {
+              "id": "D10.2.4",
+              "title": "metric and seed agreement"
+            },
+            {
+              "id": "D10.2.5",
+              "title": "discrepancy analysis"
+            }
+          ]
+        },
+        {
+          "id": "D10.3",
+          "title": "Optional branches",
+          "outcomes": [
+            {
+              "id": "D10.3.1",
+              "title": "Vision detection segmentation and tracking"
+            },
+            {
+              "id": "D10.3.2",
+              "title": "audio speech and real time interaction"
+            },
+            {
+              "id": "D10.3.3",
+              "title": "recommender ranking and feedback"
+            },
+            {
+              "id": "D10.3.4",
+              "title": "time series temporal backtesting"
+            },
+            {
+              "id": "D10.3.5",
+              "title": "reinforcement learning state action reward"
+            }
+          ]
+        },
+        {
+          "id": "D10.4",
+          "title": "Open model study",
+          "outcomes": [
+            {
+              "id": "D10.4.1",
+              "title": "Architecture versus released weights"
+            },
+            {
+              "id": "D10.4.2",
+              "title": "tokenizer and configuration"
+            },
+            {
+              "id": "D10.4.3",
+              "title": "training versus inference code"
+            },
+            {
+              "id": "D10.4.4",
+              "title": "license and distribution terms"
+            },
+            {
+              "id": "D10.4.5",
+              "title": "accessible scale versus original compute"
+            }
+          ]
+        },
+        {
+          "id": "D10.5",
+          "title": "Portfolio and FYP",
+          "outcomes": [
+            {
+              "id": "D10.5.1",
+              "title": "User problem and prior art"
+            },
+            {
+              "id": "D10.5.2",
+              "title": "evaluation set before implementation"
+            },
+            {
+              "id": "D10.5.3",
+              "title": "independent contribution beyond cloning"
+            },
+            {
+              "id": "D10.5.4",
+              "title": "reproducible demo and failure cases"
+            },
+            {
+              "id": "D10.5.5",
+              "title": "report artifacts and ongoing maintenance"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
