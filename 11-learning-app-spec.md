@@ -81,7 +81,7 @@ Do not promise exact delivery under battery optimization, device shutdown or for
 | Reminder | unique ID, assignment ID, local time, timezone, enabled |
 | Preferences | study days, quiet hours, notification slots, start date, privacy choices |
 
-Inputs already supplied: data/curriculum.json, courses.json, papers.json, tool-registry.json and first-28-days.json. The first month has concrete daily tasks. The remaining 740-concept map is a curriculum checklist, not 740 finalized daily lesson scripts; later modules need curated lesson segmentation before scheduling them.
+Inputs already supplied: data/curriculum.json, courses.json, papers.json, tool-registry.json and first-28-days.json. The first month has concrete daily tasks. The 777-topic map is a curriculum checklist, not 777 finalized daily lesson scripts; after the starter month learners choose modules directly and follow each module's learn/read/practice sequence.
 
 ## Scheduling rules
 

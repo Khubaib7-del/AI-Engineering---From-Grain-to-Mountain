@@ -25,7 +25,7 @@ Use public primary resources, legal free books, papers and independently selecte
 
 ## Guided learning preference, 8 October 2026
 
-The user wants each current goal attached to a concrete free course/video or reading assignment, rather than navigating a large catalog. Use one primary resource at a time, with optional explanations hidden by default. Days are sequence labels, not deadlines. Provide a small first step and an observable stopping condition. Do not imply every discovered playlist must be finished. `24-guided-free-learning-route.md` and `data/study-guides.json` map 21 modules; all 28 authored lessons have named assignments and matching Harvard notes. This does not mean every one of the 740 concepts has a timestamp or that the entire curriculum has daily scheduling.
+The user wants each current goal attached to a concrete course/video and reading assignment, with a clear order: learn, read, practice. Days are sequence labels, not deadlines. Provide a small first step and an observable stopping condition. Keep additional resources optional. `24-guided-free-learning-route.md` and `data/study-guides.json` map all 21 modules; all 28 starter lessons have named assignments and matching Harvard notes. The curriculum now has 777 checkpoints (740 original IDs plus 37 added topics); additions are appended to module groups so saved progress IDs remain stable. After the 28 starter lessons, any module may be studied and saved ahead of its gated assessment. The route is not a daily schedule for all 777 topics.
 
 ## Design decisions, 7 October 2026
 

@@ -37,7 +37,7 @@ for(const [id,title,url,modules] of [
 write('resources',resources);
 const md=fs.readFileSync(path.join(root,'15-coverage-audit-and-learning-extensions.md'),'utf8');
 const units=[...md.matchAll(/### (X\d+) — (.*?) · after (.*?) · (\d+) hours\n([\s\S]*?)(?=\n### |\n## Study sequence)/g)].map(m=>({id:m[1],title:m[2],prerequisites:m[3].split(', ').map(s=>s.trim()),hours:Number(m[4]),topics:[...m[5].matchAll(/- \[ \] (X\d+\.\d+) (.*)/g)].map(t=>({id:t[1],title:t[2]})),assessment:(m[5].match(/\*\*Evidence:\*\* (.*)/)||[])[1]||'Compare retrieval, cache and memory on fixed queries, updates and cold-start cost.'}));
-write('learning-extensions',{schemaVersion:1,prepared:'2026-10-07',scope:'Optional deeper units; not part of existing 740 topic IDs or the first 28 daily sessions.',units});
+write('learning-extensions',{schemaVersion:1,prepared:'2026-10-07',scope:'Optional deeper units; not part of the 777 core topic IDs or the first 28 daily sessions.',units});
 const projectMd=fs.readFileSync(path.join(root,'18-final-year-projects-reviewed.md'),'utf8');
 const projects=projectMd.split('\n').filter(l=>/^\| \d+ /.test(l)).map(l=>{const cells=l.split('|').slice(1,-1).map(s=>s.trim());const link=cells[0].match(/\[([^\]]+)\]\(([^)]+)\)/);return {id:`SP${cells[0].match(/^\d+/)[0].padStart(2,'0')}`,label:cells[0],url:link[2],prerequisites:cells[1],deliverable:cells[2],verification:'official-repository-readme-reviewed'};});
 const frameworkMd=fs.readFileSync(path.join(root,'16-agent-frameworks-and-protocols.md'),'utf8');

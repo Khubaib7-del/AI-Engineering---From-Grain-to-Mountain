@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewed": "2026-10-07",
-  "scope": "Ordered drill-down of the existing curriculum; outcomes overlap the core 740 concepts and are not additive hours or completion IDs. Our educational decomposition, not repository feature claims.",
+  "scope": "Ordered drill-down of the original 740-topic curriculum; outcomes overlap those concepts and are not additive hours or completion IDs. The current app adds 37 module checkpoints outside this drill-down. Our educational decomposition, not repository feature claims.",
   "domains": [
     {
       "id": "D01",

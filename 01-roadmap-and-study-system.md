@@ -36,7 +36,7 @@ flowchart TD
 
 ## Time: use hours and checkpoints, not promises
 
-The full map has 1,720 estimated working hours including branches, exercises and the capstone. These are my planning allowances, not measured course durations or a guarantee.
+The full map has 1,800 estimated working hours including branches, exercises and the capstone. These are planning allowances, not measured course durations or a guarantee.
 
 | Sustainable effort | Approximate full-map duration, before breaks |
 |---|---|

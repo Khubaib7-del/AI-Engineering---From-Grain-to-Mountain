@@ -78,7 +78,7 @@ Use ONE main course for a stage. The optional resources fill specific gaps; do n
 
 ## C07 — ML and data analysis labs
 
-**Primary:** [Statistical Learning with Python (ISLP)](https://www.statlearning.com/online-courses). [Videos / syllabus](https://www.youtube.com/playlist?list=PLoROMvodv4rNHU1-iPeDRH-J0cL-CrIda).
+**Primary:** [Stanford ISLP chapter lectures — 108 videos](https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ). Read the [free Python edition](https://www.statlearning.com/) alongside them, then use the separate [Python lab videos](https://www.youtube.com/playlist?list=PLoROMvodv4rNHU1-iPeDRH-J0cL-CrIda). The author’s [online-course page](https://www.statlearning.com/online-courses) is only an index; these direct links open the lecture and lab sequences.
 
 **Before it:** Python, arrays, basic probability; English.
 

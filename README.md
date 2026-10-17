@@ -8,11 +8,11 @@ A prerequisite-led journey from your first program to advanced AI engineering, w
 
 Prepared for Khubaib on 2026-10-07. Start from zero, learn the fundamentals in order, build and evaluate useful systems, then develop one deep specialty.
 
-This workspace contains 21 modules, 740 core concept checkpoints, 17 primary course selections, 12 free book/reference sources, 28 research papers, 32 tool categories with 174 illustrative entries, portfolio assessments and a first-month plan. Eight optional depth units add 58 checkpoints; 20 saved project ideas are reviewed with prerequisites and evaluations. A working [cross-platform learning app](learning-companion/README.md) bundles the core curriculum, paper catalog and 30 supplementary video/learning resources. Counts describe scope, not completed personal learning; the depth units are documented separately from the app's existing 740 progress IDs.
+This workspace contains 21 modules, 777 concept checkpoints, 20 primary course selections, 12 free book/reference sources, 28 research papers, 32 tool categories with 174 illustrative entries, portfolio assessments and a first-month plan. The original 740 topic IDs are preserved; 37 new checkpoints extend model lifecycle, agent harness engineering and LLM operations. Eight optional depth units add 58 checkpoints; 20 saved project ideas are reviewed with prerequisites and evaluations. A working [cross-platform learning app](learning-companion/README.md) bundles the core curriculum, paper catalog and 30 supplementary video/learning resources. Counts describe scope, not completed personal learning.
 
 ## Open these first
 
-**Need one clear next step?** Open [Your guided free learning route](24-guided-free-learning-route.md). Every authored daily lesson now has a named assignment and matching reading; all 21 modules have a primary route. There are now 30 supplementary resources, including the separate CampusX LangChain series, MIT 18.06 and Hugging Face Audio. Optional explanations are not extra obligations.
+**Need one clear next step?** Open [Your guided free learning route](24-guided-free-learning-route.md). Every starter module now has a learn/read/practice sequence; the first 28 daily lessons have a named assignment and matching reading. There are 30 supplementary video companions, including the separate CampusX LangChain series, MIT 18.06 and Hugging Face Audio. Optional explanations are not extra obligations.
 
 1. [Roadmap and study method](01-roadmap-and-study-system.md) — prerequisites, pacing and mastery.
 2. [First 28 learning days](10-first-28-days.md) — the next concrete assignments.
@@ -62,7 +62,7 @@ This workspace contains 21 modules, 740 core concept checkpoints, 17 primary cou
 
 ## What the timeline means
 
-The full breadth map is approximately 1,720 planning hours. At 20–25 hours/week it is roughly 16–20 months before breaks; university commitments can extend it. A useful first product comes much earlier. None of these documents promises universal mastery or employment after a fixed number of months.
+The full breadth map is approximately 1,800 planning hours. At 20–25 hours/week it is roughly 17–21 months before breaks; university commitments can extend it. A useful first product comes much earlier. None of these documents promises universal mastery or employment after a fixed number of months.
 
 Start with [CS50P](https://cs50.harvard.edu/python/) and Day 1. Complete a Python program you understand before collecting frameworks. Later choose one primary depth track while preserving broad awareness.
 

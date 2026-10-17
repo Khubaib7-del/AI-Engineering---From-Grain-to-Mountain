@@ -56,7 +56,7 @@
   {
     "id": "C07",
     "title": "Statistical Learning with Python (ISLP)",
-    "url": "https://www.statlearning.com/online-courses",
+    "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ",
     "type": "course",
     "language": "English",
     "verification": "official-page-reviewed",
@@ -83,7 +83,7 @@
   {
     "id": "C10",
     "title": "Full Stack LLM Bootcamp",
-    "url": "https://fullstackdeeplearning.com/llm-bootcamp/",
+    "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/",
     "type": "course",
     "language": "English",
     "verification": "official-page-reviewed",
@@ -182,7 +182,7 @@
   {
     "id": "B04",
     "title": "Introduction to Probability, second edition",
-    "url": "https://projects.iq.harvard.edu/stat110/home",
+    "url": "https://probabilitybook.net/",
     "stage": "M06",
     "access": "Free book linked from author course page",
     "type": "book-or-reference",
@@ -536,6 +536,50 @@
     "format": "documentation-guide",
     "notes": "Trace documents, nodes, retrieval and query assembly with current APIs.",
     "type": "course",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "C18",
+    "title": "DeepLearning.AI — Agentic AI, Andrew Ng",
+    "url": "https://www.deeplearning.ai/courses/agentic-ai",
+    "modules": "M12",
+    "format": "course",
+    "notes": "Reflection, tool use, planning, multi-agent patterns and evaluation. Videos and code examples are listed; graded assignments and certificates require PRO.",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "C19",
+    "title": "DeepLearning.AI — Intro to LLM Post-training",
+    "url": "https://www.deeplearning.ai/courses/fine-tuning-and-reinforcement-learning-for-llms-intro-to-post-training",
+    "modules": "M13",
+    "format": "course",
+    "notes": "Updated Jul 17, 2026. Covers fine-tuning and reinforcement learning for post-training; graded assignments and certificates require PRO.",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "C20",
+    "title": "DeepLearning.AI — Generative AI with Large Language Models",
+    "url": "https://www.deeplearning.ai/courses/generative-ai-with-llms",
+    "modules": "M09/M10/M13",
+    "format": "course",
+    "notes": "Training, fine-tuning, evaluation and deployment lifecycle. The linked Coursera route may have separate account, audit and certificate terms.",
+    "type": "course",
+    "language": "English",
+    "verification": "official-page-reviewed"
+  },
+  {
+    "id": "DR07",
+    "title": "Hugging Face Learn — specialist course catalog",
+    "url": "https://huggingface.co/learn",
+    "modules": "M19",
+    "format": "course-catalog",
+    "notes": "Use after the core route: choose one specialization such as agents, audio, computer vision, diffusion or LLMs. This is a catalog for choosing one branch, not a sequence to complete end to end.",
+    "type": "course",
+    "language": "English",
     "verification": "official-page-reviewed"
   }
 ]

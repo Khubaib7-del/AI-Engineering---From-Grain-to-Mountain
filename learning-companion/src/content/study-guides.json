@@ -2,37 +2,41 @@
   {
     "moduleId": "M00",
     "primary": {
-      "title": "CS50’s Introduction to Programming with Python",
-      "url": "https://cs50.harvard.edu/python/"
+      "title": "Harvard CS50P — Week 0: Functions and Variables",
+      "url": "https://cs50.harvard.edu/python/weeks/0/"
     },
     "reading": {
       "title": "Think Python, third edition",
       "url": "https://allendowney.github.io/ThinkPython/"
+    },
+    "practice": {
+      "title": "CS50P Problem Set 0 — a small first program",
+      "url": "https://cs50.harvard.edu/python/psets/0/"
     },
     "optional": [
       {
         "title": "freeCodeCamp / Dave Gray · Python for Beginners",
         "url": "https://www.youtube.com/watch?v=qwAFL1597eM"
-      },
-      {
-        "title": "CodeWithHarry · The Ultimate Python Course",
-        "url": "https://www.youtube.com/watch?v=UrsmFxEIp5k"
       }
     ],
     "assignment": "Week 0: run one program, use print and input, distinguish a file from its output.",
     "finish": "Create hello.py, run it, change one line and explain the result.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M01",
     "primary": {
-      "title": "CS50’s Introduction to Programming with Python",
-      "url": "https://cs50.harvard.edu/python/"
+      "title": "Harvard CS50P — full Python course, weeks 0–9",
+      "url": "https://cs50.harvard.edu/python/weeks/"
     },
     "reading": {
-      "title": "Think Python, third edition",
-      "url": "https://allendowney.github.io/ThinkPython/"
+      "title": "The Python Tutorial — official language guide",
+      "url": "https://docs.python.org/3/tutorial/"
+    },
+    "practice": {
+      "title": "CS50P problem sets — practice the matching week",
+      "url": "https://cs50.harvard.edu/python/psets/"
     },
     "optional": [
       {
@@ -42,8 +46,8 @@
     ],
     "assignment": "CS50P weeks 0–9 in order: functions, conditionals, loops, exceptions, libraries, tests, files, regex, classes. Complete exercises between lectures.",
     "finish": "Write a small command-line tool with functions, validation, files and tests.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M02",
@@ -52,14 +56,18 @@
       "url": "https://missing.csail.mit.edu/"
     },
     "reading": {
-      "title": "Think Python, third edition",
-      "url": "https://allendowney.github.io/ThinkPython/"
+      "title": "uv documentation — Python and project environments",
+      "url": "https://docs.astral.sh/uv/"
+    },
+    "practice": {
+      "title": "MIT Missing Semester — current lessons and exercises",
+      "url": "https://missing.csail.mit.edu/2026/"
     },
     "optional": [],
     "assignment": "Shell basics → files/pipes → Git → debugging → environments. Use current uv documentation alongside the packaging section.",
     "finish": "Create a repository and reproducible Python environment; explain how to recreate it.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M03",
@@ -68,14 +76,18 @@
       "url": "https://cs50.harvard.edu/x/"
     },
     "reading": {
-      "title": "Think Python, third edition",
-      "url": "https://allendowney.github.io/ThinkPython/"
+      "title": "CS50x Week 3 — algorithms and data structures",
+      "url": "https://cs50.harvard.edu/x/weeks/3/"
+    },
+    "practice": {
+      "title": "CS50x problem sets",
+      "url": "https://cs50.harvard.edu/x/psets/"
     },
     "optional": [],
     "assignment": "Algorithms → memory → data structures → Python/SQL/web. Work through exercises; add HTTP/API practice after the CS foundations.",
     "finish": "Explain a data structure and build a tested API endpoint.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M04",
@@ -87,11 +99,15 @@
       "title": "Python for Data Analysis, third edition",
       "url": "https://wesmckinney.com/book/"
     },
+    "practice": {
+      "title": "CS50 SQL problem sets",
+      "url": "https://cs50.harvard.edu/sql/psets/"
+    },
     "optional": [],
     "assignment": "SQL querying and joins first; then Python for Data Analysis chapters on NumPy, pandas, cleaning, grouping and time series.",
     "finish": "Clean one dataset, join two tables and explain missing-value decisions.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M05",
@@ -103,20 +119,20 @@
       "title": "Mathematics for Machine Learning",
       "url": "https://mml-book.github.io/"
     },
+    "practice": {
+      "title": "MIT OCW 18.06 lecture series",
+      "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/pages/video-lectures/"
+    },
     "optional": [
       {
         "title": "3Blue1Brown · Calculus intuition",
         "url": "https://www.3blue1brown.com/topics/calculus"
-      },
-      {
-        "title": "MIT OCW · 18.06 Linear Algebra",
-        "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/pages/video-lectures/"
       }
     ],
     "assignment": "Vectors and linear transformations → matrix operations → eigenvectors; then derivatives, gradients and the chain rule. MIT 18.06 supplies deeper exercises.",
     "finish": "Derive and implement a small gradient-descent example.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M06",
@@ -126,32 +142,36 @@
     },
     "reading": {
       "title": "Introduction to Probability, second edition",
-      "url": "https://projects.iq.harvard.edu/stat110/home"
+      "url": "https://probabilitybook.net/"
+    },
+    "practice": {
+      "title": "StatQuest — statistics fundamentals playlist",
+      "url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9"
     },
     "optional": [
       {
         "title": "Khan Academy · Statistics and probability bridge",
         "url": "https://www.khanacademy.org/math/statistics-probability"
-      },
-      {
-        "title": "StatQuest · Statistics Fundamentals",
-        "url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9"
       }
     ],
     "assignment": "Start with counting, conditional probability and Bayes; then random variables, expectations, estimation and experiments. Use Khan Academy if the prerequisite math feels unfamiliar.",
     "finish": "Simulate a probability result and explain a confidence interval.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M07",
     "primary": {
       "title": "Statistical Learning with Python (ISLP)",
-      "url": "https://www.statlearning.com/online-courses"
+      "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ"
     },
     "reading": {
       "title": "Introduction to Statistical Learning with Python",
       "url": "https://www.statlearning.com/"
+    },
+    "practice": {
+      "title": "Stanford ISLP Python lab videos",
+      "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rNHU1-iPeDRH-J0cL-CrIda"
     },
     "optional": [
       {
@@ -165,12 +185,16 @@
       {
         "title": "Stanford CS229 · Machine Learning lectures and notes",
         "url": "https://cs229.stanford.edu/"
+      },
+      {
+        "title": "Andrew Ng · Machine Learning Specialization",
+        "url": "https://www.deeplearning.ai/specializations/machine-learning"
       }
     ],
-    "assignment": "Introduction → regression → classification → resampling → regularization → trees → unsupervised learning; reproduce Python labs.",
+    "assignment": "Follow the Stanford chapter lecture playlist, read the matching ISLP chapter, then run the separate Python lab video for that chapter.",
     "finish": "Compare a baseline and two models without train/test leakage.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M08",
@@ -181,6 +205,10 @@
     "reading": {
       "title": "Dive into Deep Learning",
       "url": "https://d2l.ai/"
+    },
+    "practice": {
+      "title": "PyTorch beginner tutorials — build the training loop",
+      "url": "https://pytorch.org/tutorials/beginner/basics/intro.html"
     },
     "optional": [
       {
@@ -198,12 +226,16 @@
       {
         "title": "CampusX · 100 Days of Deep Learning",
         "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn"
+      },
+      {
+        "title": "Andrew Ng · Deep Learning Specialization",
+        "url": "https://www.deeplearning.ai/specializations/deep-learning"
       }
     ],
     "assignment": "Train a small model → tensors and autodiff → training loops → regularization → CNNs/sequence models. Reimplement a tiny network after the guided lesson.",
     "finish": "Write a PyTorch train/validation loop and diagnose overfitting.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M09",
@@ -215,41 +247,44 @@
       "title": "Speech and Language Processing, third-edition draft",
       "url": "https://web.stanford.edu/~jurafsky/slp3/"
     },
-    "optional": [
-      {
-        "title": "Andrej Karpathy · Neural Networks: Zero to Hero",
-        "url": "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
-      },
-      {
-        "title": "Stanford CS224N · Public 2024 lectures",
-        "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D"
-      }
-    ],
+    "practice": {
+      "title": "Stanford CS224N public lecture playlist",
+      "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D"
+    },
+    "optional": [],
     "assignment": "Transformer concepts → tokenizers/datasets → inference → fine-tuning and evaluation. Build a tiny attention example before reading architecture papers.",
     "finish": "Explain tokenization and attention and evaluate an NLP model.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M10",
     "primary": {
       "title": "Full Stack LLM Bootcamp",
-      "url": "https://fullstackdeeplearning.com/llm-bootcamp/"
+      "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/"
     },
     "reading": {
       "title": "Made With ML online reference",
       "url": "https://madewithml.com/"
     },
+    "practice": {
+      "title": "Full Stack LLM Bootcamp — launch a small LLM app",
+      "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/launch-an-llm-app-in-one-hour/"
+    },
     "optional": [
       {
         "title": "CampusX · Generative AI using LangChain",
         "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0"
+      },
+      {
+        "title": "Generative AI with Large Language Models — DeepLearning.AI",
+        "url": "https://www.deeplearning.ai/courses/generative-ai-with-llms"
       }
     ],
     "assignment": "LLM foundations → prompt and structured output → application architecture → evaluation and deployment. Use a small fixed test set before adding tools.",
     "finish": "Build a typed LLM workflow with failure handling and cost measurements.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M11",
@@ -258,8 +293,12 @@
       "url": "https://github.com/langchain-ai/rag-from-scratch"
     },
     "reading": {
-      "title": "Speech and Language Processing, third-edition draft",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
+      "title": "LlamaIndex — understanding RAG",
+      "url": "https://developers.llamaindex.ai/python/framework/understanding/rag/"
+    },
+    "practice": {
+      "title": "Qdrant Essentials — vector search exercises",
+      "url": "https://qdrant.tech/course/essentials/"
     },
     "optional": [
       {
@@ -269,16 +308,12 @@
       {
         "title": "DataTalksClub · LLM Zoomcamp",
         "url": "https://www.youtube.com/playlist?list=PL3MmuxUbc_hLZFNgSad56pDBKK8KO0XIv"
-      },
-      {
-        "title": "Qdrant Essentials",
-        "url": "https://qdrant.tech/course/essentials/"
       }
     ],
     "assignment": "Indexing → chunking/embeddings → retrieval → generation → hybrid search/reranking → retrieval and answer evaluation. Start with a tiny local corpus.",
     "finish": "Compare retrieval variants using labeled questions and grounded answers.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M12",
@@ -287,14 +322,14 @@
       "url": "https://huggingface.co/learn/agents-course/en/unit0/introduction"
     },
     "reading": {
-      "title": "Made With ML online reference",
-      "url": "https://madewithml.com/"
+      "title": "Hugging Face Agents Course — when to use LangGraph",
+      "url": "https://huggingface.co/learn/agents-course/unit2/langgraph/when_to_use_langgraph"
+    },
+    "practice": {
+      "title": "DeepLearning.AI — Agentic AI course",
+      "url": "https://www.deeplearning.ai/courses/agentic-ai"
     },
     "optional": [
-      {
-        "title": "CampusX · Generative AI using LangChain",
-        "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0"
-      },
       {
         "title": "CampusX · Agentic AI using LangGraph",
         "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL"
@@ -304,26 +339,35 @@
         "url": "https://www.youtube.com/watch?v=RM6ZArd2nVc"
       }
     ],
-    "assignment": "Hugging Face units 0–1 first; build one tool loop. Then select ONE unit-2 framework, practice memory and approvals, and do the course evaluation. LangChain basics precede the optional LangGraph series.",
+    "assignment": "Start with agent foundations and the plain tool loop; then compare reflection, tool use, planning, multi-agent patterns and evals. Add context, memory, permission boundaries, human approval and traces to one bounded agent.",
     "finish": "Build one bounded tool-using agent, test failures and add a human approval step.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M13",
     "primary": {
-      "title": "Hugging Face LLM Course",
-      "url": "https://huggingface.co/learn/llm-course/en/chapter1/1"
+      "title": "Fine-tuning & RL for LLMs: Intro to Post-training — DeepLearning.AI",
+      "url": "https://www.deeplearning.ai/courses/fine-tuning-and-reinforcement-learning-for-llms-intro-to-post-training"
     },
     "reading": {
-      "title": "Dive into Deep Learning",
-      "url": "https://d2l.ai/"
+      "title": "Hugging Face TRL — post-training library guide",
+      "url": "https://huggingface.co/docs/trl/en/index"
     },
-    "optional": [],
-    "assignment": "Fine-tuning foundations → dataset quality → PEFT/LoRA → preference optimization; study RL fundamentals before advanced post-training papers.",
+    "practice": {
+      "title": "DeepLearning.AI — where post-training fits in LLM training",
+      "url": "https://learn.deeplearning.ai/courses/fine-tuning-and-reinforcement-learning-for-llms-intro-to-post-training/lesson/fwxgd0/where-post-training-%28fine-tuning-and-rl%29-fits-into-llm-training"
+    },
+    "optional": [
+      {
+        "title": "Hugging Face LLM Course",
+        "url": "https://huggingface.co/learn/llm-course/en/chapter1/1"
+      }
+    ],
+    "assignment": "Separate weight training from runtime inference: study SFT, preference data, reward models and RL, then compare them with prompting and RAG.",
     "finish": "Compare an adapted small model to its base model on a held-out task.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M14",
@@ -335,11 +379,11 @@
       "title": "Deep Learning",
       "url": "https://www.deeplearningbook.org/"
     },
+    "practice": {
+      "title": "Stanford CS336 Assignment 1 — basics",
+      "url": "https://github.com/stanford-cs336/assignment1-basics/tree/main"
+    },
     "optional": [
-      {
-        "title": "Andrej Karpathy · Neural Networks: Zero to Hero",
-        "url": "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
-      },
       {
         "title": "Deep Learning Systems · CMU course",
         "url": "https://dlsyscourse.org/"
@@ -347,8 +391,8 @@
     ],
     "assignment": "Tokenization → model/training implementation → optimizers → systems → scaling and data; use course assignments at a scale your hardware permits.",
     "finish": "Train a tiny language model and reproduce one controlled ablation.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M15",
@@ -357,23 +401,23 @@
       "url": "https://course.fast.ai/Lessons/part2.html"
     },
     "reading": {
-      "title": "Dive into Deep Learning",
-      "url": "https://d2l.ai/"
+      "title": "Dive into Deep Learning — computer vision chapters",
+      "url": "https://d2l.ai/chapter_computer-vision/index.html"
+    },
+    "practice": {
+      "title": "Hugging Face Audio Course",
+      "url": "https://huggingface.co/learn/audio-course/en/chapter0/introduction"
     },
     "optional": [
       {
         "title": "MIT 6.S191 · Introduction to Deep Learning",
         "url": "https://introtodeeplearning.com/"
-      },
-      {
-        "title": "Hugging Face · Audio Course",
-        "url": "https://huggingface.co/learn/audio-course/en/chapter0/introduction"
       }
     ],
     "assignment": "Choose vision, diffusion OR audio first. Follow one specialization; use the audio course only after transformers. Do not attempt all branches simultaneously.",
     "finish": "Evaluate one modality-specific model and document failure cases.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M16",
@@ -382,8 +426,12 @@
       "url": "https://github.com/DataTalksClub/mlops-zoomcamp"
     },
     "reading": {
-      "title": "Made With ML online reference",
-      "url": "https://madewithml.com/"
+      "title": "MLflow Tracking — official documentation",
+      "url": "https://mlflow.org/docs/latest/ml/tracking/"
+    },
+    "practice": {
+      "title": "DataTalksClub MLOps Zoomcamp — official lecture playlist",
+      "url": "https://www.youtube.com/playlist?list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK"
     },
     "optional": [
       {
@@ -397,8 +445,8 @@
     ],
     "assignment": "Environment → experiment tracking → orchestration → deployment → monitoring → testing/CI. Begin locally before renting cloud resources.",
     "finish": "Version data and models and reproduce a training-to-serving pipeline.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M17",
@@ -410,6 +458,10 @@
       "title": "Machine Learning Systems, two volumes",
       "url": "https://mlsysbook.ai/"
     },
+    "practice": {
+      "title": "vLLM quickstart — run a model server",
+      "url": "https://docs.vllm.ai/en/latest/getting_started/quickstart.html"
+    },
     "optional": [
       {
         "title": "Deep Learning Systems · CMU course",
@@ -418,55 +470,67 @@
     ],
     "assignment": "FSDL deployment/monitoring plus ML Systems serving chapters; then batching, quantization, caching, load tests and capacity planning.",
     "finish": "Serve a small model and measure latency, throughput and resource usage.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M18",
     "primary": {
-      "title": "Made With ML online reference",
-      "url": "https://madewithml.com/"
+      "title": "OpenAI — safety best practices for applications",
+      "url": "https://platform.openai.com/docs/guides/safety-best-practices"
     },
     "reading": {
-      "title": "Machine Learning Systems, two volumes",
-      "url": "https://mlsysbook.ai/"
+      "title": "NIST AI Risk Management Framework Playbook",
+      "url": "https://airc.nist.gov/airmf-resources/playbook/"
+    },
+    "practice": {
+      "title": "NVIDIA NeMo Guardrails — inspect a guardrail implementation",
+      "url": "https://github.com/NVIDIA/NeMo-Guardrails"
     },
     "optional": [],
     "assignment": "Study testing, data validation, monitoring and reliability in Made With ML; add privacy, misuse and permission analysis to your own system. This is a reading/practice route, not a complete security certification.",
     "finish": "Write a threat model and test access boundaries, data leakage and recovery.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M19",
     "primary": {
-      "title": "Statistical Learning with Python (ISLP)",
-      "url": "https://www.statlearning.com/online-courses"
+      "title": "Hugging Face Learn — choose one specialist course",
+      "url": "https://huggingface.co/learn"
     },
     "reading": {
-      "title": "Dive into Deep Learning",
-      "url": "https://d2l.ai/"
+      "title": "DeepLearning.AI course catalog — compare one role-specific course",
+      "url": "https://www.deeplearning.ai/courses"
+    },
+    "practice": {
+      "title": "Choose one specialty using the AI engineer roadmap",
+      "url": "https://roadmap.sh/ai-engineer"
     },
     "optional": [],
-    "assignment": "Choose ONE branch after core ML: time series, recommendation, graphs, causal inference or RL. Use the branch map in document 22 to choose its specialist resources.",
-    "finish": "Compare a simple baseline to a specialist method on one domain dataset.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "assignment": "Choose one branch only: time series, recommendation, graphs, causal/Bayesian ML, vision/audio, robotics/edge, AI applications, ML systems or research. Follow one course in the selected branch instead of sampling every playlist.",
+    "finish": "Complete one small project in your branch and explain its baseline, metric, failures and deployment constraints.",
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   },
   {
     "moduleId": "M20",
     "primary": {
-      "title": "Full Stack Deep Learning · 2022 course",
-      "url": "https://fullstackdeeplearning.com/course/2022/"
+      "title": "LangGraph 101 — portfolio capstone starting point",
+      "url": "https://github.com/langchain-ai/langgraph-101"
     },
     "reading": {
-      "title": "Made With ML online reference",
-      "url": "https://madewithml.com/"
+      "title": "Full Stack LLM Bootcamp — what to build next",
+      "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/whats-next/"
+    },
+    "practice": {
+      "title": "Open-SWE — inspect a real agent project structure",
+      "url": "https://github.com/langchain-ai/open-swe"
     },
     "optional": [],
-    "assignment": "Select a real user problem → reproducible baseline → evaluations → deployment → feedback → technical report. Revisit only the lessons needed by your project.",
+    "assignment": "Choose one real user workflow, define a measurable baseline, then build a reliable agent or ML system around it. Use LangGraph 101 as one example implementation and adapt the scope to your own specialization.",
     "finish": "Publish a reproducible project with measured results, limitations and a demo.",
-    "access": "Learning material is free. Some platforms require a free account; API calls, GPUs and hosting may cost money. Paid certificates/notes are not required.",
-    "checked": "2026-10-08"
+    "access": "Learning material is free where noted. Some platforms require an account; graded DeepLearning.AI assignments/certificates may require PRO. API calls, GPUs and hosting may cost money.",
+    "checked": "2026-10-17"
   }
 ]

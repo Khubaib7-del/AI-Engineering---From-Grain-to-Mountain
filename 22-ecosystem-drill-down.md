@@ -1,6 +1,6 @@
 # Ecosystem drill-down: beginner to advanced
 
-This is a deeper teaching map of the existing M00–M20 route, not a replacement. Each domain contains topics and granular practice outcomes. Read prerequisite modules first. Resource IDs resolve through [the teaching additions](23-independent-teaching-resources.md), [existing videos](19-videos-and-agent-papers-in-order.md) and data/video-companions.json. Core 740 IDs and app progress remain stable. These 250 outcomes overlap core topics; they are not 250 newly discovered unique concepts or additional planning hours.
+This is a deeper teaching map of the existing M00–M20 route, not a replacement. Each domain contains topics and granular practice outcomes. Read prerequisite modules first. Resource IDs resolve through [the teaching additions](23-independent-teaching-resources.md), [existing videos](19-videos-and-agent-papers-in-order.md) and data/video-companions.json. The original 740 IDs and saved app progress remain stable; the current curriculum appends 37 module topics. These 250 outcomes overlap core topics; they are not 250 newly discovered unique concepts or additional planning hours.
 
 ## D01 — Foundations to executable programs
 

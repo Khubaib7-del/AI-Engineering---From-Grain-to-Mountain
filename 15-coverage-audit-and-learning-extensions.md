@@ -1,6 +1,6 @@
 # Coverage audit of your saved material
 
-Reviewed 2026-10-07. Your saved posts are useful discovery lists. The learning route is broader: fundamentals → models → applications → evaluated agents → operations → a specialty. They do not establish mastery or guarantee employment. The original path has 21 modules and 740 checkpoints; the extensions below add depth without renumbering saved app progress.
+Reviewed 2026-10-17. Your saved posts are useful discovery lists. The learning route is broader: fundamentals → models → applications → evaluated agents → operations → a specialty. They do not establish mastery or guarantee employment. The core path has 21 modules and 777 checkpoints, including 37 appended topics for model lifecycle, agent harness engineering and LLM operations. The original 740 topic IDs remain stable; optional extensions below add depth without renumbering saved progress.
 
 ## What is already covered, and what needed expansion
 
@@ -129,6 +129,6 @@ The machine-readable version is [learning extensions](data/learning-extensions.j
 
 ## Study sequence
 
-M00–M09 → M10/M11 → M12 → X01 → M18/X02 → X03 or X04. Follow the M16/M17 branch before X05; follow M13/M14 before X06 and X08. X07 follows M11/M12. The eight optional extensions total 144 planning hours beyond the original 1,720; they can overlap capstone work, so do not blindly add both estimates to a calendar.
+M00–M09 → M10/M11 → M12 → X01 → M18/X02 → X03 or X04. Follow the M16/M17 branch before X05; follow M13/M14 before X06 and X08. X07 follows M11/M12. The eight optional extensions total 144 planning hours beyond the current 1,800-hour core; they can overlap capstone work, so do not blindly add both estimates to a calendar.
 
 Sources were reviewed at landing-page/README/abstract level. Repositories were not all installed, licenses were not legally audited, videos were not watched end to end, and papers were not experimentally reproduced by this research pass. Prime Agent and DeepSeek Harness are now resolved in [the source study](20-prime-and-deepseek-harness-study.md), and MAG's intended meaning is confirmed. See [the expanded hierarchy](22-ecosystem-drill-down.md) for the deeper teaching decomposition.

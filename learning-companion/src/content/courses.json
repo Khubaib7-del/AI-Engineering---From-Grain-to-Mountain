@@ -75,11 +75,11 @@
     "id": "C07",
     "category": "ML and data analysis labs",
     "title": "Statistical Learning with Python (ISLP)",
-    "url": "https://www.statlearning.com/online-courses",
+    "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ",
     "video": "https://www.youtube.com/playlist?list=PLoROMvodv4rNHU1-iPeDRH-J0cL-CrIda",
     "prerequisites": "Python, arrays, basic probability; English.",
     "assignment": "Read ISLP chapters in order and do Python labs. Use theory videos linked on the same official page. Covers models, resampling, regularization, trees and unsupervised learning.",
-    "freshness": "Python edition 2023; stable ML foundations. Free author-linked videos/book; edX certificate unnecessary.",
+    "freshness": "Python edition 2023; stable ML foundations. The direct Stanford playlist contains the chapter lectures; the author page links the Python labs and optional edX course.",
     "modules": "M04/M07/M19",
     "language": "English"
   },
@@ -111,7 +111,7 @@
     "id": "C10",
     "category": "LLM application engineering",
     "title": "Full Stack LLM Bootcamp",
-    "url": "https://fullstackdeeplearning.com/llm-bootcamp/",
+    "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/",
     "video": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/",
     "prerequisites": "Python, plus ML/backend experience; English recorded lectures.",
     "assignment": "Foundations → prompting → augmented models → UX → LLMOps. Build a small extraction service alongside it.",
@@ -184,7 +184,7 @@
     "category": "MLOps and deployment",
     "title": "DataTalksClub MLOps Zoomcamp",
     "url": "https://github.com/DataTalksClub/mlops-zoomcamp",
-    "video": "https://github.com/DataTalksClub/mlops-zoomcamp",
+    "video": "https://www.youtube.com/playlist?list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK",
     "prerequisites": "Python, trained ML models, command line and Docker basics; English videos/materials.",
     "assignment": "Intro → tracking → orchestration → deployment → monitoring → practices → final project.",
     "freshness": "Repository actively maintained in 2026; recordings may be from earlier cohorts. Use current main syllabus, date your chosen cohort.",
@@ -201,6 +201,39 @@
     "assignment": "MDPs and value methods → policy gradients → PPO. Core ideas support post-training; environment specialization optional.",
     "freshness": "Official living course, update environment/library compatibility when running.",
     "modules": "M13 optional depth",
+    "language": "English"
+  },
+  {
+    "id": "C18",
+    "category": "Agentic AI and evaluation",
+    "title": "Agentic AI — DeepLearning.AI, Andrew Ng",
+    "url": "https://www.deeplearning.ai/courses/agentic-ai",
+    "prerequisites": "Python and basic LLM application knowledge; intermediate course with videos and code examples.",
+    "assignment": "Study reflection, tool use, planning, multi-agent patterns and agent evaluation. Apply the loop and eval ideas to one bounded agent.",
+    "freshness": "Course page updated Aug 31, 2026. Videos and code examples are listed; graded assignments and certificates require PRO.",
+    "modules": "M12",
+    "language": "English"
+  },
+  {
+    "id": "C19",
+    "category": "LLM post-training",
+    "title": "Fine-tuning & RL for LLMs: Intro to Post-training — DeepLearning.AI",
+    "url": "https://www.deeplearning.ai/courses/fine-tuning-and-reinforcement-learning-for-llms-intro-to-post-training",
+    "prerequisites": "Python, PyTorch, neural-network and language-model basics; intermediate course.",
+    "assignment": "Map SFT, preference data, reward models and RL to the model lifecycle; compare one post-training method with prompting and RAG.",
+    "freshness": "Course page updated Jul 17, 2026. Videos are listed; graded assignments and certificates require PRO.",
+    "modules": "M13",
+    "language": "English"
+  },
+  {
+    "id": "C20",
+    "category": "Generative AI foundations",
+    "title": "Generative AI with Large Language Models — DeepLearning.AI",
+    "url": "https://www.deeplearning.ai/courses/generative-ai-with-llms",
+    "prerequisites": "Python and introductory machine learning; English course with exercises.",
+    "assignment": "Connect transformer foundations, training, fine-tuning, evaluation and deployment to the product lifecycle.",
+    "freshness": "Official course page; the linked Coursera route may have separate account, audit and certificate terms.",
+    "modules": "M09/M10/M13",
     "language": "English"
   }
 ]

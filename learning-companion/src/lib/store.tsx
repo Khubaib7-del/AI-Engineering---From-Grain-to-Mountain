@@ -1,6 +1,6 @@
 import React, {createContext,useContext,useEffect,useRef,useState} from 'react';
 import {AppState} from 'react-native';
-import {allTopicIds,lessons,modules} from './content';
+import {addedTopicIds,allTopicIds,lessons,modules} from './content';
 import {initialState,parseBackup} from './planner';
 import {readStored,writeStored} from './storage';
 import {reconcileReminders} from './notifications';
@@ -87,7 +87,11 @@ export function LearningProvider({children,scope='guest'}:{children:React.ReactN
   try{
    const next=parseBackup(text,lessons.map(l=>l.id),allTopicIds,modules.map(m=>m.id));
    for(const l of lessons)if(next.lessons[l.id]?.completedAt&&!l.prerequisites.every(id=>next.lessons[id]?.completedAt))throw new Error('Missing lesson prerequisites');
-   for(const m of modules)if(next.verified[m.id]&&(!m.prerequisites.every(id=>next.verified[id])||!allTopicIds.filter(id=>id.startsWith(`${m.id}.`)).every(id=>next.topics[id])))throw new Error('Missing module prerequisites');
+   for(const m of modules)if(next.verified[m.id]){
+    const ids=allTopicIds.filter(id=>id.startsWith(`${m.id}.`));
+    const originalIds=ids.filter(id=>!addedTopicIds.has(id));
+    if(!m.prerequisites.every(id=>next.verified[id])||!originalIds.every(id=>next.topics[id]))throw new Error('Missing module prerequisites or original topic checks');
+   }
    await persist(next,revision.current,signedIn);writable.current=true;setError('');setNotice('Notebook imported. Reminders are off on this device.');schedule(next);await sync();return true;
   }catch(e){setError(`Import failed: ${String(e)}`);return false;}
  });

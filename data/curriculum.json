@@ -612,7 +612,7 @@
     {
       "id": "M09",
       "title": "NLP, transformers and language models",
-      "hours": 90,
+      "hours": 105,
       "prerequisites": [
         "M08"
       ],
@@ -661,6 +661,21 @@
             "perplexity",
             "HF Transformers/Datasets/Tokenizers"
           ]
+        },
+        {
+          "title": "From pretraining to inference",
+          "addedOn": "2026-10-17",
+          "topics": [
+            "pretraining versus supervised fine-tuning versus inference",
+            "corpus collection, filtering, deduplication and data mixtures",
+            "compute and data scaling laws",
+            "pretraining objectives: causal, masked and sequence-to-sequence",
+            "training tokens, batch size, steps and learning-rate schedule",
+            "inference prefill versus autoregressive decoding",
+            "KV cache purpose and memory cost",
+            "sampling controls versus model training",
+            "serving-time batching and latency trade-offs"
+          ]
         }
       ]
     },
@@ -672,7 +687,7 @@
         "M03",
         "M09"
       ],
-      "course": "C10",
+      "course": "C20",
       "gate": "Ship a validated extraction service with a held-out evaluation set, retries and a cost report.",
       "groups": [
         {
@@ -821,12 +836,12 @@
     {
       "id": "M12",
       "title": "Agents, tools and protocols",
-      "hours": 85,
+      "hours": 115,
       "prerequisites": [
         "M10",
         "M11"
       ],
-      "course": "C12",
+      "course": "C18",
       "gate": "Build a bounded tool agent that resumes after failure and respects explicit action permissions.",
       "groups": [
         {
@@ -891,6 +906,24 @@
             "compare agent against deterministic workflow",
             "multi-agent costs and coordination failure"
           ]
+        },
+        {
+          "title": "Harness engineering",
+          "addedOn": "2026-10-17",
+          "topics": [
+            "agent loop: model call, tool call, validation, execution, observation and stop",
+            "context engineering: selection, ordering, compaction and token budgets",
+            "tool design: narrow schemas, typed inputs, clear errors and idempotency",
+            "memory architecture: working state, episodic history and durable user memory",
+            "orchestration patterns: router, sequential workflow, graph, supervisor and handoff",
+            "guardrails: input/output validation, policy checks and untrusted-content boundaries",
+            "permissions: least privilege, scoped credentials and approval before side effects",
+            "human-in-the-loop checkpoints, review queues and interrupt/resume behavior",
+            "agent evals: task success, tool accuracy, trajectory quality, regression and cost",
+            "benchmarks: task definition, scoring rules, contamination and reproducibility",
+            "observability: traces, spans, prompts, tool events, tokens, latency and failures",
+            "privacy-aware trace retention, redaction and incident replay"
+          ]
         }
       ],
       "supplementaryResources": [
@@ -900,12 +933,12 @@
     {
       "id": "M13",
       "title": "Adaptation, post-training and RL",
-      "hours": 95,
+      "hours": 115,
       "prerequisites": [
         "M09",
         "M06"
       ],
-      "course": "C09",
+      "course": "C19",
       "gate": "Compare prompting, retrieval and LoRA on one task; evaluate before and after on held-out data.",
       "groups": [
         {
@@ -962,6 +995,21 @@
             "REINFORCE",
             "PPO",
             "offline RL limits"
+          ]
+        },
+        {
+          "title": "Post-training pipeline and inference distinction",
+          "addedOn": "2026-10-17",
+          "topics": [
+            "pretrained base model versus instruction-tuned model",
+            "SFT data formatting, target masks and supervised loss",
+            "preference collection, pairwise labels and reward-model purpose",
+            "RLHF stages: supervised warm start, reward model and policy optimization",
+            "DPO versus reward-model-based RL and their assumptions",
+            "inference is model execution, not another weight-update stage",
+            "prompting and decoding change outputs without changing model weights",
+            "fine-tuning changes weights; RAG supplies external evidence at runtime",
+            "post-training evaluation: capability, robustness, safety and regressions"
           ]
         }
       ],
@@ -1084,7 +1132,7 @@
     {
       "id": "M16",
       "title": "MLOps and data pipelines",
-      "hours": 90,
+      "hours": 105,
       "prerequisites": [
         "M07",
         "M03"
@@ -1145,6 +1193,19 @@
             "retraining governance",
             "OpenTelemetry",
             "incident review"
+          ]
+        },
+        {
+          "title": "LLMOps and agent operations",
+          "addedOn": "2026-10-17",
+          "topics": [
+            "LLM request tracing across model, retrieval and tool calls",
+            "prompt/model/tool version attribution in traces",
+            "agent outcome, step count, retries, handoffs and approval metrics",
+            "offline eval suites in CI and online quality review",
+            "token, latency and cost budgets with per-task attribution",
+            "trace sampling, PII redaction, retention and access controls",
+            "failure triage from user report to reproducible trace"
           ]
         }
       ]

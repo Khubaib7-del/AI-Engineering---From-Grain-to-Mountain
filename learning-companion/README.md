@@ -6,7 +6,7 @@ Implemented: Today, curriculum Path, searchable Library, Progress, module/topic 
 
 ## Run locally
 
-Guided-learning update (8 October 2026): all 28 daily lessons display a named assignment, matching notes, a small starting step and a stopping condition. All 21 module pages include a primary resource, reading and optional explanations hidden by default. The supplementary catalog now contains 30 entries. See [the free learning route](../24-guided-free-learning-route.md). Course material is free; API/compute costs and optional certificates are separate.
+Guided-learning update (17 October 2026): all 28 daily lessons display a named assignment, matching notes, a small starting step and a stopping condition. All 21 module pages show Learn → Read → Practice links and optional explanations hidden by default. The curriculum now contains 777 checkpoints and estimates 1,800 study hours. See [the free learning route](../24-guided-free-learning-route.md). Course material is free where noted; API/compute costs and optional certificates are separate.
 
 From the repository's `learning-companion` directory:
 
@@ -23,7 +23,7 @@ Use the QR from Expo on a compatible phone or run a development build. Native fe
 
 The additional eight depth units and 58 checkpoints are documented in [the parent coverage audit](../15-coverage-audit-and-learning-extensions.md). They are not yet individual tracked app lessons; existing topic IDs and personal progress remain stable. This pass updates Library content, not the UI design.
 
-`npm run sync-content` copies the eight source JSON files in the parent `data` folder into `src/content`. The complete path is 21 modules and 740 concepts. Only the first 28 daily sessions are authored; after that, continue through modules and assessments. Hours are planning estimates, not a deadline. Checking a concept means studied; self-assessment means you confirmed the exercise. Neither is an independently graded qualification.
+`npm run sync-content` copies the eight source JSON files in the parent `data` folder into `src/content`. The complete path is 21 modules and 777 concepts (the prior 740 topic IDs remain stable). Each module has three visible resource steps: learn, read, practice. The first 28 daily sessions are guided; afterward, choose any module and save topic notes ahead of its final assessment. Hours are planning estimates, not a deadline. Checking a concept means studied; self-assessment means you confirmed the exercise. Neither is an independently graded qualification.
 
 A lesson needs all three tasks and at least one sentence of evidence before completion. Recall intervals are 1, 3, 7 and 14 days after completion. Reviews are manually confirmed. No AI-generated mastery judgment is used.
 

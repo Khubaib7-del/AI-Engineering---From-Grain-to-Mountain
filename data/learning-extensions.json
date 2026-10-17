@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "prepared": "2026-10-07",
-  "scope": "Optional deeper units; not part of existing 740 topic IDs or the first 28 daily sessions.",
+  "scope": "Optional deeper units; not part of the 777 core topic IDs or the first 28 daily sessions.",
   "units": [
     {
       "id": "X01",
