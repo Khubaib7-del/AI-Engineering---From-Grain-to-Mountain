@@ -1,14 +1,14 @@
 # Android personal preview
 
-**Current release: [Android 1.1 with account sync](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.1.0-preview.1).** Read [update and sync instructions](UPDATE-1.1.md). Install over the existing app, without uninstalling, to preserve local progress. The old 1.0 APK below is retained as historical build evidence and is local-only.
+**Current release: [Android 1.2 expanded curriculum](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.2.0-preview.1).** Read [update instructions](UPDATE-1.2.md). Install over the existing app, without uninstalling, to preserve local progress.
 
 ## Historical 1.0 artifact
 
-`AI-Learning-1.0.0-android-arm64.apk` was built successfully on 8 October 2026 (47,748,479 bytes). Its APK v2 signature verifies and it contains the JavaScript bundle and ARM64 native libraries. See `../VALIDATION.md` for startup-test results and limitations; `SHA256SUMS.txt` identifies this exact file.
+`AI-Learning-1.0.0-android-arm64.apk` was built successfully on 8 October 2026 (47,748,479 bytes). Its APK v2 signature verifies and it contains the JavaScript bundle and ARM64 native libraries. See `../VALIDATION.md` for startup-test results and limitations.
 
-## Install a completed APK
+## Install Android 1.2
 
-1. Transfer `AI-Learning-1.0.0-android-arm64.apk` to your Android phone using USB, a private drive or another file-transfer method. Send it as a file/document, not an image.
+1. Download `AI-Learning-1.2.0-android-arm64.apk` and `SHA256SUMS.txt` from the [1.2 GitHub release](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.2.0-preview.1), then transfer the APK to your phone using USB, a private drive or another file-transfer method. Send it as a file/document, not an image.
 2. Open the APK in Files. If Android asks, allow that file manager to install this app, then install.
 3. Launch **AI Learning**. The curriculum, notes and progress work locally without the desktop preview or Metro. Linked courses/videos need internet.
 4. Reminders require notification permission and are scheduled through Settings. Hardware delivery still needs checking on your phone.

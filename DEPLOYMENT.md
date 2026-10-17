@@ -14,7 +14,7 @@ To deploy from an authenticated CLI, run `npx vercel --prod` from the repository
 
 ## Android
 
-Download the APK and SHA256 checksum from the [1.1.0 Android prerelease](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.1.0-preview.1). Install over 1.0 without uninstalling: package name and signing certificate are preserved, and version code increases to 2. Sign in with the same account on web and Android. In Settings → Account & sync, explicitly import the guest notebook if you want its progress in the account. Confirmation/reset links open the website; return to Android to sign in afterward.
+Download the APK and SHA256 checksum from the [1.2.0 Android prerelease](https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/tag/v1.2.0-preview.1). Install over the existing app without uninstalling: package name and signing certificate are preserved, and version code increases to 3. The expanded curriculum ships in the app bundle. Sign in with the same account on web and Android to sync progress.
 
 See [personal-preview installation and build instructions](learning-companion/releases/README.md) and [observed validation](learning-companion/VALIDATION.md). APK binaries, signing keys, SDK tools and generated native projects are excluded from Git. Distribute APKs as release attachments rather than source-history blobs. The existing preview uses a development test key and targets ARM64 Android 7.0 or later.
 

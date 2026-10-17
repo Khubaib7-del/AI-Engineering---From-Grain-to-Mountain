@@ -15,7 +15,7 @@ This is a working local prototype, not a signed or store-distributed release.
 
 Actual iPhone and Android testing: notification delivery/taps, permission denial, SQLite persistence, safe areas and keyboards, accessibility/font scaling, reduced motion and haptics. The web reminder control is explicitly disabled. Local reminders cover up to seven days and require reopening to refresh.
 
-The curriculum path contains 21 modules and 740 concepts; 28 daily sessions are authored. Completion and assessments are self-reported, with evidence required for sessions. External lessons are linked rather than hosted or played inside the app.
+The curriculum path now contains 21 modules and 777 concepts; 28 daily sessions are authored. Completion and assessments are self-reported, with evidence required for sessions. External lessons are linked rather than hosted or played inside the app.
 
 ## Dependencies
 
@@ -130,3 +130,10 @@ The disposable native fixture was removed after successful checks using an exact
 ARM64 :app:assembleRelease completed successfully in 10m 3s (532 tasks, 60 executed, 472 up-to-date). Packaged releases/AI-Learning-1.1.0-android-arm64.apk: 48,508,315 bytes; SHA256 282cd568566b979c65ad0ffd64eb9a127d719d5c0b0a4e84342ac17f6f9eb2b9. APK v2 signature verifies. Signing certificate SHA256 fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c matches the published 1.0 APK, enabling an in-place update. Manifest: com.khubaib.ailearning, version 1.1.0/code 2, min SDK 24, target SDK 36, ARM64 only. Archive checks verified bundled JS, ARM64 native libraries and hosted public account configuration. This is personal test signing; physical ARM64 sync and notification verification remain device checks.
 
 Release v1.1.0-preview.1 is public with APK and SHA256SUMS attachments. Public APK HTTP 200, server digest and 48,508,315-byte size matched the validated file. Initial PowerShell upload connection closed before creating an asset; inspected the draft, then HTTP/1.1 upload succeeded. Functional commit 3efa4f0 reached Vercel Ready/promoted (dpl_5wZ5SKtf7vhbCJ1V56xyKqkwgkRR). Live production desktop/mobile product checks and anonymous Auth access checks passed. The public download page displayed version 1.1 and its button requested the exact published APK URL. Vercel MCP scope access failed; the already-authorized CLI successfully verified the deployment. New source/scripts contain no user credentials, APK or signing key.
+
+
+## Guided curriculum refresh — 17 October 2026
+
+Revised all 21 module guides into distinct Learn → Read → Practice resources; integrity check found 63 unique required links and no repeats. Repointed ISLP to its Stanford chapter lectures and Python labs, corrected the Full Stack LLM route to its course materials, and refreshed the official MLOps Zoomcamp playlist. Added official DeepLearning.AI Agentic AI, post-training and Generative AI courses. Added tracked checkpoints for pretraining/inference, post-training, harness engineering, agent evaluation and operations. The curriculum is now 777 concepts and estimates 1,800 hours. After the 28 guided lessons, learners can open any module; prerequisites gate assessment only. Existing module assessments retain their completed concepts and can be refreshed after studying newly added checkpoints.
+
+TypeScript, ESLint and the Expo web export passed. The 1.2 ARM64 Android build completed 576 Gradle tasks; APK v2 signature verification passed. Package is `com.khubaib.ailearning`, version 1.2.0/code 3, min SDK 24, target SDK 36, ARM64 only. Certificate SHA256 `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c` matches 1.1; packaged APK SHA256 `9bbba7d69fce27edf9a1400412dbb17c88a550fcfe65069f6f916cfd4d4f8794`. Android 1.2 has not yet been installed on a physical phone; iOS remains unbuilt. Course source pages and syllabuses were checked; full recordings and repository experiments were not reproduced.

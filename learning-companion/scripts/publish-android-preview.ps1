@@ -1,4 +1,4 @@
-param([string]$Tag = 'v1.1.0-preview.1')
+param([string]$Tag = 'v1.2.0-preview.1')
 $ErrorActionPreference = 'Stop'
 $appRoot = Split-Path -Parent $PSScriptRoot
 $repoRoot = Split-Path -Parent $appRoot
@@ -22,18 +22,18 @@ $api = 'https://api.github.com/repos/Khubaib7-del/AI-Engineering---From-Grain-to
 $releases = @(Invoke-RestMethod -Uri "$api/releases" -Headers $headers -TimeoutSec 45)
 $release = $releases | Where-Object tag_name -eq $Tag | Select-Object -First 1
 $notes = @"
-Update over the existing AI Learning app without uninstalling. Version $version/code 2 preserves its package and signing identity.
+Update over the existing AI Learning app without uninstalling. Version $version/code 3 preserves its package and signing identity. The updated curriculum is bundled in this app version.
 
 Sign in with the same account on web and Android. Native/web notes in both directions, offline SQLite and encrypted-session cold restart, explicit conflict choice, sign-out and preserved guest progress passed on Android 14 emulator and browser checks. Confirmation/password-reset links open the website; return to Android afterward. Guest import requires explicit replacement confirmation.
 
 ARM64 Android 7.0+ personal preview, development-test signed. Physical-phone sync/notification verification of this update remains a device check; the owner previously tested 1.0 on two phones. This is not an iOS binary or Play Store release.
 
 Website: https://ai-engineering-grain-to-mountain.vercel.app
-Update instructions: https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/learning-companion/releases/UPDATE-1.1.md
+Update instructions: https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/learning-companion/releases/UPDATE-1.2.md
 SHA256: $digest
 "@
 if (!$release) {
- $body = @{tag_name=$Tag;target_commitish=$head;name="AI Learning $version — Android accounts and sync";draft=$true;prerelease=$true;body=$notes} | ConvertTo-Json
+ $body = @{tag_name=$Tag;target_commitish=$head;name="AI Learning $version — expanded learning path";draft=$true;prerelease=$true;body=$notes} | ConvertTo-Json
  $release = Invoke-RestMethod -Method Post -Uri "$api/releases" -Headers $headers -ContentType 'application/json' -Body $body -TimeoutSec 45
 }
 $uploadBase = $release.upload_url -replace '\{.*$',''
