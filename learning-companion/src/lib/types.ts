@@ -1,3 +1,4 @@
+import type { ThemeMode } from './theme';
 // ---------------------------------------------------------------------------
 // Legacy (v1) curriculum: 21 modules of topic strings and the first 28 days.
 // ---------------------------------------------------------------------------
@@ -158,7 +159,8 @@ export type ResourceV2 = {
 // ---------------------------------------------------------------------------
 export type LessonWork = { tasks: boolean[]; evidence: string; completedAt?: string; reviews: string[] };
 export type Settings = {
-  theme: 'system' | 'light' | 'dark';
+  /** Colour mode (see lib/theme.ts). Older notebooks may hold 'light'/'dark'. */
+  theme: ThemeMode;
   reminders: boolean;
   times: string[];
   weekdays: number[];

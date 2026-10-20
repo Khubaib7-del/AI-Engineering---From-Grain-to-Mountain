@@ -1,5 +1,6 @@
 import { backfillActivity, ACTIVITY_CAP } from './activity';
 import { migrateTopicIds, type LegacyMap } from './migrate';
+import { isThemeValue, normalizeTheme } from './theme';
 import type { Activity, CapstoneWork, LearningState, Lesson, LessonWork, Profile, UnitWork } from './types';
 export const emptyWork = (): LessonWork => ({ tasks: [false, false, false], evidence: '', reviews: [] });
 export const initialState = (): LearningState => ({
@@ -8,7 +9,7 @@ export const initialState = (): LearningState => ({
   topics: {},
   verified: {},
   settings: {
-    theme: 'dark',
+    theme: 'system',
     reminders: false,
     times: ['09:00', '20:00'],
     weekdays: [0, 1, 2, 3, 4, 5, 6],
@@ -90,7 +91,7 @@ export function parseBackup(
     throw new Error('Unrecognized backup format.');
   const s = v.settings;
   if (
-    !['system', 'light', 'dark'].includes(s.theme) ||
+    !isThemeValue(s.theme) ||
     typeof s.reminders !== 'boolean' ||
     !Array.isArray(s.times) ||
     s.times.length < 1 ||
@@ -105,7 +106,7 @@ export function parseBackup(
     throw new Error('Invalid reminder settings.');
   const clean = initialState();
   clean.settings = {
-    theme: s.theme,
+    theme: normalizeTheme(s.theme),
     reminders: false,
     times: [...new Set<string>(s.times)],
     weekdays: [...new Set<number>(s.weekdays)],
