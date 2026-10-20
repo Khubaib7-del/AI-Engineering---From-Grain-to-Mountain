@@ -36,7 +36,7 @@ function BubbleCloud({ b, onPress, peek = false }: { b: Bubble; onPress: () => v
         borderWidth: now ? 1.5 : 1,
         borderColor: now ? c.accent : c.line,
         gap: 4,
-        opacity: pressed ? 0.85 : now ? 1 : 0.97,
+        opacity: pressed ? 0.85 : 1,
         transform: [{ translateY: hovered ? -1 : 0 }],
         boxShadow:
           c.mode === 'contrast'
