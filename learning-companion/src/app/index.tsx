@@ -1,9 +1,9 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
-import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
-import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
-import { MountainMap, type MapNode } from '../components/mountain-map';
+import Animated, { FadeInDown } from 'react-native-reanimated';
+import { RouteBoard, type MapNode } from '../components/route-board';
+import { AsciiMountain, AsciiRule, Backdrop, DitherBand, DitherMountain } from '../components/art';
 import { Heatmap } from '../components/heatmap';
 import { useReduced } from '../components/motion';
 import {
@@ -11,8 +11,10 @@ import {
   BrandLink,
   Button,
   Chip,
+  Disclosure,
   Grid,
   Icon,
+  Label,
   Panel,
   Txt,
   usePageTitle,
@@ -101,24 +103,15 @@ const SOURCES = [
 ];
 
 function demoNodes(): MapNode[] {
-  const statuses: MapNode['status'][] = [
-    'passed',
-    'passed',
-    'passed',
-    'in-progress',
-    'available',
-    'locked',
-    'locked',
-    'locked',
-    'locked',
-  ];
+  const statuses: MapNode['status'][] = ['passed', 'passed', 'passed', 'in-progress', 'locked'];
   const source = hasV2 ? v2Modules : modules;
-  return source.slice(0, 9).map((m, i) => ({
+  return source.slice(0, 5).map((m, i) => ({
     id: m.id,
     kind: 'module',
     title: m.title,
     moduleId: m.id,
     moduleTitle: m.title,
+    phase: 'P1 Foundations',
     status: statuses[i],
     progress: i === 3 ? 0.5 : statuses[i] === 'passed' ? 1 : 0,
     hours: m.hours,
@@ -141,34 +134,17 @@ function demoActivity(): Activity[] {
   return out.sort((a, b) => a.at.localeCompare(b.at));
 }
 
-function Glow({ width, height }: { width: number; height: number }) {
-  const c = usePalette();
-  return (
-    <Svg width={width} height={height} style={{ position: 'absolute', top: 0, left: 0 }} pointerEvents="none">
-      <Defs>
-        <RadialGradient id="g" cx="70%" cy="20%" rx="60%" ry="55%">
-          <Stop offset="0" stopColor={c.ink} stopOpacity={c.bg === '#000000' ? 0.11 : 0.06} />
-          <Stop offset="1" stopColor={c.ink} stopOpacity={0} />
-        </RadialGradient>
-      </Defs>
-      <Rect x={0} y={0} width={width} height={height} fill="url(#g)" />
-    </Svg>
-  );
-}
-
-function SectionHead({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) {
+function SectionHead({ label, title, body }: { label: string; title: string; body?: string }) {
   const c = usePalette();
   const { width } = useWindowDimensions();
   return (
-    <View style={{ gap: 10, maxWidth: 720 }}>
-      <Txt size={12} weight="600" color={c.muted} style={{ letterSpacing: 1.6 }}>
-        {eyebrow.toUpperCase()}
-      </Txt>
-      <Txt size={width >= 900 ? 44 : 32} weight="700" accessibilityRole="header">
+    <View style={{ gap: 12, maxWidth: 680 }}>
+      <Label color={c.accentText}>{c.mode === 'terminal' ? `// ${label.toLowerCase()}` : label}</Label>
+      <Txt size={width >= 900 ? 44 : 32} weight="600" accessibilityRole="header">
         {title}
       </Txt>
       {body && (
-        <Txt size={17} color={c.muted}>
+        <Txt size={18} color={c.muted}>
           {body}
         </Txt>
       )}
@@ -178,42 +154,81 @@ function SectionHead({ eyebrow, title, body }: { eyebrow: string; title: string;
 
 function Faq() {
   const c = usePalette();
-  const [open, setOpen] = useState(0);
   return (
-    <View style={{ borderTopWidth: 1, borderColor: c.line }}>
+    <View style={{ borderBottomWidth: 1, borderColor: c.line }}>
       {FAQ.map(([q, a], i) => (
-        <View key={q} style={{ borderBottomWidth: 1, borderColor: c.line }}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityState={{ expanded: open === i }}
-            onPress={() => setOpen(open === i ? -1 : i)}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 12,
-              paddingVertical: 20,
-              minHeight: 56,
-            }}
-          >
-            <Txt size={17} weight="600" style={{ flex: 1 }}>
-              {q}
-            </Txt>
-            <Icon name={open === i ? 'minus' : 'plus'} size={18} color={c.muted} />
-          </Pressable>
-          {open === i && (
-            <Animated.View entering={FadeIn.duration(160)} style={{ paddingBottom: 20, maxWidth: 760 }}>
-              <Txt color={c.muted}>{a}</Txt>
-            </Animated.View>
-          )}
-        </View>
+        <Disclosure key={q} title={q} initiallyOpen={i === 0}>
+          <Txt color={c.muted} style={{ maxWidth: 680 }}>
+            {a}
+          </Txt>
+        </Disclosure>
       ))}
+    </View>
+  );
+}
+
+/** The hero art: an ASCII range in a terminal-style frame. */
+function HeroArt({ wide }: { wide: boolean }) {
+  const c = usePalette();
+  return (
+    <View
+      style={{
+        borderRadius: c.mode === 'terminal' ? 4 : 24,
+        borderWidth: 1,
+        borderColor: c.line,
+        backgroundColor: c.dark ? 'rgba(5,8,14,.55)' : 'rgba(255,253,248,.7)',
+        overflow: 'hidden',
+      }}
+    >
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 8,
+          paddingHorizontal: 16,
+          minHeight: 44,
+          borderBottomWidth: 1,
+          borderColor: c.line,
+        }}
+      >
+        {[0, 1, 2].map(i => (
+          <View
+            key={i}
+            style={{ width: 10, height: 10, borderRadius: 5, borderWidth: 1.5, borderColor: c.edge }}
+          />
+        ))}
+        <Txt size={13} raw mono color={c.muted} style={{ marginLeft: 8 }}>
+          ~/route $ climb --from zero --to ai-engineer
+        </Txt>
+      </View>
+      <View style={{ paddingTop: 16 }}>
+        <AsciiMountain rows={wide ? 26 : 18} />
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 16,
+          paddingVertical: 12,
+          borderTopWidth: 1,
+          borderColor: c.line,
+          gap: 12,
+        }}
+      >
+        <Txt size={13} raw mono color={c.muted}>
+          base camp · M00
+        </Txt>
+        <Txt size={13} raw mono color={c.accentText}>
+          summit · job-ready ▲
+        </Txt>
+      </View>
     </View>
   );
 }
 
 export default function Landing() {
   const c = usePalette();
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const wide = width >= 900;
   const reduced = useReduced();
   const { session, ready } = useAuth();
@@ -238,13 +253,19 @@ export default function Landing() {
     width: '100%' as const,
     alignSelf: 'center' as const,
   };
+  const section = { ...pad, gap: 32, paddingVertical: wide ? 88 : 56 };
   const sampleUnit = allUnits.find(u => u.unit.id === 'M01.U01') ?? allUnits[0];
   const books = resources.filter(r => r.type === 'book').length;
+  const rule = (seed: number) => (
+    <View style={pad}>
+      <AsciiRule width={wide ? 120 : 44} seed={seed} />
+    </View>
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>
+      <Backdrop haze={false} />
       <ScrollView ref={scroll} contentContainerStyle={{ paddingBottom: 40 }}>
-        <Glow width={width} height={Math.min(1100, height * 1.3)} />
         {/* Nav */}
         <View
           style={{
@@ -252,7 +273,7 @@ export default function Landing() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            minHeight: 76,
+            minHeight: 80,
             gap: 16,
           }}
         >
@@ -261,7 +282,7 @@ export default function Landing() {
             <View style={{ flexDirection: 'row', gap: 4 }}>
               {[
                 ['How it works', 'how'],
-                ['Roadmap', 'roadmap'],
+                ['Route', 'roadmap'],
                 ['Roles', 'roles'],
                 ['FAQ', 'faq'],
               ].map(([label, key]) => (
@@ -269,9 +290,9 @@ export default function Landing() {
                   key={key}
                   accessibilityRole="link"
                   onPress={() => go(key)}
-                  style={{ paddingHorizontal: 14, minHeight: 40, justifyContent: 'center' }}
+                  style={{ paddingHorizontal: 14, minHeight: 44, justifyContent: 'center' }}
                 >
-                  <Txt size={14} color={c.muted}>
+                  <Txt size={16} raw color={c.ink}>
                     {label}
                   </Txt>
                 </Pressable>
@@ -279,9 +300,9 @@ export default function Landing() {
               <Pressable
                 accessibilityRole="link"
                 onPress={() => router.push('/download')}
-                style={{ paddingHorizontal: 14, minHeight: 40, justifyContent: 'center' }}
+                style={{ paddingHorizontal: 14, minHeight: 44, justifyContent: 'center' }}
               >
-                <Txt size={14} color={c.muted}>
+                <Txt size={16} raw color={c.ink}>
                   Android app
                 </Txt>
               </Pressable>
@@ -298,105 +319,109 @@ export default function Landing() {
           style={{
             ...pad,
             flexDirection: wide ? 'row' : 'column',
-            gap: wide ? 56 : 36,
+            gap: wide ? 56 : 32,
             alignItems: wide ? 'center' : 'stretch',
-            paddingTop: wide ? 72 : 32,
-            paddingBottom: wide ? 96 : 56,
+            paddingTop: wide ? 64 : 24,
+            paddingBottom: wide ? 72 : 40,
           }}
         >
-          <Animated.View entering={enter()} style={{ flex: wide ? 1.05 : undefined, gap: 24 }}>
-            <Chip text="Free · open source · web + Android" icon="sparkles" />
+          <Animated.View entering={enter()} style={{ flex: wide ? 1 : undefined, gap: 24 }}>
+            <Chip text="Free · open source · web + Android" icon="sparkles" tone="signal" />
             <Txt
-              size={wide ? 68 : 44}
-              weight="700"
+              size={wide ? 64 : 42}
+              weight="600"
               accessibilityRole="header"
-              style={{ letterSpacing: wide ? -2.6 : -1.6, lineHeight: wide ? 72 : 48 }}
+              style={{ lineHeight: wide ? 68 : 46 }}
             >
               Go from zero to AI engineer. Free.
             </Txt>
-            <Txt size={wide ? 20 : 17} color={c.muted} style={{ maxWidth: 560 }}>
-              One guided path from your first line of Python to a job as an AI Engineer, Forward Deployed
-              Engineer or MLOps Engineer — built on the best free courses. Learn it, practise it, prove it.
+            <Txt size={wide ? 20 : 18} color={c.muted} style={{ maxWidth: 540 }}>
+              One guided route from your first line of Python to a job as an AI, Forward Deployed or MLOps
+              engineer. Built on the best free courses. One clear next step at a time.
             </Txt>
             <View style={{ flexDirection: wide ? 'row' : 'column', gap: 12 }}>
               <Button
-                title="Get started — it’s free"
+                title="Get started, it’s free"
                 icon="arrow-forward"
                 full={!wide}
                 onPress={() => router.push('/start')}
               />
-              <Button title="See the roadmap" secondary full={!wide} onPress={() => go('roadmap')} />
+              <Button title="See the route" secondary full={!wide} onPress={() => go('roadmap')} />
             </View>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 22, rowGap: 8, paddingTop: 8 }}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 20, rowGap: 8, paddingTop: 4 }}>
               {[
                 ...(hasV2
-                  ? [`${v2Modules.length} modules`, `${allUnits.length} units`, `~${TOTAL_HOURS.toLocaleString()} h core`]
-                  : [`${modules.length} modules`, `~${TOTAL_HOURS.toLocaleString()} h`, `${conceptCount} concepts`]),
-                '100% free resources',
-                'Works offline',
+                  ? [
+                      `${v2Modules.length} modules`,
+                      `${allUnits.length} units`,
+                      `~${TOTAL_HOURS.toLocaleString()} h`,
+                    ]
+                  : [
+                      `${modules.length} modules`,
+                      `~${TOTAL_HOURS.toLocaleString()} h`,
+                      `${conceptCount} concepts`,
+                    ]),
+                'works offline',
               ].map(f => (
-                <View key={f} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <Icon name="checkmark" size={14} color={c.muted} />
-                  <Txt size={13} color={c.muted}>
-                    {f}
-                  </Txt>
-                </View>
+                <Txt key={f} size={14} raw mono color={c.muted}>
+                  {`[${f}]`}
+                </Txt>
               ))}
             </View>
           </Animated.View>
-          <Animated.View entering={enter(140)} style={{ flex: wide ? 1 : undefined }}>
-            <MountainMap nodes={nodes} currentId="M03" interactive={false} height={wide ? 560 : 420} />
+          <Animated.View entering={enter(140)} style={{ flex: wide ? 1.05 : undefined }}>
+            <HeroArt wide={wide} />
           </Animated.View>
         </View>
+
+        {rule(2)}
 
         {/* How it works */}
         <View
           onLayout={e => {
             anchors.current.how = e.nativeEvent.layout.y;
           }}
-          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+          style={section}
         >
-          <SectionHead eyebrow="How it works" title="Three steps, repeated until you are job-ready." />
+          <SectionHead label="How it works" title="Three steps, repeated until you are job-ready." />
           <Grid min={280} gap={20}>
             {[
               [
                 'route',
                 '01',
                 'Pick your role',
-                'AI Engineer, Forward Deployed Engineer or MLOps. Tell us your level and weekly hours; an optional placement check skips what you know.',
+                'Tell us your level and weekly hours. An optional placement check skips what you already know.',
               ],
               [
                 'map',
                 '02',
-                'Follow your map',
-                'One next unit at a time, on a trail up the mountain. Each unit names the exact lecture slice to watch, what to read and what to build.',
+                'Follow one next step',
+                'Each unit names the exact lecture slice to watch, what to read and what to build.',
               ],
               [
                 'trophy',
                 '03',
                 'Prove it',
-                'Auto-graded quizzes, short answers checked against a rubric, practice evidence and a GitHub capstone for every module.',
+                'Graded quizzes, short answers checked against a rubric, and a GitHub capstone per module.',
               ],
             ].map(([icon, n, title, body]) => (
-              <Panel key={n} style={{ gap: 14, minHeight: 220 }}>
+              <Panel key={n} style={{ gap: 14, minHeight: 210 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                   <View
                     style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 12,
-                      backgroundColor: c.soft,
+                      width: 48,
+                      height: 48,
+                      borderRadius: c.mode === 'terminal' ? 4 : 14,
+                      backgroundColor: c.accentSoft,
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}
                   >
-                    <Icon name={icon} size={22} />
+                    <Icon name={icon} size={22} color={c.accentText} />
                   </View>
-                  <Txt size={13} weight="600" color={c.faint}>
-                    {n}
-                  </Txt>
+                  <Label>{n}</Label>
                 </View>
-                <Txt size={21} weight="700">
+                <Txt size={22} weight="600">
                   {title}
                 </Txt>
                 <Txt color={c.muted}>{body}</Txt>
@@ -405,64 +430,76 @@ export default function Landing() {
           </Grid>
         </View>
 
-        {/* Roadmap */}
+        {/* Route */}
         <View
           onLayout={e => {
             anchors.current.roadmap = e.nativeEvent.layout.y;
           }}
-          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+          style={section}
         >
           <SectionHead
-            eyebrow="The roadmap"
-            title={hasV2 ? `${ROADMAP.length} phases from base to summit.` : 'Four camps from base to summit.'}
-            body="Every role climbs the same trunk of fundamentals, then branches near the top. Browse the whole map without an account."
+            label="The route"
+            title={
+              hasV2
+                ? `${ROADMAP.length} level lines, base camp to summit.`
+                : 'Four camps from base to summit.'
+            }
+            body="No slopes, no guesswork: each phase is one line of stations. Finish a line, start the next. Browse it all without an account."
           />
-          <Grid min={260} gap={16}>
-            {ROADMAP.map(p => (
-              <Panel key={p.title} style={{ gap: 10, minHeight: 220 }}>
-                <Txt size={13} weight="600" color={c.faint}>
-                  {p.title} · {p.items.length} MODULE{p.items.length === 1 ? '' : 'S'}
-                </Txt>
-                <Txt size={19} weight="700">
-                  {p.caption}
-                </Txt>
-                {p.items.map(m => (
-                  <View key={m.id} style={{ flexDirection: 'row', gap: 10 }}>
-                    <Txt size={13} weight="600" color={c.faint} style={{ width: 32 }}>
-                      {m.id}
-                    </Txt>
-                    <Txt size={14} color={c.muted} style={{ flex: 1 }}>
+          <RouteBoard nodes={nodes} currentId={nodes[3]?.id} interactive={false} compactLabels />
+          <Disclosure title={`All ${ROADMAP.length} phases`} hint="Every module on the route, in order">
+            <Grid min={260} gap={16}>
+              {ROADMAP.map(p => (
+                <View
+                  key={p.title}
+                  style={{
+                    gap: 6,
+                    padding: 16,
+                    borderRadius: 14,
+                    borderWidth: 1,
+                    borderColor: c.line,
+                    backgroundColor: c.surface,
+                  }}
+                >
+                  <Label color={c.accentText}>{p.title}</Label>
+                  <Txt size={18} weight="600">
+                    {p.caption}
+                  </Txt>
+                  {p.items.map(m => (
+                    <Txt key={m.id} size={15} color={c.muted}>
+                      <Txt size={14} raw mono color={c.ink}>
+                        {m.id}
+                      </Txt>{' '}
                       {m.title}
                     </Txt>
-                  </View>
-                ))}
-              </Panel>
-            ))}
-          </Grid>
-          <Button title="Browse the map" secondary icon="arrow-forward" onPress={() => router.push('/map')} />
+                  ))}
+                </View>
+              ))}
+            </Grid>
+          </Disclosure>
+          <Button
+            title="Browse the full map"
+            secondary
+            icon="arrow-forward"
+            onPress={() => router.push('/map')}
+          />
         </View>
+
+        {rule(5)}
 
         {/* Anatomy of a unit */}
         {sampleUnit && (
-          <View
-            style={{
-              ...pad,
-              gap: 32,
-              paddingVertical: wide ? 72 : 48,
-              borderTopWidth: 1,
-              borderColor: c.line,
-            }}
-          >
+          <View style={section}>
             <SectionHead
-              eyebrow="Anatomy of a unit"
-              title="Learn → Read → Practice → Assess."
-              body="No vague “selected videos”. Each unit names the exact slice of one primary resource, fills the gaps it leaves, and checks that you can use it."
+              label="Inside a unit"
+              title="Learn, read, practise, prove."
+              body="Each unit names the exact slice of one primary resource and checks that you can use it."
             />
             <Panel style={{ gap: 18 }}>
-              <Txt size={13} weight="600" color={c.muted}>
-                {sampleUnit.module.id} · {sampleUnit.module.title} · {sampleUnit.unit.id}
-              </Txt>
-              <Txt size={wide ? 28 : 22} weight="700">
+              <Label>
+                {sampleUnit.module.id} · {sampleUnit.unit.id}
+              </Label>
+              <Txt size={wide ? 28 : 22} weight="600">
                 {sampleUnit.unit.title}
               </Txt>
               <Grid min={220} gap={12}>
@@ -470,18 +507,14 @@ export default function Landing() {
                   [
                     'play-circle-outline',
                     'Learn',
-                    `${sampleUnit.unit.learn.title}${sampleUnit.unit.learn.slice ? ` — ${sampleUnit.unit.learn.slice}` : ''}`,
+                    `${sampleUnit.unit.learn.title}${sampleUnit.unit.learn.slice ? `: ${sampleUnit.unit.learn.slice}` : ''}`,
                   ],
                   ['book-outline', 'Read', sampleUnit.unit.read?.title ?? 'Matching chapter'],
-                  [
-                    'hammer',
-                    'Practice',
-                    `${sampleUnit.unit.practice.title}. Done when: ${sampleUnit.unit.practice.done_when}`,
-                  ],
+                  ['hammer', 'Practice', sampleUnit.unit.practice.title],
                   [
                     'clipboard',
                     'Assess',
-                    `${sampleUnit.unit.quiz.filter(q => q.kind === 'mcq').length} auto-graded questions (80% to pass) + ${sampleUnit.unit.quiz.filter(q => q.kind === 'short').length} short answer checked against a rubric`,
+                    `${sampleUnit.unit.quiz.filter(q => q.kind === 'mcq').length} graded questions, 80% to pass`,
                   ],
                 ].map(([icon, label, body], i) => (
                   <View
@@ -493,16 +526,16 @@ export default function Landing() {
                       backgroundColor: c.raised,
                       borderWidth: 1,
                       borderColor: c.line,
-                      minHeight: 170,
+                      minHeight: 150,
                     }}
                   >
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                      <Icon name={icon} size={18} />
-                      <Txt size={13} weight="700">
+                      <Icon name={icon} size={18} color={c.accentText} />
+                      <Label color={c.ink}>
                         {String(i + 1).padStart(2, '0')} · {label}
-                      </Txt>
+                      </Label>
                     </View>
-                    <Txt size={14} color={c.muted}>
+                    <Txt size={16} color={c.muted}>
                       {body}
                     </Txt>
                   </View>
@@ -517,69 +550,78 @@ export default function Landing() {
           onLayout={e => {
             anchors.current.roles = e.nativeEvent.layout.y;
           }}
-          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+          style={section}
         >
-          <SectionHead eyebrow="Roles" title="Three jobs, one trunk." />
+          <SectionHead label="Roles" title="Three jobs, one shared trunk." />
           <Grid min={300} gap={16}>
             {tracks.map(t => (
-              <Panel key={t.id} style={{ gap: 12, minHeight: 300 }}>
+              <Panel key={t.id} style={{ gap: 12 }}>
                 <Icon
                   name={t.id === 'ai-engineer' ? 'sparkles' : t.id === 'fde' ? 'briefcase' : 'server'}
                   size={24}
+                  color={c.accentText}
                 />
-                <Txt size={22} weight="700">
+                <Txt size={22} weight="600">
                   {t.title}
                 </Txt>
-                <Txt color={c.muted}>{t.summary}</Txt>
-                <View style={{ gap: 6 }}>
+                <Txt color={c.muted} numberOfLines={4}>
+                  {t.summary}
+                </Txt>
+                <Disclosure title="What you will be able to do">
                   {t.outcomes.map(o => (
                     <View key={o} style={{ flexDirection: 'row', gap: 8 }}>
-                      <Icon name="checkmark" size={16} color={c.muted} />
-                      <Txt size={14} style={{ flex: 1 }}>
+                      <Icon name="checkmark" size={16} color={c.accentText} />
+                      <Txt size={16} style={{ flex: 1 }}>
                         {o}
                       </Txt>
                     </View>
                   ))}
-                </View>
-                <Txt size={13} color={c.faint}>
-                  Portfolio: {t.portfolio.join(' · ')}
-                </Txt>
+                </Disclosure>
               </Panel>
             ))}
           </Grid>
         </View>
 
         {/* Progress */}
-        <View
-          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
-        >
-          <SectionHead
-            eyebrow="Progress"
-            title="Your work, not your clicks."
-            body="Every quiz, practice note and capstone is logged with its date. A year of showing up, at a glance."
-          />
-          <Panel>
-            <Txt size={13} color={c.faint}>
-              Example activity
-            </Txt>
-            <Heatmap activity={activity} />
-          </Panel>
+        <View style={{ ...section, gap: 0 }}>
+          <DitherBand height={64} />
+          <View style={{ gap: 32, paddingTop: 24 }}>
+            <SectionHead
+              label="Progress"
+              title="Your work, not your clicks."
+              body="Every quiz, practice note and capstone is logged with its date."
+            />
+            <Panel>
+              <Label>Example activity</Label>
+              <Heatmap activity={activity} />
+            </Panel>
+          </View>
         </View>
 
         {/* Sources */}
-        <View
-          style={{ ...pad, gap: 24, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
-        >
+        <View style={{ ...section, gap: 24 }}>
           <SectionHead
-            eyebrow="Sources"
-            title="Built on the best free teaching in the world."
+            label="Sources"
+            title="Built on the best free teaching."
             body={`${resources.length} hand-picked resources, including ${books} free books.`}
           />
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 28, rowGap: 12 }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
             {SOURCES.map(s => (
-              <Txt key={s} size={15} color={c.muted}>
-                {s}
-              </Txt>
+              <View
+                key={s}
+                style={{
+                  paddingHorizontal: 14,
+                  paddingVertical: 8,
+                  borderRadius: 999,
+                  borderWidth: 1,
+                  borderColor: c.line,
+                  backgroundColor: c.surface,
+                }}
+              >
+                <Txt size={15} raw>
+                  {s}
+                </Txt>
+              </View>
             ))}
           </View>
         </View>
@@ -589,30 +631,45 @@ export default function Landing() {
           onLayout={e => {
             anchors.current.faq = e.nativeEvent.layout.y;
           }}
-          style={{ ...pad, gap: 24, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+          style={{ ...section, gap: 24 }}
         >
-          <SectionHead eyebrow="FAQ" title="Questions, answered." />
+          <SectionHead label="FAQ" title="Questions, answered." />
           <Faq />
         </View>
 
         {/* Final CTA */}
-        <View style={{ ...pad, paddingVertical: wide ? 96 : 56, alignItems: 'center', gap: 20 }}>
-          <Txt size={wide ? 52 : 34} weight="700" style={{ textAlign: 'center', letterSpacing: -1.6 }}>
-            Start with one grain.
-          </Txt>
-          <Txt size={17} color={c.muted} style={{ textAlign: 'center', maxWidth: 520 }}>
-            A minute to set up. A clear next step every day after.
-          </Txt>
-          <Button title="Get started" icon="arrow-forward" onPress={() => router.push('/start')} />
+        <View style={{ ...pad, paddingTop: wide ? 40 : 24, gap: 0 }}>
+          <View
+            style={{
+              borderRadius: c.mode === 'terminal' ? 4 : 28,
+              borderWidth: 1,
+              borderColor: c.line,
+              backgroundColor: c.surface,
+              overflow: 'hidden',
+            }}
+          >
+            <View
+              style={{ alignItems: 'center', gap: 16, paddingTop: wide ? 64 : 40, paddingHorizontal: 20 }}
+            >
+              <Txt size={wide ? 52 : 34} weight="600" style={{ textAlign: 'center' }}>
+                Start with one grain.
+              </Txt>
+              <Txt size={18} color={c.muted} style={{ textAlign: 'center', maxWidth: 520 }}>
+                A minute to set up. A clear next step every day after.
+              </Txt>
+              <Button title="Get started" icon="arrow-forward" onPress={() => router.push('/start')} />
+            </View>
+            <DitherMountain height={wide ? 200 : 130} />
+          </View>
         </View>
 
         {/* Footer */}
-        <View style={{ ...pad, borderTopWidth: 1, borderColor: c.line, paddingTop: 32, gap: 28 }}>
+        <View style={{ ...pad, paddingTop: 48, gap: 28 }}>
           <View style={{ flexDirection: wide ? 'row' : 'column', gap: 28, justifyContent: 'space-between' }}>
             <View style={{ gap: 8, maxWidth: 320 }}>
               <BrandLink href="/?about=1" />
-              <Txt size={13} color={c.muted}>
-                A free, guided path from zero to an AI engineering job.
+              <Txt size={15} color={c.muted}>
+                A free, guided route from zero to an AI engineering job.
               </Txt>
             </View>
             <View style={{ flexDirection: 'row', gap: 48, flexWrap: 'wrap' }}>
@@ -641,16 +698,15 @@ export default function Landing() {
                 ],
               ].map(([head, links]) => (
                 <View key={head as string} style={{ gap: 10 }}>
-                  <Txt size={13} weight="700">
-                    {head as string}
-                  </Txt>
+                  <Label color={c.ink}>{head as string}</Label>
                   {(links as string[][]).map(([label, href]) => (
                     <Pressable
                       key={label}
                       accessibilityRole="link"
                       onPress={() => router.push(href as never)}
+                      style={{ minHeight: 32, justifyContent: 'center' }}
                     >
-                      <Txt size={13} color={c.muted}>
+                      <Txt size={15} color={c.muted}>
                         {label}
                       </Txt>
                     </Pressable>
@@ -659,7 +715,7 @@ export default function Landing() {
               ))}
             </View>
           </View>
-          <Txt size={12} color={c.faint}>
+          <Txt size={14} color={c.muted}>
             © {new Date().getFullYear()} {APP_NAME}. Course content belongs to its creators; links open their
             original sites.
           </Txt>
