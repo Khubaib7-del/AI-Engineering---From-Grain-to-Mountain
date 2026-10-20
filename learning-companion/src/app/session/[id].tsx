@@ -105,7 +105,7 @@ export default function Session() {
       )}
       <Panel style={{ backgroundColor: c.hero }}>
         <Pieces tasks={saved.tasks} />
-        <Txt size={12} weight="600" color={c.accent}>
+        <Txt size={12} weight="600" color={c.accentText}>
           {complete ? 'WORK SAVED' : 'WATCH → BUILD → RECALL'}
         </Txt>
       </Panel>
@@ -200,9 +200,9 @@ export default function Session() {
               opacity: pressed ? 0.65 : 1,
             })}
           >
-            <Icon name={saved.tasks[i] ? 'checkmark-circle' : 'ellipse-outline'} color={c.accent} size={26} />
+            <Icon name={saved.tasks[i] ? 'checkmark-circle' : 'ellipse-outline'} color={c.accentText} size={26} />
             <View style={{ flex: 1, gap: 6 }}>
-              <Txt size={14} weight="700" color={c.accent}>
+              <Txt size={14} weight="700" color={c.accentText}>
                 {['01 / WATCH OR READ', '02 / BUILD', '03 / RECALL'][i]}
               </Txt>
               <Txt>{task.description}</Txt>
@@ -238,7 +238,7 @@ export default function Session() {
         />
       </Panel>
       {!!message && (
-        <Txt accessibilityLiveRegion="polite" color={c.accent} weight="600">
+        <Txt accessibilityLiveRegion="polite" color={c.accentText} weight="600">
           {message}
         </Txt>
       )}

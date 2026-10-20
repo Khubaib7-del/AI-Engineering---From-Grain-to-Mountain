@@ -86,62 +86,67 @@ import {
   ZoomOut,
 } from 'lucide-react-native';
 import { BrandMark } from './brand';
+import { Backdrop } from './art';
 import { MotionPress, MovingProgress } from './motion';
 import { useLearning } from '../lib/store';
+import { PALETTES, type Palette } from '../lib/palettes';
+import { resolveTheme, type ResolvedMode } from '../lib/theme';
 import { useAuth } from '../lib/auth';
 
 export const APP_NAME = 'Grain to Mountain';
 
 // ---------------------------------------------------------------------------
-// Palette: true-black monochrome, charcoal surfaces, white/silver controls.
-// `signal` is the one quiet tone for "current / next" (desaturated ice).
+// Ascent identity: four colour modes (Dawn, Dusk, Terminal, High contrast).
+// Palettes live in lib/palettes.ts so tests can check their contrast.
 // ---------------------------------------------------------------------------
-export const light = {
-  bg: '#F3F3F3',
-  surface: '#FFFFFF',
-  raised: '#FAFAFA',
-  ink: '#0E0E0E',
-  muted: '#5E5E5E',
-  faint: '#8A8A8A',
-  line: '#DADADA',
-  accent: '#111111',
-  soft: '#EAEAEA',
-  onAccent: '#FFFFFF',
-  danger: '#B42335',
-  signal: '#4F6478',
-  glass: 'rgba(255,255,255,.86)',
-  hero: '#ECECEC',
-  heat: ['#E4E4E4', '#C2C2C2', '#8E8E8E', '#555555', '#111111'],
-};
-export const dark = {
-  bg: '#000000',
-  surface: '#0E0E0E',
-  raised: '#151515',
-  ink: '#F5F5F5',
-  muted: '#A3A3A3',
-  faint: '#6E6E6E',
-  line: '#262626',
-  accent: '#F2F2F2',
-  soft: '#1B1B1B',
-  onAccent: '#080808',
-  danger: '#FF8D9C',
-  signal: '#C9D6E3',
-  glass: 'rgba(16,16,16,.88)',
-  hero: '#121212',
-  heat: ['#141414', '#2A2A2A', '#5A5A5A', '#9A9A9A', '#E6E6E6'],
-};
-export type Palette = typeof dark;
+export type { Palette } from '../lib/palettes';
+export const light = PALETTES.dawn;
+export const dark = PALETTES.dusk;
 
-export function usePalette(): Palette {
+export function useThemeMode(): ResolvedMode {
   const { state } = useLearning();
   const system = useColorScheme();
-  return (state.settings.theme === 'system' ? system : state.settings.theme) === 'light' ? light : dark;
+  return resolveTheme(state.settings.theme, system === 'light' ? 'light' : system === 'dark' ? 'dark' : null);
+}
+export function usePalette(): Palette {
+  return PALETTES[useThemeMode()];
 }
 export const useWide = () => useWindowDimensions().width >= 900;
 export const isWeb = Platform.OS === 'web';
-const webFont = isWeb
-  ? { fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", sans-serif' }
-  : {};
+
+// Geist for text, Geist Mono for labels, data and ASCII. Families are loaded in
+// the root layout; on web each name carries a system fallback stack.
+const SANS: Record<string, string> = {
+  '400': 'Geist_400Regular',
+  '500': 'Geist_500Medium',
+  '600': 'Geist_600SemiBold',
+  '700': 'Geist_700Bold',
+};
+const MONO: Record<string, string> = {
+  '400': 'GeistMono_400Regular',
+  '500': 'GeistMono_500Medium',
+  '600': 'GeistMono_600SemiBold',
+  '700': 'GeistMono_600SemiBold',
+};
+const SANS_FALLBACK = ', Geist, Inter, system-ui, -apple-system, "Segoe UI", sans-serif';
+const MONO_FALLBACK = ', "Geist Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace';
+export function fontFor(weight: TextStyle['fontWeight'] = '400', mono = false): TextStyle {
+  const w = String(weight === 'bold' ? '700' : weight === 'normal' ? '400' : (weight ?? '400'));
+  const key = Number(w) >= 700 ? '700' : Number(w) >= 600 ? '600' : Number(w) >= 500 ? '500' : '400';
+  const family = (mono ? MONO : SANS)[key];
+  return isWeb
+    ? ({ fontFamily: family + (mono ? MONO_FALLBACK : SANS_FALLBACK), fontWeight: key } as TextStyle)
+    : { fontFamily: family };
+}
+/** Readability floor: small legacy sizes step up so body copy is 16–17 px. */
+export function readable(size: number) {
+  if (size < 12) return size;
+  if (size === 12) return 13;
+  if (size === 13) return 15;
+  if (size === 14 || size === 15) return 16;
+  if (size === 16) return 17;
+  return size;
+}
 
 /** Sets the browser tab title while a screen is focused (tabs stay mounted). */
 export function usePageTitle(title?: string) {
@@ -155,35 +160,60 @@ export function usePageTitle(title?: string) {
 
 export function Txt({
   children,
-  size = 16,
+  size = 17,
   weight = '400',
   color,
+  mono,
+  raw = false,
   style,
   ...rest
 }: React.ComponentProps<typeof Text> & {
   size?: number;
   weight?: TextStyle['fontWeight'];
   color?: ColorValue;
+  /** Geist Mono. Terminal mode sets every heading in mono too. */
+  mono?: boolean;
+  /** Skip the readability floor (art, tight data cells). */
+  raw?: boolean;
 }) {
   const c = usePalette();
+  const px = raw ? size : readable(size);
+  const useMono = mono ?? (c.mode === 'terminal' && px >= 20);
   return (
     <Text
       {...rest}
       style={[
         {
           color: color ?? c.ink,
-          fontSize: size,
-          fontWeight: weight,
-          lineHeight: Math.round(size * (size >= 32 ? 1.1 : size >= 20 ? 1.3 : 1.5)),
-          letterSpacing: size >= 40 ? -1.6 : size >= 28 ? -0.9 : size >= 20 ? -0.4 : -0.1,
+          fontSize: px,
+          lineHeight: Math.round(px * (px >= 32 ? 1.12 : px >= 20 ? 1.3 : 1.55)),
+          letterSpacing: useMono ? 0 : px >= 40 ? -1.4 : px >= 28 ? -0.8 : px >= 20 ? -0.3 : 0,
           fontVariant: ['tabular-nums'],
-          ...webFont,
+          ...fontFor(weight, useMono),
         },
         style,
       ]}
     >
       {children}
     </Text>
+  );
+}
+
+/** Small mono label for metadata, IDs and data (replaces shouty eyebrows). */
+export function Label({
+  children,
+  color,
+  style,
+}: {
+  children: React.ReactNode;
+  color?: ColorValue;
+  style?: TextStyle;
+}) {
+  const c = usePalette();
+  return (
+    <Txt size={13} raw mono weight="500" color={color ?? c.muted} style={{ letterSpacing: 0.4, ...style }}>
+      {children}
+    </Txt>
   );
 }
 
@@ -288,9 +318,7 @@ export function Glass({ children, style }: { children?: React.ReactNode; style?:
         style,
       ]}
     >
-      {blur && (
-        <BlurView tint={c === dark ? 'dark' : 'light'} intensity={60} style={StyleSheet.absoluteFill} />
-      )}
+      {blur && <BlurView tint={c.dark ? 'dark' : 'light'} intensity={60} style={StyleSheet.absoluteFill} />}
       {children}
     </View>
   );
@@ -316,12 +344,14 @@ export function Panel({
           borderCurve: 'continuous',
           borderWidth: 1,
           borderColor: c.line,
-          padding: padded ? 22 : 0,
-          gap: 14,
+          padding: padded ? 24 : 0,
+          gap: 16,
           boxShadow:
-            c === dark
-              ? 'inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 32px rgba(0,0,0,0.45)'
-              : '0 1px 2px rgba(0,0,0,0.04), 0 10px 28px rgba(0,0,0,0.06)',
+            c.mode === 'contrast' || c.mode === 'terminal'
+              ? 'none'
+              : c.dark
+                ? 'inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 40px rgba(0,0,0,0.35)'
+                : '0 1px 2px rgba(40,30,10,0.05), 0 12px 32px rgba(40,50,80,0.08)',
         },
         style,
       ]}
@@ -383,16 +413,7 @@ export function Split({ children, gap = 20 }: { children: React.ReactNode; gap?:
 
 export function Eyebrow({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = usePalette();
-  return (
-    <Txt
-      size={12}
-      weight="600"
-      color={color ?? c.muted}
-      style={{ letterSpacing: 1.4, textTransform: 'uppercase' }}
-    >
-      {children}
-    </Txt>
-  );
+  return <Label color={color ?? c.accentText}>{children}</Label>;
 }
 
 export function Meter({ value, label }: { value: number; label: string }) {
@@ -434,6 +455,7 @@ export function Button({
 }) {
   const c = usePalette();
   const fg = secondary || ghost ? c.ink : c.onAccent;
+  const term = c.mode === 'terminal';
   return (
     <MotionPress
       accessibilityRole="button"
@@ -443,26 +465,33 @@ export function Button({
       disabled={disabled || busy}
       onPress={onPress}
       style={{
-        minHeight: compact ? 40 : 48,
-        backgroundColor: ghost ? 'transparent' : secondary ? c.soft : c.accent,
-        borderRadius: compact ? 12 : 14,
+        minHeight: compact ? 44 : 52,
+        backgroundColor: ghost ? 'transparent' : secondary ? c.surface : c.accent,
+        borderRadius: term ? 4 : compact ? 12 : 14,
         borderCurve: 'continuous',
-        paddingVertical: compact ? 8 : 12,
-        paddingHorizontal: compact ? 14 : 20,
+        paddingVertical: compact ? 8 : 14,
+        paddingHorizontal: compact ? 16 : 24,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         gap: 10,
         opacity: disabled ? 0.45 : 1,
         borderWidth: 1,
-        borderColor: secondary || ghost ? c.line : 'transparent',
+        borderColor: secondary ? c.edge : ghost ? 'transparent' : c.accent,
         alignSelf: full ? 'stretch' : 'flex-start',
         ...((isWeb ? { cursor: disabled ? 'not-allowed' : 'pointer' } : {}) as ViewStyle),
       }}
     >
       {busy && <ActivityIndicator size="small" color={fg} />}
-      <Txt size={compact ? 14 : 15} weight="600" color={fg} style={{ flexShrink: 1, textAlign: 'center' }}>
-        {title}
+      <Txt
+        size={compact ? 15 : 16}
+        raw
+        weight="600"
+        mono={term}
+        color={fg}
+        style={{ flexShrink: 1, textAlign: 'center' }}
+      >
+        {term && !secondary && !ghost ? `> ${title}` : title}
       </Txt>
       {icon && !busy && <Icon name={icon} size={18} color={fg} />}
     </MotionPress>
@@ -504,7 +533,7 @@ export function Checkbox({
           height: 22,
           borderRadius: 6,
           borderWidth: 1.5,
-          borderColor: checked ? c.accent : c.faint,
+          borderColor: checked ? c.accent : c.edge,
           backgroundColor: checked ? c.accent : 'transparent',
           alignItems: 'center',
           justifyContent: 'center',
@@ -512,7 +541,7 @@ export function Checkbox({
       >
         {checked && <Icon name="checkmark" size={15} color={c.onAccent} />}
       </View>
-      <Txt size={15} style={{ flex: 1 }}>
+      <Txt size={16} style={{ flex: 1 }}>
         {label}
       </Txt>
     </Pressable>
@@ -529,7 +558,7 @@ export function Chip({
   tone?: 'default' | 'strong' | 'signal';
 }) {
   const c = usePalette();
-  const fg = tone === 'strong' ? c.onAccent : tone === 'signal' ? c.signal : c.muted;
+  const fg = tone === 'strong' ? c.onAccent : tone === 'signal' ? c.accentText : c.muted;
   return (
     <View
       style={{
@@ -538,15 +567,15 @@ export function Chip({
         gap: 6,
         paddingHorizontal: 10,
         paddingVertical: 4,
-        borderRadius: 999,
+        borderRadius: c.mode === 'terminal' ? 2 : 999,
         borderWidth: 1,
-        borderColor: tone === 'strong' ? c.accent : tone === 'signal' ? c.signal : c.line,
-        backgroundColor: tone === 'strong' ? c.accent : 'transparent',
+        borderColor: tone === 'strong' ? c.accent : tone === 'signal' ? c.accentSoft : c.line,
+        backgroundColor: tone === 'strong' ? c.accent : tone === 'signal' ? c.accentSoft : c.surface,
         alignSelf: 'flex-start',
       }}
     >
-      {icon && <Icon name={icon} size={13} color={fg} />}
-      <Txt size={12} weight="600" color={fg}>
+      {icon && <Icon name={icon} size={14} color={fg} />}
+      <Txt size={13} raw mono weight="500" color={fg}>
         {text}
       </Txt>
     </View>
@@ -636,9 +665,9 @@ export function BrandLink({
     >
       <View
         style={{
-          width: 30,
-          height: 30,
-          borderRadius: 9,
+          width: 32,
+          height: 32,
+          borderRadius: c.mode === 'terminal' ? 3 : 9,
           backgroundColor: c.accent,
           alignItems: 'center',
           justifyContent: 'center',
@@ -647,8 +676,8 @@ export function BrandLink({
         <BrandMark size={20} color={c.onAccent} />
       </View>
       {!compact && (
-        <Txt size={size} weight="700" style={{ letterSpacing: -0.3 }}>
-          {APP_NAME}
+        <Txt size={size} raw weight="600" mono={c.mode === 'terminal'} style={{ letterSpacing: -0.2 }}>
+          {c.mode === 'terminal' ? 'grain_to_mountain' : APP_NAME}
         </Txt>
       )}
     </Pressable>
@@ -666,7 +695,7 @@ export function TopNav() {
   return (
     <View
       accessibilityRole="header"
-      style={{ borderBottomWidth: 1, borderColor: c.line, backgroundColor: c.bg }}
+      style={{ borderBottomWidth: 1, borderColor: c.line, backgroundColor: c.glass }}
     >
       <View
         style={{
@@ -693,19 +722,24 @@ export function TopNav() {
                 accessibilityState={{ selected }}
                 onPress={() => router.navigate(t.route)}
                 style={state => ({
-                  minHeight: 40,
-                  paddingHorizontal: 16,
+                  minHeight: 44,
+                  paddingHorizontal: 18,
                   justifyContent: 'center',
-                  borderRadius: 10,
+                  borderRadius: c.mode === 'terminal' ? 3 : 999,
                   backgroundColor: selected
-                    ? c.soft
+                    ? c.accentSoft
                     : (state as { hovered?: boolean }).hovered
-                      ? c.raised
+                      ? c.soft
                       : 'transparent',
                 })}
               >
-                <Txt size={14} weight={selected ? '600' : '500'} color={selected ? c.ink : c.muted}>
-                  {t.title}
+                <Txt
+                  size={16}
+                  raw
+                  weight={selected ? '600' : '500'}
+                  color={selected ? c.accentText : c.muted}
+                >
+                  {c.mode === 'terminal' && selected ? `[${t.title}]` : t.title}
                 </Txt>
               </Pressable>
             );
@@ -819,12 +853,12 @@ export function ToastHost() {
           paddingVertical: 12,
           paddingLeft: 18,
           paddingRight: 8,
-          borderRadius: 16,
-          backgroundColor: c.accent,
+          borderRadius: c.mode === 'terminal' ? 4 : 16,
+          backgroundColor: c.ink,
           boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
         }}
       >
-        <Txt size={14} weight="500" color={c.onAccent} style={{ flex: 1 }}>
+        <Txt size={14} weight="500" color={c.bg} style={{ flex: 1 }}>
           {toast.message}
         </Txt>
         {toast.action && (
@@ -836,7 +870,7 @@ export function ToastHost() {
             }}
             style={{ minHeight: 36, paddingHorizontal: 12, justifyContent: 'center' }}
           >
-            <Txt size={14} weight="700" color={c.onAccent} style={{ textDecorationLine: 'underline' }}>
+            <Txt size={14} weight="700" color={c.bg} style={{ textDecorationLine: 'underline' }}>
               {toast.action.label}
             </Txt>
           </Pressable>
@@ -847,7 +881,7 @@ export function ToastHost() {
           onPress={hideToast}
           style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Icon name="close" size={16} color={c.onAccent} />
+          <Icon name="close" size={16} color={c.bg} />
         </Pressable>
       </View>
     </View>
@@ -963,13 +997,13 @@ export function Screen({
         </Pressable>
       )}
       {!!title && (
-        <View style={{ gap: 8, maxWidth: 820 }}>
+        <View style={{ gap: 8, maxWidth: 760 }}>
           {!!eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <Txt size={wide ? 40 : 28} weight="700" accessibilityRole="header">
-            {title}
+          <Txt size={wide ? 40 : 30} weight="600" accessibilityRole="header">
+            {c.mode === 'terminal' ? `# ${title}` : title}
           </Txt>
           {!!subtitle && (
-            <Txt color={c.muted} size={wide ? 17 : 15}>
+            <Txt color={c.muted} size={wide ? 18 : 17}>
               {subtitle}
             </Txt>
           )}
@@ -999,13 +1033,14 @@ export function Screen({
     </>
   );
   const pad = {
-    paddingHorizontal: wide ? 40 : 18,
+    paddingHorizontal: wide ? 40 : 20,
     width: '100%' as const,
     maxWidth: width + (wide ? 80 : 36),
     alignSelf: 'center' as const,
   };
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>
+      <Backdrop />
       {desktopNav && (
         <View style={{ paddingTop: insets.top }}>
           <TopNav />
@@ -1016,9 +1051,9 @@ export function Screen({
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
             ...pad,
-            paddingTop: desktopNav ? 32 : insets.top + 8,
-            paddingBottom: 96,
-            gap: wide ? 28 : 20,
+            paddingTop: desktopNav ? 40 : insets.top + 8,
+            paddingBottom: 140,
+            gap: wide ? 32 : 24,
           }}
         >
           {header}
@@ -1049,18 +1084,12 @@ export function Section({
   aside?: string;
   action?: React.ReactNode;
 }) {
-  const c = usePalette();
   return (
     <View style={styles.row}>
-      <Txt style={{ flexShrink: 1 }} size={20} weight="600" accessibilityRole="header">
+      <Txt style={{ flexShrink: 1 }} size={21} weight="600" accessibilityRole="header">
         {title}
       </Txt>
-      {action ??
-        (aside ? (
-          <Txt size={13} color={c.muted}>
-            {aside}
-          </Txt>
-        ) : null)}
+      {action ?? (aside ? <Label>{aside}</Label> : null)}
     </View>
   );
 }
@@ -1092,11 +1121,11 @@ export function Row({
       style={({ pressed }) => ({
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 14,
-        paddingVertical: 14,
-        borderBottomWidth: last ? 0 : StyleSheet.hairlineWidth,
+        gap: 16,
+        paddingVertical: 16,
+        borderBottomWidth: last ? 0 : 1,
         borderColor: c.line,
-        minHeight: 64,
+        minHeight: 68,
         opacity: pressed ? 0.6 : 1,
       })}
     >
@@ -1112,7 +1141,7 @@ export function Row({
             alignItems: 'center',
           }}
         >
-          <Txt size={12} weight="700">
+          <Txt size={13} raw mono weight="600">
             {leading}
           </Txt>
         </View>
@@ -1120,16 +1149,16 @@ export function Row({
         leading
       )}
       <View style={{ flex: 1, gap: 2 }}>
-        <Txt size={15} weight="600">
+        <Txt size={16} weight="600">
           {title}
         </Txt>
         {subtitle && (
-          <Txt size={13} color={c.muted}>
+          <Txt size={15} color={c.muted}>
             {subtitle}
           </Txt>
         )}
       </View>
-      {trailing ?? <Icon name="chevron-forward" size={17} color={c.faint} />}
+      {trailing ?? <Icon name="chevron-forward" size={18} color={c.muted} />}
     </Pressable>
   );
 }
@@ -1186,17 +1215,17 @@ export function Tag({
       accessibilityState={{ selected: active }}
       onPress={onPress}
       style={{
-        minHeight: 40,
-        paddingHorizontal: 16,
+        minHeight: 44,
+        paddingHorizontal: 18,
         paddingVertical: 8,
-        borderRadius: 999,
+        borderRadius: c.mode === 'terminal' ? 3 : 999,
         borderWidth: 1,
-        borderColor: active ? c.accent : c.line,
-        backgroundColor: active ? c.accent : 'transparent',
+        borderColor: active ? c.accent : c.edge,
+        backgroundColor: active ? c.accent : c.surface,
         justifyContent: 'center',
       }}
     >
-      <Txt size={14} weight="600" color={active ? c.onAccent : c.muted}>
+      <Txt size={15} raw weight="600" color={active ? c.onAccent : c.ink}>
         {text}
       </Txt>
     </MotionPress>
@@ -1211,9 +1240,135 @@ export const inputStyle = (c: Palette): ViewStyle & TextStyle => ({
   backgroundColor: c.surface,
   color: c.ink,
   borderWidth: 1,
-  borderColor: c.line,
-  borderRadius: 14,
+  borderColor: c.edge,
+  borderRadius: c.mode === 'terminal' ? 3 : 14,
   padding: 14,
-  fontSize: 16,
-  minHeight: 50,
+  fontSize: 17,
+  minHeight: 52,
+  ...fontFor('400', c.mode === 'terminal'),
 });
+
+/** Plain-language disclosure: secondary detail stays folded until asked for. */
+export function Disclosure({
+  title,
+  hint,
+  children,
+  initiallyOpen = false,
+  testID,
+  first = false,
+}: {
+  title: string;
+  hint?: string;
+  children: React.ReactNode;
+  initiallyOpen?: boolean;
+  testID?: string;
+  /** No divider above the first disclosure in a card. */
+  first?: boolean;
+}) {
+  const c = usePalette();
+  const [open, setOpen] = useState(initiallyOpen);
+  return (
+    <View style={{ borderTopWidth: first ? 0 : 1, borderColor: c.line }}>
+      <Pressable
+        testID={testID}
+        accessibilityRole="button"
+        accessibilityState={{ expanded: open }}
+        accessibilityLabel={`${title}${hint ? `, ${hint}` : ''}`}
+        onPress={() => setOpen(o => !o)}
+        style={({ pressed }) => ({
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 12,
+          minHeight: 56,
+          paddingVertical: 12,
+          opacity: pressed ? 0.7 : 1,
+        })}
+      >
+        <View style={{ flex: 1, gap: 2 }}>
+          <Txt size={16} weight="600">
+            {title}
+          </Txt>
+          {!!hint && (
+            <Txt size={15} color={c.muted}>
+              {hint}
+            </Txt>
+          )}
+        </View>
+        <View
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: c.soft,
+            transform: [{ rotate: open ? '180deg' : '0deg' }],
+          }}
+        >
+          <Icon name="chevron-down" size={18} color={c.ink} />
+        </View>
+      </Pressable>
+      {open && <View style={{ gap: 12, paddingBottom: 16 }}>{children}</View>}
+    </View>
+  );
+}
+
+/** Segmented control (uiarc "segmented-control" pattern) for two to four views. */
+export function Segmented<T extends string>({
+  value,
+  options,
+  onChange,
+  label,
+}: {
+  value: T;
+  options: { value: T; label: string; icon?: string }[];
+  onChange: (v: T) => void;
+  label: string;
+}) {
+  const c = usePalette();
+  return (
+    <View
+      accessibilityRole="tablist"
+      accessibilityLabel={label}
+      style={{
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        padding: 4,
+        gap: 4,
+        borderRadius: c.mode === 'terminal' ? 4 : 999,
+        backgroundColor: c.soft,
+        borderWidth: 1,
+        borderColor: c.line,
+      }}
+    >
+      {options.map(o => {
+        const selected = o.value === value;
+        return (
+          <Pressable
+            key={o.value}
+            accessibilityRole="tab"
+            accessibilityState={{ selected }}
+            accessibilityLabel={o.label}
+            onPress={() => onChange(o.value)}
+            style={{
+              minHeight: 40,
+              paddingHorizontal: 16,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 8,
+              borderRadius: c.mode === 'terminal' ? 3 : 999,
+              backgroundColor: selected ? c.surface : 'transparent',
+              borderWidth: 1,
+              borderColor: selected ? c.edge : 'transparent',
+            }}
+          >
+            {o.icon && <Icon name={o.icon} size={16} color={selected ? c.ink : c.muted} />}
+            <Txt size={15} raw weight={selected ? '600' : '500'} color={selected ? c.ink : c.muted}>
+              {o.label}
+            </Txt>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}

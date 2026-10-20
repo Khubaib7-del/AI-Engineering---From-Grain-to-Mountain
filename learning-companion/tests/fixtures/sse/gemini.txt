@@ -1,0 +1,6 @@
+data: {"candidates": [{"content": {"parts": [{"text": "considering", "thought": true}],"role": "model"},"index": 0}]}
+
+data: {"candidates": [{"content": {"parts": [{"text": "Hint: what type "}],"role": "model"},"index": 0}]}
+
+data: {"candidates": [{"content": {"parts": [{"text": "does input() return?"}],"role": "model"},"finishReason": "STOP","index": 0}],"usageMetadata": {"promptTokenCount": 9}}
+

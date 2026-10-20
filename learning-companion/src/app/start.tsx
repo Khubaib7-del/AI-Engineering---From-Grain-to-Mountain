@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import Animated, { FadeIn, FadeInRight } from 'react-native-reanimated';
 import { Button, Chip, Icon, Panel, Screen, Txt, usePalette, useWide } from '../components/ui';
 import { useReduced } from '../components/motion';
+import { Mote } from '../components/mote';
 import { useAuth } from '../lib/auth';
 import { useLearning } from '../lib/store';
 import { tracks, v2Modules } from '../lib/content';
@@ -78,19 +79,19 @@ function Option({
         padding: 16,
         minHeight: 64,
         borderRadius: 16,
-        borderWidth: selected ? 1.5 : 1,
-        borderColor: selected ? c.ink : c.line,
-        backgroundColor: selected ? c.soft : c.surface,
+        borderWidth: selected ? 2 : 1,
+        borderColor: selected ? c.accent : c.edge,
+        backgroundColor: selected ? c.accentSoft : c.surface,
         opacity: pressed ? 0.75 : 1,
       })}
     >
-      {icon && <Icon name={icon} size={22} color={selected ? c.ink : c.muted} />}
+      {icon && <Icon name={icon} size={22} color={selected ? c.accentText : c.ink} />}
       <View style={{ flex: 1, gap: 2 }}>
         <Txt size={16} weight="600">
           {title}
         </Txt>
         {body && (
-          <Txt size={13} color={c.muted}>
+          <Txt size={15} color={c.muted}>
             {body}
           </Txt>
         )}
@@ -101,12 +102,14 @@ function Option({
           height: 22,
           borderRadius: 11,
           borderWidth: 1.5,
-          borderColor: selected ? c.ink : c.faint,
+          borderColor: selected ? c.accentText : c.edge,
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        {selected && <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.ink }} />}
+        {selected && (
+          <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.accentText }} />
+        )}
       </View>
     </Pressable>
   );
@@ -196,6 +199,23 @@ export default function Start() {
       <Animated.View key={`${step}-${quizIndex}`} entering={entering} style={{ gap: 16 }}>
         {step === 0 && (
           <>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+              <Mote size={56} />
+              <View
+                style={{
+                  flex: 1,
+                  paddingVertical: 10,
+                  paddingHorizontal: 14,
+                  borderRadius: 16,
+                  borderBottomLeftRadius: 4,
+                  backgroundColor: c.surface,
+                  borderWidth: 1,
+                  borderColor: c.line,
+                }}
+              >
+                <Txt size={16}>Hi, I’m Mote. Three quick questions and your route is ready.</Txt>
+              </View>
+            </View>
             <Txt size={wide ? 34 : 28} weight="700" accessibilityRole="header">
               What do you want to become?
             </Txt>
@@ -310,8 +330,8 @@ export default function Start() {
             return (
               <>
                 <Txt size={13} weight="600" color={c.muted}>
-                  Module {moduleIndex + 1} of {placementModuleIds.length} · {q.module} {moduleTitle} · question{' '}
-                  {quizIndex + 1} of {placementQuestions.length}
+                  Module {moduleIndex + 1} of {placementModuleIds.length} · {q.module} {moduleTitle} ·
+                  question {quizIndex + 1} of {placementQuestions.length}
                 </Txt>
                 <Txt size={wide ? 26 : 22} weight="700" accessibilityRole="header">
                   {q.prompt}
@@ -354,7 +374,12 @@ export default function Start() {
                     </View>
                     <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
                       <Button title={`New to ${q.module} — skip it`} ghost compact onPress={skipModule} />
-                      <Button title="Stop here and see my result" ghost compact onPress={() => grade(answers)} />
+                      <Button
+                        title="Stop here and see my result"
+                        ghost
+                        compact
+                        onPress={() => grade(answers)}
+                      />
                     </View>
                   </>
                 )}

@@ -32,3 +32,16 @@ test('backup roundtrip, unsafe IDs and broken record rejected; imports disable n
   s.settings.times=['99:00'];assert.throws(()=>parse(s),/Invalid reminder/);s.settings.times=['09:00'];s.lessons.D001={...p.emptyWork(),completedAt:'2026-10-07T09:00:00.000Z'};assert.throws(()=>parse(s),/Invalid lesson/);
 });
 test('recall intervals end after fourth review',()=>{const w={...p.emptyWork(),completedAt:'2026-10-01T09:00:00.000Z'};assert.equal(p.reviewDue(w,new Date('2026-10-01T10:00:00Z')),false);assert.equal(p.reviewDue(w,new Date('2026-10-02T10:00:00Z')),true);w.reviews=['2026-10-02T10:00:00Z'];assert.equal(p.reviewDue(w,new Date('2026-10-03T10:00:00Z')),false);w.reviews=Array(4).fill('2026-10-15T10:00:00Z');assert.equal(p.reviewDue(w,new Date('2027-01-01')),false);});
+
+test('week progress reads "Week N of M · H h left this week"', async () => {
+  const { weekHoursLeft, weekLabel } = await load('path');
+  const p2 = await load('planner');
+  const s = p2.initialState();
+  s.units = { A: { steps: {}, attempts: [], short: {}, passedAt: '2026-10-01T00:00:00Z' } };
+  const week = { week: 3, title: 't', hours: 9, units: ['A', 'B', 'C'], allocation: { B: 3 } };
+  const hours = { A: 2, B: 6, C: 4 };
+  const left = weekHoursLeft(week, id => hours[id], s, id => (id === 'C' ? 0.5 : 0));
+  assert.equal(left, 5);
+  assert.equal(weekLabel(3, 12, left), 'Week 3 of 12 · 5 h left this week');
+  assert.equal(weekLabel(3, 12, 0), 'Week 3 of 12 · nothing left this week');
+});

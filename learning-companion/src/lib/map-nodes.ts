@@ -1,4 +1,4 @@
-import type { MapNode } from '../components/mountain-map';
+import type { MapNode } from '../components/route-board';
 import type { LearningState, Module } from './types';
 import type { PathEntry } from './use-path';
 import { topicsOfModule } from './content';

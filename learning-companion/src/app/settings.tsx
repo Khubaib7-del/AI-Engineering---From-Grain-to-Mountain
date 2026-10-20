@@ -8,6 +8,7 @@ import type { Level, Profile } from '../lib/types';
 import { isQuiet, validTime } from '../lib/planner';
 import { requestReminders, testReminder } from '../lib/notifications';
 import { useLearning } from '../lib/store';
+import { ThemePicker } from '../components/theme-picker';
 
 const onWeb = Platform.OS === ('web' as string);
 const LEVEL_LABEL: Record<Level, string> = {
@@ -154,18 +155,10 @@ export default function Settings() {
       </Panel>
       <Panel>
         <Section title="Appearance" />
-        <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
-          {(['system', 'light', 'dark'] as const).map(t => (
-            <Tag
-              key={t}
-              text={t[0].toUpperCase() + t.slice(1)}
-              active={state.settings.theme === t}
-              onPress={() => {
-                void update(s => ({ ...s, settings: { ...s.settings, theme: t } }));
-              }}
-            />
-          ))}
-        </View>
+        <Txt size={15} color={c.muted}>
+          Saved on this device. System follows your device: Dawn by day, Dusk at night.
+        </Txt>
+        <ThemePicker />
       </Panel>
       {onWeb ? (
         <Panel>

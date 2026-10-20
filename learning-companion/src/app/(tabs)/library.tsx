@@ -3,11 +3,14 @@ import { Linking, Pressable, TextInput, View, type ViewStyle } from 'react-nativ
 import { router } from 'expo-router';
 import { resources, unitsUsing } from '../../lib/content';
 import type { Resource } from '../../lib/types';
+import { NextStepCard } from '../../components/next-step';
+import { usePath } from '../../lib/use-path';
 import {
   Button,
   Chip,
   Grid,
   Icon,
+  Label,
   Panel,
   Screen,
   Tag,
@@ -59,16 +62,9 @@ function ResourceCard({
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Icon name={ICON[r.type] ?? 'document-text-outline'} size={16} color={c.muted} />
-          <Txt
-            size={12}
-            weight="600"
-            color={c.muted}
-            style={{ letterSpacing: 1, textTransform: 'uppercase' }}
-          >
-            {r.type}
-          </Txt>
+          <Label>{r.type}</Label>
           <View style={{ flex: 1 }} />
-          <Icon name="arrow-up-outline" size={16} color={c.muted} />
+          <Icon name="arrow-up-outline" size={16} color={c.accentText} />
         </View>
         <Txt size={17} weight="600">
           {r.title}
@@ -82,14 +78,7 @@ function ResourceCard({
         )}
       </Pressable>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
-        {(r.modules ?? '')
-          .split('/')
-          .filter(Boolean)
-          .slice(0, 4)
-          .map(m => (
-            <Chip key={m} text={m} />
-          ))}
-        {used.map(id => (
+        {used.slice(0, 2).map(id => (
           <Pressable
             key={id}
             accessibilityRole="link"
@@ -108,10 +97,10 @@ function ResourceCard({
             onPress={() => setOpen(v => !v)}
             style={{ minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 4 }}
           >
-            <Txt size={13} weight="600" color={c.muted}>
+            <Txt size={15} raw weight="600" color={c.ink}>
               {open ? 'Hide details' : 'Details'}
             </Txt>
-            <Icon name="chevron-down" size={14} color={c.muted} />
+            <Icon name="chevron-down" size={14} color={c.ink} />
           </Pressable>
         )}
         {!!r.video && (
@@ -120,8 +109,8 @@ function ResourceCard({
             onPress={() => onOpen(r.video!)}
             style={{ minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 4 }}
           >
-            <Icon name="play-circle-outline" size={14} color={c.muted} />
-            <Txt size={13} weight="600" color={c.muted}>
+            <Icon name="play-circle-outline" size={14} color={c.ink} />
+            <Txt size={15} raw weight="600" color={c.ink}>
               Video playlist
             </Txt>
           </Pressable>
@@ -142,6 +131,8 @@ export default function Library() {
   const [filter, setFilter] = useState(0);
   const [limit, setLimit] = useState(12);
   const [error, setError] = useState('');
+  const path = usePath();
+  const cur = path.current;
   const items = useMemo(() => {
     const types = FILTERS[filter].types;
     const q = query.trim().toLowerCase();
@@ -167,6 +158,17 @@ export default function Library() {
       subtitle={`${resources.length} free courses, books, papers, videos and docs used across the path.`}
       docTitle="Library"
     >
+      {cur && (
+        <NextStepCard
+          kicker="For your next unit"
+          meta={`${cur.unit.id} · ${cur.unit.title}`}
+          title={cur.unit.learn.title}
+          detail={cur.unit.learn.slice ? `Exactly: ${cur.unit.learn.slice}` : undefined}
+          action="Open the lesson"
+          ask={false}
+          onAction={() => void open(cur.unit.learn.url)}
+        />
+      )}
       <View style={{ gap: 12 }}>
         <View>
           <TextInput

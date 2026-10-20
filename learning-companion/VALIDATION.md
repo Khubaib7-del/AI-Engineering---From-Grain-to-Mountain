@@ -159,3 +159,19 @@ Release `v1.2.0-preview.1` is public with the ARM64 APK and checksum. GitHub rep
 The synced v2 curriculum (23 modules M00–M22, 295 units, 158 weeks, 756 resources incl. 38 books) replaced the two-unit fixture. Logic tests now use inline fixtures (`tests/helpers/fixture.mjs`); `tests/content.test.mjs` enforces docs/v2-content-schema.md on the real bundle. That contract found and the data now fixes: 141 MCQs in M01–M04 with empty explanations, M12.U20 placed before its prerequisite M12.U21, M17.U08 requiring M22.U11 (scheduled 8 weeks later), M03.U16–U18 scheduled before their SQL prerequisite M04.U06, and 228 unit `week` fields that disagreed with or were missing from weeks.json. `npm run typecheck`, `npm run lint` and `npm test` (38 tests) pass.
 
 `npx expo export --platform web --output-dir dist` succeeded; screens were captured from `scripts/serve-preview.mjs` with Playwright's ARM64 headless Chromium 133 at 1440×1000 and 390×844 into `design/shots/rebuild/` (landing, onboarding, placement, today, map, unit M01.U01, module M01, progress, library-books, signin, settings). No runtime errors or horizontal overflow; long screens were reviewed with `scripts/scroll-check.mjs`. The clustered map draws ~300 SVG elements (vs ~1,600 unclustered) and a 30-step drag completed in ~0.5 s headless; this is not a measurement on a low-end phone. Not done: Android/iOS builds of v2, Vercel deployment, live link checks of the 756 resources, physical-device checks.
+
+## Ascent identity (branch identity/ascent, 2026-10-21)
+
+- `npm run typecheck`, `npm run lint` (0 problems) and `npm test` (54/54) pass. New tests: `tests/theme.test.mjs`
+  (mode normalisation, system resolution, theme persisted through save/parse, legacy light/dark, AA/AAA
+  contrast of every palette, deterministic procedural art) and `tests/bubbles.test.mjs` (Mote's Now/Then
+  bubbles from next steps, dismissal, clipping, mood, gaze); `tests/planner.test.mjs` adds the
+  "Week N of M · H h left this week" label.
+- Web export built with `npx expo export --platform web --output-dir dist` and served by
+  `scripts/serve-preview.mjs`; `scripts/capture-ascent.mjs` captured 58 screenshots in
+  `design/shots/ascent/` (15 screens × Dawn/Dusk × 1440/390, plus landing in Terminal) with no runtime
+  errors and no horizontal overflow. High-contrast Today was spot-checked.
+- The chat runs against `src/assistant-stub.ts` (fake streaming text). Real provider calls, key storage and
+  `useNextSteps` come from the engine branch; swap the re-export in `src/ui/assistant-api.ts` at merge.
+- Not checked on a physical phone: Geist loading on native, Mote animations under Reanimated 4 on Android,
+  and touch-gaze. Native draws the same art statically (no canvas/WebGL is used).

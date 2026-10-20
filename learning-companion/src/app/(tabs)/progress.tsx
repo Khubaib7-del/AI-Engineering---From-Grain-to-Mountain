@@ -2,17 +2,20 @@ import { Share, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   Button,
+  Disclosure,
   Grid,
   Icon,
+  Label,
   Panel,
   Row,
   Screen,
   Section,
-  Split,
   Txt,
   isWeb,
   usePalette,
+  useWide,
 } from '../../components/ui';
+import { NextStepCard } from '../../components/next-step';
 import { Heatmap } from '../../components/heatmap';
 import { activeDaysInMonth, streaks } from '../../lib/activity';
 import { bestAttempt } from '../../lib/assess';
@@ -23,22 +26,21 @@ import { unitTitle, usePath } from '../../lib/use-path';
 
 function Stat({ icon, value, label, hint }: { icon: string; value: string; label: string; hint?: string }) {
   const c = usePalette();
+  const wide = useWide();
   return (
-    <Panel style={{ gap: 10, minHeight: 148 }}>
-      <Icon name={icon} size={20} color={c.muted} />
-      <Txt size={32} weight="700">
+    <Panel style={{ gap: 8, minHeight: 150 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <Icon name={icon} size={18} color={c.accentText} />
+        <Label>{label}</Label>
+      </View>
+      <Txt size={wide ? 34 : 26} weight="600" mono={c.mode === 'terminal'}>
         {value}
       </Txt>
-      <View>
-        <Txt size={14} weight="600">
-          {label}
+      {!!hint && (
+        <Txt size={15} color={c.muted}>
+          {hint}
         </Txt>
-        {!!hint && (
-          <Txt size={12} color={c.muted}>
-            {hint}
-          </Txt>
-        )}
-      </View>
+      )}
     </Panel>
   );
 }
@@ -83,11 +85,30 @@ export default function Progress() {
       subtitle="Your work, not your clicks: what you have proven, and how consistently you show up."
       docTitle="Progress"
     >
+      {due.length ? (
+        <NextStepCard
+          kicker="Next"
+          meta={`${due.length} review${due.length > 1 ? 's' : ''} due`}
+          title={`Review: ${due[0].title}`}
+          detail="Explain it without your notes. Reviews come back after 1, 3, 7 and 14 days."
+          action="Start review"
+          onAction={() => router.push(`/session/${due[0].id}?review=1`)}
+        />
+      ) : path.current ? (
+        <NextStepCard
+          kicker="Next"
+          meta={`${path.passed} of ${path.units.length} units done · ${path.hoursLeft} core hours left`}
+          title={path.current.unit.title}
+          detail="Keep the streak going with one step today."
+          action="Continue"
+          onAction={() => router.push(`/unit/${path.current!.unit.id}`)}
+        />
+      ) : null}
       <Grid min={150}>
         <Stat
           icon="flame"
           value={`${streak.current} day${streak.current === 1 ? '' : 's'}`}
-          label="Current streak"
+          label="Streak"
           hint={`Longest ${streak.longest} · ${activeDaysInMonth(activity)} active days this month`}
         />
         <Stat
@@ -117,15 +138,17 @@ export default function Progress() {
       <Panel>
         <Section title="Activity" aside={`${activity.length} events`} />
         <Heatmap activity={activity} labelFor={unitTitle} />
-        <Txt size={12} color={c.muted}>
-          Every ticked topic, saved practice, quiz attempt and passed unit is logged with its time. Older
-          ticks from before the log are undated.
+        <Txt size={15} color={c.muted}>
+          Every ticked topic, saved practice, quiz attempt and passed unit is logged with its time.
         </Txt>
       </Panel>
 
-      <Split>
-        <Panel style={{ flex: 1.4 }}>
-          <Section title="Field notes" aside={`${notes.length + complete.length} saved`} />
+      <Panel style={{ gap: 0, paddingVertical: 8 }}>
+        <Disclosure
+          first
+          title="Field notes"
+          hint={`${notes.length + complete.length} pieces of practice evidence`}
+        >
           {notes.map(([id, w], i) => (
             <Row
               key={id}
@@ -162,9 +185,11 @@ export default function Progress() {
               />
             </View>
           )}
-        </Panel>
-        <Panel style={{ flex: 1 }}>
-          <Section title="Reviews due" aside={`${due.length} due`} />
+        </Disclosure>
+        <Disclosure
+          title="Reviews and recent passes"
+          hint={due.length ? `${due.length} due now` : 'All caught up'}
+        >
           {due.length ? (
             due.map((l, i) => (
               <Row
@@ -181,9 +206,7 @@ export default function Progress() {
             </Txt>
           )}
           {path.units.some(u => u.status === 'passed' && bestAttempt(state.units?.[u.unit.id])) && (
-            <Txt size={13} weight="600" color={c.muted} style={{ paddingTop: 12 }}>
-              RECENTLY PASSED
-            </Txt>
+            <Label style={{ paddingTop: 12 }}>Recently passed</Label>
           )}
           {path.units
             .filter(u => u.status === 'passed' && bestAttempt(state.units?.[u.unit.id]))
@@ -196,8 +219,8 @@ export default function Progress() {
                 onPress={() => router.push(`/unit/${u.unit.id}`)}
               />
             ))}
-        </Panel>
-      </Split>
+        </Disclosure>
+      </Panel>
 
       <Panel>
         <Section title="Backup and sync" />
