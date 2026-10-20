@@ -121,7 +121,8 @@ export function ChatPanel({ draft }: { draft?: string }) {
   const c = usePalette();
   const a = useAssistant();
   const [text, setText] = useState(draft ?? '');
-  const [setup, setSetup] = useState(false);
+  // Setup stays on screen after connecting so the success state is seen; "Start chatting" closes it.
+  const [setup, setSetup] = useState(a.status !== 'ready');
   const scroll = useRef<ScrollView>(null);
   const streaming = a.messages.some(m => m.status === 'streaming');
   const prompts = useMemo(() => promptsFor(a.context.unitId), [a.context.unitId]);

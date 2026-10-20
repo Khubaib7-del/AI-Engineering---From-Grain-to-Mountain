@@ -36,7 +36,7 @@ function LegacyToday() {
         onAction={() => (lesson ? router.push(`/session/${lesson.id}`) : router.navigate('/map'))}
       />
       <Panel>
-        <Disclosure title="Up next" hint={`${done} of ${lessons.length} guided days done`}>
+        <Disclosure first title="Up next" hint={`${done} of ${lessons.length} guided days done`}>
           {lessons.slice(start, start + 3).map((l, i) => (
             <Row
               key={l.id}
@@ -145,6 +145,7 @@ export default function Today() {
 
           <Panel style={{ gap: 0, paddingVertical: 8 }}>
             <Disclosure
+              first
               testID="week-plan"
               title={week ? `This week: ${week.title}` : 'This week'}
               hint={`${weekPassed} of ${weekUnits.length} units done · planned ${week?.hours ?? 0} h, your goal ${path.hoursPerWeek} h`}

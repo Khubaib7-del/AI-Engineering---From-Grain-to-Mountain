@@ -34,7 +34,6 @@ import { logActivity } from '../../lib/activity';
 import { useLearning } from '../../lib/store';
 import type { ModuleV2 } from '../../lib/types';
 
-
 type RepoFacts = { ok: boolean; message: string };
 async function checkRepo(url: string): Promise<RepoFacts> {
   const m = url.match(/github\.com\/([^/\s]+)\/([^/\s#?]+)/);
@@ -103,6 +102,7 @@ function Capstone({ module, unitsPassed }: { module: ModuleV2; unitsPassed: bool
   return (
     <Panel style={{ gap: 0, paddingVertical: 8 }}>
       <Disclosure
+        first
         title={`Capstone: ${module.capstone.title}`}
         hint={
           proven
@@ -252,10 +252,11 @@ function ModuleV2Screen({ module }: { module: ModuleV2 }) {
         </Txt>
       )}
       <Panel style={{ gap: 0, paddingVertical: 8 }}>
-        {module.submodules.map(sub => {
+        {module.submodules.map((sub, si) => {
           const subPassed = sub.units.filter(u => unitStatus(u, state, unitIds) === 'passed').length;
           return (
             <Disclosure
+              first={si === 0}
               key={sub.id}
               title={sub.title}
               hint={`${sub.id} · ${subPassed} of ${sub.units.length} done`}

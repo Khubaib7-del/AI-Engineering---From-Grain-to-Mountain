@@ -143,6 +143,7 @@ export default function Progress() {
 
       <Panel style={{ gap: 0, paddingVertical: 8 }}>
         <Disclosure
+          first
           title="Field notes"
           hint={`${notes.length + complete.length} pieces of practice evidence`}
         >

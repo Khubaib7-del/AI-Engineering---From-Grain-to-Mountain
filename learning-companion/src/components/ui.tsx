@@ -1255,17 +1255,20 @@ export function Disclosure({
   children,
   initiallyOpen = false,
   testID,
+  first = false,
 }: {
   title: string;
   hint?: string;
   children: React.ReactNode;
   initiallyOpen?: boolean;
   testID?: string;
+  /** No divider above the first disclosure in a card. */
+  first?: boolean;
 }) {
   const c = usePalette();
   const [open, setOpen] = useState(initiallyOpen);
   return (
-    <View style={{ borderTopWidth: 1, borderColor: c.line }}>
+    <View style={{ borderTopWidth: first ? 0 : 1, borderColor: c.line }}>
       <Pressable
         testID={testID}
         accessibilityRole="button"

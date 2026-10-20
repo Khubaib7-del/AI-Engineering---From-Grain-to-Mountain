@@ -107,15 +107,18 @@ function Plate({
   c,
   current,
   selected,
+  fill,
 }: {
   children: React.ReactNode;
   c: Palette;
   current?: boolean;
   selected?: boolean;
+  fill?: boolean;
 }) {
   return (
     <View
       style={{
+        flex: fill ? 1 : undefined,
         backgroundColor: c.plate,
         borderWidth: current || selected ? 2 : 1,
         borderColor: current ? c.accent : selected ? c.ink : c.line,
@@ -313,8 +316,8 @@ export function RouteBoard({
                         {current ? <Mote size={34} /> : null}
                       </View>
                       <Station node={n} current={current} />
-                      <View style={{ alignSelf: 'stretch' }}>
-                        <Plate c={c} current={current} selected={selectedId === n.id}>
+                      <View style={{ alignSelf: 'stretch', flex: 1 }}>
+                        <Plate c={c} current={current} selected={selectedId === n.id} fill>
                           {stationLabel(n, current)}
                         </Plate>
                       </View>
