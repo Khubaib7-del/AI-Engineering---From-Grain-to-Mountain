@@ -1,0 +1,2231 @@
+{
+ "id": "M17",
+ "phase": "P5 Ship and operate",
+ "title": "Serving, inference and production LLM systems",
+ "summary": "Composite primary: rohitg00 Phase 17 (all 29 lessons mapped, concepts + quizzes) paired lesson-by-lesson with real-tool labs on vLLM, llama.cpp, LiteLLM, Locust, Langfuse, k3d and Toxiproxy. Covers serving patterns, inference internals, quantization, metrics/goodput, load testing, gateways/quotas/caching/routing, autoscaling and FinOps. Cloud fundamentals moved to M21; distributed training/CUDA is an optional specialist track. GPU labs run on free Colab/Kaggle T4s or fall back to llama.cpp on CPU; no card needed anywhere.",
+ "hours": 64,
+ "deepHours": 59,
+ "prerequisites": [
+  "M08",
+  "M16",
+  "M21",
+  "M10",
+  "M11",
+  "M12"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "mlops"
+ ],
+ "optionalFor": [
+  "fde"
+ ],
+ "submodules": [
+  {
+   "id": "M17.S1",
+   "title": "Serving fundamentals",
+   "units": [
+    {
+     "id": "M17.U01",
+     "title": "Model serving patterns: REST, batching, ONNX, demos, cold starts",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U07"
+     ],
+     "outcomes": [
+      "You can serve a small model behind FastAPI and with ONNX Runtime and compare latency/memory.",
+      "You can add micro-batching or async workers inside a service.",
+      "You can explain serverless cold starts and how to hide them.",
+      "You can ship a safe public demo (limits, rate limit, no PII logging)."
+     ],
+     "topics": [
+      {
+       "id": "M17.05.01",
+       "title": "REST serving with FastAPI/BentoML"
+      },
+      {
+       "id": "M17.05.02",
+       "title": "Batching inside a service, async workers"
+      },
+      {
+       "id": "M17.05.04",
+       "title": "Serverless inference and cold starts"
+      },
+      {
+       "id": "M17.02.02",
+       "title": "ONNX awareness (export + ONNX Runtime)"
+      },
+      {
+       "id": "M17.05.08",
+       "title": "Public demo interfaces with limits"
+      }
+     ],
+     "learn": {
+      "resourceId": "fsdl-2022",
+      "title": "Full Stack Deep Learning 2022",
+      "url": "https://fullstackdeeplearning.com/course/2022/lecture-5-deployment/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 5 'Deployment' (build a prototype; model-in-service vs model-in-database vs model-as-a-service; REST APIs, dependency management, performance optimisation: GPU vs CPU, concurrency, model distillation, quantization, caching, batching; edge)"
+     },
+     "covers": [
+      "Prototype -> model-as-a-service progression",
+      "REST API design and dependency management (containers)",
+      "Performance: CPU vs GPU, concurrency, distillation, quantization, caching, batching, sharing GPUs",
+      "Horizontal scaling and serverless model serving trade-offs",
+      "Edge deployment overview"
+     ],
+     "gaps": [
+      {
+       "topic": "ONNX export + ONNX Runtime",
+       "resource": {
+        "resourceId": "onnxruntime",
+        "title": "ONNX Runtime: Get started with Python",
+        "url": "https://onnxruntime.ai/docs/get-started/with-python.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Get started with Python (export + InferenceSession)"
+       }
+      },
+      {
+       "topic": "Cold-start layers and warm pools (real-tool lab below)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/10-cold-start-mitigation",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 10 'Cold Start Mitigation for Serverless LLMs'"
+       }
+      },
+      {
+       "topic": "Safe demo contract: limits, token bucket, no-PII logs",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/29-model-demo-interfaces",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 29 'Model Demo Interfaces - From a Function to a Shareable App'"
+       }
+      },
+      {
+       "topic": "FastAPI serving lesson",
+       "resource": {
+        "resourceId": "B11",
+        "title": "Made With ML (MLOps course, online reference)",
+        "url": "https://madewithml.com/courses/mlops/api/",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Lesson 'APIs for Model Serving'"
+       }
+      },
+      {
+       "topic": "Demo UI framework",
+       "resource": {
+        "resourceId": "gradio",
+        "title": "Gradio Quickstart",
+        "url": "https://www.gradio.app/guides/quickstart",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart"
+       }
+      }
+     ],
+     "practice": {
+      "title": "PyTorch vs ONNX on CPU + a public demo (labs for rohitg00 17/10, 17/29)",
+      "brief": "No-card path: laptop CPU; demo on a free Hugging Face Docker Space. Serve a small transformer classifier (e.g. distilbert sentiment) as (a) PyTorch in FastAPI, (b) ONNX Runtime. Measure p50/p95 and RSS memory with 200 requests each. Deploy (b) with a Gradio UI that enforces max input length, a per-client token bucket and logs without input text. Measure the Space's cold start after it sleeps.",
+      "done_when": "BENCH.md table (p50, p95, RSS) for both; public Space URL; README reports measured cold-start seconds and one mitigation (pre-loading weights at build time or keep-warm ping) with before/after."
+     },
+     "quiz": [
+      {
+       "id": "M17.U01.Q1",
+       "kind": "mcq",
+       "prompt": "ONNX Runtime often speeds up CPU inference because of:",
+       "options": [
+        "Bigger models",
+        "Graph optimisations and efficient kernels",
+        "GPU-only features",
+        "Quantization only"
+       ],
+       "answer": 1,
+       "explain": "Operator fusion, constant folding and optimised execution providers."
+      },
+      {
+       "id": "M17.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Serverless cold start hurts most when:",
+       "options": [
+        "Traffic is steady",
+        "Traffic is spiky/rare and model load is heavy",
+        "Models are tiny",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "Scale-from-zero must download and load weights before the first response."
+      },
+      {
+       "id": "M17.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Micro-batching requests in a service trades:",
+       "options": [
+        "Nothing",
+        "A little latency for higher throughput",
+        "Accuracy for cost",
+        "Memory for disk"
+       ],
+       "answer": 1,
+       "explain": "Requests wait a few ms to be grouped into one forward pass."
+      },
+      {
+       "id": "M17.U01.Q4",
+       "kind": "short",
+       "prompt": "What is the first measurement you take before optimising a model API, and why?",
+       "rubric": [
+        "Baseline latency distribution (p50/p95/p99) and throughput under realistic load.",
+        "Profile where time goes (preprocessing, model, I/O, serialization).",
+        "Without a baseline you can't prove improvement; avoid optimising the wrong stage."
+       ]
+      }
+     ],
+     "backup": {
+      "resourceId": "bentoml",
+      "title": "BentoML documentation",
+      "url": "https://docs.bentoml.com/en/latest/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Docs: Get started / Hello world service"
+     },
+     "read": {
+      "resourceId": "mlzoomcamp",
+      "title": "DataTalksClub Machine Learning Zoomcamp",
+      "url": "https://github.com/DataTalksClub/machine-learning-zoomcamp",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 05-deployment (Flask/FastAPI + Docker) and 09-serverless"
+     }
+    },
+    {
+     "id": "M17.U02",
+     "title": "Managed vs self-hosted inference; economics; free deploy targets",
+     "hours": 4,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U01"
+     ],
+     "outcomes": [
+      "You can compare hyperscaler platforms, inference platforms and self-hosting.",
+      "You can compute break-even between per-token APIs and per-GPU-hour hosting.",
+      "You can deploy a demo on a free tier without a card."
+     ],
+     "topics": [
+      {
+       "id": "M17.05.05",
+       "title": "Managed APIs vs inference platforms vs self-host"
+      },
+      {
+       "id": "M17.05.06",
+       "title": "Cost model: per token vs per GPU-hour"
+      },
+      {
+       "id": "M17.05.07",
+       "title": "Deploying a demo on a free tier"
+      },
+      {
+       "id": "M17.05.03",
+       "title": "GPU rental basics (GPU part of old M17.01.04)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/01-managed-llm-platforms",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 01 'Managed LLM Platforms - Bedrock, Vertex AI, Azure OpenAI' + lesson 02 'Inference Platform Economics - Fireworks, Together, Baseten, Modal, Replicate, Anyscale'"
+     },
+     "covers": [
+      "Platform strategies (marketplace vs exclusive vs Gemini-first); PTUs; FinOps attribution per platform (L01)",
+      "Two-provider minimum policy (L01)",
+      "Market segments (custom silicon, GPU platforms, API-first); per-token vs per-minute pricing; effective cost per request (L02)",
+      "Choosing a default platform per workload shape (L02)"
+     ],
+     "gaps": [
+      {
+       "topic": "Free GPU notebooks and VRAM estimation",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/03-gpu-setup-and-cloud",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 00 lesson 03 'GPU Setup and Cloud'"
+       }
+      },
+      {
+       "topic": "Free no-card deploy target",
+       "resource": {
+        "resourceId": "hf-spaces",
+        "title": "Hugging Face Spaces: Docker Spaces",
+        "url": "https://huggingface.co/docs/hub/spaces-sdks-docker",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Docker Spaces guide"
+       }
+      },
+      {
+       "topic": "Serverless containers (if you have credits)",
+       "resource": {
+        "resourceId": "gcp-docs",
+        "title": "Google Cloud documentation (Cloud Run, free program)",
+        "url": "https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Cloud Run Python quickstart"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Break-even sheet (real-tool lab for rohitg00 17/01-02)",
+      "brief": "No-card path: spreadsheet only; prices from public pricing pages with date. Compute monthly tokens at which a rented GPU running vLLM (measured tokens/s from U05, or a published benchmark if not yet measured) beats a per-token API for an 8B-class model, at 30%, 60% and 90% utilisation. Run the lesson's `code/main.py` and change one workload input.",
+      "done_when": "Sheet with formulas (not hard-coded results), cited prices + dates, three break-even points, and a decision record naming the assumptions that would flip the decision."
+     },
+     "quiz": [
+      {
+       "id": "M17.U02.Q1",
+       "kind": "mcq",
+       "prompt": "Self-hosting is favoured by:",
+       "options": [
+        "Low, spiky traffic",
+        "High steady utilisation, data residency or custom models",
+        "Having no ops team",
+        "Prototypes"
+       ],
+       "answer": 1,
+       "explain": "GPU-hours only get cheap per token at high utilisation."
+      },
+      {
+       "id": "M17.U02.Q2",
+       "kind": "mcq",
+       "prompt": "A GPU-hour price becomes cheap per token only if:",
+       "options": [
+        "The GPU is idle",
+        "Utilisation and batching are high",
+        "Models are big",
+        "Always"
+       ],
+       "answer": 1,
+       "explain": "Idle time is paid for but produces no tokens."
+      },
+      {
+       "id": "M17.U02.Q3",
+       "kind": "mcq",
+       "prompt": "The hidden cost of self-hosting is mostly:",
+       "options": [
+        "Electricity",
+        "Engineering/on-call time and idle capacity",
+        "Licences",
+        "Bandwidth"
+       ],
+       "answer": 1,
+       "explain": "People and over-provisioning dominate."
+      },
+      {
+       "id": "M17.U02.Q4",
+       "kind": "short",
+       "prompt": "Give two non-cost reasons an FDE might recommend self-hosting to a client.",
+       "rubric": [
+        "Data residency/privacy/regulatory requirements.",
+        "Custom/fine-tuned models, latency control, offline/air-gapped, vendor independence."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M17.S2",
+   "title": "LLM inference engines",
+   "units": [
+    {
+     "id": "M17.U03",
+     "title": "Inference internals: KV cache, continuous batching, prefix caching, prefill vs decode",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U01"
+     ],
+     "outcomes": [
+      "You can compute KV-cache memory for a model and context.",
+      "You can explain continuous batching, PagedAttention and chunked prefill.",
+      "You can explain prefix caching and RadixAttention and when they pay off."
+     ],
+     "topics": [
+      {
+       "id": "M17.02.07",
+       "title": "KV cache"
+      },
+      {
+       "id": "M17.02.06",
+       "title": "Dynamic/continuous batching"
+      },
+      {
+       "id": "M17.02.08",
+       "title": "Prefix caching"
+      },
+      {
+       "id": "M17.02.14",
+       "title": "Prefill vs decode phases; chunked prefill"
+      },
+      {
+       "id": "M17.02.13",
+       "title": "Memory accounting (weights + KV cache)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/04-vllm-serving-internals",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 04 'Serving Engine Internals - PagedAttention, Continuous Batching, Chunked Prefill'"
+     },
+     "covers": [
+      "PagedAttention as a KV-cache allocator (blocks, block tables, fragmentation)",
+      "Iteration-level continuous batching",
+      "Chunked prefill and its effect on TTFT tail",
+      "Checking vLLM feature-compatibility before enabling optimisations"
+     ],
+     "gaps": [
+      {
+       "topic": "KV-cache memory math",
+       "resource": {
+        "resourceId": "yt-kv-cache",
+        "title": "The KV Cache: Memory Usage in Transformers",
+        "url": "https://www.youtube.com/watch?v=80bIUggRJf4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "PagedAttention design",
+       "resource": {
+        "resourceId": "vllm-docs",
+        "title": "vLLM documentation",
+        "url": "https://docs.vllm.ai/en/latest/design/paged_attention.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Design doc 'Paged Attention'"
+       }
+      },
+      {
+       "topic": "Continuous batching explained",
+       "resource": {
+        "resourceId": "anyscale-cb",
+        "title": "How continuous batching enables 23x throughput in LLM inference",
+        "url": "https://www.anyscale.com/blog/continuous-batching-llm-inference",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full article"
+       }
+      },
+      {
+       "topic": "Prefix caching in practice",
+       "resource": {
+        "resourceId": "vllm-docs",
+        "title": "vLLM documentation",
+        "url": "https://docs.vllm.ai/en/latest/features/automatic_prefix_caching.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Features: Automatic Prefix Caching"
+       }
+      },
+      {
+       "topic": "RadixAttention / cache-aware scheduling",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/06-sglang-radixattention",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 06 'Prefix-Cache Serving - RadixAttention and KV Reuse'"
+       }
+      },
+      {
+       "topic": "vLLM talk by its authors",
+       "resource": {
+        "resourceId": "yt-vllm-talk",
+        "title": "Fast LLM Serving with vLLM and PagedAttention",
+        "url": "https://www.youtube.com/watch?v=5ZlavKF_98U",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full talk"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hf-cb",
+      "title": "Continuous batching (Hugging Face blog)",
+      "url": "https://huggingface.co/blog/continuous_batching",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full article"
+     },
+     "practice": {
+      "title": "KV-cache budget, checked against vLLM (real-tool lab for rohitg00 17/04, 17/06)",
+      "brief": "Free GPU route: Google Colab or Kaggle notebooks (T4, no card; Kaggle needs phone verification; quotas change) with a <=3B model; CPU fallback: llama.cpp. Compute by hand the KV-cache bytes for an 8B Llama-style model (layers, KV heads, head_dim, fp16) at 4k context x 16 sequences; then for the 1-3B model you can run, predict max concurrent sequences and compare with vLLM's startup log ('# GPU blocks' / KV cache size). Toggle `--enable-prefix-caching` and measure TTFT on 20 requests sharing a 1,500-token system prompt.",
+      "done_when": "KV.md shows the formula 2 x layers x kv_heads x head_dim x bytes x tokens with numbers; predicted vs logged KV capacity within 15%; TTFT p50 with and without prefix caching reported."
+     },
+     "quiz": [
+      {
+       "id": "M17.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Decode is typically:",
+       "options": [
+        "Compute-bound",
+        "Memory-bandwidth-bound",
+        "Network-bound",
+        "Disk-bound"
+       ],
+       "answer": 1,
+       "explain": "Each token reads all weights and the KV cache for little compute; prefill is the compute-heavy phase."
+      },
+      {
+       "id": "M17.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Continuous batching improves on static batching by:",
+       "options": [
+        "Using larger batches only",
+        "Adding/removing sequences every iteration so finished requests do not block",
+        "Caching prompts",
+        "Quantizing"
+       ],
+       "answer": 1,
+       "explain": "Iteration-level scheduling keeps the GPU busy."
+      },
+      {
+       "id": "M17.U03.Q3",
+       "kind": "mcq",
+       "prompt": "PagedAttention mainly reduces:",
+       "options": [
+        "FLOPs",
+        "KV-cache memory fragmentation and waste",
+        "Model size",
+        "Tokenization latency"
+       ],
+       "answer": 1,
+       "explain": "Fixed-size blocks avoid reserving max-length contiguous memory."
+      },
+      {
+       "id": "M17.U03.Q4",
+       "kind": "short",
+       "prompt": "Why does a long shared system prompt benefit from prefix caching, and what breaks the benefit?",
+       "rubric": [
+        "KV for the shared prefix is computed once and reused, cutting prefill time/TTFT and compute.",
+        "Breaks if the prefix varies (timestamps/user data at the start), or cache is evicted under memory pressure.",
+        "Put static content first, dynamic content last."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U04",
+     "title": "Quantization and local serving with llama.cpp",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U03"
+     ],
+     "outcomes": [
+      "You can choose a quantization format for given hardware and engine.",
+      "You can run and quantize a model with llama.cpp and serve it via llama-server.",
+      "You can measure speed, memory and quality after quantization."
+     ],
+     "topics": [
+      {
+       "id": "M17.02.01",
+       "title": "Quantization and precision (fp16/bf16/int8/int4; AWQ/GPTQ/GGUF)"
+      },
+      {
+       "id": "M17.02.03",
+       "title": "llama.cpp"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/09-production-quantization",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 09 'Production Quantization - AWQ, GPTQ, GGUF K-quants, FP8, MXFP4/NVFP4'"
+     },
+     "covers": [
+      "Six production formats and their sweet spots",
+      "Choosing a format by hardware, engine and workload",
+      "Weight memory saved vs KV cache untouched",
+      "Calibration-dataset pitfall on domain traffic"
+     ],
+     "gaps": [
+      {
+       "topic": "Running/quantizing with llama.cpp (llama-cli, llama-server, llama-quantize, llama-bench)",
+       "resource": {
+        "resourceId": "llamacpp",
+        "title": "llama.cpp",
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README: Quick start, 'llama-server', quantization docs"
+       }
+      },
+      {
+       "topic": "GPTQ vs GGUF vs AWQ explained",
+       "resource": {
+        "resourceId": "yt-quant",
+        "title": "Which Quantization Method is Right for You? (GPTQ vs. GGUF vs. AWQ)",
+        "url": "https://www.youtube.com/watch?v=mNE_d-C82lI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Same, as an article",
+       "resource": {
+        "resourceId": "grootendorst-quant",
+        "title": "Which Quantization Method is Right for You? (GPTQ vs. GGUF vs. AWQ)",
+        "url": "https://www.maartengrootendorst.com/blog/gguf/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full article"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Q8 vs Q5 vs Q4 on a laptop (real-tool lab for rohitg00 17/09)",
+      "brief": "No-card path: laptop CPU, no GPU needed. Download a 1-3B GGUF model (or convert + `llama-quantize` yourself) at Q8_0, Q5_K_M and Q4_K_M. Run `llama-bench` for tokens/s, record RAM, and run a 20-question quality check you wrote (exact-answer questions).",
+      "done_when": "QUANT.md table: quant, file size, RAM, prompt tok/s, generation tok/s, quality score/20, plus the choice you would ship and why; `llama-server` serving the chosen quant answers an OpenAI-style /v1/chat/completions request."
+     },
+     "quiz": [
+      {
+       "id": "M17.U04.Q1",
+       "kind": "mcq",
+       "prompt": "4-bit weights for a 7B model need roughly:",
+       "options": [
+        "14 GB",
+        "~3.5-4 GB plus overhead",
+        "28 GB",
+        "700 MB"
+       ],
+       "answer": 1,
+       "explain": "7e9 params x 0.5 bytes ~= 3.5 GB, plus scales and KV cache."
+      },
+      {
+       "id": "M17.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Quantization usually hurts most:",
+       "options": [
+        "Never",
+        "At very low bit-widths and on reasoning/maths-heavy tasks",
+        "Only on short prompts",
+        "Only on GPUs"
+       ],
+       "answer": 1,
+       "explain": "Errors accumulate in multi-step reasoning."
+      },
+      {
+       "id": "M17.U04.Q3",
+       "kind": "mcq",
+       "prompt": "GGUF is mainly associated with:",
+       "options": [
+        "vLLM",
+        "llama.cpp",
+        "TensorRT",
+        "ONNX"
+       ],
+       "answer": 1,
+       "explain": "GGUF is llama.cpp's model file format with K-quants."
+      },
+      {
+       "id": "M17.U04.Q4",
+       "kind": "short",
+       "prompt": "Why must you re-run your task eval after quantizing, not just check perplexity?",
+       "rubric": [
+        "Perplexity averages over generic text and can hide task-specific regressions.",
+        "Domain data/calibration mismatch and reasoning degradation show only in task metrics.",
+        "Decision should be made on the product's own quality bar."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U05",
+     "title": "vLLM serving, speculative decoding and engine selection",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U03",
+      "M17.U04",
+      "M21.U14"
+     ],
+     "outcomes": [
+      "You can run vLLM's OpenAI-compatible server and scrape its metrics.",
+      "You can explain speculative decoding and decide when to enable it.",
+      "You can pick an engine (llama.cpp, vLLM, SGLang, TGI, TensorRT-LLM) for hardware and scale."
+     ],
+     "topics": [
+      {
+       "id": "M17.02.04",
+       "title": "vLLM"
+      },
+      {
+       "id": "M17.02.05",
+       "title": "SGLang awareness"
+      },
+      {
+       "id": "M17.02.09",
+       "title": "Speculative decoding"
+      },
+      {
+       "id": "M17.02.15",
+       "title": "Engine selection (llama.cpp / vLLM / SGLang / TGI / TensorRT-LLM)"
+      }
+     ],
+     "learn": {
+      "resourceId": "vllm-docs",
+      "title": "vLLM documentation",
+      "url": "https://docs.vllm.ai/en/latest/getting_started/quickstart.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Getting Started: Quickstart (offline batched inference + OpenAI-compatible server) + Usage: Production Metrics"
+     },
+     "covers": [
+      "Installing vLLM and offline batched inference with LLM/SamplingParams",
+      "`vllm serve` OpenAI-compatible server (completions/chat)",
+      "Prometheus /metrics: running/waiting requests, KV-cache usage, TTFT/TPOT histograms"
+     ],
+     "gaps": [
+      {
+       "topic": "Speculative decoding concepts",
+       "resource": {
+        "resourceId": "yt-specdec",
+        "title": "Speculative Decoding: When Two LLMs are Faster than One",
+        "url": "https://www.youtube.com/watch?v=S-8yr_RibJ4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Speculative decoding in vLLM (ngram/draft/EAGLE configs)",
+       "resource": {
+        "resourceId": "vllm-docs",
+        "title": "vLLM documentation",
+        "url": "https://docs.vllm.ai/en/latest/features/spec_decode.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Features: Speculative Decoding"
+       }
+      },
+      {
+       "topic": "EAGLE-3, acceptance rate and break-even",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/05-eagle3-speculative-decoding",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 05 'EAGLE-3 Speculative Decoding in Production'"
+       }
+      },
+      {
+       "topic": "Engine choice by hardware/scale (notes TGI maintenance mode)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/28-self-hosted-serving-selection",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 28 'Self-Hosted Serving Selection - Matching Engine to Hardware and Scale'"
+       }
+      },
+      {
+       "topic": "SGLang",
+       "resource": {
+        "resourceId": "sglang",
+        "title": "SGLang documentation",
+        "url": "https://docs.sglang.ai/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Docs home: quick start"
+       }
+      }
+     ],
+     "practice": {
+      "title": "vLLM on a T4 vs llama.cpp (real-tool lab for rohitg00 17/05, 17/28)",
+      "brief": "Free GPU route: Google Colab or Kaggle notebooks (T4, no card; Kaggle needs phone verification; quotas change) with a <=3B model; CPU fallback: llama.cpp. Run `vllm serve` for a <=3B model on the T4 (expose via the notebook or test in-notebook), scrape /metrics into your M21 Prometheus (or dump it to a file and import), run the same 50 prompts against vLLM and llama.cpp. Try ngram speculative decoding and report acceptance rate and speed-up.",
+      "done_when": "ENGINES.md: table of tokens/s and TTFT p50/p95 for vLLM (spec off/on) and llama.cpp on identical prompts, the measured acceptance rate, and a 5-line engine choice for (a) one laptop user, (b) 100 concurrent users on one GPU."
+     },
+     "quiz": [
+      {
+       "id": "M17.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Speculative decoding speeds up generation by:",
+       "options": [
+        "Skipping tokens",
+        "A cheap draft proposes tokens the large model verifies in parallel",
+        "Quantization",
+        "Caching outputs"
+       ],
+       "answer": 1,
+       "explain": "Output distribution is unchanged; you save target-model forward passes."
+      },
+      {
+       "id": "M17.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Its speed-up mainly depends on:",
+       "options": [
+        "GPU colour",
+        "The draft acceptance rate (and draft length vs concurrency)",
+        "Prompt language only",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Low acceptance wastes compute; at high concurrency gains shrink."
+      },
+      {
+       "id": "M17.U05.Q3",
+       "kind": "mcq",
+       "prompt": "vLLM's OpenAI-compatible server matters because:",
+       "options": [
+        "It is always faster",
+        "Existing clients and gateways work unchanged",
+        "It is required by law",
+        "It adds auth"
+       ],
+       "answer": 1,
+       "explain": "Swap base_url and keep your code."
+      },
+      {
+       "id": "M17.U05.Q4",
+       "kind": "short",
+       "prompt": "When would you pick llama.cpp over vLLM in production?",
+       "rubric": [
+        "CPU-only/edge/Apple Silicon or very small deployments, single-user or low concurrency.",
+        "Need GGUF quantization and minimal dependencies/footprint.",
+        "vLLM wins for high-concurrency GPU serving (continuous batching, PagedAttention)."
+       ]
+      }
+     ],
+     "backup": {
+      "resourceId": "tgi",
+      "title": "Text Generation Inference docs",
+      "url": "https://huggingface.co/docs/text-generation-inference/index",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Docs home (note: maintenance mode since 2025-12-11 per rohitg00 17/28)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "M17.S3",
+   "title": "Performance engineering",
+   "units": [
+    {
+     "id": "M17.U06",
+     "title": "Inference metrics: TTFT, TPOT/ITL, goodput, percentiles",
+     "hours": 4,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U05"
+     ],
+     "outcomes": [
+      "You can define TTFT, TPOT, ITL, E2E, throughput and goodput precisely.",
+      "You can compute percentiles and goodput against a multi-constraint SLO."
+     ],
+     "topics": [
+      {
+       "id": "M17.02.10",
+       "title": "TTFT/TPOT"
+      },
+      {
+       "id": "M17.02.11",
+       "title": "p50/p95/p99"
+      },
+      {
+       "id": "M17.02.12",
+       "title": "Throughput vs latency"
+      },
+      {
+       "id": "M17.06.01",
+       "title": "Goodput and SLO multi-constraints"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/08-inference-metrics-goodput",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 08 'Inference Metrics - TTFT, TPOT, ITL, Goodput, P99'"
+     },
+     "covers": [
+      "Precise definitions of TTFT, TPOT, ITL, E2E, throughput, goodput",
+      "Why the mean is wrong; reading P50/P90/P99",
+      "Building an SLO multi-constraint and computing goodput",
+      "Why benchmark tools disagree on TPOT"
+     ],
+     "gaps": [
+      {
+       "topic": "Where these metrics come from in a real server",
+       "resource": {
+        "resourceId": "vllm-docs",
+        "title": "vLLM documentation",
+        "url": "https://docs.vllm.ai/en/latest/usage/metrics.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Usage: Production Metrics"
+       }
+      },
+      {
+       "topic": "SLO thinking",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/sre-book/service-level-objectives/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Book Ch4 'Service Level Objectives'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Goodput from real logs (real-tool lab for rohitg00 17/08)",
+      "brief": "No-card path: use the streaming request logs from your U05 runs (Colab) or llama.cpp locally. Log per-request timestamps (sent, first token, each token, done) for 500 streaming requests and compute TTFT/TPOT p50/p95/p99 and goodput for TTFT < 500 ms AND TPOT < 50 ms (adjust to your hardware and state it).",
+      "done_when": "metrics.py computes all numbers from raw JSONL (committed); README shows percentile table, goodput %, and one sentence on which constraint fails most often."
+     },
+     "quiz": [
+      {
+       "id": "M17.U06.Q1",
+       "kind": "mcq",
+       "prompt": "End-to-end latency of a streamed response is approximately:",
+       "options": [
+        "TPOT only",
+        "TTFT + TPOT x (output tokens - 1)",
+        "TTFT x tokens",
+        "Queue time only"
+       ],
+       "answer": 1,
+       "explain": "First token arrives at TTFT, then one token per TPOT."
+      },
+      {
+       "id": "M17.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Reporting only mean latency hides:",
+       "options": [
+        "Nothing",
+        "Tail latency users actually feel",
+        "Throughput",
+        "Cost"
+       ],
+       "answer": 1,
+       "explain": "A few very slow requests barely move the mean."
+      },
+      {
+       "id": "M17.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Goodput is:",
+       "options": [
+        "Total tokens/s",
+        "The rate or fraction of requests that meet all SLO constraints",
+        "GPU utilisation",
+        "Cache hit rate"
+       ],
+       "answer": 1,
+       "explain": "Throughput that counts only SLO-compliant requests."
+      },
+      {
+       "id": "M17.U06.Q4",
+       "kind": "short",
+       "prompt": "Why can raising the batch size increase throughput but lower goodput?",
+       "rubric": [
+        "Bigger batches raise tokens/s overall but increase per-request TPOT/queueing.",
+        "More requests then violate the latency SLO, so fewer count as good.",
+        "Optimal point maximises SLO-compliant throughput, not raw throughput."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U07",
+     "title": "Load testing LLM APIs and capacity planning",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U06"
+     ],
+     "outcomes": [
+      "You can design steady, ramp, spike and soak tests with realistic prompt-length distributions.",
+      "You can tell a client bottleneck from a server bottleneck.",
+      "You can state a capacity plan with assumptions."
+     ],
+     "topics": [
+      {
+       "id": "M17.06.02",
+       "title": "Load patterns: steady, ramp, spike, soak"
+      },
+      {
+       "id": "M17.06.03",
+       "title": "Realistic prompt/length distributions"
+      },
+      {
+       "id": "M17.04.07",
+       "title": "Capacity planning"
+      },
+      {
+       "id": "M17.06.04",
+       "title": "Finding the bottleneck (client vs queue vs GPU)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/22-load-testing-llm-apis",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 22 'Load Testing LLM APIs - Why k6 and Locust Lie'"
+     },
+     "covers": [
+      "GIL trap and prompt-uniformity trap in generic load testers",
+      "Tool choice: LLMPerf, k6 + streaming, guidellm, GenAI-Perf",
+      "Four load patterns and the failure mode each catches",
+      "Building prompt distributions from mean + stddev of input tokens"
+     ],
+     "gaps": [
+      {
+       "topic": "Writing a load test in Python",
+       "resource": {
+        "resourceId": "locust",
+        "title": "Locust documentation",
+        "url": "https://docs.locust.io/en/stable/quickstart.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Your first test' quickstart"
+       }
+      },
+      {
+       "topic": "Scriptable alternative for CI gates",
+       "resource": {
+        "resourceId": "k6",
+        "title": "Grafana k6 documentation",
+        "url": "https://grafana.com/docs/k6/latest/get-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Get started"
+       }
+      },
+      {
+       "topic": "Overload behaviour",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/sre-book/handling-overload/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Book Ch21 'Handling Overload'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Find the knee (real-tool lab for rohitg00 17/22)",
+      "brief": "No-card path: Locust from your laptop against llama.cpp `llama-server` locally (CPU) or vLLM in Colab. Prompts sampled from a distribution (e.g. lognormal input lengths), streaming on. Run ramp and spike tests; run Locust with multiple worker processes and watch load-generator CPU.",
+      "done_when": "Report shows the concurrency where p95 TTFT breaks your SLO, load-generator CPU stayed < 70% (evidence the client is not the bottleneck), and a capacity statement 'N replicas for X RPS at p95 TTFT < Y ms' with assumptions."
+     },
+     "quiz": [
+      {
+       "id": "M17.U07.Q1",
+       "kind": "mcq",
+       "prompt": "A soak test mainly finds:",
+       "options": [
+        "Peak capacity",
+        "Leaks and degradation over time",
+        "Cold starts",
+        "Auth bugs"
+       ],
+       "answer": 1,
+       "explain": "Hours of steady load reveal memory leaks, fragmentation, log growth."
+      },
+      {
+       "id": "M17.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Identical prompts in a loop overestimate performance because:",
+       "options": [
+        "They are short",
+        "Prefix caching and uniform lengths do not reflect real traffic",
+        "The GPU warms up",
+        "DNS caching"
+       ],
+       "answer": 1,
+       "explain": "Real traffic has varied lengths and fewer cache hits."
+      },
+      {
+       "id": "M17.U07.Q3",
+       "kind": "mcq",
+       "prompt": "If your load-generator CPU is at 100%:",
+       "options": [
+        "The server is the bottleneck",
+        "Your results may be measuring the client",
+        "Results are valid",
+        "Add GPUs"
+       ],
+       "answer": 1,
+       "explain": "Scale out the generator before trusting numbers."
+      },
+      {
+       "id": "M17.U07.Q4",
+       "kind": "short",
+       "prompt": "State your capacity plan as 'N replicas for X RPS at p95 < Y' and list its assumptions.",
+       "rubric": [
+        "Gives concrete N, X, Y derived from measured per-replica knee with headroom.",
+        "Assumptions: prompt/output length distribution, cache hit rate, model/quant, hardware, traffic peak factor.",
+        "Notes what invalidates the plan."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M17.S4",
+   "title": "Production LLM operations",
+   "units": [
+    {
+     "id": "M17.U08",
+     "title": "Gateway, quotas, caching, batch APIs and routing (implementation)",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U11",
+      "M16.U12",
+      "M17.U05"
+     ],
+     "outcomes": [
+      "You can run an LLM gateway with provider fallback, retries and per-key quotas.",
+      "You can implement exact and semantic caching with tenant-scoped keys.",
+      "You can route easy requests to cheap models and push offline work to batch APIs."
+     ],
+     "topics": [
+      {
+       "id": "M17.04.10",
+       "title": "Gateway with provider fallback and retries"
+      },
+      {
+       "id": "M17.04.11",
+       "title": "Per-tenant quotas (RPM/TPM)"
+      },
+      {
+       "id": "M17.04.12",
+       "title": "Prompt/semantic cache"
+      },
+      {
+       "id": "M17.04.13",
+       "title": "Batch API pipeline"
+      },
+      {
+       "id": "M17.04.14",
+       "title": "Model routing/cascades"
+      }
+     ],
+     "learn": {
+      "resourceId": "litellm",
+      "title": "LiteLLM AI Gateway (proxy) docs",
+      "url": "https://docs.litellm.ai/docs/simple_proxy",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "LiteLLM Proxy docs: Getting started (config.yaml model_list), Fallbacks/reliability, Virtual keys + budgets/rate limits, Caching"
+     },
+     "covers": [
+      "Running the proxy with a model_list config (OpenAI-compatible endpoint)",
+      "Routing, retries and fallbacks across deployments/providers",
+      "Virtual keys with budgets and RPM/TPM limits",
+      "Caching (Redis, semantic cache options) and logging callbacks (e.g. Langfuse)"
+     ],
+     "gaps": [
+      {
+       "topic": "Gateway feature map (vendor benchmark figures = claims)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/19-ai-gateways",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 19 'AI Gateways - LiteLLM, Portkey, Kong AI Gateway, Bifrost'"
+       }
+      },
+      {
+       "topic": "Cache economics",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/14-prompt-semantic-caching",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 14 'Prompt Caching and Semantic Caching Economics'"
+       }
+      },
+      {
+       "topic": "Batch lane triage",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/15-batch-apis",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 15 'Batch APIs - the 50% Discount as Industry Standard'"
+       }
+      },
+      {
+       "topic": "Cascades and routing signals",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/16-model-routing",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 16 'Model Routing as a Cost-Reduction Primitive'"
+       }
+      },
+      {
+       "topic": "Batch API mechanics",
+       "resource": {
+        "resourceId": "openai-batch",
+        "title": "OpenAI Batch API guide",
+        "url": "https://platform.openai.com/docs/guides/batch",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Batch API guide"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Build the M22.U11 gateway (real-tool lab for rohitg00 17/14, 17/15, 17/16, 17/19)",
+      "brief": "No-card path: LiteLLM proxy + Redis + Langfuse in Docker locally; upstreams = your llama.cpp/vLLM server plus one hosted free-tier model (no card). Configure per-key RPM/TPM limits, fallback on 429/5xx, Redis semantic cache scoped by tenant, and a simple router (short prompts -> small model). If you have no paid API, simulate the Batch API lane with a nightly job against llama.cpp and document the provider version.",
+      "done_when": "Test script shows: tenant A throttled with 429 while tenant B unaffected; a forced upstream 500 falls back successfully (trace in Langfuse); cache hit rate and $ saved over 500 replayed requests; a cross-tenant cache probe returns a miss."
+     },
+     "quiz": [
+      {
+       "id": "M17.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Exact-match response caching is safe for:",
+       "options": [
+        "All prompts",
+        "Deterministic settings (temperature 0) with identical inputs and no side effects",
+        "Personalised answers",
+        "Tool calls with side effects"
+       ],
+       "answer": 1,
+       "explain": "Anything else risks returning wrong or stale/private answers."
+      },
+      {
+       "id": "M17.U08.Q2",
+       "kind": "mcq",
+       "prompt": "TPM limits are about:",
+       "options": [
+        "Requests",
+        "Tokens per minute",
+        "Tenants",
+        "Timeouts"
+       ],
+       "answer": 1,
+       "explain": "Providers meter both RPM and TPM."
+      },
+      {
+       "id": "M17.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Fallback across providers needs care because:",
+       "options": [
+        "It is slow",
+        "Different models give different outputs/formats, so evals must cover the fallback path",
+        "It is illegal",
+        "It never fails"
+       ],
+       "answer": 1,
+       "explain": "Your quality bar must hold on every path."
+      },
+      {
+       "id": "M17.U08.Q4",
+       "kind": "short",
+       "prompt": "How do you stop one tenant's burst from starving others?",
+       "rubric": [
+        "Per-tenant quotas/token buckets at the gateway (RPM/TPM) and spend caps.",
+        "Fair queuing / priority classes / separate concurrency pools (bulkheads).",
+        "Return 429 with Retry-After to the noisy tenant; monitor per-tenant usage."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U09",
+     "title": "Autoscaling and Kubernetes for inference",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M21.U13",
+      "M17.U07"
+     ],
+     "outcomes": [
+      "You can protect slow-loading model servers with startup probes.",
+      "You can add a bounded queue with load shedding.",
+      "You can autoscale on queue depth or KV-cache utilisation instead of GPU utilisation.",
+      "You can explain gang scheduling and node provisioning for GPUs."
+     ],
+     "topics": [
+      {
+       "id": "M17.04.02",
+       "title": "Autoscaling"
+      },
+      {
+       "id": "M17.04.03",
+       "title": "Resource requests (GPU)"
+      },
+      {
+       "id": "M17.04.04",
+       "title": "Queues and backpressure"
+      },
+      {
+       "id": "M17.04.05",
+       "title": "Health probes (model warm-up / startup probes)"
+      },
+      {
+       "id": "M17.04.15",
+       "title": "Scaling signals: queue depth, KV-cache utilisation"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 03 'GPU Autoscaling on Kubernetes - Karpenter, KAI Scheduler, Gang Scheduling'"
+     },
+     "covers": [
+      "Three autoscaling layers: node provisioning, gang scheduling, application-level",
+      "Why DCGM GPU utilisation is the wrong HPA signal; queue depth and KV-cache utilisation instead",
+      "Gang scheduling and partial-allocation failure",
+      "Karpenter consolidation pitfalls for running GPU jobs"
+     ],
+     "gaps": [
+      {
+       "topic": "Startup probes for slow model loads",
+       "resource": {
+        "resourceId": "k8s-docs",
+        "title": "Kubernetes documentation",
+        "url": "https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts: Liveness, Readiness, and Startup Probes"
+       }
+      },
+      {
+       "topic": "HPA on custom/external metrics",
+       "resource": {
+        "resourceId": "k8s-docs",
+        "title": "Kubernetes documentation",
+        "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "HorizontalPodAutoscaler Walkthrough - 'Autoscaling on multiple metrics and custom metrics'"
+       }
+      },
+      {
+       "topic": "Cold-start costs when scaling 0 -> 1",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/10-cold-start-mitigation",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 10 'Cold Start Mitigation for Serverless LLMs'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Queue-aware autoscaling on k3d (real-tool lab for rohitg00 17/03)",
+      "brief": "No-card path: k3d on CPU with llama.cpp `llama-server` as the model pod. Add a startup probe sized to model load time, put a small FastAPI queue in front with max depth 20 that returns 503 when full, export queue depth to Prometheus, and scale with an HPA on that metric (prometheus-adapter or KEDA; a simulated metric is acceptable if adapters are too heavy - document it).",
+      "done_when": "Under a Locust spike, `kubectl get hpa -w` shows scaling on queue depth; a deliberately low startupProbe threshold reproduces the restart loop and the fixed value cures it; 503 rate during the spike reported alongside p95 for accepted requests."
+     },
+     "quiz": [
+      {
+       "id": "M17.U09.Q1",
+       "kind": "mcq",
+       "prompt": "A startup probe protects slow-loading models from:",
+       "options": [
+        "OOM",
+        "Being killed by the liveness probe during warm-up",
+        "Scaling",
+        "Network loss"
+       ],
+       "answer": 1,
+       "explain": "Liveness/readiness are held off until startup succeeds."
+      },
+      {
+       "id": "M17.U09.Q2",
+       "kind": "mcq",
+       "prompt": "GPU utilisation is a poor HPA signal for LLM servers because:",
+       "options": [
+        "It is unavailable",
+        "It measures kernel duty cycle, not how saturated the request queue is",
+        "It is too precise",
+        "Kubernetes cannot read it"
+       ],
+       "answer": 1,
+       "explain": "A GPU can read 100% busy while latency is fine, or vice versa."
+      },
+      {
+       "id": "M17.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Load shedding (fast 503) under overload:",
+       "options": [
+        "Is a bug",
+        "Protects latency for accepted requests and avoids cascading failure",
+        "Always loses data",
+        "Is only for databases"
+       ],
+       "answer": 1,
+       "explain": "Better to reject quickly than time out everything."
+      },
+      {
+       "id": "M17.U09.Q4",
+       "kind": "short",
+       "prompt": "What does a cold start cost when scaling an LLM from 0 to 1 replica, and how do you hide it?",
+       "rubric": [
+        "Node provision + image pull + weight download + load into memory/HBM + engine init/warm-up (minutes for big models).",
+        "Hide with min replicas/warm pool, pre-pulled images, cached weights on local disk/volumes, smaller/quantized models, queueing with honest 202/503.",
+        "States the cost trade-off of keeping warm capacity."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U10",
+     "title": "Reliability, security and FinOps for LLM services",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M17.U08"
+     ],
+     "outcomes": [
+      "You can set SLOs and runbooks for an LLM service and plan DR (RPO/RTO).",
+      "You can rotate API keys with zero downtime and keep audit logs.",
+      "You can enforce tenant isolation and attribute cost per tenant."
+     ],
+     "topics": [
+      {
+       "id": "M17.04.06",
+       "title": "SLOs"
+      },
+      {
+       "id": "M17.04.08",
+       "title": "Multi-tenant isolation"
+      },
+      {
+       "id": "M17.04.09",
+       "title": "Disaster recovery"
+      },
+      {
+       "id": "M17.04.16",
+       "title": "Secrets rotation and audit logs"
+      },
+      {
+       "id": "M17.04.17",
+       "title": "Unit economics and per-tenant cost attribution"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/23-sre-for-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lessons 23 'SRE for AI - Multi-Agent Incident Response, Runbooks, Predictive Detection', 25 'Security - Secrets, API Key Rotation, Audit Logs, Guardrails', 27 'FinOps for LLMs - Unit Economics and Multi-Tenant Attribution'"
+     },
+     "covers": [
+      "AI-SRE architecture with human approval gate; narrow auto-remediation (L23)",
+      "Secret-management anti-patterns, gateway-pulls-from-vault, PII scrubbing with consistent tokenization (L25)",
+      "Four token layers, enforcement ladder (rate -> spend cap -> kill switch), unit metric per resolved query (L27)"
+     ],
+     "gaps": [
+      {
+       "topic": "Cascading failures and graceful degradation",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Book Ch22 'Addressing Cascading Failures'"
+       }
+      },
+      {
+       "topic": "SLO definition practice",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/workbook/implementing-slos/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Workbook 'Implementing SLOs'"
+       }
+      },
+      {
+       "topic": "DR checklist for LLM serving (tokenizer/quant configs)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/11-multi-region-kv-locality",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 11 'Multi-Region LLM Serving and KV Cache Locality' (DR section)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "DR plan, zero-downtime key rotation, per-tenant cost report (real-tool lab for rohitg00 17/23, 17/25, 17/27)",
+      "brief": "No-card path: all on your local gateway stack (LiteLLM + Redis + Langfuse + Qdrant). Write a DR plan with RPO/RTO for gateway config, vector DB and model artifacts and test restoring Qdrant from a snapshot. Rotate a LiteLLM virtual key with an overlap window while Locust runs. Produce a monthly per-tenant cost report from Langfuse/LiteLLM spend logs.",
+      "done_when": "Locust run shows zero 401s during rotation; Qdrant restore timed against your RTO; COST_REPORT.md with cost per tenant and cost per resolved query; an audit log line exists for every key create/revoke."
+     },
+     "quiz": [
+      {
+       "id": "M17.U10.Q1",
+       "kind": "mcq",
+       "prompt": "RPO is:",
+       "options": [
+        "Recovery time",
+        "The maximum acceptable data-loss window",
+        "Request rate",
+        "Replica count"
+       ],
+       "answer": 1,
+       "explain": "RTO is how fast you recover; RPO is how much data you can lose."
+      },
+      {
+       "id": "M17.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Zero-downtime key rotation requires:",
+       "options": [
+        "A restart",
+        "Accepting old and new keys during an overlap window",
+        "Deleting the old key first",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Issue new -> roll clients -> revoke old."
+      },
+      {
+       "id": "M17.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Multi-tenant isolation at the application layer includes:",
+       "options": [
+        "Shared caches by default",
+        "Tenant-scoped data access, quotas and cache keys",
+        "One API key for everyone",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Every shared component must carry the tenant boundary."
+      },
+      {
+       "id": "M17.U10.Q4",
+       "kind": "short",
+       "prompt": "One tenant's prompts must never appear in another tenant's cached answers. How do you guarantee it?",
+       "rubric": [
+        "Include tenant ID in every cache key/namespace (exact and semantic) and filter vector-cache lookups by tenant.",
+        "Tests that probe cross-tenant hits; no global cache for personalised content.",
+        "Audit/monitor; encryption or separate stores for high-sensitivity tenants."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M17.S5",
+   "title": "Frontier serving, chaos and compliance (optional)",
+   "units": [
+    {
+     "id": "M17.U11",
+     "title": "Frontier serving architectures (optional)",
+     "hours": 8,
+     "depth": "deep",
+     "prerequisites": [
+      "M17.U09"
+     ],
+     "outcomes": [
+      "You can explain disaggregated prefill/decode, KV offloading and cache-aware routing, and when they pay off.",
+      "You can explain hardware-specialised compilation (TensorRT-LLM, FP8/NVFP4) and edge inference targets."
+     ],
+     "topics": [
+      {
+       "id": "M17.07.01",
+       "title": "Hardware-specialised compilation (TensorRT-LLM, FP8/NVFP4)"
+      },
+      {
+       "id": "M17.07.02",
+       "title": "Multi-region serving and KV-cache locality"
+      },
+      {
+       "id": "M17.07.03",
+       "title": "Edge inference targets"
+      },
+      {
+       "id": "M17.07.04",
+       "title": "Disaggregated prefill/decode"
+      },
+      {
+       "id": "M17.07.05",
+       "title": "KV offloading and cache-aware routing (vLLM production stack, LMCache)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/17-disaggregated-prefill-decode",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lessons 07 'Hardware-Specialized Inference Compilation', 11 'Multi-Region LLM Serving and KV Cache Locality', 12 'Edge Inference', 17 'Disaggregated Prefill/Decode - NVIDIA Dynamo and llm-d', 18 'Production Serving Stack - KV Offloading and Cache-Aware Routing'"
+     },
+     "covers": [
+      "FP8 KV/attention with NVFP4 weights; HBM footprint math (L07)",
+      "Round-robin vs cache-aware routing; prefix-hash routers; DR file checklist (L11)",
+      "Edge targets (ANE, Hexagon, WebGPU/WebLLM, Jetson) and formats (L12)",
+      "Prefill and decode pools with KV transfer; when disaggregation does not pay (L17)",
+      "vLLM production-stack layers; KV offload connector; when LMCache helps (L18)"
+     ],
+     "gaps": [
+      {
+       "topic": "KV offloading engine",
+       "resource": {
+        "resourceId": "lmcache",
+        "title": "LMCache",
+        "url": "https://github.com/LMCache/LMCache",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "TensorRT-LLM overview",
+       "resource": {
+        "resourceId": "trtllm",
+        "title": "TensorRT-LLM documentation",
+        "url": "https://nvidia.github.io/TensorRT-LLM/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Docs home / overview"
+       }
+      },
+      {
+       "topic": "Prefill vs decode cost measured locally",
+       "resource": {
+        "resourceId": "llamacpp",
+        "title": "llama.cpp",
+        "url": "https://github.com/ggml-org/llama.cpp/tree/master/tools/llama-bench",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "llama-bench tool (-p prompt vs -n generation tests)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Measure prefill vs decode and cache-aware routing (real-tool lab for rohitg00 17/07, 17/11, 17/12, 17/17, 17/18)",
+      "brief": "No-card path: laptop only. (1) `llama-bench -p 512,2048 -n 128` to measure prefill vs decode throughput and explain from the numbers why disaggregation separates them. (2) Run two llama-server replicas behind nginx with `hash $http_x_session_id consistent` vs round robin; send multi-turn conversations sharing a prefix and compare TTFT (cache reuse). (3) Run a Q4 model in the browser with WebLLM (WebGPU) if your GPU supports it, else document why not. TensorRT-LLM/Blackwell: reading only.",
+      "done_when": "FRONTIER.md: prefill vs decode tok/s table; TTFT p50 sticky vs round-robin with the difference explained; one paragraph per lesson (07, 11, 12, 17, 18) on when it would matter at your scale (usually: not yet, and why)."
+     },
+     "quiz": [
+      {
+       "id": "M17.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Disaggregated prefill/decode pays off least when:",
+       "options": [
+        "Prompts are long",
+        "Prompts and outputs are both short",
+        "Traffic is high",
+        "GPUs are heterogeneous"
+       ],
+       "answer": 1,
+       "explain": "KV transfer overhead dominates when there is little prefill or decode work to separate."
+      },
+      {
+       "id": "M17.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Round-robin load balancing hurts cached inference because:",
+       "options": [
+        "It is slow",
+        "Requests sharing a prefix land on replicas without that KV cache",
+        "It drops requests",
+        "It needs TLS"
+       ],
+       "answer": 1,
+       "explain": "Cache-aware/sticky routing preserves prefix hits."
+      },
+      {
+       "id": "M17.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Mobile/edge LLM inference is mostly bound by:",
+       "options": [
+        "Compute",
+        "Memory bandwidth",
+        "Network",
+        "Disk"
+       ],
+       "answer": 1,
+       "explain": "Same reason as decode on GPUs: weights must stream through memory per token."
+      },
+      {
+       "id": "M17.U11.Q4",
+       "kind": "short",
+       "prompt": "Your team runs one 8B model on two GPUs at 20 RPS. Which of today's five techniques would you adopt first, if any, and why?",
+       "rubric": [
+        "Likely cache-aware routing/prefix caching first (cheap, immediate TTFT win) or none.",
+        "Explains disaggregation/LMCache/TRT-LLM need larger scale, long contexts or specific hardware.",
+        "Ties the decision to measured bottleneck."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U12",
+     "title": "Chaos engineering and compliance for LLM production (optional)",
+     "hours": 6,
+     "depth": "deep",
+     "prerequisites": [
+      "M17.U10"
+     ],
+     "outcomes": [
+      "You can design and run a safe chaos experiment against an LLM stack.",
+      "You can map an LLM product to relevant compliance frameworks and controls."
+     ],
+     "topics": [
+      {
+       "id": "M17.07.06",
+       "title": "Chaos engineering for LLM production"
+      },
+      {
+       "id": "M17.07.07",
+       "title": "Compliance frameworks (SOC 2, HIPAA, GDPR, PCI-DSS, EU AI Act, ISO 42001)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/24-chaos-engineering-llm",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lessons 24 'Chaos Engineering for LLM Production' + 26 'Compliance - SOC 2, HIPAA, GDPR, PCI-DSS, EU AI Act, ISO 42001'"
+     },
+     "covers": [
+      "Chaos prerequisites (SLI/SLO, observability, rollback, runbooks, on-call) and four planes (L24)",
+      "Five LLM-specific experiments: memory overload, network fail, provider outage, malformed prompt, KV eviction storm (L24)",
+      "Seven frameworks by customer segment; EU AI Act timeline; inference-layer PII redaction; cross-framework control mapping (L26)"
+     ],
+     "gaps": [
+      {
+       "topic": "Network fault injection tool",
+       "resource": {
+        "resourceId": "toxiproxy",
+        "title": "Toxiproxy (network fault injection)",
+        "url": "https://github.com/Shopify/toxiproxy",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README: Usage, toxics (latency, timeout, reset_peer)"
+       }
+      },
+      {
+       "topic": "Blameless review of the experiment",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/workbook/postmortem-culture/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Workbook 'Postmortem Culture'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Provider-outage game day (real-tool lab for rohitg00 17/24, 17/26)",
+      "brief": "No-card path: local gateway stack. Put Toxiproxy between LiteLLM and your primary upstream; run Locust; inject 2 s latency, then a full outage (reset_peer) for 5 minutes. Observe fallback, SLO burn and alerts. Separately write a one-page compliance control map for your M20 product idea (which frameworks apply and 5 controls you already implement).",
+      "done_when": "GAMEDAY.md with hypothesis, blast-radius limits, abort condition, graphs during injection, outcome vs hypothesis; COMPLIANCE.md mapping 5 implemented controls to framework clauses (e.g. GDPR Art. 32)."
+     },
+     "quiz": [
+      {
+       "id": "M17.U12.Q1",
+       "kind": "mcq",
+       "prompt": "Before running chaos experiments you must have:",
+       "options": [
+        "A bigger cluster",
+        "SLOs, observability, rollback, runbooks and on-call",
+        "A paid chaos tool",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Without these you cannot detect, limit or recover from the experiment."
+      },
+      {
+       "id": "M17.U12.Q2",
+       "kind": "mcq",
+       "prompt": "A safe chaos experiment always defines:",
+       "options": [
+        "Only the fault",
+        "A hypothesis, blast radius and an abort condition",
+        "A blame owner",
+        "A new feature"
+       ],
+       "answer": 1,
+       "explain": "It is a controlled experiment, not random breakage."
+      },
+      {
+       "id": "M17.U12.Q3",
+       "kind": "mcq",
+       "prompt": "For GDPR, the defensible standard for PII in LLM traffic is:",
+       "options": [
+        "Post-processing cleanup later",
+        "Real-time redaction at the inference layer before storage/transfer",
+        "Ignoring it if logs are private",
+        "Encrypting only backups"
+       ],
+       "answer": 1,
+       "explain": "Data should not be stored or sent onwards unredacted in the first place."
+      },
+      {
+       "id": "M17.U12.Q4",
+       "kind": "short",
+       "prompt": "Design one LLM-specific chaos experiment beyond 'kill a pod': state the hypothesis and the metric that would refute it.",
+       "rubric": [
+        "Names an LLM-specific fault (provider 429 storm, malformed/huge prompt, KV eviction storm, slow tokenizer).",
+        "Hypothesis framed as 'SLO holds / fallback engages within X s'.",
+        "Refuting metric and abort condition stated."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M17.S6",
+   "title": "Distributed training and GPU programming (optional specialist track)",
+   "units": [
+    {
+     "id": "M17.U13",
+     "title": "Distributed training: DDP, ZeRO/FSDP, parallelism, collectives (specialist)",
+     "hours": 30,
+     "depth": "deep",
+     "prerequisites": [
+      "M17.U03"
+     ],
+     "outcomes": [
+      "You can run DDP with 2 processes and verify gradient synchronisation.",
+      "You can explain ZeRO stages/FSDP, tensor/pipeline/data parallelism and their communication costs.",
+      "You can use gradient accumulation and sharded checkpoints with resume."
+     ],
+     "topics": [
+      {
+       "id": "M17.03.01",
+       "title": "DDP"
+      },
+      {
+       "id": "M17.03.02",
+       "title": "FSDP"
+      },
+      {
+       "id": "M17.03.03",
+       "title": "Tensor/pipeline/data parallelism"
+      },
+      {
+       "id": "M17.03.04",
+       "title": "Collectives"
+      },
+      {
+       "id": "M17.03.05",
+       "title": "Communication bottlenecks"
+      },
+      {
+       "id": "M17.03.06",
+       "title": "Gradient accumulation"
+      },
+      {
+       "id": "M17.03.07",
+       "title": "Checkpoint sharding"
+      },
+      {
+       "id": "M17.03.08",
+       "title": "Fault recovery"
+      }
+     ],
+     "learn": {
+      "resourceId": "ultrascale",
+      "title": "The Ultra-Scale Playbook: Training LLMs on GPU Clusters",
+      "url": "https://huggingface.co/spaces/nanotron/ultrascale-playbook",
+      "type": "book",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Sections 'First Steps: Training on One GPU' (memory, activation recomputation, gradient accumulation), 'Data Parallelism', 'ZeRO (Zero Redundancy Optimizer)', 'Tensor Parallelism', 'Pipeline Parallelism', 'Finding the Best Training Configuration'; appendix on collective operations"
+     },
+     "covers": [
+      "Memory anatomy of training (weights, grads, optimizer states, activations)",
+      "Gradient accumulation and activation recomputation",
+      "Data parallelism with overlapped all-reduce; ZeRO-1/2/3",
+      "Tensor, sequence/context and pipeline parallelism trade-offs",
+      "Collective operations primer (broadcast, all-reduce, all-gather, reduce-scatter)"
+     ],
+     "gaps": [
+      {
+       "topic": "Hands-on DDP code",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch tutorials (DDP series, profiler)",
+        "url": "https://docs.pytorch.org/tutorials/beginner/ddp_series_intro.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Distributed Data Parallel in PyTorch' video series (DDP series intro onward)"
+       }
+      },
+      {
+       "topic": "DDP API walkthrough",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch tutorials (DDP series, profiler)",
+        "url": "https://docs.pytorch.org/tutorials/intermediate/ddp_tutorial.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting Started with Distributed Data Parallel"
+       }
+      },
+      {
+       "topic": "Fault tolerance and checkpointing in practice",
+       "resource": {
+        "resourceId": "stas-mle",
+        "title": "Machine Learning Engineering Open Book",
+        "url": "https://github.com/stas00/ml-engineering",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapters 'Training' -> fault tolerance / checkpoints"
+       }
+      },
+      {
+       "topic": "Collectives from scratch -> end-to-end distributed train (CPU-simulated)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 capstones 76-81 (collectives, DDP, ZeRO, pipeline parallel, sharded checkpoint, end-to-end)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "DDP on CPU (gloo) + accumulation equivalence + sharded resume",
+      "brief": "No-card path: CPU with the gloo backend (2 processes via torchrun) on your laptop; optionally 2xT4 on Kaggle if the free quota allows. Train a small MLP/GPT with DDP, prove gradients are identical across ranks after backward, prove 4 x accumulation of batch 8 == batch 32 (within tolerance), save a sharded checkpoint, kill the run, resume.",
+      "done_when": "Tests pass: rank gradients equal; accumulation equivalence assert; resumed loss curve continues from the saved step (plot); README explains which collective DDP uses and its bytes per step."
+     },
+     "quiz": [
+      {
+       "id": "M17.U13.Q1",
+       "kind": "mcq",
+       "prompt": "DDP synchronises:",
+       "options": [
+        "Weights each step via broadcast",
+        "Gradients via all-reduce",
+        "Training data",
+        "Only the optimizer"
+       ],
+       "answer": 1,
+       "explain": "Each rank has a full model copy; gradients are averaged with all-reduce."
+      },
+      {
+       "id": "M17.U13.Q2",
+       "kind": "mcq",
+       "prompt": "FSDP/ZeRO-3 reduces per-GPU memory by:",
+       "options": [
+        "Quantization",
+        "Sharding parameters, gradients and optimizer states",
+        "Smaller batches",
+        "Offloading data"
+       ],
+       "answer": 1,
+       "explain": "Each rank holds only its shard and gathers parameters when needed."
+      },
+      {
+       "id": "M17.U13.Q3",
+       "kind": "mcq",
+       "prompt": "Gradient accumulation simulates:",
+       "options": [
+        "More GPUs",
+        "A larger effective batch size",
+        "Mixed precision",
+        "Pipeline parallelism"
+       ],
+       "answer": 1,
+       "explain": "Sum gradients over micro-batches before stepping."
+      },
+      {
+       "id": "M17.U13.Q4",
+       "kind": "short",
+       "prompt": "Why does all-reduce bandwidth limit scaling beyond one node?",
+       "rubric": [
+        "Inter-node links (Ethernet/InfiniBand) are much slower than intra-node NVLink.",
+        "Gradient bytes per step are fixed by model size, so communication time can exceed compute.",
+        "Mitigations: overlap comm/compute, gradient compression, larger batches, hierarchical/sharded strategies."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M17.U14",
+     "title": "Profiling and GPU kernels: PyTorch profiler, CUDA/Triton intro (specialist)",
+     "hours": 15,
+     "depth": "deep",
+     "prerequisites": [
+      "M17.U13"
+     ],
+     "outcomes": [
+      "You can profile a training/inference step and find the bottleneck op.",
+      "You can write and benchmark a simple Triton kernel."
+     ],
+     "topics": [
+      {
+       "id": "M17.03.09",
+       "title": "Profiling"
+      },
+      {
+       "id": "M17.03.10",
+       "title": "CUDA/Triton introduction"
+      }
+     ],
+     "learn": {
+      "resourceId": "triton",
+      "title": "Triton language tutorials",
+      "url": "https://triton-lang.org/main/getting-started/tutorials/index.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Tutorials 01 'Vector Addition', 02 'Fused Softmax', 03 'Matrix Multiplication'"
+     },
+     "covers": [
+      "Triton programming model: programs, blocks, pointers and masks",
+      "Fused softmax: memory-bound kernel fusion",
+      "Blocked matmul with performance comparison against cuBLAS"
+     ],
+     "gaps": [
+      {
+       "topic": "PyTorch profiler",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch tutorials (DDP series, profiler)",
+        "url": "https://docs.pytorch.org/tutorials/recipes/recipes/profiler_recipe.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Recipe: PyTorch Profiler"
+       }
+      },
+      {
+       "topic": "GPU kernels and fusion overview",
+       "resource": {
+        "resourceId": "ultrascale",
+        "title": "The Ultra-Scale Playbook: Training LLMs on GPU Clusters",
+        "url": "https://huggingface.co/spaces/nanotron/ultrascale-playbook",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Section 'Diving into the GPUs - fusing, threading, mixing'"
+       }
+      },
+      {
+       "topic": "Practical GPU performance notes",
+       "resource": {
+        "resourceId": "stas-mle",
+        "title": "Machine Learning Engineering Open Book",
+        "url": "https://github.com/stas00/ml-engineering",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 'Compute' / performance"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Profile, then fuse",
+      "brief": "Free GPU route: Google Colab or Kaggle notebooks (T4, no card; Kaggle needs phone verification; quotas change) with a <=3B model; CPU fallback: llama.cpp. Profile one step of a small transformer with torch.profiler (Colab T4), export a Chrome trace, name the top-3 ops. Implement Triton fused softmax from tutorial 02 and benchmark against torch.softmax for 3 sizes.",
+      "done_when": "Chrome trace committed; PROFILE.md names top ops with % time; benchmark table (GB/s) for Triton vs PyTorch with a sentence on why fusion helps a memory-bound op."
+     },
+     "quiz": [
+      {
+       "id": "M17.U14.Q1",
+       "kind": "mcq",
+       "prompt": "Kernel fusion helps memory-bound ops mainly by:",
+       "options": [
+        "Using more FLOPs",
+        "Reducing round-trips to GPU global memory",
+        "Increasing precision",
+        "Using the CPU"
+       ],
+       "answer": 1,
+       "explain": "Intermediate results stay in registers/shared memory."
+      },
+      {
+       "id": "M17.U14.Q2",
+       "kind": "mcq",
+       "prompt": "In the PyTorch profiler, a large gap between CPU dispatch and GPU kernels suggests:",
+       "options": [
+        "The GPU is saturated",
+        "Launch/CPU overhead (small kernels, Python overhead)",
+        "Disk I/O",
+        "Network"
+       ],
+       "answer": 1,
+       "explain": "Consider CUDA graphs, torch.compile or larger batches."
+      },
+      {
+       "id": "M17.U14.Q3",
+       "kind": "mcq",
+       "prompt": "Triton lets you write GPU kernels at the level of:",
+       "options": [
+        "Individual threads like raw CUDA",
+        "Blocks/tiles of data with automatic scheduling inside a block",
+        "SQL",
+        "Assembly only"
+       ],
+       "answer": 1,
+       "explain": "It abstracts intra-block thread management."
+      },
+      {
+       "id": "M17.U14.Q4",
+       "kind": "short",
+       "prompt": "You profile inference and 40% of time is in many tiny elementwise kernels. What do you try, in order?",
+       "rubric": [
+        "torch.compile/operator fusion first (cheap).",
+        "CUDA graphs / larger batches to amortise launch overhead.",
+        "Custom fused Triton kernel only if still dominant; re-measure each step."
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Serve, measure, break, recover",
+  "brief": "Serve an open model (vLLM on a Colab/Kaggle T4, or llama.cpp on CPU) behind your gateway (quotas, cache, fallback, Langfuse traces). Run ramp, spike and soak tests; report TTFT/TPOT p50/p95/p99, goodput and cost per 1k requests; identify the bottleneck with evidence; apply one optimisation (quantization, prefix caching, batching knob or cache) with before/after and quality re-evaluated; demonstrate canary + rollback under load. No-card path: everything local + free notebook GPUs.",
+  "rubric": [
+   {
+    "criterion": "Measurement rigour",
+    "levels": [
+     "Means only",
+     "Percentiles, synthetic uniform prompts",
+     "Realistic prompt-length distribution; percentiles not means; client bottleneck ruled out; raw data committed"
+    ]
+   },
+   {
+    "criterion": "Bottleneck analysis",
+    "levels": [
+     "Guess",
+     "Plausible, weakly supported",
+     "Named bottleneck (prefill, decode, queue, memory, client) supported by metrics/graphs"
+    ]
+   },
+   {
+    "criterion": "Optimisation",
+    "levels": [
+     "None",
+     "Speed only",
+     "One change with controlled before/after and quality re-evaluated"
+    ]
+   },
+   {
+    "criterion": "Resilience",
+    "levels": [
+     "Outage on rollback",
+     "Rollback works without load",
+     "Rollback under load with no SLO breach beyond the stated window; overload sheds gracefully"
+    ]
+   },
+   {
+    "criterion": "Economics and ops",
+    "levels": [
+     "Missing",
+     "Partial",
+     "Cost/1k requests, break-even vs API, SLOs, runbook and DR note"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

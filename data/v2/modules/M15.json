@@ -1,0 +1,1686 @@
+{
+ "id": "M15",
+ "phase": "P4 Build AI systems",
+ "title": "Vision, audio and multimodal",
+ "summary": "Core (15A): the multimodal skills AI Engineers and FDEs deploy — transfer learning, VLM structured extraction, document AI and multimodal RAG, ASR/TTS, realtime voice agents and slice-based evaluation. Branch (15B, deep): CNNs/ResNet, detection/segmentation, ViT/CLIP, diffusion and flow matching (CS231n 2025 + MIT 6.S184).",
+ "hours": 32,
+ "deepHours": 50,
+ "prerequisites": [
+  "M08",
+  "M10",
+  "M11"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde"
+ ],
+ "optionalFor": [
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M15.S1",
+   "title": "Multimodal for AI engineers (core)",
+   "units": [
+    {
+     "id": "M15.U01",
+     "title": "Images as tensors, pretrained vision and transfer learning",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [],
+     "outcomes": [
+      "You can load, augment and batch image data as N×C×H×W tensors in PyTorch.",
+      "You can fine-tune a pretrained backbone and evaluate it on a split by source with per-class metrics."
+     ],
+     "topics": [
+      {
+       "id": "M15.01.01",
+       "title": "Image tensors"
+      },
+      {
+       "id": "M15.01.02",
+       "title": "Augmentation"
+      },
+      {
+       "id": "M15.01.05",
+       "title": "Transfer learning"
+      }
+     ],
+     "learn": {
+      "resourceId": "learnpytorch",
+      "title": "Zero to Mastery Learn PyTorch for Deep Learning",
+      "url": "https://www.learnpytorch.io/03_pytorch_computer_vision/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Ch. 03 PyTorch Computer Vision + Ch. 06 PyTorch Transfer Learning"
+     },
+     "covers": [
+      "03: torchvision datasets, image tensor shapes (C×H×W), DataLoader batching, baseline linear model vs TinyVGG CNN, confusion matrix",
+      "06: pretrained torchvision weights and their transforms, freezing the feature extractor, replacing the classifier head, training and predicting on custom images"
+     ],
+     "gaps": [
+      {
+       "topic": "Custom datasets and ImageFolder/transforms (augmentation)",
+       "resource": {
+        "resourceId": "learnpytorch",
+        "title": "Zero to Mastery Learn PyTorch for Deep Learning",
+        "url": "https://www.learnpytorch.io/04_pytorch_custom_datasets/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Ch. 04 PyTorch Custom Datasets"
+       }
+      },
+      {
+       "topic": "Group-aware splitting",
+       "resource": {
+        "resourceId": "sklearn-cv",
+        "title": "scikit-learn — Cross-validation (GroupKFold etc.)",
+        "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "GroupKFold / GroupShuffleSplit sections"
+       }
+      },
+      {
+       "topic": "Per-class metrics",
+       "resource": {
+        "resourceId": "sklearn-classification-report",
+        "title": "scikit-learn — classification_report",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fastai-part1",
+      "title": "fast.ai Practical Deep Learning for Coders, Part 1",
+      "url": "https://course.fast.ai/",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Lessons 1–2"
+     },
+     "practice": {
+      "title": "Fine-tune on a source-split dataset",
+      "brief": "Fine-tune a pretrained classifier on a small licensed dataset. Split train/test by source (camera/site/person), not randomly. Report per-class precision/recall and show 10 misclassified images with a hypothesis for each.",
+      "done_when": "A notebook/script reports per-class precision and recall from classification_report on the source-held-out split and a gallery of 10 errors with hypotheses."
+     },
+     "quiz": [
+      {
+       "id": "M15.U01.Q1",
+       "kind": "mcq",
+       "prompt": "PyTorch's default image tensor layout is…",
+       "options": [
+        "C×H×W (batched N×C×H×W)",
+        "H×W×C",
+        "W×H",
+        "C only"
+       ],
+       "answer": 0,
+       "explain": "Channels-first; PIL/NumPy images are H×W×C and need conversion."
+      },
+      {
+       "id": "M15.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Data augmentation should be applied to…",
+       "options": [
+        "the training set only",
+        "the test set",
+        "train and test equally for evaluation",
+        "the labels"
+       ],
+       "answer": 0,
+       "explain": "Evaluation data must reflect the real distribution."
+      },
+      {
+       "id": "M15.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Freezing the backbone is most useful when…",
+       "options": [
+        "the dataset is huge and very different",
+        "the dataset is small",
+        "never",
+        "always"
+       ],
+       "answer": 1,
+       "explain": "Few examples can't retrain millions of weights without overfitting."
+      },
+      {
+       "id": "M15.U01.Q4",
+       "kind": "short",
+       "prompt": "Why can a random split overestimate accuracy for images from the same camera/patient/site?",
+       "rubric": [
+        "Near-duplicate or correlated images land in both train and test (leakage)",
+        "Model learns source-specific cues",
+        "Proposes group/source-held-out splitting"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U02",
+     "title": "Vision-language models in products: structured extraction from images",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M15.U01"
+     ],
+     "outcomes": [
+      "You can extract fields from images into a Pydantic schema with an open-weight VLM and an API VLM.",
+      "You can report field-level accuracy, cost per page and latency, and decide between OCR+LLM and an end-to-end VLM."
+     ],
+     "topics": [
+      {
+       "id": "M15.03.06",
+       "title": "Vision-language models"
+      },
+      {
+       "id": "M15.03.10",
+       "title": "Structured extraction from images"
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-cv-course",
+      "title": "Hugging Face Community Computer Vision Course",
+      "url": "https://huggingface.co/learn/computer-vision-course/unit4/multimodal-models/vlm-intro",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Unit 4 Multimodal Models — Introduction to Vision Language Models"
+     },
+     "covers": [
+      "What a VLM is: vision encoder + projection/connector + language model",
+      "Common VLM tasks (captioning, VQA, document understanding, grounding)",
+      "Pre-training and instruction-tuning stages at a high level"
+     ],
+     "gaps": [
+      {
+       "topic": "What changed in 2025 VLMs (any-to-any, small VLMs, agents)",
+       "resource": {
+        "resourceId": "hf-vlms-2025",
+        "title": "Vision Language Models (Better, faster, stronger)",
+        "url": "https://huggingface.co/blog/vlms-2025",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "Running an open VLM with transformers",
+       "resource": {
+        "resourceId": "hf-image-text-to-text",
+        "title": "Transformers — Image-text-to-text task guide",
+        "url": "https://huggingface.co/docs/transformers/tasks/image_text_to_text",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Task guide"
+       }
+      },
+      {
+       "topic": "Schema-constrained outputs from local VLMs",
+       "resource": {
+        "resourceId": "ollama-structured-outputs",
+        "title": "Ollama — Structured outputs (blog)",
+        "url": "https://ollama.com/blog/structured-outputs",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "OCR baseline",
+       "resource": {
+        "resourceId": "tesseract",
+        "title": "Tesseract OCR documentation",
+        "url": "https://tesseract-ocr.github.io/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Command-line usage"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Llava Visual Instruction Tuning (+1 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/12-multimodal-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 12 · Lesson 05 llava visual instruction tuning; Lesson 07 open weight vlm recipes"
+     },
+     "practice": {
+      "title": "50 receipts → JSON",
+      "brief": "Extract fields from 50 receipts or forms into a Pydantic schema with one open-weight VLM (local or free tier) and one API VLM. Report field-level exact match/F1, cost per page, latency and the 5 worst failures.",
+      "done_when": "A results table per field and per model, a cost/latency table, and 5 annotated failures (including at least one hallucinated value)."
+     },
+     "quiz": [
+      {
+       "id": "M15.U02.Q1",
+       "kind": "mcq",
+       "prompt": "A VLM typically connects…",
+       "options": [
+        "two CNNs",
+        "a tokenizer only",
+        "an RNN",
+        "a vision encoder → projection → LLM"
+       ],
+       "answer": 3,
+       "explain": "LLaVA-style architecture."
+      },
+      {
+       "id": "M15.U02.Q2",
+       "kind": "mcq",
+       "prompt": "The best metric for form extraction is…",
+       "options": [
+        "field-level exact match / F1 per field",
+        "BLEU",
+        "perplexity",
+        "FID"
+       ],
+       "answer": 0,
+       "explain": "Business value is per field."
+      },
+      {
+       "id": "M15.U02.Q3",
+       "kind": "mcq",
+       "prompt": "A known VLM failure mode is…",
+       "options": [
+        "it never errs",
+        "hallucinating text or values not present in the image",
+        "it can't read images",
+        "it works only on grayscale"
+       ],
+       "answer": 1,
+       "explain": "Validate against the image or with OCR cross-checks."
+      },
+      {
+       "id": "M15.U02.Q4",
+       "kind": "short",
+       "prompt": "When would you choose classic OCR + LLM over an end-to-end VLM?",
+       "rubric": [
+        "Clean printed text where OCR is cheap and accurate",
+        "Need for character-level auditability/bounding boxes",
+        "Cost or offline constraints; mentions measuring both"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U03",
+     "title": "Document AI and multimodal RAG",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M15.U02"
+     ],
+     "outcomes": [
+      "You can parse messy PDFs with layout-aware tools and compare against plain text extraction.",
+      "You can build page-image (ColPali-style) retrieval and score recall@5 and table-answer accuracy."
+     ],
+     "topics": [
+      {
+       "id": "M15.03.07",
+       "title": "Document OCR versus VLM"
+      },
+      {
+       "id": "M15.03.11",
+       "title": "Layout parsing"
+      },
+      {
+       "id": "M15.03.12",
+       "title": "Vision-native retrieval"
+      }
+     ],
+     "learn": {
+      "resourceId": "docling",
+      "title": "Docling",
+      "url": "https://github.com/docling-project/docling",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "README + docs: conversion pipeline, table structure, export to Markdown/JSON, OCR options"
+     },
+     "covers": [
+      "PDF/DOCX/PPTX/image conversion to a unified DoclingDocument",
+      "Layout analysis and table-structure recognition",
+      "OCR engines for scanned pages",
+      "Export to Markdown/JSON and chunking for RAG"
+     ],
+     "gaps": [
+      {
+       "topic": "Vision-native retrieval explained",
+       "resource": {
+        "resourceId": "hf-colpali-blog",
+        "title": "ColPali: Efficient Document Retrieval with Vision Language Models",
+        "url": "https://huggingface.co/blog/manu/colpali",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "ColPali code",
+       "resource": {
+        "resourceId": "colpali-repo",
+        "title": "colpali (engine + models)",
+        "url": "https://github.com/illuin-tech/colpali",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Document/diagram understanding and multimodal RAG lessons",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Document Diagram Understanding (+2 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/12-multimodal-ai",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 12 · Lesson 22 document diagram understanding; Lesson 23 colpali vision native rag; Lesson 24 multimodal rag cross modal"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Ocr Document Understanding",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/04-computer-vision/19-ocr-document-understanding",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 4 · Lesson 19 ocr document understanding"
+     },
+     "practice": {
+      "title": "Three ingestion pipelines on 20 PDFs",
+      "brief": "Ingest 20 messy PDFs with tables. Compare (i) plain text extraction, (ii) Docling and (iii) page-image retrieval (ColPali-style) on 30 questions; score retrieval recall@5 and table-answer accuracy.",
+      "done_when": "A table of recall@5 and table-answer accuracy for all 3 pipelines on 30 questions, plus 3 examples where parsing (not the LLM) caused the error."
+     },
+     "quiz": [
+      {
+       "id": "M15.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Layout-aware parsing matters because…",
+       "options": [
+        "tables and headings carry meaning that plain text extraction scrambles",
+        "it is always faster",
+        "PDFs are always images",
+        "it doesn't"
+       ],
+       "answer": 0,
+       "explain": "Reading order and cell structure are lost in naive extraction."
+      },
+      {
+       "id": "M15.U03.Q2",
+       "kind": "mcq",
+       "prompt": "ColPali-style retrieval embeds…",
+       "options": [
+        "only OCR text",
+        "page images directly",
+        "audio",
+        "code"
+       ],
+       "answer": 1,
+       "explain": "Multi-vector embeddings of page patches."
+      },
+      {
+       "id": "M15.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Scanned PDFs need…",
+       "options": [
+        "nothing",
+        "a tokenizer only",
+        "OCR or a vision model",
+        "SQL"
+       ],
+       "answer": 2,
+       "explain": "There is no text layer."
+      },
+      {
+       "id": "M15.U03.Q4",
+       "kind": "short",
+       "prompt": "How would you detect that a parsing error, not the LLM, caused a wrong answer?",
+       "rubric": [
+        "Inspect retrieved chunks vs the source page",
+        "Check whether the answer exists correctly in the parsed text",
+        "Use a parsing-specific eval (table cell accuracy) separate from answer accuracy"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U04",
+     "title": "Speech: waveforms, spectrograms, ASR, TTS",
+     "hours": 7,
+     "depth": "core",
+     "prerequisites": [
+      "M15.U01"
+     ],
+     "outcomes": [
+      "You can load audio, resample it and compute log-mel spectrograms.",
+      "You can run and evaluate two ASR models with WER and add TTS output."
+     ],
+     "topics": [
+      {
+       "id": "M15.03.01",
+       "title": "Sample rate/waveform"
+      },
+      {
+       "id": "M15.03.02",
+       "title": "STFT/spectrogram"
+      },
+      {
+       "id": "M15.03.03",
+       "title": "ASR"
+      },
+      {
+       "id": "M15.03.04",
+       "title": "TTS"
+      },
+      {
+       "id": "M15.03.05",
+       "title": "Diarization awareness"
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-audio-course",
+      "title": "Hugging Face Audio Course",
+      "url": "https://huggingface.co/learn/audio-course/chapter1/introduction",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Unit 1 Working with audio data; Unit 5 Automatic Speech Recognition; Unit 6 Text-to-speech"
+     },
+     "covers": [
+      "Unit 1: sampling rate, amplitude/bit depth, waveform, frequency spectrum, spectrogram and mel spectrogram, loading/streaming datasets, preprocessing",
+      "Unit 5: pre-trained ASR (Whisper), choosing a dataset, evaluation with WER/CER and normalisation, fine-tuning Whisper",
+      "Unit 6: TTS datasets, pre-trained TTS models (SpeechT5, Bark, MMS), fine-tuning and evaluating TTS"
+     ],
+     "gaps": [
+      {
+       "topic": "WER/CER computation library",
+       "resource": {
+        "resourceId": "jiwer",
+        "title": "jiwer (WER/CER computation)",
+        "url": "https://github.com/jitsi/jiwer",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Speaker diarization (awareness)",
+       "resource": {
+        "resourceId": "pyannote",
+        "title": "pyannote.audio (speaker diarization)",
+        "url": "https://github.com/pyannote/pyannote-audio",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README quickstart"
+       }
+      },
+      {
+       "topic": "Whisper internals and fine-tuning",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Speech Recognition Asr (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/06-speech-and-audio",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 6 · Lesson 04 speech recognition asr; Lesson 05 whisper architecture finetuning"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "whisper",
+      "title": "openai/whisper",
+      "url": "https://github.com/openai/whisper",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "README"
+     },
+     "practice": {
+      "title": "Code-switched Urdu/English ASR",
+      "brief": "Transcribe 30 minutes of Urdu/English code-switched audio (your own recordings with consent, or a licensed set) with two ASR models. Compute WER/CER on a 5-minute hand-transcribed slice, analyse errors by accent/noise, and add TTS for responses.",
+      "done_when": "A WER/CER table for 2 models, an error breakdown by slice, and one generated TTS reply; consent/licence noted in README."
+     },
+     "quiz": [
+      {
+       "id": "M15.U04.Q1",
+       "kind": "mcq",
+       "prompt": "A 16 kHz sample rate means…",
+       "options": [
+        "16 bits per sample",
+        "16 channels",
+        "16 ms frames",
+        "16,000 samples per second"
+       ],
+       "answer": 3,
+       "explain": "Sampling rate is samples per second."
+      },
+      {
+       "id": "M15.U04.Q2",
+       "kind": "mcq",
+       "prompt": "The standard ASR metric is…",
+       "options": [
+        "FID",
+        "WER",
+        "BLEU only",
+        "AUC"
+       ],
+       "answer": 1,
+       "explain": "Word error rate = (S+D+I)/N."
+      },
+      {
+       "id": "M15.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A log-mel spectrogram represents…",
+       "options": [
+        "speaker identity only",
+        "text",
+        "frequency content over time on a perceptual scale",
+        "phase only"
+       ],
+       "answer": 2,
+       "explain": "It is the usual input to ASR models."
+      },
+      {
+       "id": "M15.U04.Q4",
+       "kind": "short",
+       "prompt": "Why might WER mislead for code-switched Urdu-English speech?",
+       "rubric": [
+        "Script/transliteration variation (Urdu script vs Roman Urdu) inflates errors",
+        "Normalisation choices change the score",
+        "Suggests CER or normalised/transliteration-aware scoring"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U05",
+     "title": "Realtime voice agents: VAD, turn-taking, latency",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M15.U04",
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can build a VAD → ASR → LLM(+tool) → TTS pipeline that supports barge-in.",
+      "You can measure and budget turn latency (p50/p95) across pipeline stages."
+     ],
+     "topics": [
+      {
+       "id": "M15.03.13",
+       "title": "VAD and turn-taking"
+      },
+      {
+       "id": "M15.03.14",
+       "title": "Voice latency budget and interruption"
+      }
+     ],
+     "learn": {
+      "resourceId": "pipecat-docs",
+      "title": "Pipecat documentation",
+      "url": "https://docs.pipecat.ai/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Introduction, core concepts (frames, processors, pipelines, transports) and the quickstart bot"
+     },
+     "covers": [
+      "Frames, frame processors and pipelines",
+      "Transports (WebRTC/WebSocket/local) and services (STT, LLM, TTS)",
+      "VAD and interruption handling configuration",
+      "Quickstart: a talking bot end to end"
+     ],
+     "gaps": [
+      {
+       "topic": "VAD and turn-taking in depth (Silero, flush trick)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Voice Activity Detection Turn Taking",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/06-speech-and-audio/14-voice-activity-detection-turn-taking",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 6 · Lesson 14 voice activity detection turn taking"
+       }
+      },
+      {
+       "topic": "VAD model",
+       "resource": {
+        "resourceId": "silero-vad",
+        "title": "Silero VAD",
+        "url": "https://github.com/snakers4/silero-vad",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Alternative framework",
+       "resource": {
+        "resourceId": "livekit-agents",
+        "title": "LiveKit Agents",
+        "url": "https://github.com/livekit/agents",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Voice Agents Pipecat Livekit",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/22-voice-agents-pipecat-livekit",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 22 voice agents pipecat livekit"
+     },
+     "practice": {
+      "title": "Local voice agent with barge-in",
+      "brief": "Build a local voice agent (VAD → ASR → LLM with 1 tool → TTS) that supports barge-in. Measure turn latency p50/p95 and task success on 15 scripted calls with background noise. Record only with consent.",
+      "done_when": "A latency table (per stage + total, p50/p95) for 15 calls and a demo recording showing an interruption handled correctly."
+     },
+     "quiz": [
+      {
+       "id": "M15.U05.Q1",
+       "kind": "mcq",
+       "prompt": "VAD is used to…",
+       "options": [
+        "translate",
+        "synthesize speech",
+        "detect when speech starts and stops",
+        "encrypt audio"
+       ],
+       "answer": 2,
+       "explain": "It drives turn-taking."
+      },
+      {
+       "id": "M15.U05.Q2",
+       "kind": "mcq",
+       "prompt": "The biggest UX killer in voice agents is…",
+       "options": [
+        "a small vocabulary",
+        "high turn latency / no interruption handling",
+        "logging",
+        "mono audio"
+       ],
+       "answer": 1,
+       "explain": "Users talk over slow bots."
+      },
+      {
+       "id": "M15.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Streaming ASR/TTS reduces…",
+       "options": [
+        "accuracy in all cases",
+        "cost in all cases",
+        "nothing",
+        "time to first audio"
+       ],
+       "answer": 3,
+       "explain": "You start speaking before the full response is ready."
+      },
+      {
+       "id": "M15.U05.Q4",
+       "kind": "short",
+       "prompt": "Break down a 1.5 s turn latency budget across the pipeline stages.",
+       "rubric": [
+        "Allocates time to VAD end-of-turn, ASR final, LLM time-to-first-token, TTS time-to-first-audio, network",
+        "Totals ≤ 1.5 s",
+        "Names one optimisation per heavy stage (streaming, smaller model, endpointing)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U06",
+     "title": "Multimodal evaluation",
+     "hours": 3,
+     "depth": "core",
+     "prerequisites": [
+      "M15.U02",
+      "M15.U04"
+     ],
+     "outcomes": [
+      "You can write an eval card with slices, modality-correct metrics, failures and cost/latency.",
+      "You can explain what CLIPScore and FID measure and where they mislead."
+     ],
+     "topics": [
+      {
+       "id": "M15.03.09",
+       "title": "Modality-specific evaluation"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Audio Evaluation Metrics",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/06-speech-and-audio/17-audio-evaluation-metrics",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 6 · Lesson 17 audio evaluation metrics"
+     },
+     "covers": [
+      "WER/CER, MOS and other audio metrics",
+      "Choosing metrics per audio task",
+      "Pitfalls of aggregate metrics"
+     ],
+     "gaps": [
+      {
+       "topic": "Image generation metrics (FID, CLIPScore)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Evaluation Fid Clip Score",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/08-generative-ai/14-evaluation-fid-clip-score",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 8 · Lesson 14 evaluation fid clip score"
+       }
+      },
+      {
+       "topic": "CLIPScore definition",
+       "resource": {
+        "resourceId": "clipscore-paper",
+        "title": "CLIPScore: A Reference-free Evaluation Metric for Image Captioning",
+        "url": "https://arxiv.org/abs/2104.08718",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 3"
+       }
+      },
+      {
+       "topic": "Multimodal eval capstone lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Multimodal Eval",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects/63-multimodal-eval",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 · Lesson 63 multimodal eval"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hf-audio-course",
+      "title": "Hugging Face Audio Course",
+      "url": "https://huggingface.co/learn/audio-course/chapter5/evaluation",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Unit 5 evaluation section"
+     },
+     "practice": {
+      "title": "Eval card for your 15A project",
+      "brief": "Write an eval card for one of your 15A projects: slices (lighting, accent, noise, scan quality), the metric per slice, failure examples and a cost/latency table.",
+      "done_when": "EVAL_CARD.md lists ≥ 4 slices with per-slice metric values and ≥ 3 failure examples."
+     },
+     "quiz": [
+      {
+       "id": "M15.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Slice-based evaluation reveals…",
+       "options": [
+        "nothing new",
+        "failures hidden by aggregate averages",
+        "training speed",
+        "cost only"
+       ],
+       "answer": 1,
+       "explain": "A 95% average can hide a 60% slice."
+      },
+      {
+       "id": "M15.U06.Q2",
+       "kind": "mcq",
+       "prompt": "CLIPScore measures…",
+       "options": [
+        "WER",
+        "image–text alignment",
+        "latency",
+        "recall"
+       ],
+       "answer": 1,
+       "explain": "Cosine similarity in CLIP space."
+      },
+      {
+       "id": "M15.U06.Q3",
+       "kind": "mcq",
+       "prompt": "FID compares…",
+       "options": [
+        "feature distributions of generated vs real images",
+        "pixel counts",
+        "captions",
+        "audio"
+       ],
+       "answer": 0,
+       "explain": "Lower is better."
+      },
+      {
+       "id": "M15.U06.Q4",
+       "kind": "short",
+       "prompt": "Which slice would you prioritise for a Pakistani call-centre voice bot, and why?",
+       "rubric": [
+        "Names a concrete slice (Punjabi/Sindhi-accented Urdu, noisy lines, code-switching)",
+        "Ties it to user volume or harm",
+        "Says how to collect data for it"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M15.S2",
+   "title": "Deep vision and generative models (branch)",
+   "units": [
+    {
+     "id": "M15.U07",
+     "title": "CNNs and ResNet properly",
+     "hours": 10,
+     "depth": "deep",
+     "prerequisites": [
+      "M15.U01"
+     ],
+     "outcomes": [
+      "You can implement conv2d forward and compute output shapes.",
+      "You can train a small ResNet and ablate skip connections."
+     ],
+     "topics": [
+      {
+       "id": "M15.01.03",
+       "title": "CNNs"
+      },
+      {
+       "id": "M15.01.04",
+       "title": "ResNet"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs231n-2025-yt",
+      "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+      "url": "https://www.youtube.com/watch?v=f3g1zGdxptI&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Spring 2025 Lecture 5: Image Classification with CNNs"
+     },
+     "covers": [
+      "Convolution and pooling layers, receptive fields, output size arithmetic",
+      "Lecture 6 (watch next): CNN architectures — AlexNet, VGG, GoogLeNet, ResNet, normalisation, transfer learning"
+     ],
+     "gaps": [
+      {
+       "topic": "Visual intuition for convolution",
+       "resource": {
+        "resourceId": "yt-3b1b-convolution",
+        "title": "But what is a convolution?",
+        "url": "https://www.youtube.com/watch?v=KuXjwB4LzSA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Second lecture: CNN architectures",
+       "resource": {
+        "resourceId": "cs231n-2025-yt",
+        "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+        "url": "https://www.youtube.com/watch?v=aVJy4O5TOk8&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Spring 2025 Lecture 6: CNN Architectures"
+       }
+      },
+      {
+       "topic": "Written notes",
+       "resource": {
+        "resourceId": "cs231n-notes",
+        "title": "CS231n course notes",
+        "url": "https://cs231n.github.io/convolutional-networks/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Convolutional Networks notes"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l-cnn",
+      "title": "Dive into Deep Learning — Ch. 7 CNNs / Ch. 8 Modern CNNs",
+      "url": "https://d2l.ai/chapter_convolutional-neural-networks/index.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Ch. 7–8"
+     },
+     "practice": {
+      "title": "conv2d in NumPy + ResNet ablation",
+      "brief": "Implement conv2d forward in NumPy and check it against torch.nn.functional.conv2d. Train a small ResNet on CIFAR-10 and ablate skip connections.",
+      "done_when": "A unit test matches PyTorch to 1e-5; an ablation table shows accuracy with vs without skips at equal epochs."
+     },
+     "quiz": [
+      {
+       "id": "M15.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Output size for input 32, kernel 3, padding 1, stride 1 is…",
+       "options": [
+        "30",
+        "34",
+        "32",
+        "16"
+       ],
+       "answer": 2,
+       "explain": "(32 − 3 + 2·1)/1 + 1 = 32."
+      },
+      {
+       "id": "M15.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Residual connections mainly help…",
+       "options": [
+        "gradient flow in deep networks",
+        "reduce parameters to zero",
+        "augmentation",
+        "tokenization"
+       ],
+       "answer": 0,
+       "explain": "Identity paths ease optimisation."
+      },
+      {
+       "id": "M15.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Weight sharing in convolutions gives…",
+       "options": [
+        "rotation invariance always",
+        "attention",
+        "nothing",
+        "translation equivariance and fewer parameters"
+       ],
+       "answer": 3,
+       "explain": "The same filter slides across positions."
+      },
+      {
+       "id": "M15.U07.Q4",
+       "kind": "short",
+       "prompt": "Explain what your skip-connection ablation showed.",
+       "rubric": [
+        "Reports numbers for both variants",
+        "Interprets via optimisation/degradation",
+        "Notes limits (epochs, depth, seeds)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U08",
+     "title": "Detection and segmentation",
+     "hours": 8,
+     "depth": "deep",
+     "prerequisites": [
+      "M15.U07"
+     ],
+     "outcomes": [
+      "You can train a detector and report mAP@0.5 and mAP@0.5:0.95 and CPU latency.",
+      "You can explain IoU, NMS and semantic vs instance segmentation."
+     ],
+     "topics": [
+      {
+       "id": "M15.01.06",
+       "title": "Detection/segmentation concepts"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs231n-2025-yt",
+      "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+      "url": "https://www.youtube.com/watch?v=PTypu6GqEd4&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Spring 2025 Lecture 9: Object Detection, Image Segmentation, Visualizing"
+     },
+     "covers": [
+      "Semantic segmentation, object detection (R-CNN family, single-stage), instance segmentation",
+      "Visualising and understanding CNN features"
+     ],
+     "gaps": [
+      {
+       "topic": "Practical training/val/predict",
+       "resource": {
+        "resourceId": "ultralytics-docs",
+        "title": "Ultralytics YOLO docs",
+        "url": "https://docs.ultralytics.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Train, Val, Predict modes"
+       }
+      },
+      {
+       "topic": "Metric definitions",
+       "resource": {
+        "resourceId": "ultralytics-metrics",
+        "title": "Ultralytics — YOLO performance metrics guide (IoU, mAP)",
+        "url": "https://docs.ultralytics.com/guides/yolo-performance-metrics/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Object Detection Yolo (+2 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/04-computer-vision",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 4 · Lesson 06 object detection yolo; Lesson 07 semantic segmentation unet; Lesson 08 instance segmentation mask rcnn"
+     },
+     "practice": {
+      "title": "Small detector with metrics",
+      "brief": "Train a detector on a small licensed dataset (e.g. with Ultralytics YOLO; note AGPL), report mAP@0.5, mAP@0.5:0.95 and per-class recall, and measure CPU inference latency.",
+      "done_when": "A metrics table and latency measurement (images/sec on CPU) are in the README with licence notes."
+     },
+     "quiz": [
+      {
+       "id": "M15.U08.Q1",
+       "kind": "mcq",
+       "prompt": "IoU is…",
+       "options": [
+        "intersection over union of predicted and true boxes",
+        "image of union",
+        "a loss only",
+        "accuracy"
+       ],
+       "answer": 0,
+       "explain": "Overlap ratio used for matching."
+      },
+      {
+       "id": "M15.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Semantic vs instance segmentation:",
+       "options": [
+        "they are identical",
+        "semantic uses boxes",
+        "instance segmentation separates individual objects of the same class",
+        "instance produces captions"
+       ],
+       "answer": 2,
+       "explain": "Semantic labels pixels by class only."
+      },
+      {
+       "id": "M15.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Non-max suppression removes…",
+       "options": [
+        "classes",
+        "duplicate overlapping detections",
+        "images",
+        "labels"
+       ],
+       "answer": 1,
+       "explain": "Keeps the highest-scoring box per object."
+      },
+      {
+       "id": "M15.U08.Q4",
+       "kind": "short",
+       "prompt": "Why is mAP@0.5:0.95 stricter than mAP@0.5?",
+       "rubric": [
+        "Averages over IoU thresholds up to 0.95",
+        "Rewards precise localisation",
+        "A detector can score high at 0.5 with sloppy boxes"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U09",
+     "title": "ViT, self-supervised learning and CLIP",
+     "hours": 8,
+     "depth": "deep",
+     "prerequisites": [
+      "M15.U07"
+     ],
+     "outcomes": [
+      "You can explain patch tokenisation and contrastive image–text pre-training.",
+      "You can do zero-shot classification and text→image search with CLIP."
+     ],
+     "topics": [
+      {
+       "id": "M15.01.07",
+       "title": "ViT"
+      },
+      {
+       "id": "M15.01.08",
+       "title": "Contrastive learning/CLIP"
+      },
+      {
+       "id": "M15.03.08",
+       "title": "Audio/text/image embeddings"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs231n-2025-yt",
+      "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+      "url": "https://www.youtube.com/watch?v=4howBU7THbM&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Spring 2025 Lecture 12: Self-Supervised Learning"
+     },
+     "covers": [
+      "Pretext tasks, contrastive learning (SimCLR, MoCo), masked image modelling",
+      "CLIP-style image–text contrastive learning",
+      "Lecture 8 (prerequisite): attention and transformers, ViT"
+     ],
+     "gaps": [
+      {
+       "topic": "Attention and transformers lecture (ViT)",
+       "resource": {
+        "resourceId": "cs231n-2025-yt",
+        "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+        "url": "https://www.youtube.com/watch?v=RQowiOF_FvQ&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Spring 2025 Lecture 8: Attention and Transformers"
+       }
+      },
+      {
+       "topic": "ViT paper",
+       "resource": {
+        "resourceId": "vit-paper",
+        "title": "An Image is Worth 16x16 Words (ViT)",
+        "url": "https://arxiv.org/abs/2010.11929",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 3.1, 4"
+       }
+      },
+      {
+       "topic": "CLIP paper",
+       "resource": {
+        "resourceId": "clip-paper",
+        "title": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+        "url": "https://arxiv.org/abs/2103.00020",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 2–3"
+       }
+      },
+      {
+       "topic": "Hands-on ViT",
+       "resource": {
+        "resourceId": "hf-cv-vit",
+        "title": "HF CV Course — Vision Transformers for image classification",
+        "url": "https://huggingface.co/learn/computer-vision-course/unit3/vision-transformers/vision-transformers-for-image-classification",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Vision Transformer Patch Tokens (+1 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/12-multimodal-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 12 · Lesson 01 vision transformer patch tokens; Lesson 02 clip contrastive pretraining"
+     },
+     "practice": {
+      "title": "CLIP vs your fine-tuned CNN",
+      "brief": "Zero-shot classify your M15.U01 dataset with CLIP, compare against your fine-tuned model, and build a small text→image search.",
+      "done_when": "A comparison table (accuracy per class) and a working search demo returning top-5 images for 5 queries."
+     },
+     "quiz": [
+      {
+       "id": "M15.U09.Q1",
+       "kind": "mcq",
+       "prompt": "ViT turns images into tokens by…",
+       "options": [
+        "treating pixels as characters",
+        "a CNN only",
+        "splitting into patches and linearly projecting each",
+        "OCR"
+       ],
+       "answer": 2,
+       "explain": "16×16 patches → embeddings + position."
+      },
+      {
+       "id": "M15.U09.Q2",
+       "kind": "mcq",
+       "prompt": "CLIP is trained with…",
+       "options": [
+        "MSE on pixels",
+        "RLHF",
+        "CTC",
+        "a contrastive image–text objective"
+       ],
+       "answer": 3,
+       "explain": "Matching pairs pulled together, others pushed apart."
+      },
+      {
+       "id": "M15.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Zero-shot classification with CLIP uses…",
+       "options": [
+        "fine-tuning",
+        "labels at test time",
+        "GANs",
+        "text prompts per class compared by embedding similarity"
+       ],
+       "answer": 3,
+       "explain": "Prompt like 'a photo of a {class}'."
+      },
+      {
+       "id": "M15.U09.Q4",
+       "kind": "short",
+       "prompt": "When did zero-shot CLIP beat your fine-tuned model, and why?",
+       "rubric": [
+        "Cites specific classes/slices",
+        "Explains via pre-training breadth or label noise",
+        "Notes when fine-tuning won and why"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U10",
+     "title": "Generative models: VAE → GAN → diffusion → flow matching",
+     "hours": 18,
+     "depth": "deep",
+     "prerequisites": [
+      "M15.U07"
+     ],
+     "outcomes": [
+      "You can explain and implement diffusion and flow-matching training and sampling.",
+      "You can compare a flow-matching model with a DDPM baseline at equal steps."
+     ],
+     "topics": [
+      {
+       "id": "M15.02.01",
+       "title": "Autoencoders/VAE"
+      },
+      {
+       "id": "M15.02.02",
+       "title": "GAN intuition"
+      },
+      {
+       "id": "M15.02.03",
+       "title": "Diffusion/noise schedule"
+      },
+      {
+       "id": "M15.02.04",
+       "title": "Denoising"
+      },
+      {
+       "id": "M15.02.05",
+       "title": "Conditioning"
+      },
+      {
+       "id": "M15.02.06",
+       "title": "Latent diffusion"
+      },
+      {
+       "id": "M15.02.07",
+       "title": "Sampling"
+      },
+      {
+       "id": "M15.02.09",
+       "title": "Flow matching"
+      },
+      {
+       "id": "M15.02.10",
+       "title": "Diffusion transformers"
+      }
+     ],
+     "learn": {
+      "resourceId": "mit-6s184",
+      "title": "MIT 6.S184 Introduction to Flow Matching and Diffusion Models",
+      "url": "https://diffusion.csail.mit.edu/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "2026 edition: lecture notes PDF, 5 lectures, 3 Colab labs (ending in a latent diffusion model)"
+     },
+     "covers": [
+      "Flow and diffusion models as ODEs/SDEs; probability paths",
+      "Flow-matching and score-matching training objectives",
+      "Conditional generation and classifier-free guidance",
+      "Latent diffusion and image/video architectures",
+      "Labs: implement flow matching, score matching, and a latent diffusion model"
+     ],
+     "gaps": [
+      {
+       "topic": "VAE and GAN intuition first",
+       "resource": {
+        "resourceId": "cs231n-2025-yt",
+        "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+        "url": "https://www.youtube.com/watch?v=zbHXQRUNlH0&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Spring 2025 Lecture 13: Generative Models 1"
+       }
+      },
+      {
+       "topic": "Diffusion/flow lecture",
+       "resource": {
+        "resourceId": "cs231n-2025-yt",
+        "title": "Stanford CS231n: Deep Learning for Computer Vision (Spring 2025) — YouTube playlist",
+        "url": "https://www.youtube.com/watch?v=Edr4uZFh4EE&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Spring 2025 Lecture 14: Generative Models 2"
+       }
+      },
+      {
+       "topic": "Visual explanation",
+       "resource": {
+        "resourceId": "yt-3b1b-ai-images",
+        "title": "But how do AI images and videos actually work? (guest video by Welch Labs)",
+        "url": "https://www.youtube.com/watch?v=iv-5mZ_9CPY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Flow matching blog",
+       "resource": {
+        "resourceId": "cam-flow-matching",
+        "title": "An introduction to Flow Matching",
+        "url": "https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Diffusion transformers",
+       "resource": {
+        "resourceId": "dit-paper",
+        "title": "Scalable Diffusion Models with Transformers (DiT)",
+        "url": "https://arxiv.org/abs/2212.09748",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 3–4"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hf-diffusion-course",
+      "title": "Hugging Face Diffusion Models Course",
+      "url": "https://huggingface.co/learn/diffusion-course/unit0/1",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Flow matching vs DDPM on MNIST",
+      "brief": "Complete the 3 MIT labs, then train a tiny flow-matching model on MNIST and compare samples with a DDPM baseline at an equal step count.",
+      "done_when": "Lab notebooks run end to end; a grid of samples from both models at equal steps plus a short comparison."
+     },
+     "quiz": [
+      {
+       "id": "M15.U10.Q1",
+       "kind": "mcq",
+       "prompt": "The diffusion forward process…",
+       "options": [
+        "removes noise",
+        "classifies",
+        "gradually adds noise to data",
+        "tokenizes"
+       ],
+       "answer": 2,
+       "explain": "Training learns to reverse it."
+      },
+      {
+       "id": "M15.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Classifier-free guidance…",
+       "options": [
+        "needs a separate classifier",
+        "removes noise schedules",
+        "mixes conditional and unconditional predictions to strengthen conditioning",
+        "is a GAN loss"
+       ],
+       "answer": 2,
+       "explain": "Guidance scale trades diversity for fidelity."
+      },
+      {
+       "id": "M15.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Latent diffusion runs the generative process in…",
+       "options": [
+        "a VAE's compressed latent space",
+        "pixel space only",
+        "text space",
+        "audio"
+       ],
+       "answer": 0,
+       "explain": "Cheaper than pixel space."
+      },
+      {
+       "id": "M15.U10.Q4",
+       "kind": "short",
+       "prompt": "In your own words, what does flow matching learn?",
+       "rubric": [
+        "A time-dependent vector field transporting noise to data",
+        "Trained by regressing to a known conditional velocity along a chosen path",
+        "Sampling = integrating the ODE"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M15.U11",
+     "title": "Diffusers in practice and generative evaluation",
+     "hours": 6,
+     "depth": "deep",
+     "prerequisites": [
+      "M15.U10"
+     ],
+     "outcomes": [
+      "You can run Diffusers pipelines with different schedulers and step counts and load LoRA weights.",
+      "You can evaluate generations with CLIPScore, timing/VRAM and a human preference check."
+     ],
+     "topics": [
+      {
+       "id": "M15.02.08",
+       "title": "Diffusers"
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-diffusers",
+      "title": "Hugging Face Diffusers documentation",
+      "url": "https://huggingface.co/docs/diffusers/index",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Get started → Pipelines → Schedulers → Load LoRAs"
+     },
+     "covers": [
+      "DiffusionPipeline, models and schedulers as separate components",
+      "Swapping schedulers and step counts",
+      "Loading adapters (LoRA)",
+      "Memory/speed optimisations"
+     ],
+     "gaps": [
+      {
+       "topic": "FID implementation",
+       "resource": {
+        "resourceId": "torchmetrics-fid",
+        "title": "TorchMetrics — Fréchet Inception Distance",
+        "url": "https://lightning.ai/docs/torchmetrics/stable/image/frechet_inception_distance.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "ControlNet/LoRA conditioning",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Controlnet Lora Conditioning",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/08-generative-ai/08-controlnet-lora-conditioning",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 8 · Lesson 08 controlnet lora conditioning"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Evaluation Fid Clip Score",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/08-generative-ai/14-evaluation-fid-clip-score",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 8 · Lesson 14 evaluation fid clip score"
+     },
+     "practice": {
+      "title": "2 schedulers × 2 step counts",
+      "brief": "Generate 200 images across 2 schedulers × 2 step counts. Report CLIPScore, time per image and VRAM, plus a human preference check on 20 pairs. Check the model's licence.",
+      "done_when": "A table with CLIPScore, s/image and VRAM for 4 configurations, a preference result on 20 pairs, and the licence quoted in README."
+     },
+     "quiz": [
+      {
+       "id": "M15.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A scheduler in Diffusers controls…",
+       "options": [
+        "the learning rate only",
+        "the dataset",
+        "the denoising step sequence",
+        "the tokenizer"
+       ],
+       "answer": 2,
+       "explain": "It defines timesteps and update rule."
+      },
+      {
+       "id": "M15.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Fewer sampling steps generally…",
+       "options": [
+        "are faster but may lower quality",
+        "always improve quality",
+        "change nothing",
+        "need more VRAM"
+       ],
+       "answer": 0,
+       "explain": "Speed/quality trade-off."
+      },
+      {
+       "id": "M15.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Before publishing generated images commercially, check…",
+       "options": [
+        "nothing",
+        "the model licence and content policy",
+        "FID only",
+        "GPU brand"
+       ],
+       "answer": 1,
+       "explain": "Many open weights restrict use."
+      },
+      {
+       "id": "M15.U11.Q4",
+       "kind": "short",
+       "prompt": "Why is human preference still needed alongside CLIPScore?",
+       "rubric": [
+        "CLIPScore measures alignment, not aesthetics/artefacts",
+        "Metrics can be gamed or miss failure types",
+        "Small human eval is cheap calibration"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Multimodal assistant (A) or trained vision/generative model (B)",
+  "brief": "A (AI Eng/FDE): a multimodal document or voice assistant for a real Pakistani workflow (e.g. Urdu/English utility-bill extraction, or a clinic phone-triage demo) with slice evals and a cost/latency table (scaffold ideas: rohitg00 phase 19 lessons 03 realtime voice assistant, 04 multimodal document QA, 12 video understanding pipeline). B (deep branch): a trained detector or a small diffusion/flow model with ablations.",
+  "rubric": [
+   {
+    "criterion": "Problem and data",
+    "levels": [
+     "0: unlicensed/unconsented data",
+     "1: data ok but random split",
+     "2: licensed data, split by source",
+     "3: licensed/consented data, split by source, documented slices"
+    ]
+   },
+   {
+    "criterion": "Modelling/pipeline",
+    "levels": [
+     "0: nothing runs",
+     "1: single untested pipeline",
+     "2: baseline + one improvement",
+     "3: baseline + justified improvement proven by ablation"
+    ]
+   },
+   {
+    "criterion": "Evaluation",
+    "levels": [
+     "0: no metrics",
+     "1: aggregate metric only",
+     "2: modality-correct metric (field F1/WER/mAP/CLIPScore)",
+     "3: modality-correct metrics per slice + failure gallery"
+    ]
+   },
+   {
+    "criterion": "Production realism",
+    "levels": [
+     "0: none",
+     "1: latency measured once",
+     "2: p95 latency and cost per page/minute/image",
+     "3: p95, cost, hardware notes and a fallback path"
+    ]
+   },
+   {
+    "criterion": "Communication",
+    "levels": [
+     "0: no README",
+     "1: README only",
+     "2: README + demo",
+     "3: README, demo, limitations incl. bias and consent"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

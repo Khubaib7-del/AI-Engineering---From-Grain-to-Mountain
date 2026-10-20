@@ -1,0 +1,2059 @@
+{
+ "id": "M11",
+ "phase": "P3 Language models and apps",
+ "title": "Search, embeddings and RAG",
+ "summary": "Baseline first: BM25 and retrieval metrics plus a frozen test harness come before any embedding trick. Then provenance-first ingestion, chunking (incl. contextual retrieval), embedding selection/efficiency, ANN indexes, permission-aware vector DBs, hybrid + rerank, query transformations, grounded answering with citations/abstention, and calibrated end-to-end RAG evaluation. Spine: LLM Zoomcamp 2026 + IR book + vendor-neutral docs; LangChain RAG From Scratch only for query-transformation concepts.",
+ "hours": 84,
+ "prerequisites": [
+  "M04",
+  "M10"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde"
+ ],
+ "optionalFor": [
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M11.S1",
+   "title": "Search foundations and measurement (baseline first)",
+   "units": [
+    {
+     "id": "M11.U01",
+     "title": "Information retrieval basics, BM25 and ranking metrics",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M10.U01"
+     ],
+     "outcomes": [
+      "You can implement BM25 from scratch and explain k1 (term-frequency saturation) and b (length normalization).",
+      "You can implement recall@k, MRR and nDCG@10 and unit-test them on toy rankings.",
+      "You can say when lexical search beats dense retrieval (IDs, codes, rare terms)."
+     ],
+     "topics": [
+      {
+       "id": "M11.04.01",
+       "title": "TF-IDF/BM25 (canonical home)",
+       "legacyIds": [
+        "M09.01.04"
+       ]
+      },
+      {
+       "id": "M11.05.05",
+       "title": "Recall@k/MRR/nDCG"
+      }
+     ],
+     "learn": {
+      "resourceId": "ir-book",
+      "title": "Introduction to Information Retrieval — §11.4.3 Okapi BM25 + §8.4 Evaluation of ranked retrieval results",
+      "url": "https://nlp.stanford.edu/IR-book/html/htmledition/okapi-bm25-a-non-binary-model-1.html",
+      "slice": "§11.4.3 (BM25 formula, k1, b) then §8.4 https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-ranked-retrieval-results-1.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "BM25 term weighting: IDF, term-frequency saturation (k1), document-length normalization (b), query-term weighting",
+      "Precision–recall curves, interpolated precision, precision@k, R-precision",
+      "Mean Average Precision (MAP)",
+      "Normalized Discounted Cumulative Gain (NDCG) for graded relevance"
+     ],
+     "gaps": [
+      {
+       "topic": "TF-IDF weighting (merged from M09.01.04)",
+       "resource": {
+        "resourceId": "ir-book",
+        "title": "IIR §6.2 Term frequency and weighting / inverse document frequency",
+        "url": "https://nlp.stanford.edu/IR-book/html/htmledition/inverse-document-frequency-1.html",
+        "slice": "§6.2–6.2.2 (idf, tf-idf)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reference BM25 implementation to diff against",
+       "resource": {
+        "resourceId": "rank-bm25",
+        "title": "rank_bm25 README",
+        "url": "https://github.com/dorianbrown/rank_bm25",
+        "slice": "README usage (BM25Okapi)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "MRR and hit rate (not in §8.4)",
+       "resource": {
+        "resourceId": "llm-zoomcamp",
+        "title": "LLM Zoomcamp 04 — Search Evaluation Metrics (hit rate, MRR)",
+        "url": "https://github.com/DataTalksClub/llm-zoomcamp/blob/main/04-evaluation/05-search-metrics.md",
+        "slice": "Whole lesson",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "llm-zoomcamp",
+      "title": "LLM Zoomcamp module 1 — keyword-search RAG",
+      "url": "https://github.com/DataTalksClub/llm-zoomcamp/tree/main/01-agentic-rag",
+      "slice": "Lessons 03-rag → 05-search → 08-rag-helper",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "BM25 + metrics from scratch",
+      "brief": "Implement BM25 (k1, b) yourself and compare its rankings with rank_bm25 on one corpus (e.g. FBR tax FAQs or your university handbook). Implement recall@k, MRR and nDCG@10 and unit-test each on hand-made toy rankings with known answers. Sweep b ∈ {0, 0.5, 0.75, 1} and report nDCG@10.",
+      "done_when": "pytest passes for metric unit tests; your BM25 top-10 matches rank_bm25 on ≥95% of queries; a b-sweep table."
+     },
+     "quiz": [
+      {
+       "id": "M11.U01.Q1",
+       "kind": "mcq",
+       "prompt": "In BM25, parameter b controls:",
+       "options": [
+        "Term-frequency saturation",
+        "IDF smoothing",
+        "Document-length normalization",
+        "Query expansion"
+       ],
+       "answer": 2,
+       "explain": "b=0 disables length normalization; b=1 fully normalizes by document length (k1 controls saturation)."
+      },
+      {
+       "id": "M11.U01.Q2",
+       "kind": "mcq",
+       "prompt": "MRR rewards:",
+       "options": [
+        "All relevant documents equally",
+        "Diversity",
+        "Speed",
+        "The rank of the first relevant result"
+       ],
+       "answer": 3,
+       "explain": "Reciprocal rank = 1/rank of the first hit, averaged over queries."
+      },
+      {
+       "id": "M11.U01.Q3",
+       "kind": "mcq",
+       "prompt": "nDCG handles graded relevance by:",
+       "options": [
+        "Ignoring order",
+        "Discounting gains logarithmically by rank and normalizing by the ideal ranking",
+        "Counting hits only",
+        "Averaging cosine scores"
+       ],
+       "answer": 1,
+       "explain": "DCG/IDCG puts the score in [0,1] and rewards highly relevant items near the top."
+      },
+      {
+       "id": "M11.U01.Q4",
+       "kind": "short",
+       "prompt": "Why can BM25 beat dense retrieval on part numbers or legal section IDs?",
+       "rubric": [
+        "Exact-token matching: IDs like 'Section 114(2)' are rare terms with high IDF",
+        "Dense embeddings blur exact strings into semantic neighbours and may not distinguish 114 vs 141",
+        "Conclusion: keep BM25 as a baseline/hybrid component"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U02",
+     "title": "Build a retrieval test set and evaluation harness",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U01",
+      "M10.U08"
+     ],
+     "outcomes": [
+      "You can build a retrieval test set with gold passage IDs, including unanswerable and permission-restricted questions.",
+      "You can write one evaluate(retriever) → metrics.json harness that every later unit calls.",
+      "You can run component ablations that change one thing at a time."
+     ],
+     "topics": [
+      {
+       "id": "M11.05.12",
+       "title": "Retrieval test-set construction: answerable, unanswerable, restricted (new)"
+      },
+      {
+       "id": "M11.05.11",
+       "title": "Component ablation"
+      }
+     ],
+     "learn": {
+      "resourceId": "llm-zoomcamp",
+      "title": "LLM Zoomcamp module 4 — Evaluation (search part)",
+      "url": "https://github.com/DataTalksClub/llm-zoomcamp/blob/main/04-evaluation/02-ground-truth.md",
+      "slice": "Lessons 02-ground-truth → 03-ground-truth-batch → 04-search-evaluation → 05-search-metrics → 06-search-tuning",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Generating ground-truth questions per document with an LLM (single and batch)",
+      "Evaluating a search function over the ground truth",
+      "Hit rate and MRR implementations",
+      "Tuning search parameters (field boosts) against the metrics"
+     ],
+     "gaps": [
+      {
+       "topic": "Synthetic QA generation with critique-based filtering + ablation over settings",
+       "resource": {
+        "resourceId": "hf-cookbook",
+        "title": "HF Cookbook — RAG Evaluation",
+        "url": "https://huggingface.co/learn/cookbook/en/rag_evaluation",
+        "slice": "Build synthetic eval dataset → critique agents → benchmarking RAG settings",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Why unanswerable questions matter",
+       "resource": {
+        "resourceId": "paper-beir",
+        "title": "BEIR benchmark (heterogeneous zero-shot retrieval evaluation)",
+        "url": "https://arxiv.org/abs/2104.08663",
+        "slice": "§3–4 (datasets, why in-domain metrics mislead)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "beir-repo",
+      "title": "BEIR code",
+      "url": "https://github.com/beir-cellar/beir",
+      "slice": "README: evaluating a custom retriever",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "The harness every later unit uses",
+      "brief": "Create 60 questions with gold passage IDs (40 hand-written, 20 LLM-generated then human-filtered), plus 15 unanswerable and 10 permission-restricted questions (tagged with the user role allowed to see the answer). Write evaluate(retriever) → metrics.json (recall@k, MRR, nDCG@10, abstention, latency) and freeze a test split.",
+      "done_when": "metrics.json produced for the U01 BM25 baseline; test-set file with tags; split frozen with a recorded hash."
+     },
+     "quiz": [
+      {
+       "id": "M11.U02.Q1",
+       "kind": "mcq",
+       "prompt": "Unanswerable questions in a RAG test set measure:",
+       "options": [
+        "Speed",
+        "Embedding size",
+        "Abstention behaviour",
+        "Cost"
+       ],
+       "answer": 2,
+       "explain": "A good system says 'not found' instead of answering from irrelevant chunks."
+      },
+      {
+       "id": "M11.U02.Q2",
+       "kind": "mcq",
+       "prompt": "LLM-generated questions should be filtered because they often:",
+       "options": [
+        "Are too hard",
+        "Copy wording from the passage, inflating lexical-match scores",
+        "Lack answers",
+        "Are in the wrong language"
+       ],
+       "answer": 1,
+       "explain": "Real users paraphrase; generated questions leak passage words."
+      },
+      {
+       "id": "M11.U02.Q3",
+       "kind": "mcq",
+       "prompt": "A component ablation changes:",
+       "options": [
+        "Everything at once",
+        "One component at a time with everything else fixed",
+        "Only the LLM",
+        "The test set"
+       ],
+       "answer": 1,
+       "explain": "Otherwise you cannot attribute the metric change."
+      },
+      {
+       "id": "M11.U02.Q4",
+       "kind": "short",
+       "prompt": "How many test questions do you need before you trust a 3-point recall@5 difference? Justify roughly.",
+       "rubric": [
+        "Uses a binomial/bootstrap argument: SE ≈ sqrt(p(1−p)/n); at p≈0.7, ±3 points at 95% needs roughly n≈900 for unpaired",
+        "Notes paired comparisons on the same questions need fewer (variance of differences)",
+        "Concludes small sets only detect large differences"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M11.S2",
+   "title": "Documents and chunking",
+   "units": [
+    {
+     "id": "M11.U03",
+     "title": "Ingestion and parsing: HTML, PDF, OCR, tables, provenance",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [],
+     "outcomes": [
+      "You can parse mixed documents (multi-column PDF, scanned notice, HTML, tables) and check extraction quality.",
+      "You can store doc_id, version hash, source/page, char offsets and ACL tags per chunk.",
+      "You can re-ingest incrementally so only changed documents are processed."
+     ],
+     "topics": [
+      {
+       "id": "M11.01.01",
+       "title": "HTML/PDF/OCR"
+      },
+      {
+       "id": "M11.01.02",
+       "title": "Tables/layout"
+      },
+      {
+       "id": "M11.01.03",
+       "title": "Extraction quality"
+      },
+      {
+       "id": "M11.01.04",
+       "title": "Normalization"
+      },
+      {
+       "id": "M11.01.05",
+       "title": "Document IDs"
+      },
+      {
+       "id": "M11.01.06",
+       "title": "Metadata/ACLs"
+      },
+      {
+       "id": "M11.01.07",
+       "title": "Incremental updates"
+      },
+      {
+       "id": "M11.01.08",
+       "title": "Checksums"
+      },
+      {
+       "id": "M11.01.09",
+       "title": "Provenance"
+      }
+     ],
+     "learn": {
+      "resourceId": "dlai-document-ai",
+      "title": "DeepLearning.AI — Document AI: From OCR to Agentic Doc Extraction",
+      "url": "https://www.deeplearning.ai/short-courses/document-ai-from-ocr-to-agentic-doc-extraction/",
+      "slice": "All lessons (≈3h)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Why traditional OCR breaks on real documents (layout, reading order, tables, charts)",
+      "Layout-aware parsing and vision-language document understanding",
+      "Table and form extraction",
+      "Agentic document extraction with visual grounding (page + bounding boxes) usable for citations",
+      "Schema-based field extraction from parsed documents into a RAG pipeline"
+     ],
+     "gaps": [
+      {
+       "topic": "Open-source parsing for PDF/DOCX/HTML with layout and tables",
+       "resource": {
+        "resourceId": "docling",
+        "title": "Docling README + docs",
+        "url": "https://github.com/docling-project/docling",
+        "slice": "README features + quickstart (DocumentConverter, table structure)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Page/char-offset extraction for provenance",
+       "resource": {
+        "resourceId": "pymupdf-docs",
+        "title": "PyMuPDF documentation",
+        "url": "https://pymupdf.readthedocs.io/en/latest/",
+        "slice": "Text extraction (get_text with 'blocks'/'words' and coordinates)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Document IDs, checksums and incremental re-indexing",
+       "resource": {
+        "resourceId": "langchain-indexing",
+        "title": "LangChain how-to: Indexing API",
+        "url": "https://python.langchain.com/docs/how_to/indexing/",
+        "slice": "Whole page (record manager, content hashing, incremental/full cleanup) — read for the pattern",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "markitdown",
+      "title": "Microsoft MarkItDown",
+      "url": "https://github.com/microsoft/markitdown",
+      "slice": "README",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Provenance-first ingestion",
+      "brief": "Ingest 20 mixed docs (a 2-column PDF, a scanned Urdu/English notice, an HTML page, a table-heavy PDF) with Docling or MarkItDown plus PyMuPDF. Store doc_id, content hash, source URL/page, char offsets and an ACL tag. Write an extraction-quality check (sampled visual diff + table-cell accuracy on 3 tables). Re-run and prove only changed files re-ingest.",
+      "done_when": "A store with all metadata fields populated, a quality report (cell accuracy on 3 tables), and a second run log showing 0 re-ingests for unchanged files and 1 for an edited file."
+     },
+     "quiz": [
+      {
+       "id": "M11.U03.Q1",
+       "kind": "mcq",
+       "prompt": "A content hash per document enables:",
+       "options": [
+        "Better embeddings",
+        "OCR",
+        "Skipping unchanged documents during incremental ingest",
+        "Reranking"
+       ],
+       "answer": 2,
+       "explain": "Compare hashes; only re-chunk/re-embed what changed, and delete what vanished."
+      },
+      {
+       "id": "M11.U03.Q2",
+       "kind": "mcq",
+       "prompt": "The most damaging silent error in PDF ingestion is often:",
+       "options": [
+        "Wrong reading order in multi-column layouts",
+        "Slow parsing",
+        "File size",
+        "Fonts"
+       ],
+       "answer": 0,
+       "explain": "Interleaved columns produce fluent-looking nonsense that still gets embedded."
+      },
+      {
+       "id": "M11.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Storing an ACL tag on each chunk lets you:",
+       "options": [
+        "Compress vectors",
+        "Filter results by user permission at query time",
+        "Chunk faster",
+        "Cache prompts"
+       ],
+       "answer": 1,
+       "explain": "Authorization must be enforced in retrieval, before generation."
+      },
+      {
+       "id": "M11.U03.Q4",
+       "kind": "short",
+       "prompt": "Why must provenance (doc, page, offsets) be captured at ingest time rather than reconstructed later?",
+       "rubric": [
+        "Later transformations (cleaning, chunking, OCR) lose the mapping back to source positions",
+        "Citations and audits need exact spans; reconstruction by fuzzy search is unreliable",
+        "Version hashes tie a citation to the exact document version"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U04",
+     "title": "Chunking strategies and context reconstruction",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U03",
+      "M11.U02"
+     ],
+     "outcomes": [
+      "You can compare fixed, recursive, heading-aware/structural and parent-child chunking on your harness.",
+      "You can add contextual chunk annotation and measure its effect and ingest cost.",
+      "You can reconstruct exact source spans from char offsets and expand to neighbouring chunks."
+     ],
+     "topics": [
+      {
+       "id": "M11.02.01",
+       "title": "Token/character/sentence splitting"
+      },
+      {
+       "id": "M11.02.02",
+       "title": "Recursive splitting"
+      },
+      {
+       "id": "M11.02.03",
+       "title": "Heading-aware splitting"
+      },
+      {
+       "id": "M11.02.04",
+       "title": "Semantic splitting"
+      },
+      {
+       "id": "M11.02.05",
+       "title": "Overlap"
+      },
+      {
+       "id": "M11.02.06",
+       "title": "Size tuning"
+      },
+      {
+       "id": "M11.02.07",
+       "title": "Tables/code chunks"
+      },
+      {
+       "id": "M11.02.08",
+       "title": "Parent-child chunks"
+      },
+      {
+       "id": "M11.02.09",
+       "title": "Neighbouring-window expansion"
+      },
+      {
+       "id": "M11.02.10",
+       "title": "Deduplication"
+      },
+      {
+       "id": "M11.02.11",
+       "title": "Reconstructing context with offsets"
+      },
+      {
+       "id": "M11.02.12",
+       "title": "Contextual chunk annotation (new)"
+      },
+      {
+       "id": "M11.02.13",
+       "title": "Late chunking (awareness) (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Chunking strategies for RAG",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag",
+      "slice": "Lesson 05/23 docs/en.md: Step 1 fixed & recursive → Step 2 semantic → Step 3 parent-document → Step 4 contextual retrieval → Step 5 evaluate; plus Pitfalls",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Fixed-size and recursive character/token splitting with overlap",
+      "Semantic chunking by embedding-similarity breakpoints",
+      "Parent-document (small-to-big) retrieval",
+      "Contextual retrieval: prepending an LLM-written situating sentence to each chunk",
+      "Evaluating chunkers on retrieval metrics; common pitfalls (size defaults, overlap duplicates)"
+     ],
+     "gaps": [
+      {
+       "topic": "Heading-aware/structural chunking incl. tables",
+       "resource": {
+        "resourceId": "docling",
+        "title": "Docling — Chunking concepts (HierarchicalChunker, HybridChunker)",
+        "url": "https://docling-project.github.io/docling/concepts/chunking/",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Contextual retrieval method and results",
+       "resource": {
+        "resourceId": "anthropic-eng",
+        "title": "Anthropic — Introducing Contextual Retrieval",
+        "url": "https://www.anthropic.com/engineering/contextual-retrieval",
+        "slice": "Whole post (contextual embeddings + contextual BM25, cost with caching)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Late chunking (awareness)",
+       "resource": {
+        "resourceId": "jina-blog",
+        "title": "Jina AI — Late Chunking in Long-Context Embedding Models",
+        "url": "https://jina.ai/news/late-chunking-in-long-context-embedding-models/",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Neighbour windows, dedup, offsets and the 'remerge' pattern",
+       "resource": {
+        "resourceId": "g2m-rag-deep-map",
+        "title": "Grain to Mountain — 07 RAG and agents deep map (chunking table + remerge section)",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/07-rag-and-agents-deep-map.md",
+        "slice": "Chunking table and 'remerge' section",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-rag",
+      "title": "DeepLearning.AI RAG course — Module 3 'Information Retrieval with Vector Databases' (chunking lessons)",
+      "url": "https://www.deeplearning.ai/courses/retrieval-augmented-generation",
+      "slice": "Module 3",
+      "type": "course",
+      "free": "audit",
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Chunker bake-off",
+      "brief": "On your U02 harness run 4 chunkers (fixed-512, recursive, heading-aware, parent-child) × 2 overlaps. Add contextual annotation to the best config. Report recall@5, index size, ingest cost, and pass a citation-offset round-trip test (chunk text == source[start:end]). Implement ±1 neighbour expansion and near-duplicate chunk removal.",
+      "done_when": "A results table (8 configs + contextual variant) with recall@5/size/cost; round-trip test passes on 100% of chunks; dedup removes measured duplicates."
+     },
+     "quiz": [
+      {
+       "id": "M11.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Parent-child chunking indexes ___ and returns ___:",
+       "options": [
+        "Parents, children",
+        "Titles, bodies",
+        "Embeddings, raw text",
+        "Small child chunks for precise matching, larger parent sections for context"
+       ],
+       "answer": 3,
+       "explain": "Small chunks embed sharply; the parent gives the LLM enough surrounding text."
+      },
+      {
+       "id": "M11.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Larger chunk overlap always:",
+       "options": [
+        "Improves quality",
+        "Reduces cost",
+        "Fixes OCR errors",
+        "Increases index size and duplicate hits — it must be measured"
+       ],
+       "answer": 3,
+       "explain": "Overlap helps boundary cases but costs storage and crowds top-k with duplicates."
+      },
+      {
+       "id": "M11.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Contextual retrieval prepends to each chunk:",
+       "options": [
+        "Its embedding",
+        "A short generated description situating it within the document",
+        "The query",
+        "A hash"
+       ],
+       "answer": 1,
+       "explain": "Anthropic reported fewer retrieval failures when chunks carry document context."
+      },
+      {
+       "id": "M11.U04.Q4",
+       "kind": "short",
+       "prompt": "How does keeping character offsets let you show exact source spans in answers?",
+       "rubric": [
+        "Each chunk stores (doc_id, version, start, end) into the normalized source",
+        "Citations map back to source[start:end] (and page/coordinates) for highlighting",
+        "Offsets survive re-chunking only if tied to a document version hash"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M11.S3",
+   "title": "Embeddings and vector indexes",
+   "units": [
+    {
+     "id": "M11.U05",
+     "title": "Embedding models: selection, asymmetry, efficiency",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M09.U07",
+      "M11.U02"
+     ],
+     "outcomes": [
+      "You can pick and compare embedding models (incl. multilingual for Urdu) on your own harness instead of trusting a leaderboard.",
+      "You can apply required query/passage prefixes and the right similarity (cosine/dot/L2 with normalization).",
+      "You can measure Matryoshka truncation and int8/binary quantization trade-offs and say when to fine-tune an embedder."
+     ],
+     "topics": [
+      {
+       "id": "M11.03.01",
+       "title": "Embedding model selection"
+      },
+      {
+       "id": "M11.03.02",
+       "title": "Dimensionality"
+      },
+      {
+       "id": "M11.03.03",
+       "title": "Query/document asymmetry"
+      },
+      {
+       "id": "M11.03.04",
+       "title": "Cosine/dot/L2"
+      },
+      {
+       "id": "M11.03.05",
+       "title": "Normalization"
+      },
+      {
+       "id": "M11.03.06",
+       "title": "Batching"
+      },
+      {
+       "id": "M11.03.13",
+       "title": "Matryoshka and quantized embeddings (new)"
+      },
+      {
+       "id": "M11.03.14",
+       "title": "Embedding fine-tuning: when and how (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "sbert-docs",
+      "title": "Sentence Transformers documentation — usage + pretrained models",
+      "url": "https://www.sbert.net/",
+      "slice": "Quickstart/usage (encode, similarity, normalize_embeddings, batch_size) → Pretrained Models page https://www.sbert.net/docs/sentence_transformer/pretrained_models.html (incl. multilingual & asymmetric/prompted models); then DLAI 'Embedding Models: from Architecture to Implementation' (all lessons)",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Encoding sentences/passages, similarity functions, normalize_embeddings and batching (SBERT usage)",
+      "Model families and their intended use: symmetric vs asymmetric search models, multilingual models, model prompts/prefixes (SBERT pretrained models)",
+      "History from word embeddings to contextual BERT embeddings (DLAI)",
+      "Dual-encoder architecture and contrastive training for retrieval (DLAI)"
+     ],
+     "gaps": [
+      {
+       "topic": "Matryoshka embeddings",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Introduction to Matryoshka Embedding Models",
+        "url": "https://huggingface.co/blog/matryoshka",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "int8/binary embedding quantization",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Binary and Scalar Embedding Quantization",
+        "url": "https://huggingface.co/blog/embedding-quantization",
+        "slice": "Whole post (incl. rescoring)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Fine-tuning an embedding model",
+       "resource": {
+        "resourceId": "sbert-docs",
+        "title": "Sentence Transformers — Training Overview",
+        "url": "https://sbert.net/docs/sentence_transformer/training_overview.html",
+        "slice": "Dataset format, loss functions (MultipleNegativesRankingLoss), trainer, evaluators",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reading MTEB with caveats",
+       "resource": {
+        "resourceId": "mteb-leaderboard",
+        "title": "MTEB leaderboard",
+        "url": "https://huggingface.co/spaces/mteb/leaderboard",
+        "slice": "Filter by language/task; read benchmark descriptions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "dlai-embedding-models",
+      "title": "DeepLearning.AI — Embedding Models: from Architecture to Implementation",
+      "url": "https://www.deeplearning.ai/short-courses/embedding-models-from-architecture-to-implementation/",
+      "slice": "All lessons (second half of this unit's learn slice)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Embedding models deep dive",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive",
+      "slice": "Lesson phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Embedder shoot-out incl. Urdu",
+      "brief": "Compare 3 embedding models (one multilingual) on your harness, including Urdu queries, with the correct query/passage prefixes. Measure recall@5 at full dimension, Matryoshka-truncated (e.g. 256) and int8/binary-quantized, plus memory per 1M vectors and encode throughput at 3 batch sizes.",
+      "done_when": "A table: model × (full / truncated / int8 / binary) × recall@5 × memory per 1M; a short decision note naming the model you will use and why."
+     },
+     "quiz": [
+      {
+       "id": "M11.U05.Q1",
+       "kind": "mcq",
+       "prompt": "If embeddings are L2-normalized, cosine similarity equals:",
+       "options": [
+        "L2 distance",
+        "Jaccard similarity",
+        "BM25 score",
+        "The dot product"
+       ],
+       "answer": 3,
+       "explain": "cos(a,b) = a·b/(|a||b|) and both norms are 1."
+      },
+      {
+       "id": "M11.U05.Q2",
+       "kind": "mcq",
+       "prompt": "'query: / passage:' prefixes required by some models address:",
+       "options": [
+        "Tokenization",
+        "The query–document asymmetry the model was trained with",
+        "Caching",
+        "Language detection"
+       ],
+       "answer": 1,
+       "explain": "Omitting them silently lowers recall for such models."
+      },
+      {
+       "id": "M11.U05.Q3",
+       "kind": "mcq",
+       "prompt": "A top MTEB average does not guarantee the best model for you because:",
+       "options": [
+        "MTEB is fake",
+        "Scores are random",
+        "It ignores dimension",
+        "Your domain, language and task may differ from the benchmark mix"
+       ],
+       "answer": 3,
+       "explain": "Always re-evaluate on your own test set (Urdu is barely represented)."
+      },
+      {
+       "id": "M11.U05.Q4",
+       "kind": "short",
+       "prompt": "When would you fine-tune an embedding model instead of switching models?",
+       "rubric": [
+        "When your domain vocabulary/queries are off-distribution and several off-the-shelf models plateau on your harness",
+        "When you have (or can generate and filter) enough query–passage pairs",
+        "Mentions cost: re-embedding the corpus and maintaining the model"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U06",
+     "title": "Exact vs approximate search: HNSW, IVF, PQ, FAISS",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U05"
+     ],
+     "outcomes": [
+      "You can build Flat, HNSW, IVF and IVF-PQ indexes in FAISS and sweep their search parameters.",
+      "You can plot recall@10 vs exact against p95 latency and memory.",
+      "You can explain why ANN recall is measured against exact search, not human labels."
+     ],
+     "topics": [
+      {
+       "id": "M11.03.07",
+       "title": "FAISS"
+      },
+      {
+       "id": "M11.03.08",
+       "title": "Exact vs ANN"
+      },
+      {
+       "id": "M11.03.09",
+       "title": "HNSW/IVF/PQ"
+      },
+      {
+       "id": "M11.03.11",
+       "title": "Index recall/latency"
+      }
+     ],
+     "learn": {
+      "resourceId": "pinecone-faiss-manual",
+      "title": "Faiss: The Missing Manual (Pinecone)",
+      "url": "https://www.pinecone.io/learn/series/faiss/",
+      "slice": "Chapters: Introduction to Facebook AI Similarity Search → Nearest Neighbor Indexes for Similarity Search (https://www.pinecone.io/learn/series/faiss/vector-indexes/) → Product Quantization → HNSW (https://www.pinecone.io/learn/series/faiss/hnsw/) → Composite indexes and the index factory",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "FAISS basics: IndexFlatL2/IP exact search, adding and searching vectors",
+      "Index families compared: Flat, LSH, HNSW, IVF — recall/speed/memory trade-offs",
+      "Product quantization: splitting vectors into subvectors, codebooks via k-means, memory savings",
+      "HNSW: navigable small-world graphs, layers, M, efConstruction, efSearch",
+      "Composite indexes (IVF-PQ, OPQ) and the index_factory string syntax"
+     ],
+     "gaps": [
+      {
+       "topic": "Benchmarking methodology for recall vs QPS",
+       "resource": {
+        "resourceId": "ann-benchmarks",
+        "title": "ANN-Benchmarks",
+        "url": "https://ann-benchmarks.com/",
+        "slice": "Read the plots/method page for recall-vs-QPS conventions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "dlai-retrieval-optimization",
+      "title": "DeepLearning.AI — Retrieval Optimization: Tokenization to Vector Quantization",
+      "url": "https://www.deeplearning.ai/short-courses/retrieval-optimization-from-tokenization-to-vector-quantization/",
+      "slice": "Lessons on HNSW tuning and vector quantization",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "faiss-docs",
+      "title": "FAISS wiki — Getting started",
+      "url": "https://github.com/facebookresearch/faiss/wiki/Getting-started",
+      "slice": "Getting started → Faster search → Lower memory footprint",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "ANN trade-off curves",
+      "brief": "On 200k–1M vectors (e.g. Simple-English Wikipedia embeddings), compare IndexFlatIP, HNSW (M and efSearch sweep), IVF (nlist/nprobe sweep) and IVF-PQ. Compute recall@10 against the exact results and plot recall vs p95 latency and vs memory.",
+      "done_when": "Two plots (recall vs p95 latency, recall vs memory) with ≥4 points per index type; a recommendation for your corpus size."
+     },
+     "quiz": [
+      {
+       "id": "M11.U06.Q1",
+       "kind": "mcq",
+       "prompt": "HNSW's efSearch primarily trades:",
+       "options": [
+        "Memory for disk",
+        "Query latency for recall",
+        "Build time for dimension",
+        "Accuracy for embedding cost"
+       ],
+       "answer": 1,
+       "explain": "Larger efSearch explores more of the graph: slower, more accurate."
+      },
+      {
+       "id": "M11.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Product quantization reduces:",
+       "options": [
+        "The number of documents",
+        "Query length",
+        "Recall to zero",
+        "Memory per vector by encoding subvectors with codebooks"
+       ],
+       "answer": 3,
+       "explain": "A 768-d float32 vector (3 KB) can become tens of bytes."
+      },
+      {
+       "id": "M11.U06.Q3",
+       "kind": "mcq",
+       "prompt": "ANN index recall is measured against:",
+       "options": [
+        "Human relevance labels",
+        "BM25",
+        "Exact nearest-neighbour results for the same vectors",
+        "The LLM's answer"
+       ],
+       "answer": 2,
+       "explain": "Index recall isolates the approximation error from embedding quality."
+      },
+      {
+       "id": "M11.U06.Q4",
+       "kind": "short",
+       "prompt": "Why can a perfect ANN index still give bad RAG results?",
+       "rubric": [
+        "ANN recall only measures agreement with exact search over the same embeddings",
+        "If embeddings/chunking are poor, the exact neighbours are themselves irrelevant",
+        "End-to-end retrieval metrics on labelled questions are still needed"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U07",
+     "title": "Vector databases in practice: pgvector/Qdrant, filters, re-indexing",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U06"
+     ],
+     "outcomes": [
+      "You can run pgvector (or Qdrant) in Docker and implement tenant- and ACL-filtered search.",
+      "You can demonstrate the filtered-ANN recall problem and one mitigation.",
+      "You can do a zero-downtime re-embed with versioned collections and an alias switch."
+     ],
+     "topics": [
+      {
+       "id": "M11.03.10",
+       "title": "pgvector/Qdrant"
+      },
+      {
+       "id": "M11.03.12",
+       "title": "Versioned re-indexing"
+      },
+      {
+       "id": "M11.04.04",
+       "title": "Metadata filters"
+      },
+      {
+       "id": "M11.05.09",
+       "title": "Authorization filtering"
+      }
+     ],
+     "learn": {
+      "resourceId": "llm-zoomcamp",
+      "title": "LLM Zoomcamp module 2 — Vector Search",
+      "url": "https://github.com/DataTalksClub/llm-zoomcamp/tree/main/02-vector-search",
+      "slice": "Lessons 02-embeddings → 04-vector-search → 05-minsearch-vector → 06-rag-vector → 07-sqlitesearch-vector → 08-pgvector",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Turning text into vectors with sentence-transformers and embedding a FAQ dataset",
+      "Vector search with numpy, then in-memory with minsearch",
+      "Swapping keyword search for vector search inside the RAG pipeline",
+      "Persistent vector search with SQLite (sqlitesearch) and with PostgreSQL + pgvector"
+     ],
+     "gaps": [
+      {
+       "topic": "Filtering with HNSW/IVFFlat and iterative index scans",
+       "resource": {
+        "resourceId": "pgvector",
+        "title": "pgvector README — Filtering + Iterative Index Scans",
+        "url": "https://github.com/pgvector/pgvector",
+        "slice": "Sections: Filtering, Iterative Index Scans, HNSW, IVFFlat",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Versioned re-indexing with collection aliases",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant — Collections: collection aliases",
+        "url": "https://qdrant.tech/documentation/concepts/collections/",
+        "slice": "'Collection aliases' section (switch collection atomically)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Tenant isolation patterns",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant — Multitenancy (multiple partitions) guide",
+        "url": "https://qdrant.tech/documentation/guides/multiple-partitions/",
+        "slice": "Whole guide (payload-based partitioning, is_tenant indexes)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Payload/metadata filters",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant — Filtering",
+        "url": "https://qdrant.tech/documentation/concepts/filtering/",
+        "slice": "Filtering clauses and conditions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "qdrant-essentials",
+      "title": "Qdrant Essentials course",
+      "url": "https://qdrant.tech/course/essentials/",
+      "slice": "Days 1–3",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Permission-aware vector store",
+      "brief": "Load your corpus into Postgres+pgvector (Docker). Implement tenant- and ACL-filtered search. Show the filtered-ANN recall problem (selective filter + HNSW returns too few results) and fix it with one mitigation (iterative index scans, partial index, or pre-filter). Then re-embed to a new model with versioned tables/collections and an alias/view switch while queries keep running.",
+      "done_when": "A test proving a user never receives chunks outside their ACL; before/after result counts for the filtered-ANN fix; a log showing zero failed queries during the re-embed switch."
+     },
+     "quiz": [
+      {
+       "id": "M11.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Applying a selective metadata filter after ANN retrieval can:",
+       "options": [
+        "Return too few results because filtered-out items consumed the top-k",
+        "Improve recall",
+        "Speed up indexing",
+        "Fix permissions automatically"
+       ],
+       "answer": 0,
+       "explain": "Post-filtering 10 candidates with a 5%-selective filter leaves ~0.5 results."
+      },
+      {
+       "id": "M11.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Changing the embedding model usually requires:",
+       "options": [
+        "Re-embedding the corpus, since vectors from different models are not comparable",
+        "Nothing",
+        "Only rebuilding HNSW",
+        "A new BM25 tokenizer"
+       ],
+       "answer": 0,
+       "explain": "Different models produce different vector spaces."
+      },
+      {
+       "id": "M11.U07.Q3",
+       "kind": "mcq",
+       "prompt": "A good reason to choose pgvector over a dedicated vector DB:",
+       "options": [
+        "Transactional joins with existing relational data and one system to operate",
+        "It is always faster",
+        "GPU support",
+        "No indexes needed"
+       ],
+       "answer": 0,
+       "explain": "For small-to-medium corpora, operational simplicity often wins."
+      },
+      {
+       "id": "M11.U07.Q4",
+       "kind": "short",
+       "prompt": "Where must authorization filtering happen so the LLM never sees forbidden text?",
+       "rubric": [
+        "In the retrieval query itself (filter by ACL/tenant before results are returned)",
+        "Never rely on the LLM or a post-generation filter to hide text it already saw",
+        "ACLs stored on every chunk and kept in sync with the source system"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M11.S4",
+   "title": "Retrieval pipeline",
+   "units": [
+    {
+     "id": "M11.U08",
+     "title": "Dense, hybrid search and rank fusion",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U01",
+      "M11.U05"
+     ],
+     "outcomes": [
+      "You can implement Reciprocal Rank Fusion over BM25 and dense results.",
+      "You can compare BM25 / dense / hybrid by query type (IDs, paraphrases, Urdu).",
+      "You can explain why score-based fusion needs normalization."
+     ],
+     "topics": [
+      {
+       "id": "M11.04.02",
+       "title": "Dense retrieval"
+      },
+      {
+       "id": "M11.04.03",
+       "title": "Hybrid search/RRF"
+      }
+     ],
+     "learn": {
+      "resourceId": "qdrant-docs",
+      "title": "Qdrant — Hybrid and multi-stage queries",
+      "url": "https://qdrant.tech/documentation/concepts/hybrid-queries/",
+      "slice": "Whole page (prefetch, RRF and DBSF fusion, multi-stage re-scoring); then LLM Zoomcamp 06 lesson 02-hybrid-search https://github.com/DataTalksClub/llm-zoomcamp/blob/main/06-best-practices/02-hybrid-search.md",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Prefetch: running sparse and dense sub-queries in one request",
+      "Fusion methods: Reciprocal Rank Fusion and distribution-based score fusion (DBSF)",
+      "Multi-stage queries: cheap candidates then re-scoring with a more expensive representation",
+      "Zoomcamp: hybrid keyword + vector search on the course FAQ data and evaluating it"
+     ],
+     "gaps": [
+      {
+       "topic": "Dense retrieval training (bi-encoders, in-batch negatives)",
+       "resource": {
+        "resourceId": "P06",
+        "title": "Dense Passage Retrieval for Open-Domain QA",
+        "url": "https://arxiv.org/abs/2004.04906",
+        "slice": "§3 (dual encoder, in-batch negatives) and §5 results",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Original RRF paper",
+       "resource": {
+        "resourceId": "paper-rrf-cormack",
+        "title": "Cormack, Clarke & Büttcher 2009 — Reciprocal Rank Fusion outperforms Condorcet and individual rank learning methods",
+        "url": "https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf",
+        "slice": "2-page paper",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "weaviate-hybrid",
+      "title": "Weaviate — Hybrid Search Explained",
+      "url": "https://weaviate.io/blog/hybrid-search-explained",
+      "slice": "Whole post",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Hybrid by query type",
+      "brief": "Implement RRF yourself (k=60) over BM25 + dense. Compare BM25 / dense / hybrid on your harness broken down by query type (exact IDs/sections, paraphrased questions, Urdu). Read P06 DPR §3 and note what dense retrieval learns.",
+      "done_when": "A per-query-type table of recall@5 and nDCG@10 for 3 systems, and one query where hybrid beats both, explained."
+     },
+     "quiz": [
+      {
+       "id": "M11.U08.Q1",
+       "kind": "mcq",
+       "prompt": "RRF combines rankers using:",
+       "options": [
+        "Raw scores",
+        "The reciprocal of each item's rank in each list",
+        "Only the top-1",
+        "Averaged embeddings"
+       ],
+       "answer": 1,
+       "explain": "score = Σ 1/(k + rank); it ignores incomparable raw scores."
+      },
+      {
+       "id": "M11.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Hybrid search helps most when queries mix:",
+       "options": [
+        "One language only",
+        "Short and long documents",
+        "Exact terms/IDs and semantic paraphrase",
+        "Images"
+       ],
+       "answer": 2,
+       "explain": "BM25 catches exact strings; dense catches meaning."
+      },
+      {
+       "id": "M11.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Score-based fusion needs care because:",
+       "options": [
+        "BM25 and cosine scores have different scales and distributions",
+        "Scores are always comparable",
+        "RRF is slow",
+        "Dense scores are negative"
+       ],
+       "answer": 0,
+       "explain": "Normalize (min-max, z-score, DBSF) or use rank-based fusion."
+      },
+      {
+       "id": "M11.U08.Q4",
+       "kind": "short",
+       "prompt": "Show a query from your set where hybrid wins over both components, and explain why.",
+       "rubric": [
+        "Quotes the actual query and the ranks from BM25, dense and hybrid",
+        "Explains which part of the query each retriever matched",
+        "Connects to the fusion formula (both lists had it moderately high)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U09",
+     "title": "Reranking, diversity and late interaction",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U08"
+     ],
+     "outcomes": [
+      "You can add a cross-encoder reranker and choose a rerank depth from measured gain vs latency.",
+      "You can implement MMR to remove near-duplicate chunks.",
+      "You can explain late interaction (ColBERT) and when it is worth it."
+     ],
+     "topics": [
+      {
+       "id": "M11.04.05",
+       "title": "Reranking/cross-encoders"
+      },
+      {
+       "id": "M11.04.06",
+       "title": "MMR/diversity"
+      }
+     ],
+     "learn": {
+      "resourceId": "sbert-docs",
+      "title": "Sentence Transformers — Retrieve & Re-Rank",
+      "url": "https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html",
+      "slice": "Whole page, then Pinecone 'Rerankers and Two-Stage Retrieval' https://www.pinecone.io/learn/series/rag/rerankers/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Bi-encoder retrieval of candidates followed by cross-encoder re-ranking",
+      "Why cross-encoders are more accurate but must score every query–document pair",
+      "Pre-trained retrieval and cross-encoder models (MS MARCO) and an end-to-end example",
+      "Two-stage retrieval economics; recall from the first stage bounds what reranking can fix (Pinecone)"
+     ],
+     "gaps": [
+      {
+       "topic": "MMR formulation",
+       "resource": {
+        "resourceId": "paper-mmr-1998",
+        "title": "Carbonell & Goldstein 1998 — The Use of MMR",
+        "url": "https://www.cs.cmu.edu/~jgc/publication/The_Use_MMR_Diversity_Based_LTMIR_1998.pdf",
+        "slice": "§2 (MMR definition)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Late interaction / ColBERT",
+       "resource": {
+        "resourceId": "C11",
+        "title": "RAG From Scratch: Part 14 (ColBERT)",
+        "url": "https://www.youtube.com/watch?v=cN6S0Ehm7_8",
+        "slice": "Full video",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "ColBERT explained in prose",
+       "resource": {
+        "resourceId": "jina-blog",
+        "title": "Jina AI — What is ColBERT and late interaction and why they matter in search",
+        "url": "https://jina.ai/news/what-is-colbert-and-late-interaction-and-why-they-matter-in-search/",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "sbert-docs",
+      "title": "Sentence Transformers — CrossEncoder usage",
+      "url": "https://sbert.net/docs/cross_encoder/usage/usage.html",
+      "slice": "Whole page",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Rerank depth sweep + MMR",
+      "brief": "Add a cross-encoder reranker over the hybrid top-50 and sweep rerank depth (20/50/100). Report nDCG@10 gain vs added p95 latency. Implement MMR (λ sweep) and show it reduces near-duplicate chunks in the final context without hurting recall@5.",
+      "done_when": "A depth × (nDCG@10, p95 latency) table and an MMR λ table with duplicate rate and recall@5."
+     },
+     "quiz": [
+      {
+       "id": "M11.U09.Q1",
+       "kind": "mcq",
+       "prompt": "A cross-encoder is slower than a bi-encoder because it:",
+       "options": [
+        "Always has more layers",
+        "Uses BM25",
+        "Needs GPUs only",
+        "Must jointly encode every query–document pair at query time"
+       ],
+       "answer": 3,
+       "explain": "Bi-encoder document vectors are precomputed; cross-encoders cannot be."
+      },
+      {
+       "id": "M11.U09.Q2",
+       "kind": "mcq",
+       "prompt": "MMR balances:",
+       "options": [
+        "Cost and latency",
+        "BM25 precision and recall",
+        "Relevance and diversity",
+        "Chunk size and overlap"
+       ],
+       "answer": 2,
+       "explain": "Each pick maximizes λ·relevance − (1−λ)·max similarity to already-picked items."
+      },
+      {
+       "id": "M11.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Two-stage retrieval means:",
+       "options": [
+        "Two LLM calls",
+        "Two vector DBs",
+        "Two languages",
+        "Cheap high-recall candidate retrieval, then expensive precise reranking"
+       ],
+       "answer": 3,
+       "explain": "Stage 1 maximizes recall; stage 2 maximizes precision at the top."
+      },
+      {
+       "id": "M11.U09.Q4",
+       "kind": "short",
+       "prompt": "When is a reranker not worth its latency?",
+       "rubric": [
+        "When measured nDCG/answer-quality gain on your harness is negligible (first stage already precise)",
+        "When latency budget is tight (e.g. autocomplete) or traffic is very high",
+        "When the first stage misses the relevant docs (reranking cannot recover recall)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U10",
+     "title": "Query transformation and advanced retrieval patterns",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U09",
+      "M10.U03"
+     ],
+     "outcomes": [
+      "You can implement multi-query + RRF, HyDE and an agentic search loop in plain Python and keep only what wins on your harness.",
+      "You can explain routing, query structuring, multi-representation (parent) indexing and context compression.",
+      "You can decide when GraphRAG or multimodal retrieval is justified (awareness)."
+     ],
+     "topics": [
+      {
+       "id": "M11.04.07",
+       "title": "Query rewriting/decomposition"
+      },
+      {
+       "id": "M11.04.08",
+       "title": "HyDE"
+      },
+      {
+       "id": "M11.04.09",
+       "title": "Multi-query fusion"
+      },
+      {
+       "id": "M11.04.10",
+       "title": "Parent retrieval"
+      },
+      {
+       "id": "M11.04.11",
+       "title": "Context compression"
+      },
+      {
+       "id": "M11.04.12",
+       "title": "GraphRAG (awareness)"
+      },
+      {
+       "id": "M11.04.13",
+       "title": "Multimodal retrieval (awareness)"
+      },
+      {
+       "id": "M11.04.14",
+       "title": "Agentic/iterative and just-in-time retrieval (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C11",
+      "title": "LangChain — RAG From Scratch video series, Parts 5–12",
+      "url": "https://www.youtube.com/playlist?list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x",
+      "slice": "Part 5 Multi Query (JChPi0CRnDY) → 6 RAG Fusion (77qELPbNgxA) → 7 Decomposition (h0OPWlEOank) → 8 Step Back (xn1jEjRyJ2U) → 9 HyDE (SaDzIVkYqyY) → 10 Routing (pfpIndq7Fi8) → 11 Query Structuring (kl6NwWYxvbM) → 12 Multi-Representation Indexing (gTCU9I6QqCE). Watch for concepts; code at https://github.com/langchain-ai/rag-from-scratch uses 2024 LangChain APIs",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Multi-query: rewriting a question into several variants and merging results",
+      "RAG-Fusion: multi-query + reciprocal rank fusion",
+      "Decomposition into sub-questions (answered sequentially or in parallel) and step-back prompting",
+      "HyDE: embedding a hypothetical answer document",
+      "Logical and semantic routing to different indexes/prompts; query structuring into metadata filters",
+      "Multi-representation indexing: index summaries/children, return full parent documents"
+     ],
+     "gaps": [
+      {
+       "topic": "Agentic/iterative retrieval (search as a tool in a loop)",
+       "resource": {
+        "resourceId": "llm-zoomcamp",
+        "title": "LLM Zoomcamp module 1 — Agentic RAG lessons",
+        "url": "https://github.com/DataTalksClub/llm-zoomcamp/tree/main/01-agentic-rag",
+        "slice": "Lessons 11-agents-intro → 13-function-calling → 14-agentic-loop",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Just-in-time retrieval for agents",
+       "resource": {
+        "resourceId": "anthropic-eng",
+        "title": "Anthropic — Effective context engineering for AI agents",
+        "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "slice": "Section on just-in-time context retrieval",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Context compression",
+       "resource": {
+        "resourceId": "llmlingua",
+        "title": "Microsoft LLMLingua",
+        "url": "https://github.com/microsoft/LLMLingua",
+        "slice": "README (LLMLingua / LongLLMLingua compression)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "GraphRAG (awareness)",
+       "resource": {
+        "resourceId": "graphrag-docs",
+        "title": "Microsoft GraphRAG docs",
+        "url": "https://microsoft.github.io/graphrag/",
+        "slice": "Overview + 'GraphRAG approach' page; paper P12 https://arxiv.org/abs/2404.16130",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Multimodal retrieval (awareness)",
+       "resource": {
+        "resourceId": "dlai-multivector-image",
+        "title": "DeepLearning.AI — Multi-vector Image Retrieval",
+        "url": "https://www.deeplearning.ai/courses/multi-vector-image-retrieval",
+        "slice": "Whole course",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "HyDE paper",
+       "resource": {
+        "resourceId": "P09",
+        "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE)",
+        "url": "https://arxiv.org/abs/2212.10496",
+        "slice": "§3",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Advanced RAG",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/07-advanced-rag",
+      "slice": "Lesson phases/11-llm-engineering/07-advanced-rag (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Advanced patterns, measured",
+      "brief": "In plain Python (no framework), implement multi-query + RRF, HyDE, and an agentic loop where the model decides to search again with a rewritten query (max 3 steps, explicit stop criterion). Measure each against your U09 pipeline on recall@5, answer correctness and extra LLM calls/latency. Keep only what wins and justify it.",
+      "done_when": "A table of 4 pipelines × (recall@5, correctness, LLM calls/query, p95 latency) and a decision paragraph."
+     },
+     "quiz": [
+      {
+       "id": "M11.U10.Q1",
+       "kind": "mcq",
+       "prompt": "HyDE embeds:",
+       "options": [
+        "The raw query",
+        "The top result",
+        "The system prompt",
+        "A hypothetical answer document generated from the query"
+       ],
+       "answer": 3,
+       "explain": "Answer-shaped text sits closer to real answer passages in embedding space."
+      },
+      {
+       "id": "M11.U10.Q2",
+       "kind": "mcq",
+       "prompt": "The main cost of multi-query retrieval is:",
+       "options": [
+        "Storage",
+        "Lower recall",
+        "Re-indexing",
+        "Extra LLM and search calls, plus duplicate results to fuse"
+       ],
+       "answer": 3,
+       "explain": "N rewrites ≈ N searches and an extra LLM call per query."
+      },
+      {
+       "id": "M11.U10.Q3",
+       "kind": "mcq",
+       "prompt": "GraphRAG is most justified for:",
+       "options": [
+        "Global, relationship or 'summarize the corpus' questions",
+        "Single-fact lookups",
+        "Keyword search",
+        "Short FAQs"
+       ],
+       "answer": 0,
+       "explain": "Its community summaries target sensemaking over a whole corpus; index cost is high."
+      },
+      {
+       "id": "M11.U10.Q4",
+       "kind": "short",
+       "prompt": "Why must an agentic retrieval loop have a step budget and a stop criterion?",
+       "rubric": [
+        "Without them the model can loop, rack up cost/latency, or drift off the question",
+        "Stop criterion: sufficient evidence found / confidence threshold / no new results",
+        "Budget makes worst-case cost and latency predictable and testable"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M11.S5",
+   "title": "Generation and RAG evaluation",
+   "units": [
+    {
+     "id": "M11.U11",
+     "title": "Grounded answering: packing, citations, abstention, conflicts, freshness",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U09",
+      "M10.U05"
+     ],
+     "outcomes": [
+      "You can pack context in a position-aware way and require span-level citations.",
+      "You can abstain when evidence is weak and surface conflicting sources explicitly.",
+      "You can decide between long-context, RAG and cache-augmented generation for a given corpus."
+     ],
+     "topics": [
+      {
+       "id": "M11.05.01",
+       "title": "Context packing"
+      },
+      {
+       "id": "M11.05.02",
+       "title": "Citations/source spans"
+      },
+      {
+       "id": "M11.05.03",
+       "title": "Abstention"
+      },
+      {
+       "id": "M11.05.04",
+       "title": "Contradiction handling"
+      },
+      {
+       "id": "M11.05.08",
+       "title": "Freshness"
+      },
+      {
+       "id": "M11.05.13",
+       "title": "Long-context vs RAG vs CAG decision (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "B08",
+      "title": "SLP3 ch. 11 — Information Retrieval and Retrieval-Augmented Generation",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/11.pdf",
+      "slice": "RAG and question-answering sections (retrieve-then-read, prompting with passages, evaluation of QA)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Retrieve-then-read architecture for question answering",
+      "Prompting an LLM with retrieved passages; why retrieval reduces hallucination and enables fresh/private knowledge",
+      "QA datasets and answer evaluation (exact match, F1)",
+      "Dense vs sparse retrieval recap within RAG"
+     ],
+     "gaps": [
+      {
+       "topic": "Span-level citations returned by the API",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude — Citations",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/citations",
+        "slice": "Whole page (document blocks, cited spans)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Position effects in long context",
+       "resource": {
+        "resourceId": "paper-lost-in-the-middle",
+        "title": "Lost in the Middle",
+        "url": "https://arxiv.org/abs/2307.03172",
+        "slice": "§2 results",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Conflicting evidence vs model priors",
+       "resource": {
+        "resourceId": "paper-clasheval",
+        "title": "ClashEval",
+        "url": "https://arxiv.org/abs/2404.10198",
+        "slice": "§1, §4 findings",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Long-context vs RAG vs CAG",
+       "resource": {
+        "resourceId": "P28",
+        "title": "Don't Do RAG: When Cache-Augmented Generation is All You Need",
+        "url": "https://arxiv.org/abs/2412.15605",
+        "slice": "§1–3",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Freshness via date metadata filters",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant — Filtering (datetime range)",
+        "url": "https://qdrant.tech/documentation/concepts/filtering/",
+        "slice": "Range / datetime range conditions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reducing hallucinations in grounded answers",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude — Reduce hallucinations",
+        "url": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+        "slice": "Whole page (allow 'I don't know', quote-then-answer, verify with citations)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-rag",
+      "title": "DeepLearning.AI RAG course — Module 4 'LLMs and Text Generation' + Module 5 'RAG Systems in Production'",
+      "url": "https://www.deeplearning.ai/courses/retrieval-augmented-generation",
+      "slice": "Modules 4–5 (Coursera audit; DLAI page states only Module 1 is a free preview — verify access)",
+      "type": "course",
+      "free": "audit",
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Grounded answer step",
+      "brief": "Build the answer step: numbered sources, span-level citations (doc_id + offsets) validated after generation, abstention ('not found in the sources') when retrieval confidence is low, and explicit reporting when sources conflict. Add effective_date metadata and prefer newer documents on conflict. Test with your 15 unanswerable and 5 deliberately contradictory cases; also try putting the whole corpus in a long-context model for 10 questions and compare cost/accuracy.",
+      "done_when": "Tests pass for citation validity (every cited span exists and supports its claim on a 20-answer sample), abstention on ≥12/15 unanswerables, and conflict reporting on 5/5; a long-context vs RAG comparison table."
+     },
+     "quiz": [
+      {
+       "id": "M11.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Placing the most relevant chunks at the start or end of the context helps because:",
+       "options": [
+        "Caching",
+        "Tokenization",
+        "Models tend to under-use information in the middle of long contexts",
+        "Cost"
+       ],
+       "answer": 2,
+       "explain": "This is the 'lost in the middle' effect."
+      },
+      {
+       "id": "M11.U11.Q2",
+       "kind": "mcq",
+       "prompt": "A correct abstention is:",
+       "options": [
+        "A failure",
+        "A guardrail bug",
+        "Always wrong for users",
+        "The right behaviour when the sources do not contain the answer"
+       ],
+       "answer": 3,
+       "explain": "Score abstentions on unanswerable questions as passes."
+      },
+      {
+       "id": "M11.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Citation support means:",
+       "options": [
+        "Any URL is shown",
+        "The cited span actually entails the claim",
+        "The answer is long",
+        "Sources are recent"
+       ],
+       "answer": 1,
+       "explain": "A citation that doesn't support the claim is worse than none."
+      },
+      {
+       "id": "M11.U11.Q4",
+       "kind": "short",
+       "prompt": "How do you decide between RAG and putting the whole 150-page policy in a long-context model?",
+       "rubric": [
+        "Size/cost per query (with and without prompt caching) and latency",
+        "Update frequency, need for citations and permissions",
+        "Measure both on the same questions (accuracy incl. lost-in-the-middle effects); consider CAG for a static corpus"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M11.U12",
+     "title": "Evaluating RAG end to end",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M11.U11",
+      "M10.U09"
+     ],
+     "outcomes": [
+      "You can measure faithfulness, answer correctness, context precision and context recall.",
+      "You can validate judge-based RAG metrics against 40 human labels before trusting them.",
+      "You can attribute failures to missing evidence, ranking, packing or generation, and test poisoned documents."
+     ],
+     "topics": [
+      {
+       "id": "M11.05.06",
+       "title": "Faithfulness"
+      },
+      {
+       "id": "M11.05.07",
+       "title": "Answer correctness"
+      },
+      {
+       "id": "M11.05.10",
+       "title": "Adversarial documents"
+      }
+     ],
+     "learn": {
+      "resourceId": "ragas-docs",
+      "title": "Ragas — List of available metrics",
+      "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
+      "slice": "RAG metrics: context precision, context recall, faithfulness, response relevancy, factual/answer correctness; then HF Cookbook 'RAG Evaluation' https://huggingface.co/learn/cookbook/en/rag_evaluation",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Retrieval-side metrics: context precision and context recall (LLM-based and non-LLM variants)",
+      "Generation-side metrics: faithfulness (claims supported by context), response relevancy, answer/factual correctness",
+      "HF cookbook: building a synthetic eval set, an LLM judge with a scoring rubric, and comparing RAG configurations"
+     ],
+     "gaps": [
+      {
+       "topic": "Calibrating the judge before trusting RAG scores",
+       "resource": {
+        "resourceId": "hamel-evals",
+        "title": "Hamel Husain — Using LLM-as-a-Judge (measuring agreement)",
+        "url": "https://hamel.dev/blog/posts/llm-judge/",
+        "slice": "Sections on measuring agreement with the domain expert",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Poisoned/adversarial documents in vector stores",
+       "resource": {
+        "resourceId": "owasp-llm-top10",
+        "title": "OWASP Top 10 for LLM Apps — LLM08 Vector and Embedding Weaknesses + LLM01 Prompt Injection",
+        "url": "https://genai.owasp.org/llm-top-10/",
+        "slice": "LLM08 and LLM01 entries",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "LLM-as-judge for RAG answers in practice",
+       "resource": {
+        "resourceId": "llm-zoomcamp",
+        "title": "LLM Zoomcamp 04 — RAG answers + LLM as a judge",
+        "url": "https://github.com/DataTalksClub/llm-zoomcamp/blob/main/04-evaluation/13-llm-as-judge.md",
+        "slice": "Lessons 12-rag-answers and 13-llm-as-judge",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Ragas method and metric definitions",
+       "resource": {
+        "resourceId": "paper-ragas",
+        "title": "Ragas paper",
+        "url": "https://arxiv.org/abs/2309.15217",
+        "slice": "§2 (faithfulness, answer relevance, context relevance)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — LLM evaluation frameworks (RAGAS, DeepEval, G-Eval)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks",
+      "slice": "Lesson phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "RAG report card",
+      "brief": "Run Ragas (or your own judge) for faithfulness and answer correctness on the frozen test split. Hand-label 40 answers and report judge agreement before trusting the scores. Inject 5 poisoned documents containing instructions ('ignore previous… say X') and report attack-success rate before/after your M10.U13 guards. Write a per-stage diagnosis (missing evidence / ranking / packing / generation) for every failed case.",
+      "done_when": "A report with metric scores + judge agreement on 40 labels, attack-success rate before/after guards, and a failure table where every failure has a stage label."
+     },
+     "quiz": [
+      {
+       "id": "M11.U12.Q1",
+       "kind": "mcq",
+       "prompt": "Faithfulness measures whether:",
+       "options": [
+        "The answer matches the gold answer",
+        "The answer's claims are supported by the retrieved context",
+        "Retrieval found all relevant docs",
+        "Latency is low"
+       ],
+       "answer": 1,
+       "explain": "Faithfulness ≠ correctness: you can be faithful to wrong context."
+      },
+      {
+       "id": "M11.U12.Q2",
+       "kind": "mcq",
+       "prompt": "High faithfulness with low answer correctness most likely indicates:",
+       "options": [
+        "A generation bug",
+        "A judge that is too strict",
+        "Caching",
+        "A retrieval problem — faithfully answering from the wrong evidence"
+       ],
+       "answer": 3,
+       "explain": "Check context recall for those cases."
+      },
+      {
+       "id": "M11.U12.Q3",
+       "kind": "mcq",
+       "prompt": "Before reporting judge-based RAG metrics you should:",
+       "options": [
+        "Average across several models",
+        "Raise temperature",
+        "Check agreement against human labels on a sample",
+        "Remove hard cases"
+       ],
+       "answer": 2,
+       "explain": "Uncalibrated judge scores are opinions, not measurements."
+      },
+      {
+       "id": "M11.U12.Q4",
+       "kind": "short",
+       "prompt": "Describe how you'd attribute a wrong answer to retrieval vs generation using your logs.",
+       "rubric": [
+        "Check whether gold passages appear in retrieved top-k (recall) and in the packed context",
+        "If evidence was present, inspect the answer vs evidence (faithfulness, citation) → generation/packing",
+        "If absent → retrieval (chunking/embedding/ranking); log per-stage IDs to make this mechanical"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Measured RAG over a real corpus",
+  "brief": "Pick a corpus useful in Pakistan (FBR tax circulars, HEC policies, your university's rules, PSX filings, a legal code). Ship an API and UI with span-cited answers plus a public evaluation report covering every baseline and ablation on a frozen test split.",
+  "rubric": [
+   {
+    "criterion": "Baselines and ablations (25%)",
+    "levels": [
+     "Excellent: BM25 → dense → hybrid → +rerank → +one query/chunk change, each on the frozen split with recall@k, nDCG and p95 latency; negative results reported",
+     "Adequate: 3 variants compared",
+     "Fail: only the final system"
+    ]
+   },
+   {
+    "criterion": "Ingestion and provenance (15%)",
+    "levels": [
+     "Excellent: incremental ingest by hash; span-level citations that round-trip to source pages",
+     "Adequate: document-level citations",
+     "Fail: none"
+    ]
+   },
+   {
+    "criterion": "Answer quality (25%)",
+    "levels": [
+     "Excellent: faithfulness and correctness with a calibrated judge (agreement reported); abstention measured on unanswerables",
+     "Adequate: judge scores only",
+     "Fail: anecdotes"
+    ]
+   },
+   {
+    "criterion": "Security and access (15%)",
+    "levels": [
+     "Excellent: ACL filtering before generation; poisoned-document test with attack-success rate",
+     "Adequate: ACL filter",
+     "Fail: none"
+    ]
+   },
+   {
+    "criterion": "Ops (20%)",
+    "levels": [
+     "Excellent: pgvector/Qdrant in Docker; versioned re-embed; traces with cost/latency per stage",
+     "Adequate: runs locally",
+     "Fail: notebook only"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}
