@@ -1,21 +1,70 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import {AppState, Platform} from 'react-native';
-import type {Session} from '@supabase/supabase-js';
-import {supabase} from './supabase';
-const Auth = createContext<{session:Session|null; ready:boolean; recovery:boolean; error:string; finishRecovery:()=>void}>({session:null,ready:false,recovery:false,error:'',finishRecovery:()=>{}});
-export function AuthProvider({children}:{children:React.ReactNode}) {
- const [session,setSession]=useState<Session|null>(null),[ready,setReady]=useState(!supabase),[recovery,setRecovery]=useState(false),[error,setError]=useState('');
- useEffect(()=>{
-  if(!supabase)return;
-  let active=true,authEvents=0;
-  const {data:{subscription}}=supabase.auth.onAuthStateChange((event,next)=>{if(active){authEvents++;setSession(next);setReady(true);setError('');if(event==='PASSWORD_RECOVERY')setRecovery(true);if(event==='SIGNED_OUT')setRecovery(false);}});
-  // A slow restoration must never replace a newer sign-in or sign-out event.
-  const restoreEvent=authEvents;
-  void supabase.auth.getSession().then(({data,error:e})=>{if(active&&authEvents===restoreEvent){setSession(data.session);if(e)setError(e.message);setReady(true);}}).catch(()=>{if(active&&authEvents===restoreEvent){setError('Could not restore your sign-in. Your local notebook is preserved.');setReady(true);}});
-  if(Platform.OS!=='web'&&AppState.currentState==='active')supabase.auth.startAutoRefresh();
-  const app=Platform.OS!=='web'?AppState.addEventListener('change',s=>{if(s==='active')supabase?.auth.startAutoRefresh();else supabase?.auth.stopAutoRefresh();}):null;
-  return()=>{active=false;subscription.unsubscribe();app?.remove();};
- },[]);
- return <Auth.Provider value={{session,ready,recovery,error,finishRecovery:()=>setRecovery(false)}}>{children}</Auth.Provider>;
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { AppState, Platform } from 'react-native';
+import type { Session } from '@supabase/supabase-js';
+import { supabase } from './supabase';
+const Auth = createContext<{
+  session: Session | null;
+  ready: boolean;
+  recovery: boolean;
+  error: string;
+  finishRecovery: () => void;
+}>({ session: null, ready: false, recovery: false, error: '', finishRecovery: () => {} });
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [session, setSession] = useState<Session | null>(null),
+    [ready, setReady] = useState(!supabase),
+    [recovery, setRecovery] = useState(false),
+    [error, setError] = useState('');
+  useEffect(() => {
+    if (!supabase) return;
+    let active = true,
+      authEvents = 0;
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, next) => {
+      if (active) {
+        authEvents++;
+        setSession(next);
+        setReady(true);
+        setError('');
+        if (event === 'PASSWORD_RECOVERY') setRecovery(true);
+        if (event === 'SIGNED_OUT') setRecovery(false);
+      }
+    });
+    // A slow restoration must never replace a newer sign-in or sign-out event.
+    const restoreEvent = authEvents;
+    void supabase.auth
+      .getSession()
+      .then(({ data, error: e }) => {
+        if (active && authEvents === restoreEvent) {
+          setSession(data.session);
+          if (e) setError(e.message);
+          setReady(true);
+        }
+      })
+      .catch(() => {
+        if (active && authEvents === restoreEvent) {
+          setError('Could not restore your sign-in. Your local notebook is preserved.');
+          setReady(true);
+        }
+      });
+    if (Platform.OS !== 'web' && AppState.currentState === 'active') supabase.auth.startAutoRefresh();
+    const app =
+      Platform.OS !== 'web'
+        ? AppState.addEventListener('change', s => {
+            if (s === 'active') supabase?.auth.startAutoRefresh();
+            else supabase?.auth.stopAutoRefresh();
+          })
+        : null;
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+      app?.remove();
+    };
+  }, []);
+  return (
+    <Auth.Provider value={{ session, ready, recovery, error, finishRecovery: () => setRecovery(false) }}>
+      {children}
+    </Auth.Provider>
+  );
 }
-export const useAuth=()=>useContext(Auth);
+export const useAuth = () => useContext(Auth);

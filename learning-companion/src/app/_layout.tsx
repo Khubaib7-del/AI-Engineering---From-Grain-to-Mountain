@@ -21,7 +21,39 @@ function Navigation() {
     return () => style.remove();
   }, []);
   useEffect(() => listenForLessons(id => router.push(`/session/${id}`)), []);
-  return <><StatusBar style={c === dark ? 'light' : 'dark'} /><Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg } }}><Stack.Screen name="(tabs)" /><Stack.Screen name="session/[id]" /><Stack.Screen name="module/[id]" /><Stack.Screen name="settings" options={{ presentation: 'modal' }} /></Stack></>;
+  return (
+    <>
+      <StatusBar style={c === dark ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg } }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="session/[id]" />
+        <Stack.Screen name="module/[id]" />
+        <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+      </Stack>
+    </>
+  );
 }
-function AccountNotebook() { const {session,ready}=useAuth(); if(!ready)return <View style={{flex:1,backgroundColor:'#000',justifyContent:'center',alignItems:'center'}}><Text style={{color:'#fff'}}>Opening your notebook…</Text></View>; const scope=session?.user.id??'guest'; return <LearningProvider key={scope} scope={scope}><Navigation /></LearningProvider>; }
-export default function RootLayout() { return <SafeAreaProvider><AuthProvider><AccountNotebook /></AuthProvider></SafeAreaProvider>; }
+function AccountNotebook() {
+  const { session, ready } = useAuth();
+  if (!ready)
+    return (
+      <View style={{ flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: '#fff' }}>Opening your notebook…</Text>
+      </View>
+    );
+  const scope = session?.user.id ?? 'guest';
+  return (
+    <LearningProvider key={scope} scope={scope}>
+      <Navigation />
+    </LearningProvider>
+  );
+}
+export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <AuthProvider>
+        <AccountNotebook />
+      </AuthProvider>
+    </SafeAreaProvider>
+  );
+}
