@@ -5,7 +5,9 @@ import {
   Button,
   Checkbox,
   Chip,
+  Disclosure,
   Icon,
+  Label,
   Meter,
   Panel,
   Row,
@@ -15,6 +17,8 @@ import {
   inputStyle,
   usePalette,
 } from '../../components/ui';
+import { NextStepCard } from '../../components/next-step';
+import { STATUS_TEXT, Station } from '../../components/route-board';
 import { StudyGuide } from '../../components/study-guide';
 import {
   addedTopicIds,
@@ -30,12 +34,6 @@ import { logActivity } from '../../lib/activity';
 import { useLearning } from '../../lib/store';
 import type { ModuleV2 } from '../../lib/types';
 
-const STATUS_ICON: Record<string, string> = {
-  passed: 'checkmark-circle',
-  'in-progress': 'timer',
-  available: 'ellipse-outline',
-  locked: 'circle-dashed',
-};
 
 type RepoFacts = { ok: boolean; message: string };
 async function checkRepo(url: string): Promise<RepoFacts> {
@@ -103,79 +101,88 @@ function Capstone({ module, unitsPassed }: { module: ModuleV2; unitsPassed: bool
       );
   };
   return (
-    <Panel>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Icon name="flag" />
-        <Txt size={20} weight="700" style={{ flex: 1 }} accessibilityRole="header">
-          Capstone · {module.capstone.title}
-        </Txt>
-        {proven && <Chip text="Proven" tone="strong" icon="checkmark" />}
-      </View>
-      <Txt>{module.capstone.brief}</Txt>
-      {!unitsPassed && (
-        <Txt size={14} color={c.muted}>
-          You can start any time; the module counts as proven once every unit is passed and you score at least
-          2 on each criterion.
-        </Txt>
-      )}
-      <Txt size={14} weight="600">
-        Rubric — score yourself honestly
-      </Txt>
-      {module.capstone.rubric.map((r, i) => (
-        <View key={r.criterion} style={{ gap: 8, paddingVertical: 6 }}>
-          <Txt size={15} weight="600">
-            {r.criterion}
-          </Txt>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
-            {r.levels.map((level, li) => (
-              <Pressable
-                key={li}
-                accessibilityRole="radio"
-                accessibilityState={{ checked: scores[i] === li }}
-                onPress={() => setScores(s => s.map((v, j) => (j === i ? li : v)))}
-                style={{
-                  paddingHorizontal: 12,
-                  paddingVertical: 8,
-                  minHeight: 40,
-                  borderRadius: 10,
-                  borderWidth: 1,
-                  borderColor: scores[i] === li ? c.ink : c.line,
-                  backgroundColor: scores[i] === li ? c.soft : 'transparent',
-                  justifyContent: 'center',
-                }}
-              >
-                <Txt
-                  size={13}
-                  weight={scores[i] === li ? '700' : '500'}
-                  color={scores[i] === li ? c.ink : c.muted}
-                >
-                  {li} · {level}
-                </Txt>
-              </Pressable>
-            ))}
-          </View>
+    <Panel style={{ gap: 0, paddingVertical: 8 }}>
+      <Disclosure
+        title={`Capstone: ${module.capstone.title}`}
+        hint={
+          proven
+            ? 'Proven ✓'
+            : saved?.submittedAt
+              ? 'Submitted · update any time'
+              : 'The project that proves this module'
+        }
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <Icon name="flag" color={c.accentText} />
+          <Label style={{ flex: 1 }}>Brief</Label>
+          {proven && <Chip text="Proven" tone="strong" icon="checkmark" />}
         </View>
-      ))}
-      <TextInput
-        accessibilityLabel="Capstone link"
-        autoCapitalize="none"
-        value={url}
-        onChangeText={setUrl}
-        placeholder={needsRepo ? 'https://github.com/you/project' : 'Link or short write-up'}
-        placeholderTextColor={c.faint}
-        style={inputStyle(c)}
-      />
-      {!!facts && (
-        <Txt size={14} color={facts.ok ? c.muted : c.danger}>
-          {facts.message}
+        <Txt>{module.capstone.brief}</Txt>
+        {!unitsPassed && (
+          <Txt size={14} color={c.muted}>
+            You can start any time; the module counts as proven once every unit is passed and you score at
+            least 2 on each criterion.
+          </Txt>
+        )}
+        <Txt size={14} weight="600">
+          Rubric — score yourself honestly
         </Txt>
-      )}
-      <Button
-        title={saved?.submittedAt ? 'Update submission' : 'Submit capstone'}
-        busy={busy}
-        disabled={!url.trim() || scores.some(s => s < 0)}
-        onPress={() => void submit()}
-      />
+        {module.capstone.rubric.map((r, i) => (
+          <View key={r.criterion} style={{ gap: 8, paddingVertical: 6 }}>
+            <Txt size={15} weight="600">
+              {r.criterion}
+            </Txt>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+              {r.levels.map((level, li) => (
+                <Pressable
+                  key={li}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: scores[i] === li }}
+                  onPress={() => setScores(s => s.map((v, j) => (j === i ? li : v)))}
+                  style={{
+                    paddingHorizontal: 12,
+                    paddingVertical: 8,
+                    minHeight: 40,
+                    borderRadius: 10,
+                    borderWidth: 1,
+                    borderColor: scores[i] === li ? c.accent : c.edge,
+                    backgroundColor: scores[i] === li ? c.accentSoft : c.surface,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Txt
+                    size={13}
+                    weight={scores[i] === li ? '700' : '500'}
+                    color={scores[i] === li ? c.accentText : c.ink}
+                  >
+                    {li} · {level}
+                  </Txt>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        ))}
+        <TextInput
+          accessibilityLabel="Capstone link"
+          autoCapitalize="none"
+          value={url}
+          onChangeText={setUrl}
+          placeholder={needsRepo ? 'https://github.com/you/project' : 'Link or short write-up'}
+          placeholderTextColor={c.faint}
+          style={inputStyle(c)}
+        />
+        {!!facts && (
+          <Txt size={14} color={facts.ok ? c.muted : c.danger}>
+            {facts.message}
+          </Txt>
+        )}
+        <Button
+          title={saved?.submittedAt ? 'Update submission' : 'Submit capstone'}
+          busy={busy}
+          disabled={!url.trim() || scores.some(s => s < 0)}
+          onPress={() => void submit()}
+        />
+      </Disclosure>
     </Panel>
   );
 }
@@ -186,6 +193,12 @@ function ModuleV2Screen({ module }: { module: ModuleV2 }) {
   const units = module.submodules.flatMap(s => s.units);
   const statuses = units.map(u => unitStatus(u, state, unitIds));
   const passed = statuses.filter(s => s === 'passed').length;
+  const nextIdx =
+    statuses.findIndex(s => s === 'in-progress') >= 0
+      ? statuses.findIndex(s => s === 'in-progress')
+      : statuses.findIndex(s => s === 'available');
+  const next = nextIdx >= 0 ? units[nextIdx] : undefined;
+  const nextSub = next ? module.submodules.find(sm => sm.units.some(u => u.id === next.id))?.id : undefined;
   const prereqs = module.prerequisites
     .map(id => findModuleV2(id) ?? modules.find(m => m.id === id))
     .filter(Boolean);
@@ -198,56 +211,83 @@ function ModuleV2Screen({ module }: { module: ModuleV2 }) {
       subtitle={module.summary}
       width={880}
     >
-      <Panel>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-          <Chip
-            text={`${passed}/${units.length} units passed`}
-            tone={passed === units.length ? 'strong' : 'default'}
-          />
-          <Chip text={`${module.hours} h core`} icon="clock" />
-          {!!module.deepHours && <Chip text={`+${module.deepHours} h deep`} />}
-          {module.tracks.map(t => (
-            <Chip key={t} text={t === 'ai-engineer' ? 'AI Engineer' : t === 'fde' ? 'FDE' : 'MLOps'} />
-          ))}
-        </View>
-        <Meter value={units.length ? passed / units.length : 0} label="Units passed" />
-        {!!prereqs.length && (
-          <Txt size={14} color={c.muted}>
-            Builds on:{' '}
-            {prereqs.map((p, i) => (
-              <Txt
-                key={p!.id}
-                size={14}
-                weight="600"
-                accessibilityRole="link"
-                onPress={() => router.push(`/module/${p!.id}`)}
-              >
-                {p!.id} {p!.title}
-                {i < prereqs.length - 1 ? ', ' : ''}
-              </Txt>
-            ))}
+      {next ? (
+        <NextStepCard
+          kicker={statuses[nextIdx] === 'in-progress' ? 'Continue' : 'Next in this module'}
+          meta={`${passed} of ${units.length} units done · ${module.hours} h core`}
+          title={next.title}
+          detail={`${next.id} · ${next.hours} h · ${next.learn.title}`}
+          action={statuses[nextIdx] === 'in-progress' ? 'Continue unit' : 'Start unit'}
+          onAction={() => router.push(`/unit/${next.id}`)}
+        />
+      ) : (
+        <Panel>
+          <Label>
+            {passed} of {units.length} units done
+          </Label>
+          <Txt size={22} weight="600">
+            {passed === units.length
+              ? 'Every unit here is done. Finish the capstone below.'
+              : 'Pass the earlier modules to open these units.'}
           </Txt>
-        )}
-      </Panel>
-      {module.submodules.map(sub => (
-        <Panel key={sub.id}>
-          <Section title={sub.title} aside={sub.id} />
-          {sub.units.map((u, i) => {
-            const st = unitStatus(u, state, unitIds);
-            return (
-              <Row
-                key={u.id}
-                title={u.title}
-                subtitle={`${u.id} · ${u.hours} h · ${st === 'in-progress' ? `${Math.round(stepFraction(u, state) * 100)}% done` : st.replace('-', ' ')}`}
-                leading={<Icon name={STATUS_ICON[st]} size={20} color={st === 'locked' ? c.faint : c.ink} />}
-                onPress={() => router.push(`/unit/${u.id}`)}
-                last={i === sub.units.length - 1}
-              />
-            );
-          })}
+          <Meter value={units.length ? passed / units.length : 0} label="Units passed" />
         </Panel>
-      ))}
+      )}
+      {!!prereqs.length && (
+        <Txt size={16} color={c.muted}>
+          Builds on:{' '}
+          {prereqs.map((p, i) => (
+            <Txt
+              key={p!.id}
+              size={16}
+              weight="600"
+              color={c.accentText}
+              accessibilityRole="link"
+              onPress={() => router.push(`/module/${p!.id}`)}
+            >
+              {p!.id} {p!.title}
+              {i < prereqs.length - 1 ? ', ' : ''}
+            </Txt>
+          ))}
+        </Txt>
+      )}
+      <Panel style={{ gap: 0, paddingVertical: 8 }}>
+        {module.submodules.map(sub => {
+          const subPassed = sub.units.filter(u => unitStatus(u, state, unitIds) === 'passed').length;
+          return (
+            <Disclosure
+              key={sub.id}
+              title={sub.title}
+              hint={`${sub.id} · ${subPassed} of ${sub.units.length} done`}
+              initiallyOpen={sub.id === nextSub}
+            >
+              {sub.units.map((u, i) => {
+                const st = unitStatus(u, state, unitIds);
+                return (
+                  <Row
+                    key={u.id}
+                    title={u.title}
+                    subtitle={`${u.id} · ${u.hours} h · ${st === 'in-progress' ? `${Math.round(stepFraction(u, state) * 100)}% done` : STATUS_TEXT[st]}`}
+                    leading={
+                      <Station node={{ status: st, kind: 'unit' }} size={30} current={u.id === next?.id} />
+                    }
+                    onPress={() => router.push(`/unit/${u.id}`)}
+                    last={i === sub.units.length - 1}
+                  />
+                );
+              })}
+            </Disclosure>
+          );
+        })}
+      </Panel>
       <Capstone module={module} unitsPassed={passed === units.length} />
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+        <Chip text={`${module.hours} h core`} icon="clock" />
+        {!!module.deepHours && <Chip text={`+${module.deepHours} h deep`} />}
+        {module.tracks.map(t => (
+          <Chip key={t} text={t === 'ai-engineer' ? 'AI Engineer' : t === 'fde' ? 'FDE' : 'MLOps'} />
+        ))}
+      </View>
     </Screen>
   );
 }

@@ -6,15 +6,17 @@ import {
   Button,
   Checkbox,
   Chip,
+  Disclosure,
   Icon,
+  Label,
   Panel,
   Screen,
-  Section,
   Txt,
   inputStyle,
   usePalette,
   useWide,
 } from '../../components/ui';
+import { NextStepCard } from '../../components/next-step';
 import { findUnit, unitIds, unitWeek } from '../../lib/content';
 import {
   bestAttempt,
@@ -46,33 +48,6 @@ const STEPS: { key: StepKey; label: string; icon: string }[] = [
   { key: 'assess', label: 'Assess', icon: 'clipboard' },
 ];
 
-function StepTracker({ done }: { done: Record<StepKey, boolean> }) {
-  const c = usePalette();
-  return (
-    <View style={{ flexDirection: 'row', gap: 8 }}>
-      {STEPS.map((s, i) => (
-        <View
-          key={s.key}
-          accessible
-          accessibilityLabel={`${s.label} ${done[s.key] ? 'done' : 'to do'}`}
-          style={{ flex: 1, gap: 6 }}
-        >
-          <View style={{ height: 4, borderRadius: 2, backgroundColor: done[s.key] ? c.accent : c.line }} />
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-            <Txt size={12} weight="700" color={done[s.key] ? c.ink : c.faint}>
-              {String(i + 1).padStart(2, '0')}
-            </Txt>
-            <Txt size={13} weight="600" color={done[s.key] ? c.ink : c.muted}>
-              {s.label}
-            </Txt>
-            {done[s.key] && <Icon name="checkmark" size={14} />}
-          </View>
-        </View>
-      ))}
-    </View>
-  );
-}
-
 function ResourceLine({
   resource,
   onOpen,
@@ -92,25 +67,27 @@ function ResourceLine({
         padding: 16,
         borderRadius: 14,
         borderWidth: 1,
-        borderColor: c.line,
+        borderColor: c.edge,
         backgroundColor: c.raised,
         gap: 6,
         opacity: pressed ? 0.7 : 1,
       })}
     >
-      <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-        <Chip text={resource.type} />
-        <Chip
-          text={resource.free === true ? 'Free' : resource.free === 'audit' ? 'Free to audit' : 'Partly free'}
-        />
-        <View style={{ flex: 1 }} />
-        <Icon name="arrow-up-outline" size={16} color={c.muted} />
+      <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+        <Label style={{ flex: 1 }}>
+          {resource.type} ·{' '}
+          {resource.free === true ? 'free' : resource.free === 'audit' ? 'free to audit' : 'partly free'}
+        </Label>
+        <Txt size={15} raw weight="600" color={c.accentText}>
+          {cta}
+        </Txt>
+        <Icon name="arrow-up-outline" size={16} color={c.accentText} />
       </View>
-      <Txt size={16} weight="600">
+      <Txt size={17} weight="600">
         {resource.title}
       </Txt>
       {!!resource.slice && (
-        <Txt size={14} color={c.muted}>
+        <Txt size={16} color={c.muted}>
           Exactly: {resource.slice}
         </Txt>
       )}
@@ -122,42 +99,64 @@ function Block({
   index,
   title,
   done,
+  open,
+  onToggle,
+  summary,
   children,
 }: {
   index: number;
   title: string;
   done: boolean;
+  open: boolean;
+  onToggle: () => void;
+  summary?: string;
   children: React.ReactNode;
 }) {
   const c = usePalette();
   return (
-    <Panel>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+    <Panel style={{ gap: open ? 16 : 0, borderColor: open && !done ? c.accent : c.line }}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ expanded: open }}
+        accessibilityLabel={`Step ${index}: ${title}${done ? ', done' : ''}`}
+        onPress={onToggle}
+        style={{ flexDirection: 'row', alignItems: 'center', gap: 14, minHeight: 44 }}
+      >
         <View
           style={{
-            width: 30,
-            height: 30,
-            borderRadius: 15,
+            width: 34,
+            height: 34,
+            borderRadius: 17,
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: done ? c.accent : 'transparent',
-            borderWidth: done ? 0 : 1.5,
-            borderColor: c.faint,
+            borderWidth: done ? 0 : 2,
+            borderColor: c.edge,
           }}
         >
           {done ? (
-            <Icon name="checkmark" size={16} color={c.onAccent} />
+            <Icon name="checkmark" size={17} color={c.onAccent} />
           ) : (
-            <Txt size={13} weight="700">
+            <Txt size={14} raw mono weight="600">
               {index}
             </Txt>
           )}
         </View>
-        <Txt size={20} weight="700" accessibilityRole="header" style={{ flex: 1 }}>
-          {title}
-        </Txt>
-      </View>
-      {children}
+        <View style={{ flex: 1, gap: 2 }}>
+          <Txt size={21} weight="600" accessibilityRole="header">
+            {title}
+          </Txt>
+          {!!summary && !open && (
+            <Txt size={15} color={c.muted} numberOfLines={1}>
+              {summary}
+            </Txt>
+          )}
+        </View>
+        <View style={{ transform: [{ rotate: open ? '180deg' : '0deg' }] }}>
+          <Icon name="chevron-down" size={20} color={c.muted} />
+        </View>
+      </Pressable>
+      {open && children}
     </Panel>
   );
 }
@@ -234,8 +233,8 @@ function Quiz({
                     paddingVertical: 10,
                     borderRadius: 12,
                     borderWidth: chosen || isAnswer ? 1.5 : 1,
-                    borderColor: isAnswer ? c.ink : wrongPick ? c.danger : chosen ? c.ink : c.line,
-                    backgroundColor: chosen ? c.soft : 'transparent',
+                    borderColor: isAnswer ? c.accent : wrongPick ? c.danger : chosen ? c.accent : c.edge,
+                    backgroundColor: chosen ? c.accentSoft : c.surface,
                     opacity: pressed ? 0.7 : 1,
                   })}
                 >
@@ -245,13 +244,13 @@ function Quiz({
                       height: 18,
                       borderRadius: 9,
                       borderWidth: 1.5,
-                      borderColor: chosen ? c.ink : c.faint,
+                      borderColor: chosen ? c.accentText : c.edge,
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}
                   >
                     {chosen && (
-                      <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: c.ink }} />
+                      <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: c.accentText }} />
                     )}
                   </View>
                   <Txt size={15} style={{ flex: 1 }}>
@@ -387,6 +386,8 @@ export default function UnitScreen() {
   const savedEvidence = state.units?.[id]?.evidence ?? '';
   const [evidence, setEvidence] = useState({ id, value: savedEvidence });
   if (evidence.id !== id) setEvidence({ id, value: savedEvidence });
+  const [openSteps, setOpenSteps] = useState<{ id: string; keys: StepKey[] | null }>({ id, keys: null });
+  if (openSteps.id !== id) setOpenSteps({ id, keys: null });
 
   if (!found)
     return <Screen back title="Unit not found" subtitle="This unit is not in the current curriculum." />;
@@ -450,51 +451,124 @@ export default function UnitScreen() {
     );
 
   const topicsDone = unit.topics.filter(t => state.topics[t.id]).length;
+  const stepList = STEPS.filter(st => st.key !== 'read' || !!unit.read);
+  const firstOpen = stepList.find(st => !done[st.key]);
+  const nextStep = firstOpen
+    ? {
+        index: stepList.indexOf(firstOpen) + 1,
+        ...(firstOpen.key === 'learn'
+          ? {
+              title: `Watch: ${unit.learn.title}`,
+              detail: unit.learn.slice
+                ? `Exactly: ${unit.learn.slice}`
+                : 'Open the lesson, then mark it done below.',
+              action: 'Open the lesson',
+              run: () => {
+                setOpenSteps({ id, keys: ['learn'] });
+                open(unit.learn.url);
+              },
+            }
+          : firstOpen.key === 'read'
+            ? {
+                title: `Read: ${unit.read!.title}`,
+                detail: unit.read!.slice
+                  ? `Exactly: ${unit.read!.slice}`
+                  : 'Open the reading, then mark it done below.',
+                action: 'Open the reading',
+                run: () => {
+                  setOpenSteps({ id, keys: ['read'] });
+                  open(unit.read!.url);
+                },
+              }
+            : firstOpen.key === 'practice'
+              ? {
+                  title: `Build: ${unit.practice.title}`,
+                  detail: `Done when: ${unit.practice.done_when}`,
+                  action: 'Start the practice',
+                  run: () => setOpenSteps({ id, keys: ['practice'] }),
+                }
+              : {
+                  title: 'Prove it: take the quiz',
+                  detail: `${mcqOf(unit.quiz).length} questions, ${PASS_MARK * 100}% to pass${shortOf(unit.quiz).length ? ', plus a short answer' : ''}.`,
+                  action: 'Take the quiz',
+                  run: () => setOpenSteps({ id, keys: ['assess'] }),
+                }),
+      }
+    : undefined;
+  const isOpen = (k: StepKey) => (openSteps.keys ? openSteps.keys.includes(k) : firstOpen?.key === k);
+  const toggle = (k: StepKey) => {
+    const cur = openSteps.keys ?? (firstOpen ? [firstOpen.key] : []);
+    setOpenSteps({ id, keys: cur.includes(k) ? cur.filter(x => x !== k) : [...cur, k] });
+  };
   const isLink = /^https?:\/\//.test(evidence.value.trim());
   const isGithub = /github\.com\//.test(evidence.value);
 
   return (
     <Screen back docTitle={unit.title} width={880}>
       <View style={{ gap: 10 }}>
-        <Pressable accessibilityRole="link" onPress={() => router.push(`/module/${module.id}`)}>
-          <Txt size={13} weight="600" color={c.muted}>
+        <Pressable
+          accessibilityRole="link"
+          onPress={() => router.push(`/module/${module.id}`)}
+          style={{ alignSelf: 'flex-start', minHeight: 32, justifyContent: 'center' }}
+        >
+          <Label color={c.accentText}>
             {module.id} · {module.title}
             {sub ? ` · ${sub.title}` : ''}
-          </Txt>
+          </Label>
         </Pressable>
-        <Txt size={wide ? 36 : 28} weight="700" accessibilityRole="header">
+        <Txt size={wide ? 38 : 30} weight="600" accessibilityRole="header">
           {unit.title}
         </Txt>
-        <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Chip
-            text={
-              status === 'passed'
-                ? testedOut
-                  ? 'Tested out'
-                  : 'Passed'
-                : status === 'in-progress'
-                  ? 'In progress'
-                  : status === 'available'
-                    ? 'Ready'
-                    : 'Locked'
-            }
-            tone={status === 'passed' ? 'strong' : status === 'in-progress' ? 'signal' : 'default'}
-          />
-          <Chip text={`${unit.hours} h`} icon="clock" />
-          <Chip text={unit.depth === 'core' ? 'Core' : 'Deep dive'} />
-          {!!unitWeek.get(unit.id) && <Chip text={`Week ${unitWeek.get(unit.id)}`} icon="calendar" />}
-        </View>
+        <Label color={c.ink}>
+          {[
+            status === 'passed'
+              ? testedOut
+                ? 'Tested out ✓'
+                : 'Done ✓'
+              : status === 'in-progress'
+                ? 'In progress'
+                : status === 'available'
+                  ? 'Ready'
+                  : 'Locked',
+            `${unit.hours} h`,
+            unit.depth === 'core' ? 'Core' : 'Deep dive',
+            unitWeek.get(unit.id) ? `Week ${unitWeek.get(unit.id)}` : '',
+          ]
+            .filter(Boolean)
+            .join(' · ')}
+        </Label>
       </View>
-      <StepTracker done={done} />
+
+      {nextStep && status !== 'passed' && (
+        <NextStepCard
+          kicker={`Step ${nextStep.index} of ${stepList.length}`}
+          title={nextStep.title}
+          detail={nextStep.detail}
+          steps={stepList.map(s => ({ label: s.label, done: done[s.key] }))}
+          action={nextStep.action}
+          onAction={nextStep.run}
+        />
+      )}
+      {status === 'passed' && (
+        <NextStepCard
+          kicker="Unit done"
+          title={next ? `Next: ${next.unit.title}` : `Module capstone: ${module.capstone.title}`}
+          detail={next ? `${next.module.id} · ${next.unit.hours} h` : 'Prove the module with one project.'}
+          steps={stepList.map(s => ({ label: s.label, done: done[s.key] }))}
+          action={next ? 'Open next unit' : 'Open capstone'}
+          onAction={() => router.push(next ? `/unit/${next.unit.id}` : `/module/${module.id}`)}
+        />
+      )}
 
       {locked && (
         <View
           style={{
             padding: 16,
             borderRadius: 14,
-            borderWidth: 1,
+            borderWidth: 1.5,
             borderStyle: 'dashed',
-            borderColor: c.faint,
+            borderColor: c.edge,
+            backgroundColor: c.surface,
             gap: 10,
           }}
         >
@@ -502,7 +576,7 @@ export default function UnitScreen() {
             Locked until you pass{' '}
             {missingPrereqs.length === 1 ? 'one earlier unit' : `${missingPrereqs.length} earlier units`}
           </Txt>
-          <Txt size={14} color={c.muted}>
+          <Txt size={16} color={c.muted}>
             You can read ahead and practise; the assessment opens once these are passed.
           </Txt>
           <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
@@ -520,88 +594,100 @@ export default function UnitScreen() {
       )}
 
       {!!unit.outcomes.length && (
-        <Panel>
-          <Section title="By the end you can" />
-          {unit.outcomes.map(o => (
-            <View key={o} style={{ flexDirection: 'row', gap: 10 }}>
-              <Icon name="target" size={18} color={c.muted} />
-              <Txt style={{ flex: 1 }}>{o.replace(/^You can /, '')}</Txt>
-            </View>
-          ))}
-        </Panel>
+        <View style={{ borderBottomWidth: 1, borderColor: c.line }}>
+          <Disclosure title="What you will be able to do" hint={`${unit.outcomes.length} outcomes`}>
+            {unit.outcomes.map(o => (
+              <View key={o} style={{ flexDirection: 'row', gap: 10 }}>
+                <Icon name="target" size={18} color={c.accentText} />
+                <Txt style={{ flex: 1 }}>{o.replace(/^You can /, '')}</Txt>
+              </View>
+            ))}
+          </Disclosure>
+        </View>
       )}
 
-      <Block index={1} title="Learn" done={done.learn}>
+      <Block
+        index={1}
+        title="Learn"
+        done={done.learn}
+        open={isOpen('learn')}
+        onToggle={() => toggle('learn')}
+        summary={unit.learn.title}
+      >
         <ResourceLine resource={unit.learn} onOpen={() => open(unit.learn.url)} cta="Open lesson" />
-        {!!unit.covers.length && (
-          <View style={{ gap: 6 }}>
-            <Txt size={13} weight="600" color={c.muted}>
-              THIS SLICE COVERS
-            </Txt>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
-              {unit.covers.map(x => (
-                <Chip key={x} text={x} />
-              ))}
-            </View>
-          </View>
-        )}
-        {!!unit.gaps?.length && (
-          <View style={{ gap: 8 }}>
-            <Txt size={13} weight="600" color={c.muted}>
-              NOT IN THE LECTURE — FILL THESE IN
-            </Txt>
-            {unit.gaps.map(g => (
-              <Pressable
-                key={g.topic}
-                accessibilityRole="link"
-                onPress={() => open(g.resource.url)}
-                style={({ pressed }) => ({
-                  flexDirection: 'row',
-                  gap: 10,
-                  alignItems: 'center',
-                  minHeight: 44,
-                  opacity: pressed ? 0.6 : 1,
-                })}
+        {(!!unit.covers.length || !!unit.gaps?.length || !!unit.topics.length) && (
+          <View style={{ borderBottomWidth: 1, borderColor: c.line }}>
+            {!!unit.covers.length && (
+              <Disclosure title="What this lesson covers" hint={`${unit.covers.length} ideas`}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+                  {unit.covers.map(x => (
+                    <Chip key={x} text={x} />
+                  ))}
+                </View>
+              </Disclosure>
+            )}
+            {!!unit.gaps?.length && (
+              <Disclosure
+                title="Fill-ins the lecture skips"
+                hint={`${unit.gaps.length} short extra reading${unit.gaps.length > 1 ? 's' : ''}`}
               >
-                <Icon name="link" size={16} color={c.muted} />
-                <Txt size={14} style={{ flex: 1 }}>
-                  <Txt size={14} weight="600">
-                    {g.topic}
-                  </Txt>{' '}
-                  — {g.resource.title}
-                </Txt>
-                <Icon name="arrow-up-outline" size={14} color={c.muted} />
-              </Pressable>
-            ))}
-          </View>
-        )}
-        {!!unit.topics.length && (
-          <View style={{ gap: 2 }}>
-            <Txt size={13} weight="600" color={c.muted}>
-              TOPICS · {topicsDone}/{unit.topics.length} TICKED
-            </Txt>
-            {unit.topics.map(t => (
-              <Checkbox
-                key={t.id}
-                label={t.title}
-                checked={!!state.topics[t.id]}
-                onPress={() => {
-                  const value = !state.topics[t.id];
-                  void update(s =>
-                    logActivity(
-                      { ...s, topics: { ...s.topics, [t.id]: value } },
-                      { kind: 'topic', id: t.id },
-                    ),
-                  ).then(
-                    ok =>
-                      ok &&
-                      showToast(
-                        value ? `Saved · ${topicsDone + 1}/${unit.topics.length} topics` : 'Topic unticked.',
-                      ),
-                  );
-                }}
-              />
-            ))}
+                {unit.gaps.map(g => (
+                  <Pressable
+                    key={g.topic}
+                    accessibilityRole="link"
+                    onPress={() => open(g.resource.url)}
+                    style={({ pressed }) => ({
+                      flexDirection: 'row',
+                      gap: 10,
+                      alignItems: 'center',
+                      minHeight: 44,
+                      opacity: pressed ? 0.6 : 1,
+                    })}
+                  >
+                    <Icon name="link" size={16} color={c.accentText} />
+                    <Txt size={16} style={{ flex: 1 }}>
+                      <Txt size={16} weight="600">
+                        {g.topic}
+                      </Txt>
+                      {': '}
+                      {g.resource.title}
+                    </Txt>
+                    <Icon name="arrow-up-outline" size={14} color={c.muted} />
+                  </Pressable>
+                ))}
+              </Disclosure>
+            )}
+            {!!unit.topics.length && (
+              <Disclosure
+                title="Your notes checklist"
+                hint={`${topicsDone} of ${unit.topics.length} topics ticked`}
+              >
+                {unit.topics.map(t => (
+                  <Checkbox
+                    key={t.id}
+                    label={t.title}
+                    checked={!!state.topics[t.id]}
+                    onPress={() => {
+                      const value = !state.topics[t.id];
+                      void update(s =>
+                        logActivity(
+                          { ...s, topics: { ...s.topics, [t.id]: value } },
+                          { kind: 'topic', id: t.id },
+                        ),
+                      ).then(
+                        ok =>
+                          ok &&
+                          showToast(
+                            value
+                              ? `Saved · ${topicsDone + 1}/${unit.topics.length} topics`
+                              : 'Topic unticked.',
+                          ),
+                      );
+                    }}
+                  />
+                ))}
+              </Disclosure>
+            )}
           </View>
         )}
         {!!unit.backup && (
@@ -623,7 +709,14 @@ export default function UnitScreen() {
       </Block>
 
       {unit.read && (
-        <Block index={2} title="Read" done={done.read}>
+        <Block
+          index={2}
+          title="Read"
+          done={done.read}
+          open={isOpen('read')}
+          onToggle={() => toggle('read')}
+          summary={unit.read.title}
+        >
           <ResourceLine resource={unit.read} onOpen={() => open(unit.read!.url)} cta="Open reading" />
           {!work.steps.read && !done.read && (
             <Button
@@ -636,15 +729,28 @@ export default function UnitScreen() {
         </Block>
       )}
 
-      <Block index={unit.read ? 3 : 2} title="Practice" done={done.practice}>
+      <Block
+        index={unit.read ? 3 : 2}
+        title="Practice"
+        done={done.practice}
+        open={isOpen('practice')}
+        onToggle={() => toggle('practice')}
+        summary={unit.practice.title}
+      >
         <Txt size={16} weight="600">
           {unit.practice.title}
         </Txt>
         <Txt>{unit.practice.brief}</Txt>
         <View
-          style={{ flexDirection: 'row', gap: 10, padding: 14, borderRadius: 14, backgroundColor: c.soft }}
+          style={{
+            flexDirection: 'row',
+            gap: 10,
+            padding: 14,
+            borderRadius: 14,
+            backgroundColor: c.accentSoft,
+          }}
         >
-          <Icon name="flag" size={18} />
+          <Icon name="flag" size={18} color={c.accentText} />
           <Txt size={14} style={{ flex: 1 }}>
             <Txt size={14} weight="700">
               Done when:{' '}
@@ -700,7 +806,14 @@ export default function UnitScreen() {
         </View>
       </Block>
 
-      <Block index={unit.read ? 4 : 3} title="Assess" done={done.assess}>
+      <Block
+        index={unit.read ? 4 : 3}
+        title="Assess"
+        done={done.assess}
+        open={isOpen('assess')}
+        onToggle={() => toggle('assess')}
+        summary={`Quiz · ${PASS_MARK * 100}% to pass`}
+      >
         {testedOut && (
           <Txt color={c.muted}>
             You tested out of this unit in the placement check. Take the quiz any time to confirm.
@@ -760,21 +873,6 @@ export default function UnitScreen() {
           </View>
         )}
       </Block>
-
-      {status === 'passed' && next && (
-        <Button
-          title={`Next: ${next.unit.title}`}
-          icon="arrow-forward"
-          onPress={() => router.push(`/unit/${next.unit.id}`)}
-        />
-      )}
-      {status === 'passed' && !next && (
-        <Button
-          title={`Module capstone: ${module.capstone.title}`}
-          icon="flag"
-          onPress={() => router.push(`/module/${module.id}`)}
-        />
-      )}
     </Screen>
   );
 }
