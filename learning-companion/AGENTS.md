@@ -4,7 +4,7 @@ Read `../AGENTS.md` for product intent and `VALIDATION.md` for observed checks. 
 
 ## Current direction and preservation
 
-The user rejected orange/green styling. Use black/charcoal, white/silver actions, neutral light mode, Apple-inspired depth and purposeful motion. Public references: Hoplite for composition; UIArc for interaction. Do not revive the warm palette from historical notes. `design/MONOCHROME-DIRECTION.md` is the current record. `assets/brand/` contains the original folded-page logo; `scripts/make-brand-assets.mjs` regenerates PNGs.
+Current identity is **Ascent** (`design/ASCENT-DIRECTION.md`): Dawn/Dusk/Terminal/High-contrast modes, Geist + Geist Mono, procedural dither/ASCII art, Mote the guide, one next-step card per page, flat route-board map. No orange/green/purple primaries; keep text at AA (tests enforce it). The monochrome and warm palettes in older notes are historical. The chat UI reaches the assistant engine only through `src/ui/assistant-api.ts`; do not import `src/assistant/` elsewhere. `assets/brand/` contains the original folded-page logo; `scripts/make-brand-assets.mjs` regenerates PNGs.
 
 Preserve stable curriculum IDs, Watch/Build/Recall, evidence gates, progress, notes, prerequisites, reminders and backups. Inspect `scripts/sync-content.mjs` before relocating parent documents/data. Browser checks use isolated profiles, never personal progress.
 
