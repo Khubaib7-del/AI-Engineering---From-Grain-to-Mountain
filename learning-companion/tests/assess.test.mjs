@@ -1,12 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { load, json } from './helpers/load.mjs';
+import { load } from './helpers/load.mjs';
+import { M00, M01, units, unit } from './helpers/fixture.mjs';
 
 const a = await load('assess');
 const { initialState } = await load('planner');
-const M00 = json('src/content/v2/modules/M00.json');
-const M01 = json('src/content/v2/modules/M01.json');
-const units = [M00, M01].flatMap(m => m.submodules.flatMap(s => s.units));
 const known = new Set(units.map(u => u.id));
 const u1 = units.find(u => u.id === 'M00.U01');
 const u2 = units.find(u => u.id === 'M00.U02');
@@ -71,14 +69,30 @@ test('step fraction tracks Learn / Read / Practice / Assess', () => {
   assert.equal(a.stepFraction(u1, s), 0);
   s.units = { 'M00.U01': { ...a.emptyUnitWork(), steps: { learn: '2026-10-20T10:00:00.000Z' }, evidence: 'my notes here' } };
   assert.equal(a.stepFraction(u1, s), 0.5);
+  const noRead = unit('X.U01', { read: false });
+  assert.equal(a.stepFraction(noRead, initialState()), 0.25, 'a unit without a reading counts Read as done');
 });
 
-test('placement tests out a module only when every question for it is right', async () => {
-  const { placementQuestions, placementResult } = await load('placement');
-  const right = placementQuestions.map(q => (q.module === 'M00' ? q.answer : -1));
-  const r = placementResult(right, [M00, M01]);
+test('option order is a stable per-question permutation, so the keyed answer is not always in one slot', () => {
+  const o = a.optionOrder('M01.U01.Q1', 4);
+  assert.deepEqual([...o].sort(), [0, 1, 2, 3]);
+  assert.deepEqual(a.optionOrder('M01.U01.Q1', 4), o, 'same ID → same order on every visit');
+  const slots = new Set(Array.from({ length: 40 }, (_, i) => a.optionOrder(`Q${i}`, 4).indexOf(1)));
+  assert.ok(slots.size >= 3, 'answer index 1 lands in different display slots across questions');
+});
+
+test('placement samples the first MCQ of a few core units per module and tests out only all-correct modules', async () => {
+  const { buildPlacement, placementResult } = await load('placement');
+  const qs = buildPlacement([M00, M01]);
+  assert.deepEqual(qs.map(q => q.unit), ['M00.U01', 'M00.U02', 'M01.U01', 'M01.U02', 'M01.U03'], 'deep units are skipped');
+  assert.ok(qs.every(q => q.id === `P.${q.unit}.Q1` && q.kind === 'mcq'), 'first MCQ of each unit');
+  assert.deepEqual(buildPlacement([M01], 2).map(q => q.unit), ['M01.U01', 'M01.U03'], 'picks spread across the module');
+  const right = qs.map(q => (q.module === 'M00' ? q.answer : -1));
+  const r = placementResult(qs, right, [M00, M01]);
   assert.deepEqual(r.testedOutModules, ['M00']);
   assert.deepEqual(r.testedOut, ['M00.U01', 'M00.U02']);
-  const partial = placementQuestions.map(q => (q.id === 'P1' ? q.answer : -1));
-  assert.deepEqual(placementResult(partial, [M00, M01]).testedOut, []);
+  assert.deepEqual([r.score, r.max], [2, 5]);
+  const oneWrong = qs.map((q, i) => (i === 0 ? -1 : q.answer));
+  assert.deepEqual(placementResult(qs, oneWrong, [M00, M01]).testedOutModules, ['M01']);
+  assert.deepEqual(placementResult(qs.slice(0, 1), [qs[0].answer], [M00]).testedOut, [], 'one question is not enough');
 });
