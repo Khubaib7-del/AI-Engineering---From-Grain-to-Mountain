@@ -23,7 +23,7 @@
      "title": "Linux server basics: navigation, packages, services, logs",
      "hours": 10,
      "depth": "core",
-     "week": 29,
+     "week": 32,
      "prerequisites": [],
      "outcomes": [
       "You can navigate the Linux filesystem hierarchy and say what lives in /etc, /var/log, /usr/bin and /home.",
@@ -170,7 +170,7 @@
      "title": "Users, permissions, processes, scheduling, text processing",
      "hours": 10,
      "depth": "core",
-     "week": 30,
+     "week": 33,
      "prerequisites": [
       "M21.U01"
      ],
@@ -318,7 +318,7 @@
      "title": "Bash scripting, SSH and network troubleshooting",
      "hours": 10,
      "depth": "core",
-     "week": 31,
+     "week": 34,
      "prerequisites": [
       "M21.U02"
      ],
@@ -500,7 +500,7 @@
      "title": "Docker fundamentals: images, containers, volumes, ports, registries",
      "hours": 12,
      "depth": "core",
-     "week": 32,
+     "week": 35,
      "prerequisites": [
       "M21.U01"
      ],
@@ -658,7 +658,7 @@
      "title": "Docker Compose and multi-service apps",
      "hours": 8,
      "depth": "core",
-     "week": 33,
+     "week": 36,
      "prerequisites": [
       "M21.U04"
      ],
@@ -812,7 +812,7 @@
      "title": "Image optimisation, security and GPU containers",
      "hours": 8,
      "depth": "core",
-     "week": 34,
+     "week": 37,
      "prerequisites": [
       "M21.U05"
      ],
@@ -975,7 +975,7 @@
      "title": "CI with GitHub Actions: workflows, triggers, matrix, caching, secrets",
      "hours": 8,
      "depth": "core",
-     "week": 35,
+     "week": 38,
      "prerequisites": [
       "M21.U04"
      ],
@@ -1125,7 +1125,7 @@
      "title": "CD: build, push, deploy, environments, OIDC, rollback",
      "hours": 8,
      "depth": "core",
-     "week": 36,
+     "week": 39,
      "prerequisites": [
       "M21.U07"
      ],
@@ -1277,7 +1277,7 @@
      "title": "Cloud concepts, IAM and billing safety",
      "hours": 8,
      "depth": "core",
-     "week": 37,
+     "week": 40,
      "prerequisites": [
       "M21.U03"
      ],
@@ -1443,7 +1443,7 @@
      "title": "Compute, storage, networking, managed DBs, serverless containers",
      "hours": 10,
      "depth": "core",
-     "week": 38,
+     "week": 41,
      "prerequisites": [
       "M21.U09",
       "M21.U04"
@@ -1636,7 +1636,7 @@
      "title": "Terraform: providers, state, plan/apply, variables, modules",
      "hours": 10,
      "depth": "core",
-     "week": 39,
+     "week": 42,
      "prerequisites": [
       "M21.U08",
       "M21.U10"
@@ -1809,7 +1809,7 @@
      "title": "Kubernetes core objects on a local k3d cluster",
      "hours": 14,
      "depth": "core",
-     "week": 40,
+     "week": 43,
      "prerequisites": [
       "M21.U06",
       "M21.U08"
@@ -1989,7 +1989,7 @@
      "title": "Ingress, storage, autoscaling, Helm, GitOps awareness",
      "hours": 10,
      "depth": "core",
-     "week": 41,
+     "week": 44,
      "prerequisites": [
       "M21.U12"
      ],
@@ -2204,7 +2204,7 @@
      "title": "Metrics with Prometheus and Grafana; alerting",
      "hours": 8,
      "depth": "core",
-     "week": 42,
+     "week": 45,
      "prerequisites": [
       "M21.U05"
      ],
@@ -2362,7 +2362,7 @@
      "title": "SLIs/SLOs, error budgets, tracing, incident review",
      "hours": 8,
      "depth": "core",
-     "week": 43,
+     "week": 46,
      "prerequisites": [
       "M21.U14"
      ],

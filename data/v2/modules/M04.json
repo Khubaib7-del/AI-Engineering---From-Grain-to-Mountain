@@ -22,7 +22,7 @@
      "title": "SQL 1 — Querying and relating (CS50 SQL Lectures 0–1)",
      "hours": 7,
      "depth": "core",
-     "week": 44,
+     "week": 27,
      "prerequisites": [
       "M01.U08"
      ],
@@ -175,7 +175,7 @@
      "title": "SQL 2 — Designing schemas (CS50 SQL Lecture 2)",
      "hours": 6,
      "depth": "core",
-     "week": 44,
+     "week": 27,
      "prerequisites": [
       "M04.U01"
      ],
@@ -298,7 +298,7 @@
      "title": "SQL 3 — Writing data, views, CTEs, upserts (Lectures 3–4)",
      "hours": 5,
      "depth": "core",
-     "week": 45,
+     "week": 28,
      "prerequisites": [
       "M04.U02"
      ],
@@ -438,7 +438,7 @@
      "title": "SQL 4 — Indexes, transactions and EXPLAIN (Lecture 5)",
      "hours": 5,
      "depth": "core",
-     "week": 45,
+     "week": 28,
      "prerequisites": [
       "M04.U03"
      ],
@@ -584,7 +584,7 @@
      "title": "PostgreSQL in practice (windows, JSONB, timestamptz, roles, injection, backups)",
      "hours": 7,
      "depth": "core",
-     "week": 45,
+     "week": 29,
      "prerequisites": [
       "M04.U04",
       "M02.U15"
@@ -803,7 +803,7 @@
      "title": "SQL from Python: parameters, SQLAlchemy, Alembic, pooling",
      "hours": 6,
      "depth": "core",
-     "week": 46,
+     "week": 30,
      "prerequisites": [
       "M04.U05"
      ],

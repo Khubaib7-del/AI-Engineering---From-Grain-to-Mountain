@@ -2345,7 +2345,7 @@
      "title": "Database-backed API with tests",
      "hours": 7,
      "depth": "core",
-     "week": 46,
+     "week": 30,
      "prerequisites": [
       "M04.U06",
       "M03.U13"
@@ -2499,7 +2499,7 @@
      "title": "Ship it: container, deploy, health checks, load test",
      "hours": 5,
      "depth": "core",
-     "week": 27,
+     "week": 31,
      "prerequisites": [
       "M03.U16",
       "M02.U16"
@@ -2635,7 +2635,7 @@
      "title": "System design basics",
      "hours": 6,
      "depth": "core",
-     "week": 28,
+     "week": 31,
      "prerequisites": [
       "M03.U10",
       "M03.U17"

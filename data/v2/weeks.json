@@ -425,159 +425,6 @@
  },
  {
   "week": 27,
-  "title": "CS, algorithms & backend foundations",
-  "units": [
-   "M03.U17"
-  ],
-  "hours": 5,
-  "provisional": true
- },
- {
-  "week": 28,
-  "title": "CS, algorithms & backend foundations",
-  "units": [
-   "M03.U18"
-  ],
-  "hours": 6,
-  "provisional": true
- },
- {
-  "week": 29,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U01"
-  ],
-  "hours": 10,
-  "provisional": true
- },
- {
-  "week": 30,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U02"
-  ],
-  "hours": 10,
-  "provisional": true
- },
- {
-  "week": 31,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U03"
-  ],
-  "hours": 10,
-  "provisional": true
- },
- {
-  "week": 32,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U04"
-  ],
-  "hours": 12,
-  "provisional": true
- },
- {
-  "week": 33,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U05"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 34,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U06"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 35,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U07"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 36,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U08"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 37,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U09"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 38,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U10"
-  ],
-  "hours": 10,
-  "provisional": true
- },
- {
-  "week": 39,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U11"
-  ],
-  "hours": 10,
-  "provisional": true
- },
- {
-  "week": 40,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U12"
-  ],
-  "hours": 14,
-  "provisional": true
- },
- {
-  "week": 41,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U13"
-  ],
-  "hours": 10,
-  "provisional": true
- },
- {
-  "week": 42,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U14"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 43,
-  "title": "DevOps and Cloud Foundations",
-  "units": [
-   "M21.U15"
-  ],
-  "hours": 8,
-  "provisional": true
- },
- {
-  "week": 44,
   "title": "Data analysis & SQL",
   "units": [
    "M04.U01",
@@ -587,24 +434,177 @@
   "provisional": true
  },
  {
-  "week": 45,
+  "week": 28,
   "title": "Data analysis & SQL",
   "units": [
    "M04.U03",
-   "M04.U04",
-   "M04.U05"
+   "M04.U04"
   ],
-  "hours": 17,
+  "hours": 10,
   "provisional": true
  },
  {
-  "week": 46,
+  "week": 29,
   "title": "Data analysis & SQL",
+  "units": [
+   "M04.U05"
+  ],
+  "hours": 7,
+  "provisional": true
+ },
+ {
+  "week": 30,
+  "title": "SQL from Python, then a database-backed API",
   "units": [
    "M04.U06",
    "M03.U16"
   ],
   "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 31,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U17",
+   "M03.U18"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 32,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U01"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 33,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U02"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 34,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U03"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 35,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U04"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 36,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U05"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 37,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U06"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 38,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U07"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 39,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U08"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 40,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U09"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 41,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U10"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 42,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U11"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 43,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U12"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 44,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U13"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 45,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U14"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 46,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U15"
+  ],
+  "hours": 8,
   "provisional": true
  },
  {
