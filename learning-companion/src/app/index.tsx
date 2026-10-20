@@ -226,7 +226,7 @@ export default function Landing() {
             gap: 16,
           }}
         >
-          <BrandLink href="/?about=1" />
+          <BrandLink href="/?about=1" compact={width < 480} />
           {wide && (
             <View style={{ flexDirection: 'row', gap: 4 }}>
               {[

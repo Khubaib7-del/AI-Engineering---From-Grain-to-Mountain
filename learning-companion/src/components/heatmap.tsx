@@ -23,8 +23,14 @@ export function Heatmap({ activity, labelFor }: { activity: Activity[]; labelFor
   const columns = useMemo(() => heatmap(activity), [activity]);
   const [selected, setSelected] = useState<string>();
   const scroll = useRef<ScrollView>(null);
-  const size = wide ? 13 : 12;
   const gap = 3;
+  const [avail, setAvail] = useState(0);
+  // Fill the card on wide screens; on phones keep cells tappable and scroll horizontally.
+  const size = avail
+    ? Math.max(wide ? 10 : 12, Math.min(18, Math.floor((avail - gap * 51) / 52)))
+    : wide
+      ? 13
+      : 12;
   const events = selected ? eventsOn(activity, selected) : [];
   return (
     <View style={{ gap: 12 }}>
@@ -43,6 +49,7 @@ export function Heatmap({ activity, labelFor }: { activity: Activity[]; labelFor
           horizontal
           showsHorizontalScrollIndicator={false}
           onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: false })}
+          onLayout={e => setAvail(Math.floor(e.nativeEvent.layout.width))}
           style={{ flex: 1 }}
         >
           <View style={{ gap: 4 }}>

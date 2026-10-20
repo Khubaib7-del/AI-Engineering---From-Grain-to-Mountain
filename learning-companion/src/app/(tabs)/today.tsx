@@ -170,9 +170,14 @@ export default function Today() {
           <Split>
             <Panel style={{ flex: 1.4 }}>
               <Section
-                title={week ? `Week ${week.week} · ${week.title}` : 'This week'}
+                title={week ? `Week ${week.week}` : 'This week'}
                 aside={`${weekPassed}/${weekUnits.length} passed`}
               />
+              {!!week && (
+                <Txt size={16} weight="600">
+                  {week.title}
+                </Txt>
+              )}
               <Txt size={13} color={c.muted}>
                 Planned {week?.hours ?? 0} h · your goal {path.hoursPerWeek} h/week
                 {week && week.hours > path.hoursPerWeek ? ' — this week may stretch over two' : ''}

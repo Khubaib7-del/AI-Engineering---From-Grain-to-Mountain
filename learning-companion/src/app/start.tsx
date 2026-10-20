@@ -159,7 +159,7 @@ export default function Start() {
   const entering = reduced ? FadeIn.duration(1) : FadeInRight.duration(220);
 
   return (
-    <Screen docTitle="Get started" width={640} showNav={false}>
+    <Screen docTitle="Get started" width={640} showNav={false} minimal>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <View
           accessibilityRole="progressbar"

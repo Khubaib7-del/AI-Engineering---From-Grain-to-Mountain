@@ -15,6 +15,7 @@ function useWebStyles() {
     const style = document.createElement('style');
     style.textContent = `
       html, body { background: #000; }
+      svg text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, 'Segoe UI', Helvetica, Arial, sans-serif; }
       :focus-visible { outline: 2px solid #C9D6E3 !important; outline-offset: 3px; }
       input:focus-visible, textarea:focus-visible { outline-offset: 1px; }
       @media (prefers-reduced-transparency: reduce) { [style*="backdrop-filter"] { backdrop-filter: none !important; } }

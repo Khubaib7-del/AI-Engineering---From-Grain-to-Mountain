@@ -83,7 +83,7 @@ export default function Progress() {
       subtitle="Your work, not your clicks: what you have proven, and how consistently you show up."
       docTitle="Progress"
     >
-      <Grid min={200}>
+      <Grid min={150}>
         <Stat
           icon="flame"
           value={`${streak.current} day${streak.current === 1 ? '' : 's'}`}
@@ -178,6 +178,11 @@ export default function Progress() {
           ) : (
             <Txt color={c.muted} size={14}>
               You’re all caught up. Completed lessons come back after 1, 3, 7 and 14 days.
+            </Txt>
+          )}
+          {path.units.some(u => u.status === 'passed' && bestAttempt(state.units?.[u.unit.id])) && (
+            <Txt size={13} weight="600" color={c.muted} style={{ paddingTop: 12 }}>
+              RECENTLY PASSED
             </Txt>
           )}
           {path.units

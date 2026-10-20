@@ -242,6 +242,11 @@ export function AuthForm({ initial }: { initial: Mode }) {
           />
         </Field>
       )}
+      {!supabase && (
+        <Txt size={13} color={c.muted}>
+          Accounts are not configured in this build, so sign-in is unavailable. Your notebook still works and is saved on this device.
+        </Txt>
+      )}
       {!!message && (
         <Txt
           size={14}

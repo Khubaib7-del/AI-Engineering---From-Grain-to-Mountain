@@ -352,7 +352,14 @@ export function Grid({
     >
       {items.map((child, i) => (
         <View key={i} style={{ width: itemWidth ?? '100%', flexGrow: 0 }}>
-          {child}
+          {React.isValidElement(child)
+            ? React.cloneElement(child as React.ReactElement<{ style?: ViewStyle }>, {
+                style: {
+                  ...((child as React.ReactElement<{ style?: ViewStyle }>).props.style ?? {}),
+                  flexGrow: 1,
+                },
+              })
+            : child}
         </View>
       ))}
     </View>
@@ -553,7 +560,7 @@ const ago = (iso?: string) => {
 };
 
 /** Cloud status: Synced · 2m / Syncing… / Saved locally / Needs attention / Guest. */
-export function SyncChip() {
+export function SyncChip({ compact = false }: { compact?: boolean }) {
   const c = usePalette();
   const { syncStatus, lastSyncedAt, scope, syncNow } = useLearning();
   const [, tick] = useState(0);
@@ -593,9 +600,11 @@ export function SyncChip() {
       })}
     >
       <Icon name={icon} size={15} color={syncStatus === 'conflict' ? c.danger : c.muted} />
-      <Txt size={12} weight="500" color={c.muted}>
-        {label}
-      </Txt>
+      {!compact && (
+        <Txt size={12} weight="500" color={c.muted}>
+          {label}
+        </Txt>
+      )}
     </Pressable>
   );
 }
@@ -608,7 +617,15 @@ const TABS = [
 ] as const;
 export const tabs = TABS;
 
-export function BrandLink({ size = 15, href = '/today' }: { size?: number; href?: string }) {
+export function BrandLink({
+  size = 15,
+  href = '/today',
+  compact = false,
+}: {
+  size?: number;
+  href?: string;
+  compact?: boolean;
+}) {
   const c = usePalette();
   return (
     <Pressable
@@ -629,9 +646,11 @@ export function BrandLink({ size = 15, href = '/today' }: { size?: number; href?
       >
         <BrandMark size={20} color={c.onAccent} />
       </View>
-      <Txt size={size} weight="700" style={{ letterSpacing: -0.3 }}>
-        {APP_NAME}
-      </Txt>
+      {!compact && (
+        <Txt size={size} weight="700" style={{ letterSpacing: -0.3 }}>
+          {APP_NAME}
+        </Txt>
+      )}
     </Pressable>
   );
 }
@@ -870,6 +889,7 @@ export function Screen({
   eyebrow,
   scroll = true,
   showNav = true,
+  minimal = false,
 }: {
   children?: React.ReactNode;
   title?: string;
@@ -880,6 +900,7 @@ export function Screen({
   eyebrow?: string;
   scroll?: boolean;
   showNav?: boolean;
+  minimal?: boolean;
 }) {
   const c = usePalette();
   const wide = useWide();
@@ -907,15 +928,17 @@ export function Screen({
             <BrandLink size={16} />
           )}
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-            {!back && <SyncChip />}
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Settings"
-              onPress={() => router.push('/settings')}
-              style={styles.iconButton}
-            >
-              <Icon name="options-outline" size={20} color={c.muted} />
-            </Pressable>
+            {!back && !minimal && <SyncChip compact />}
+            {!minimal && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Settings"
+                onPress={() => router.push('/settings')}
+                style={styles.iconButton}
+              >
+                <Icon name="options-outline" size={20} color={c.muted} />
+              </Pressable>
+            )}
           </View>
         </View>
       )}

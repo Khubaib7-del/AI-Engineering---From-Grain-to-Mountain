@@ -33,6 +33,7 @@ export type MapNode = {
 };
 
 const VW = 1000;
+const FONT = Platform.OS === 'web' ? 'Helvetica Neue, Helvetica, Arial, sans-serif' : undefined;
 const STEP = 118;
 const TOP = 150;
 const BOTTOM = 120;
@@ -41,10 +42,10 @@ const R = 22;
 export type Point = { x: number; y: number };
 
 /** Layout: a switchback trail climbing from the bottom (first unit) to the summit. */
-export function layoutTrail(count: number) {
+export function layoutTrail(count: number, vw = VW) {
   const height = TOP + BOTTOM + Math.max(0, count - 1) * STEP;
   const points: Point[] = Array.from({ length: count }, (_, i) => ({
-    x: VW / 2 + Math.sin(i * 0.9 + 0.4) * 230 + Math.sin(i * 0.37) * 40,
+    x: vw / 2 + Math.sin(i * 0.9 + 0.4) * vw * 0.23 + Math.sin(i * 0.37) * vw * 0.04,
     y: height - BOTTOM - i * STEP,
   }));
   return { height, points };
@@ -194,7 +195,15 @@ function Climber({ p, c }: { p: Point; c: Palette }) {
       <Line x1={x} y1={y + 26} x2={x} y2={y - 22} stroke={c.ink} strokeWidth={2} strokeLinecap="round" />
       <Path d={`M${x} ${y - 22} L${x + 22} ${y - 15} L${x} ${y - 8} Z`} fill={c.signal} />
       <Rect x={x + 8} y={y + 2} width={38} height={20} rx={10} fill={c.accent} />
-      <SvgText x={x + 27} y={y + 16} fontSize={11} fontWeight="700" fill={c.onAccent} textAnchor="middle">
+      <SvgText
+        fontFamily={FONT}
+        x={x + 27}
+        y={y + 16}
+        fontSize={11}
+        fontWeight="700"
+        fill={c.onAccent}
+        textAnchor="middle"
+      >
         You
       </SvgText>
     </G>
@@ -202,7 +211,7 @@ function Climber({ p, c }: { p: Point; c: Palette }) {
 }
 
 type View2 = { s: number; tx: number; ty: number };
-type Geom = { w: number; h: number; fit: number; H: number };
+type Geom = { w: number; h: number; fit: number; H: number; vw: number };
 const touchDistance = (e: GestureResponderEvent) => {
   const t = e.nativeEvent.touches;
   return t && t.length >= 2 ? Math.hypot(t[0].pageX - t[1].pageX, t[0].pageY - t[1].pageY) : 0;
@@ -211,7 +220,7 @@ const touchDistance = (e: GestureResponderEvent) => {
 export function clampView(v: View2, g: Geom): View2 {
   const s = Math.min(3, Math.max(0.45, v.s));
   const scale = g.fit * s;
-  const cw = VW * scale;
+  const cw = g.vw * scale;
   const ch = g.H * scale;
   const minTx = Math.min(0, g.w - cw) - 80;
   const maxTx = Math.max(0, g.w - cw) + 80;
@@ -266,9 +275,12 @@ export function MountainMap({
   onSelect?: (node: MapNode | undefined) => void;
 }) {
   const c = usePalette();
-  const { height: H, points } = useMemo(() => layoutTrail(nodes.length), [nodes.length]);
   const [size, setSize] = useState({ w: 0, h: height });
-  const fit = size.w ? Math.min(size.w / VW, 1.15) : 1;
+  // Narrow screens get a narrower virtual canvas so labels stay readable (no tiny text on phones).
+  const vw = size.w ? Math.round(Math.min(VW, Math.max(460, size.w / 0.8))) : VW;
+  const { height: H, points } = useMemo(() => layoutTrail(nodes.length, vw), [nodes.length, vw]);
+  const fit = size.w ? Math.min(size.w / vw, 1.15) : 1;
+  const maxChars = Math.max(14, Math.floor((vw / 2 - 80) / 8.8));
   const [view, setView] = useState<View2>({ s: 1, tx: 0, ty: 0 });
   const currentIndex = Math.max(
     0,
@@ -276,10 +288,10 @@ export function MountainMap({
   );
   const container = useRef<View>(null);
   // Geometry and the latest view, mirrored into refs for gesture callbacks.
-  const geom = useRef<Geom>({ w: 0, h: height, fit: 1, H });
+  const geom = useRef<Geom>({ w: 0, h: height, fit: 1, H, vw });
   const viewRef = useRef(view);
   useEffect(() => {
-    geom.current = { w: size.w, h: size.h, fit, H };
+    geom.current = { w: size.w, h: size.h, fit, H, vw };
     viewRef.current = view;
   });
 
@@ -289,10 +301,9 @@ export function MountainMap({
     setView(v => {
       const zoom = s ?? v.s;
       const scale = fit * zoom;
-      return clampView(
-        { s: zoom, tx: size.w / 2 - p.x * scale, ty: size.h / 2 - p.y * scale },
-        { w: size.w, h: size.h, fit, H },
-      );
+      // When the trail fits the width, keep it centred horizontally; otherwise follow the node.
+      const tx = vw * scale <= size.w ? (size.w - vw * scale) / 2 : size.w / 2 - p.x * scale;
+      return clampView({ s: zoom, tx, ty: size.h / 2 - p.y * scale }, { w: size.w, h: size.h, fit, H, vw });
     });
   };
 
@@ -305,7 +316,7 @@ export function MountainMap({
   }, [size.w, size.h, currentIndex, nodes.length]);
 
   const zoomAt = (factor: number) =>
-    setView(v => zoomView(v, factor, size.w / 2, size.h / 2, { w: size.w, h: size.h, fit, H }));
+    setView(v => zoomView(v, factor, size.w / 2, size.h / 2, { w: size.w, h: size.h, fit, H, vw }));
 
   // Mouse wheel / trackpad: scroll pans, Cmd/Ctrl-scroll or pinch zooms (web).
   useEffect(() => {
@@ -363,7 +374,7 @@ export function MountainMap({
   const scale = fit * view.s;
   const trail = smoothPath(points);
   const done = smoothPath(points.slice(0, currentIndex + 1));
-  const summit = { x: VW / 2, y: 54 };
+  const summit = { x: vw / 2, y: 54 };
   const firstOfModule = nodes.map((n, i) => i === 0 || nodes[i - 1].moduleId !== n.moduleId);
 
   return (
@@ -389,7 +400,7 @@ export function MountainMap({
           <G transform={`translate(${view.tx.toFixed(1)} ${view.ty.toFixed(1)}) scale(${scale.toFixed(4)})`}>
             {/* Mountain body and contour lines */}
             <Path
-              d={`M${-200} ${H + 40} L${VW / 2 - 60} ${summit.y + 30} L${VW / 2} ${summit.y} L${VW / 2 + 80} ${summit.y + 46} L${VW + 200} ${H + 40} Z`}
+              d={`M${-200} ${H + 40} L${vw / 2 - 60} ${summit.y + 30} L${vw / 2} ${summit.y} L${vw / 2 + 80} ${summit.y + 46} L${vw + 200} ${H + 40} Z`}
               fill={c.surface}
             />
             {Array.from({ length: Math.max(4, Math.ceil(H / 160)) }, (_, i) => {
@@ -398,7 +409,7 @@ export function MountainMap({
               return (
                 <Path
                   key={i}
-                  d={`M${VW / 2 - spread} ${yy + 30} Q${VW / 2 - spread / 3} ${yy - 24} ${VW / 2} ${yy} T${VW / 2 + spread} ${yy + 22}`}
+                  d={`M${vw / 2 - spread} ${yy + 30} Q${vw / 2 - spread / 3} ${yy - 24} ${vw / 2} ${yy} T${vw / 2 + spread} ${yy + 22}`}
                   stroke={c.line}
                   strokeWidth={1}
                   fill="none"
@@ -447,7 +458,7 @@ export function MountainMap({
                   <Line
                     x1={40}
                     y1={points[i].y + 50}
-                    x2={VW - 40}
+                    x2={vw - 40}
                     y2={points[i].y + 50}
                     stroke={c.line}
                     strokeWidth={1}
@@ -461,7 +472,7 @@ export function MountainMap({
                     fill={c.faint}
                     letterSpacing={1.5}
                   >
-                    {`${n.moduleId} · ${n.moduleTitle}`.toUpperCase().slice(0, 48)}
+                    {`${n.moduleId} · ${n.moduleTitle}`.toUpperCase().slice(0, Math.floor(vw / 9))}
                   </SvgText>
                 </G>
               ) : null,
@@ -469,13 +480,12 @@ export function MountainMap({
             {/* Nodes */}
             {nodes.map((n, i) => {
               const p = points[i];
-              const right = p.x < VW / 2;
+              const right = p.x < vw / 2;
               const current = i === currentIndex && n.status !== 'passed';
               return (
                 <G
                   key={n.id}
                   onPress={interactive ? () => onSelect?.(selectedId === n.id ? undefined : n) : undefined}
-                  accessibilityRole="button"
                   accessibilityLabel={`${n.title}, ${n.status.replace('-', ' ')}`}
                 >
                   <Circle cx={p.x} cy={p.y} r={R + 16} fill="transparent" />
@@ -489,7 +499,7 @@ export function MountainMap({
                     fill={n.status === 'locked' ? c.faint : c.ink}
                     textAnchor={right ? 'start' : 'end'}
                   >
-                    {n.title.length > 34 ? `${n.title.slice(0, 33)}…` : n.title}
+                    {n.title.length > maxChars ? `${n.title.slice(0, maxChars - 1)}…` : n.title}
                   </SvgText>
                   <SvgText
                     x={right ? p.x + R + 16 : p.x - R - 16}
@@ -655,7 +665,7 @@ export function MapLegend() {
     ],
   ];
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 16, rowGap: 6, flexShrink: 1 }}>
       {items.map(([label, n]) => (
         <View key={label} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
           <Svg width={30} height={30} viewBox="-30 -30 60 60">
