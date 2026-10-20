@@ -16,7 +16,7 @@ const HIDDEN = ['/start', '/signin', '/signup', '/welcome', '/privacy', '/downlo
 const TAB_ROUTES = ['/today', '/map', '/progress', '/library'];
 const SIZE = 60;
 
-function BubbleCloud({ b, onPress }: { b: Bubble; onPress: () => void }) {
+function BubbleCloud({ b, onPress, peek = false }: { b: Bubble; onPress: () => void; peek?: boolean }) {
   const c = usePalette();
   const now = b.key === 'now';
   return (
@@ -27,9 +27,9 @@ function BubbleCloud({ b, onPress }: { b: Bubble; onPress: () => void }) {
       onPress={onPress}
       style={({ pressed, hovered }: { pressed: boolean; hovered?: boolean }) => ({
         alignSelf: 'flex-end',
-        maxWidth: 280,
-        paddingVertical: 10,
-        paddingHorizontal: 16,
+        maxWidth: peek ? 230 : 280,
+        paddingVertical: peek ? 8 : 10,
+        paddingHorizontal: peek ? 12 : 16,
         borderRadius: c.mode === 'terminal' ? 4 : 20,
         borderBottomRightRadius: now ? 6 : c.mode === 'terminal' ? 4 : 20,
         backgroundColor: now ? c.surface : c.raised,
@@ -46,10 +46,12 @@ function BubbleCloud({ b, onPress }: { b: Bubble; onPress: () => void }) {
               : '0 10px 28px rgba(30,40,70,.16)',
       })}
     >
-      <Label color={now ? c.accentText : c.muted}>
-        {c.mode === 'terminal' ? `${b.prefix.toLowerCase()}:` : b.prefix}
-      </Label>
-      <Txt size={16} weight={now ? '600' : '500'}>
+      {!peek && (
+        <Label color={now ? c.accentText : c.muted}>
+          {c.mode === 'terminal' ? `${b.prefix.toLowerCase()}:` : b.prefix}
+        </Label>
+      )}
+      <Txt size={peek ? 15 : 16} raw={peek} weight={now ? '600' : '500'} numberOfLines={peek ? 2 : undefined}>
         {b.text}
       </Txt>
     </Pressable>
@@ -177,6 +179,8 @@ export function MoteHost() {
   if (pathname === '/' && Platform.OS !== 'web') return null;
   const celebrating = mood === 'celebrate';
   const showBubbles = !collapsed && (bubbles.length > 0 || celebrating);
+  // Phones get a small one-line "peek" so Mote never covers the page; tapping Mote opens the full tips.
+  const full = wide || unfoldFor === viewKey || celebrating;
   const go = (href?: string) => href && router.push(href as never);
 
   return (
@@ -207,51 +211,55 @@ export function MoteHost() {
                 Unit passed. Nice climbing!
               </Txt>
             </View>
-          ) : (
+          ) : full ? (
             bubbles.map(b => <BubbleCloud key={b.key} b={b} onPress={() => go(b.href)} />)
+          ) : (
+            bubbles.slice(0, 1).map(b => <BubbleCloud key={b.key} b={b} peek onPress={() => go(b.href)} />)
           )}
-          <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-            <Pressable
-              testID="mote-tell-more"
-              accessibilityRole="button"
-              accessibilityLabel="Tell me more: open the assistant"
-              onPress={() => openChat()}
-              style={({ pressed }) => ({
-                minHeight: 40,
-                paddingHorizontal: 14,
-                borderRadius: 999,
-                justifyContent: 'center',
-                backgroundColor: c.ink,
-                opacity: pressed ? 0.8 : 1,
-              })}
-            >
-              <Txt size={15} raw weight="600" color={c.bg}>
-                Tell me more
-              </Txt>
-            </Pressable>
-            <Pressable
-              testID="mote-dismiss"
-              accessibilityRole="button"
-              accessibilityLabel="Dismiss Mote's tips"
-              onPress={() => {
-                setDismissed(onboarded ? steps.now.id : 'setup');
-                setCollapsed(true);
-              }}
-              style={({ pressed }) => ({
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: c.surface,
-                borderWidth: 1,
-                borderColor: c.edge,
-                opacity: pressed ? 0.7 : 1,
-              })}
-            >
-              <Icon name="close" size={16} color={c.ink} />
-            </Pressable>
-          </View>
+          {full && (
+            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+              <Pressable
+                testID="mote-tell-more"
+                accessibilityRole="button"
+                accessibilityLabel="Tell me more: open the assistant"
+                onPress={() => openChat()}
+                style={({ pressed }) => ({
+                  minHeight: 40,
+                  paddingHorizontal: 14,
+                  borderRadius: 999,
+                  justifyContent: 'center',
+                  backgroundColor: c.ink,
+                  opacity: pressed ? 0.8 : 1,
+                })}
+              >
+                <Txt size={15} raw weight="600" color={c.bg}>
+                  Tell me more
+                </Txt>
+              </Pressable>
+              <Pressable
+                testID="mote-dismiss"
+                accessibilityRole="button"
+                accessibilityLabel="Dismiss Mote's tips"
+                onPress={() => {
+                  setDismissed(onboarded ? steps.now.id : 'setup');
+                  setCollapsed(true);
+                }}
+                style={({ pressed }) => ({
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: c.surface,
+                  borderWidth: 1,
+                  borderColor: c.edge,
+                  opacity: pressed ? 0.7 : 1,
+                })}
+              >
+                <Icon name="close" size={16} color={c.ink} />
+              </Pressable>
+            </View>
+          )}
         </Animated.View>
       )}
       <Pressable
@@ -263,7 +271,7 @@ export function MoteHost() {
         onPress={() => {
           lastActive.current = Date.now();
           setMood(m => (m === 'sleepy' ? 'idle' : m));
-          if (collapsed) {
+          if (collapsed || !full) {
             setDismissed(undefined);
             setCollapsed(false);
           } else setCollapsed(true);

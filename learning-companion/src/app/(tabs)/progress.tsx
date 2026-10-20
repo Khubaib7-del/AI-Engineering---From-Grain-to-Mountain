@@ -13,6 +13,7 @@ import {
   Txt,
   isWeb,
   usePalette,
+  useWide,
 } from '../../components/ui';
 import { NextStepCard } from '../../components/next-step';
 import { Heatmap } from '../../components/heatmap';
@@ -25,13 +26,14 @@ import { unitTitle, usePath } from '../../lib/use-path';
 
 function Stat({ icon, value, label, hint }: { icon: string; value: string; label: string; hint?: string }) {
   const c = usePalette();
+  const wide = useWide();
   return (
     <Panel style={{ gap: 8, minHeight: 150 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         <Icon name={icon} size={18} color={c.accentText} />
         <Label>{label}</Label>
       </View>
-      <Txt size={34} weight="600" mono={c.mode === 'terminal'}>
+      <Txt size={wide ? 34 : 26} weight="600" mono={c.mode === 'terminal'}>
         {value}
       </Txt>
       {!!hint && (
