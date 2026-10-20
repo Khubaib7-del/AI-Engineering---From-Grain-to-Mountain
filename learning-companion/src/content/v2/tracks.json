@@ -1,0 +1,38 @@
+[
+  {
+    "id": "ai-engineer",
+    "title": "AI Engineer",
+    "summary": "Build LLM applications, retrieval systems and agents that work in production.",
+    "outcomes": [
+      "Ship a RAG app with evaluations",
+      "Build and debug tool-using agents",
+      "Deploy and monitor an LLM service"
+    ],
+    "moduleOrder": ["M00", "M01"],
+    "portfolio": ["RAG app with evals", "Agent with tools", "Deployed LLM API"]
+  },
+  {
+    "id": "fde",
+    "title": "Forward Deployed Engineer",
+    "summary": "Take AI systems into real customer environments: integrate, adapt and deliver.",
+    "outcomes": [
+      "Integrate AI into existing systems",
+      "Scope and demo solutions with customers",
+      "Debug in unfamiliar codebases"
+    ],
+    "moduleOrder": ["M00", "M01"],
+    "portfolio": ["Customer-style integration", "Solution demo with write-up"]
+  },
+  {
+    "id": "mlops",
+    "title": "MLOps Engineer",
+    "summary": "Train, ship and operate models reliably: pipelines, deployment and monitoring.",
+    "outcomes": [
+      "Build reproducible training pipelines",
+      "Serve models behind an API",
+      "Monitor drift and cost"
+    ],
+    "moduleOrder": ["M00", "M01"],
+    "portfolio": ["Training pipeline", "Model service with monitoring"]
+  }
+]

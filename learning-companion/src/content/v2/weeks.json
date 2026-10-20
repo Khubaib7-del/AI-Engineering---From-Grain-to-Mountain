@@ -1,0 +1,10 @@
+[
+  { "week": 1, "title": "Your machine and the terminal", "units": ["M00.U01"], "hours": 4 },
+  {
+    "week": 2,
+    "title": "Git, then your first Python functions (CS50P Lecture 0)",
+    "units": ["M00.U02", "M01.U01"],
+    "hours": 10
+  },
+  { "week": 3, "title": "CS50P Lectures 1–2: conditionals and loops", "units": ["M01.U02"], "hours": 6 }
+]

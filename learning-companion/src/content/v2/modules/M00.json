@@ -1,0 +1,242 @@
+{
+  "id": "M00",
+  "phase": "P0 Base Camp",
+  "title": "Computer and learning foundations",
+  "summary": "How a computer runs your code, how to move around a terminal, and how to keep your work safe with Git.",
+  "hours": 12,
+  "deepHours": 6,
+  "prerequisites": [],
+  "tracks": ["ai-engineer", "fde", "mlops"],
+  "submodules": [
+    {
+      "id": "M00.S1",
+      "title": "The machine and the shell",
+      "units": [
+        {
+          "id": "M00.U01",
+          "title": "Files, paths and the terminal",
+          "hours": 4,
+          "depth": "core",
+          "week": 1,
+          "prerequisites": [],
+          "outcomes": [
+            "You can navigate folders with cd, ls and pwd and explain absolute versus relative paths.",
+            "You can run a program from the terminal and redirect its output to a file."
+          ],
+          "topics": [
+            { "id": "M00.01.06", "title": "absolute/relative paths", "legacyIds": ["M00.01.06"] },
+            { "id": "M00.01.07", "title": "working directory", "legacyIds": ["M00.01.07"] },
+            { "id": "M00.01.09", "title": "terminal versus editor", "legacyIds": ["M00.01.09"] },
+            { "id": "M00.U01.T04", "title": "pipes and redirection" }
+          ],
+          "learn": {
+            "title": "MIT Missing Semester — Lecture 1: Course overview + the shell",
+            "url": "https://missing.csail.mit.edu/2020/course-shell/",
+            "slice": "Lecture 1 (full, ~48 min) plus the lecture notes",
+            "type": "course",
+            "free": true,
+            "verified": "fixture"
+          },
+          "covers": [
+            "the shell prompt",
+            "navigating with cd/ls/pwd",
+            "absolute and relative paths",
+            "file permissions",
+            "redirection and pipes"
+          ],
+          "gaps": [
+            {
+              "topic": "terminal versus editor",
+              "resource": {
+                "title": "VS Code docs — Integrated terminal",
+                "url": "https://code.visualstudio.com/docs/terminal/basics",
+                "type": "doc",
+                "free": true,
+                "verified": "fixture"
+              }
+            }
+          ],
+          "read": {
+            "title": "The Linux Command Line (free book) — Chapter 2: Navigation",
+            "url": "https://linuxcommand.org/tlcl.php",
+            "type": "book",
+            "free": true,
+            "verified": "fixture"
+          },
+          "practice": {
+            "title": "Build a tidy learning folder",
+            "brief": "Create ~/learning with notes/ and code/ subfolders using only the terminal. Write hello.py into code/, run it, and save the output to notes/run.txt with redirection.",
+            "done_when": "notes/run.txt contains your program's output and you can paste the exact commands you used."
+          },
+          "quiz": [
+            {
+              "id": "M00.U01.Q1",
+              "kind": "mcq",
+              "prompt": "You are in /home/sam/learning. Which path points to /home/sam/learning/code/hello.py?",
+              "options": ["/code/hello.py", "code/hello.py", "../code/hello.py", "~/code/hello.py"],
+              "answer": 1,
+              "explain": "A relative path starts from the working directory, so code/hello.py resolves inside /home/sam/learning."
+            },
+            {
+              "id": "M00.U01.Q2",
+              "kind": "mcq",
+              "prompt": "What does `python hello.py > out.txt` do?",
+              "options": [
+                "Prints to the screen and to out.txt",
+                "Appends output to out.txt",
+                "Writes standard output to out.txt, replacing its contents",
+                "Reads input from out.txt"
+              ],
+              "answer": 2,
+              "explain": "> redirects standard output and truncates the file; >> would append."
+            },
+            {
+              "id": "M00.U01.Q3",
+              "kind": "mcq",
+              "prompt": "Which command tells you the current working directory?",
+              "options": ["ls", "cd", "pwd", "echo"],
+              "answer": 2,
+              "explain": "pwd prints the working directory."
+            },
+            {
+              "id": "M00.U01.S1",
+              "kind": "short",
+              "prompt": "Explain the difference between your editor and your terminal, and when you use each.",
+              "rubric": [
+                "The editor is where you write and save source files",
+                "The terminal is where you run commands and programs",
+                "Saving a file does not run it; running happens in the terminal"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M00.S2",
+      "title": "Keeping work safe",
+      "units": [
+        {
+          "id": "M00.U02",
+          "title": "Version control with Git",
+          "hours": 5,
+          "depth": "core",
+          "week": 2,
+          "prerequisites": ["M00.U01"],
+          "outcomes": [
+            "You can create a repository, commit changes with clear messages and push to GitHub.",
+            "You can explain what a commit and a branch are."
+          ],
+          "topics": [
+            { "id": "M00.U02.T01", "title": "commits and history" },
+            { "id": "M00.U02.T02", "title": "branches" },
+            { "id": "M00.U02.T03", "title": "remotes and GitHub" }
+          ],
+          "learn": {
+            "title": "MIT Missing Semester — Lecture 6: Version Control (Git)",
+            "url": "https://missing.csail.mit.edu/2020/version-control/",
+            "slice": "Lecture 6, 0:00–58:00 (data model, snapshots, branches, remotes)",
+            "type": "course",
+            "free": true,
+            "verified": "fixture"
+          },
+          "covers": ["Git's snapshot data model", "commits and history", "branches and merging", "remotes"],
+          "gaps": [
+            {
+              "topic": "remotes and GitHub",
+              "resource": {
+                "title": "GitHub Docs — Hello World",
+                "url": "https://docs.github.com/en/get-started/start-your-journey/hello-world",
+                "type": "doc",
+                "free": true,
+                "verified": "fixture"
+              }
+            }
+          ],
+          "read": {
+            "title": "Pro Git — Chapter 2: Git Basics",
+            "url": "https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository",
+            "type": "book",
+            "free": true,
+            "verified": "fixture"
+          },
+          "practice": {
+            "title": "Put your learning folder on GitHub",
+            "brief": "Turn ~/learning into a Git repository, make three commits with meaningful messages and push it to a public GitHub repo.",
+            "done_when": "The repo is public and shows at least three commits."
+          },
+          "quiz": [
+            {
+              "id": "M00.U02.Q1",
+              "kind": "mcq",
+              "prompt": "What does a Git commit store?",
+              "options": [
+                "Only the lines you changed",
+                "A snapshot of the tracked files plus metadata",
+                "A copy of your whole disk",
+                "Just a message"
+              ],
+              "answer": 1,
+              "explain": "Git stores snapshots (trees of blobs) with author, time, message and parent pointers."
+            },
+            {
+              "id": "M00.U02.Q2",
+              "kind": "mcq",
+              "prompt": "Which command uploads your local commits to GitHub?",
+              "options": ["git pull", "git commit", "git push", "git clone"],
+              "answer": 2,
+              "explain": "git push sends local commits to the remote."
+            },
+            {
+              "id": "M00.U02.Q3",
+              "kind": "mcq",
+              "prompt": "A branch in Git is…",
+              "options": [
+                "A full copy of the repository",
+                "A movable pointer to a commit",
+                "A remote server",
+                "A backup file"
+              ],
+              "answer": 1,
+              "explain": "Branches are lightweight references to commits."
+            },
+            {
+              "id": "M00.U02.S1",
+              "kind": "short",
+              "prompt": "Why are small commits with clear messages useful?",
+              "rubric": [
+                "Easy to understand what changed and why",
+                "Easy to undo or bisect one change",
+                "Helps reviewers and your future self"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capstone": {
+    "title": "Your learning workspace",
+    "brief": "Publish a GitHub repo that holds your notes and first programs, with a README that explains how to run them from a terminal.",
+    "rubric": [
+      {
+        "criterion": "Repository is public and organised",
+        "levels": ["Missing", "Exists but messy", "Clear folders", "Clear folders and .gitignore"]
+      },
+      {
+        "criterion": "README explains how to run",
+        "levels": ["None", "Vague", "Step-by-step", "Step-by-step with expected output"]
+      },
+      {
+        "criterion": "Commit history",
+        "levels": [
+          "One commit",
+          "A few unclear commits",
+          "Regular commits",
+          "Regular, well-described commits"
+        ]
+      }
+    ],
+    "evidence": "github"
+  }
+}

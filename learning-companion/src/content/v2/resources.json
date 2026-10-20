@@ -1,0 +1,68 @@
+[
+  {
+    "id": "C01",
+    "type": "course",
+    "title": "CS50's Introduction to Programming with Python",
+    "author": "Harvard / David J. Malan",
+    "url": "https://cs50.harvard.edu/python/",
+    "free": true,
+    "language": "English",
+    "notes": "Lectures, shorts and problem sets with an autograder.",
+    "modules": ["M01"]
+  },
+  {
+    "id": "C-MS",
+    "type": "course",
+    "title": "The Missing Semester of Your CS Education",
+    "author": "MIT",
+    "url": "https://missing.csail.mit.edu/",
+    "free": true,
+    "language": "English",
+    "notes": "Shell, editors, Git and tooling.",
+    "modules": ["M00"]
+  },
+  {
+    "id": "B01",
+    "type": "book",
+    "title": "Think Python, third edition",
+    "author": "Allen B. Downey",
+    "url": "https://allendowney.github.io/ThinkPython/",
+    "free": true,
+    "language": "English",
+    "notes": "Author-hosted HTML and notebooks.",
+    "modules": ["M01"]
+  },
+  {
+    "id": "B-TLCL",
+    "type": "book",
+    "title": "The Linux Command Line",
+    "author": "William Shotts",
+    "url": "https://linuxcommand.org/tlcl.php",
+    "free": true,
+    "language": "English",
+    "notes": "Free PDF.",
+    "modules": ["M00"]
+  },
+  {
+    "id": "B-PROGIT",
+    "type": "book",
+    "title": "Pro Git, second edition",
+    "author": "Scott Chacon and Ben Straub",
+    "url": "https://git-scm.com/book/en/v2",
+    "free": true,
+    "language": "English",
+    "notes": "Official Git book.",
+    "modules": ["M00"]
+  },
+  {
+    "id": "D-PYTUT",
+    "type": "doc",
+    "title": "The Python Tutorial",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/",
+    "free": true,
+    "language": "English",
+    "notes": "Official tutorial.",
+    "modules": ["M01"]
+  }
+]

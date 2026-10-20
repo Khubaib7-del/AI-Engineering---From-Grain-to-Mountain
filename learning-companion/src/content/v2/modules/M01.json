@@ -1,0 +1,226 @@
+{
+  "id": "M01",
+  "phase": "P0 Base Camp",
+  "title": "Python programming",
+  "summary": "Write real Python: variables, functions, conditionals and loops, then small programs you can test.",
+  "hours": 14,
+  "prerequisites": ["M00"],
+  "tracks": ["ai-engineer", "fde", "mlops"],
+  "submodules": [
+    {
+      "id": "M01.S1",
+      "title": "First programs",
+      "units": [
+        {
+          "id": "M01.U01",
+          "title": "Functions and variables",
+          "hours": 5,
+          "depth": "core",
+          "week": 2,
+          "prerequisites": ["M00.U01"],
+          "outcomes": [
+            "You can store values in variables, call built-in functions and write your own function with parameters and a return value."
+          ],
+          "topics": [
+            { "id": "M01.01.01", "title": "variables and types", "legacyIds": ["M01.01.01"] },
+            { "id": "M01.01.02", "title": "strings and f-strings", "legacyIds": ["M01.01.02"] },
+            { "id": "M01.U01.T03", "title": "defining functions and return values" }
+          ],
+          "learn": {
+            "resourceId": "C01",
+            "title": "Harvard CS50P — Lecture 0: Functions, Variables",
+            "url": "https://cs50.harvard.edu/python/weeks/0/",
+            "slice": "Lecture 0 (full, ~1 h 40 min)",
+            "type": "course",
+            "free": true,
+            "verified": "fixture"
+          },
+          "covers": [
+            "print and input",
+            "variables",
+            "strings and f-strings",
+            "int and float",
+            "defining functions",
+            "return values"
+          ],
+          "read": {
+            "title": "Think Python 3e — Chapter 1: Programming as a way of thinking",
+            "url": "https://allendowney.github.io/ThinkPython/chap01.html",
+            "type": "book",
+            "free": true,
+            "verified": "fixture"
+          },
+          "backup": {
+            "title": "Python tutorial — An informal introduction",
+            "url": "https://docs.python.org/3/tutorial/introduction.html",
+            "type": "doc",
+            "free": true,
+            "verified": "fixture"
+          },
+          "practice": {
+            "title": "CS50P Problem Set 0",
+            "brief": "Solve Indoor Voice, Playback Speed, Making Faces, Einstein and Tip Calculator.",
+            "done_when": "All five programs run and pass check50 (or your own manual tests).",
+            "autograder": "check50 cs50/problems/2022/python/tip"
+          },
+          "quiz": [
+            {
+              "id": "M01.U01.Q1",
+              "kind": "mcq",
+              "prompt": "What does `input()` return?",
+              "options": ["An int", "A str", "Whatever type the user typed", "None"],
+              "answer": 1,
+              "explain": "input() always returns a string; convert with int() or float()."
+            },
+            {
+              "id": "M01.U01.Q2",
+              "kind": "mcq",
+              "prompt": "What prints? `def f(x):\n    x * 2\nprint(f(3))`",
+              "options": ["6", "3", "None", "An error"],
+              "answer": 2,
+              "explain": "Without a return statement a function returns None."
+            },
+            {
+              "id": "M01.U01.Q3",
+              "kind": "mcq",
+              "prompt": "Which is a valid f-string?",
+              "options": ["f'{name}'", "'f{name}'", "f(name)", "{f'name'}"],
+              "answer": 0,
+              "explain": "Prefix the string with f and put expressions in braces."
+            },
+            {
+              "id": "M01.U01.S1",
+              "kind": "short",
+              "prompt": "Explain the difference between printing a value and returning it.",
+              "rubric": [
+                "print shows text to the user",
+                "return hands a value back to the caller",
+                "A returned value can be stored and reused"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M01.S2",
+      "title": "Control flow",
+      "units": [
+        {
+          "id": "M01.U02",
+          "title": "Conditionals and loops",
+          "hours": 6,
+          "depth": "core",
+          "week": 3,
+          "prerequisites": ["M01.U01"],
+          "outcomes": ["You can branch with if/elif/else and repeat work with for and while loops."],
+          "topics": [
+            { "id": "M01.02.01", "title": "if / elif / else", "legacyIds": ["M01.02.01"] },
+            { "id": "M01.02.02", "title": "for and while loops", "legacyIds": ["M01.02.02"] },
+            { "id": "M01.U02.T03", "title": "match statements" }
+          ],
+          "learn": {
+            "resourceId": "C01",
+            "title": "Harvard CS50P — Lectures 1–2: Conditionals, Loops",
+            "url": "https://cs50.harvard.edu/python/weeks/1/",
+            "slice": "Lecture 1 (full) and Lecture 2 (0:00–1:10:00)",
+            "type": "course",
+            "free": true,
+            "verified": "fixture"
+          },
+          "covers": [
+            "comparison operators",
+            "if/elif/else",
+            "match",
+            "while loops",
+            "for loops over ranges and lists"
+          ],
+          "gaps": [
+            {
+              "topic": "loop else clauses",
+              "resource": {
+                "title": "Python tutorial — break, continue and else on loops",
+                "url": "https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops",
+                "type": "doc",
+                "free": true,
+                "verified": "fixture"
+              }
+            }
+          ],
+          "read": {
+            "title": "Think Python 3e — Chapter 5: Conditionals and recursion",
+            "url": "https://allendowney.github.io/ThinkPython/chap05.html",
+            "type": "book",
+            "free": true,
+            "verified": "fixture"
+          },
+          "practice": {
+            "title": "CS50P Problem Sets 1–2",
+            "brief": "Solve Deep Thought, Bank, Extensions, camelCase and Coke Machine.",
+            "done_when": "All programs handle the edge cases listed in each problem."
+          },
+          "quiz": [
+            {
+              "id": "M01.U02.Q1",
+              "kind": "mcq",
+              "prompt": "How many times does `for i in range(2, 8, 2)` run?",
+              "options": ["3", "4", "6", "8"],
+              "answer": 0,
+              "explain": "It yields 2, 4, 6 — the stop value 8 is excluded."
+            },
+            {
+              "id": "M01.U02.Q2",
+              "kind": "mcq",
+              "prompt": "Which keyword exits a loop immediately?",
+              "options": ["continue", "pass", "break", "return only"],
+              "answer": 2,
+              "explain": "break leaves the innermost loop."
+            },
+            {
+              "id": "M01.U02.Q3",
+              "kind": "mcq",
+              "prompt": "In an if/elif chain, how many branches run?",
+              "options": ["All true ones", "At most one", "Exactly two", "None"],
+              "answer": 1,
+              "explain": "The first true branch runs and the rest are skipped."
+            },
+            {
+              "id": "M01.U02.S1",
+              "kind": "short",
+              "prompt": "When would you choose a while loop over a for loop?",
+              "rubric": [
+                "When the number of iterations is not known in advance",
+                "The loop continues until a condition changes",
+                "Mentions risk of an infinite loop if the condition never changes"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capstone": {
+    "title": "A command-line tool",
+    "brief": "Build a small CLI program in Python (e.g. a unit converter or tip splitter) with functions, input validation and loops, published to GitHub.",
+    "rubric": [
+      {
+        "criterion": "Works end to end",
+        "levels": [
+          "Does not run",
+          "Runs with errors",
+          "Works for normal input",
+          "Handles bad input gracefully"
+        ]
+      },
+      {
+        "criterion": "Code structure",
+        "levels": ["One long block", "Some functions", "Clear functions", "Clear functions with docstrings"]
+      },
+      {
+        "criterion": "README with run steps",
+        "levels": ["None", "Vague", "Step-by-step", "Step-by-step with examples"]
+      }
+    ],
+    "evidence": "github"
+  }
+}
