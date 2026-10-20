@@ -1,0 +1,1538 @@
+{
+ "id": "M20",
+ "phase": "P7 Career",
+ "title": "Portfolio, final-year project and job readiness",
+ "summary": "Turn projects into evidence for your chosen track (AI Engineer, FDE or MLOps), scope and run a final-year project with pre-registered evaluation, and prepare for hiring: DSA, SQL, timed system-design practice (concepts live in M22), debugging and paper interviews, open-source contribution, resume and behavioural stories. Job readiness runs in parallel from year 2.",
+ "hours": 127,
+ "prerequisites": [
+  "M11",
+  "M12",
+  "M16",
+  "M18",
+  "M19",
+  "M22"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M20.S1",
+   "title": "Portfolio evidence",
+   "units": [
+    {
+     "id": "M20.U01",
+     "title": "A repository as evidence",
+     "hours": 6,
+     "depth": "core",
+     "week": 149,
+     "prerequisites": [],
+     "outcomes": [
+      "You can bring a repo to an evidence standard: problem, licence audit, one-command setup, architecture, baseline, evals, failures, demo, CI.",
+      "You can prove reproducibility by having a stranger set it up from scratch."
+     ],
+     "topics": [
+      {
+       "id": "M20.01.01",
+       "title": "Public README"
+      },
+      {
+       "id": "M20.01.02",
+       "title": "Reproducible setup"
+      },
+      {
+       "id": "M20.01.03",
+       "title": "Dataset/model licence"
+      },
+      {
+       "id": "M20.01.04",
+       "title": "Architecture"
+      },
+      {
+       "id": "M20.01.05",
+       "title": "Baseline"
+      },
+      {
+       "id": "M20.01.06",
+       "title": "Test/eval suite"
+      },
+      {
+       "id": "M20.01.07",
+       "title": "Benchmark table"
+      },
+      {
+       "id": "M20.01.08",
+       "title": "Failure cases"
+      },
+      {
+       "id": "M20.01.09",
+       "title": "Demo"
+      },
+      {
+       "id": "M20.01.10",
+       "title": "User feedback"
+      },
+      {
+       "id": "M20.01.11",
+       "title": "Issue history"
+      }
+     ],
+     "learn": {
+      "resourceId": "grain-doc09",
+      "title": "Grain to Mountain doc 09 — Projects and assessments",
+      "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/09-projects-and-assessments.md",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Sections 'A good repository contains' and the 0–3 project rubric"
+     },
+     "covers": [
+      "Checklist of what a portfolio repository must contain",
+      "0–3 rubric for usefulness, engineering, evaluation, reproducibility, communication"
+     ],
+     "gaps": [
+      {
+       "topic": "README conventions on GitHub",
+       "resource": {
+        "resourceId": "github-about-readmes",
+        "title": "GitHub Docs — About READMEs",
+        "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "README structure guide",
+       "resource": {
+        "resourceId": "makeareadme",
+        "title": "Make a README",
+        "url": "https://www.makeareadme.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Architecture diagrams as code",
+       "resource": {
+        "resourceId": "mermaid",
+        "title": "Mermaid (diagrams as code)",
+        "url": "https://mermaid.js.org/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Flowchart and sequence diagram syntax"
+       }
+      },
+      {
+       "topic": "CI badge",
+       "resource": {
+        "resourceId": "gh-actions-badge",
+        "title": "GitHub Docs — Adding a workflow status badge",
+        "url": "https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/adding-a-workflow-status-badge",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "applied-llms",
+      "title": "What We've Learned From A Year of Building with LLMs",
+      "url": "https://applied-llms.org/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Operational section"
+     },
+     "practice": {
+      "title": "Evidence-standard repo + stranger test",
+      "brief": "Bring your best repo to the evidence standard: problem/users, licence audit, one-command setup (uv or docker), architecture diagram, baseline, eval table, failure gallery, demo GIF/video, issues/PR history, CI badge. Ask a peer to set it up from scratch and time it.",
+      "done_when": "Peer setup succeeds from README alone in ≤ 15 minutes (time recorded); README has every listed section; CI badge is green."
+     },
+     "quiz": [
+      {
+       "id": "M20.U01.Q1",
+       "kind": "mcq",
+       "prompt": "The strongest single portfolio signal is…",
+       "options": [
+        "a measured result against a baseline, with failure analysis",
+        "number of repos",
+        "bought stars",
+        "certificates"
+       ],
+       "answer": 0,
+       "explain": "Shows judgement, not just activity."
+      },
+      {
+       "id": "M20.U01.Q2",
+       "kind": "mcq",
+       "prompt": "'Reproducible setup' is proven by…",
+       "options": [
+        "it works on your laptop",
+        "a long README",
+        "screenshots",
+        "a stranger running one documented command successfully"
+       ],
+       "answer": 3,
+       "explain": "Test it on someone else."
+      },
+      {
+       "id": "M20.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Including failure cases…",
+       "options": [
+        "builds credibility and shows engineering judgement",
+        "hurts you",
+        "is optional noise",
+        "is illegal"
+       ],
+       "answer": 0,
+       "explain": "Reviewers trust honest limits."
+      },
+      {
+       "id": "M20.U01.Q4",
+       "kind": "short",
+       "prompt": "What did your peer get stuck on during setup?",
+       "rubric": [
+        "Names the concrete blocker",
+        "Explains the root cause (missing env var, OS assumption, model download)",
+        "Shows the README/script fix"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U02",
+     "title": "Track-specific portfolio sets",
+     "hours": 2,
+     "depth": "core",
+     "week": 149,
+     "prerequisites": [
+      "M20.U01",
+      "M19.U01"
+     ],
+     "outcomes": [
+      "You can map your projects to your track's must-show evidence and close the weakest gap."
+     ],
+     "topics": [
+      {
+       "id": "M20.01.12",
+       "title": "Track portfolio matrix"
+      }
+     ],
+     "learn": {
+      "resourceId": "grain-doc08",
+      "title": "Grain to Mountain doc 08 — Role paths and priorities",
+      "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/08-role-paths-and-priorities.md",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Role table (portfolio row) — mirrored in this curriculum's tracks.json portfolio lists"
+     },
+     "covers": [
+      "AI Engineer must-shows: evaluated RAG with retrieval ablation; bounded agent with MCP + evals + traces + cost per success; a shipped app with real users",
+      "FDE must-shows: client engagement case study; demo video + handover runbook; the agent capstone",
+      "MLOps must-shows: versioned pipeline with CI/CD + canary/rollback; serving benchmark; monitoring + drift + incident drill"
+     ],
+     "gaps": [
+      {
+       "topic": "Skill coverage check for AI Engineers",
+       "resource": {
+        "resourceId": "roadmap-ai-engineer",
+        "title": "roadmap.sh — AI Engineer",
+        "url": "https://roadmap.sh/ai-engineer",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Skill coverage check for MLOps",
+       "resource": {
+        "resourceId": "roadmap-mlops",
+        "title": "roadmap.sh — MLOps",
+        "url": "https://roadmap.sh/mlops",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Portfolio matrix",
+      "brief": "Build a portfolio matrix (rows = your projects, columns = your track's must-show items, cells = link to evidence or empty) and close one empty cell.",
+      "done_when": "PORTFOLIO.md matrix with links; one previously empty cell now links to new evidence."
+     },
+     "quiz": [
+      {
+       "id": "M20.U02.Q1",
+       "kind": "mcq",
+       "prompt": "An FDE portfolio uniquely needs…",
+       "options": [
+        "a GAN",
+        "a paper",
+        "a client engagement case study with adoption evidence",
+        "a CUDA kernel"
+       ],
+       "answer": 2,
+       "explain": "Shows discovery-to-impact."
+      },
+      {
+       "id": "M20.U02.Q2",
+       "kind": "mcq",
+       "prompt": "An MLOps portfolio must include…",
+       "options": [
+        "a chatbot UI only",
+        "Kaggle medals",
+        "versioned pipelines with CI/CD, rollback and monitoring",
+        "slides"
+       ],
+       "answer": 2,
+       "explain": "Reliability of the lifecycle."
+      },
+      {
+       "id": "M20.U02.Q3",
+       "kind": "mcq",
+       "prompt": "An AI Engineer portfolio must include…",
+       "options": [
+        "an evaluated LLM/agent system with cost and failure analysis",
+        "a certificate list",
+        "a logo",
+        "only notebooks"
+       ],
+       "answer": 0,
+       "explain": "Measured, not demoed."
+      },
+      {
+       "id": "M20.U02.Q4",
+       "kind": "short",
+       "prompt": "What is your weakest column, and what is the plan to close it?",
+       "rubric": [
+        "Names the column",
+        "Names a concrete project/unit to close it",
+        "Gives a date"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U03",
+     "title": "Case studies and public technical writing",
+     "hours": 5,
+     "depth": "core",
+     "week": 150,
+     "prerequisites": [
+      "M20.U01"
+     ],
+     "outcomes": [
+      "You can publish a 1,200-word case study with a measured result, what failed and next steps.",
+      "You can scope claims to what your evaluation supports."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.07",
+       "title": "Technical communication"
+      }
+     ],
+     "learn": {
+      "resourceId": "google-tech-writing-one",
+      "title": "Google Technical Writing One",
+      "url": "https://developers.google.com/tech-writing/one",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Units on audience, active voice, short sentences, lists, paragraphs and documents"
+     },
+     "covers": [
+      "Clarity at word and sentence level",
+      "Lists, tables and paragraph structure",
+      "Audience and document organisation"
+     ],
+     "gaps": [
+      {
+       "topic": "Model of clear LLM engineering writing",
+       "resource": {
+        "resourceId": "eugeneyan-llm-patterns",
+        "title": "Patterns for Building LLM-based Systems & Products",
+        "url": "https://eugeneyan.com/writing/llm-patterns/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Plain style",
+       "resource": {
+        "resourceId": "pg-write-simply",
+        "title": "Write Simply",
+        "url": "https://paulgraham.com/simply.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "google-tech-writing-two",
+      "title": "Google Technical Writing Two",
+      "url": "https://developers.google.com/tech-writing/two",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Publish a case study",
+      "brief": "Publish a 1,200-word case study (problem → approach → measured result → what failed → next step) and a LinkedIn summary with no inflated claims.",
+      "done_when": "Public URL of the case study and the post; the key result appears in the first paragraph."
+     },
+     "quiz": [
+      {
+       "id": "M20.U03.Q1",
+       "kind": "mcq",
+       "prompt": "A case study's claims should be scoped to…",
+       "options": [
+        "the hype",
+        "all domains",
+        "the best run only",
+        "what your evaluation actually supports"
+       ],
+       "answer": 3,
+       "explain": "Overclaiming destroys trust."
+      },
+      {
+       "id": "M20.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Active voice and short sentences…",
+       "options": [
+        "are unprofessional",
+        "don't matter",
+        "are banned",
+        "improve clarity"
+       ],
+       "answer": 3,
+       "explain": "Google Tech Writing One."
+      },
+      {
+       "id": "M20.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Put the key result…",
+       "options": [
+        "in an appendix",
+        "nowhere",
+        "near the top",
+        "in the code only"
+       ],
+       "answer": 2,
+       "explain": "Readers skim."
+      },
+      {
+       "id": "M20.U03.Q4",
+       "kind": "short",
+       "prompt": "Write your case study's one-sentence result.",
+       "rubric": [
+        "Contains a number and a baseline/comparison",
+        "Names the user/task",
+        "No unsupported generalisation"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M20.S2",
+   "title": "Final-year project (FYP)",
+   "units": [
+    {
+     "id": "M20.U04",
+     "title": "Choosing and scoping the final-year project",
+     "hours": 10,
+     "depth": "core",
+     "week": 151,
+     "prerequisites": [
+      "M19.U02"
+     ],
+     "outcomes": [
+      "You can score FYP candidates on user access, data licence, compute budget, supervisor fit, track fit, risk and evaluation feasibility.",
+      "You can write an FYP proposal with question, users, baseline, acceptance criteria, timeline and risks."
+     ],
+     "topics": [
+      {
+       "id": "M20.02.01",
+       "title": "Choose primary track (AI Eng / FDE / MLOps) + depth question"
+      },
+      {
+       "id": "M20.02.02",
+       "title": "Identify real users"
+      },
+      {
+       "id": "M20.02.04",
+       "title": "Capstone timeline"
+      },
+      {
+       "id": "M20.02.05",
+       "title": "Compute budget"
+      },
+      {
+       "id": "M20.02.06",
+       "title": "Supervision"
+      },
+      {
+       "id": "M20.02.07",
+       "title": "Measurable acceptance criteria"
+      }
+     ],
+     "learn": {
+      "resourceId": "grain-doc18",
+      "title": "Grain to Mountain doc 18 — Final-year projects reviewed",
+      "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/18-final-year-projects-reviewed.md",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified",
+      "slice": "The 20 FYP ideas with caveats (menu)"
+     },
+     "covers": [
+      "Twenty reviewed FYP ideas with difficulty and data caveats",
+      "Which ideas are hardest (coding harness, on-chain agent)",
+      "Doc 09: scope a capstone in 12–16 weeks"
+     ],
+     "gaps": [
+      {
+       "topic": "Capstone menu (production RAG, MCP server with registry, voice assistant, issue-to-PR agent…)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Terminal Native Coding Agent (+13 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 · Lesson 01 terminal native coding agent; Lesson 02 rag over codebase; Lesson 03 realtime voice assistant; Lesson 04 multimodal document qa; Lesson 05 autonomous research agent; Lesson 06 devops troubleshooting agent; Lesson 08 production rag chatbot; Lesson 09 code migration agent; Lesson 10 multi agent software team; Lesson 11 llm observability dashboard; Lesson 13 mcp server with registry; Lesson 15 constitutional safety harness; Lesson 16 github issue to pr agent; Lesson 17 personal ai tutor"
+       }
+      },
+      {
+       "topic": "Agent harness build series as an FYP spine",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Agent Harness Loop Contract (+9 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 · Lesson 20 agent harness loop contract; Lesson 21 tool registry schema validation; Lesson 22 jsonrpc stdio transport; Lesson 23 function call dispatcher; Lesson 24 plan execute control flow; Lesson 25 verification gates observation budget; Lesson 26 sandbox runner denylist; Lesson 27 eval harness fixture tasks; Lesson 28 observability otel traces; Lesson 29 end to end coding task demo"
+       }
+      },
+      {
+       "topic": "Frame the task, plan from evidence, delegate, turn feedback into the system",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Frame The Task Before Code (+3 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 14 · Lesson 43 frame the task before code; Lesson 44 plan from evidence; Lesson 45 delegate with isolation; Lesson 46 turn feedback into system"
+       }
+      },
+      {
+       "topic": "Fixed-time scoping",
+       "resource": {
+        "resourceId": "shape-up",
+        "title": "Shape Up: Stop Running in Circles and Ship Work that Matters",
+        "url": "https://basecamp.com/shapeup",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Ch. 3 Set Boundaries (appetite)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Frame The Task Before Code (+3 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 14 · Lesson 43 frame the task before code; Lesson 44 plan from evidence; Lesson 45 delegate with isolation; Lesson 46 turn feedback into system"
+     },
+     "practice": {
+      "title": "Score three, propose one",
+      "brief": "Score 3 candidate FYPs on user access, data licence, compute budget (free tiers, Colab, local), supervisor fit, track fit, risk and evaluation feasibility. Pick one and write the proposal: question, users, baseline, acceptance criteria, timeline and risks.",
+      "done_when": "FYP_SCORING.md with a weighted table for 3 ideas and PROPOSAL.md approved by your supervisor (or reviewed by a peer if not yet assigned)."
+     },
+     "quiz": [
+      {
+       "id": "M20.U04.Q1",
+       "kind": "mcq",
+       "prompt": "The best FYP selection signal is…",
+       "options": [
+        "trendiness",
+        "most components",
+        "a reachable real user plus measurable acceptance criteria",
+        "the longest title"
+       ],
+       "answer": 2,
+       "explain": "Real users make evaluation possible."
+      },
+      {
+       "id": "M20.U04.Q2",
+       "kind": "mcq",
+       "prompt": "When the schedule slips, cut…",
+       "options": [
+        "evaluation first",
+        "the report",
+        "features before evaluation",
+        "testing"
+       ],
+       "answer": 2,
+       "explain": "Evaluation is the evidence."
+      },
+      {
+       "id": "M20.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A compute budget should be set…",
+       "options": [
+        "after experiments",
+        "never",
+        "before experiments, with free-tier limits checked",
+        "by the supervisor only"
+       ],
+       "answer": 2,
+       "explain": "Free tiers change; check them."
+      },
+      {
+       "id": "M20.U04.Q4",
+       "kind": "short",
+       "prompt": "Why did you reject your second-ranked FYP idea?",
+       "rubric": [
+        "Cites scoring criteria",
+        "Names the decisive risk",
+        "States what would have to change to revisit it"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U05",
+     "title": "Research question, baselines, ablations and the report",
+     "hours": 8,
+     "depth": "core",
+     "week": 152,
+     "prerequisites": [
+      "M20.U04"
+     ],
+     "outcomes": [
+      "You can pre-register an evaluation protocol before building.",
+      "You can run ablations and write a report with limitations."
+     ],
+     "topics": [
+      {
+       "id": "M20.02.03",
+       "title": "Scoped research question"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-recipe",
+      "title": "A Recipe for Training Neural Networks",
+      "url": "https://karpathy.github.io/2019/04/25/recipe/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post"
+     },
+     "covers": [
+      "Become one with the data; set up end-to-end skeleton and dumb baselines",
+      "Overfit, then regularise; tune; squeeze",
+      "Baseline-first, verify-everything discipline"
+     ],
+     "gaps": [
+      {
+       "topic": "ML research pitfalls checklist",
+       "resource": {
+        "resourceId": "ml-pitfalls-paper",
+        "title": "How to avoid machine learning pitfalls: a guide for academic researchers",
+        "url": "https://arxiv.org/abs/2108.02497",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Fair experiment design",
+       "resource": {
+        "resourceId": "grain-doc17",
+        "title": "Grain to Mountain doc 17 — Benchmarks, costs and harness study",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/17-benchmarks-costs-and-harness-study.md",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Fair harness experiment section"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "google-tech-writing-two",
+      "title": "Google Technical Writing Two",
+      "url": "https://developers.google.com/tech-writing/two",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Pre-registered protocol + ablations",
+      "brief": "Pre-register your evaluation protocol (frozen held-out set, metrics, baselines) before building. Run at least 2 ablations and write the report skeleton (intro, related work, method, experiments, limitations) by week 6.",
+      "done_when": "PROTOCOL.md committed with a date before the first experiment commit; ABLATIONS.md with 2 ablations; REPORT draft with all sections."
+     },
+     "quiz": [
+      {
+       "id": "M20.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Pre-registering the evaluation protocol prevents…",
+       "options": [
+        "bugs",
+        "choosing metrics after seeing results",
+        "cost",
+        "slow code"
+       ],
+       "answer": 1,
+       "explain": "Avoids p-hacking."
+      },
+      {
+       "id": "M20.U05.Q2",
+       "kind": "mcq",
+       "prompt": "An ablation removes…",
+       "options": [
+        "all components",
+        "the dataset",
+        "the baseline",
+        "one component to measure its contribution"
+       ],
+       "answer": 3,
+       "explain": "Isolates causal contribution."
+      },
+      {
+       "id": "M20.U05.Q3",
+       "kind": "mcq",
+       "prompt": "A limitations section should…",
+       "options": [
+        "be omitted",
+        "blame the data",
+        "state the conditions where results may not hold",
+        "repeat the abstract"
+       ],
+       "answer": 2,
+       "explain": "Scopes claims honestly."
+      },
+      {
+       "id": "M20.U05.Q4",
+       "kind": "short",
+       "prompt": "State your FYP research question in one falsifiable sentence.",
+       "rubric": [
+        "Has a measurable outcome",
+        "Has a comparison/baseline",
+        "Could turn out false"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M20.S3",
+   "title": "Job readiness (run in parallel from year 2)",
+   "units": [
+    {
+     "id": "M20.U06",
+     "title": "DSA and coding interviews",
+     "hours": 40,
+     "depth": "core",
+     "week": 153,
+     "prerequisites": [],
+     "outcomes": [
+      "You can solve NeetCode-150-pattern problems in timed conditions and explain complexity.",
+      "You can run a structured interview: clarify, brute force, optimise, test."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.01",
+       "title": "Python interview exercises"
+      },
+      {
+       "id": "M20.03.08",
+       "title": "DSA practice plan"
+      }
+     ],
+     "learn": {
+      "resourceId": "neetcode-roadmap",
+      "title": "NeetCode Roadmap (NeetCode 150)",
+      "url": "https://neetcode.io/roadmap",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "NeetCode 150 in roadmap order: arrays & hashing → two pointers → sliding window → stack → binary search → linked list → trees → tries → heap → backtracking → graphs → 1-D/2-D DP → greedy → intervals → math → bit manipulation"
+     },
+     "covers": [
+      "Pattern-ordered problem list with free video explanations",
+      "Prerequisite graph between patterns"
+     ],
+     "gaps": [
+      {
+       "topic": "Algorithm cheatsheets and interview process",
+       "resource": {
+        "resourceId": "tih-algo-cheatsheet",
+        "title": "Tech Interview Handbook — Algorithms study cheatsheet",
+        "url": "https://www.techinterviewhandbook.org/algorithms/study-cheatsheet/",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "tech-interview-handbook",
+      "title": "Tech Interview Handbook",
+      "url": "https://www.techinterviewhandbook.org/",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified"
+     },
+     "practice": {
+      "title": "3 timed problems a week",
+      "brief": "Solve 3 problems a week, timed (45 min). Log pattern, mistakes and a re-solve date; do a mock interview every 2 weeks with a peer.",
+      "done_when": "dsa_log.csv with ≥ 60 entries over the period and ≥ 6 mock-interview notes."
+     },
+     "quiz": [
+      {
+       "id": "M20.U06.Q1",
+       "kind": "mcq",
+       "prompt": "A sliding window fits…",
+       "options": [
+        "tree traversal",
+        "graph shortest path",
+        "contiguous subarray/substring problems with a constraint",
+        "sorting"
+       ],
+       "answer": 2,
+       "explain": "Expand/shrink a window."
+      },
+      {
+       "id": "M20.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Two-sum in O(n) uses…",
+       "options": [
+        "nested loops",
+        "sorting only",
+        "recursion",
+        "a hash map"
+       ],
+       "answer": 3,
+       "explain": "Store complements as you go."
+      },
+      {
+       "id": "M20.U06.Q3",
+       "kind": "mcq",
+       "prompt": "In an interview you should first…",
+       "options": [
+        "clarify inputs/constraints and state a brute-force approach",
+        "code immediately",
+        "stay silent",
+        "ask for hints"
+       ],
+       "answer": 0,
+       "explain": "Shows structured thinking."
+      },
+      {
+       "id": "M20.U06.Q4",
+       "kind": "short",
+       "prompt": "Which pattern do you fail most, and what is your fix?",
+       "rubric": [
+        "Names the pattern from the log",
+        "Diagnoses why",
+        "Concrete re-practice plan"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U07",
+     "title": "SQL interviews",
+     "hours": 10,
+     "depth": "core",
+     "week": 154,
+     "prerequisites": [],
+     "outcomes": [
+      "You can solve joins, window functions, CTEs and GROUP BY/HAVING interview problems."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.12",
+       "title": "SQL interview exercises",
+       "legacyIds": [
+        "M20.03.01"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "leetcode-sql50",
+      "title": "LeetCode — Top SQL 50 study plan",
+      "url": "https://leetcode.com/studyplan/top-sql-50/",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Top SQL 50 study plan: select, basic joins, aggregates, sorting/grouping, advanced select/joins, subqueries, advanced string functions"
+     },
+     "covers": [
+      "Select/filter, joins, aggregation",
+      "Sorting and grouping, subqueries",
+      "String functions and regex"
+     ],
+     "gaps": [
+      {
+       "topic": "Window functions explained",
+       "resource": {
+        "resourceId": "mode-window-functions",
+        "title": "Mode SQL Tutorial — Window functions",
+        "url": "https://mode.com/sql-tutorial/sql-window-functions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Interactive basics refresher",
+       "resource": {
+        "resourceId": "sqlbolt",
+        "title": "SQLBolt — interactive SQL lessons",
+        "url": "https://sqlbolt.com/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "30 SQL problems",
+      "brief": "Complete 30 problems covering joins, window functions, CTEs and GROUP BY/HAVING.",
+      "done_when": "30 solved problems logged with the concept tested; ≥ 5 use window functions."
+     },
+     "quiz": [
+      {
+       "id": "M20.U07.Q1",
+       "kind": "mcq",
+       "prompt": "ROW_NUMBER() OVER (PARTITION BY x ORDER BY y) is used for…",
+       "options": [
+        "joins",
+        "ranking rows within groups",
+        "deleting rows",
+        "indexing"
+       ],
+       "answer": 1,
+       "explain": "Classic top-N-per-group."
+      },
+      {
+       "id": "M20.U07.Q2",
+       "kind": "mcq",
+       "prompt": "WHERE vs HAVING:",
+       "options": [
+        "they are identical",
+        "HAVING filters after aggregation",
+        "WHERE runs after aggregation",
+        "none"
+       ],
+       "answer": 1,
+       "explain": "WHERE filters rows, HAVING filters groups."
+      },
+      {
+       "id": "M20.U07.Q3",
+       "kind": "mcq",
+       "prompt": "A LEFT JOIN keeps…",
+       "options": [
+        "all rows from the left table",
+        "only matches",
+        "all rows from the right table",
+        "none"
+       ],
+       "answer": 0,
+       "explain": "Unmatched right columns are NULL."
+      },
+      {
+       "id": "M20.U07.Q4",
+       "kind": "short",
+       "prompt": "Describe the query for 'second-highest salary per department'.",
+       "rubric": [
+        "Uses DENSE_RANK/ROW_NUMBER partitioned by department ordered by salary desc",
+        "Filters rank = 2 in an outer query/CTE",
+        "Handles ties/departments with one salary"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U08",
+     "title": "System design interview practice (classic, ML and LLM)",
+     "hours": 15,
+     "depth": "core",
+     "week": 155,
+     "prerequisites": [],
+     "outcomes": [
+      "You can run a 45-minute design under time pressure with capacity estimates, failure modes and an eval plan.",
+      "You can adapt a classic design to ML/LLM concerns: evaluation, cost per request, latency, safety."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.02",
+       "title": "ML system design"
+      },
+      {
+       "id": "M20.03.05",
+       "title": "Distributed-systems fundamentals for systems roles"
+      }
+     ],
+     "learn": {
+      "resourceId": "system-design-primer",
+      "title": "The System Design Primer",
+      "url": "https://github.com/donnemartin/system-design-primer",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'How to approach a system design interview question', then 'Back-of-the-envelope calculations' and the solved designs index"
+     },
+     "covers": [
+      "Four-step interview approach: use cases/constraints → high-level design → core components → scale",
+      "Latency numbers and powers-of-two for capacity estimates",
+      "Worked designs (Pastebin, Twitter timeline, web crawler…) — concepts themselves are taught in M22"
+     ],
+     "gaps": [
+      {
+       "topic": "ML system design questions and framework",
+       "resource": {
+        "resourceId": "chip-mlib",
+        "title": "Introduction to Machine Learning Interviews Book",
+        "url": "https://huyenchip.com/ml-interviews-book/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Part II ML system design chapter"
+       }
+      },
+      {
+       "topic": "LLM production concerns",
+       "resource": {
+        "resourceId": "chip-llm-production",
+        "title": "Building LLM applications for production",
+        "url": "https://huyenchip.com/2023/04/11/llm-engineering.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "LLM design patterns",
+       "resource": {
+        "resourceId": "eugeneyan-llm-patterns",
+        "title": "Patterns for Building LLM-based Systems & Products",
+        "url": "https://eugeneyan.com/writing/llm-patterns/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Interview delivery framework",
+       "resource": {
+        "resourceId": "hellointerview-sd",
+        "title": "Hello Interview — System Design in a Hurry",
+        "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction",
+        "type": "course",
+        "free": "partial",
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "aie-book-repo",
+      "title": "AI Engineering (book) resources repo",
+      "url": "https://github.com/chiphuyen/aie-book",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Four timed designs",
+      "brief": "Do 4 timed 45-minute designs on paper: a URL shortener, a RAG support bot for 1M documents, an agent platform with tool permissions, and an ML feature/serving pipeline. Each with capacity estimates, a failure-modes section and an evaluation plan. Have a peer interrupt with follow-ups.",
+      "done_when": "4 scanned/typed designs with estimates, failure modes and eval plans, plus peer feedback notes."
+     },
+     "quiz": [
+      {
+       "id": "M20.U08.Q1",
+       "kind": "mcq",
+       "prompt": "A cache-aside pattern means…",
+       "options": [
+        "the DB writes to the cache automatically",
+        "the app checks the cache, falls back to the DB, then fills the cache",
+        "there is no DB",
+        "none"
+       ],
+       "answer": 1,
+       "explain": "Lazy loading."
+      },
+      {
+       "id": "M20.U08.Q2",
+       "kind": "mcq",
+       "prompt": "A queue between the API and workers provides…",
+       "options": [
+        "lower correctness",
+        "synchronous calls",
+        "none",
+        "decoupling, buffering and retry"
+       ],
+       "answer": 3,
+       "explain": "Absorbs bursts."
+      },
+      {
+       "id": "M20.U08.Q3",
+       "kind": "mcq",
+       "prompt": "An LLM system design must address, beyond scale…",
+       "options": [
+        "evaluation, cost per request, latency and safety",
+        "only QPS",
+        "fonts",
+        "none"
+       ],
+       "answer": 0,
+       "explain": "Quality is a design dimension."
+      },
+      {
+       "id": "M20.U08.Q4",
+       "kind": "short",
+       "prompt": "Where is the single point of failure in your RAG design?",
+       "rubric": [
+        "Names it (vector DB, embedding service, LLM provider)",
+        "Impact when it fails",
+        "Mitigation (replica, fallback model, degraded mode)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U09",
+     "title": "Debugging and paper-discussion interviews",
+     "hours": 8,
+     "depth": "core",
+     "week": 156,
+     "prerequisites": [
+      "M12.U23"
+     ],
+     "outcomes": [
+      "You can diagnose a broken training run or agent out loud in 30 minutes from traces/metrics.",
+      "You can present a paper's question, method, baseline, ablations and limitations in 10 minutes."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.03",
+       "title": "Model debugging"
+      },
+      {
+       "id": "M20.03.04",
+       "title": "Paper discussion"
+      }
+     ],
+     "learn": {
+      "resourceId": "chip-mlib",
+      "title": "Introduction to Machine Learning Interviews Book",
+      "url": "https://huyenchip.com/ml-interviews-book/contents/part-ii.-questions.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Part II Questions (ML basics, sampling, evaluation, debugging)"
+     },
+     "covers": [
+      "Question bank across ML fundamentals, data, training, evaluation",
+      "Common debugging scenarios"
+     ],
+     "gaps": [
+      {
+       "topic": "Training-run debugging recipe",
+       "resource": {
+        "resourceId": "karpathy-recipe",
+        "title": "A Recipe for Training Neural Networks",
+        "url": "https://karpathy.github.io/2019/04/25/recipe/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 2–4"
+       }
+      },
+      {
+       "topic": "Paper to practise on",
+       "resource": {
+        "resourceId": "swe-agent-paper",
+        "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+        "url": "https://arxiv.org/abs/2405.15793",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Break-and-fix + paper talk",
+      "brief": "A peer breaks your training run or agent (wrong LR, label leak, broken tool schema, injected doc) and you diagnose it out loud in 30 minutes. Also present one agent paper (e.g. SWE-agent) in 10 minutes: question, method, baseline, ablation, limitations.",
+      "done_when": "Notes from 2 break-and-fix sessions (time to diagnosis) and a 10-minute recording or slide deck of the paper talk."
+     },
+     "quiz": [
+      {
+       "id": "M20.U09.Q1",
+       "kind": "mcq",
+       "prompt": "The first check when loss won't decrease is to…",
+       "options": [
+        "add layers",
+        "add more data",
+        "overfit a single batch",
+        "change the GPU"
+       ],
+       "answer": 2,
+       "explain": "Verifies the pipeline can learn at all."
+      },
+      {
+       "id": "M20.U09.Q2",
+       "kind": "mcq",
+       "prompt": "The first check when an agent loops is to…",
+       "options": [
+        "use a bigger model",
+        "read the trace: tool errors, stop conditions, context",
+        "restart it",
+        "add more tools"
+       ],
+       "answer": 1,
+       "explain": "Evidence before fixes."
+      },
+      {
+       "id": "M20.U09.Q3",
+       "kind": "mcq",
+       "prompt": "In paper discussion, a strong answer covers…",
+       "options": [
+        "only the abstract",
+        "the author list",
+        "citation count",
+        "assumptions, baselines and what the ablations prove"
+       ],
+       "answer": 3,
+       "explain": "Shows critical reading."
+      },
+      {
+       "id": "M20.U09.Q4",
+       "kind": "short",
+       "prompt": "Describe the hardest bug you've fixed using the STAR structure.",
+       "rubric": [
+        "Situation and task are concrete",
+        "Actions show a method (hypothesis, evidence)",
+        "Result quantified and lesson stated"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U10",
+     "title": "Open-source contribution",
+     "hours": 15,
+     "depth": "core",
+     "week": 157,
+     "prerequisites": [],
+     "outcomes": [
+      "You can land a merged PR in a project you use, following its contribution process."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.06",
+       "title": "Open-source contribution"
+      }
+     ],
+     "learn": {
+      "resourceId": "gh-contribute-oss",
+      "title": "GitHub Docs — Finding ways to contribute to open source on GitHub",
+      "url": "https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole page: finding good first issues, topics, explore"
+     },
+     "covers": [
+      "Finding beginner-friendly issues and labels",
+      "Using topics/explore to find projects",
+      "Reading CONTRIBUTING and codes of conduct"
+     ],
+     "gaps": [
+      {
+       "topic": "End-to-end contribution etiquette",
+       "resource": {
+        "resourceId": "opensource-guide-contribute",
+        "title": "How to Contribute to Open Source",
+        "url": "https://opensource.guide/how-to-contribute/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "One merged PR",
+      "brief": "Land 1 merged PR in a project you actually used (bug repro + fix, docs correction, or test). Reference the issue and the review discussion in your portfolio.",
+      "done_when": "A merged PR URL with review discussion linked from your portfolio."
+     },
+     "quiz": [
+      {
+       "id": "M20.U10.Q1",
+       "kind": "mcq",
+       "prompt": "A good first contribution is…",
+       "options": [
+        "a giant refactor",
+        "a generated repo",
+        "a style-only PR across 100 files",
+        "a reproducible bug fix, test or docs fix following CONTRIBUTING"
+       ],
+       "answer": 3,
+       "explain": "Small and reviewable."
+      },
+      {
+       "id": "M20.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Before coding a fix you should…",
+       "options": [
+        "open a PR blindly",
+        "fork silently",
+        "nothing",
+        "confirm the issue and approach with maintainers"
+       ],
+       "answer": 3,
+       "explain": "Saves wasted work."
+      },
+      {
+       "id": "M20.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Most hiring signal comes from…",
+       "options": [
+        "fork count",
+        "a reviewed merged PR with discussion",
+        "stars",
+        "followers"
+       ],
+       "answer": 1,
+       "explain": "Shows collaboration."
+      },
+      {
+       "id": "M20.U10.Q4",
+       "kind": "short",
+       "prompt": "Link your PR and summarise the reviewer's main feedback.",
+       "rubric": [
+        "Valid PR link",
+        "Accurate summary of feedback",
+        "What you changed in response"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M20.U11",
+     "title": "Resume, GitHub profile, behavioural interviews and job search",
+     "hours": 8,
+     "depth": "core",
+     "week": 158,
+     "prerequisites": [
+      "M20.U01"
+     ],
+     "outcomes": [
+      "You can write a one-page resume with quantified, evidence-linked bullets and a GitHub profile README.",
+      "You can tell 6 STAR stories and run a tracked job-search funnel."
+     ],
+     "topics": [
+      {
+       "id": "M20.03.09",
+       "title": "Resume and GitHub profile"
+      },
+      {
+       "id": "M20.03.10",
+       "title": "Behavioural/STAR"
+      },
+      {
+       "id": "M20.03.11",
+       "title": "Job-search funnel"
+      }
+     ],
+     "learn": {
+      "resourceId": "tih-resume",
+      "title": "Tech Interview Handbook — Resume",
+      "url": "https://www.techinterviewhandbook.org/resume/",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Resume page"
+     },
+     "covers": [
+      "Resume structure and length",
+      "Writing impact bullets with metrics",
+      "Tailoring to roles and ATS considerations"
+     ],
+     "gaps": [
+      {
+       "topic": "Behavioural interview prep",
+       "resource": {
+        "resourceId": "tih-behavioral",
+        "title": "Tech Interview Handbook — Behavioral interviews",
+        "url": "https://www.techinterviewhandbook.org/behavioral-interview/",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified"
+       }
+      },
+      {
+       "topic": "Profile README",
+       "resource": {
+        "resourceId": "gh-profile-readme",
+        "title": "GitHub Docs — Managing your profile README",
+        "url": "https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Offer negotiation",
+       "resource": {
+        "resourceId": "tih-negotiation",
+        "title": "Tech Interview Handbook — Negotiation",
+        "url": "https://www.techinterviewhandbook.org/negotiation/",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified"
+       }
+      },
+      {
+       "topic": "What FDE hiring screens for",
+       "resource": {
+        "resourceId": "pragmatic-fde",
+        "title": "What are Forward Deployed Engineers, and why are they so in demand?",
+        "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers",
+        "type": "article",
+        "free": "partial",
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Resume, profile, stories, funnel",
+      "brief": "Write a one-page resume with quantified bullets linked to evidence repos, a GitHub profile README, and 6 STAR stories (conflict, failure, ambiguity, customer, learning, leadership). Once track-ready, apply to 10 roles a week and track the funnel in a sheet.",
+      "done_when": "resume.pdf, profile README live, STORIES.md with 6 stories, and a funnel sheet with stage counts."
+     },
+     "quiz": [
+      {
+       "id": "M20.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A strong resume bullet is…",
+       "options": [
+        "a duty list",
+        "action + measurable result + how ('cut p95 latency 40% by…')",
+        "a skills cloud",
+        "a photo"
+       ],
+       "answer": 1,
+       "explain": "Evidence, not duties."
+      },
+      {
+       "id": "M20.U11.Q2",
+       "kind": "mcq",
+       "prompt": "STAR stands for…",
+       "options": [
+        "Skills, Talent, Ability, Role",
+        "Situation, Task, Action, Result",
+        "Start, Try, Act, Repeat",
+        "none"
+       ],
+       "answer": 1,
+       "explain": "Structure for behavioural answers."
+      },
+      {
+       "id": "M20.U11.Q3",
+       "kind": "mcq",
+       "prompt": "For FDE roles, behavioural stories should especially show…",
+       "options": [
+        "only coding speed",
+        "customer handling, ambiguity and ownership",
+        "papers",
+        "none"
+       ],
+       "answer": 1,
+       "explain": "FDE work is customer-facing."
+      },
+      {
+       "id": "M20.U11.Q4",
+       "kind": "short",
+       "prompt": "Paste your best resume bullet and the evidence link.",
+       "rubric": [
+        "Bullet has action, metric and method",
+        "Link points to verifiable evidence",
+        "Claim matches the evidence"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Final-year project plus job-ready portfolio",
+  "brief": "Deliver an FYP that is useful to real users with a pre-registered, held-out evaluation, an independent technical report reviewed by another person, and a portfolio matrix complete for your track; pass at least one mock interview.",
+  "rubric": [
+   {
+    "criterion": "Real usefulness",
+    "levels": [
+     "0: no users",
+     "1: hypothetical users",
+     "2: real users tried it",
+     "3: real users, adoption/feedback data, problem validated in discovery"
+    ]
+   },
+   {
+    "criterion": "Engineering and evaluation",
+    "levels": [
+     "0: no evaluation",
+     "1: demo-level evaluation",
+     "2: baseline + held-out eval",
+     "3: strong baseline, pre-registered held-out eval, ablations, cost/latency, failure analysis"
+    ]
+   },
+   {
+    "criterion": "Reproducibility and operations",
+    "levels": [
+     "0: runs only on author's machine",
+     "1: setup instructions",
+     "2: one-command setup + CI",
+     "3: one-command setup, CI, deployment runbook, monitoring (MLOps track: rollback demo)"
+    ]
+   },
+   {
+    "criterion": "Track evidence",
+    "levels": [
+     "0: no matrix",
+     "1: matrix with many gaps",
+     "2: most cells filled",
+     "3: portfolio matrix complete for the chosen track"
+    ]
+   },
+   {
+    "criterion": "Communication",
+    "levels": [
+     "0: no report",
+     "1: report unreviewed",
+     "2: reviewed report + demo",
+     "3: reviewed report, published case study, 5-minute demo, mock interview passed"
+    ]
+   }
+  ],
+  "evidence": "url"
+ }
+}

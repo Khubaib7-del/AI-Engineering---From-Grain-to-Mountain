@@ -1,31 +1,670 @@
-import {Redirect,router} from 'expo-router';
-import {Platform,ScrollView,View,Pressable} from 'react-native';
-import Svg,{Path,Circle,Line} from 'react-native-svg';
-import {BrandMark} from '../components/brand';
-import {Button,Txt,usePalette,useWide} from '../components/ui';
-import {useAuth} from '../lib/auth';
-import {conceptCount,lessons,modules} from '../lib/content';
-function Mountain(){const c=usePalette();return <Svg width="100%" height={320} viewBox="0 0 560 320" accessibilityLabel="A path from a single grain to a mountain summit"><Path d="M0 290L70 270L120 225L165 240L255 95L295 145L355 20L470 226L560 280" stroke={c.ink} strokeWidth={1.5} fill="none"/>{[0,1,2,3,4,5,6].map(i=><Path key={i} d={`M0 ${306-i*9} Q160 ${310-i*24} 280 ${240-i*22} T560 ${300-i*8}`} stroke={c.line} strokeWidth={1} fill="none"/>)}<Line x1={355} y1={20} x2={355} y2={310} stroke={c.line} strokeDasharray="3 6"/><Circle cx={355} cy={20} r={5} fill={c.ink}/><Circle cx={70} cy={270} r={4} fill={c.ink}/></Svg>;}
-export default function Product(){
- const c=usePalette(),wide=useWide(),{session}=useAuth();
- if(Platform.OS!=='web')return <Redirect href="/today"/>;
- return <ScrollView style={{flex:1,backgroundColor:c.bg}} contentContainerStyle={{paddingHorizontal:wide?56:24,paddingTop:28,paddingBottom:40,gap:wide?96:56,maxWidth:1400,width:'100%',alignSelf:'center'}}>
-  <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:20,flexWrap:'wrap'}}>
-   <View style={{flexDirection:'row',alignItems:'center',gap:12}}><BrandMark size={36} color={c.ink}/><View><Txt size={16} weight="700">GRAIN / MOUNTAIN</Txt><Txt size={11} color={c.muted}>AI ENGINEERING, ONE STEP AT A TIME</Txt></View></View>
-   <View style={{flexDirection:'row',gap:20,alignItems:'center'}}><Pressable accessibilityRole="link" onPress={()=>router.push('/download')} style={{paddingVertical:12}}><Txt size={14}>Get the app</Txt></Pressable><Button title={session?'Your account':'Sign in'} secondary onPress={()=>router.push('/account')}/></View>
-  </View>
-  <View style={{flexDirection:wide?'row':'column',gap:48,alignItems:wide?'center':'stretch'}}>
-   <View style={{flex:wide?1:undefined,gap:28}}><Txt size={12} color={c.muted} style={{letterSpacing:2}}>FROM YOUR FIRST LINE TO YOUR NEXT BIG IDEA</Txt><Txt size={wide?84:54} weight="700" accessibilityRole="header">Small steps.{`\n`}Serious depth.</Txt><Txt size={20} color={c.muted} style={{maxWidth:470}}>An entire AI ecosystem. One clear next step. Learn the foundations, build real things, and keep a notebook of what you understand.</Txt><View style={{flexDirection:'row',flexWrap:'wrap',gap:12}}><Button title="Open learning app" icon="arrow-forward" onPress={()=>router.push('/today')}/><Button title="Get the mobile app" secondary onPress={()=>router.push('/download')}/></View><Txt size={13} color={c.muted}>Free learning resources. Your pace. No race to finish.</Txt></View>
-   <View style={{flex:wide?1:undefined,gap:20}}><Mountain/><View style={{flexDirection:'row',justifyContent:'space-between',borderTopWidth:1,borderColor:c.line,paddingTop:18}}><Txt size={12} color={c.muted}>01 / BEGIN WITH A GRAIN</Txt><Txt size={12} color={c.muted}>∞ / KEEP CLIMBING</Txt></View></View>
-  </View>
-  <View style={{borderWidth:1,borderColor:c.line,borderRadius:28,overflow:'hidden',backgroundColor:c.surface,flexDirection:wide?'row':'column'}}>
-   <View style={{padding:wide?40:24,flex:wide?1:undefined,gap:22}}><Txt size={12} color={c.muted} style={{letterSpacing:2}}>THE PRODUCT / YOUR LEARNING WORKSPACE</Txt><Txt size={wide?40:32} weight="600">Less collecting.{`\n`}More understanding.</Txt><Txt color={c.muted}>Your next lesson, the right course, a small build, and a moment to explain it in your own words. Everything has a place.</Txt><Button title="Explore the learning path" secondary onPress={()=>router.push('/path')}/></View>
-   <View style={{padding:wide?40:24,flex:wide?1:undefined,gap:18,backgroundColor:c.hero}}><Txt size={12} color={c.muted}>A LOOK INSIDE · DAY 01</Txt><Txt size={27} weight="600">Your first program.</Txt><View style={{flexDirection:'row',gap:8}}>{['Watch','Build','Recall'].map((s,i)=><View key={s} style={{flex:1,padding:14,borderRadius:16,borderWidth:1,borderColor:c.line}}><Txt size={12} color={c.muted}>0{i+1}</Txt><Txt size={14} weight="600">{s}</Txt></View>)}</View><Txt color={c.muted}>Harvard CS50P · Functions and variables</Txt><View style={{borderLeftWidth:2,borderColor:c.ink,paddingLeft:18,gap:6}}><Txt size={15}>20 minutes. One line of Python.</Txt><Txt size={13} color={c.muted}>Run print(&quot;Hello&quot;). Change it. Explain it.</Txt></View></View>
-  </View>
-  <View style={{gap:32}}><Txt size={wide?40:30} weight="600">A path that grows with you.</Txt><View style={{flexDirection:wide?'row':'column',gap:24}}>{[['01','Foundations','Python, engineering tools and the mathematics behind the models.'],['02','Build understanding','Machine learning, neural networks and the experiments that make them click.'],['03','Make it useful','Retrieval, agents, evaluation and deployment. Then go deep in one specialty.']].map(([n,title,body])=><View key={n} style={{flex:wide?1:undefined,gap:12,borderTopWidth:1,borderColor:c.line,paddingTop:22}}><Txt size={12} color={c.muted}>{n}</Txt><Txt size={23} weight="600">{title}</Txt><Txt size={16} color={c.muted}>{body}</Txt></View>)}</View></View>
-  <View style={{flexDirection:'row',flexWrap:'wrap',gap:40,borderTopWidth:1,borderBottomWidth:1,borderColor:c.line,paddingVertical:32}}>{[[String(modules.length),'ordered modules'],[String(conceptCount),'concept checkpoints'],[String(lessons.length),'guided first steps']].map(([n,label])=><View key={label} style={{flexGrow:1,gap:4}}><Txt size={46} weight="600">{n}</Txt><Txt size={14} color={c.muted}>{label}</Txt></View>)}</View>
-  <View style={{gap:16,alignItems:'flex-start'}}><Txt size={wide?46:34} weight="600">Start where you are.</Txt><Txt color={c.muted}>One notebook across the website and Android app. Sign in to sync your progress, or begin locally and bring your guest notebook into your account when you’re ready.</Txt><Button title="Open learning app" icon="arrow-forward" onPress={()=>router.push('/today')}/></View>
-  <View style={{borderTopWidth:1,borderColor:c.line,paddingTop:24,flexDirection:'row',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}><Txt size={12} color={c.muted}>GRAIN / MOUNTAIN · BUILT FOR THE LONG CLIMB</Txt><Pressable accessibilityRole="link" onPress={()=>router.push('/privacy')} style={{minHeight:44}}><Txt size={13}>Privacy & your data</Txt></Pressable></View>
- </ScrollView>;
+import { useMemo, useRef, useState } from 'react';
+import { Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { Redirect, router, useLocalSearchParams } from 'expo-router';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
+import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
+import { MountainMap, type MapNode } from '../components/mountain-map';
+import { Heatmap } from '../components/heatmap';
+import { useReduced } from '../components/motion';
+import {
+  APP_NAME,
+  BrandLink,
+  Button,
+  Chip,
+  Grid,
+  Icon,
+  Panel,
+  Txt,
+  usePageTitle,
+  usePalette,
+} from '../components/ui';
+import { useAuth } from '../lib/auth';
+import { useLearning } from '../lib/store';
+import {
+  allUnits,
+  conceptCount,
+  hasV2,
+  modules,
+  phases,
+  resources,
+  tracks,
+  v2CoreHours,
+  v2Modules,
+  v2Phases,
+  weeks,
+} from '../lib/content';
+import type { Activity } from '../lib/types';
+
+const TOTAL_HOURS = hasV2 ? v2CoreHours : modules.reduce((n, m) => n + m.hours, 0);
+const years = (perWeek: number) => TOTAL_HOURS / perWeek / 52;
+const yearsText = (perWeek: number) => {
+  const y = years(perWeek);
+  return y < 2 ? 'under two years' : `about ${Math.round(y * 2) / 2} years`;
+};
+/** Roadmap groups: the v2 phases when the v2 curriculum is bundled, else the legacy camps. */
+const ROADMAP: { title: string; caption: string; items: { id: string; title: string }[] }[] = hasV2
+  ? v2Phases.map(p => ({
+      title: p.title.replace(/^(P\d+)\s+/, '$1 · ').toUpperCase(),
+      caption: p.title.replace(/^P\d+\s+/, ''),
+      items: p.modules.map(m => ({ id: m.id, title: m.title })),
+    }))
+  : phases.map((p, i) => ({
+      title: ['BASE CAMP', 'CAMP 1', 'CAMP 2', 'SUMMIT RIDGE'][i],
+      caption: p.caption,
+      items: p.ids.map(id => ({ id, title: modules.find(m => m.id === id)?.title ?? id })),
+    }));
+
+const FAQ = [
+  [
+    'Is it really free?',
+    'Yes. Every course, book, video and paper on the path is free to use (some university courses are “free to audit”). The app is free, with no ads or tracking. Certificates from course providers are optional and separate.',
+  ],
+  [
+    'How long will it take?',
+    `The core path is about ${TOTAL_HOURS.toLocaleString()} hours${hasV2 ? `, laid out as a ${weeks.length}-week plan` : ''}. At 10 hours a week that is ${yearsText(10)} of evenings; at 20 hours, ${yearsText(20)}. Your weekly plan and projected finish update to the hours you choose, and the placement check lets you skip what you already know.`,
+  ],
+  [
+    'Do I need a CS degree, a GPU or paid API keys?',
+    'No degree. A normal laptop is enough for almost everything; GPU work uses free notebooks such as Colab or Kaggle. Where an LLM API is needed, the path points to free tiers or local models first.',
+  ],
+  [
+    'Which role should I pick?',
+    'AI Engineer builds LLM apps, retrieval and agents. Forward Deployed Engineer takes those systems into customer environments. MLOps Engineer trains, ships and runs models. All three share the same fundamentals; you can start undecided and choose once the fundamentals are done.',
+  ],
+  [
+    'Does it work offline and on Android?',
+    'Yes. Your notebook is stored on your device first, so it works offline; sign in to sync it across the website and the Android app. The lectures themselves still need a connection.',
+  ],
+  [
+    'Is this a certificate?',
+    'No. You finish with something more useful to employers: a portfolio of graded quizzes, practice evidence and capstone projects on GitHub that show what you can actually do.',
+  ],
+  [
+    'Who made it?',
+    'An AI engineering student who wanted one honest, ordered path through the best free material instead of a hundred open tabs. The curriculum and the app are open source.',
+  ],
+];
+
+const SOURCES = [
+  'Harvard CS50 & CS50P',
+  'MIT OpenCourseWare & Missing Semester',
+  'Stanford CS229, CS224N, CS336',
+  'fast.ai',
+  'Hugging Face courses',
+  'DataTalksClub (ML, LLM & MLOps Zoomcamps)',
+  'Andrej Karpathy · Neural Networks: Zero to Hero',
+  'DeepLearning.AI short courses',
+  'Mathematics for Machine Learning (book)',
+  'Dive into Deep Learning (book)',
+  '3Blue1Brown',
+  'Official docs: Python, PyTorch, LangGraph, MCP',
+];
+
+function demoNodes(): MapNode[] {
+  const statuses: MapNode['status'][] = [
+    'passed',
+    'passed',
+    'passed',
+    'in-progress',
+    'available',
+    'locked',
+    'locked',
+    'locked',
+    'locked',
+  ];
+  const source = hasV2 ? v2Modules : modules;
+  return source.slice(0, 9).map((m, i) => ({
+    id: m.id,
+    kind: 'module',
+    title: m.title,
+    moduleId: m.id,
+    moduleTitle: m.title,
+    status: statuses[i],
+    progress: i === 3 ? 0.5 : statuses[i] === 'passed' ? 1 : 0,
+    hours: m.hours,
+  }));
 }
 
+function demoActivity(): Activity[] {
+  const out: Activity[] = [];
+  const today = new Date();
+  for (let d = 0; d < 200; d++) {
+    const seed = Math.sin(d * 12.9898) * 43758.5453;
+    const r = seed - Math.floor(seed);
+    if (r < 0.42 - (d > 150 ? 0.25 : 0)) continue;
+    const n = 1 + Math.floor(r * 5);
+    const date = new Date(today);
+    date.setDate(today.getDate() - d);
+    for (let k = 0; k < n; k++)
+      out.push({ at: new Date(date.getTime() - k * 60000).toISOString(), kind: 'step', id: 'demo' });
+  }
+  return out.sort((a, b) => a.at.localeCompare(b.at));
+}
+
+function Glow({ width, height }: { width: number; height: number }) {
+  const c = usePalette();
+  return (
+    <Svg width={width} height={height} style={{ position: 'absolute', top: 0, left: 0 }} pointerEvents="none">
+      <Defs>
+        <RadialGradient id="g" cx="70%" cy="20%" rx="60%" ry="55%">
+          <Stop offset="0" stopColor={c.ink} stopOpacity={c.bg === '#000000' ? 0.11 : 0.06} />
+          <Stop offset="1" stopColor={c.ink} stopOpacity={0} />
+        </RadialGradient>
+      </Defs>
+      <Rect x={0} y={0} width={width} height={height} fill="url(#g)" />
+    </Svg>
+  );
+}
+
+function SectionHead({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) {
+  const c = usePalette();
+  const { width } = useWindowDimensions();
+  return (
+    <View style={{ gap: 10, maxWidth: 720 }}>
+      <Txt size={12} weight="600" color={c.muted} style={{ letterSpacing: 1.6 }}>
+        {eyebrow.toUpperCase()}
+      </Txt>
+      <Txt size={width >= 900 ? 44 : 32} weight="700" accessibilityRole="header">
+        {title}
+      </Txt>
+      {body && (
+        <Txt size={17} color={c.muted}>
+          {body}
+        </Txt>
+      )}
+    </View>
+  );
+}
+
+function Faq() {
+  const c = usePalette();
+  const [open, setOpen] = useState(0);
+  return (
+    <View style={{ borderTopWidth: 1, borderColor: c.line }}>
+      {FAQ.map(([q, a], i) => (
+        <View key={q} style={{ borderBottomWidth: 1, borderColor: c.line }}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ expanded: open === i }}
+            onPress={() => setOpen(open === i ? -1 : i)}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 12,
+              paddingVertical: 20,
+              minHeight: 56,
+            }}
+          >
+            <Txt size={17} weight="600" style={{ flex: 1 }}>
+              {q}
+            </Txt>
+            <Icon name={open === i ? 'minus' : 'plus'} size={18} color={c.muted} />
+          </Pressable>
+          {open === i && (
+            <Animated.View entering={FadeIn.duration(160)} style={{ paddingBottom: 20, maxWidth: 760 }}>
+              <Txt color={c.muted}>{a}</Txt>
+            </Animated.View>
+          )}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+export default function Landing() {
+  const c = usePalette();
+  const { width, height } = useWindowDimensions();
+  const wide = width >= 900;
+  const reduced = useReduced();
+  const { session, ready } = useAuth();
+  const { state, loaded } = useLearning();
+  const { about } = useLocalSearchParams<{ about?: string }>();
+  const scroll = useRef<ScrollView>(null);
+  const anchors = useRef<Record<string, number>>({});
+  const nodes = useMemo(() => demoNodes(), []);
+  const activity = useMemo(() => demoActivity(), []);
+  usePageTitle(undefined);
+
+  if (!ready || !loaded) return <View style={{ flex: 1, backgroundColor: c.bg }} />;
+  if (Platform.OS !== 'web') return <Redirect href={state.profile?.onboarded ? '/today' : '/start'} />;
+  if (!about && (session || state.profile?.onboarded)) return <Redirect href="/today" />;
+
+  const go = (key: string) =>
+    scroll.current?.scrollTo({ y: Math.max(0, (anchors.current[key] ?? 0) - 24), animated: !reduced });
+  const enter = (delay = 0) => (reduced ? undefined : FadeInDown.duration(520).delay(delay));
+  const pad = {
+    paddingHorizontal: wide ? 56 : 20,
+    maxWidth: 1240,
+    width: '100%' as const,
+    alignSelf: 'center' as const,
+  };
+  const sampleUnit = allUnits.find(u => u.unit.id === 'M01.U01') ?? allUnits[0];
+  const books = resources.filter(r => r.type === 'book').length;
+
+  return (
+    <View style={{ flex: 1, backgroundColor: c.bg }}>
+      <ScrollView ref={scroll} contentContainerStyle={{ paddingBottom: 40 }}>
+        <Glow width={width} height={Math.min(1100, height * 1.3)} />
+        {/* Nav */}
+        <View
+          style={{
+            ...pad,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            minHeight: 76,
+            gap: 16,
+          }}
+        >
+          <BrandLink href="/?about=1" compact={width < 480} />
+          {wide && (
+            <View style={{ flexDirection: 'row', gap: 4 }}>
+              {[
+                ['How it works', 'how'],
+                ['Roadmap', 'roadmap'],
+                ['Roles', 'roles'],
+                ['FAQ', 'faq'],
+              ].map(([label, key]) => (
+                <Pressable
+                  key={key}
+                  accessibilityRole="link"
+                  onPress={() => go(key)}
+                  style={{ paddingHorizontal: 14, minHeight: 40, justifyContent: 'center' }}
+                >
+                  <Txt size={14} color={c.muted}>
+                    {label}
+                  </Txt>
+                </Pressable>
+              ))}
+              <Pressable
+                accessibilityRole="link"
+                onPress={() => router.push('/download')}
+                style={{ paddingHorizontal: 14, minHeight: 40, justifyContent: 'center' }}
+              >
+                <Txt size={14} color={c.muted}>
+                  Android app
+                </Txt>
+              </Pressable>
+            </View>
+          )}
+          <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+            <Button title="Sign in" ghost compact onPress={() => router.push('/signin')} />
+            <Button title="Get started" compact onPress={() => router.push('/start')} />
+          </View>
+        </View>
+
+        {/* Hero */}
+        <View
+          style={{
+            ...pad,
+            flexDirection: wide ? 'row' : 'column',
+            gap: wide ? 56 : 36,
+            alignItems: wide ? 'center' : 'stretch',
+            paddingTop: wide ? 72 : 32,
+            paddingBottom: wide ? 96 : 56,
+          }}
+        >
+          <Animated.View entering={enter()} style={{ flex: wide ? 1.05 : undefined, gap: 24 }}>
+            <Chip text="Free · open source · web + Android" icon="sparkles" />
+            <Txt
+              size={wide ? 68 : 44}
+              weight="700"
+              accessibilityRole="header"
+              style={{ letterSpacing: wide ? -2.6 : -1.6, lineHeight: wide ? 72 : 48 }}
+            >
+              Go from zero to AI engineer. Free.
+            </Txt>
+            <Txt size={wide ? 20 : 17} color={c.muted} style={{ maxWidth: 560 }}>
+              One guided path from your first line of Python to a job as an AI Engineer, Forward Deployed
+              Engineer or MLOps Engineer — built on the best free courses. Learn it, practise it, prove it.
+            </Txt>
+            <View style={{ flexDirection: wide ? 'row' : 'column', gap: 12 }}>
+              <Button
+                title="Get started — it’s free"
+                icon="arrow-forward"
+                full={!wide}
+                onPress={() => router.push('/start')}
+              />
+              <Button title="See the roadmap" secondary full={!wide} onPress={() => go('roadmap')} />
+            </View>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 22, rowGap: 8, paddingTop: 8 }}>
+              {[
+                ...(hasV2
+                  ? [`${v2Modules.length} modules`, `${allUnits.length} units`, `~${TOTAL_HOURS.toLocaleString()} h core`]
+                  : [`${modules.length} modules`, `~${TOTAL_HOURS.toLocaleString()} h`, `${conceptCount} concepts`]),
+                '100% free resources',
+                'Works offline',
+              ].map(f => (
+                <View key={f} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                  <Icon name="checkmark" size={14} color={c.muted} />
+                  <Txt size={13} color={c.muted}>
+                    {f}
+                  </Txt>
+                </View>
+              ))}
+            </View>
+          </Animated.View>
+          <Animated.View entering={enter(140)} style={{ flex: wide ? 1 : undefined }}>
+            <MountainMap nodes={nodes} currentId="M03" interactive={false} height={wide ? 560 : 420} />
+          </Animated.View>
+        </View>
+
+        {/* How it works */}
+        <View
+          onLayout={e => {
+            anchors.current.how = e.nativeEvent.layout.y;
+          }}
+          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+        >
+          <SectionHead eyebrow="How it works" title="Three steps, repeated until you are job-ready." />
+          <Grid min={280} gap={20}>
+            {[
+              [
+                'route',
+                '01',
+                'Pick your role',
+                'AI Engineer, Forward Deployed Engineer or MLOps. Tell us your level and weekly hours; an optional placement check skips what you know.',
+              ],
+              [
+                'map',
+                '02',
+                'Follow your map',
+                'One next unit at a time, on a trail up the mountain. Each unit names the exact lecture slice to watch, what to read and what to build.',
+              ],
+              [
+                'trophy',
+                '03',
+                'Prove it',
+                'Auto-graded quizzes, short answers checked against a rubric, practice evidence and a GitHub capstone for every module.',
+              ],
+            ].map(([icon, n, title, body]) => (
+              <Panel key={n} style={{ gap: 14, minHeight: 220 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <View
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 12,
+                      backgroundColor: c.soft,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Icon name={icon} size={22} />
+                  </View>
+                  <Txt size={13} weight="600" color={c.faint}>
+                    {n}
+                  </Txt>
+                </View>
+                <Txt size={21} weight="700">
+                  {title}
+                </Txt>
+                <Txt color={c.muted}>{body}</Txt>
+              </Panel>
+            ))}
+          </Grid>
+        </View>
+
+        {/* Roadmap */}
+        <View
+          onLayout={e => {
+            anchors.current.roadmap = e.nativeEvent.layout.y;
+          }}
+          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+        >
+          <SectionHead
+            eyebrow="The roadmap"
+            title={hasV2 ? `${ROADMAP.length} phases from base to summit.` : 'Four camps from base to summit.'}
+            body="Every role climbs the same trunk of fundamentals, then branches near the top. Browse the whole map without an account."
+          />
+          <Grid min={260} gap={16}>
+            {ROADMAP.map(p => (
+              <Panel key={p.title} style={{ gap: 10, minHeight: 220 }}>
+                <Txt size={13} weight="600" color={c.faint}>
+                  {p.title} · {p.items.length} MODULE{p.items.length === 1 ? '' : 'S'}
+                </Txt>
+                <Txt size={19} weight="700">
+                  {p.caption}
+                </Txt>
+                {p.items.map(m => (
+                  <View key={m.id} style={{ flexDirection: 'row', gap: 10 }}>
+                    <Txt size={13} weight="600" color={c.faint} style={{ width: 32 }}>
+                      {m.id}
+                    </Txt>
+                    <Txt size={14} color={c.muted} style={{ flex: 1 }}>
+                      {m.title}
+                    </Txt>
+                  </View>
+                ))}
+              </Panel>
+            ))}
+          </Grid>
+          <Button title="Browse the map" secondary icon="arrow-forward" onPress={() => router.push('/map')} />
+        </View>
+
+        {/* Anatomy of a unit */}
+        {sampleUnit && (
+          <View
+            style={{
+              ...pad,
+              gap: 32,
+              paddingVertical: wide ? 72 : 48,
+              borderTopWidth: 1,
+              borderColor: c.line,
+            }}
+          >
+            <SectionHead
+              eyebrow="Anatomy of a unit"
+              title="Learn → Read → Practice → Assess."
+              body="No vague “selected videos”. Each unit names the exact slice of one primary resource, fills the gaps it leaves, and checks that you can use it."
+            />
+            <Panel style={{ gap: 18 }}>
+              <Txt size={13} weight="600" color={c.muted}>
+                {sampleUnit.module.id} · {sampleUnit.module.title} · {sampleUnit.unit.id}
+              </Txt>
+              <Txt size={wide ? 28 : 22} weight="700">
+                {sampleUnit.unit.title}
+              </Txt>
+              <Grid min={220} gap={12}>
+                {[
+                  [
+                    'play-circle-outline',
+                    'Learn',
+                    `${sampleUnit.unit.learn.title}${sampleUnit.unit.learn.slice ? ` — ${sampleUnit.unit.learn.slice}` : ''}`,
+                  ],
+                  ['book-outline', 'Read', sampleUnit.unit.read?.title ?? 'Matching chapter'],
+                  [
+                    'hammer',
+                    'Practice',
+                    `${sampleUnit.unit.practice.title}. Done when: ${sampleUnit.unit.practice.done_when}`,
+                  ],
+                  [
+                    'clipboard',
+                    'Assess',
+                    `${sampleUnit.unit.quiz.filter(q => q.kind === 'mcq').length} auto-graded questions (80% to pass) + ${sampleUnit.unit.quiz.filter(q => q.kind === 'short').length} short answer checked against a rubric`,
+                  ],
+                ].map(([icon, label, body], i) => (
+                  <View
+                    key={label}
+                    style={{
+                      gap: 8,
+                      padding: 16,
+                      borderRadius: 14,
+                      backgroundColor: c.raised,
+                      borderWidth: 1,
+                      borderColor: c.line,
+                      minHeight: 170,
+                    }}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                      <Icon name={icon} size={18} />
+                      <Txt size={13} weight="700">
+                        {String(i + 1).padStart(2, '0')} · {label}
+                      </Txt>
+                    </View>
+                    <Txt size={14} color={c.muted}>
+                      {body}
+                    </Txt>
+                  </View>
+                ))}
+              </Grid>
+            </Panel>
+          </View>
+        )}
+
+        {/* Roles */}
+        <View
+          onLayout={e => {
+            anchors.current.roles = e.nativeEvent.layout.y;
+          }}
+          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+        >
+          <SectionHead eyebrow="Roles" title="Three jobs, one trunk." />
+          <Grid min={300} gap={16}>
+            {tracks.map(t => (
+              <Panel key={t.id} style={{ gap: 12, minHeight: 300 }}>
+                <Icon
+                  name={t.id === 'ai-engineer' ? 'sparkles' : t.id === 'fde' ? 'briefcase' : 'server'}
+                  size={24}
+                />
+                <Txt size={22} weight="700">
+                  {t.title}
+                </Txt>
+                <Txt color={c.muted}>{t.summary}</Txt>
+                <View style={{ gap: 6 }}>
+                  {t.outcomes.map(o => (
+                    <View key={o} style={{ flexDirection: 'row', gap: 8 }}>
+                      <Icon name="checkmark" size={16} color={c.muted} />
+                      <Txt size={14} style={{ flex: 1 }}>
+                        {o}
+                      </Txt>
+                    </View>
+                  ))}
+                </View>
+                <Txt size={13} color={c.faint}>
+                  Portfolio: {t.portfolio.join(' · ')}
+                </Txt>
+              </Panel>
+            ))}
+          </Grid>
+        </View>
+
+        {/* Progress */}
+        <View
+          style={{ ...pad, gap: 32, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+        >
+          <SectionHead
+            eyebrow="Progress"
+            title="Your work, not your clicks."
+            body="Every quiz, practice note and capstone is logged with its date. A year of showing up, at a glance."
+          />
+          <Panel>
+            <Txt size={13} color={c.faint}>
+              Example activity
+            </Txt>
+            <Heatmap activity={activity} />
+          </Panel>
+        </View>
+
+        {/* Sources */}
+        <View
+          style={{ ...pad, gap: 24, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+        >
+          <SectionHead
+            eyebrow="Sources"
+            title="Built on the best free teaching in the world."
+            body={`${resources.length} hand-picked resources, including ${books} free books.`}
+          />
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 28, rowGap: 12 }}>
+            {SOURCES.map(s => (
+              <Txt key={s} size={15} color={c.muted}>
+                {s}
+              </Txt>
+            ))}
+          </View>
+        </View>
+
+        {/* FAQ */}
+        <View
+          onLayout={e => {
+            anchors.current.faq = e.nativeEvent.layout.y;
+          }}
+          style={{ ...pad, gap: 24, paddingVertical: wide ? 72 : 48, borderTopWidth: 1, borderColor: c.line }}
+        >
+          <SectionHead eyebrow="FAQ" title="Questions, answered." />
+          <Faq />
+        </View>
+
+        {/* Final CTA */}
+        <View style={{ ...pad, paddingVertical: wide ? 96 : 56, alignItems: 'center', gap: 20 }}>
+          <Txt size={wide ? 52 : 34} weight="700" style={{ textAlign: 'center', letterSpacing: -1.6 }}>
+            Start with one grain.
+          </Txt>
+          <Txt size={17} color={c.muted} style={{ textAlign: 'center', maxWidth: 520 }}>
+            A minute to set up. A clear next step every day after.
+          </Txt>
+          <Button title="Get started" icon="arrow-forward" onPress={() => router.push('/start')} />
+        </View>
+
+        {/* Footer */}
+        <View style={{ ...pad, borderTopWidth: 1, borderColor: c.line, paddingTop: 32, gap: 28 }}>
+          <View style={{ flexDirection: wide ? 'row' : 'column', gap: 28, justifyContent: 'space-between' }}>
+            <View style={{ gap: 8, maxWidth: 320 }}>
+              <BrandLink href="/?about=1" />
+              <Txt size={13} color={c.muted}>
+                A free, guided path from zero to an AI engineering job.
+              </Txt>
+            </View>
+            <View style={{ flexDirection: 'row', gap: 48, flexWrap: 'wrap' }}>
+              {[
+                [
+                  'Product',
+                  [
+                    ['Get started', '/start'],
+                    ['Map', '/map'],
+                    ['Library', '/library'],
+                  ],
+                ],
+                [
+                  'Apps',
+                  [
+                    ['Android', '/download'],
+                    ['Web app', '/today'],
+                  ],
+                ],
+                [
+                  'About',
+                  [
+                    ['Privacy', '/privacy'],
+                    ['Sign in', '/signin'],
+                  ],
+                ],
+              ].map(([head, links]) => (
+                <View key={head as string} style={{ gap: 10 }}>
+                  <Txt size={13} weight="700">
+                    {head as string}
+                  </Txt>
+                  {(links as string[][]).map(([label, href]) => (
+                    <Pressable
+                      key={label}
+                      accessibilityRole="link"
+                      onPress={() => router.push(href as never)}
+                    >
+                      <Txt size={13} color={c.muted}>
+                        {label}
+                      </Txt>
+                    </Pressable>
+                  ))}
+                </View>
+              ))}
+            </View>
+          </View>
+          <Txt size={12} color={c.faint}>
+            © {new Date().getFullYear()} {APP_NAME}. Course content belongs to its creators; links open their
+            original sites.
+          </Txt>
+        </View>
+      </ScrollView>
+    </View>
+  );
+}

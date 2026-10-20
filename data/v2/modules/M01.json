@@ -1,0 +1,3047 @@
+{
+ "id": "M01",
+ "phase": "P1 Foundations",
+ "title": "Python from zero",
+ "summary": "CS50P Lectures 0–9 as the spine (every problem set checked with check50), with a precise fill-in for every topic CS50P does not teach: finally/custom exceptions, memory model, pathlib/JSON/Unicode, dataclasses/dunders/enums/Protocols, iterators/itertools/collections/zoneinfo, closures/decorators/context managers, typing + mypy, threads/processes/asyncio.",
+ "hours": 116,
+ "prerequisites": [
+  "M00"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M01.S1",
+   "title": "CS50P spine I: basics (Lectures 0–3)",
+   "units": [
+    {
+     "id": "M01.U01",
+     "title": "CS50P Lecture 0 — Functions, variables, strings, numbers",
+     "hours": 10,
+     "depth": "core",
+     "week": 1,
+     "prerequisites": [],
+     "outcomes": [
+      "You can write a program that reads input, transforms strings/numbers and prints formatted output.",
+      "You can define a function with parameters and a return value.",
+      "You can explain print vs return and str vs int vs float."
+     ],
+     "topics": [
+      {
+       "id": "M01.01.01",
+       "title": "integers/floats"
+      },
+      {
+       "id": "M01.01.02",
+       "title": "strings"
+      },
+      {
+       "id": "M01.01.04",
+       "title": "variables/binding"
+      },
+      {
+       "id": "M01.01.05",
+       "title": "input/print"
+      },
+      {
+       "id": "M01.01.06",
+       "title": "arithmetic/comparison"
+      },
+      {
+       "id": "M01.01.07",
+       "title": "conversion"
+      },
+      {
+       "id": "M01.01.08",
+       "title": "f-strings"
+      },
+      {
+       "id": "M01.01.09",
+       "title": "indentation/comments"
+      },
+      {
+       "id": "M01.04.01",
+       "title": "def/return"
+      },
+      {
+       "id": "M01.04.02",
+       "title": "parameters/arguments"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l0",
+      "title": "CS50P - Lecture 0 - Functions, Variables",
+      "url": "https://www.youtube.com/watch?v=JP7ITIXGpHk",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (1:45:36). print/input and variables from the start; f-strings first at ~30:19; str methods strip/title from ~47:20; int/arithmetic ~1:00:00; floats, round and {x:.2f} formatting from 1:14:38; def from 1:28:33; return values to the end. Notes: cs50.harvard.edu/python/notes/0/"
+     },
+     "covers": [
+      "print() and input(), arguments, sep/end parameters (notes §Strings and Parameters)",
+      "Variables and comments; pseudocode as comments (§Improving Your First Python Program)",
+      "f-strings (§Formatting Strings); str methods strip/title/capitalize/split (§More on Strings)",
+      "int(), arithmetic operators, interactive mode (§Integers or int)",
+      "float(), round(), f'{x:.2f}' and f'{x:,}' (§Float Basics, §More on Floats)",
+      "def, parameters, default values, scope intro, return (§def, §Returning Values)"
+     ],
+     "gaps": [
+      {
+       "topic": "running check50 locally (outside cs50.dev)",
+       "resource": {
+        "resourceId": "check50-docs",
+        "title": "check50 documentation",
+        "url": "https://cs50.readthedocs.io/projects/check50/en/latest/",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Installation + usage"
+       }
+      },
+      {
+       "topic": "indentation as syntax (book)",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap03.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 3 'Functions' (defining functions, indentation, parameters)"
+       }
+      },
+      {
+       "topic": "Hindi/Urdu companion",
+       "resource": {
+        "resourceId": "cwh-python",
+        "title": "Python Tutorial For Beginners in Hindi | Complete Python Course",
+        "url": "https://www.youtube.com/watch?v=UrsmFxEIp5k",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Opening chapters: variables, data types, strings, input (use chapters list in description)"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/0/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 0 notes, all sections"
+     },
+     "backup": {
+      "resourceId": "thinkpython3",
+      "title": "Think Python, 3rd edition",
+      "url": "https://allendowney.github.io/ThinkPython/chap02.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapters 2 'Variables and Statements' and 3 'Functions'"
+     },
+     "practice": {
+      "title": "Problem Set 0 (all five)",
+      "brief": "Solve indoor, playback, faces, einstein, tip (https://cs50.harvard.edu/python/psets/0/). Start on cs50.dev; once M00.U05 is done, redo one locally in WSL.",
+      "done_when": "check50 green for all 5 problems (and `submit50` optional).",
+      "autograder": "check50 cs50/problems/2022/python/{indoor,playback,faces,einstein,tip}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U01.Q1",
+       "kind": "mcq",
+       "prompt": "`input()` returns:",
+       "options": [
+        "int",
+        "str",
+        "Whatever type you typed",
+        "float"
+       ],
+       "answer": 1,
+       "explain": "input always returns a str; convert with int()/float() (L0 §Integers or int)."
+      },
+      {
+       "id": "M01.U01.Q2",
+       "kind": "mcq",
+       "prompt": "print vs return:",
+       "options": [
+        "Same thing",
+        "print shows output; return hands a value back to the caller",
+        "return prints",
+        "print exits the function"
+       ],
+       "answer": 1,
+       "explain": "L0 §Returning Values: return makes the function's result usable by the caller."
+      },
+      {
+       "id": "M01.U01.Q3",
+       "kind": "mcq",
+       "prompt": "`f\"{3/2:.1f}\"` gives:",
+       "options": [
+        "\"1\"",
+        "\"1.5\"",
+        "\"1.50\"",
+        "\"2\""
+       ],
+       "answer": 1,
+       "explain": ".1f = one decimal place (L0 §More on Floats)."
+      },
+      {
+       "id": "M01.U01.Q4",
+       "kind": "mcq",
+       "prompt": "`\"  hi there \".strip().title()` gives:",
+       "options": [
+        "\"Hi There\"",
+        "\"hi there\"",
+        "\"  Hi There \"",
+        "\"HI THERE\""
+       ],
+       "answer": 0,
+       "explain": "strip removes surrounding whitespace; title capitalises each word (§More on Strings)."
+      },
+      {
+       "id": "M01.U01.Q5",
+       "kind": "short",
+       "prompt": "Why does `\"5\" + 5` fail, and what are two ways to fix it?",
+       "rubric": [
+        "TypeError: can't concatenate str and int",
+        "int(\"5\") + 5 for arithmetic",
+        "\"5\" + str(5) or an f-string for text",
+        "Explains Python does not convert implicitly"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U02",
+     "title": "CS50P Lecture 1 — Conditionals and Boolean logic",
+     "hours": 7,
+     "depth": "core",
+     "week": 4,
+     "prerequisites": [
+      "M01.U01"
+     ],
+     "outcomes": [
+      "You can branch with if/elif/else, and/or and match.",
+      "You can predict truthiness and short-circuit results.",
+      "You can write a function that returns a Boolean expression directly."
+     ],
+     "topics": [
+      {
+       "id": "M01.02.01",
+       "title": "if/elif/else"
+      },
+      {
+       "id": "M01.02.02",
+       "title": "truthiness"
+      },
+      {
+       "id": "M01.02.03",
+       "title": "and/or/not"
+      },
+      {
+       "id": "M01.02.04",
+       "title": "short-circuiting"
+      },
+      {
+       "id": "M01.01.03",
+       "title": "booleans/None"
+      },
+      {
+       "id": "M01.02.13",
+       "title": "match statement"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l1",
+      "title": "CS50P - Lecture 1 - Conditionals",
+      "url": "https://www.youtube.com/watch?v=_b6NgY_pMdw",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (56:06). if from ~1:00; elif/else ~9:55; or/and; modulo + parity function from 34:57; 'Pythonic' return of Boolean expressions; match from 48:17"
+     },
+     "covers": [
+      "Comparison operators and if (§If Statements)",
+      "elif/else control flow (§Control Flow, elif, and else)",
+      "or / and (§or, §and)",
+      "% modulo and an is_even function (§Modulo, §Creating Our Own Parity Function)",
+      "Returning a bool expression (§Pythonic)",
+      "match/case with | (§match)"
+     ],
+     "gaps": [
+      {
+       "topic": "truthiness, None and short-circuiting (not explicitly taught in L1)",
+       "resource": {
+        "resourceId": "py-truth",
+        "title": "Built-in Types — Truth Value Testing and Boolean Operations",
+        "url": "https://docs.python.org/3/library/stdtypes.html#truth-value-testing",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Truth Value Testing' and 'Boolean Operations — and, or, not' sections"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/1/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 1 notes"
+     },
+     "backup": {
+      "resourceId": "thinkpython3",
+      "title": "Think Python, 3rd edition",
+      "url": "https://allendowney.github.io/ThinkPython/chap05.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 5 'Conditionals and Recursion' (conditional sections only)"
+     },
+     "practice": {
+      "title": "Problem Set 1 (all five)",
+      "brief": "deep, bank, extensions, interpreter, meal (https://cs50.harvard.edu/python/psets/1/). Do them in WSL inside your Git repo.",
+      "done_when": "check50 green for all 5.",
+      "autograder": "check50 cs50/problems/2022/python/{deep,bank,extensions,interpreter,meal}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U02.Q1",
+       "kind": "mcq",
+       "prompt": "`\"\" or \"default\"` evaluates to:",
+       "options": [
+        "\"\"",
+        "\"default\"",
+        "True",
+        "Error"
+       ],
+       "answer": 1,
+       "explain": "Empty string is falsy, so `or` returns its right operand."
+      },
+      {
+       "id": "M01.U02.Q2",
+       "kind": "mcq",
+       "prompt": "With x = 0, `x != 0 and 10/x > 1` gives:",
+       "options": [
+        "ZeroDivisionError",
+        "False, with no division performed",
+        "True",
+        "None"
+       ],
+       "answer": 1,
+       "explain": "`and` short-circuits: the left side is False so the right is never evaluated."
+      },
+      {
+       "id": "M01.U02.Q3",
+       "kind": "mcq",
+       "prompt": "`match` compares the subject against:",
+       "options": [
+        "Only ints",
+        "Case patterns, top to bottom",
+        "All cases at once",
+        "Regexes"
+       ],
+       "answer": 1,
+       "explain": "The first matching case runs (L1 §match)."
+      },
+      {
+       "id": "M01.U02.Q4",
+       "kind": "mcq",
+       "prompt": "Which value is falsy?",
+       "options": [
+        "\"0\"",
+        "[0]",
+        "None",
+        "\" \""
+       ],
+       "answer": 2,
+       "explain": "None, 0, empty containers and \"\" are falsy; \"0\" and \" \" are non-empty strings."
+      },
+      {
+       "id": "M01.U02.Q5",
+       "kind": "short",
+       "prompt": "Write a boundary-value test list for a grade classifier where 90+ = A, 80–89 = B.",
+       "rubric": [
+        "Includes 89, 90 (and 79/80)",
+        "Includes extreme values (0, 100)",
+        "Includes invalid input (negative / >100 / non-number)",
+        "States expected output for each"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U03",
+     "title": "CS50P Lecture 2 — Loops, lists, dictionaries",
+     "hours": 9,
+     "depth": "core",
+     "week": 5,
+     "prerequisites": [
+      "M01.U02"
+     ],
+     "outcomes": [
+      "You can loop with while/for, validate input with while True + break, and nest loops.",
+      "You can store and look up data in lists and dicts and pick between them."
+     ],
+     "topics": [
+      {
+       "id": "M01.02.05",
+       "title": "for over iterables"
+      },
+      {
+       "id": "M01.02.06",
+       "title": "range"
+      },
+      {
+       "id": "M01.02.07",
+       "title": "while"
+      },
+      {
+       "id": "M01.02.08",
+       "title": "break/continue"
+      },
+      {
+       "id": "M01.02.09",
+       "title": "nested loops"
+      },
+      {
+       "id": "M01.02.10",
+       "title": "loop termination"
+      },
+      {
+       "id": "M01.03.01",
+       "title": "list/tuple/dict/set"
+      },
+      {
+       "id": "M01.03.02",
+       "title": "indexing/slicing"
+      },
+      {
+       "id": "M01.03.03",
+       "title": "membership"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l2",
+      "title": "CS50P - Lecture 2 - Loops",
+      "url": "https://www.youtube.com/watch?v=-7xg8pGcP6w",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (1:20:45). while from 3:28; for/range from 4:59; input validation with while True/continue/break ~10:00–16:00; lists from 16:40; len; dictionaries from 45:53; Mario nested loops from 1:05:34"
+     },
+     "covers": [
+      "while loops and counters (§While Loops)",
+      "for with lists and range, `_` variable (§For Loops)",
+      "while True + break/continue for validation (§Improving with User Input)",
+      "Lists, indexing, iterating (§More About Lists, §Length)",
+      "Dictionaries: keys/values, iterating, None values (§Dictionaries)",
+      "Nested loops and decomposing into functions (§Mario)"
+     ],
+     "gaps": [
+      {
+       "topic": "tuples and sets (L2 teaches only lists and dicts)",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap11.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 11 'Tuples' §Tuples are like lists, §But tuples are immutable; Chapter 18 §Sets"
+       }
+      },
+      {
+       "topic": "slicing lists (L2 slices only implicitly; L4 §slice covers it)",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap09.html#list-slices",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 9 'Lists' §List slices"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/2/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 2 notes"
+     },
+     "backup": {
+      "resourceId": "thinkpython3",
+      "title": "Think Python, 3rd edition",
+      "url": "https://allendowney.github.io/ThinkPython/chap07.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 7 'Iteration and Search', Chapter 9 'Lists', Chapter 10 'Dictionaries'"
+     },
+     "practice": {
+      "title": "Problem Set 2 (all five)",
+      "brief": "camel, coke, twttr, plates, nutrition (https://cs50.harvard.edu/python/psets/2/). Commit each on its own commit.",
+      "done_when": "check50 green for all 5.",
+      "autograder": "check50 cs50/problems/2022/python/{camel,coke,twttr,plates,nutrition}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U03.Q1",
+       "kind": "mcq",
+       "prompt": "`list(range(2, 8, 3))` is:",
+       "options": [
+        "[2, 5]",
+        "[2, 5, 8]",
+        "[3, 6]",
+        "[2, 4, 6]"
+       ],
+       "answer": 0,
+       "explain": "Start 2, step 3, stop before 8."
+      },
+      {
+       "id": "M01.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Looking up a key in a dict is on average:",
+       "options": [
+        "O(n)",
+        "O(1)",
+        "O(log n)",
+        "O(n²)"
+       ],
+       "answer": 1,
+       "explain": "Dicts are hash tables."
+      },
+      {
+       "id": "M01.U03.Q3",
+       "kind": "mcq",
+       "prompt": "`while True:` with no break (and no exception) will:",
+       "options": [
+        "Run once",
+        "Never terminate",
+        "Error",
+        "Run 100 times"
+       ],
+       "answer": 1,
+       "explain": "The condition is always true."
+      },
+      {
+       "id": "M01.U03.Q4",
+       "kind": "mcq",
+       "prompt": "`\"CS50\"[1:3]` is:",
+       "options": [
+        "\"CS\"",
+        "\"S5\"",
+        "\"S50\"",
+        "\"C5\""
+       ],
+       "answer": 1,
+       "explain": "Slices include start, exclude stop."
+      },
+      {
+       "id": "M01.U03.Q5",
+       "kind": "short",
+       "prompt": "When would you pick a dict over a list for the same data? Give an example.",
+       "rubric": [
+        "Lookup by a key (name, id) rather than position",
+        "O(1) average lookups vs O(n) search",
+        "Concrete example (e.g. fruit → calories in nutrition)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U04",
+     "title": "CS50P Lecture 3 — Exceptions (+ finally, raise, custom exceptions)",
+     "hours": 6,
+     "depth": "core",
+     "week": 6,
+     "prerequisites": [
+      "M01.U03"
+     ],
+     "outcomes": [
+      "You can catch specific exceptions with try/except/else and re-prompt on bad input.",
+      "You can raise exceptions, define your own exception class and clean up with finally."
+     ],
+     "topics": [
+      {
+       "id": "M01.05.06",
+       "title": "exceptions/try/except/finally"
+      },
+      {
+       "id": "M01.05.07",
+       "title": "validation"
+      },
+      {
+       "id": "M01.05.11",
+       "title": "raise, custom exceptions and finally"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l3",
+      "title": "CS50P - Lecture 3 - Exceptions",
+      "url": "https://www.youtube.com/watch?v=LW7g1169v7w",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (44:33). SyntaxError vs runtime errors from 1:37; ValueError + try/except from 6:18; else from ~9:20; get_int() function; pass"
+     },
+     "covers": [
+      "Syntax errors vs runtime errors (§Runtime Errors)",
+      "try/except ValueError (§try)",
+      "else block (§else)",
+      "Wrapping in a get_int() function with a loop (§Creating a Function to Get an Integer)",
+      "pass (§pass)"
+     ],
+     "gaps": [
+      {
+       "topic": "raise, user-defined exceptions, finally (CS50P L3 has zero occurrences of `finally`)",
+       "resource": {
+        "resourceId": "py-tut-errors",
+        "title": "Python Tutorial ch. 8 – Errors and Exceptions",
+        "url": "https://docs.python.org/3/tutorial/errors.html#raising-exceptions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "§8.4 Raising Exceptions, §8.6 User-defined Exceptions, §8.7 Defining Clean-up Actions"
+       }
+      },
+      {
+       "topic": "try/except/else/finally in video",
+       "resource": {
+        "resourceId": "cy-tryexcept",
+        "title": "Python Tutorial: Using Try/Except Blocks for Error Handling",
+        "url": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (~10 min): specific exceptions, else, finally, raise"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/3/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 3 notes"
+     },
+     "backup": {
+      "resourceId": "thinkpython3",
+      "title": "Think Python, 3rd edition",
+      "url": "https://allendowney.github.io/ThinkPython/chap13.html#debugging",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 13 §Debugging"
+     },
+     "practice": {
+      "title": "Problem Set 3 + custom exception",
+      "brief": "fuel, taqueria, grocery, outdated (https://cs50.harvard.edu/python/psets/3/). Then write `InvalidFractionError(ValueError)` for fuel, raise it from a `parse_fraction()` function and use `finally` to print 'done'.",
+      "done_when": "check50 green for all 4; custom exception + finally committed with a 3-line explanation.",
+      "autograder": "check50 cs50/problems/2022/python/{fuel,taqueria,grocery,outdated}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U04.Q1",
+       "kind": "mcq",
+       "prompt": "The `else` block of a try runs when:",
+       "options": [
+        "An exception occurred",
+        "No exception occurred",
+        "Always",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "L3 §else."
+      },
+      {
+       "id": "M01.U04.Q2",
+       "kind": "mcq",
+       "prompt": "`finally` runs:",
+       "options": [
+        "Only on success",
+        "Only on error",
+        "In both cases",
+        "Only after return"
+       ],
+       "answer": 2,
+       "explain": "Clean-up actions always run (Python Tutorial §8.7) — NOT taught in CS50P L3."
+      },
+      {
+       "id": "M01.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A bare `except:` is bad mainly because it:",
+       "options": [
+        "Is slow",
+        "Also swallows unexpected errors like KeyboardInterrupt",
+        "Is a syntax error",
+        "Needs Python 4"
+       ],
+       "answer": 1,
+       "explain": "Catch the specific exception you expect."
+      },
+      {
+       "id": "M01.U04.Q4",
+       "kind": "mcq",
+       "prompt": "To create your own exception you:",
+       "options": [
+        "Use `raise \"error\"`",
+        "Subclass Exception (or a subclass like ValueError)",
+        "Call sys.exit",
+        "Return -1"
+       ],
+       "answer": 1,
+       "explain": "Python Tutorial §8.6 User-defined Exceptions."
+      },
+      {
+       "id": "M01.U04.Q5",
+       "kind": "short",
+       "prompt": "Is 'the user typed a letter instead of a number' exceptional? Defend where you put the check.",
+       "rubric": [
+        "Discusses EAFP (try int()) vs LBYL (check first)",
+        "Places handling at the input boundary",
+        "Re-prompts or reports a clear message",
+        "Doesn't let the error crash deeper logic"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M01.S2",
+   "title": "Python's memory model",
+   "units": [
+    {
+     "id": "M01.U05",
+     "title": "Python's memory model: names, mutability, aliasing, copies (gap unit)",
+     "hours": 8,
+     "depth": "core",
+     "week": 7,
+     "prerequisites": [
+      "M01.U04"
+     ],
+     "outcomes": [
+      "You can predict aliasing, mutation and copy behaviour of nested data.",
+      "You can explain `is` vs `==`, hashability and the mutable-default trap.",
+      "You can explain scope (LEGB) and pure functions vs side effects."
+     ],
+     "topics": [
+      {
+       "id": "M01.03.05",
+       "title": "methods (mutating vs returning)"
+      },
+      {
+       "id": "M01.03.06",
+       "title": "mutability/immutability"
+      },
+      {
+       "id": "M01.03.07",
+       "title": "aliasing"
+      },
+      {
+       "id": "M01.03.08",
+       "title": "shallow/deep copy"
+      },
+      {
+       "id": "M01.03.09",
+       "title": "equality versus identity"
+      },
+      {
+       "id": "M01.03.10",
+       "title": "hashability"
+      },
+      {
+       "id": "M01.03.11",
+       "title": "mutable default argument trap"
+      },
+      {
+       "id": "M01.04.05",
+       "title": "scope"
+      },
+      {
+       "id": "M01.04.07",
+       "title": "pure functions/side effects"
+      }
+     ],
+     "learn": {
+      "resourceId": "ned-names-talk",
+      "title": "Facts and Myths about Python names and values (PyCon 2015)",
+      "url": "https://www.youtube.com/watch?v=_AEJHKGk9ns",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole talk (25:20): names refer to values, assignment never copies, mutable vs immutable, function arguments are assignments"
+     },
+     "covers": [
+      "Names refer to values; many names can refer to one value",
+      "Assignment never copies data",
+      "Mutating vs rebinding",
+      "Mutable vs immutable values",
+      "Function arguments as assignment (call by object reference)"
+     ],
+     "gaps": [
+      {
+       "topic": "aliasing, list arguments, objects and values (book)",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap09.html#objects-and-values",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 9 §Objects and values, §Aliasing, §List arguments"
+       }
+      },
+      {
+       "topic": "hashability",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap10.html#lists-and-dictionaries",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 10 §Lists and dictionaries (why lists can't be keys)"
+       }
+      },
+      {
+       "topic": "equality vs identity, deep copy",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap16.html#equivalence-and-identity",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 16 §Equivalence and identity, §Deep copy"
+       }
+      },
+      {
+       "topic": "shallow vs deep copy (reference)",
+       "resource": {
+        "resourceId": "py-copy",
+        "title": "copy — Shallow and deep copy operations",
+        "url": "https://docs.python.org/3/library/copy.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "pure functions / side effects",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap14.html#pure-functions",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 14 §Pure functions"
+       }
+      },
+      {
+       "topic": "scope (LEGB, global/nonlocal)",
+       "resource": {
+        "resourceId": "cy-scope",
+        "title": "Python Tutorial: Variable Scope - Understanding the LEGB rule and global/nonlocal statements",
+        "url": "https://www.youtube.com/watch?v=QVdf0LgmICw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "visualise every example",
+       "resource": {
+        "resourceId": "pythontutor",
+        "title": "Python Tutor (code visualiser)",
+        "url": "https://pythontutor.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Paste each snippet"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "ned-names",
+      "title": "Python Names and Values (talk text)",
+      "url": "https://nedbatchelder.com/text/names1.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Text version of the talk (read after watching)"
+     },
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 13 Python for AI Engineering",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/13-python-for-ai-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 13 'Python for AI Engineering' §Names refer to objects"
+     },
+     "practice": {
+      "title": "Predict-the-output lab",
+      "brief": "Write 6 snippets: aliasing a list, `is` vs `==` on small vs large ints/strings, shallow copy of a nested list, `def f(x=[])` called twice, a closure over a loop variable (preview), `global` vs local. Predict, run in Python Tutor, explain each in `memory-model.md`.",
+      "done_when": "All 6 snippets with prediction, actual output and an explanation that uses the words name/value/mutate; at least one prediction was wrong and you explain why."
+     },
+     "quiz": [
+      {
+       "id": "M01.U05.Q1",
+       "kind": "mcq",
+       "prompt": "`a = [1]; b = a; b.append(2); a` is:",
+       "options": [
+        "[1]",
+        "[1, 2]",
+        "Error",
+        "[2]"
+       ],
+       "answer": 1,
+       "explain": "a and b are two names for one list."
+      },
+      {
+       "id": "M01.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Which can be a dict key?",
+       "options": [
+        "list",
+        "dict",
+        "tuple of ints",
+        "set"
+       ],
+       "answer": 2,
+       "explain": "Keys must be hashable; tuples of immutables are."
+      },
+      {
+       "id": "M01.U05.Q3",
+       "kind": "mcq",
+       "prompt": "`copy.copy(nested_list)` copies:",
+       "options": [
+        "All levels",
+        "Only the outer list",
+        "Nothing",
+        "Only the inner lists"
+       ],
+       "answer": 1,
+       "explain": "Shallow copy: inner lists are shared."
+      },
+      {
+       "id": "M01.U05.Q4",
+       "kind": "mcq",
+       "prompt": "`def f(x=[]): x.append(1); return x` — calling f() twice returns:",
+       "options": [
+        "[1] then [1]",
+        "[1] then [1, 1]",
+        "Error",
+        "[] then [1]"
+       ],
+       "answer": 1,
+       "explain": "Defaults are evaluated once at def time; use x=None and create inside."
+      },
+      {
+       "id": "M01.U05.Q5",
+       "kind": "short",
+       "prompt": "Explain the mutable-default-argument trap and the idiomatic fix.",
+       "rubric": [
+        "Default object created once at definition",
+        "Mutations persist across calls",
+        "Fix: default None, create new list inside",
+        "Mentions it's the same object (aliasing)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M01.S3",
+   "title": "CS50P spine II: libraries, tests, files, regex (Lectures 4–7)",
+   "units": [
+    {
+     "id": "M01.U06",
+     "title": "CS50P Lecture 4 — Libraries, CLI args, packages, APIs",
+     "hours": 8,
+     "depth": "core",
+     "week": 8,
+     "prerequisites": [
+      "M01.U04",
+      "M02.U08"
+     ],
+     "outcomes": [
+      "You can import stdlib and third-party modules and install packages into a project environment with uv.",
+      "You can read sys.argv, call a JSON HTTP API with requests and handle its errors.",
+      "You can write your own module with an `if __name__ == '__main__':` guard."
+     ],
+     "topics": [
+      {
+       "id": "M01.05.09",
+       "title": "modules/imports"
+      },
+      {
+       "id": "M01.05.10",
+       "title": "main guard"
+      },
+      {
+       "id": "M01.05.12",
+       "title": "command-line arguments (sys.argv, argparse)"
+      },
+      {
+       "id": "M01.05.13",
+       "title": "HTTP + JSON APIs with requests"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l4",
+      "title": "CS50P - Lecture 4 - Libraries",
+      "url": "https://www.youtube.com/watch?v=MztLZWibctI",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (1:17:26). random from 1:36; statistics 17:01; sys.argv from 21:21; slice 40:52; packages + pip 46:18; APIs/requests 54:10; JSON 56:40; making your own libraries + __name__ from 1:15:09"
+     },
+     "covers": [
+      "import / from-import; random, statistics (§Libraries, §Random, §Statistics)",
+      "sys.argv, sys.exit, IndexError handling (§Command-line Arguments)",
+      "Slicing lists (§slice)",
+      "Installing packages with pip, PyPI (§Packages)",
+      "requests.get + .json(), json.dumps (§APIs)",
+      "Own modules and the `__name__ == '__main__'` guard (§Making Your Own Libraries)"
+     ],
+     "gaps": [
+      {
+       "topic": "argparse (CS50P teaches it in Lecture 9, not 4)",
+       "resource": {
+        "resourceId": "cs50p-notes",
+        "title": "CS50P lecture notes",
+        "url": "https://cs50.harvard.edu/python/notes/9/#argparse",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 9 notes §argparse"
+       }
+      },
+      {
+       "topic": "argparse in depth",
+       "resource": {
+        "resourceId": "py-argparse-tut",
+        "title": "Argparse Tutorial",
+        "url": "https://docs.python.org/3/howto/argparse.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections up to 'Combining positional and optional arguments'"
+       }
+      },
+      {
+       "topic": "virtual environments / uv instead of global pip (not in CS50P)",
+       "resource": {
+        "resourceId": "cy-uv",
+        "title": "Python Tutorial: UV - A Faster, All-in-One Package Manager to Replace Pip and Venv",
+        "url": "https://www.youtube.com/watch?v=AMdG7IjgSPM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video: uv init, uv add, uv run"
+       }
+      },
+      {
+       "topic": "modules, packages and the import system",
+       "resource": {
+        "resourceId": "py-tut-modules",
+        "title": "Python Tutorial ch. 6 – Modules",
+        "url": "https://docs.python.org/3/tutorial/modules.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "§6.1 More on Modules (incl. 'Executing modules as scripts'), §6.4 Packages"
+       }
+      },
+      {
+       "topic": "HTTP status codes",
+       "resource": {
+        "resourceId": "mdn-http",
+        "title": "MDN — HTTP",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'HTTP response status codes' reference"
+       }
+      },
+      {
+       "topic": "API keys kept out of Git",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 04 APIs & Keys",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/04-apis-and-keys",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 04 'APIs & Keys' Step 1 (store keys safely) and Step 4 (raw HTTP)"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/4/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 4 notes"
+     },
+     "backup": {
+      "resourceId": "cy-main",
+      "title": "Python Tutorial: if __name__ == '__main__'",
+      "url": "https://www.youtube.com/watch?v=sugvnHA7ElY",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole video (if __name__ == '__main__')"
+     },
+     "practice": {
+      "title": "Problem Set 4 (all six) with uv",
+      "brief": "emojize, figlet, adieu, game, professor, bitcoin (https://cs50.harvard.edu/python/psets/4/). Use `uv add emoji pyfiglet inflect requests` instead of global pip. bitcoin now needs a free CoinCap v3 API key (problem page notice, 2025-04-05): keep it in an env var loaded from a git-ignored `.env`.",
+      "done_when": "check50 green for all 6; pyproject.toml + uv.lock committed; `git log -p | grep -i apikey` finds nothing.",
+      "autograder": "check50 cs50/problems/2022/python/{emojize,figlet,adieu,game,professor,bitcoin}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U06.Q1",
+       "kind": "mcq",
+       "prompt": "`if __name__ == \"__main__\":` lets a file:",
+       "options": [
+        "Run faster",
+        "Be imported without running its main code",
+        "Skip imports",
+        "Be compiled"
+       ],
+       "answer": 1,
+       "explain": "L4 §Making Your Own Libraries."
+      },
+      {
+       "id": "M01.U06.Q2",
+       "kind": "mcq",
+       "prompt": "`sys.argv[0]` is:",
+       "options": [
+        "The first user argument",
+        "The script name",
+        "The Python version",
+        "Empty"
+       ],
+       "answer": 1,
+       "explain": "User arguments start at index 1."
+      },
+      {
+       "id": "M01.U06.Q3",
+       "kind": "mcq",
+       "prompt": "HTTP status 404 means:",
+       "options": [
+        "Server error",
+        "Not found",
+        "Unauthorised",
+        "OK"
+       ],
+       "answer": 1,
+       "explain": "4xx = client error; 404 = resource not found."
+      },
+      {
+       "id": "M01.U06.Q4",
+       "kind": "mcq",
+       "prompt": "Installing with `uv add requests` (vs global `pip install`) changes:",
+       "options": [
+        "Nothing",
+        "The project's pyproject.toml, uv.lock and .venv",
+        "System Python",
+        "Only PATH"
+       ],
+       "answer": 1,
+       "explain": "Dependencies are recorded and isolated per project."
+      },
+      {
+       "id": "M01.U06.Q5",
+       "kind": "short",
+       "prompt": "What should your program do when the API times out or returns 500? Name two behaviours.",
+       "rubric": [
+        "Set a timeout on the request",
+        "Catch requests exceptions / check status",
+        "Retry with backoff or fail with a clear message/exit code",
+        "Never crash with a raw traceback for users"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U07",
+     "title": "CS50P Lecture 5 — Unit tests with pytest",
+     "hours": 5,
+     "depth": "core",
+     "week": 9,
+     "prerequisites": [
+      "M01.U06"
+     ],
+     "outcomes": [
+      "You can write pytest tests for pure functions, including edge cases and expected exceptions.",
+      "You can organise tests in a folder and run them from the shell."
+     ],
+     "topics": [
+      {
+       "id": "M01.05.08",
+       "title": "assertions"
+      },
+      {
+       "id": "M01.05.15",
+       "title": "pytest basics (CS50P level: test functions, pytest.raises, test folders)"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l5",
+      "title": "CS50P - Lecture 5 - Unit Tests",
+      "url": "https://www.youtube.com/watch?v=tIrcxwLqzjQ",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (50:52). assert from 10:19; pytest from 17:14; testing strings + pytest.raises ~36:26; tests in folders from 33:05 (__init__.py ~49:06)"
+     },
+     "covers": [
+      "assert statements (§assert)",
+      "pytest test functions and running pytest (§pytest)",
+      "pytest.raises for expected exceptions; testing str functions (§Testing Strings)",
+      "Tests folder + __init__.py (§Organizing Tests into Folders)"
+     ],
+     "gaps": [
+      {
+       "topic": "fixtures, parametrize, tmp_path (zero occurrences in CS50P; taught in M02.U12)",
+       "resource": {
+        "resourceId": "pytest-howto",
+        "title": "pytest — How-to guides",
+        "url": "https://docs.pytest.org/en/stable/how-to/parametrize.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'How to parametrize fixtures and test functions' — first example only (preview)"
+       }
+      },
+      {
+       "topic": "pytest in video",
+       "resource": {
+        "resourceId": "fcc-pytest",
+        "title": "Pytest Tutorial – How to Test Python Code",
+        "url": "https://www.youtube.com/watch?v=cHYq1MRoyI0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "First ~30 min (writing tests, running pytest, asserting exceptions)"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "pytest-start",
+      "title": "pytest — Get Started",
+      "url": "https://docs.pytest.org/en/stable/getting-started.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole 'Get Started' page"
+     },
+     "backup": {
+      "resourceId": "cy-unittest",
+      "title": "Python Tutorial: Unit Testing Your Code with the unittest Module",
+      "url": "https://www.youtube.com/watch?v=6tNS--WetLI",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole video (the stdlib unittest alternative — awareness)"
+     },
+     "practice": {
+      "title": "Problem Set 5 + a deliberately failing test",
+      "brief": "test_twttr, test_bank, test_plates, test_fuel (https://cs50.harvard.edu/python/psets/5/). Add one test you expect to fail, watch it fail, then delete it.",
+      "done_when": "check50 green for all 4 (check50 checks your tests catch buggy implementations).",
+      "autograder": "check50 cs50/problems/2022/python/tests/{twttr,bank,plates,fuel}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U07.Q1",
+       "kind": "mcq",
+       "prompt": "pytest discovers tests in files named:",
+       "options": [
+        "tests.txt",
+        "test_*.py or *_test.py",
+        "main.py",
+        "Any .py"
+       ],
+       "answer": 1,
+       "explain": "Default discovery rules (pytest Get Started)."
+      },
+      {
+       "id": "M01.U07.Q2",
+       "kind": "mcq",
+       "prompt": "A good unit test is:",
+       "options": [
+        "Dependent on test order",
+        "Fast, isolated and deterministic",
+        "Network-bound",
+        "Manual"
+       ],
+       "answer": 1,
+       "explain": "So it can run often and fail only for real bugs."
+      },
+      {
+       "id": "M01.U07.Q3",
+       "kind": "mcq",
+       "prompt": "`with pytest.raises(ValueError): convert(\"cat\")` passes when:",
+       "options": [
+        "convert returns None",
+        "convert raises ValueError",
+        "convert prints an error",
+        "Always"
+       ],
+       "answer": 1,
+       "explain": "It asserts that the block raises that exception."
+      },
+      {
+       "id": "M01.U07.Q4",
+       "kind": "short",
+       "prompt": "Why test functions instead of the `main()` that calls `input()`?",
+       "rubric": [
+        "Pure functions are deterministic and easy to call",
+        "input/print need mocking",
+        "Design: separate I/O from logic",
+        "Faster, more focused tests"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U08",
+     "title": "CS50P Lecture 6 — File I/O (+ pathlib, JSON, encodings)",
+     "hours": 7,
+     "depth": "core",
+     "week": 10,
+     "prerequisites": [
+      "M01.U07",
+      "M00.U03"
+     ],
+     "outcomes": [
+      "You can read/write text, CSV and binary files safely with `with`.",
+      "You can build paths with pathlib, read/write JSON and diagnose UnicodeDecodeError."
+     ],
+     "topics": [
+      {
+       "id": "M01.05.01",
+       "title": "pathlib"
+      },
+      {
+       "id": "M01.05.02",
+       "title": "text/binary files"
+      },
+      {
+       "id": "M01.05.03",
+       "title": "encoding/Unicode"
+      },
+      {
+       "id": "M01.05.04",
+       "title": "JSON/CSV"
+      },
+      {
+       "id": "M01.05.05",
+       "title": "with context manager"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l6",
+      "title": "CS50P - Lecture 6 - File I/O",
+      "url": "https://www.youtube.com/watch?v=KD-Yoel6EVQ",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (1:32:21). open()/write/read from ~6:17; `with open` from ~7:57; reading + sorting lines ~23:00; CSV by splitting on commas from ~30:26; csv.reader from ~1:02:33; csv.DictReader ~1:09:14; csv.writer/DictWriter ~1:16:54; binary files + PIL animated GIF from 1:23:50"
+     },
+     "covers": [
+      "open() modes, write/read, `with` (§open, §with)",
+      "Reading lines and sorting",
+      "csv.reader, csv.DictReader, csv.writer, csv.DictWriter (§CSV)",
+      "Binary files and PIL images (§Binary Files and PIL)"
+     ],
+     "gaps": [
+      {
+       "topic": "pathlib (zero occurrences in CS50P)",
+       "resource": {
+        "resourceId": "cy-pathlib",
+        "title": "Python Tutorial: Pathlib - The Modern Way to Handle File Paths",
+        "url": "https://www.youtube.com/watch?v=yxa-DJuuTBI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (~35 min): Path, /, exists, glob/rglob, read_text/write_text"
+       }
+      },
+      {
+       "topic": "pathlib reference",
+       "resource": {
+        "resourceId": "py-pathlib",
+        "title": "pathlib — Object-oriented filesystem paths",
+        "url": "https://docs.python.org/3/library/pathlib.html#basic-use",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Basic use' and 'General properties' sections"
+       }
+      },
+      {
+       "topic": "JSON files (CS50P L6 does only CSV)",
+       "resource": {
+        "resourceId": "cy-json",
+        "title": "Python Tutorial: Working with JSON Data using the json Module",
+        "url": "https://www.youtube.com/watch?v=9N6a-VLBa2I",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video: json.load/loads/dump/dumps"
+       }
+      },
+      {
+       "topic": "json reference",
+       "resource": {
+        "resourceId": "py-json",
+        "title": "json — JSON encoder and decoder",
+        "url": "https://docs.python.org/3/library/json.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Basic Usage: dump, dumps, load, loads"
+       }
+      },
+      {
+       "topic": "pathlib deeper (optional)",
+       "resource": {
+        "resourceId": "arjan-pathlib",
+        "title": "A Deep Dive Into Pathlib And The Magic Behind It",
+        "url": "https://www.youtube.com/watch?v=UcKkmwaRbsQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "csv module second explanation",
+       "resource": {
+        "resourceId": "cy-csv",
+        "title": "Python Tutorial: CSV Module - How to Read, Parse, and Write CSV Files",
+        "url": "https://www.youtube.com/watch?v=q5uM4VKywbA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "text vs binary file modes",
+       "resource": {
+        "resourceId": "cy-files",
+        "title": "Python Tutorial: File Objects - Reading and Writing to Files",
+        "url": "https://www.youtube.com/watch?v=Uh2ebFW8OYM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (modes r/w/a/rb/wb, reading in chunks)"
+       }
+      },
+      {
+       "topic": "encoding/Unicode",
+       "resource": {
+        "resourceId": "py-unicode",
+        "title": "Unicode HOWTO",
+        "url": "https://docs.python.org/3/howto/unicode.html#reading-and-writing-unicode-data",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Python's Unicode Support' → 'Reading and Writing Unicode Data'"
+       }
+      },
+      {
+       "topic": "Unicode mental model (talk)",
+       "resource": {
+        "resourceId": "ned-unicode",
+        "title": "Pragmatic Unicode, or, How do I stop the pain?",
+        "url": "https://www.youtube.com/watch?v=sgHbC6udIqc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole talk (~36 min): bytes vs unicode, 'unicode sandwich'"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/6/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 6 notes"
+     },
+     "backup": {
+      "resourceId": "thinkpython3",
+      "title": "Think Python, 3rd edition",
+      "url": "https://allendowney.github.io/ThinkPython/chap13.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 13 'Files and Databases' §Filenames and paths, §Walking directories"
+     },
+     "practice": {
+      "title": "Problem Set 6 + folder walker",
+      "brief": "lines, pizza, scourgify, shirt (https://cs50.harvard.edu/python/psets/6/). Then write `scan.py`: walk a folder with `Path.rglob('*.txt')`, read each file as UTF-8 (fallback to errors='replace' and report it), and write a JSONL summary (name, bytes, lines).",
+      "done_when": "check50 green for all 4; scan.py produces valid JSONL (each line parses with json.loads) on a folder containing one Latin-1 file.",
+      "autograder": "check50 cs50/problems/2022/python/{lines,pizza,scourgify,shirt}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U08.Q1",
+       "kind": "mcq",
+       "prompt": "`with open(...) as f:` guarantees:",
+       "options": [
+        "Faster reads",
+        "The file is closed even on error",
+        "UTF-8",
+        "A backup"
+       ],
+       "answer": 1,
+       "explain": "The context manager closes the file on exit."
+      },
+      {
+       "id": "M01.U08.Q2",
+       "kind": "mcq",
+       "prompt": "`json.dumps(obj)` returns:",
+       "options": [
+        "dict",
+        "str",
+        "bytes",
+        "A file"
+       ],
+       "answer": 1,
+       "explain": "dumps = dump to string; dump writes to a file object."
+      },
+      {
+       "id": "M01.U08.Q3",
+       "kind": "mcq",
+       "prompt": "`Path(\"a\") / \"b.txt\"` is:",
+       "options": [
+        "An error",
+        "A Path for a/b.txt",
+        "Division",
+        "The str \"ab.txt\""
+       ],
+       "answer": 1,
+       "explain": "pathlib overloads / to join paths."
+      },
+      {
+       "id": "M01.U08.Q4",
+       "kind": "mcq",
+       "prompt": "`open(p)` without `encoding=` uses:",
+       "options": [
+        "Always UTF-8",
+        "The platform's locale encoding (may differ per machine)",
+        "ASCII",
+        "Latin-1"
+       ],
+       "answer": 1,
+       "explain": "Pass encoding='utf-8' explicitly for portable code."
+      },
+      {
+       "id": "M01.U08.Q5",
+       "kind": "short",
+       "prompt": "What is a UnicodeDecodeError and how do you diagnose its cause?",
+       "rubric": [
+        "Bytes couldn't be decoded with the chosen encoding",
+        "Inspect the raw bytes / position in the message",
+        "Find the real encoding (source, `file` command, chardet)",
+        "Decode with the right encoding or errors= policy"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U09",
+     "title": "CS50P Lecture 7 — Regular expressions",
+     "hours": 5,
+     "depth": "core",
+     "week": 11,
+     "prerequisites": [
+      "M01.U08"
+     ],
+     "outcomes": [
+      "You can validate and extract text with re.search/fullmatch, groups and re.sub.",
+      "You know when regex is the wrong tool."
+     ],
+     "topics": [
+      {
+       "id": "M01.05.14",
+       "title": "regular expressions"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l7",
+      "title": "CS50P - Lecture 7 - Regular Expressions",
+      "url": "https://www.youtube.com/watch?v=hy3sd9MOAcc",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (2:04:58). re.search from 11:36; character classes/quantifiers; groups from 52:46; walrus 1:31:44; fullmatch 1:12:38; re.sub from 1:41:26"
+     },
+     "covers": [
+      "re.search, patterns, ., *, +, ?, {m,n}, ^, $ (§Regular Expressions)",
+      "Flags e.g. re.IGNORECASE (§Case Sensitivity)",
+      "Cleaning input with groups and := (§Cleaning Up User Input)",
+      "Extracting with re.sub and groups (§Extracting User Input)"
+     ],
+     "gaps": [
+      {
+       "topic": "regex reference + named groups",
+       "resource": {
+        "resourceId": "py-regex-howto",
+        "title": "Regular Expression HOWTO",
+        "url": "https://docs.python.org/3/howto/regex.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 'Simple Patterns', 'Grouping', 'Non-capturing and Named Groups'"
+       }
+      },
+      {
+       "topic": "regex in video",
+       "resource": {
+        "resourceId": "cy-regex",
+        "title": "Python Tutorial: re Module - How to Write and Match Regular Expressions (Regex)",
+        "url": "https://www.youtube.com/watch?v=K8L6KVGG-7o",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "testing patterns interactively",
+       "resource": {
+        "resourceId": "regex101",
+        "title": "regex101",
+        "url": "https://regex101.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Set flavour to Python"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/7/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 7 notes"
+     },
+     "backup": {
+      "resourceId": "py-re",
+      "title": "re — Regular expression operations",
+      "url": "https://docs.python.org/3/library/re.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module reference"
+     },
+     "practice": {
+      "title": "Problem Set 7 + log extractor",
+      "brief": "numb3rs, watch, working, um, response (https://cs50.harvard.edu/python/psets/7/). Then extract all emails and ISO dates (YYYY-MM-DD) from a sample log file with tests.",
+      "done_when": "check50 green for all 5; extractor has ≥4 pytest tests.",
+      "autograder": "check50 cs50/problems/2022/python/{numb3rs,watch,working,um,response}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U09.Q1",
+       "kind": "mcq",
+       "prompt": "`\\d+` matches:",
+       "options": [
+        "One digit",
+        "One or more digits",
+        "Any character",
+        "A decimal point"
+       ],
+       "answer": 1,
+       "explain": "+ = one or more."
+      },
+      {
+       "id": "M01.U09.Q2",
+       "kind": "mcq",
+       "prompt": "re.fullmatch vs re.search:",
+       "options": [
+        "Same",
+        "fullmatch must match the whole string",
+        "search is anchored",
+        "fullmatch ignores case"
+       ],
+       "answer": 1,
+       "explain": "search finds a match anywhere."
+      },
+      {
+       "id": "M01.U09.Q3",
+       "kind": "mcq",
+       "prompt": "A capture group is written with:",
+       "options": [
+        "[]",
+        "()",
+        "{}",
+        "<>"
+       ],
+       "answer": 1,
+       "explain": "[] is a character class; {} a quantifier."
+      },
+      {
+       "id": "M01.U09.Q4",
+       "kind": "short",
+       "prompt": "Give one case where regex is the wrong tool, and what you'd use instead.",
+       "rubric": [
+        "Nested/structured formats (HTML, JSON, CSV)",
+        "Use a parser (html.parser/BeautifulSoup, json, csv)",
+        "Explains why (nesting/escaping)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M01.S4",
+   "title": "Objects and idioms (Lectures 8–9 + gaps)",
+   "units": [
+    {
+     "id": "M01.U10",
+     "title": "CS50P Lecture 8 — OOP (+ dataclasses, dunders, enums, Protocols)",
+     "hours": 12,
+     "depth": "core",
+     "week": 11,
+     "prerequisites": [
+      "M01.U08",
+      "M01.U05"
+     ],
+     "outcomes": [
+      "You can design classes with __init__, validation, properties, class methods and inheritance.",
+      "You can model data with dataclasses and enums, and write __repr__/__eq__.",
+      "You can choose composition over inheritance and describe an interface with a Protocol or ABC."
+     ],
+     "topics": [
+      {
+       "id": "M01.06.01",
+       "title": "class/object/self"
+      },
+      {
+       "id": "M01.06.02",
+       "title": "init"
+      },
+      {
+       "id": "M01.06.03",
+       "title": "composition versus inheritance"
+      },
+      {
+       "id": "M01.06.04",
+       "title": "dataclasses"
+      },
+      {
+       "id": "M01.06.08",
+       "title": "properties"
+      },
+      {
+       "id": "M01.06.11",
+       "title": "dunder methods (__repr__, __eq__, __hash__)"
+      },
+      {
+       "id": "M01.06.12",
+       "title": "class and static methods"
+      },
+      {
+       "id": "M01.06.13",
+       "title": "enums"
+      },
+      {
+       "id": "M01.06.14",
+       "title": "ABC vs Protocol"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l8",
+      "title": "CS50P - Lecture 8 - Object-Oriented Programming",
+      "url": "https://www.youtube.com/watch?v=e4fwY9ZsxPw",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (2:47:35). Tuples/dicts as data first; classes from 28:14; raise in __init__ from 54:54; __str__; @property/@setter from ~1:19:46; class methods from 1:48:32; static methods mentioned ~2:17:42; inheritance + super() from ~2:18:11; exception hierarchy; operator overloading (__add__) from 2:39:59"
+     },
+     "covers": [
+      "Classes, instances, __init__, attributes (§Classes)",
+      "Validating with raise (§raise)",
+      "__str__, methods",
+      "@property and setters (§Decorators — using built-in decorators)",
+      "@classmethod (§Class Methods); static methods are only mentioned (§Static Methods: 'not covered')",
+      "Inheritance and super() (§Inheritance)",
+      "Exception class hierarchy (§Inheritance and Exceptions)",
+      "__add__ operator overloading (§Operator Overloading)"
+     ],
+     "gaps": [
+      {
+       "topic": "dataclasses (not in CS50P)",
+       "resource": {
+        "resourceId": "arjan-dataclasses",
+        "title": "If You're Not Using Python DATA CLASSES Yet, You Should",
+        "url": "https://www.youtube.com/watch?v=vRVVyl9uaZc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video: @dataclass, field(default_factory), frozen, ordering"
+       }
+      },
+      {
+       "topic": "dataclasses alt. explanation",
+       "resource": {
+        "resourceId": "mcoding-dataclasses",
+        "title": "Python dataclasses will save you HOURS, also featuring attrs",
+        "url": "https://www.youtube.com/watch?v=vBH6GRJ1REM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "dataclasses reference",
+       "resource": {
+        "resourceId": "py-dataclasses",
+        "title": "dataclasses — Data Classes",
+        "url": "https://docs.python.org/3/library/dataclasses.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Module docs: field(), frozen, __post_init__"
+       }
+      },
+      {
+       "topic": "dunder methods __repr__/__eq__/__len__ (CS50P only does __str__/__add__)",
+       "resource": {
+        "resourceId": "cy-oop5",
+        "title": "Python OOP Tutorial 5: Special (Magic/Dunder) Methods",
+        "url": "https://www.youtube.com/watch?v=3ohzBxoFHAY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "str vs repr",
+       "resource": {
+        "resourceId": "cy-strrepr",
+        "title": "Python Tutorial: str() vs repr()",
+        "url": "https://www.youtube.com/watch?v=5cvM-crlDvg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "properties (second explanation)",
+       "resource": {
+        "resourceId": "cy-oop6",
+        "title": "Python OOP Tutorial 6: Property Decorators - Getters, Setters, and Deleters",
+        "url": "https://www.youtube.com/watch?v=jCzT9XFZ5bw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "static methods (CS50P marks them 'not covered')",
+       "resource": {
+        "resourceId": "cy-oop3",
+        "title": "Python OOP Tutorial 3: classmethods and staticmethods",
+        "url": "https://www.youtube.com/watch?v=rq8cL2XMM5M",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video: classmethods and staticmethods"
+       }
+      },
+      {
+       "topic": "enums",
+       "resource": {
+        "resourceId": "py-enum-howto",
+        "title": "Enum HOWTO",
+        "url": "https://docs.python.org/3/howto/enum.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections up to 'Programmatic access to enumeration members'"
+       }
+      },
+      {
+       "topic": "ABC vs Protocol",
+       "resource": {
+        "resourceId": "arjan-protocol",
+        "title": "Protocol Or ABC In Python - When to Use Which One?",
+        "url": "https://www.youtube.com/watch?v=xvb5hGLoK0A",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "Protocol reference",
+       "resource": {
+        "resourceId": "typing-protocols",
+        "title": "typing.python.org — Protocols and structural subtyping",
+        "url": "https://typing.python.org/en/latest/reference/protocols.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Simple user-defined protocols'"
+       }
+      },
+      {
+       "topic": "composition vs inheritance",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap17.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 17 'Inheritance' (§Parents and children, §Specialization) for the trade-offs"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "py-tut-classes",
+      "title": "Python Tutorial ch. 9 – Classes",
+      "url": "https://docs.python.org/3/tutorial/classes.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "§9.3 A First Look at Classes through §9.5 Inheritance"
+     },
+     "backup": {
+      "resourceId": "cy-oop1",
+      "title": "Python OOP Tutorial 1: Classes and Instances",
+      "url": "https://www.youtube.com/watch?v=ZDa-Z5JzLYM",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole video (Corey OOP series part 1; parts 3, 5, 6 linked above)"
+     },
+     "practice": {
+      "title": "Problem Set 8 + domain model",
+      "brief": "seasons, jar, shirtificate (https://cs50.harvard.edu/python/psets/8/). Then model a `Task` @dataclass (plus a frozen variant), a `Priority` Enum and a `Storage` Protocol with two implementations (in-memory, JSON file) — composition, not inheritance. Tests for both storages.",
+      "done_when": "check50 green for all 3; Task/Priority/Storage committed with ≥6 passing tests and mypy finding no Protocol errors.",
+      "autograder": "check50 cs50/problems/2022/python/{seasons,jar,shirtificate}"
+     },
+     "quiz": [
+      {
+       "id": "M01.U10.Q1",
+       "kind": "mcq",
+       "prompt": "`@dataclass` generates by default:",
+       "options": [
+        "__init__, __repr__, __eq__",
+        "__hash__ always",
+        "DB tables",
+        "Getters/setters"
+       ],
+       "answer": 0,
+       "explain": "Hashing depends on eq/frozen settings."
+      },
+      {
+       "id": "M01.U10.Q2",
+       "kind": "mcq",
+       "prompt": "If you define `__eq__` but not `__hash__`, instances become:",
+       "options": [
+        "Hashable",
+        "Unhashable",
+        "Immutable",
+        "Faster"
+       ],
+       "answer": 1,
+       "explain": "Python sets __hash__ = None to protect dict/set invariants."
+      },
+      {
+       "id": "M01.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A Protocol enables:",
+       "options": [
+        "Runtime inheritance only",
+        "Structural ('duck') typing checked by a type checker",
+        "Multiple processes",
+        "Serialisation"
+       ],
+       "answer": 1,
+       "explain": "No inheritance needed; matching methods suffice."
+      },
+      {
+       "id": "M01.U10.Q4",
+       "kind": "mcq",
+       "prompt": "`@classmethod` receives as its first argument:",
+       "options": [
+        "The instance",
+        "The class (cls)",
+        "Nothing",
+        "The module"
+       ],
+       "answer": 1,
+       "explain": "Used for alternative constructors (L8 §Class Methods)."
+      },
+      {
+       "id": "M01.U10.Q5",
+       "kind": "short",
+       "prompt": "Why 'composition over inheritance'? Use your Storage design as the example.",
+       "rubric": [
+        "Inheritance couples to parent internals",
+        "Composition swaps behaviour by passing objects",
+        "Example: Tracker holds a Storage, swap JSON/in-memory",
+        "Testing becomes easier"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U11",
+     "title": "CS50P Lecture 9 — Et cetera (+ iterators, itertools, collections, datetime)",
+     "hours": 9,
+     "depth": "core",
+     "week": 13,
+     "prerequisites": [
+      "M01.U10"
+     ],
+     "outcomes": [
+      "You can use sets, type hints, docstrings, argparse, unpacking, *args/**kwargs, map/filter, comprehensions, enumerate and generators.",
+      "You can use collections (Counter, defaultdict, namedtuple), itertools (islice, groupby) and timezone-aware datetimes."
+     ],
+     "topics": [
+      {
+       "id": "M01.02.11",
+       "title": "enumerate/zip"
+      },
+      {
+       "id": "M01.02.12",
+       "title": "list/dict/set comprehensions"
+      },
+      {
+       "id": "M01.03.04",
+       "title": "unpacking"
+      },
+      {
+       "id": "M01.04.03",
+       "title": "positional/keyword/default"
+      },
+      {
+       "id": "M01.04.04",
+       "title": "args/kwargs"
+      },
+      {
+       "id": "M01.04.09",
+       "title": "docstrings"
+      },
+      {
+       "id": "M01.04.11",
+       "title": "lambda and higher-order functions"
+      },
+      {
+       "id": "M01.06.05",
+       "title": "iterator versus iterable"
+      },
+      {
+       "id": "M01.06.06",
+       "title": "generators/yield"
+      },
+      {
+       "id": "M01.06.10",
+       "title": "standard library collections/datetime/itertools"
+      },
+      {
+       "id": "M01.06.15",
+       "title": "datetime and zoneinfo"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50p-l9",
+      "title": "CS50P - Lecture 9 - Et Cetera",
+      "url": "https://www.youtube.com/watch?v=6pgodt1mezg",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full lecture (2:28:57). set at start; global 7:47; constants 23:46; type hints + mypy 31:06; docstrings; argparse 1:01:18; unpacking 1:10:42; *args/**kwargs; lambda ~1:38:37; map ~1:44:03; list comprehensions 1:46:42; filter; dict comprehensions ~1:58:53; enumerate 2:06:55; generators/yield 2:17:45"
+     },
+     "covers": [
+      "set (§set)",
+      "global variables and constants (§Global Variables, §Constants)",
+      "Type hints n: int, -> None, mypy (§Type Hints)",
+      "Docstrings (§Docstrings)",
+      "argparse (§argparse)",
+      "Unpacking, *args, **kwargs (§Unpacking, §args and kwargs)",
+      "map, lambda, filter (§map, §filter)",
+      "List and dict comprehensions",
+      "enumerate (§enumerate)",
+      "Generators with yield (§Generators and Iterators)"
+     ],
+     "gaps": [
+      {
+       "topic": "iterator protocol (iter/next) — L9 only shows yield",
+       "resource": {
+        "resourceId": "cy-iterators",
+        "title": "Python Tutorial: Iterators and Iterables - What Are They and How Do They Work?",
+        "url": "https://www.youtube.com/watch?v=jTYiNjvnHZY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "generators in depth",
+       "resource": {
+        "resourceId": "cy-generators",
+        "title": "Python Tutorial: Generators - How to use them and the benefits you receive",
+        "url": "https://www.youtube.com/watch?v=bD05uGo_sVI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "zip (not in CS50P)",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap11.html#zip",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 11 §zip"
+       }
+      },
+      {
+       "topic": "collections: Counter, defaultdict, namedtuple",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap18.html#counters",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 18 §Counters, §defaultdict, §Named tuples"
+       }
+      },
+      {
+       "topic": "namedtuple (video)",
+       "resource": {
+        "resourceId": "cy-namedtuple",
+        "title": "Python Tutorial: Namedtuple - When and why should you use namedtuples?",
+        "url": "https://www.youtube.com/watch?v=GfxJYp9_nJA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "itertools",
+       "resource": {
+        "resourceId": "py-functional",
+        "title": "Functional Programming HOWTO",
+        "url": "https://docs.python.org/3/howto/functional.html#the-itertools-module",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Functional Programming HOWTO §Iterators, §Generators, §The itertools module"
+       }
+      },
+      {
+       "topic": "comprehensions (dict/set too)",
+       "resource": {
+        "resourceId": "cy-comprehensions",
+        "title": "Python Tutorial: Comprehensions - How they work and why you should be using them",
+        "url": "https://www.youtube.com/watch?v=3dt4OGnU5sM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "collections reference",
+       "resource": {
+        "resourceId": "py-collections",
+        "title": "collections — Container datatypes",
+        "url": "https://docs.python.org/3/library/collections.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Counter, defaultdict, namedtuple, deque entries"
+       }
+      },
+      {
+       "topic": "itertools reference",
+       "resource": {
+        "resourceId": "py-itertools",
+        "title": "itertools — Functions creating iterators",
+        "url": "https://docs.python.org/3/library/itertools.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "islice, groupby, chain, accumulate entries + 'Itertools Recipes'"
+       }
+      },
+      {
+       "topic": "idiomatic loops (enumerate, zip, sorted, dict iteration)",
+       "resource": {
+        "resourceId": "hettinger-idiomatic",
+        "title": "Transforming Code into Beautiful, Idiomatic Python",
+        "url": "https://www.youtube.com/watch?v=OSGv2VnC0go",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole talk (~48 min)"
+       }
+      },
+      {
+       "topic": "first-class and higher-order functions",
+       "resource": {
+        "resourceId": "cy-firstclass",
+        "title": "Programming Terms: First-Class Functions",
+        "url": "https://www.youtube.com/watch?v=kr0mpwqttM0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "sorting with key functions",
+       "resource": {
+        "resourceId": "cy-sorting",
+        "title": "Python Tutorial: Sorting Lists, Tuples, and Objects",
+        "url": "https://www.youtube.com/watch?v=D3JvDWO-BY4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "datetime, timedelta, timezones",
+       "resource": {
+        "resourceId": "cy-datetime",
+        "title": "Python Tutorial: Datetime Module - How to work with Dates, Times, Timedeltas, and Timezones",
+        "url": "https://www.youtube.com/watch?v=eirjjyP2qcQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (uses pytz in places — use zoneinfo instead, see next)"
+       }
+      },
+      {
+       "topic": "zoneinfo",
+       "resource": {
+        "resourceId": "py-zoneinfo",
+        "title": "zoneinfo — IANA time zone support",
+        "url": "https://docs.python.org/3/library/zoneinfo.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Using ZoneInfo' section"
+       }
+      },
+      {
+       "topic": "aware vs naive datetimes",
+       "resource": {
+        "resourceId": "py-datetime",
+        "title": "datetime — Basic date and time types",
+        "url": "https://docs.python.org/3/library/datetime.html#aware-and-naive-objects",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Aware and Naive Objects' section"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/9/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 9 notes"
+     },
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 13 Python for AI Engineering",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/13-python-for-ai-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 13 §5 Iterators and generators, §9 Counting, grouping and iterator tools"
+     },
+     "practice": {
+      "title": "Streaming + grouping lab",
+      "brief": "(1) Write a generator `batches(path, n)` that yields lists of n lines lazily (use itertools.islice). (2) Group events by day with defaultdict and with itertools.groupby — note which needs sorted input. (3) Convert '2026-10-20 22:00' Asia/Karachi to UTC with zoneinfo. CS50P Problem Set 9 is the final project — reuse the M01 capstone for it if you want the certificate.",
+      "done_when": "All three scripts committed with pytest tests (generator test proves laziness by consuming only the first batch); UTC result = 2026-10-20 17:00."
+     },
+     "quiz": [
+      {
+       "id": "M01.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A generator:",
+       "options": [
+        "Builds the full list",
+        "Yields values lazily",
+        "Is always faster than lists",
+        "Can be iterated many times"
+       ],
+       "answer": 1,
+       "explain": "It produces values on demand and is exhausted after one pass."
+      },
+      {
+       "id": "M01.U11.Q2",
+       "kind": "mcq",
+       "prompt": "itertools.groupby groups:",
+       "options": [
+        "All equal keys anywhere",
+        "Consecutive equal keys only",
+        "Randomly",
+        "By hash"
+       ],
+       "answer": 1,
+       "explain": "Sort by the key first if you want global groups."
+      },
+      {
+       "id": "M01.U11.Q3",
+       "kind": "mcq",
+       "prompt": "`sorted(xs, key=lambda s: s[\"name\"])` sorts by:",
+       "options": [
+        "Dict size",
+        "The 'name' value",
+        "Insertion order",
+        "Hash"
+       ],
+       "answer": 1,
+       "explain": "key= maps each item to a sort key."
+      },
+      {
+       "id": "M01.U11.Q4",
+       "kind": "mcq",
+       "prompt": "`def f(*args, **kwargs)` — kwargs is a:",
+       "options": [
+        "tuple",
+        "dict",
+        "list",
+        "set"
+       ],
+       "answer": 1,
+       "explain": "args is a tuple of positionals; kwargs a dict of keyword args."
+      },
+      {
+       "id": "M01.U11.Q5",
+       "kind": "short",
+       "prompt": "Why do generators matter for data pipelines and for LLM token streaming?",
+       "rubric": [
+        "Constant memory for huge inputs",
+        "Start processing before all data arrives",
+        "Token streams are produced incrementally",
+        "Composable pipeline stages"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U12",
+     "title": "Closures, decorators and context managers (gap unit)",
+     "hours": 6,
+     "depth": "core",
+     "week": 14,
+     "prerequisites": [
+      "M01.U11",
+      "M01.U05"
+     ],
+     "outcomes": [
+      "You can explain closures and write decorators (with and without arguments) using functools.wraps.",
+      "You can write context managers with a class (__enter__/__exit__) and with @contextmanager."
+     ],
+     "topics": [
+      {
+       "id": "M01.04.06",
+       "title": "closures"
+      },
+      {
+       "id": "M01.06.07",
+       "title": "decorators"
+      },
+      {
+       "id": "M01.06.16",
+       "title": "writing context managers"
+      }
+     ],
+     "learn": {
+      "resourceId": "cy-closures",
+      "title": "Programming Terms: Closures - How to Use Them and Why They Are Useful",
+      "url": "https://www.youtube.com/watch?v=swU3c34d2NQ",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Watch in this order: Closures (whole) → Decorators (FsAPt_9Bf3U, whole) → Context Managers (-aKFBoZpiqA, whole)"
+     },
+     "covers": [
+      "Closures: inner functions remembering enclosing variables (Corey 'Closures')",
+      "Decorators: functions taking/returning functions, wrapper with *args/**kwargs, class decorators (Corey 'Decorators')",
+      "Context managers: class-based __enter__/__exit__ and contextlib.contextmanager (Corey 'Context Managers')"
+     ],
+     "gaps": [
+      {
+       "topic": "decorators",
+       "resource": {
+        "resourceId": "cy-decorators",
+        "title": "Python Tutorial: Decorators - Dynamically Alter The Functionality Of Your Functions",
+        "url": "https://www.youtube.com/watch?v=FsAPt_9Bf3U",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "context managers",
+       "resource": {
+        "resourceId": "cy-ctxmgr",
+        "title": "Python Tutorial: Context Managers - Efficiently Managing Resources",
+        "url": "https://www.youtube.com/watch?v=-aKFBoZpiqA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "functools.wraps, lru_cache, partial",
+       "resource": {
+        "resourceId": "py-functools",
+        "title": "functools — Higher-order functions",
+        "url": "https://docs.python.org/3/library/functools.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "@wraps, @lru_cache, partial entries"
+       }
+      },
+      {
+       "topic": "contextlib.contextmanager",
+       "resource": {
+        "resourceId": "py-contextlib",
+        "title": "contextlib — Utilities for with-statement contexts",
+        "url": "https://docs.python.org/3/library/contextlib.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "@contextmanager entry + examples"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 13 Python for AI Engineering",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/13-python-for-ai-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 13 §3 Functions, arguments, and closures; §6 Context managers and exceptions"
+     },
+     "backup": {
+      "resourceId": "py-functools",
+      "title": "functools — Higher-order functions",
+      "url": "https://docs.python.org/3/library/functools.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Reference"
+     },
+     "practice": {
+      "title": "@timed, @retry and timer()",
+      "brief": "Write `@timed` and `@retry(times=3, exceptions=(ValueError,))` using functools.wraps, plus a `timer()` context manager with @contextmanager. Tests prove `__name__` is preserved, retry stops after 3 attempts, and timer's exit code runs on exceptions.",
+      "done_when": "≥5 passing pytest tests covering wraps, retry count, and exception path through the context manager."
+     },
+     "quiz": [
+      {
+       "id": "M01.U12.Q1",
+       "kind": "mcq",
+       "prompt": "A decorator is:",
+       "options": [
+        "A class",
+        "A callable that takes a function and returns a function",
+        "A comment",
+        "A type hint"
+       ],
+       "answer": 1,
+       "explain": "@d above def f is f = d(f)."
+      },
+      {
+       "id": "M01.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Without functools.wraps, the decorated function loses:",
+       "options": [
+        "Its arguments",
+        "Its name and docstring metadata",
+        "Its return value",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "wraps copies __name__, __doc__, etc."
+      },
+      {
+       "id": "M01.U12.Q3",
+       "kind": "mcq",
+       "prompt": "In a @contextmanager function, code after `yield` runs:",
+       "options": [
+        "Before the block",
+        "On exit from the with block",
+        "Never",
+        "At import"
+       ],
+       "answer": 1,
+       "explain": "Put it in try/finally so it runs on errors too."
+      },
+      {
+       "id": "M01.U12.Q4",
+       "kind": "mcq",
+       "prompt": "CS50P Lecture 8 teaches decorators how?",
+       "options": [
+        "Writing your own decorators",
+        "Only using built-ins @property/@classmethod",
+        "Not at all",
+        "Via functools"
+       ],
+       "answer": 1,
+       "explain": "Verified in the L8 notes: §Decorators covers @property only."
+      },
+      {
+       "id": "M01.U12.Q5",
+       "kind": "short",
+       "prompt": "Explain how a closure 'remembers' a variable, using your retry(times) example.",
+       "rubric": [
+        "Inner function references enclosing variable",
+        "Enclosing frame's variable kept alive in a cell",
+        "times is captured when retry(3) runs",
+        "Each decorator call gets its own captured value"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M01.S5",
+   "title": "Typed and concurrent Python",
+   "units": [
+    {
+     "id": "M01.U13",
+     "title": "Typed Python for real codebases (gap unit)",
+     "hours": 6,
+     "depth": "core",
+     "week": 14,
+     "prerequisites": [
+      "M01.U10"
+     ],
+     "outcomes": [
+      "You can annotate functions and data with unions, Optional, generics, TypedDict, Literal, Callable and Protocol.",
+      "You can run mypy (strict) and fix or justify every error."
+     ],
+     "topics": [
+      {
+       "id": "M01.04.10",
+       "title": "type hints"
+      },
+      {
+       "id": "M01.07.01",
+       "title": "X | None / Optional"
+      },
+      {
+       "id": "M01.07.02",
+       "title": "generics (list[int], dict[str, T])"
+      },
+      {
+       "id": "M01.07.03",
+       "title": "TypedDict and Literal"
+      },
+      {
+       "id": "M01.07.04",
+       "title": "Callable and Protocol in annotations"
+      },
+      {
+       "id": "M01.07.05",
+       "title": "running mypy"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-types",
+      "title": "FastAPI — Python Types Intro",
+      "url": "https://fastapi.tiangolo.com/python-types/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole page: simple types, generics (list/dict/tuple/set), Union/Optional (X | None), classes as types, Pydantic models, Annotated"
+     },
+     "covers": [
+      "Why type hints; str/int/float/bool/bytes",
+      "Generic types list[str], dict[str, float], tuple, set",
+      "Union and X | None",
+      "Classes as types",
+      "Pydantic models preview",
+      "Annotated metadata"
+     ],
+     "gaps": [
+      {
+       "topic": "type hints in video",
+       "resource": {
+        "resourceId": "twt-typing",
+        "title": "Python Typing - Type Hints & Annotations",
+        "url": "https://www.youtube.com/watch?v=QORvB-_mbZ0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "TypedDict, Literal, Callable, generics cheat sheet",
+       "resource": {
+        "resourceId": "mypy-cheat",
+        "title": "mypy — Type hints cheat sheet",
+        "url": "https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 'Functions', 'Classes', 'When you're puzzled', 'Standard duck types'"
+       }
+      },
+      {
+       "topic": "generics reference",
+       "resource": {
+        "resourceId": "typing-generics",
+        "title": "typing.python.org — Generics",
+        "url": "https://typing.python.org/en/latest/reference/generics.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Defining generic classes' and 'Generic functions'"
+       }
+      },
+      {
+       "topic": "Protocol in annotations",
+       "resource": {
+        "resourceId": "anthony-protocol",
+        "title": "structural subtyping in python with Protocol! (anthony explains #164)",
+        "url": "https://www.youtube.com/watch?v=QjFChmQHJxk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "mypy-start",
+      "title": "mypy — Getting started",
+      "url": "https://mypy.readthedocs.io/en/stable/getting_started.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole page (installing, running, strict mode)"
+     },
+     "backup": {
+      "resourceId": "cs50p-notes",
+      "title": "CS50P lecture notes",
+      "url": "https://cs50.harvard.edu/python/notes/9/#type-hints",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 9 §Type Hints (the CS50P baseline: n: int, -> None, mypy)"
+     },
+     "practice": {
+      "title": "Type the tracker",
+      "brief": "Fully annotate your M01.U10 Task/Storage project. Add `mypy --strict` to a `check.sh`.",
+      "done_when": "`mypy --strict .` exits 0, or every remaining `# type: ignore[...]` has a comment explaining why."
+     },
+     "quiz": [
+      {
+       "id": "M01.U13.Q1",
+       "kind": "mcq",
+       "prompt": "Type hints at runtime are:",
+       "options": [
+        "Enforced by Python",
+        "Not enforced; checked by tools like mypy",
+        "Compiled",
+        "Only for classes"
+       ],
+       "answer": 1,
+       "explain": "CPython ignores annotations at runtime (CS50P L9 §Type Hints shows this too)."
+      },
+      {
+       "id": "M01.U13.Q2",
+       "kind": "mcq",
+       "prompt": "`def f(x: int | None = None)` means x is:",
+       "options": [
+        "int only",
+        "int or None",
+        "A union of strings",
+        "Required"
+       ],
+       "answer": 1,
+       "explain": "| None = Optional."
+      },
+      {
+       "id": "M01.U13.Q3",
+       "kind": "mcq",
+       "prompt": "`Literal[\"asc\", \"desc\"]` restricts a value to:",
+       "options": [
+        "Any string",
+        "Exactly those strings",
+        "Enums only",
+        "ints"
+       ],
+       "answer": 1,
+       "explain": "Literal types only accept the listed values, so a type checker flags any other string such as \"up\"."
+      },
+      {
+       "id": "M01.U13.Q4",
+       "kind": "mcq",
+       "prompt": "Which describes a dict with fixed string keys and typed values?",
+       "options": [
+        "dict[str, Any]",
+        "TypedDict",
+        "NamedTuple only",
+        "Protocol"
+       ],
+       "answer": 1,
+       "explain": "TypedDict types each key."
+      },
+      {
+       "id": "M01.U13.Q5",
+       "kind": "short",
+       "prompt": "Why does typed code matter more when an AI assistant or a teammate edits it?",
+       "rubric": [
+        "Types document intent/contracts",
+        "Checker catches wrong calls before runtime",
+        "Editors give better completions",
+        "Safer refactors"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M01.U14",
+     "title": "Concurrency mental model + async/await intro (gap unit)",
+     "hours": 6,
+     "depth": "core",
+     "week": 15,
+     "prerequisites": [
+      "M01.U12",
+      "M01.U06"
+     ],
+     "outcomes": [
+      "You can explain concurrency vs parallelism, threads vs processes vs async, and the GIL.",
+      "You can write asyncio code with asyncio.run, await, gather and an async HTTP client, and show when it helps."
+     ],
+     "topics": [
+      {
+       "id": "M01.06.09",
+       "title": "async/await basics"
+      },
+      {
+       "id": "M01.06.17",
+       "title": "threads vs processes vs async"
+      },
+      {
+       "id": "M01.06.18",
+       "title": "asyncio.run and gather"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-async",
+      "title": "FastAPI — Concurrency and async / await",
+      "url": "https://fastapi.tiangolo.com/async/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole page 'Concurrency and async / await' (the burgers analogy; concurrency vs parallelism; when to use async def)"
+     },
+     "covers": [
+      "Asynchronous code explained (waiting on I/O)",
+      "Concurrency vs parallelism via the burgers story",
+      "async/await syntax",
+      "When parallelism (CPU-bound) beats concurrency",
+      "async def vs def path operations in FastAPI"
+     ],
+     "gaps": [
+      {
+       "topic": "how asyncio works (event loop, tasks)",
+       "resource": {
+        "resourceId": "py-asyncio-overview",
+        "title": "A Conceptual Overview of asyncio",
+        "url": "https://docs.python.org/3/howto/a-conceptual-overview-of-asyncio.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole HOWTO"
+       }
+      },
+      {
+       "topic": "asyncio.run, create_task, gather",
+       "resource": {
+        "resourceId": "py-asyncio-task",
+        "title": "asyncio — Coroutines and Tasks",
+        "url": "https://docs.python.org/3/library/asyncio-task.html#running-tasks-concurrently",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 'Coroutines' through 'Running Tasks Concurrently' (gather)"
+       }
+      },
+      {
+       "topic": "asyncio in video",
+       "resource": {
+        "resourceId": "arjan-asyncio",
+        "title": "Next-Level Concurrent Programming In Python With Asyncio",
+        "url": "https://www.youtube.com/watch?v=GpqAQxH1Afc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "asyncio long-form",
+       "resource": {
+        "resourceId": "twt-asyncio",
+        "title": "Asyncio in Python - Full Tutorial",
+        "url": "https://www.youtube.com/watch?v=Qb9s3UiMSTA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (event loop, tasks, gather, TaskGroup)"
+       }
+      },
+      {
+       "topic": "threads",
+       "resource": {
+        "resourceId": "cy-threading",
+        "title": "Python Threading Tutorial: Run Code Concurrently Using the Threading Module",
+        "url": "https://www.youtube.com/watch?v=IEEhzQoKtQU",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (ThreadPoolExecutor section is the key part)"
+       }
+      },
+      {
+       "topic": "processes",
+       "resource": {
+        "resourceId": "cy-mp",
+        "title": "Python Multiprocessing Tutorial: Run Code in Parallel Using the Multiprocessing Module",
+        "url": "https://www.youtube.com/watch?v=fKl2JW_qrso",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (ProcessPoolExecutor section)"
+       }
+      },
+      {
+       "topic": "threads vs event loop from first principles",
+       "resource": {
+        "resourceId": "beazley-conc",
+        "title": "Python Concurrency From the Ground Up: LIVE! (PyCon 2015)",
+        "url": "https://www.youtube.com/watch?v=MCs5OvhV9S4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole talk (~46 min, live coding: threads, GIL, generators as coroutines)"
+       }
+      },
+      {
+       "topic": "async HTTP client",
+       "resource": {
+        "resourceId": "httpx",
+        "title": "HTTPX documentation",
+        "url": "https://www.python-httpx.org/async/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Async Support'"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "py-cf",
+      "title": "concurrent.futures — Launching parallel tasks",
+      "url": "https://docs.python.org/3/library/concurrent.futures.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "ThreadPoolExecutor and ProcessPoolExecutor examples"
+     },
+     "backup": {
+      "resourceId": "hettinger-concurrency",
+      "title": "Raymond Hettinger, Keynote on Concurrency, PyBay 2017",
+      "url": "https://www.youtube.com/watch?v=9zinZmE3Ogk",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole keynote (threads vs processes vs async trade-offs)"
+     },
+     "practice": {
+      "title": "10 URLs, three ways",
+      "brief": "Fetch 10 URLs sequentially, with ThreadPoolExecutor, and with asyncio.gather + httpx.AsyncClient. Time each and explain. Then add a CPU-bound loop and show async doesn't speed it up but ProcessPoolExecutor does.",
+      "done_when": "`concurrency.md` with a timing table for the 4 variants and a correct explanation (I/O-bound vs CPU-bound, GIL)."
+     },
+     "quiz": [
+      {
+       "id": "M01.U14.Q1",
+       "kind": "mcq",
+       "prompt": "`async def f()` called as `f()` returns:",
+       "options": [
+        "The result",
+        "A coroutine object",
+        "A thread",
+        "None"
+       ],
+       "answer": 1,
+       "explain": "It must be awaited or scheduled."
+      },
+      {
+       "id": "M01.U14.Q2",
+       "kind": "mcq",
+       "prompt": "asyncio helps most with:",
+       "options": [
+        "CPU-bound maths",
+        "Many concurrent I/O waits",
+        "GPU kernels",
+        "Disk compression"
+       ],
+       "answer": 1,
+       "explain": "asyncio overlaps waiting time on one thread; it does not make CPU-heavy maths run in parallel."
+      },
+      {
+       "id": "M01.U14.Q3",
+       "kind": "mcq",
+       "prompt": "`time.sleep(5)` inside a coroutine:",
+       "options": [
+        "Yields to other tasks",
+        "Blocks the whole event loop",
+        "Equals `await asyncio.sleep(5)`",
+        "Errors"
+       ],
+       "answer": 1,
+       "explain": "Use await asyncio.sleep or to_thread for blocking calls."
+      },
+      {
+       "id": "M01.U14.Q4",
+       "kind": "mcq",
+       "prompt": "For CPU-bound pure-Python work on a default (GIL) CPython, real parallelism comes from:",
+       "options": [
+        "Threads",
+        "asyncio",
+        "Multiple processes",
+        "Generators"
+       ],
+       "answer": 2,
+       "explain": "Processes each have their own interpreter and GIL."
+      },
+      {
+       "id": "M01.U14.Q5",
+       "kind": "short",
+       "prompt": "Explain concurrency vs parallelism using the event loop and the GIL.",
+       "rubric": [
+        "Concurrency = interleaving progress on many tasks",
+        "Parallelism = simultaneous execution on multiple cores",
+        "Event loop switches at await points (single thread)",
+        "GIL lets one thread run Python bytecode at a time; processes bypass it"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Study tracker CLI v1",
+  "brief": "(12h) Build from an empty file a typed CLI: argparse subcommands add/list/done/stats; dataclass models + Priority enum; JSON storage behind a Storage Protocol; regex-validated input; custom exceptions; zoneinfo-aware timestamps; generator-based CSV export; an async `quote` command (httpx, timeout); ≥15 pytest tests incl. failures and tmp files; mypy --strict clean. Log AI-assistant use. Can double as your CS50P Problem Set 9 final project. Pass ≥8/10 with no zero in the last row.",
+  "rubric": [
+   {
+    "criterion": "Correctness (all commands; empty file, bad input, timeout)",
+    "levels": [
+     "0 – broken",
+     "1 – happy path",
+     "2 – edge cases handled"
+    ]
+   },
+   {
+    "criterion": "Code design (functions, dataclasses, Protocol, no globals, main guard)",
+    "levels": [
+     "0 – monolith",
+     "1 – partly structured",
+     "2 – clean separation"
+    ]
+   },
+   {
+    "criterion": "Tests (≥15, cover errors and tmp files)",
+    "levels": [
+     "0 – none",
+     "1 – <15 or happy path only",
+     "2 – ≥15 incl. failures"
+    ]
+   },
+   {
+    "criterion": "Typing (mypy --strict clean or justified ignores)",
+    "levels": [
+     "0 – none",
+     "1 – partial",
+     "2 – clean"
+    ]
+   },
+   {
+    "criterion": "Explain & modify live (reviewer change in ≤20 min without AI)",
+    "levels": [
+     "0 – can't",
+     "1 – with help",
+     "2 – independently"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

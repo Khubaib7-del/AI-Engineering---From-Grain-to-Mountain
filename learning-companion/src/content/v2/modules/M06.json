@@ -1,0 +1,1899 @@
+{
+ "id": "M06",
+ "phase": "P2 Math and models",
+ "title": "Probability, statistics and evaluation",
+ "summary": "Simulation-first probability and statistics for engineers who must evaluate ML/LLM systems: Bayes and base rates, distributions and percentiles, CLT and sampling (incl. temperature/top-p), likelihood, bootstrap CIs and permutation tests, power and peeking, entropy/cross-entropy/perplexity, and eval statistics (paired comparisons, clustered error bars, kappa, calibration). Spine: Seeing Theory, Think Stats 3e, Data 8 textbook, 3Blue1Brown, Evan Miller, Miller (2024). Harvard Stat 110 (fixed playlist link) is the Deep track. Needs only the M00 math bridge and Python; U04 and U07 need M05.U05.",
+ "hours": 45,
+ "deepHours": 140,
+ "prerequisites": [
+  "M00",
+  "M01"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M06.S1",
+   "title": "Probability for engineers",
+   "units": [
+    {
+     "id": "M06.U01",
+     "title": "Events, conditional probability and Bayes",
+     "hours": 5,
+     "depth": "core",
+     "week": 53,
+     "prerequisites": [],
+     "outcomes": [
+      "You can compute conditional probabilities and test independence.",
+      "You can apply Bayes' rule to a classifier/base-rate problem and verify it by simulation.",
+      "You can describe prior → posterior updating in words."
+     ],
+     "topics": [
+      {
+       "id": "M06.01.01",
+       "title": "sample space/events"
+      },
+      {
+       "id": "M06.01.02",
+       "title": "conditional probability"
+      },
+      {
+       "id": "M06.01.03",
+       "title": "independence"
+      },
+      {
+       "id": "M06.01.04",
+       "title": "Bayes rule"
+      },
+      {
+       "id": "M06.02.10",
+       "title": "Bayesian intuition"
+      }
+     ],
+     "learn": {
+      "resourceId": "seeing-theory",
+      "title": "Seeing Theory ch.2 Compound Probability",
+      "url": "https://seeing-theory.brown.edu/compound-probability/index.html",
+      "slice": "Chapter 2 'Compound Probability': Set Theory, Counting, Conditional Probability (+ Chapter 1 'Basic Probability': Chance Events)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Set theory for events: union, intersection, complement (interactive)",
+      "Counting: permutations and combinations",
+      "Conditional probability P(A|B) visualised",
+      "Ch.1 Chance Events: sample space and frequentist intuition via simulation"
+     ],
+     "gaps": [
+      {
+       "topic": "Bayes' theorem and base rates",
+       "resource": {
+        "resourceId": "3b1b-lessons",
+        "title": "3Blue1Brown · Bayes theorem, the geometry of changing beliefs",
+        "url": "https://www.youtube.com/watch?v=HZGCoVF3YvM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Independence (formal definition and pitfalls)",
+       "resource": {
+        "resourceId": "stat110-youtube",
+        "title": "Stat 110 Lecture 4: Conditional Probability",
+        "url": "https://www.youtube.com/watch?v=P7NE4WF8j-Q",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Prior → posterior updating",
+       "resource": {
+        "resourceId": "seeing-theory",
+        "title": "Seeing Theory · Bayesian Inference",
+        "url": "https://seeing-theory.brown.edu/bayesian-inference/index.html",
+        "slice": "Chapter 'Bayesian Inference': Bayes' Theorem, Likelihood Function, Prior to Posterior",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Bayes for classifiers in code",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 07-bayes-theorem",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/07-bayes-theorem",
+        "slice": "Phase 01 · lesson 07-bayes-theorem (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "seeing-theory",
+      "title": "Seeing Theory ch.1 Basic Probability",
+      "url": "https://seeing-theory.brown.edu/basic-probability/index.html",
+      "slice": "Chapter 1 'Basic Probability'",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "blitzstein-probability-book",
+      "title": "Introduction to Probability, 2nd ed.",
+      "url": "https://probabilitybook.net/",
+      "slice": "Ch.2 Conditional probability",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Toxicity filter base rates",
+      "brief": "A toxicity classifier has 95% recall and a 2% false-positive rate; 1% of messages are toxic. Compute P(toxic | flagged) analytically, then verify by simulating 1,000,000 messages in NumPy. Repeat at 10% prevalence and explain the change. Reference build: rohitg00 Phase 01 lesson 07.",
+      "done_when": "Analytic and simulated answers agree within 0.5 percentage points at both prevalences (≈32% and ≈84%), with a 3-sentence explanation of the base-rate effect."
+     },
+     "quiz": [
+      {
+       "id": "M06.U01.Q1",
+       "kind": "mcq",
+       "prompt": "P(A|B) =",
+       "options": [
+        "P(A)P(B)",
+        "P(A∩B)/P(B)",
+        "P(B|A)",
+        "P(A)+P(B)"
+       ],
+       "answer": 1,
+       "explain": "Definition of conditional probability (P(B) > 0)."
+      },
+      {
+       "id": "M06.U01.Q2",
+       "kind": "mcq",
+       "prompt": "A and B independent means:",
+       "options": [
+        "P(A∩B) = 0",
+        "P(A|B) = P(A)",
+        "P(A) = P(B)",
+        "They are mutually exclusive"
+       ],
+       "answer": 1,
+       "explain": "Knowing B tells you nothing about A. Mutually exclusive events with non-zero probability are dependent."
+      },
+      {
+       "id": "M06.U01.Q3",
+       "kind": "mcq",
+       "prompt": "With a rare positive class, a high-recall classifier's precision is usually:",
+       "options": [
+        "Also high",
+        "Potentially low (base-rate effect)",
+        "Exactly the recall",
+        "50%"
+       ],
+       "answer": 1,
+       "explain": "False positives from the huge negative class can outnumber true positives."
+      },
+      {
+       "id": "M06.U01.Q4",
+       "kind": "mcq",
+       "prompt": "In sequential Bayesian updating, you start with Beta(1,1) and observe 7 heads and 3 tails. What is the posterior?",
+       "options": [
+        "Beta(8, 4)",
+        "Beta(1.7, 1.3)",
+        "Normal(0.7, 0.1)",
+        "Beta(7, 3)"
+       ],
+       "answer": 0,
+       "explain": "The Beta-Binomial conjugate update adds successes to the first parameter and failures to the second: Beta(1+7, 1+3) = Beta(8, 4). The posterior mean is 8/12 = 0.667. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 07-bayes-theorem quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M06.U01.Q5",
+       "kind": "short",
+       "prompt": "Explain the base-rate fallacy using the toxicity-filter example.",
+       "rubric": [
+        "Confuses P(flagged|toxic) with P(toxic|flagged)",
+        "Shows the arithmetic or frequency table",
+        "States how prevalence changes precision",
+        "Gives a product consequence (reviewer load, user trust)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U02",
+     "title": "Random variables, distributions, expectation and variance",
+     "hours": 8,
+     "depth": "core",
+     "week": 54,
+     "prerequisites": [
+      "M06.U01"
+     ],
+     "outcomes": [
+      "You can plot and read a PMF, PDF and CDF from real data.",
+      "You can compute mean, variance, covariance, median and percentiles and say which summary fits which data.",
+      "You can recognise Bernoulli, binomial, Gaussian and heavy-tailed data."
+     ],
+     "topics": [
+      {
+       "id": "M06.01.05",
+       "title": "random variables"
+      },
+      {
+       "id": "M06.01.06",
+       "title": "PMF/PDF/CDF"
+      },
+      {
+       "id": "M06.01.07",
+       "title": "expectation/variance/covariance"
+      },
+      {
+       "id": "M06.01.08",
+       "title": "Bernoulli/binomial/Gaussian"
+      },
+      {
+       "id": "M06.04.05",
+       "title": "descriptive stats & distributions with real data (quantiles, skew, heavy tails)"
+      }
+     ],
+     "learn": {
+      "resourceId": "think-stats-3e",
+      "title": "Think Stats 3e ch.1 Exploratory Data Analysis",
+      "url": "https://allendowney.github.io/ThinkStats/chap01.html",
+      "slice": "Ch.1 EDA, ch.2 Distributions, ch.3 PMFs, ch.4 CDFs, ch.5 Modeling Distributions, ch.6 PDFs, ch.7 §7.1–7.6 Relationships (correlation)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.1–2: reading data, histograms, mean/variance/SD, outliers, summary statistics",
+      "Ch.3: probability mass functions and comparing distributions",
+      "Ch.4: CDFs, percentiles and percentile ranks",
+      "Ch.5: exponential, normal, lognormal and Pareto models; comparing model to data",
+      "Ch.6: probability density functions and kernel density estimation",
+      "Ch.7: scatter plots, correlation, rank correlation, correlation vs causation"
+     ],
+     "gaps": [
+      {
+       "topic": "Random variables, expectation and variance as definitions",
+       "resource": {
+        "resourceId": "seeing-theory",
+        "title": "Seeing Theory ch.3 Probability Distributions",
+        "url": "https://seeing-theory.brown.edu/probability-distributions/index.html",
+        "slice": "Chapter 1 'Basic Probability': Expectation, Variance + Chapter 3 'Probability Distributions': Random Variables, Discrete and Continuous",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Covariance",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Covariance, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=qtaqvPAeEJY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Bernoulli/binomial distribution",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · The Binomial Distribution and Test, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=J8jNoF-K8E8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Gaussian distribution",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · The Normal Distribution, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=rzFX5NWojp0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Expectation for continuous variables (integral form; replaces M05.02.07's expectation half)",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §22.6 Random Variables",
+        "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/random-variables.html",
+        "slice": "§22.6 Random Variables (§22.6.1.4 Means → §22.6.1.10 Covariance)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Quantiles and percentiles (for latency SLOs)",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Quantiles and Percentiles, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=IFKQLDmRK0Y",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §2.6 Probability and Statistics",
+      "url": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "slice": "§2.6 Probability and Statistics",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Latency distribution report",
+      "brief": "On a real heavy-tailed dataset (API latency logs, or the NYC taxi trip durations from M04) plot PMF/histogram and CDF; compute mean, median, p95, p99; fit a Gaussian and a lognormal and compare on the CDF. Write 5 sentences on why the mean misleads. Reference build: rohitg00 Phase 01 lesson 06.",
+      "done_when": "Notebook shows CDF with both fitted models overlaid, a table of mean/median/p95/p99, and the lognormal visibly fits the tail better (or you explain why not)."
+     },
+     "quiz": [
+      {
+       "id": "M06.U02.Q1",
+       "kind": "mcq",
+       "prompt": "Var(aX + b) =",
+       "options": [
+        "aVar(X)+b",
+        "a²Var(X)",
+        "Var(X)",
+        "a²Var(X)+b"
+       ],
+       "answer": 1,
+       "explain": "Shifting adds nothing to spread; scaling by a scales variance by a²."
+      },
+      {
+       "id": "M06.U02.Q2",
+       "kind": "mcq",
+       "prompt": "A CDF value F(x) means:",
+       "options": [
+        "Density at x",
+        "P(X ≤ x)",
+        "P(X = x) for continuous X",
+        "The mean"
+       ],
+       "answer": 1,
+       "explain": "CDF = cumulative probability up to x."
+      },
+      {
+       "id": "M06.U02.Q3",
+       "kind": "mcq",
+       "prompt": "For heavy-tailed latency, the most informative SLO metric is usually:",
+       "options": [
+        "Mean",
+        "p95/p99",
+        "Mode",
+        "Minimum"
+       ],
+       "answer": 1,
+       "explain": "Tail percentiles reflect the worst user experiences that averages hide."
+      },
+      {
+       "id": "M06.U02.Q4",
+       "kind": "short",
+       "prompt": "Why do serving SLOs use percentiles instead of averages?",
+       "rubric": [
+        "Latency is skewed/heavy-tailed so the mean is dominated by or hides outliers",
+        "Percentiles describe what fraction of users get acceptable latency",
+        "Tail latency compounds across fan-out calls",
+        "Mentions p50 vs p99 reporting together"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U03",
+     "title": "Law of large numbers, CLT, simulation and sampling",
+     "hours": 4,
+     "depth": "core",
+     "week": 54,
+     "prerequisites": [
+      "M06.U02"
+     ],
+     "outcomes": [
+      "You can explain the CLT and why the standard error shrinks like 1/√n.",
+      "You can use Monte Carlo simulation to estimate a quantity.",
+      "You can implement temperature and top-p sampling from a softmax."
+     ],
+     "topics": [
+      {
+       "id": "M06.01.09",
+       "title": "law of large numbers"
+      },
+      {
+       "id": "M06.01.10",
+       "title": "central limit theorem"
+      },
+      {
+       "id": "M06.04.01",
+       "title": "Monte Carlo simulation & sampling (incl. temperature sampling from a softmax)"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-lessons",
+      "title": "3Blue1Brown · But what is the Central Limit Theorem?",
+      "url": "https://www.youtube.com/watch?v=zeJD6dqJ5lo",
+      "slice": "Full video (~31 min)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Galton board and sums of dice converging to a bell curve",
+      "Mean and SD of a sum of n variables (SD grows like √n)",
+      "The three assumptions behind the CLT (independence, identical distribution, finite variance)"
+     ],
+     "gaps": [
+      {
+       "topic": "Law of large numbers and empirical distributions",
+       "resource": {
+        "resourceId": "data8-inferential-thinking",
+        "title": "Data 8 textbook · ch.10 Sampling and Empirical Distributions",
+        "url": "https://inferentialthinking.com/chapters/10/sampling-and-empirical-distributions/index.html",
+        "slice": "§10.1–10.4",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Standard error of the mean and choosing a sample size",
+       "resource": {
+        "resourceId": "data8-inferential-thinking",
+        "title": "Data 8 textbook · ch.14 Why the Mean Matters",
+        "url": "https://inferentialthinking.com/chapters/14/why-the-mean-matters/index.html",
+        "slice": "§14.4 CLT, §14.5 Variability of the Sample Mean, §14.6 Choosing a Sample Size",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Monte Carlo estimation, temperature, top-k and top-p sampling",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 16-sampling-methods",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/16-sampling-methods",
+        "slice": "Phase 01 lesson 16 · 'Monte Carlo Estimation', 'Temperature Sampling', 'Top-k', 'Top-p' + Build It steps 4, 7, 8",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "seeing-theory",
+      "title": "Seeing Theory · Frequentist Inference",
+      "url": "https://seeing-theory.brown.edu/frequentist-inference/index.html",
+      "slice": "Chapter 'Frequentist Inference'",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "CLT and token sampling",
+      "brief": "(1) Simulate sample means of an exponential distribution for n = 1, 5, 30, 200 and plot histograms with the CLT normal overlaid. (2) Implement sample_token(logits, temperature, top_p) in NumPy and plot the empirical distribution of 10,000 samples at temperatures 0.2/1.0/2.0.",
+      "done_when": "SD of your simulated means matches σ/√n within 5% for each n, and your sampler's empirical frequencies match the softmax probabilities within 1 percentage point at T=1."
+     },
+     "quiz": [
+      {
+       "id": "M06.U03.Q1",
+       "kind": "mcq",
+       "prompt": "The CLT says the distribution of the sample mean approaches:",
+       "options": [
+        "Uniform",
+        "Normal",
+        "The population distribution",
+        "Exponential"
+       ],
+       "answer": 1,
+       "explain": "Under mild conditions, regardless of the population shape."
+      },
+      {
+       "id": "M06.U03.Q2",
+       "kind": "mcq",
+       "prompt": "The standard error of a mean shrinks like:",
+       "options": [
+        "1/n",
+        "1/√n",
+        "n",
+        "Constant"
+       ],
+       "answer": 1,
+       "explain": "SE = σ/√n."
+      },
+      {
+       "id": "M06.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Raising softmax temperature makes sampling:",
+       "options": [
+        "More deterministic",
+        "More uniform/diverse",
+        "Unchanged",
+        "Always argmax"
+       ],
+       "answer": 1,
+       "explain": "Dividing logits by T > 1 flattens the distribution."
+      },
+      {
+       "id": "M06.U03.Q4",
+       "kind": "short",
+       "prompt": "Why does quadrupling an eval set only halve the width of your confidence interval?",
+       "rubric": [
+        "CI width ∝ SE ∝ 1/√n",
+        "√4 = 2",
+        "Implication: precision is expensive; plan sample size",
+        "Mentions paired designs/variance reduction as alternatives"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M06.S2",
+   "title": "Inference",
+   "units": [
+    {
+     "id": "M06.U04",
+     "title": "Estimation and likelihood",
+     "hours": 5,
+     "depth": "core",
+     "week": 55,
+     "prerequisites": [
+      "M06.U02",
+      "M05.U05"
+     ],
+     "outcomes": [
+      "You can tell probability from likelihood.",
+      "You can find a maximum-likelihood estimate numerically and analytically.",
+      "You can show that minimising cross-entropy is maximising likelihood."
+     ],
+     "topics": [
+      {
+       "id": "M06.02.01",
+       "title": "population/sample"
+      },
+      {
+       "id": "M06.02.02",
+       "title": "estimation"
+      },
+      {
+       "id": "M06.02.03",
+       "title": "likelihood/log-likelihood"
+      }
+     ],
+     "learn": {
+      "resourceId": "d2l",
+      "title": "D2L §22.7 Maximum Likelihood",
+      "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/maximum-likelihood.html",
+      "slice": "§22.7 Maximum Likelihood (§22.7.1 principle + concrete example, §22.7.2 numerical optimisation and negative log-likelihood, §22.7.3 continuous variables)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "The maximum-likelihood principle with a coin-flip example",
+      "Why we minimise negative log-likelihood (numerical stability, sums)",
+      "Likelihood for continuous variables via densities"
+     ],
+     "gaps": [
+      {
+       "topic": "Probability vs likelihood",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · In Statistics, Probability is not Likelihood.",
+        "url": "https://www.youtube.com/watch?v=pYxNSUDSFH4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "MLE explained visually",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Maximum Likelihood, clearly explained!!!",
+        "url": "https://www.youtube.com/watch?v=XepXtl9YKwc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Population vs sample, estimators, standard error, sampling distributions",
+       "resource": {
+        "resourceId": "think-stats-3e",
+        "title": "Think Stats 3e ch.8 Estimation",
+        "url": "https://allendowney.github.io/ThinkStats/chap08.html",
+        "slice": "§8.1–8.7 (weighing penguins, robustness, estimating variance, sampling distributions, standard error, CIs, sources of error)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Statistics toolkit for ML in code",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 15-statistics-for-ml",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/15-statistics-for-ml",
+        "slice": "Phase 01 lesson 15 · 'Descriptive Statistics', 'Covariance Matrix', 'Bootstrap Methods'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "statquest-youtube",
+      "title": "StatQuest · Maximum Likelihood, clearly explained!!!",
+      "url": "https://www.youtube.com/watch?v=XepXtl9YKwc",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Coin MLE = cross-entropy",
+      "brief": "For Bernoulli coin flips, plot the log-likelihood over p ∈ (0,1), find the MLE numerically (grid + scipy.optimize) and analytically (k/n), and show that the binary cross-entropy of a constant predictor p is the negative mean log-likelihood.",
+      "done_when": "Numeric, analytic and argmin-of-BCE answers agree to 1e-4, and the plot marks the maximum."
+     },
+     "quiz": [
+      {
+       "id": "M06.U04.Q1",
+       "kind": "mcq",
+       "prompt": "The MLE for a Bernoulli p from k heads in n flips is:",
+       "options": [
+        "k/n",
+        "n/k",
+        "0.5",
+        "(k+1)/(n+2)"
+       ],
+       "answer": 0,
+       "explain": "(k+1)/(n+2) is the Laplace (Bayesian) estimate, not the MLE."
+      },
+      {
+       "id": "M06.U04.Q2",
+       "kind": "mcq",
+       "prompt": "We maximise log-likelihood rather than likelihood mainly because:",
+       "options": [
+        "It has a different optimum",
+        "Sums are numerically stable and easier to differentiate",
+        "It's required",
+        "It is always convex"
+       ],
+       "answer": 1,
+       "explain": "log is monotonic so the argmax is unchanged."
+      },
+      {
+       "id": "M06.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Minimising cross-entropy loss for a classifier is equivalent to:",
+       "options": [
+        "Maximising accuracy",
+        "Maximising likelihood of the labels",
+        "Minimising MSE",
+        "Maximising entropy"
+       ],
+       "answer": 1,
+       "explain": "Cross-entropy with one-hot labels = negative log-likelihood."
+      },
+      {
+       "id": "M06.U04.Q4",
+       "kind": "mcq",
+       "prompt": "How does MAP (Maximum A Posteriori) estimation differ from MLE (Maximum Likelihood Estimation)?",
+       "options": [
+        "MAP is faster to compute than MLE",
+        "MLE always produces better results than MAP",
+        "MAP incorporates a prior distribution over parameters, equivalent to adding regularization, while MLE only uses the likelihood",
+        "MAP uses a larger dataset than MLE"
+       ],
+       "answer": 2,
+       "explain": "MAP maximizes P(data|params) * P(params) while MLE maximizes P(data|params) alone. The prior P(params) acts as regularization -- a Gaussian prior equals L2 regularization, a Laplace prior equals L1. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 07-bayes-theorem quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M06.U04.Q5",
+       "kind": "short",
+       "prompt": "Explain 'likelihood is a function of parameters, not of data' in your own words.",
+       "rubric": [
+        "Data are fixed (observed) when computing likelihood",
+        "We vary θ to see how well each explains the data",
+        "Likelihood does not integrate to 1 over θ",
+        "Contrasts with probability of data given fixed θ"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U05",
+     "title": "Bootstrap, confidence intervals, hypothesis tests and p-values",
+     "hours": 8,
+     "depth": "core",
+     "week": 55,
+     "prerequisites": [
+      "M06.U03"
+     ],
+     "outcomes": [
+      "You can compute a bootstrap confidence interval and interpret it correctly.",
+      "You can run a permutation test and read a p-value correctly.",
+      "You can compare two systems on the same data honestly."
+     ],
+     "topics": [
+      {
+       "id": "M06.02.04",
+       "title": "confidence intervals"
+      },
+      {
+       "id": "M06.02.05",
+       "title": "bootstrap"
+      },
+      {
+       "id": "M06.02.06",
+       "title": "hypothesis tests"
+      },
+      {
+       "id": "M06.02.07",
+       "title": "p-values"
+      }
+     ],
+     "learn": {
+      "resourceId": "data8-inferential-thinking",
+      "title": "Data 8 textbook · ch.11 Testing Hypotheses → ch.12 Comparing Two Samples → ch.13 Estimation",
+      "url": "https://inferentialthinking.com/chapters/11/testing-hypotheses/index.html",
+      "slice": "ch.11 §11.1–11.4, ch.12 §12.1–12.2 (A/B testing, causality), ch.13 §13.1–13.4 (percentiles, bootstrap, CIs, using CIs)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "ch.11: models, test statistics, simulated null distributions, conventions for significance, error probabilities",
+      "ch.12: A/B testing with permutation tests; causal conclusions from randomised experiments",
+      "ch.13: percentiles, the bootstrap, building and using confidence intervals"
+     ],
+     "gaps": [
+      {
+       "topic": "Interpreting p-values",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · p-values: What they are and how to interpret them",
+        "url": "https://www.youtube.com/watch?v=vemZtEM63GY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Interpreting confidence intervals",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Confidence Intervals, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=TqOeMYtOc1w",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Bootstrap intuition",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Bootstrapping Main Ideas!!!",
+        "url": "https://www.youtube.com/watch?v=Xz0x-8-cgaQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Library implementations (bootstrap, permutation test)",
+       "resource": {
+        "resourceId": "scipy-stats",
+        "title": "SciPy stats: bootstrap and permutation_test",
+        "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+        "slice": "scipy.stats.bootstrap (incl. paired=True) and scipy.stats.permutation_test",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "think-stats-3e",
+      "title": "Think Stats 3e ch.9 Hypothesis Testing",
+      "url": "https://allendowney.github.io/ThinkStats/chap09.html",
+      "slice": "§9.1–9.5",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Prompt A vs prompt B",
+      "brief": "Two prompt versions were scored on the same 300 support tickets (accuracy 0.71 vs 0.76; simulate or use your own data). Write bootstrap_ci(metric, data, B=10_000) and a permutation test. Report each CI, the CI of the paired difference and the p-value, and write the conclusion in one honest sentence.",
+      "done_when": "Your CIs match scipy.stats.bootstrap within 0.01; the conclusion sentence states the effect size with its CI rather than just 'significant'."
+     },
+     "quiz": [
+      {
+       "id": "M06.U05.Q1",
+       "kind": "mcq",
+       "prompt": "A 95% CI means:",
+       "options": [
+        "95% chance the parameter is in this specific interval",
+        "The procedure captures the parameter in ~95% of repeated samples",
+        "95% of the data lie inside",
+        "p = 0.05"
+       ],
+       "answer": 1,
+       "explain": "The probability statement is about the procedure, not the realised interval (frequentist view)."
+      },
+      {
+       "id": "M06.U05.Q2",
+       "kind": "mcq",
+       "prompt": "A p-value is:",
+       "options": [
+        "P(H0 true)",
+        "P(data at least this extreme | H0)",
+        "Effect size",
+        "1 − power"
+       ],
+       "answer": 1,
+       "explain": "It assumes H0 and asks how surprising the data are."
+      },
+      {
+       "id": "M06.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Bootstrap resampling draws:",
+       "options": [
+        "Without replacement, size n",
+        "With replacement, size n",
+        "With replacement, size n/2",
+        "From the population"
+       ],
+       "answer": 1,
+       "explain": "Resampling the sample with replacement mimics sampling from the population."
+      },
+      {
+       "id": "M06.U05.Q4",
+       "kind": "mcq",
+       "prompt": "What advantage does bootstrap have over the paired t-test for comparing two ML models?",
+       "options": [
+        "Bootstrap can only be used with neural networks",
+        "Bootstrap always produces smaller p-values",
+        "Bootstrap requires no distributional assumptions and works for any metric (AUC, F1, median)",
+        "Bootstrap needs fewer samples to reach significance"
+       ],
+       "answer": 2,
+       "explain": "Bootstrap resampling estimates the sampling distribution of any statistic by resampling with replacement. Unlike the t-test, it does not assume normality. It works for any metric — AUC, F1, precision@k, median — without needing a closed-form formula. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 15-statistics-for-ml quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M06.U05.Q5",
+       "kind": "short",
+       "prompt": "Why is 'p > 0.05, so the prompts are equally good' a wrong conclusion?",
+       "rubric": [
+        "Absence of evidence is not evidence of absence",
+        "Test may be underpowered (sample too small)",
+        "Report the CI of the difference—it may include meaningful effects",
+        "Mentions equivalence testing or a pre-set minimum effect"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U06",
+     "title": "Effect size, power, multiple comparisons and causality",
+     "hours": 5,
+     "depth": "core",
+     "week": 56,
+     "prerequisites": [
+      "M06.U05"
+     ],
+     "outcomes": [
+      "You can compute the sample size an A/B test needs for a given minimum detectable effect.",
+      "You can explain why peeking and many tests inflate false positives and how to correct.",
+      "You can tell when a correlation cannot support a causal claim and why randomisation helps."
+     ],
+     "topics": [
+      {
+       "id": "M06.02.08",
+       "title": "effect size/power"
+      },
+      {
+       "id": "M06.02.09",
+       "title": "multiple comparisons"
+      },
+      {
+       "id": "M06.02.11",
+       "title": "correlation versus causation"
+      },
+      {
+       "id": "M06.03.05",
+       "title": "randomized experiments"
+      },
+      {
+       "id": "M06.03.06",
+       "title": "observational confounding"
+      },
+      {
+       "id": "M06.04.04",
+       "title": "online experiments for AI features: peeking, sequential testing, guardrail metrics"
+      }
+     ],
+     "learn": {
+      "resourceId": "evanmiller-ab",
+      "title": "Evan Miller · How Not To Run an A/B Test",
+      "url": "https://www.evanmiller.org/how-not-to-run-an-ab-test.html",
+      "slice": "'How Not To Run an A/B Test' (whole article)",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Why stopping when the test 'reaches significance' inflates the false-positive rate (with simulated numbers)",
+      "Fix the sample size in advance; sample-size formula rule of thumb",
+      "Alternatives: sequential designs and Bayesian approaches"
+     ],
+     "gaps": [
+      {
+       "topic": "Power and sample-size calculation",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Power Analysis, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=VX_M3tIyiYk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Sample-size calculator for conversion-rate metrics",
+       "resource": {
+        "resourceId": "evanmiller-ab",
+        "title": "Evan Miller · Sample Size Calculator",
+        "url": "https://www.evanmiller.org/ab-testing/sample-size.html",
+        "slice": "Sample Size Calculator",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Sequential testing (valid early stopping)",
+       "resource": {
+        "resourceId": "evanmiller-ab",
+        "title": "Evan Miller · Simple Sequential A/B Testing",
+        "url": "https://www.evanmiller.org/sequential-ab-testing.html",
+        "slice": "Simple Sequential A/B Testing",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Multiple comparisons and false discovery rate",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · False Discovery Rates, FDR, clearly explained",
+        "url": "https://www.youtube.com/watch?v=K8LQSvtjcEo",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "p-hacking",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · p-hacking: What it is and how to avoid it!",
+        "url": "https://www.youtube.com/watch?v=HDCOUXE3HMM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Randomised experiments, confounding, correlation vs causation",
+       "resource": {
+        "resourceId": "data8-inferential-thinking",
+        "title": "Data 8 textbook · ch.2 Causality and Experiments",
+        "url": "https://inferentialthinking.com/chapters/02/causality-and-experiments/index.html",
+        "slice": "§2.1–2.4",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Effect size vs significance; A/B testing for ML models; guardrails",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 15-statistics-for-ml",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/15-statistics-for-ml",
+        "slice": "Phase 01 lesson 15 · 'A/B Testing for ML Models', 'Statistical Significance vs Practical Significance', 'Multiple Comparison Problem'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 15-statistics-for-ml",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/15-statistics-for-ml",
+      "slice": "Phase 01 · lesson 15-statistics-for-ml (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Plan an A/B test for a RAG answer format",
+      "brief": "Write a one-page plan: primary metric (thumbs-up rate, baseline 40%), minimum detectable effect (+3 pts), computed sample size (α=0.05, power 0.8), guardrails (p95 latency, cost/answer, complaint rate) and stopping rule. Then simulate 'peek every day for 20 days' on A/A data (1,000 runs) and report the false-positive rate.",
+      "done_when": "Sample size within 5% of Evan Miller's calculator; your simulation shows a false-positive rate well above 5% (typically 20–30%) and the plan states how you will avoid it."
+     },
+     "quiz": [
+      {
+       "id": "M06.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Running 20 independent tests at α = 0.05 with no true effects gives an expected number of false positives of:",
+       "options": [
+        "0",
+        "1",
+        "5",
+        "20"
+       ],
+       "answer": 1,
+       "explain": "20 × 0.05 = 1."
+      },
+      {
+       "id": "M06.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Checking an A/B test daily and stopping at the first p < 0.05:",
+       "options": [
+        "Is fine",
+        "Inflates the false-positive rate",
+        "Lowers power",
+        "Fixes multiple comparisons"
+       ],
+       "answer": 1,
+       "explain": "Each look is another chance to cross the threshold by luck."
+      },
+      {
+       "id": "M06.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Randomisation primarily protects against:",
+       "options": [
+        "Small samples",
+        "Confounding",
+        "Measurement error",
+        "Seasonality only"
+       ],
+       "answer": 1,
+       "explain": "It balances unobserved causes between groups on average."
+      },
+      {
+       "id": "M06.U06.Q4",
+       "kind": "mcq",
+       "prompt": "Halving the minimum detectable effect requires roughly how much more sample?",
+       "options": [
+        "2×",
+        "4×",
+        "√2×",
+        "Same"
+       ],
+       "answer": 1,
+       "explain": "n ∝ 1/MDE²."
+      },
+      {
+       "id": "M06.U06.Q5",
+       "kind": "mcq",
+       "prompt": "Model A scores 0.9234 and Model B scores 0.9237 on 1 million test samples with p-value = 0.001. What should you conclude?",
+       "options": [
+        "Model A is better because it was tested first",
+        "Model B is significantly better and should be deployed immediately",
+        "The difference is statistically significant but a 0.03% improvement may not be practically significant",
+        "The test is invalid because the sample size is too large"
+       ],
+       "answer": 2,
+       "explain": "With 1 million samples, even trivially small differences become statistically significant. The p-value confirms the difference is real, but the effect size (0.03% accuracy gain) may not justify the engineering cost of deployment. Always report both p-value and effect size. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 15-statistics-for-ml quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M06.U06.Q6",
+       "kind": "short",
+       "prompt": "Give a concrete example where a metric correlates with a feature launch but the launch did not cause it.",
+       "rubric": [
+        "Names a plausible confounder or coincident event (seasonality, marketing, outage, new user cohort)",
+        "Explains the mechanism of the spurious link",
+        "Proposes how to check (holdout, randomisation, diff-in-diff)",
+        "Is specific to an AI/product context"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M06.S3",
+   "title": "Information theory and evaluation statistics",
+   "units": [
+    {
+     "id": "M06.U07",
+     "title": "Entropy, cross-entropy, KL and perplexity",
+     "hours": 4,
+     "depth": "core",
+     "week": 56,
+     "prerequisites": [
+      "M06.U04"
+     ],
+     "outcomes": [
+      "You can compute entropy, cross-entropy, KL divergence and perplexity.",
+      "You can explain why cross-entropy is the classification and language-model loss.",
+      "You can interpret perplexity and its limits across tokenizers."
+     ],
+     "topics": [
+      {
+       "id": "M06.03.01",
+       "title": "entropy"
+      },
+      {
+       "id": "M06.03.02",
+       "title": "cross entropy"
+      },
+      {
+       "id": "M06.03.03",
+       "title": "KL divergence"
+      },
+      {
+       "id": "M06.03.04",
+       "title": "perplexity"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 09-information-theory",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/09-information-theory",
+      "slice": "Phase 01 lesson 09 'Information Theory' · The Concept (Information Content → Perplexity) + Build It steps 1–4",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Information content (surprise) and entropy",
+      "Cross-entropy and why it is the classification loss; cross-entropy = negative log-likelihood",
+      "KL divergence; mutual, conditional and joint entropy",
+      "Label smoothing; bits vs nats; perplexity"
+     ],
+     "gaps": [
+      {
+       "topic": "Entropy intuition",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Entropy (for data science) Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=YtebGVx-Fxw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cross-entropy as a NN loss",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Neural Networks Part 6: Cross Entropy",
+        "url": "https://www.youtube.com/watch?v=6ArSys5qHAU",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Perplexity of language models",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §9.3 Language Models",
+        "url": "https://d2l.ai/chapter_recurrent-neural-networks/language-model.html",
+        "slice": "§9.3.2 Perplexity (in §9.3 Language Models)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "KL divergence properties (formal)",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §22.11 Information Theory",
+        "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html",
+        "slice": "§22.11.4 Kullback–Leibler Divergence + §22.11.5 Cross-Entropy",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §22.11 Information Theory",
+      "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html",
+      "slice": "§22.11 Information Theory",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Bigram perplexity",
+      "brief": "Implement entropy, cross-entropy, KL and perplexity in NumPy. Train a character bigram model by counting on a small text, compute its perplexity on held-out text, and compare with a uniform model (perplexity = vocab size).",
+      "done_when": "Your functions match scipy.stats.entropy (incl. KL with qk) to 1e-9; the bigram's held-out perplexity is clearly below the vocabulary size."
+     },
+     "quiz": [
+      {
+       "id": "M06.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Perplexity =",
+       "options": [
+        "exp(cross-entropy in nats)",
+        "entropy²",
+        "1/accuracy",
+        "KL"
+       ],
+       "answer": 0,
+       "explain": "Perplexity is the exponentiated average negative log-likelihood per token."
+      },
+      {
+       "id": "M06.U07.Q2",
+       "kind": "mcq",
+       "prompt": "KL(P‖Q) is:",
+       "options": [
+        "Symmetric",
+        "≥ 0 and generally asymmetric",
+        "Can be negative",
+        "A distance metric"
+       ],
+       "answer": 1,
+       "explain": "Gibbs' inequality gives ≥ 0; KL(P‖Q) ≠ KL(Q‖P) in general."
+      },
+      {
+       "id": "M06.U07.Q3",
+       "kind": "mcq",
+       "prompt": "A uniform model over 50 tokens has perplexity:",
+       "options": [
+        "1",
+        "log 50",
+        "50",
+        "2"
+       ],
+       "answer": 2,
+       "explain": "exp(log 50) = 50: 'as confused as choosing among 50'."
+      },
+      {
+       "id": "M06.U07.Q4",
+       "kind": "mcq",
+       "prompt": "Why is minimizing cross-entropy equivalent to minimizing KL divergence during training?",
+       "options": [
+        "Because cross-entropy and KL divergence are the same formula",
+        "Because cross-entropy = entropy + KL divergence, and the entropy of the true labels is constant, so minimizing cross-entropy minimizes KL divergence",
+        "Because KL divergence is always zero during training",
+        "Because the model's entropy equals zero at convergence"
+       ],
+       "answer": 1,
+       "explain": "H(P,Q) = H(P) + D_KL(P||Q). Since the true distribution P doesn't change during training, H(P) is constant. Minimizing H(P,Q) is the same as minimizing D_KL(P||Q) -- pushing the model toward the true distribution. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 09-information-theory quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M06.U07.Q5",
+       "kind": "short",
+       "prompt": "Why can't you compare perplexity across two models that use different tokenizers?",
+       "rubric": [
+        "Perplexity is per token and token units differ",
+        "Different vocab sizes change the baseline",
+        "Normalise per character/byte (bits-per-byte) to compare",
+        "Mentions evaluation on the same text"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U08",
+     "title": "Evaluation statistics for ML and LLM systems",
+     "hours": 6,
+     "depth": "core",
+     "week": 57,
+     "prerequisites": [
+      "M06.U05",
+      "M06.U06"
+     ],
+     "outcomes": [
+      "You can put error bars on an eval score (Wilson / clustered / bootstrap).",
+      "You can compare two models with a paired analysis on the same items and break results into slices.",
+      "You can measure label/judge agreement with Cohen's kappa and read a reliability diagram."
+     ],
+     "topics": [
+      {
+       "id": "M06.03.07",
+       "title": "paired model comparisons"
+      },
+      {
+       "id": "M06.03.08",
+       "title": "slice analysis"
+      },
+      {
+       "id": "M06.03.09",
+       "title": "uncertainty/calibration"
+      },
+      {
+       "id": "M06.04.02",
+       "title": "error bars for eval metrics (binomial SE, Wilson/bootstrap CIs, clustered questions)"
+      },
+      {
+       "id": "M06.04.03",
+       "title": "inter-annotator agreement (Cohen's kappa) and judge validation"
+      }
+     ],
+     "learn": {
+      "resourceId": "miller-2024-error-bars",
+      "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+      "url": "https://arxiv.org/abs/2411.00640",
+      "slice": "Full paper (14 pages): super-population framing, standard errors, clustered SEs, paired differences, variance reduction, power/sample size for evals",
+      "type": "paper",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Treat eval questions as a sample from a super-population; CLT standard errors for eval scores",
+      "Clustered standard errors when questions share a passage/context",
+      "Comparing two models with paired differences on the same questions",
+      "Variance reduction (resampling answers, using token probabilities) and planning eval size with power analysis",
+      "Reporting recommendations"
+     ],
+     "gaps": [
+      {
+       "topic": "Wilson and other binomial CIs",
+       "resource": {
+        "resourceId": "statsmodels-docs",
+        "title": "statsmodels: proportion_confint and multipletests",
+        "url": "https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html",
+        "slice": "statsmodels.stats.proportion.proportion_confint (method='wilson')",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cohen's kappa for annotator/judge agreement",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: cohen_kappa_score",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html",
+        "slice": "sklearn.metrics.cohen_kappa_score reference",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Calibration and reliability diagrams",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: Probability calibration",
+        "url": "https://scikit-learn.org/stable/modules/calibration.html",
+        "slice": "User Guide §1.16 Probability calibration (calibration curves)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Slice analysis and looking at failures in LLM products",
+       "resource": {
+        "resourceId": "hamel-evals",
+        "title": "Your AI Product Needs Evals",
+        "url": "https://hamel.dev/blog/posts/evals/",
+        "slice": "'Level 2: Human & Model Eval' (looking at traces, LLM-as-judge alignment) and 'Level 3: A/B Testing'",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "statsmodels-docs",
+      "title": "statsmodels: proportion_confint and multipletests",
+      "url": "https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html",
+      "slice": "proportion_confint",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Eval report with honest error bars",
+      "brief": "Take 200 Q&A eval items scored by two systems. Compute per-system accuracy with Wilson CIs, run a paired bootstrap on per-item differences, break results into 3 slices (question type). Label 50 items yourself and with an LLM judge; compute Cohen's kappa. Plot a reliability diagram for a classifier's predicted probabilities.",
+      "done_when": "Report shows the paired CI of the difference, per-slice scores with CIs, kappa with a note on the disagreements, and a calibration curve via sklearn.calibration.calibration_curve."
+     },
+     "quiz": [
+      {
+       "id": "M06.U08.Q1",
+       "kind": "mcq",
+       "prompt": "When two models answer the same questions, the right comparison is:",
+       "options": [
+        "Check whether two independent CIs overlap",
+        "A paired test on per-item differences",
+        "Compare means only",
+        "Chi-square on totals"
+       ],
+       "answer": 1,
+       "explain": "Pairing removes per-question difficulty variance and is much more powerful."
+      },
+      {
+       "id": "M06.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Cohen's kappa corrects raw agreement for:",
+       "options": [
+        "Sample size",
+        "Chance agreement",
+        "Label noise",
+        "Class weights"
+       ],
+       "answer": 1,
+       "explain": "κ = (p_o − p_e)/(1 − p_e)."
+      },
+      {
+       "id": "M06.U08.Q3",
+       "kind": "mcq",
+       "prompt": "A model is well calibrated if, among predictions with confidence 0.8:",
+       "options": [
+        "It is right 100% of the time",
+        "It is right about 80% of the time",
+        "Overall accuracy > 0.8",
+        "AUC = 0.8"
+       ],
+       "answer": 1,
+       "explain": "Confidence should match empirical accuracy."
+      },
+      {
+       "id": "M06.U08.Q4",
+       "kind": "mcq",
+       "prompt": "Eval questions that share the same source passage should be analysed with:",
+       "options": [
+        "Independent SEs",
+        "Clustered standard errors",
+        "No error bars",
+        "Kappa"
+       ],
+       "answer": 1,
+       "explain": "Correlated items carry less information than independent ones; Miller (2024) recommends clustered SEs."
+      },
+      {
+       "id": "M06.U08.Q5",
+       "kind": "short",
+       "prompt": "Your new prompt wins by 2 points on a 100-question eval. What do you report, and what would you do before shipping?",
+       "rubric": [
+        "Reports the paired difference with a CI (likely spans 0 at n=100)",
+        "Does a power/sample-size check and enlarges the eval",
+        "Checks slices for regressions and judge/label quality",
+        "Names an online test or guardrails before full rollout"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M06.S4",
+   "title": "Deep track: rigorous and Bayesian probability",
+   "units": [
+    {
+     "id": "M06.U09",
+     "title": "Deep: Stat 110 probability I (Lectures 1–15)",
+     "hours": 60,
+     "depth": "deep",
+     "prerequisites": [
+      "M06.U03"
+     ],
+     "outcomes": [
+      "You can solve counting and story-proof problems.",
+      "You can handle conditioning, LOTP and expectation via indicators.",
+      "You can work with Poisson, uniform and normal distributions and LOTUS."
+     ],
+     "topics": [
+      {
+       "id": "M06.05.01",
+       "title": "rigorous probability: counting, conditioning, random variables, expectation (Stat 110 L1–15)"
+      }
+     ],
+     "learn": {
+      "resourceId": "stat110-youtube",
+      "title": "Stat 110 Lecture 1: Probability and Counting",
+      "url": "https://www.youtube.com/watch?v=KbB0FjPg0mw",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lectures 1–15 (KbB0FjPg0mw … yFRZf81sB5k)"
+     },
+     "covers": [
+      "L1–3: counting, story proofs, axioms, birthday problem",
+      "L4–6: conditional probability, LOTP, Monty Hall, Simpson's paradox",
+      "L7–10: random variables, distributions, expectation, indicators, linearity",
+      "L11–14: Poisson, discrete vs continuous, uniform, normal, location/scale, LOTUS",
+      "L15: midterm review"
+     ],
+     "gaps": [
+      {
+       "topic": "Textbook chapters with exercises",
+       "resource": {
+        "resourceId": "blitzstein-probability-book",
+        "title": "Introduction to Probability, 2nd ed.",
+        "url": "https://probabilitybook.net/",
+        "slice": "Ch.1–5 + end-of-chapter exercises (free PDF)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Simpson's paradox (focused lecture)",
+       "resource": {
+        "resourceId": "stat110-youtube",
+        "title": "Stat 110 Lecture 6: Monty Hall, Simpson's Paradox",
+        "url": "https://www.youtube.com/watch?v=fDcjhAKuhqQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Simulate every theorem",
+      "brief": "For each of lectures 1–14 write a ≤20-line NumPy simulation that checks one result (birthday problem, Monty Hall, linearity of expectation with indicators, Poisson approximation to binomial, LOTUS).",
+      "done_when": "14 simulations each within 1% of the analytic answer, plus 30 book exercises attempted with self-marked solutions."
+     },
+     "quiz": [
+      {
+       "id": "M06.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Expected number of fixed points in a random permutation of n items is:",
+       "options": [
+        "0",
+        "1",
+        "n/2",
+        "log n"
+       ],
+       "answer": 1,
+       "explain": "Indicators + linearity: n × 1/n."
+      },
+      {
+       "id": "M06.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Simpson's paradox shows that:",
+       "options": [
+        "Aggregated and per-group trends can reverse",
+        "Bayes' rule fails",
+        "Variance is negative",
+        "Means are biased"
+       ],
+       "answer": 0,
+       "explain": "A confounder's distribution across groups can flip the aggregate."
+      },
+      {
+       "id": "M06.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Poisson(λ) has mean and variance:",
+       "options": [
+        "λ and λ²",
+        "λ and λ",
+        "λ and √λ",
+        "1/λ and 1/λ²"
+       ],
+       "answer": 1,
+       "explain": "Mean = variance = λ."
+      },
+      {
+       "id": "M06.U09.Q4",
+       "kind": "short",
+       "prompt": "Explain LOTUS and why it is useful in ML.",
+       "rubric": [
+        "E[g(X)] = Σ g(x)P(X=x) (or integral) without finding g(X)'s distribution",
+        "Example: expected loss under a model distribution",
+        "Notes it underlies Monte Carlo estimates",
+        "Clear notation"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U10",
+     "title": "Deep: Stat 110 probability II (Lectures 16–34)",
+     "hours": 60,
+     "depth": "deep",
+     "prerequisites": [
+      "M06.U09"
+     ],
+     "outcomes": [
+      "You can use MGFs, joint/conditional distributions and covariance.",
+      "You can use conditional expectation and inequalities.",
+      "You can analyse Markov chains and stationary distributions."
+     ],
+     "topics": [
+      {
+       "id": "M06.05.02",
+       "title": "joint distributions, conditional expectation, limit theorems, Markov chains (Stat 110 L16–34)"
+      }
+     ],
+     "learn": {
+      "resourceId": "stat110-youtube",
+      "title": "Stat 110 Lecture 16: Exponential Distribution",
+      "url": "https://www.youtube.com/watch?v=bM6nFDjvEns",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lectures 16–34 (bM6nFDjvEns … ChS3K2O-h7o)"
+     },
+     "covers": [
+      "L16–18: exponential, memorylessness, MGFs",
+      "L19–22: joint/conditional/marginal, multinomial, covariance, transformations, convolutions",
+      "L23–27: beta, gamma, order statistics, conditional expectation",
+      "L28–30: inequalities, LLN/CLT, chi-square/t/multivariate normal",
+      "L31–34: Markov chains"
+     ],
+     "gaps": [
+      {
+       "topic": "Textbook chapters",
+       "resource": {
+        "resourceId": "blitzstein-probability-book",
+        "title": "Introduction to Probability, 2nd ed.",
+        "url": "https://probabilitybook.net/",
+        "slice": "Ch.6–11",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Markov chains, MCMC and stochastic processes in code",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 22-stochastic-processes",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/22-stochastic-processes",
+        "slice": "Phase 01 lesson 22 (+ lesson 16 'MCMC: Metropolis-Hastings')",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Markov chain lab",
+      "brief": "Build a text-like Markov chain, compute its stationary distribution by eigenvectors and by long simulation, and implement Metropolis–Hastings to sample a 1-D bimodal density.",
+      "done_when": "Stationary distributions from eigenvector and simulation agree within 1%; MH histogram matches the target density visually and by KS test."
+     },
+     "quiz": [
+      {
+       "id": "M06.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Cov(X,Y) = 0 implies independence:",
+       "options": [
+        "Always",
+        "Only for jointly Gaussian (or similar special) cases",
+        "Never",
+        "Only if means are 0"
+       ],
+       "answer": 1,
+       "explain": "Uncorrelated ≠ independent in general."
+      },
+      {
+       "id": "M06.U10.Q2",
+       "kind": "mcq",
+       "prompt": "E[E[Y|X]] =",
+       "options": [
+        "E[X]",
+        "E[Y]",
+        "Var(Y)",
+        "0"
+       ],
+       "answer": 1,
+       "explain": "Adam's law (law of total expectation)."
+      },
+      {
+       "id": "M06.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A stationary distribution π of a Markov chain with transition matrix Q satisfies:",
+       "options": [
+        "πQ = π",
+        "Qπ = 0",
+        "π = Q²",
+        "πQ = 0"
+       ],
+       "answer": 0,
+       "explain": "π is a left eigenvector with eigenvalue 1."
+      },
+      {
+       "id": "M06.U10.Q4",
+       "kind": "short",
+       "prompt": "How do Markov chains connect to LLM text generation?",
+       "rubric": [
+        "Autoregressive sampling is a (high-order) Markov process over context",
+        "Bigram models are literal first-order Markov chains",
+        "Transformers condition on long context, not just the last token",
+        "Mentions sampling temperature/top-p over next-token distribution"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M06.U11",
+     "title": "Deep: Bayesian inference in practice",
+     "hours": 20,
+     "depth": "deep",
+     "prerequisites": [
+      "M06.U04"
+     ],
+     "outcomes": [
+      "You can compute posteriors with conjugate priors and with grid approximation.",
+      "You can report credible intervals and compare them to CIs.",
+      "You can apply Bayesian A/B testing to a rate metric."
+     ],
+     "topics": [
+      {
+       "id": "M06.05.03",
+       "title": "Bayesian inference: priors, posteriors, conjugacy, Bayesian A/B testing"
+      }
+     ],
+     "learn": {
+      "resourceId": "think-bayes-2",
+      "title": "Think Bayes, 2nd edition",
+      "url": "https://allendowney.github.io/ThinkBayes2/",
+      "slice": "Ch.1–6 (probability, Bayes' theorem, distributions, estimating proportions, estimating counts, odds and addends)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Bayes tables and the diachronic interpretation",
+      "Distributions as Pmf objects; updating",
+      "Estimating proportions (Euro problem) with beta priors",
+      "Estimating counts; odds and Bayes factors"
+     ],
+     "gaps": [
+      {
+       "topic": "Interactive prior → posterior",
+       "resource": {
+        "resourceId": "seeing-theory",
+        "title": "Seeing Theory · Bayesian Inference",
+        "url": "https://seeing-theory.brown.edu/bayesian-inference/index.html",
+        "slice": "Chapter 'Bayesian Inference'",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Causal inference (DAGs, diff-in-diff)",
+       "resource": {
+        "resourceId": "data8-inferential-thinking",
+        "title": "Data 8 textbook · ch.2 Causality and Experiments",
+        "url": "https://inferentialthinking.com/chapters/02/causality-and-experiments/index.html",
+        "slice": "No verified free primary chosen yet; start with ch.2 Causality and Experiments",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Bayesian A/B",
+      "brief": "Redo the M06.U06 thumbs-up test with Beta(1,1) priors: compute posteriors, P(B > A), and the expected loss of shipping B. Compare decisions with the frequentist plan.",
+      "done_when": "Posterior via conjugacy matches a grid approximation; a short note compares the Bayesian and frequentist recommendations."
+     },
+     "quiz": [
+      {
+       "id": "M06.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Beta(a,b) prior + k successes in n trials gives posterior:",
+       "options": [
+        "Beta(a+k, b+n−k)",
+        "Beta(a+n, b+k)",
+        "Normal",
+        "Beta(k, n)"
+       ],
+       "answer": 0,
+       "explain": "Beta is conjugate to the binomial likelihood."
+      },
+      {
+       "id": "M06.U11.Q2",
+       "kind": "mcq",
+       "prompt": "A 95% credible interval means:",
+       "options": [
+        "95% posterior probability the parameter lies inside, given model and prior",
+        "Same as a CI",
+        "Coverage over repeated samples",
+        "p < 0.05"
+       ],
+       "answer": 0,
+       "explain": "Bayesian probability statements are about the parameter."
+      },
+      {
+       "id": "M06.U11.Q3",
+       "kind": "mcq",
+       "prompt": "With lots of data the prior's influence:",
+       "options": [
+        "Grows",
+        "Shrinks",
+        "Stays constant",
+        "Becomes negative"
+       ],
+       "answer": 1,
+       "explain": "The likelihood dominates."
+      },
+      {
+       "id": "M06.U11.Q4",
+       "kind": "short",
+       "prompt": "When would you prefer a Bayesian analysis for an AI product decision?",
+       "rubric": [
+        "Small samples where priors from past launches help",
+        "Need direct probability statements (P(B better))",
+        "Decision-theoretic expected loss",
+        "Notes sensitivity to prior choice"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "\"Is model B really better?\" eval report",
+  "brief": "Compare two systems (two classifiers from M07, or two prompts/models on a labelled Q&A set of ≥ 200 items). Deliver a notebook + 2-page report: metric choice, Wilson + paired-bootstrap CIs, a sample-size/power statement, slice analysis, calibration plot, judge–human kappa, and a ship/no-ship recommendation with caveats. Pass: ≥ 7/10 with no 0s.",
+  "rubric": [
+   {
+    "criterion": "Correct uncertainty",
+    "levels": [
+     "0: point estimates only",
+     "1: CIs per system",
+     "2: paired-difference CI/test + correct interpretation"
+    ]
+   },
+   {
+    "criterion": "Experimental design",
+    "levels": [
+     "0: no power/sample reasoning",
+     "1: mentions sample size",
+     "2: computes required n for the stated MDE; addresses peeking/multiple tests"
+    ]
+   },
+   {
+    "criterion": "Slices and calibration",
+    "levels": [
+     "0: none",
+     "1: one of the two",
+     "2: both, with a finding that changes or confirms the recommendation"
+    ]
+   },
+   {
+    "criterion": "Label quality",
+    "levels": [
+     "0: unexamined",
+     "1: kappa computed",
+     "2: kappa + disagreements analysed + judge prompt revised"
+    ]
+   },
+   {
+    "criterion": "Decision writing",
+    "levels": [
+     "0: overclaims",
+     "1: hedged",
+     "2: clear decision, explicit limitations, what would change the decision"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

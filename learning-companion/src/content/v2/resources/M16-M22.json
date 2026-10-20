@@ -1,0 +1,1495 @@
+[
+  {
+    "id": "C16",
+    "type": "course",
+    "title": "DataTalksClub MLOps Zoomcamp",
+    "author": "DataTalksClub (Alexey Grigorev et al.)",
+    "url": "https://github.com/DataTalksClub/mlops-zoomcamp",
+    "free": true,
+    "language": "English",
+    "notes": "Modules 1-6 + project. Section numbers (1.1-6.13) verified from each module README 2026-10-20. No live 2026 cohort: homework ungraded. Module 4.4 streaming needs AWS Kinesis/Lambda (card) -> use 6.3 LocalStack. No LLMOps content. Videos: playlist PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK.",
+    "modules": [
+      "M16",
+      "M21",
+      "M22"
+    ]
+  },
+  {
+    "id": "C02",
+    "type": "course",
+    "title": "MIT Missing Semester 2026",
+    "author": "MIT CSAIL",
+    "url": "https://missing.csail.mit.edu/2026/",
+    "free": true,
+    "language": "English",
+    "notes": "2026 lectures: Course Overview + Shell, Command-line Environment, Development Environment, Debugging and Profiling, Version Control, Packaging and Shipping Code, Agentic Coding, Beyond the Code, Code Quality.",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "B11",
+    "type": "book",
+    "title": "Made With ML (MLOps course, online reference)",
+    "author": "Goku Mohandas",
+    "url": "https://madewithml.com/courses/mlops",
+    "free": true,
+    "language": "English",
+    "notes": "Free online lessons. Cloudflare blocks automated fetches; lesson pages confirmed via search index only. Later lessons (jobs/services, CI/CD) assume paid Anyscale: read for patterns.",
+    "modules": [
+      "M16",
+      "M17",
+      "M22"
+    ]
+  },
+  {
+    "id": "C10",
+    "type": "course",
+    "title": "Full Stack LLM Bootcamp (Spring 2023)",
+    "author": "Full Stack Deep Learning",
+    "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/",
+    "free": true,
+    "language": "English",
+    "notes": "April 2023; principles still valid, tooling dated.",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "rohitg00-aefs",
+    "type": "repo",
+    "title": "AI Engineering from Scratch (rohitg00)",
+    "author": "Rohit Ghumare and contributors",
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+    "free": true,
+    "language": "English",
+    "notes": "Phase 17 'Infrastructure & Production' = 29 lessons (docs/en.md + quiz.json + stdlib simulation). Titles and learning objectives of all 29 read 2026-10-20. Dense surveys with vendor benchmarks/prices: treat numbers as claims. Code is simulation, so every lesson is paired with a real-tool lab in this curriculum.",
+    "modules": [
+      "M16",
+      "M17",
+      "M21",
+      "M22"
+    ]
+  },
+  {
+    "id": "linux-upskill",
+    "type": "course",
+    "title": "Linux Upskill Challenge",
+    "author": "Linux Upskill Challenge community",
+    "url": "https://linuxupskillchallenge.org/",
+    "free": true,
+    "language": "English",
+    "notes": "Free, no registration. Day titles 0-20 verified 2026-10-20. Suggests a cloud VM; a local Ubuntu VM, WSL2 or Multipass works (no card).",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "dwdocker",
+    "type": "course",
+    "title": "DevOps with Docker (University of Helsinki, 2026)",
+    "author": "University of Helsinki MOOC Center",
+    "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-docker-spring-2026",
+    "free": true,
+    "language": "English",
+    "notes": "Ch2 Docker basics, Ch3 Docker compose, Ch4 Security and optimization; page lists verified 2026-10-20. Spring-2026 deadline passed (material readable); a new MOOC implementation runs 20/10/2026-15/2/2027 per studies.helsinki.fi.",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "dwk8s",
+    "type": "course",
+    "title": "DevOps with Kubernetes (University of Helsinki, 2026)",
+    "author": "University of Helsinki MOOC Center",
+    "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026",
+    "free": true,
+    "language": "English",
+    "notes": "Open until 2027-01-31. Uses k3d locally (no card). Ch2 pages: First deploy, Introduction to Debugging, Introduction to Networking, Introduction to Storage. Ch3 pages: Networking between pods, Organizing a cluster, Configuring applications, StatefulSets and Jobs, Monitoring. Ch4 'To the cloud' uses GKE (card). Ch5 GitOps and friends.",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "gh-actions-docs",
+    "type": "doc",
+    "title": "GitHub Actions documentation",
+    "author": "GitHub",
+    "url": "https://docs.github.com/en/actions",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "docker-docs",
+    "type": "doc",
+    "title": "Docker documentation",
+    "author": "Docker Inc.",
+    "url": "https://docs.docker.com/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "aws-cpe",
+    "type": "course",
+    "title": "AWS Cloud Practitioner Essentials (AWS Skill Builder)",
+    "author": "Amazon Web Services",
+    "url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/134/aws-cloud-practitioner-essentials",
+    "free": true,
+    "language": "English",
+    "notes": "Free course; needs a free Skill Builder login, NOT a card. Module contents not inspected (JS app).",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "aws-docs",
+    "type": "doc",
+    "title": "AWS documentation (IAM, Budgets, Free plan)",
+    "author": "Amazon Web Services",
+    "url": "https://docs.aws.amazon.com/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "kodekloud-free",
+    "type": "course",
+    "title": "KodeKloud free courses and labs",
+    "author": "KodeKloud",
+    "url": "https://kodekloud.com/free-courses",
+    "free": true,
+    "language": "English",
+    "notes": "Free crash courses + browser labs (Linux, Docker, Kubernetes, AWS basics, Terraform). Free account needed; no card. Sandbox limits not inspected.",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "localstack",
+    "type": "doc",
+    "title": "LocalStack documentation",
+    "author": "LocalStack",
+    "url": "https://docs.localstack.cloud/aws/getting-started/",
+    "free": true,
+    "language": "English",
+    "notes": "Local AWS emulator in Docker; the no-card path for S3/Lambda/Kinesis exercises.",
+    "modules": [
+      "M16",
+      "M21"
+    ]
+  },
+  {
+    "id": "gcp-docs",
+    "type": "doc",
+    "title": "Google Cloud documentation (Cloud Run, free program)",
+    "author": "Google",
+    "url": "https://cloud.google.com/run/docs",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17",
+      "M21"
+    ]
+  },
+  {
+    "id": "tf-tutorials",
+    "type": "doc",
+    "title": "HashiCorp Terraform tutorials and docs",
+    "author": "HashiCorp",
+    "url": "https://developer.hashicorp.com/terraform/tutorials",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "k8s-docs",
+    "type": "doc",
+    "title": "Kubernetes documentation",
+    "author": "The Kubernetes Authors",
+    "url": "https://kubernetes.io/docs/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17",
+      "M21"
+    ]
+  },
+  {
+    "id": "k3d",
+    "type": "doc",
+    "title": "k3d documentation",
+    "author": "k3d-io",
+    "url": "https://k3d.io/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "helm-docs",
+    "type": "doc",
+    "title": "Helm documentation",
+    "author": "Helm / CNCF",
+    "url": "https://helm.sh/docs/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "argocd-docs",
+    "type": "doc",
+    "title": "Argo CD documentation",
+    "author": "Argo Project",
+    "url": "https://argo-cd.readthedocs.io/en/stable/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "prometheus-docs",
+    "type": "doc",
+    "title": "Prometheus documentation",
+    "author": "Prometheus Authors",
+    "url": "https://prometheus.io/docs/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "prom-client-py",
+    "type": "doc",
+    "title": "Prometheus Python client",
+    "author": "Prometheus Authors",
+    "url": "https://prometheus.github.io/client_python/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "grafana-docs",
+    "type": "doc",
+    "title": "Grafana documentation",
+    "author": "Grafana Labs",
+    "url": "https://grafana.com/docs/grafana/latest/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16",
+      "M21"
+    ]
+  },
+  {
+    "id": "sre-book",
+    "type": "book",
+    "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+    "author": "Beyer, Jones, Petoff, Murphy (Google)",
+    "url": "https://sre.google/books/",
+    "free": true,
+    "language": "English",
+    "notes": "Free online. Ch4 SLOs, Ch6 Monitoring Distributed Systems, Ch21 Handling Overload, Ch22 Cascading Failures; Workbook: Implementing SLOs, Postmortem Culture.",
+    "modules": [
+      "M16",
+      "M17",
+      "M21",
+      "M22"
+    ]
+  },
+  {
+    "id": "otel-docs",
+    "type": "doc",
+    "title": "OpenTelemetry documentation (Python)",
+    "author": "OpenTelemetry / CNCF",
+    "url": "https://opentelemetry.io/docs/languages/python/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16",
+      "M21"
+    ]
+  },
+  {
+    "id": "overthewire",
+    "type": "course",
+    "title": "OverTheWire: Bandit wargame",
+    "author": "OverTheWire",
+    "url": "https://overthewire.org/wargames/bandit/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "twelve-factor",
+    "type": "doc",
+    "title": "The Twelve-Factor App",
+    "author": "Adam Wiggins (Heroku)",
+    "url": "https://12factor.net/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "trivy",
+    "type": "repo",
+    "title": "Trivy vulnerability scanner",
+    "author": "Aqua Security",
+    "url": "https://github.com/aquasecurity/trivy",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "hf-spaces",
+    "type": "doc",
+    "title": "Hugging Face Spaces: Docker Spaces",
+    "author": "Hugging Face",
+    "url": "https://huggingface.co/docs/hub/spaces-sdks-docker",
+    "free": true,
+    "language": "English",
+    "notes": "Free CPU Spaces run any Docker image; no card. The default no-card public deploy target in this curriculum.",
+    "modules": [
+      "M17",
+      "M21"
+    ]
+  },
+  {
+    "id": "atlassian-cicd",
+    "type": "doc",
+    "title": "Continuous integration vs. delivery vs. deployment",
+    "author": "Atlassian",
+    "url": "https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "hellointerview",
+    "type": "course",
+    "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+    "author": "Hello Interview (Evan King, Stefan Mai)",
+    "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction",
+    "free": "partial",
+    "language": "English",
+    "notes": "Free core pages; some deep dives/breakdowns are premium-locked. All pages cited here returned 200 on 2026-10-20.",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "hellointerview-ml",
+    "type": "course",
+    "title": "Hello Interview: ML System Design in a Hurry",
+    "author": "Hello Interview",
+    "url": "https://www.hellointerview.com/learn/ml-system-design/in-a-hurry/introduction",
+    "free": "partial",
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "sd-primer",
+    "type": "repo",
+    "title": "The System Design Primer",
+    "author": "Donne Martin",
+    "url": "https://github.com/donnemartin/system-design-primer",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "bbg-101",
+    "type": "repo",
+    "title": "System Design 101 (ByteByteGo)",
+    "author": "ByteByteGo",
+    "url": "https://github.com/ByteByteGoHq/system-design-101",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "cs329s",
+    "type": "course",
+    "title": "Stanford CS329S: Machine Learning Systems Design (2022)",
+    "author": "Chip Huyen",
+    "url": "https://stanford-cs329s.github.io/syllabus.html",
+    "free": true,
+    "language": "English",
+    "notes": "Free lecture notes and slides (Google Docs) linked from the syllabus; no videos.",
+    "modules": [
+      "M16",
+      "M22"
+    ]
+  },
+  {
+    "id": "huyen-mlsd-booklet",
+    "type": "book",
+    "title": "Machine Learning Systems Design (free booklet)",
+    "author": "Chip Huyen",
+    "url": "https://huyenchip.com/machine-learning-systems-design/toc.html",
+    "free": true,
+    "language": "English",
+    "notes": "Free booklet, NOT the paid O'Reilly book Designing Machine Learning Systems.",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "huyen-blog",
+    "type": "doc",
+    "title": "Chip Huyen blog",
+    "author": "Chip Huyen",
+    "url": "https://huyenchip.com/blog/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16",
+      "M22"
+    ]
+  },
+  {
+    "id": "eugeneyan-llm-patterns",
+    "type": "doc",
+    "title": "Patterns for Building LLM-based Systems & Products",
+    "author": "Eugene Yan",
+    "url": "https://eugeneyan.com/writing/llm-patterns/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16",
+      "M22"
+    ]
+  },
+  {
+    "id": "openai-batch",
+    "type": "doc",
+    "title": "OpenAI Batch API guide",
+    "author": "OpenAI",
+    "url": "https://platform.openai.com/docs/guides/batch",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17",
+      "M22"
+    ]
+  },
+  {
+    "id": "pinecone-hnsw",
+    "type": "doc",
+    "title": "Hierarchical Navigable Small Worlds (HNSW) - Faiss: The Missing Manual",
+    "author": "James Briggs (Pinecone)",
+    "url": "https://www.pinecone.io/learn/series/faiss/hnsw/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "qdrant-docs",
+    "type": "doc",
+    "title": "Qdrant documentation",
+    "author": "Qdrant",
+    "url": "https://qdrant.tech/documentation/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "pgvector",
+    "type": "repo",
+    "title": "pgvector",
+    "author": "Andrew Kane",
+    "url": "https://github.com/pgvector/pgvector",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "postgres-docs",
+    "type": "doc",
+    "title": "PostgreSQL documentation: Using EXPLAIN",
+    "author": "PostgreSQL Global Development Group",
+    "url": "https://www.postgresql.org/docs/current/using-explain.html",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "redis-docs",
+    "type": "doc",
+    "title": "Redis documentation",
+    "author": "Redis",
+    "url": "https://redis.io/docs/latest/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "rq",
+    "type": "doc",
+    "title": "RQ (Redis Queue) documentation",
+    "author": "RQ maintainers",
+    "url": "https://python-rq.org/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21",
+      "M22"
+    ]
+  },
+  {
+    "id": "kafka-quickstart",
+    "type": "doc",
+    "title": "Apache Kafka quickstart",
+    "author": "Apache Software Foundation",
+    "url": "https://kafka.apache.org/quickstart",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "ml-interviews",
+    "type": "repo",
+    "title": "Machine Learning Interviews guide",
+    "author": "Alireza Dirafzoon",
+    "url": "https://github.com/alirezadir/Machine-Learning-Interviews",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "litellm",
+    "type": "doc",
+    "title": "LiteLLM AI Gateway (proxy) docs",
+    "author": "BerriAI",
+    "url": "https://docs.litellm.ai/docs/simple_proxy",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "google-mlops",
+    "type": "doc",
+    "title": "MLOps: Continuous delivery and automation pipelines in machine learning",
+    "author": "Google Cloud Architecture Center",
+    "url": "https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "cd4ml",
+    "type": "doc",
+    "title": "Continuous Delivery for Machine Learning (CD4ML)",
+    "author": "Sato, Wider, Windheuser (martinfowler.com)",
+    "url": "https://martinfowler.com/articles/cd4ml.html",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "fowler-bliki",
+    "type": "doc",
+    "title": "Martin Fowler bliki: CanaryRelease / BlueGreenDeployment",
+    "author": "Martin Fowler / Danilo Sato",
+    "url": "https://martinfowler.com/bliki/CanaryRelease.html",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "mlflow-docs",
+    "type": "doc",
+    "title": "MLflow documentation",
+    "author": "MLflow / Linux Foundation",
+    "url": "https://mlflow.org/docs/latest/ml/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "dvc-docs",
+    "type": "doc",
+    "title": "DVC Get Started",
+    "author": "Iterative / DVC",
+    "url": "https://dvc.org/doc/start",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "prefect-docs",
+    "type": "doc",
+    "title": "Prefect 3 documentation",
+    "author": "Prefect",
+    "url": "https://docs.prefect.io/v3/get-started/quickstart",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "pandera-docs",
+    "type": "doc",
+    "title": "Pandera documentation",
+    "author": "Union.ai / Pandera",
+    "url": "https://pandera.readthedocs.io/en/stable/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "evidently",
+    "type": "doc",
+    "title": "Evidently AI docs + open-source ML observability course",
+    "author": "Evidently AI",
+    "url": "https://docs.evidentlyai.com/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "fsdl-2022",
+    "type": "course",
+    "title": "Full Stack Deep Learning 2022",
+    "author": "Full Stack Deep Learning",
+    "url": "https://fullstackdeeplearning.com/course/2022/",
+    "free": true,
+    "language": "English",
+    "notes": "Free lectures + notes. Good principles (L2-L6); 2022, predates vLLM-era LLM serving.",
+    "modules": [
+      "M16",
+      "M17"
+    ]
+  },
+  {
+    "id": "langfuse",
+    "type": "doc",
+    "title": "Langfuse documentation (OSS LLM observability)",
+    "author": "Langfuse",
+    "url": "https://langfuse.com/docs",
+    "free": true,
+    "language": "English",
+    "notes": "MIT-licensed core, self-hostable via Docker Compose (no card).",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "vllm-docs",
+    "type": "doc",
+    "title": "vLLM documentation",
+    "author": "vLLM project",
+    "url": "https://docs.vllm.ai/en/latest/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "llamacpp",
+    "type": "repo",
+    "title": "llama.cpp",
+    "author": "ggml-org",
+    "url": "https://github.com/ggml-org/llama.cpp",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "onnxruntime",
+    "type": "doc",
+    "title": "ONNX Runtime: Get started with Python",
+    "author": "Microsoft",
+    "url": "https://onnxruntime.ai/docs/get-started/with-python.html",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "bentoml",
+    "type": "doc",
+    "title": "BentoML documentation",
+    "author": "BentoML",
+    "url": "https://docs.bentoml.com/en/latest/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "gradio",
+    "type": "doc",
+    "title": "Gradio Quickstart",
+    "author": "Gradio / Hugging Face",
+    "url": "https://www.gradio.app/guides/quickstart",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "locust",
+    "type": "doc",
+    "title": "Locust documentation",
+    "author": "Locust maintainers",
+    "url": "https://docs.locust.io/en/stable/quickstart.html",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "k6",
+    "type": "doc",
+    "title": "Grafana k6 documentation",
+    "author": "Grafana Labs",
+    "url": "https://grafana.com/docs/k6/latest/get-started/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "anyscale-cb",
+    "type": "doc",
+    "title": "How continuous batching enables 23x throughput in LLM inference",
+    "author": "Anyscale (Daniel, Liang, et al.)",
+    "url": "https://www.anyscale.com/blog/continuous-batching-llm-inference",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "hf-cb",
+    "type": "doc",
+    "title": "Continuous batching (Hugging Face blog)",
+    "author": "Hugging Face",
+    "url": "https://huggingface.co/blog/continuous_batching",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "grootendorst-quant",
+    "type": "doc",
+    "title": "Which Quantization Method is Right for You? (GPTQ vs. GGUF vs. AWQ)",
+    "author": "Maarten Grootendorst",
+    "url": "https://www.maartengrootendorst.com/blog/gguf/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "ultrascale",
+    "type": "book",
+    "title": "The Ultra-Scale Playbook: Training LLMs on GPU Clusters",
+    "author": "Hugging Face (nanotron team)",
+    "url": "https://huggingface.co/spaces/nanotron/ultrascale-playbook",
+    "free": true,
+    "language": "English",
+    "notes": "Free interactive book. Section names in slices recalled, not re-read this session (page is a JS app).",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "stas-mle",
+    "type": "book",
+    "title": "Machine Learning Engineering Open Book",
+    "author": "Stas Bekman",
+    "url": "https://github.com/stas00/ml-engineering",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "pytorch-tutorials",
+    "type": "doc",
+    "title": "PyTorch tutorials (DDP series, profiler)",
+    "author": "PyTorch / Linux Foundation",
+    "url": "https://docs.pytorch.org/tutorials/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16",
+      "M17"
+    ]
+  },
+  {
+    "id": "triton",
+    "type": "doc",
+    "title": "Triton language tutorials",
+    "author": "OpenAI / Triton",
+    "url": "https://triton-lang.org/main/getting-started/tutorials/index.html",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "toxiproxy",
+    "type": "repo",
+    "title": "Toxiproxy (network fault injection)",
+    "author": "Shopify",
+    "url": "https://github.com/Shopify/toxiproxy",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "lmcache",
+    "type": "repo",
+    "title": "LMCache",
+    "author": "LMCache team",
+    "url": "https://github.com/LMCache/LMCache",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "sglang",
+    "type": "doc",
+    "title": "SGLang documentation",
+    "author": "SGLang team (LMSYS)",
+    "url": "https://docs.sglang.ai/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "trtllm",
+    "type": "doc",
+    "title": "TensorRT-LLM documentation",
+    "author": "NVIDIA",
+    "url": "https://nvidia.github.io/TensorRT-LLM/",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "tgi",
+    "type": "doc",
+    "title": "Text Generation Inference docs",
+    "author": "Hugging Face",
+    "url": "https://huggingface.co/docs/text-generation-inference/index",
+    "free": true,
+    "language": "English",
+    "notes": "rohitg00 17/28 reports TGI entered maintenance mode on 2025-12-11; prefer vLLM/SGLang for new projects.",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "mlzoomcamp",
+    "type": "course",
+    "title": "DataTalksClub Machine Learning Zoomcamp",
+    "author": "DataTalksClub",
+    "url": "https://github.com/DataTalksClub/machine-learning-zoomcamp",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "yt-nana-docker",
+    "type": "video",
+    "title": "Docker Tutorial for Beginners [FULL COURSE in 3 Hours]",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=3c-iBn73dDE",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-compose",
+    "type": "video",
+    "title": "Ultimate Docker Compose Tutorial",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=SXwC9fSwct8",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-volumes",
+    "type": "video",
+    "title": "Docker Volumes explained in 6 minutes",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=p2PH_YPCsis",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-dd-docker",
+    "type": "video",
+    "title": "Complete Docker Course - From BEGINNER to PRO!",
+    "author": "DevOps Directive",
+    "url": "https://www.youtube.com/watch?v=RqTEHSBrYFw",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-gha",
+    "type": "video",
+    "title": "GitHub Actions Tutorial - Basic Concepts and CI/CD Pipeline with Docker",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=R8_veQiYBjI",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-k8s",
+    "type": "video",
+    "title": "Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=X48VuDVv0do",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-ingress",
+    "type": "video",
+    "title": "Kubernetes Ingress Tutorial for Beginners",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=80Ew_fsV4rM",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16",
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-helm",
+    "type": "video",
+    "title": "What is Helm in Kubernetes? Helm and Helm Charts explained",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=-ykwb1d0DXU",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-argocd",
+    "type": "video",
+    "title": "ArgoCD Tutorial for Beginners | GitOps CD for Kubernetes",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=MeU5_k9ssrs",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-k8s-cm",
+    "type": "video",
+    "title": "Kubernetes ConfigMap and Secret as Kubernetes Volumes | Demo",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=FAnQTgr04mU",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-k8s-vol",
+    "type": "video",
+    "title": "Kubernetes Volumes explained | Persistent Volume, Persistent Volume Claim & Storage Class",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=0swOh5C3OVM",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-hpa",
+    "type": "video",
+    "title": "Understanding Horizontal Pod Autoscaling",
+    "author": "Container Bytes",
+    "url": "https://www.youtube.com/watch?v=JJqY_YFZhyY",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-prom",
+    "type": "video",
+    "title": "How Prometheus Monitoring works | Prometheus Architecture explained",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=h4Sl21AKiDg",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-nana-tf",
+    "type": "video",
+    "title": "Terraform explained in 15 mins",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=l5k1ai_GBDE",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-dd-tf",
+    "type": "video",
+    "title": "Complete Terraform Course - From BEGINNER to PRO!",
+    "author": "DevOps Directive",
+    "url": "https://www.youtube.com/watch?v=7xngnjfIlK4",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-fcc-aws-ccp",
+    "type": "video",
+    "title": "AWS Certified Cloud Practitioner Certification Course (CLF-C01)",
+    "author": "freeCodeCamp.org (Andrew Brown)",
+    "url": "https://www.youtube.com/watch?v=SOTamWNgDKc",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-gcp-slo",
+    "type": "video",
+    "title": "SLIs, SLOs, SLAs, oh my! (class SRE implements DevOps)",
+    "author": "Google Cloud Tech",
+    "url": "https://www.youtube.com/watch?v=tEylFyxbDLE",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-fcc-otel",
+    "type": "video",
+    "title": "OpenTelemetry Course - Understand Software Performance",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=r8UvWSX3KA8",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-llt-journalctl",
+    "type": "video",
+    "title": "journalctl Basics: How to Easily Check Your Linux Logs",
+    "author": "Learn Linux TV",
+    "url": "https://www.youtube.com/watch?v=0dG3vUYt7Uk",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-llt-systemd",
+    "type": "video",
+    "title": "Systemd Explained: How to Manage Linux Services Easily",
+    "author": "Learn Linux TV",
+    "url": "https://www.youtube.com/watch?v=Kzpm-rGAXos",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-llt-timers",
+    "type": "video",
+    "title": "Automate Your Tasks with systemd Timers: A Step-by-Step Guide",
+    "author": "Learn Linux TV",
+    "url": "https://www.youtube.com/watch?v=n6BuUgkZ5T0",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M21"
+    ]
+  },
+  {
+    "id": "yt-bbg-sdi",
+    "type": "video",
+    "title": "System Design Interview: A Step-By-Step Guide",
+    "author": "ByteByteGo",
+    "url": "https://www.youtube.com/watch?v=i7twT3x5yv8",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-ibm-lb",
+    "type": "video",
+    "title": "What is a Load Balancer?",
+    "author": "IBM Technology",
+    "url": "https://www.youtube.com/watch?v=sCR3SAVdyCc",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-fireship-db",
+    "type": "video",
+    "title": "7 Database Paradigms",
+    "author": "Fireship",
+    "url": "https://www.youtube.com/watch?v=W2Z7fbCLSTw",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-bbg-cache",
+    "type": "video",
+    "title": "Cache Systems Every Developer Should Know",
+    "author": "ByteByteGo",
+    "url": "https://www.youtube.com/watch?v=dGAgxozNWFE",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-bbg-ch",
+    "type": "video",
+    "title": "Consistent Hashing | Algorithms You Should Know #1",
+    "author": "ByteByteGo",
+    "url": "https://www.youtube.com/watch?v=UF9Iqmg94tk",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-cap",
+    "type": "video",
+    "title": "L16: The CAP Theorem",
+    "author": "Distributed Systems Course",
+    "url": "https://www.youtube.com/watch?v=k-Yaq8AHlFA",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-sdi-ratelimit",
+    "type": "video",
+    "title": "System Design Interview - Rate Limiting (local and distributed)",
+    "author": "System Design Interview",
+    "url": "https://www.youtube.com/watch?v=FU4WlwfS3G0",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-fcc-sd",
+    "type": "video",
+    "title": "System Design Concepts Course and Interview Prep",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=F2FmTdLtb_4",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M22"
+    ]
+  },
+  {
+    "id": "yt-codebasics-mlflow",
+    "type": "video",
+    "title": "MLFlow Tutorial | ML Ops Tutorial",
+    "author": "codebasics",
+    "url": "https://www.youtube.com/watch?v=6ngxBkx05Fs",
+    "free": true,
+    "language": "English",
+    "notes": "Hindi/Urdu-accented English; good for Pakistan-based learners.",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "yt-dvc",
+    "type": "video",
+    "title": "Versioning Data with DVC (Hands-On Tutorial!)",
+    "author": "DVCorg",
+    "url": "https://www.youtube.com/watch?v=kLKBcPonMYw",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M16"
+    ]
+  },
+  {
+    "id": "yt-kv-cache",
+    "type": "video",
+    "title": "The KV Cache: Memory Usage in Transformers",
+    "author": "Efficient NLP",
+    "url": "https://www.youtube.com/watch?v=80bIUggRJf4",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "yt-vllm-talk",
+    "type": "video",
+    "title": "Fast LLM Serving with vLLM and PagedAttention",
+    "author": "Anyscale",
+    "url": "https://www.youtube.com/watch?v=5ZlavKF_98U",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "yt-specdec",
+    "type": "video",
+    "title": "Speculative Decoding: When Two LLMs are Faster than One",
+    "author": "Efficient NLP",
+    "url": "https://www.youtube.com/watch?v=S-8yr_RibJ4",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  },
+  {
+    "id": "yt-quant",
+    "type": "video",
+    "title": "Which Quantization Method is Right for You? (GPTQ vs. GGUF vs. AWQ)",
+    "author": "Maarten Grootendorst",
+    "url": "https://www.youtube.com/watch?v=mNE_d-C82lI",
+    "free": true,
+    "language": "English",
+    "notes": "",
+    "modules": [
+      "M17"
+    ]
+  }
+]

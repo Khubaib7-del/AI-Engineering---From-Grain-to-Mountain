@@ -1,22 +1,380 @@
 import { useState } from 'react';
-import { Linking, Pressable, View } from 'react-native';
+import { Linking, Pressable, TextInput, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Button, Icon, Meter, Panel, Screen, Section, Txt, usePalette } from '../../components/ui';
-import { addedTopicIds, allTopicIds, modules, resources, topicId, studyGuides } from '../../lib/content';
-import {StudyGuide} from '../../components/study-guide';
+import {
+  Button,
+  Checkbox,
+  Chip,
+  Icon,
+  Meter,
+  Panel,
+  Row,
+  Screen,
+  Section,
+  Txt,
+  inputStyle,
+  usePalette,
+} from '../../components/ui';
+import { StudyGuide } from '../../components/study-guide';
+import {
+  addedTopicIds,
+  findModuleV2,
+  modules,
+  resources,
+  studyGuides,
+  topicsOfModule,
+  unitIds,
+} from '../../lib/content';
+import { unitStatus, stepFraction } from '../../lib/assess';
+import { logActivity } from '../../lib/activity';
 import { useLearning } from '../../lib/store';
+import type { ModuleV2 } from '../../lib/types';
+
+const STATUS_ICON: Record<string, string> = {
+  passed: 'checkmark-circle',
+  'in-progress': 'timer',
+  available: 'ellipse-outline',
+  locked: 'circle-dashed',
+};
+
+type RepoFacts = { ok: boolean; message: string };
+async function checkRepo(url: string): Promise<RepoFacts> {
+  const m = url.match(/github\.com\/([^/\s]+)\/([^/\s#?]+)/);
+  if (!m)
+    return {
+      ok: false,
+      message: 'Paste a public GitHub repository URL, e.g. https://github.com/you/project.',
+    };
+  const repo = `${m[1]}/${m[2].replace(/\.git$/, '')}`;
+  try {
+    const [info, readme] = await Promise.all([
+      fetch(`https://api.github.com/repos/${repo}`),
+      fetch(`https://api.github.com/repos/${repo}/readme`),
+    ]);
+    if (info.status === 404) return { ok: false, message: 'That repository was not found or is private.' };
+    if (!info.ok)
+      return { ok: true, message: 'Could not reach GitHub to check the repo right now; it is saved anyway.' };
+    const data = (await info.json()) as { pushed_at?: string; default_branch?: string };
+    const pushed = data.pushed_at ? new Date(data.pushed_at).toLocaleDateString() : 'unknown';
+    return {
+      ok: true,
+      message: `Repo found · README ${readme.ok ? 'present' : 'missing'} · last push ${pushed}`,
+    };
+  } catch {
+    return { ok: true, message: 'Offline — the repo link is saved and can be checked later.' };
+  }
+}
+
+function Capstone({ module, unitsPassed }: { module: ModuleV2; unitsPassed: boolean }) {
+  const c = usePalette();
+  const { state, update, showToast } = useLearning();
+  const saved = state.capstones?.[module.id];
+  const [url, setUrl] = useState(saved?.url ?? '');
+  const [scores, setScores] = useState<number[]>(saved?.scores ?? module.capstone.rubric.map(() => -1));
+  const [facts, setFacts] = useState<RepoFacts>();
+  const [busy, setBusy] = useState(false);
+  const proven = !!saved?.submittedAt && unitsPassed && saved.scores.every(s => s >= 2);
+  const needsRepo = module.capstone.evidence === 'github';
+  const submit = async () => {
+    setBusy(true);
+    const check = needsRepo ? await checkRepo(url) : { ok: url.trim().length > 7, message: '' };
+    setFacts(check);
+    if (!check.ok) return setBusy(false);
+    const ok = await update(s =>
+      logActivity(
+        {
+          ...s,
+          capstones: {
+            ...(s.capstones ?? {}),
+            [module.id]: {
+              url: url.trim(),
+              scores,
+              submittedAt: s.capstones?.[module.id]?.submittedAt ?? new Date().toISOString(),
+            },
+          },
+        },
+        { kind: 'capstone', id: module.id },
+      ),
+    );
+    setBusy(false);
+    if (ok)
+      showToast(
+        scores.every(s => s >= 2) && unitsPassed ? `Module ${module.id} proven ✓` : 'Capstone saved.',
+      );
+  };
+  return (
+    <Panel>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+        <Icon name="flag" />
+        <Txt size={20} weight="700" style={{ flex: 1 }} accessibilityRole="header">
+          Capstone · {module.capstone.title}
+        </Txt>
+        {proven && <Chip text="Proven" tone="strong" icon="checkmark" />}
+      </View>
+      <Txt>{module.capstone.brief}</Txt>
+      {!unitsPassed && (
+        <Txt size={14} color={c.muted}>
+          You can start any time; the module counts as proven once every unit is passed and you score at least
+          2 on each criterion.
+        </Txt>
+      )}
+      <Txt size={14} weight="600">
+        Rubric — score yourself honestly
+      </Txt>
+      {module.capstone.rubric.map((r, i) => (
+        <View key={r.criterion} style={{ gap: 8, paddingVertical: 6 }}>
+          <Txt size={15} weight="600">
+            {r.criterion}
+          </Txt>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+            {r.levels.map((level, li) => (
+              <Pressable
+                key={li}
+                accessibilityRole="radio"
+                accessibilityState={{ checked: scores[i] === li }}
+                onPress={() => setScores(s => s.map((v, j) => (j === i ? li : v)))}
+                style={{
+                  paddingHorizontal: 12,
+                  paddingVertical: 8,
+                  minHeight: 40,
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  borderColor: scores[i] === li ? c.ink : c.line,
+                  backgroundColor: scores[i] === li ? c.soft : 'transparent',
+                  justifyContent: 'center',
+                }}
+              >
+                <Txt
+                  size={13}
+                  weight={scores[i] === li ? '700' : '500'}
+                  color={scores[i] === li ? c.ink : c.muted}
+                >
+                  {li} · {level}
+                </Txt>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+      ))}
+      <TextInput
+        accessibilityLabel="Capstone link"
+        autoCapitalize="none"
+        value={url}
+        onChangeText={setUrl}
+        placeholder={needsRepo ? 'https://github.com/you/project' : 'Link or short write-up'}
+        placeholderTextColor={c.faint}
+        style={inputStyle(c)}
+      />
+      {!!facts && (
+        <Txt size={14} color={facts.ok ? c.muted : c.danger}>
+          {facts.message}
+        </Txt>
+      )}
+      <Button
+        title={saved?.submittedAt ? 'Update submission' : 'Submit capstone'}
+        busy={busy}
+        disabled={!url.trim() || scores.some(s => s < 0)}
+        onPress={() => void submit()}
+      />
+    </Panel>
+  );
+}
+
+function ModuleV2Screen({ module }: { module: ModuleV2 }) {
+  const c = usePalette();
+  const { state } = useLearning();
+  const units = module.submodules.flatMap(s => s.units);
+  const statuses = units.map(u => unitStatus(u, state, unitIds));
+  const passed = statuses.filter(s => s === 'passed').length;
+  const prereqs = module.prerequisites
+    .map(id => findModuleV2(id) ?? modules.find(m => m.id === id))
+    .filter(Boolean);
+  return (
+    <Screen
+      back
+      docTitle={`${module.id} · ${module.title}`}
+      title={module.title}
+      eyebrow={`${module.id} · ${module.phase}`}
+      subtitle={module.summary}
+      width={880}
+    >
+      <Panel>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+          <Chip
+            text={`${passed}/${units.length} units passed`}
+            tone={passed === units.length ? 'strong' : 'default'}
+          />
+          <Chip text={`${module.hours} h core`} icon="clock" />
+          {!!module.deepHours && <Chip text={`+${module.deepHours} h deep`} />}
+          {module.tracks.map(t => (
+            <Chip key={t} text={t === 'ai-engineer' ? 'AI Engineer' : t === 'fde' ? 'FDE' : 'MLOps'} />
+          ))}
+        </View>
+        <Meter value={units.length ? passed / units.length : 0} label="Units passed" />
+        {!!prereqs.length && (
+          <Txt size={14} color={c.muted}>
+            Builds on:{' '}
+            {prereqs.map((p, i) => (
+              <Txt
+                key={p!.id}
+                size={14}
+                weight="600"
+                accessibilityRole="link"
+                onPress={() => router.push(`/module/${p!.id}`)}
+              >
+                {p!.id} {p!.title}
+                {i < prereqs.length - 1 ? ', ' : ''}
+              </Txt>
+            ))}
+          </Txt>
+        )}
+      </Panel>
+      {module.submodules.map(sub => (
+        <Panel key={sub.id}>
+          <Section title={sub.title} aside={sub.id} />
+          {sub.units.map((u, i) => {
+            const st = unitStatus(u, state, unitIds);
+            return (
+              <Row
+                key={u.id}
+                title={u.title}
+                subtitle={`${u.id} · ${u.hours} h · ${st === 'in-progress' ? `${Math.round(stepFraction(u, state) * 100)}% done` : st.replace('-', ' ')}`}
+                leading={<Icon name={STATUS_ICON[st]} size={20} color={st === 'locked' ? c.faint : c.ink} />}
+                onPress={() => router.push(`/unit/${u.id}`)}
+                last={i === sub.units.length - 1}
+              />
+            );
+          })}
+        </Panel>
+      ))}
+      <Capstone module={module} unitsPassed={passed === units.length} />
+    </Screen>
+  );
+}
+
+/** Pre-v2 module page: topic checklist with square boxes, saved counter and explained assessment lock. */
+function LegacyModule({ id }: { id: string }) {
+  const c = usePalette();
+  const { state, update, showToast } = useLearning();
+  const module = modules.find(m => m.id === id)!;
+  const topics = topicsOfModule(id);
+  const ids = topics.map(t => t.id);
+  const count = ids.filter(t => state.topics[t]).length;
+  const verified = !!state.verified[id];
+  const missingPrereqs = module.prerequisites.filter(p => !state.verified[p]);
+  const remaining = ids.length - count;
+  const current = verified && count === ids.length;
+  const course = resources.find(r => r.id === module.course);
+  const guide = studyGuides.find(g => g.moduleId === id);
+  const lockReason = missingPrereqs.length
+    ? `Confirm ${missingPrereqs.join(', ')} first.`
+    : remaining
+      ? `${remaining} topic${remaining > 1 ? 's' : ''} left to tick.`
+      : '';
+  return (
+    <Screen
+      back
+      docTitle={`${id} · ${module.title}`}
+      title={module.title}
+      eyebrow={`${id} · about ${module.hours} hours`}
+      width={880}
+    >
+      <Panel>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Txt weight="600">
+            Saved · {count}/{ids.length} topics
+          </Txt>
+          {verified && <Chip text="Self-assessed" />}
+        </View>
+        <Meter value={ids.length ? count / ids.length : 0} label="Module topics studied" />
+        {!!missingPrereqs.length && (
+          <Txt size={14} color={c.muted}>
+            Builds on:{' '}
+            {missingPrereqs.map(p => (
+              <Txt
+                key={p}
+                size={14}
+                weight="600"
+                accessibilityRole="link"
+                onPress={() => router.push(`/module/${p}`)}
+              >
+                {p}{' '}
+              </Txt>
+            ))}
+          </Txt>
+        )}
+      </Panel>
+      {guide && <StudyGuide key={id} guide={guide} />}
+      {course && !guide && (
+        <Button
+          title={course.title}
+          secondary
+          icon="open-outline"
+          onPress={() => void Linking.openURL(course.url)}
+        />
+      )}
+      {module.groups.map((group, gi) => (
+        <Panel key={group.title}>
+          <Section title={group.title} />
+          {topics
+            .filter(t => t.group === gi)
+            .map(t => {
+              const checked = !!state.topics[t.id];
+              const disabled = current || (verified && !addedTopicIds.has(t.id));
+              return (
+                <Checkbox
+                  key={t.id}
+                  label={t.title}
+                  checked={checked}
+                  disabled={disabled}
+                  onPress={() =>
+                    void update(s =>
+                      logActivity(
+                        { ...s, topics: { ...s.topics, [t.id]: !checked } },
+                        { kind: 'topic', id: t.id },
+                      ),
+                    ).then(
+                      ok => ok && showToast(!checked ? `Saved · ${count + 1}/${ids.length}` : 'Unticked.'),
+                    )
+                  }
+                />
+              );
+            })}
+        </Panel>
+      ))}
+      <Panel>
+        <Section title="Module check" />
+        <Txt>{module.gate}</Txt>
+        <Txt size={14} color={c.muted}>
+          A graded unit-by-unit version of this module is coming with the new curriculum. Until then, confirm
+          only after doing the exercise without generated answers.
+        </Txt>
+        {!!lockReason && !current && (
+          <Txt size={14} weight="600">
+            Not yet: {lockReason}
+          </Txt>
+        )}
+        <Button
+          title={current ? 'Confirmed' : verified ? 'Refresh confirmation' : 'I can do this'}
+          disabled={!!lockReason || current}
+          onPress={() =>
+            void update(s =>
+              logActivity(
+                { ...s, verified: { ...s.verified, [id]: new Date().toISOString() } },
+                { kind: 'unit', id },
+              ),
+            ).then(ok => ok && showToast('Module confirmed.'))
+          }
+        />
+      </Panel>
+    </Screen>
+  );
+}
+
 export default function ModuleScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>(), { state, update } = useLearning(), c = usePalette(), [message, setMessage] = useState('');
-  const module = modules.find(m => m.id === id);
-  if (!module) return <Screen back title="Module not found." />;
-  const ready = module.prerequisites.every(p => state.verified[p]), verified = !!state.verified[id], ids = allTopicIds.filter(t => t.startsWith(`${id}.`)), count = ids.filter(t => state.topics[t]).length, currentAssessment = verified && count === ids.length, course = resources.find(r => r.id === module.course);
-  return <Screen back title={module.title} subtitle={`${id} · ${count}/${ids.length} concepts studied · ~${module.hours} hours`}>
-    <Meter value={count/ids.length} label="Module concepts studied" />
-    {!ready && <View style={{ gap: 12, padding: 20, backgroundColor: c.soft, borderRadius: 20 }}><Txt weight="700">You can study ahead.</Txt><Txt>Foundations make this easier. Your topic notes can be saved now; the module assessment becomes available after you demonstrate its prerequisites.</Txt>{module.prerequisites.filter(p => !state.verified[p]).map(p => <Button key={p} secondary title={`${p}: ${modules.find(m => m.id === p)?.title}`} onPress={() => router.push(`/module/${p}`)} />)}</View>}
-    {studyGuides.find(g=>g.moduleId===id) && <StudyGuide key={id} guide={studyGuides.find(g=>g.moduleId===id)!}/> }
-    <Panel><Section title="The assessment" /><Txt>{module.gate}</Txt><Txt size={14} color={c.muted}>Checking concepts means “studied”. Confirm the assessment only after doing the exercise without relying on generated answers.</Txt>{verified && !currentAssessment && <Txt size={14} color={c.accent}>Your earlier assessment is saved. This module has new checkpoints; finish the added topics below to refresh it.</Txt>}<Button title={currentAssessment ? 'Assessment confirmed' : verified ? 'Refresh assessment' : 'I demonstrated this skill'} disabled={!ready || count !== ids.length || currentAssessment} onPress={() => { void update(s => ({ ...s, verified: { ...s.verified, [id]: new Date().toISOString() } })).then(ok => { if (ok) setMessage('Assessment recorded. The next modules are ready.'); }); }} /></Panel>
-    {!!message && <Txt accessibilityLiveRegion="polite" color={c.accent}>{message}</Txt>}
-    {course && !studyGuides.some(g=>g.moduleId===id) && <Button title={course.title} secondary icon="open-outline" onPress={() => { void Linking.openURL(course.url).catch(() => setMessage('Could not open this course.')); }} />}
-    {module.groups.map((group, gi) => <Panel key={group.title}><Section title={group.title} />{group.topics.map((topic, ti) => { const tid = topicId(id, gi, ti), checked = !!state.topics[tid], disabled = currentAssessment || (verified && !addedTopicIds.has(tid)); return <Pressable key={tid} accessibilityRole="checkbox" accessibilityLabel={topic} accessibilityState={{ checked, disabled }} disabled={disabled} onPress={() => { void update(s => ({ ...s, topics: { ...s.topics, [tid]: !s.topics[tid] } })); }} style={({ pressed }) => ({ flexDirection: 'row', gap: 14, alignItems: 'center', minHeight: 54, paddingVertical: 14, borderBottomWidth: 1, borderColor: c.line, opacity: pressed ? .65 : 1 })}><Icon name={checked ? 'checkmark-circle' : 'ellipse-outline'} color={c.accent} /><Txt style={{ flex: 1 }}>{topic}</Txt></Pressable>; })}</Panel>)}
-  </Screen>;
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const v2 = findModuleV2(id);
+  if (v2) return <ModuleV2Screen module={v2} />;
+  if (modules.some(m => m.id === id)) return <LegacyModule id={id} />;
+  return <Screen back title="Module not found" />;
 }

@@ -1,0 +1,1601 @@
+{
+ "id": "M18",
+ "phase": "P4 Build AI systems",
+ "title": "Safety, privacy and responsible engineering",
+ "summary": "Threat-model LLM and agent systems with the OWASP LLM and Agentic Top 10s, harden the web/API layer (authZ, tenant isolation, SSRF, secrets, supply chain), go deep on prompt injection and the design patterns that actually reduce it, automate red-teaming in CI, and cover PII, fairness, cards/licensing/governance and incident response.",
+ "hours": 47,
+ "prerequisites": [
+  "M03",
+  "M11",
+  "M12",
+  "M16"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M18.S1",
+   "title": "Threat modelling and application security",
+   "units": [
+    {
+     "id": "M18.U01",
+     "title": "Threat-modelling LLM applications with the OWASP LLM Top 10 (2025)",
+     "hours": 5,
+     "depth": "core",
+     "week": 129,
+     "prerequisites": [
+      "M12.U19"
+     ],
+     "outcomes": [
+      "You can draw a data-flow diagram with trust boundaries for an LLM/agent system.",
+      "You can map all 10 OWASP LLM risks to attack paths, controls and gaps in a risk register."
+     ],
+     "topics": [
+      {
+       "id": "M18.01.10",
+       "title": "Rate limits / unbounded consumption"
+      },
+      {
+       "id": "M18.01.11",
+       "title": "System-prompt leakage"
+      },
+      {
+       "id": "M18.01.12",
+       "title": "Vector and embedding weaknesses"
+      },
+      {
+       "id": "M18.01.13",
+       "title": "Improper output handling"
+      }
+     ],
+     "learn": {
+      "resourceId": "owasp-llm-top10",
+      "title": "OWASP Top 10 for LLM Applications 2025",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "All 10 risk pages: LLM01 Prompt Injection … LLM10 Unbounded Consumption"
+     },
+     "covers": [
+      "LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM03 Supply Chain",
+      "LLM04 Data and Model Poisoning, LLM05 Improper Output Handling, LLM06 Excessive Agency",
+      "LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses, LLM09 Misinformation, LLM10 Unbounded Consumption",
+      "Each risk: description, examples, prevention and mitigation, attack scenarios"
+     ],
+     "gaps": [
+      {
+       "topic": "Threat-modelling method (DFDs, STRIDE-style)",
+       "resource": {
+        "resourceId": "owasp-threat-modeling",
+        "title": "OWASP Threat Modeling Process",
+        "url": "https://owasp.org/www-community/Threat_Modeling_Process",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Hands-on LLM attack labs incl. insecure output handling",
+       "resource": {
+        "resourceId": "portswigger-llm-attacks",
+        "title": "PortSwigger Web Security Academy — Web LLM attacks (labs)",
+        "url": "https://portswigger.net/web-security/llm-attacks",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Web LLM attacks topic + labs"
+       }
+      },
+      {
+       "topic": "Real CVEs against AI systems (EchoLeak etc.)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Echoleak Cves For Ai",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 18 · Lesson 25 echoleak cves for ai"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Echoleak Cves For Ai",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 18 · Lesson 25 echoleak cves for ai"
+     },
+     "practice": {
+      "title": "Risk register for your M12 capstone",
+      "brief": "Draw a data-flow diagram of your M12 capstone with trust boundaries. For each of the 10 risks record: applies?, attack path, existing control, gap, owner. Save as a CSV risk register.",
+      "done_when": "DFD image + risk_register.csv with 10 rows, each with a non-empty attack path or a justified N/A."
+     },
+     "quiz": [
+      {
+       "id": "M18.U01.Q1",
+       "kind": "mcq",
+       "prompt": "An example of LLM05 Improper Output Handling is…",
+       "options": [
+        "rendering model output as HTML without sanitising it",
+        "a slow model",
+        "a typo in the prompt",
+        "a long prompt"
+       ],
+       "answer": 0,
+       "explain": "Model output is untrusted input to downstream systems (XSS, SQLi)."
+      },
+      {
+       "id": "M18.U01.Q2",
+       "kind": "mcq",
+       "prompt": "LLM10 Unbounded Consumption covers…",
+       "options": [
+        "runaway cost/resource use (denial of wallet)",
+        "memory leaks only",
+        "GPU heat",
+        "logging"
+       ],
+       "answer": 0,
+       "explain": "Rate limits, quotas and budgets are the controls."
+      },
+      {
+       "id": "M18.U01.Q3",
+       "kind": "mcq",
+       "prompt": "LLM07 System Prompt Leakage implies you should…",
+       "options": [
+        "encrypt prompts",
+        "never put secrets or authorization logic in the system prompt",
+        "assume it can't happen",
+        "use longer prompts"
+       ],
+       "answer": 1,
+       "explain": "Assume the system prompt will be extracted."
+      },
+      {
+       "id": "M18.U01.Q4",
+       "kind": "short",
+       "prompt": "Which risk is highest for your capstone, and what single control cuts it most?",
+       "rubric": [
+        "Names a specific risk tied to the capstone's data flow",
+        "Names one concrete control",
+        "Explains why it reduces likelihood or impact the most"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U02",
+     "title": "Web/API security for AI services (authZ, tenant isolation, secrets, SSRF)",
+     "hours": 6,
+     "depth": "core",
+     "week": 129,
+     "prerequisites": [
+      "M18.U01"
+     ],
+     "outcomes": [
+      "You can enforce authentication, object-level authorization and tenant isolation including in the vector store.",
+      "You can block SSRF in URL-fetching tools and keep secrets out of git."
+     ],
+     "topics": [
+      {
+       "id": "M18.01.04",
+       "title": "AuthN/authZ"
+      },
+      {
+       "id": "M18.01.05",
+       "title": "Tenant isolation"
+      },
+      {
+       "id": "M18.01.06",
+       "title": "Secrets"
+      },
+      {
+       "id": "M18.01.14",
+       "title": "SSRF"
+      }
+     ],
+     "learn": {
+      "resourceId": "owasp-api-top10",
+      "title": "OWASP API Security Top 10 (2023)",
+      "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "API1 BOLA through API10 Unsafe Consumption of APIs (2023 edition)"
+     },
+     "covers": [
+      "API1 Broken Object Level Authorization, API2 Broken Authentication, API3 Broken Object Property Level Authorization",
+      "API4 Unrestricted Resource Consumption, API5 Broken Function Level Authorization",
+      "API6 Unrestricted Access to Sensitive Business Flows, API7 Server Side Request Forgery",
+      "API8 Security Misconfiguration, API9 Improper Inventory Management, API10 Unsafe Consumption of APIs"
+     ],
+     "gaps": [
+      {
+       "topic": "SSRF explained with labs",
+       "resource": {
+        "resourceId": "portswigger-ssrf",
+        "title": "PortSwigger Web Security Academy — SSRF (labs)",
+        "url": "https://portswigger.net/web-security/ssrf",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Secret scanning",
+       "resource": {
+        "resourceId": "gitleaks",
+        "title": "gitleaks",
+        "url": "https://github.com/gitleaks/gitleaks",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "OAuth/JWT basics",
+       "resource": {
+        "resourceId": "oauth-com",
+        "title": "OAuth 2.0 Simplified",
+        "url": "https://www.oauth.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "owasp-top10-web",
+      "title": "OWASP Top 10 (web)",
+      "url": "https://owasp.org/Top10/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Harden your FastAPI service",
+      "brief": "Add JWT auth, per-tenant row-level filtering (including vector-store metadata filters), secrets from env/secret manager (run gitleaks on the repo), rate limiting, and a URL-fetch tool with an SSRF allowlist that blocks private IPs and cloud metadata addresses.",
+      "done_when": "Tests prove: cross-tenant read → 403/empty; fetch of 169.254.169.254 and 127.0.0.1 → blocked; gitleaks reports 0 findings; rate limit returns 429."
+     },
+     "quiz": [
+      {
+       "id": "M18.U02.Q1",
+       "kind": "mcq",
+       "prompt": "BOLA (broken object-level authorization) means…",
+       "options": [
+        "slow APIs",
+        "bad JSON",
+        "a user can access another user's object by changing an id",
+        "expired TLS"
+       ],
+       "answer": 2,
+       "explain": "Check ownership on every object access."
+      },
+      {
+       "id": "M18.U02.Q2",
+       "kind": "mcq",
+       "prompt": "SSRF in an agent's fetch tool can expose…",
+       "options": [
+        "internal services and cloud metadata endpoints",
+        "nothing",
+        "only public sites",
+        "the GPU"
+       ],
+       "answer": 0,
+       "explain": "The server fetches on the attacker's behalf."
+      },
+      {
+       "id": "M18.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Tenant isolation in RAG requires…",
+       "options": [
+        "asking the model nicely",
+        "bigger embeddings",
+        "filtering retrieval by tenant/ACL before results reach the model",
+        "caching"
+       ],
+       "answer": 2,
+       "explain": "The model can't un-see another tenant's chunk."
+      },
+      {
+       "id": "M18.U02.Q4",
+       "kind": "short",
+       "prompt": "Why must authorization be enforced in the tool/back end, not in the prompt?",
+       "rubric": [
+        "Prompts can be overridden by injection",
+        "Back-end checks are deterministic and auditable",
+        "Model never holds more privilege than the user"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U03",
+     "title": "Supply chain: dependencies, model files, MCP/skill registries",
+     "hours": 3,
+     "depth": "core",
+     "week": 129,
+     "prerequisites": [
+      "M18.U01"
+     ],
+     "outcomes": [
+      "You can lock and audit Python dependencies and avoid unsafe model formats.",
+      "You can write an admission policy for third-party MCP servers and skills."
+     ],
+     "topics": [
+      {
+       "id": "M18.01.07",
+       "title": "Dependency supply chain"
+      }
+     ],
+     "learn": {
+      "resourceId": "owasp-llm03",
+      "title": "OWASP LLM03:2025 Supply Chain",
+      "url": "https://genai.owasp.org/llmrisk/llm032025-supply-chain/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "LLM03:2025 Supply Chain page"
+     },
+     "covers": [
+      "Third-party package, pre-trained model and dataset risks",
+      "LoRA/adapter and model-merge risks; on-device model tampering",
+      "Licensing and T&C risks; mitigation: SBOMs, provenance, vetting, integrity checks"
+     ],
+     "gaps": [
+      {
+       "topic": "Why pickle is dangerous and how the Hub scans",
+       "resource": {
+        "resourceId": "hf-pickle-security",
+        "title": "Hugging Face Hub — Pickle scanning and security",
+        "url": "https://huggingface.co/docs/hub/security-pickle",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Dependency auditing",
+       "resource": {
+        "resourceId": "pip-audit",
+        "title": "pip-audit",
+        "url": "https://github.com/pypa/pip-audit",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Lock files",
+       "resource": {
+        "resourceId": "uv-sync-lock",
+        "title": "uv — Locking and syncing",
+        "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Registry supply chain and drift for MCP",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Mcp Registry Supply Chain And Drift",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 30 mcp registry supply chain and drift"
+       }
+      },
+      {
+       "topic": "Skill permissions and trust",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Skill Permissions Sandboxes And Trust",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 26 skill permissions sandboxes and trust"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Mcp Registry Supply Chain And Drift",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 13 · Lesson 30 mcp registry supply chain and drift"
+     },
+     "practice": {
+      "title": "Lock, audit, admit",
+      "brief": "Pin and hash-lock dependencies with uv, run pip-audit, switch any pickle checkpoints to safetensors, and write an admission policy for third-party MCP servers/skills (source, version pin, descriptor hash, permissions, review, re-review on update).",
+      "done_when": "uv.lock committed, pip-audit output with 0 unfixed highs (or documented exceptions), no .pkl/.pt pickles loaded from untrusted sources, ADMISSION.md policy."
+     },
+     "quiz": [
+      {
+       "id": "M18.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Loading an untrusted pickle model file can…",
+       "options": [
+        "only waste RAM",
+        "do nothing",
+        "execute arbitrary code",
+        "improve speed"
+       ],
+       "answer": 2,
+       "explain": "Pickle deserialisation runs code."
+      },
+      {
+       "id": "M18.U03.Q2",
+       "kind": "mcq",
+       "prompt": "A lock file with hashes protects against…",
+       "options": [
+        "unexpected or tampered dependency versions",
+        "prompt injection",
+        "hallucination",
+        "latency"
+       ],
+       "answer": 0,
+       "explain": "Installs exactly what was reviewed."
+      },
+      {
+       "id": "M18.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Third-party skills with scripts should be…",
+       "options": [
+        "trusted by default",
+        "run as admin",
+        "reviewed and sandboxed like any code",
+        "ignored"
+       ],
+       "answer": 2,
+       "explain": "A skill is code plus instructions."
+      },
+      {
+       "id": "M18.U03.Q4",
+       "kind": "short",
+       "prompt": "Describe your admission checklist for a new MCP server.",
+       "rubric": [
+        "Source/maintainer and licence check",
+        "Pinned version + descriptor hash; re-review on change",
+        "Least-privilege scopes, sandbox/egress limits and logging"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M18.S2",
+   "title": "Prompt injection and agent security (deep)",
+   "units": [
+    {
+     "id": "M18.U04",
+     "title": "Prompt injection, indirect injection and exfiltration",
+     "hours": 5,
+     "depth": "core",
+     "week": 130,
+     "prerequisites": [
+      "M18.U01"
+     ],
+     "outcomes": [
+      "You can build an adversarial corpus across direct, retrieved-doc, tool-output, image-text and markdown-exfiltration channels.",
+      "You can measure attack success rate per channel against your own system."
+     ],
+     "topics": [
+      {
+       "id": "M18.01.01",
+       "title": "Prompt injection"
+      },
+      {
+       "id": "M18.01.02",
+       "title": "Untrusted retrieval"
+      },
+      {
+       "id": "M18.01.03",
+       "title": "Tool output trust"
+      },
+      {
+       "id": "M18.01.09",
+       "title": "Data exfiltration"
+      }
+     ],
+     "learn": {
+      "resourceId": "owasp-llm01",
+      "title": "OWASP LLM01:2025 Prompt Injection",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "LLM01:2025 page (direct vs indirect, multimodal, scenarios, mitigations)"
+     },
+     "covers": [
+      "Direct vs indirect prompt injection; jailbreaking as a form of injection",
+      "Multimodal injection (instructions hidden in images)",
+      "Impacts: data disclosure, unauthorised function access, content manipulation",
+      "Mitigations: constrain behaviour, validate output formats, least privilege, human approval, segregate external content, adversarial testing"
+     ],
+     "gaps": [
+      {
+       "topic": "Talk: LLM security section (jailbreaks, prompt injection, data poisoning)",
+       "resource": {
+        "resourceId": "yt-karpathy-intro-llms",
+        "title": "[1hr Talk] Intro to Large Language Models",
+        "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
+        "type": "video",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Part 3 'LLM Security' (from ~45:40 to end)"
+       }
+      },
+      {
+       "topic": "Ongoing case archive",
+       "resource": {
+        "resourceId": "willison-pi-tag",
+        "title": "Simon Willison — prompt-injection tag archive",
+        "url": "https://simonwillison.net/tags/prompt-injection/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Read the trifecta post + 5 tagged posts"
+       }
+      },
+      {
+       "topic": "Attack taxonomy survey",
+       "resource": {
+        "resourceId": "lilianweng-adv-attacks",
+        "title": "Adversarial Attacks on LLMs",
+        "url": "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Indirect injection lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Indirect Prompt Injection",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment/15-indirect-prompt-injection",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 18 · Lesson 15 indirect prompt injection"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Many Shot Jailbreaking (+1 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 18 · Lesson 13 many shot jailbreaking; Lesson 15 indirect prompt injection"
+     },
+     "practice": {
+      "title": "40-attack corpus",
+      "brief": "Build an adversarial corpus of 40 injections (direct, indirect via retrieved docs, via tool output, via image text, markdown-image exfiltration) and run it against your capstone. Report attack success rate per channel.",
+      "done_when": "attacks/ contains 40 cases with expected-safe behaviour; a report shows ASR per channel."
+     },
+     "quiz": [
+      {
+       "id": "M18.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Indirect prompt injection arrives via…",
+       "options": [
+        "the developer",
+        "the GPU",
+        "the tokenizer",
+        "content the agent reads (web pages, emails, docs, tool output)"
+       ],
+       "answer": 3,
+       "explain": "The attacker never talks to the model directly."
+      },
+      {
+       "id": "M18.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Markdown-image exfiltration works by…",
+       "options": [
+        "compressing images",
+        "encoding data in an image URL the client auto-fetches",
+        "OCR",
+        "CSS"
+       ],
+       "answer": 1,
+       "explain": "Rendering triggers a GET to the attacker."
+      },
+      {
+       "id": "M18.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Jailbreak vs prompt injection:",
+       "options": [
+        "they are identical",
+        "a jailbreak targets the model's safety policy; injection hijacks the application's instructions/data flow",
+        "injection is harmless",
+        "jailbreaks only use images"
+       ],
+       "answer": 1,
+       "explain": "Different threat models, overlapping techniques."
+      },
+      {
+       "id": "M18.U04.Q4",
+       "kind": "short",
+       "prompt": "Why can't injection be 'fully solved' by filtering inputs?",
+       "rubric": [
+        "Natural language has no clean code/data boundary",
+        "Attackers adapt; filters are probabilistic",
+        "Design-level capability limits are needed"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U05",
+     "title": "Design patterns that actually reduce injection risk",
+     "hours": 6,
+     "depth": "core",
+     "week": 130,
+     "prerequisites": [
+      "M18.U04"
+     ],
+     "outcomes": [
+      "You can re-architect a flow with dual-LLM, plan-then-execute or action-selector so untrusted content can't trigger side effects.",
+      "You can measure attack success and utility before/after a pattern."
+     ],
+     "topics": [
+      {
+       "id": "M18.01.08",
+       "title": "Sandbox escape awareness"
+      },
+      {
+       "id": "M18.03.04",
+       "title": "Least privilege"
+      },
+      {
+       "id": "M18.01.15",
+       "title": "OWASP Top 10 for Agentic Applications"
+      }
+     ],
+     "learn": {
+      "resourceId": "pi-design-patterns-paper",
+      "title": "Design Patterns for Securing LLM Agents against Prompt Injections",
+      "url": "https://arxiv.org/abs/2506.08837",
+      "type": "paper",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Sections 3–4: the six patterns and case studies"
+     },
+     "covers": [
+      "Action-selector, plan-then-execute, LLM map-reduce, dual LLM, code-then-execute, context-minimization",
+      "Trade-off between utility and provable resistance",
+      "Ten application case studies (email assistant, SQL agent, customer service…)"
+     ],
+     "gaps": [
+      {
+       "topic": "Capability-based defense by design",
+       "resource": {
+        "resourceId": "camel-paper",
+        "title": "Defeating Prompt Injections by Design (CaMeL)",
+        "url": "https://arxiv.org/abs/2503.18813",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 1–4"
+       }
+      },
+      {
+       "topic": "Agentic risk catalogue",
+       "resource": {
+        "resourceId": "owasp-agentic-2026",
+        "title": "OWASP Top 10 for Agentic Applications (2026)",
+        "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Guardrails as an implementation layer",
+       "resource": {
+        "resourceId": "openai-agents-guardrails",
+        "title": "OpenAI Agents SDK — Guardrails",
+        "url": "https://openai.github.io/openai-agents-python/guardrails/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "openai-agents-guardrails",
+      "title": "OpenAI Agents SDK — Guardrails",
+      "url": "https://openai.github.io/openai-agents-python/guardrails/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Re-architect one flow",
+      "brief": "Re-architect one capstone flow using dual-LLM or plan-then-execute so untrusted content can never choose a side-effecting tool. Re-run the M18.U04 corpus and report attack success rate before/after plus the utility drop on your normal eval set.",
+      "done_when": "Before/after ASR and task-success numbers in one table; an architecture diagram shows the quarantined LLM path."
+     },
+     "quiz": [
+      {
+       "id": "M18.U05.Q1",
+       "kind": "mcq",
+       "prompt": "In the dual-LLM pattern, the privileged LLM…",
+       "options": [
+        "reads everything",
+        "has no tools",
+        "is smaller",
+        "never sees raw untrusted content, only symbolic references"
+       ],
+       "answer": 3,
+       "explain": "A quarantined LLM handles untrusted text."
+      },
+      {
+       "id": "M18.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Least privilege for agents means…",
+       "options": [
+        "admin by default",
+        "no tools at all",
+        "one shared key",
+        "each tool/credential gets the minimum scope for the task"
+       ],
+       "answer": 3,
+       "explain": "Limits blast radius."
+      },
+      {
+       "id": "M18.U05.Q3",
+       "kind": "mcq",
+       "prompt": "These patterns trade off…",
+       "options": [
+        "nothing",
+        "cost vs GPU",
+        "recall vs precision only",
+        "security vs flexibility/utility"
+       ],
+       "answer": 3,
+       "explain": "Provable guarantees constrain what the agent can do."
+      },
+      {
+       "id": "M18.U05.Q4",
+       "kind": "short",
+       "prompt": "Which pattern fits an email-summarising assistant that can also send mail, and why?",
+       "rubric": [
+        "Picks a pattern (e.g. dual-LLM or plan-then-execute with user-confirmed sends)",
+        "Explains how untrusted email text is kept from choosing recipients/actions",
+        "States the utility cost"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U06",
+     "title": "Red teaming, guardrails and defense testing",
+     "hours": 6,
+     "depth": "core",
+     "week": 131,
+     "prerequisites": [
+      "M18.U05"
+     ],
+     "outcomes": [
+      "You can automate red-team, denied-action, PII-leak and benign-prompt tests in CI.",
+      "You can gate merges on attack success and benign false-refusal thresholds."
+     ],
+     "topics": [
+      {
+       "id": "M18.03.01",
+       "title": "Adversarial corpus"
+      },
+      {
+       "id": "M18.03.02",
+       "title": "Denied-action tests"
+      },
+      {
+       "id": "M18.03.03",
+       "title": "Output validation"
+      }
+     ],
+     "learn": {
+      "resourceId": "promptfoo-redteam",
+      "title": "promptfoo — LLM red teaming guide",
+      "url": "https://www.promptfoo.dev/docs/red-team/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Red teaming guide: quickstart, plugins, strategies, CI integration"
+     },
+     "covers": [
+      "Configuring a red-team target, plugins (harm categories, PII, injection, excessive agency) and strategies (jailbreak, encoding)",
+      "Generating adversarial test cases automatically",
+      "Running in CI and reading reports"
+     ],
+     "gaps": [
+      {
+       "topic": "Open-source scanner",
+       "resource": {
+        "resourceId": "garak",
+        "title": "garak (LLM vulnerability scanner)",
+        "url": "https://github.com/NVIDIA/garak",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Red-team automation framework",
+       "resource": {
+        "resourceId": "pyrit",
+        "title": "PyRIT",
+        "url": "https://github.com/Azure/PyRIT",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Moderation classifier example",
+       "resource": {
+        "resourceId": "llama-guard-3",
+        "title": "Llama Guard 3 8B model card",
+        "url": "https://huggingface.co/meta-llama/Llama-Guard-3-8B",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Model card: hazard taxonomy and usage"
+       }
+      },
+      {
+       "topic": "Red-team tooling lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Red Team Tooling Garak Llamaguard Pyrit",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 18 · Lesson 16 red team tooling garak llamaguard pyrit"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Jailbreak Taxonomy (+3 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 19 · Lesson 82 jailbreak taxonomy; Lesson 83 prompt injection detector; Lesson 84 refusal evaluation; Lesson 87 end to end safety gate"
+     },
+     "practice": {
+      "title": "Red-team gate in CI",
+      "brief": "Add a red-team suite to CI: injection, denied actions (the agent must refuse or be blocked), PII leakage and benign prompts. Gate merges on attack success ≤ threshold AND benign false-refusal rate ≤ threshold.",
+      "done_when": "A CI run fails on a deliberately weakened build and passes on the fixed one; thresholds documented with reasons."
+     },
+     "quiz": [
+      {
+       "id": "M18.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Measuring only attack success is incomplete because…",
+       "options": [
+        "it's too slow",
+        "it's illegal",
+        "over-blocking benign requests also harms users",
+        "it's always 0"
+       ],
+       "answer": 2,
+       "explain": "Track false refusals too."
+      },
+      {
+       "id": "M18.U06.Q2",
+       "kind": "mcq",
+       "prompt": "A denied-action test asserts that…",
+       "options": [
+        "a forbidden tool call is blocked by policy even if the model attempts it",
+        "the model is polite",
+        "latency is low",
+        "the UI is nicer"
+       ],
+       "answer": 0,
+       "explain": "Tests the gate, not the model's manners."
+      },
+      {
+       "id": "M18.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Output validation includes…",
+       "options": [
+        "spell check only",
+        "nothing",
+        "logging only",
+        "schema checks, sanitisation and policy classifiers before output reaches users or systems"
+       ],
+       "answer": 3,
+       "explain": "Treat output as untrusted."
+      },
+      {
+       "id": "M18.U06.Q4",
+       "kind": "short",
+       "prompt": "What is your regression threshold and why?",
+       "rubric": [
+        "States numeric thresholds for ASR and false-refusal",
+        "Justifies from risk/harm and current baseline",
+        "Explains how flakiness/variance is handled (repeats, CI)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M18.S3",
+   "title": "Privacy, responsible ML and governance",
+   "units": [
+    {
+     "id": "M18.U07",
+     "title": "Privacy and PII: minimisation, redaction, safe logging, retention",
+     "hours": 4,
+     "depth": "core",
+     "week": 131,
+     "prerequisites": [
+      "M12.U23"
+     ],
+     "outcomes": [
+      "You can detect and redact PII (incl. Pakistani CNIC and phone formats) before logs and traces.",
+      "You can implement retention and deletion and test them with seeded PII."
+     ],
+     "topics": [
+      {
+       "id": "M18.02.02",
+       "title": "Privacy/PII"
+      },
+      {
+       "id": "M18.03.05",
+       "title": "Safe logging"
+      }
+     ],
+     "learn": {
+      "resourceId": "presidio",
+      "title": "Presidio (PII detection and anonymization)",
+      "url": "https://github.com/data-privacy-stack/presidio",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "README + Analyzer and Anonymizer docs"
+     },
+     "covers": [
+      "Analyzer: NER + pattern recognisers + context words with confidence scores",
+      "Anonymizer operators: replace, redact, mask, hash, encrypt",
+      "Supported entities and languages; image redaction module"
+     ],
+     "gaps": [
+      {
+       "topic": "Custom recognisers (needed for CNIC)",
+       "resource": {
+        "resourceId": "presidio-custom-recognizers",
+        "title": "Presidio — Adding custom recognizers",
+        "url": "https://github.com/data-privacy-stack/presidio/blob/main/docs/analyzer/adding_recognizers.md",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Sensitive information disclosure risk",
+       "resource": {
+        "resourceId": "owasp-llm02",
+        "title": "OWASP LLM02:2025 Sensitive Information Disclosure",
+        "url": "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Differential privacy (awareness)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Differential Privacy For Llms",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment/22-differential-privacy-for-llms",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 18 · Lesson 22 differential privacy for llms"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "owasp-llm02",
+      "title": "OWASP LLM02:2025 Sensitive Information Disclosure",
+      "url": "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Redact before export",
+      "brief": "Add PII detection/redaction (CNIC numbers, Pakistani phone numbers, emails) before logging and tracing. Add a custom recogniser for CNIC (#####-#######-#). Set a retention policy and a deletion endpoint; test with seeded PII.",
+      "done_when": "Tests: seeded CNIC/phone/email never appear in logs or exported traces; deletion endpoint removes a user's records; retention job documented."
+     },
+     "quiz": [
+      {
+       "id": "M18.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Data minimisation means…",
+       "options": [
+        "compress data",
+        "use smaller models",
+        "collect and keep only what the purpose needs",
+        "have fewer users"
+       ],
+       "answer": 2,
+       "explain": "Less data, less risk."
+      },
+      {
+       "id": "M18.U07.Q2",
+       "kind": "mcq",
+       "prompt": "The safest place to redact PII for traces is…",
+       "options": [
+        "before export from the service",
+        "in the dashboard",
+        "never",
+        "after 30 days"
+       ],
+       "answer": 0,
+       "explain": "Redact at the trust boundary."
+      },
+      {
+       "id": "M18.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Pattern-based PII detection fails on…",
+       "options": [
+        "context-dependent or novel formats",
+        "nothing",
+        "emails always",
+        "numbers always"
+       ],
+       "answer": 0,
+       "explain": "Combine patterns with NER/context and tests."
+      },
+      {
+       "id": "M18.U07.Q4",
+       "kind": "short",
+       "prompt": "What PII might appear in an agent's tool outputs that you didn't expect?",
+       "rubric": [
+        "Gives concrete examples (addresses in search results, names in tickets, IDs in documents)",
+        "Explains it bypasses input-side redaction",
+        "Proposes output-side redaction before logging/memory"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U08",
+     "title": "Fairness and harm evaluation",
+     "hours": 4,
+     "depth": "core",
+     "week": 131,
+     "prerequisites": [],
+     "outcomes": [
+      "You can evaluate a model across subgroups with confidence intervals.",
+      "You can choose a fairness criterion for a context and propose a mitigation."
+     ],
+     "topics": [
+      {
+       "id": "M18.02.03",
+       "title": "Fairness/subgroups"
+      },
+      {
+       "id": "M18.02.09",
+       "title": "Evaluation of harms"
+      }
+     ],
+     "learn": {
+      "resourceId": "google-mlcc-fairness",
+      "title": "Google Machine Learning Crash Course — Fairness",
+      "url": "https://developers.google.com/machine-learning/crash-course/fairness",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Fairness module: types of bias, identifying bias, mitigating bias, evaluating for bias (demographic parity, equality of opportunity, counterfactual fairness)"
+     },
+     "covers": [
+      "Types of human/data bias",
+      "Identifying bias via missing/unexpected feature values and data skew",
+      "Mitigation by data augmentation and loss adjustment",
+      "Fairness metrics: demographic parity, equality of opportunity, counterfactual fairness"
+     ],
+     "gaps": [
+      {
+       "topic": "Toolkit for metrics and mitigation",
+       "resource": {
+        "resourceId": "fairlearn",
+        "title": "Fairlearn",
+        "url": "https://fairlearn.org/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "User guide: assessment and mitigation"
+       }
+      },
+      {
+       "topic": "Rigorous treatment",
+       "resource": {
+        "resourceId": "fairmlbook",
+        "title": "Fairness and Machine Learning: Limitations and Opportunities",
+        "url": "https://fairmlbook.org/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Ch. 3 Classification"
+       }
+      },
+      {
+       "topic": "Fairness criteria lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Bias Representational Harm (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 18 · Lesson 20 bias representational harm; Lesson 21 fairness criteria group individual counterfactual"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fairlearn",
+      "title": "Fairlearn",
+      "url": "https://fairlearn.org/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Subgroup report",
+      "brief": "Evaluate your M15 or M07 model (or an LLM classifier) across subgroups (language, region, gender if consented). Report metric gaps with bootstrap confidence intervals and one mitigation.",
+      "done_when": "A subgroup table with CIs, a stated criterion, and before/after numbers for one mitigation."
+     },
+     "quiz": [
+      {
+       "id": "M18.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Demographic parity requires…",
+       "options": [
+        "equal accuracy",
+        "equal data size",
+        "equal positive prediction rates across groups",
+        "no labels"
+       ],
+       "answer": 2,
+       "explain": "Independent of true labels."
+      },
+      {
+       "id": "M18.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Fairness criteria can…",
+       "options": [
+        "all be satisfied always",
+        "conflict with each other, so the choice depends on context",
+        "be ignored",
+        "be computed without groups"
+       ],
+       "answer": 1,
+       "explain": "Impossibility results when base rates differ."
+      },
+      {
+       "id": "M18.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Small subgroup sizes require…",
+       "options": [
+        "ignoring them",
+        "confidence intervals before claiming gaps",
+        "oversampling the test set",
+        "nothing"
+       ],
+       "answer": 1,
+       "explain": "Noise can look like bias."
+      },
+      {
+       "id": "M18.U08.Q4",
+       "kind": "short",
+       "prompt": "Which fairness criterion fits a loan pre-screening assistant, and why?",
+       "rubric": [
+        "Names a criterion (e.g. equal opportunity)",
+        "Justifies from harms of false negatives/positives",
+        "Acknowledges legal/context constraints"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U09",
+     "title": "Documentation, licensing and governance",
+     "hours": 4,
+     "depth": "core",
+     "week": 132,
+     "prerequisites": [],
+     "outcomes": [
+      "You can write model, system and dataset cards with intended/out-of-scope use and sliced results.",
+      "You can audit licences of every model and dataset and map controls to NIST AI RMF functions."
+     ],
+     "topics": [
+      {
+       "id": "M18.02.01",
+       "title": "Consent/licensing"
+      },
+      {
+       "id": "M18.02.04",
+       "title": "Model/data cards"
+      },
+      {
+       "id": "M18.02.10",
+       "title": "Governance"
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-model-cards",
+      "title": "Hugging Face — Model Cards",
+      "url": "https://huggingface.co/docs/hub/model-cards",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Model Cards page (sections, metadata, writing guidance)"
+     },
+     "covers": [
+      "What a model card contains: model details, intended uses and limitations, training data, evaluation, bias/risks",
+      "Card metadata (license, datasets, metrics) on the Hub",
+      "Annotated template"
+     ],
+     "gaps": [
+      {
+       "topic": "Governance framework",
+       "resource": {
+        "resourceId": "nist-ai-rmf",
+        "title": "NIST AI Risk Management Framework",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "AI RMF 1.0 core"
+       }
+      },
+      {
+       "topic": "Origins of cards",
+       "resource": {
+        "resourceId": "model-cards-paper",
+        "title": "Model Cards for Model Reporting",
+        "url": "https://arxiv.org/abs/1810.03993",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Dataset documentation",
+       "resource": {
+        "resourceId": "datasheets-paper",
+        "title": "Datasheets for Datasets",
+        "url": "https://arxiv.org/abs/1803.09010",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Regulation awareness (EU AI Act)",
+       "resource": {
+        "resourceId": "eu-ai-act-explorer",
+        "title": "EU AI Act Explorer",
+        "url": "https://artificialintelligenceact.eu/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "High-level summary"
+       }
+      },
+      {
+       "topic": "Licence comparison",
+       "resource": {
+        "resourceId": "choosealicense",
+        "title": "Choose a License",
+        "url": "https://choosealicense.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Regulatory Frameworks Eu Us Uk Korea (+2 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/18-ethics-safety-alignment",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 18 · Lesson 24 regulatory frameworks eu us uk korea; Lesson 26 model system dataset cards; Lesson 27 data provenance training governance"
+     },
+     "practice": {
+      "title": "Cards and licences",
+      "brief": "Write a model/system card and a dataset card for your capstone: licences of every model and dataset, intended use, out-of-scope use, eval results by slice, known limitations; map your controls to NIST AI RMF Govern/Map/Measure/Manage.",
+      "done_when": "MODEL_CARD.md, DATASET_CARD.md and a licence table committed; NIST mapping table with ≥ 1 control per function."
+     },
+     "quiz": [
+      {
+       "id": "M18.U09.Q1",
+       "kind": "mcq",
+       "prompt": "A model card should state…",
+       "options": [
+        "only accuracy",
+        "marketing copy",
+        "the API key",
+        "intended use, limitations and evaluation by slice"
+       ],
+       "answer": 3,
+       "explain": "Mitchell et al. 2019."
+      },
+      {
+       "id": "M18.U09.Q2",
+       "kind": "mcq",
+       "prompt": "NIST AI RMF core functions are…",
+       "options": [
+        "Plan, Do, Check, Act",
+        "Train, Test, Deploy",
+        "none",
+        "Govern, Map, Measure, Manage"
+       ],
+       "answer": 3,
+       "explain": "Govern is cross-cutting."
+      },
+      {
+       "id": "M18.U09.Q3",
+       "kind": "mcq",
+       "prompt": "'Open weights' always means unrestricted commercial use:",
+       "options": [
+        "True",
+        "Only on Hugging Face",
+        "False — read the specific licence",
+        "Only for research"
+       ],
+       "answer": 2,
+       "explain": "Many licences have use or scale restrictions."
+      },
+      {
+       "id": "M18.U09.Q4",
+       "kind": "short",
+       "prompt": "Name one licence term that could block a client deployment.",
+       "rubric": [
+        "Names a concrete term (non-commercial, user-count threshold, acceptable-use, attribution, share-alike)",
+        "Explains how it applies to the deployment",
+        "Suggests mitigation (different model, legal review)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M18.U10",
+     "title": "Uncertainty, escalation, accessibility, incident response",
+     "hours": 4,
+     "depth": "core",
+     "week": 132,
+     "prerequisites": [
+      "M18.U06"
+     ],
+     "outcomes": [
+      "You can write and drill an incident runbook with a kill switch and a blameless postmortem.",
+      "You can add abstain/escalate paths and fix accessibility issues in your UI."
+     ],
+     "topics": [
+      {
+       "id": "M18.02.05",
+       "title": "Accessibility"
+      },
+      {
+       "id": "M18.02.06",
+       "title": "Misuse limits"
+      },
+      {
+       "id": "M18.02.07",
+       "title": "Uncertainty"
+      },
+      {
+       "id": "M18.02.08",
+       "title": "Human escalation"
+      },
+      {
+       "id": "M18.03.06",
+       "title": "Reproducible risk register"
+      },
+      {
+       "id": "M18.03.07",
+       "title": "Incident response"
+      }
+     ],
+     "learn": {
+      "resourceId": "sre-postmortem",
+      "title": "Google SRE Book — Ch. 15 Postmortem Culture",
+      "url": "https://sre.google/sre-book/postmortem-culture/",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Ch. 15 Postmortem Culture: Learning from Failure"
+     },
+     "covers": [
+      "When to write a postmortem; blameless culture",
+      "Collaboration, sharing and review of postmortems",
+      "Introducing a postmortem culture; rewarding it"
+     ],
+     "gaps": [
+      {
+       "topic": "Accessibility criteria",
+       "resource": {
+        "resourceId": "wcag22-quickref",
+        "title": "WCAG 2.2 Quick Reference",
+        "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Filter to A/AA"
+       }
+      },
+      {
+       "topic": "Incident roles and process",
+       "resource": {
+        "resourceId": "pagerduty-response",
+        "title": "PagerDuty Incident Response documentation",
+        "url": "https://response.pagerduty.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Kill switches and canaries for agents",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Kill Switches Canaries",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/15-autonomous-systems/14-kill-switches-canaries",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 15 · Lesson 14 kill switches canaries"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "pagerduty-response",
+      "title": "PagerDuty Incident Response documentation",
+      "url": "https://response.pagerduty.com/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Tabletop drill",
+      "brief": "Write an incident runbook (detect → contain/kill switch → notify → fix → postmortem) and run a tabletop drill of 'agent leaked another tenant's data'. Add an abstain/escalate-to-human path for low confidence. Fix 3 accessibility issues (WCAG 2.2 A/AA) in your UI.",
+      "done_when": "RUNBOOK.md, a written blameless postmortem of the drill, a test for the escalate path, and 3 accessibility fixes referenced to WCAG success criteria."
+     },
+     "quiz": [
+      {
+       "id": "M18.U10.Q1",
+       "kind": "mcq",
+       "prompt": "A blameless postmortem focuses on…",
+       "options": [
+        "firing someone",
+        "hiding the incident",
+        "only metrics",
+        "systemic causes and fixes, not individual blame"
+       ],
+       "answer": 3,
+       "explain": "Blame suppresses reporting."
+      },
+      {
+       "id": "M18.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Escalating to a human is appropriate when…",
+       "options": [
+        "never",
+        "always",
+        "only at night",
+        "confidence is low or the action is high-impact/irreversible"
+       ],
+       "answer": 3,
+       "explain": "Match autonomy to risk."
+      },
+      {
+       "id": "M18.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A risk register should be…",
+       "options": [
+        "a one-time doc",
+        "versioned and reviewed, with owner, likelihood/impact and mitigation",
+        "secret",
+        "optional"
+       ],
+       "answer": 1,
+       "explain": "It is a living artifact."
+      },
+      {
+       "id": "M18.U10.Q4",
+       "kind": "short",
+       "prompt": "What triggers your kill switch automatically?",
+       "rubric": [
+        "Names concrete signals (budget exceeded, denied-action spike, anomalous egress, error rate)",
+        "Thresholds stated",
+        "Says what the switch does and who is notified"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Secure the agent",
+  "brief": "Take your M12 capstone and deliver: a threat model (DFD + OWASP LLM and Agentic mapping), a risk register, a red-team CI suite with before/after metrics, one architectural injection defense, a PII redaction pipeline, model/system/dataset cards, and an incident runbook plus a drill write-up.",
+  "rubric": [
+   {
+    "criterion": "Threat model",
+    "levels": [
+     "0: none",
+     "1: list of risks without data flow",
+     "2: DFD + OWASP LLM mapping",
+     "3: all trust boundaries; every OWASP LLM + Agentic risk addressed or justified N/A"
+    ]
+   },
+   {
+    "criterion": "Defense by design",
+    "levels": [
+     "0: prompt-only defenses",
+     "1: allowlists only",
+     "2: one capability-restricting pattern",
+     "3: pattern (dual-LLM/plan-then-execute/least privilege) proven by before/after tests"
+    ]
+   },
+   {
+    "criterion": "Testing",
+    "levels": [
+     "0: no tests",
+     "1: manual attacks",
+     "2: automated red-team suite",
+     "3: red-team + denied-action + benign false-refusal metrics gating CI"
+    ]
+   },
+   {
+    "criterion": "Privacy and governance",
+    "levels": [
+     "0: PII logged in clear",
+     "1: partial redaction",
+     "2: redaction verified + cards",
+     "3: redaction verified on seeded PII; retention/deletion; licences and cards complete"
+    ]
+   },
+   {
+    "criterion": "Response",
+    "levels": [
+     "0: no plan",
+     "1: runbook only",
+     "2: runbook + kill switch",
+     "3: runbook, tested kill switch, blameless postmortem of the drill"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

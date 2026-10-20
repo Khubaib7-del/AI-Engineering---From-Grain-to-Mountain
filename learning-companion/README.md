@@ -1,4 +1,6 @@
-# AI Learning
+# Grain to Mountain
+
+> 2026-10-20 rebuild: landing page, onboarding (role / level / hours / optional placement), mountain Map, unit pages (Learn → Read → Practice → Assess with graded quizzes), module capstones, weekly Today from `weeks.json`, activity heatmap and streaks, guest→account merge. Content follows `../V2-SCHEMA.md`; `npm run sync-content` copies `../data/v2/**` into `src/content/v2/` (a small M00+M01 fixture ships until then). See `VALIDATION.md`.
 
 A personal cross-platform learning companion for iPhone, Android and web. The application bundles the researched curriculum from the parent folder. Its design follows the supplied App Designer skill, adapted to React Native rather than SwiftUI.
 

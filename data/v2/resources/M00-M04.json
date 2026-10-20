@@ -1,0 +1,3076 @@
+[
+  {
+    "id": "cs50p",
+    "type": "course",
+    "title": "CS50's Introduction to Programming with Python (CS50P)",
+    "author": "Harvard / David J. Malan",
+    "url": "https://cs50.harvard.edu/python/",
+    "free": true,
+    "language": "en",
+    "notes": "Lectures 0-9 recorded 2022 (YouTube titles 'CS50P - Lecture N'). Free; check50 autograder + cs50.dev browser IDE with a GitHub login. Notes at /python/notes/N/, problem sets at /python/psets/N/.",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-notes",
+    "type": "doc",
+    "title": "CS50P lecture notes",
+    "author": "Harvard CS50",
+    "url": "https://cs50.harvard.edu/python/notes/0/",
+    "free": true,
+    "language": "en",
+    "notes": "Official per-lecture notes; section anchors verified 2026-10-20.",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50x",
+    "type": "course",
+    "title": "CS50x: Introduction to Computer Science",
+    "author": "Harvard / David J. Malan",
+    "url": "https://cs50.harvard.edu/x/",
+    "free": true,
+    "language": "en",
+    "notes": "Used only for Lecture 0 (binary/ASCII/Unicode/algorithms/pseudocode) and Lectures 3/5 as backups.",
+    "modules": [
+      "M00",
+      "M03"
+    ]
+  },
+  {
+    "id": "cs50sql",
+    "type": "course",
+    "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+    "author": "Harvard / Carter Zenke",
+    "url": "https://cs50.harvard.edu/sql/",
+    "free": true,
+    "language": "en",
+    "notes": "7 lectures (Querying, Relating, Designing, Writing, Viewing, Optimizing, Scaling). SQLite-centric; PostgreSQL only in Lecture 6. check50 slugs cs50/problems/2024/sql/<name>.",
+    "modules": [
+      "M03",
+      "M04"
+    ]
+  },
+  {
+    "id": "missing-sem-2026",
+    "type": "course",
+    "title": "The Missing Semester of Your CS Education (2026)",
+    "author": "MIT CSAIL",
+    "url": "https://missing.csail.mit.edu/2026/",
+    "free": true,
+    "language": "en",
+    "notes": "2026 edition: shell, command-line environment, development environment, debugging/profiling, version control, packaging/shipping, agentic coding, beyond the code, code quality. Dense; used as second pass.",
+    "modules": [
+      "M00",
+      "M02",
+      "M03"
+    ]
+  },
+  {
+    "id": "missing-sem-2020",
+    "type": "course",
+    "title": "The Missing Semester of Your CS Education (2020)",
+    "author": "MIT CSAIL",
+    "url": "https://missing.csail.mit.edu/2020/",
+    "free": true,
+    "language": "en",
+    "notes": "2020 edition still online; has the Data Wrangling lecture that 2026 dropped. Lecture videos on YouTube channel 'Missing Semester'.",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "swc-shell",
+    "type": "course",
+    "title": "The Unix Shell (Software Carpentry)",
+    "author": "The Carpentries",
+    "url": "https://swcarpentry.github.io/shell-novice/",
+    "free": true,
+    "language": "en",
+    "notes": "Beginner shell lesson with exercises + solutions. Episodes 01-intro ... 07-find.",
+    "modules": [
+      "M00",
+      "M02"
+    ]
+  },
+  {
+    "id": "swc-git",
+    "type": "course",
+    "title": "Version Control with Git (Software Carpentry)",
+    "author": "The Carpentries",
+    "url": "https://swcarpentry.github.io/git-novice/",
+    "free": true,
+    "language": "en",
+    "notes": "Beginner Git lesson with exercises; episodes through Ignoring Things, Remotes in GitHub, Conflicts.",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "lgb",
+    "type": "course",
+    "title": "Learn Git Branching",
+    "author": "Peter Cottle",
+    "url": "https://learngitbranching.js.org/",
+    "free": true,
+    "language": "en",
+    "notes": "Interactive, self-checking Git levels (Main: Introduction Sequence, Ramping Up).",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "bandit",
+    "type": "course",
+    "title": "OverTheWire: Bandit",
+    "author": "OverTheWire",
+    "url": "https://overthewire.org/wargames/bandit/",
+    "free": true,
+    "language": "en",
+    "notes": "Self-checking shell wargame; each level password proves completion.",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "khan-algebra-basics",
+    "type": "course",
+    "title": "Khan Academy: Algebra basics",
+    "author": "Khan Academy",
+    "url": "https://www.khanacademy.org/math/algebra-basics",
+    "free": true,
+    "language": "en",
+    "notes": "Unit tests give a mastery level; used for the math bridge.",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "khan-algebra",
+    "type": "course",
+    "title": "Khan Academy: Algebra 1",
+    "author": "Khan Academy",
+    "url": "https://www.khanacademy.org/math/algebra",
+    "free": true,
+    "language": "en",
+    "notes": "Exponents, functions.",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "coursera-lhtl",
+    "type": "course",
+    "title": "Learning How to Learn",
+    "author": "Barbara Oakley & Terrence Sejnowski (Coursera)",
+    "url": "https://www.coursera.org/learn/learning-how-to-learn",
+    "free": "audit",
+    "language": "en",
+    "notes": "Free to audit; audit availability varies by region/account (unverified).",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "pythonds3",
+    "type": "book",
+    "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+    "author": "Brad Miller, David Ranum, Roman Yasinovskyy",
+    "url": "https://runestone.academy/ns/books/published/pythonds3/index.html",
+    "free": true,
+    "language": "en",
+    "notes": "Free interactive textbook (Runestone). Chapters 2-7 used.",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "mit6006",
+    "type": "course",
+    "title": "MIT 6.006 Introduction to Algorithms (Spring 2020)",
+    "author": "MIT OCW",
+    "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+    "free": true,
+    "language": "en",
+    "notes": "Backup for algorithm analysis, trees, heaps.",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "neetcode",
+    "type": "course",
+    "title": "NeetCode Roadmap",
+    "author": "NeetCode",
+    "url": "https://neetcode.io/roadmap",
+    "free": true,
+    "language": "en",
+    "notes": "Pattern-ordered problem list; problems are free on LeetCode (auto-judged).",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "kaggle-pandas",
+    "type": "course",
+    "title": "Kaggle Learn: Pandas",
+    "author": "Kaggle",
+    "url": "https://www.kaggle.com/learn/pandas",
+    "free": true,
+    "language": "en",
+    "notes": "Auto-checked exercises.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "kaggle-cleaning",
+    "type": "course",
+    "title": "Kaggle Learn: Data Cleaning",
+    "author": "Kaggle",
+    "url": "https://www.kaggle.com/learn/data-cleaning",
+    "free": true,
+    "language": "en",
+    "notes": "Auto-checked exercises.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "kaggle-viz",
+    "type": "course",
+    "title": "Kaggle Learn: Data Visualization",
+    "author": "Kaggle",
+    "url": "https://www.kaggle.com/learn/data-visualization",
+    "free": true,
+    "language": "en",
+    "notes": "Auto-checked exercises.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "kaggle-advsql",
+    "type": "course",
+    "title": "Kaggle Learn: Advanced SQL",
+    "author": "Kaggle",
+    "url": "https://www.kaggle.com/learn/advanced-sql",
+    "free": true,
+    "language": "en",
+    "notes": "BigQuery-based; auto-checked.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "sqlbolt",
+    "type": "course",
+    "title": "SQLBolt",
+    "author": "SQLBolt",
+    "url": "https://sqlbolt.com/",
+    "free": true,
+    "language": "en",
+    "notes": "Interactive SQL lessons 1-12.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "pgexercises",
+    "type": "course",
+    "title": "PostgreSQL Exercises",
+    "author": "Alisdair Owens",
+    "url": "https://pgexercises.com/",
+    "free": true,
+    "language": "en",
+    "notes": "Self-checking Postgres exercises incl. window functions.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "selectstar",
+    "type": "course",
+    "title": "Select Star SQL",
+    "author": "Zi Chong Kao",
+    "url": "https://selectstarsql.com/",
+    "free": true,
+    "language": "en",
+    "notes": "Interactive SQL book.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "gh-skills-intro",
+    "type": "course",
+    "title": "GitHub Skills: Introduction to GitHub",
+    "author": "GitHub",
+    "url": "https://github.com/skills/introduction-to-github",
+    "free": true,
+    "language": "en",
+    "notes": "Self-checking GitHub exercise.",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "mdn-learn",
+    "type": "course",
+    "title": "MDN: Learn web development – Core modules",
+    "author": "Mozilla",
+    "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "docker-workshop",
+    "type": "course",
+    "title": "Docker Get Started workshop",
+    "author": "Docker",
+    "url": "https://docs.docker.com/get-started/workshop/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "thinkpython3",
+    "type": "book",
+    "title": "Think Python, 3rd edition",
+    "author": "Allen B. Downey",
+    "url": "https://allendowney.github.io/ThinkPython/",
+    "free": true,
+    "language": "en",
+    "notes": "Free online; chapter URLs chapNN.html.",
+    "modules": [
+      "M00",
+      "M01"
+    ]
+  },
+  {
+    "id": "pda3",
+    "type": "book",
+    "title": "Python for Data Analysis, 3rd edition",
+    "author": "Wes McKinney",
+    "url": "https://wesmckinney.com/book/",
+    "free": true,
+    "language": "en",
+    "notes": "Free open-access edition. Written for pandas 1.x/2.0; pandas 3 copy-on-write changes chained-assignment examples.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "ostep",
+    "type": "book",
+    "title": "Operating Systems: Three Easy Pieces",
+    "author": "Remzi & Andrea Arpaci-Dusseau",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+    "free": true,
+    "language": "en",
+    "notes": "Free per-chapter PDFs.",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "beej-net",
+    "type": "book",
+    "title": "Beej's Guide to Network Concepts",
+    "author": "Brian 'Beej' Hall",
+    "url": "https://beej.us/guide/bgnet0/html/split/index.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "tlcl",
+    "type": "book",
+    "title": "The Linux Command Line",
+    "author": "William Shotts",
+    "url": "https://linuxcommand.org/tlcl.php",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF.",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "progit",
+    "type": "book",
+    "title": "Pro Git, 2nd edition",
+    "author": "Scott Chacon & Ben Straub",
+    "url": "https://git-scm.com/book/en/v2",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "sdprimer",
+    "type": "repo",
+    "title": "The System Design Primer",
+    "author": "Donne Martin",
+    "url": "https://github.com/donnemartin/system-design-primer",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "artcmd",
+    "type": "repo",
+    "title": "The Art of Command Line",
+    "author": "Joshua Levy",
+    "url": "https://github.com/jlevy/the-art-of-command-line",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "rohitg00-p0",
+    "type": "repo",
+    "title": "AI Engineering from Scratch – Phase 0: Setup & Tooling",
+    "author": "Rohit Ghumare (rohitg00)",
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling",
+    "free": true,
+    "language": "en",
+    "notes": "13 short lessons (01 dev-environment … 13 python-for-ai-engineering), each with docs/en.md and a pre/post quiz.json. No asyncio, pytest, FastAPI or packaging content.",
+    "modules": [
+      "M00",
+      "M01",
+      "M02",
+      "M04"
+    ]
+  },
+  {
+    "id": "gitignore-templates",
+    "type": "repo",
+    "title": "github/gitignore (Python.gitignore)",
+    "author": "GitHub",
+    "url": "https://github.com/github/gitignore/blob/main/Python.gitignore",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "dez",
+    "type": "repo",
+    "title": "Data Engineering Zoomcamp",
+    "author": "DataTalksClub",
+    "url": "https://github.com/DataTalksClub/data-engineering-zoomcamp",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "py-tut-errors",
+    "type": "doc",
+    "title": "Python Tutorial ch. 8 – Errors and Exceptions",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/errors.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-tut-modules",
+    "type": "doc",
+    "title": "Python Tutorial ch. 6 – Modules",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/modules.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-tut-classes",
+    "type": "doc",
+    "title": "Python Tutorial ch. 9 – Classes",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/classes.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-tut-venv",
+    "type": "doc",
+    "title": "Python Tutorial ch. 12 – Virtual Environments and Packages",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/venv.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "py-copy",
+    "type": "doc",
+    "title": "copy — Shallow and deep copy operations",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/copy.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-pathlib",
+    "type": "doc",
+    "title": "pathlib — Object-oriented filesystem paths",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/pathlib.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-json",
+    "type": "doc",
+    "title": "json — JSON encoder and decoder",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/json.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-unicode",
+    "type": "doc",
+    "title": "Unicode HOWTO",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/unicode.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-re",
+    "type": "doc",
+    "title": "re — Regular expression operations",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/re.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-regex-howto",
+    "type": "doc",
+    "title": "Regular Expression HOWTO",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/regex.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-dataclasses",
+    "type": "doc",
+    "title": "dataclasses — Data Classes",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/dataclasses.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-enum-howto",
+    "type": "doc",
+    "title": "Enum HOWTO",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/enum.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-functional",
+    "type": "doc",
+    "title": "Functional Programming HOWTO",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/functional.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-collections",
+    "type": "doc",
+    "title": "collections — Container datatypes",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/collections.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-itertools",
+    "type": "doc",
+    "title": "itertools — Functions creating iterators",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/itertools.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-zoneinfo",
+    "type": "doc",
+    "title": "zoneinfo — IANA time zone support",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/zoneinfo.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-datetime",
+    "type": "doc",
+    "title": "datetime — Basic date and time types",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-functools",
+    "type": "doc",
+    "title": "functools — Higher-order functions",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/functools.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-contextlib",
+    "type": "doc",
+    "title": "contextlib — Utilities for with-statement contexts",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/contextlib.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-asyncio-overview",
+    "type": "doc",
+    "title": "A Conceptual Overview of asyncio",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/a-conceptual-overview-of-asyncio.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-asyncio-task",
+    "type": "doc",
+    "title": "asyncio — Coroutines and Tasks",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/asyncio-task.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M03"
+    ]
+  },
+  {
+    "id": "py-asyncio-sync",
+    "type": "doc",
+    "title": "asyncio — Synchronization Primitives",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/asyncio-sync.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "py-asyncio-queue",
+    "type": "doc",
+    "title": "asyncio — Queues",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/asyncio-queue.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "py-cf",
+    "type": "doc",
+    "title": "concurrent.futures — Launching parallel tasks",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/concurrent.futures.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-threading",
+    "type": "doc",
+    "title": "threading — Thread-based parallelism",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/threading.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "py-mp",
+    "type": "doc",
+    "title": "multiprocessing — Process-based parallelism",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/multiprocessing.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "py-glossary-gil",
+    "type": "doc",
+    "title": "Python glossary — global interpreter lock",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/glossary.html#term-global-interpreter-lock",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "py-logging-howto",
+    "type": "doc",
+    "title": "Logging HOWTO",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/logging.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "py-logging",
+    "type": "doc",
+    "title": "logging — Logging facility for Python",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/logging.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "py-pdb",
+    "type": "doc",
+    "title": "pdb — The Python Debugger",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/pdb.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "py-profile",
+    "type": "doc",
+    "title": "The Python Profilers",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/profile.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "py-mock",
+    "type": "doc",
+    "title": "unittest.mock — mock object library",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/unittest.mock.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "py-argparse-tut",
+    "type": "doc",
+    "title": "Argparse Tutorial",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/howto/argparse.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "py-sqlite3",
+    "type": "doc",
+    "title": "sqlite3 — DB-API 2.0 interface for SQLite (placeholders)",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "py-float",
+    "type": "doc",
+    "title": "Python Tutorial ch. 15 – Floating-Point Arithmetic: Issues and Limitations",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/floatingpoint.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "typing-protocols",
+    "type": "doc",
+    "title": "typing.python.org — Protocols and structural subtyping",
+    "author": "Python typing council",
+    "url": "https://typing.python.org/en/latest/reference/protocols.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "typing-generics",
+    "type": "doc",
+    "title": "typing.python.org — Generics",
+    "author": "Python typing council",
+    "url": "https://typing.python.org/en/latest/reference/generics.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "mypy-cheat",
+    "type": "doc",
+    "title": "mypy — Type hints cheat sheet",
+    "author": "mypy project",
+    "url": "https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "mypy-start",
+    "type": "doc",
+    "title": "mypy — Getting started",
+    "author": "mypy project",
+    "url": "https://mypy.readthedocs.io/en/stable/getting_started.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M02"
+    ]
+  },
+  {
+    "id": "fastapi-types",
+    "type": "doc",
+    "title": "FastAPI — Python Types Intro",
+    "author": "Sebastián Ramírez",
+    "url": "https://fastapi.tiangolo.com/python-types/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "fastapi-async",
+    "type": "doc",
+    "title": "FastAPI — Concurrency and async / await",
+    "author": "Sebastián Ramírez",
+    "url": "https://fastapi.tiangolo.com/async/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M03"
+    ]
+  },
+  {
+    "id": "fastapi-tutorial",
+    "type": "doc",
+    "title": "FastAPI — Tutorial – User Guide",
+    "author": "Sebastián Ramírez",
+    "url": "https://fastapi.tiangolo.com/tutorial/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "fastapi-docs",
+    "type": "doc",
+    "title": "FastAPI documentation",
+    "author": "Sebastián Ramírez",
+    "url": "https://fastapi.tiangolo.com/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "httpx",
+    "type": "doc",
+    "title": "HTTPX documentation",
+    "author": "Encode",
+    "url": "https://www.python-httpx.org/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M03"
+    ]
+  },
+  {
+    "id": "pytest-start",
+    "type": "doc",
+    "title": "pytest — Get Started",
+    "author": "pytest-dev",
+    "url": "https://docs.pytest.org/en/stable/getting-started.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "pytest-howto",
+    "type": "doc",
+    "title": "pytest — How-to guides",
+    "author": "pytest-dev",
+    "url": "https://docs.pytest.org/en/stable/how-to/index.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M02"
+    ]
+  },
+  {
+    "id": "pytest-asyncio",
+    "type": "doc",
+    "title": "pytest-asyncio documentation",
+    "author": "pytest-dev",
+    "url": "https://pytest-asyncio.readthedocs.io/en/stable/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "coveragepy",
+    "type": "doc",
+    "title": "Coverage.py",
+    "author": "Ned Batchelder",
+    "url": "https://coverage.readthedocs.io/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "ruff",
+    "type": "doc",
+    "title": "Ruff — Tutorial",
+    "author": "Astral",
+    "url": "https://docs.astral.sh/ruff/tutorial/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "precommit",
+    "type": "doc",
+    "title": "pre-commit",
+    "author": "pre-commit",
+    "url": "https://pre-commit.com/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "uv",
+    "type": "doc",
+    "title": "uv documentation",
+    "author": "Astral",
+    "url": "https://docs.astral.sh/uv/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M02",
+      "M03"
+    ]
+  },
+  {
+    "id": "pypa-guide",
+    "type": "doc",
+    "title": "Python Packaging User Guide",
+    "author": "PyPA",
+    "url": "https://packaging.python.org/en/latest/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "twelve-factor",
+    "type": "doc",
+    "title": "The Twelve-Factor App — III. Config",
+    "author": "Adam Wiggins",
+    "url": "https://12factor.net/config",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "conv-commits",
+    "type": "doc",
+    "title": "Conventional Commits 1.0.0",
+    "author": "conventionalcommits.org",
+    "url": "https://www.conventionalcommits.org/en/v1.0.0/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "makefiletutorial",
+    "type": "doc",
+    "title": "Makefile Tutorial by Example",
+    "author": "Chase Lambert",
+    "url": "https://makefiletutorial.com/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "shellcheck",
+    "type": "doc",
+    "title": "ShellCheck",
+    "author": "Vidar Holen",
+    "url": "https://www.shellcheck.net/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "bashguide",
+    "type": "doc",
+    "title": "Greg's BashGuide",
+    "author": "Greg Wooledge wiki",
+    "url": "https://mywiki.wooledge.org/BashGuide",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "gh-docs",
+    "type": "doc",
+    "title": "GitHub Docs",
+    "author": "GitHub",
+    "url": "https://docs.github.com/en",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "gh-actions-python",
+    "type": "doc",
+    "title": "GitHub Actions — Building and testing Python",
+    "author": "GitHub",
+    "url": "https://docs.github.com/en/actions/tutorials/build-and-test-code/python",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "ms-wsl",
+    "type": "doc",
+    "title": "Microsoft Learn — Install WSL",
+    "author": "Microsoft",
+    "url": "https://learn.microsoft.com/en-us/windows/wsl/install",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M02"
+    ]
+  },
+  {
+    "id": "vscode-docs",
+    "type": "doc",
+    "title": "Visual Studio Code documentation",
+    "author": "Microsoft",
+    "url": "https://code.visualstudio.com/docs",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M02"
+    ]
+  },
+  {
+    "id": "codespaces",
+    "type": "doc",
+    "title": "GitHub Codespaces overview",
+    "author": "GitHub",
+    "url": "https://docs.github.com/en/codespaces/overview",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "docker-docs",
+    "type": "doc",
+    "title": "Docker documentation",
+    "author": "Docker",
+    "url": "https://docs.docker.com/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "pg-docs",
+    "type": "doc",
+    "title": "PostgreSQL documentation (current)",
+    "author": "PostgreSQL Global Development Group",
+    "url": "https://www.postgresql.org/docs/current/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "pg-image",
+    "type": "doc",
+    "title": "postgres — Docker Official Image",
+    "author": "Docker",
+    "url": "https://hub.docker.com/_/postgres",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02",
+      "M04"
+    ]
+  },
+  {
+    "id": "psycopg",
+    "type": "doc",
+    "title": "psycopg 3 documentation",
+    "author": "Daniele Varrazzo",
+    "url": "https://www.psycopg.org/psycopg3/docs/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "sqlalchemy",
+    "type": "doc",
+    "title": "SQLAlchemy 2.0 Unified Tutorial",
+    "author": "SQLAlchemy",
+    "url": "https://docs.sqlalchemy.org/en/20/tutorial/index.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03",
+      "M04"
+    ]
+  },
+  {
+    "id": "alembic",
+    "type": "doc",
+    "title": "Alembic tutorial",
+    "author": "SQLAlchemy",
+    "url": "https://alembic.sqlalchemy.org/en/latest/tutorial.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "pydantic",
+    "type": "doc",
+    "title": "Pydantic documentation",
+    "author": "Pydantic",
+    "url": "https://docs.pydantic.dev/latest/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03",
+      "M04"
+    ]
+  },
+  {
+    "id": "numpy-docs",
+    "type": "doc",
+    "title": "NumPy user guide",
+    "author": "NumPy",
+    "url": "https://numpy.org/doc/stable/user/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "pandas-docs",
+    "type": "doc",
+    "title": "pandas user guide",
+    "author": "pandas",
+    "url": "https://pandas.pydata.org/docs/user_guide/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "matplotlib",
+    "type": "doc",
+    "title": "Matplotlib — Quick start guide",
+    "author": "Matplotlib",
+    "url": "https://matplotlib.org/stable/users/explain/quick_start.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "duckdb",
+    "type": "doc",
+    "title": "DuckDB Python API overview",
+    "author": "DuckDB",
+    "url": "https://duckdb.org/docs/stable/clients/python/overview.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "polars",
+    "type": "doc",
+    "title": "Polars user guide — Getting started",
+    "author": "Polars",
+    "url": "https://docs.pola.rs/user-guide/getting-started/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "pandera",
+    "type": "doc",
+    "title": "pandera documentation",
+    "author": "Union.ai",
+    "url": "https://pandera.readthedocs.io/en/stable/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "mdn-http",
+    "type": "doc",
+    "title": "MDN — HTTP",
+    "author": "Mozilla",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M03"
+    ]
+  },
+  {
+    "id": "mdn-tls",
+    "type": "doc",
+    "title": "MDN — Transport Layer Security",
+    "author": "Mozilla",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "mdn-sse",
+    "type": "doc",
+    "title": "MDN — Using server-sent events",
+    "author": "Mozilla",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "ts-5min",
+    "type": "doc",
+    "title": "TypeScript for JavaScript Programmers",
+    "author": "Microsoft",
+    "url": "https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "owasp-api",
+    "type": "doc",
+    "title": "OWASP API Security Top 10 (2023)",
+    "author": "OWASP",
+    "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "aws-backoff",
+    "type": "doc",
+    "title": "Timeouts, retries and backoff with jitter",
+    "author": "AWS Builders' Library",
+    "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "stripe-idem",
+    "type": "doc",
+    "title": "Designing robust and predictable APIs with idempotency",
+    "author": "Stripe (Brandur Leach)",
+    "url": "https://stripe.com/blog/idempotency",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "sre-cascade",
+    "type": "doc",
+    "title": "Google SRE book — Addressing Cascading Failures",
+    "author": "Google",
+    "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "tenacity",
+    "type": "doc",
+    "title": "Tenacity documentation",
+    "author": "Julien Danjou et al.",
+    "url": "https://tenacity.readthedocs.io/en/latest/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "restfulapi",
+    "type": "doc",
+    "title": "REST API Tutorial",
+    "author": "restfulapi.net",
+    "url": "https://restfulapi.net/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "jwt-intro",
+    "type": "doc",
+    "title": "Introduction to JSON Web Tokens",
+    "author": "jwt.io / Auth0",
+    "url": "https://jwt.io/introduction",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "pythontutor",
+    "type": "doc",
+    "title": "Python Tutor (code visualiser)",
+    "author": "Philip Guo",
+    "url": "https://pythontutor.com/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M01"
+    ]
+  },
+  {
+    "id": "regex101",
+    "type": "doc",
+    "title": "regex101",
+    "author": "regex101",
+    "url": "https://regex101.com/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "visualgo",
+    "type": "doc",
+    "title": "VisuAlgo",
+    "author": "Steven Halim",
+    "url": "https://visualgo.net/en",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "anki",
+    "type": "doc",
+    "title": "Anki (spaced-repetition flashcards)",
+    "author": "Ankitects",
+    "url": "https://apps.ankiweb.net/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "mathisfun-algebra",
+    "type": "doc",
+    "title": "Math is Fun — Algebra",
+    "author": "Rod Pierce",
+    "url": "https://www.mathsisfun.com/algebra/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "ned-names",
+    "type": "doc",
+    "title": "Python Names and Values (talk text)",
+    "author": "Ned Batchelder",
+    "url": "https://nedbatchelder.com/text/names1.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "check50-docs",
+    "type": "doc",
+    "title": "check50 documentation",
+    "author": "Harvard CS50",
+    "url": "https://cs50.readthedocs.io/projects/check50/en/latest/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l0",
+    "type": "video",
+    "title": "CS50P - Lecture 0 - Functions, Variables",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=JP7ITIXGpHk",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l1",
+    "type": "video",
+    "title": "CS50P - Lecture 1 - Conditionals",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=_b6NgY_pMdw",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l2",
+    "type": "video",
+    "title": "CS50P - Lecture 2 - Loops",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=-7xg8pGcP6w",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l3",
+    "type": "video",
+    "title": "CS50P - Lecture 3 - Exceptions",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=LW7g1169v7w",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l4",
+    "type": "video",
+    "title": "CS50P - Lecture 4 - Libraries",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=MztLZWibctI",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l5",
+    "type": "video",
+    "title": "CS50P - Lecture 5 - Unit Tests",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=tIrcxwLqzjQ",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l6",
+    "type": "video",
+    "title": "CS50P - Lecture 6 - File I/O",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=KD-Yoel6EVQ",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l7",
+    "type": "video",
+    "title": "CS50P - Lecture 7 - Regular Expressions",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=hy3sd9MOAcc",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l8",
+    "type": "video",
+    "title": "CS50P - Lecture 8 - Object-Oriented Programming",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=e4fwY9ZsxPw",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50p-l9",
+    "type": "video",
+    "title": "CS50P - Lecture 9 - Et Cetera",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=6pgodt1mezg",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video (CS50P 2022).",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cs50sql-l0",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 0 - Querying",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=vHYeChEf2lA",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50sql-l1",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 1 - Relating",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=_2t18Hy9Z0Y",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50sql-l2",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 2 - Designing",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=QzRW6bfv3Fo",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50sql-l3",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 3 - Writing",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=BD08USRd2M8",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50sql-l4",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 4 - Viewing",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=jZwGVuA8PMI",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50sql-l5",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 5 - Optimizing",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=qa5-mKVSQHQ",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50sql-l6",
+    "type": "video",
+    "title": "CS50 SQL - Lecture 6 - Scaling",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=jXbXGkgT2Xg",
+    "free": true,
+    "language": "en",
+    "notes": "Official lecture video.",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "cs50x-l0",
+    "type": "video",
+    "title": "CS50x - Lecture 0 - Scratch",
+    "author": "CS50",
+    "url": "https://www.youtube.com/watch?v=UuIEbpQms8o",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "cc-cs-4",
+    "type": "video",
+    "title": "Representing Numbers and Letters with Binary: Crash Course Computer Science #4",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=1GSjbWt0c9M",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "cc-cs-7",
+    "type": "video",
+    "title": "The Central Processing Unit (CPU): Crash Course Computer Science #7",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=FZGugFqdr60",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "cc-cs-8",
+    "type": "video",
+    "title": "Instructions & Programs: Crash Course Computer Science #8",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=zltgXvg6r3k",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "cc-cs-18",
+    "type": "video",
+    "title": "Operating Systems: Crash Course Computer Science #18",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=26QPDBe-NB8",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "cc-cs-19",
+    "type": "video",
+    "title": "Memory & Storage: Crash Course Computer Science #19",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=TQCr9RV7twk",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M03"
+    ]
+  },
+  {
+    "id": "cc-cs-28",
+    "type": "video",
+    "title": "Computer Networks: Crash Course Computer Science #28",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=3QhU9jd03a0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "cc-cs-29",
+    "type": "video",
+    "title": "The Internet: Crash Course Computer Science #29",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=AEaKrq3SpW8",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "cc-cs-30",
+    "type": "video",
+    "title": "The World Wide Web: Crash Course Computer Science #30",
+    "author": "CrashCourse",
+    "url": "https://www.youtube.com/watch?v=guvsH5OFizE",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "cwh-python",
+    "type": "video",
+    "title": "Python Tutorial For Beginners in Hindi | Complete Python Course",
+    "author": "CodeWithHarry",
+    "url": "https://www.youtube.com/watch?v=UrsmFxEIp5k",
+    "free": true,
+    "language": "hi",
+    "notes": "Hindi/Urdu companion.",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-tryexcept",
+    "type": "video",
+    "title": "Python Tutorial: Using Try/Except Blocks for Error Handling",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-scope",
+    "type": "video",
+    "title": "Python Tutorial: Variable Scope - Understanding the LEGB rule and global/nonlocal statements",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=QVdf0LgmICw",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-firstclass",
+    "type": "video",
+    "title": "Programming Terms: First-Class Functions",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=kr0mpwqttM0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-closures",
+    "type": "video",
+    "title": "Programming Terms: Closures - How to Use Them and Why They Are Useful",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=swU3c34d2NQ",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-decorators",
+    "type": "video",
+    "title": "Python Tutorial: Decorators - Dynamically Alter The Functionality Of Your Functions",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=FsAPt_9Bf3U",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-ctxmgr",
+    "type": "video",
+    "title": "Python Tutorial: Context Managers - Efficiently Managing Resources",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=-aKFBoZpiqA",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-logging1",
+    "type": "video",
+    "title": "Python Tutorial: Logging Basics - Logging to Files, Setting Levels, and Formatting",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=-ARI4Cz-awo",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-logging2",
+    "type": "video",
+    "title": "Python Tutorial: Logging Advanced - Loggers, Handlers, and Formatters",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=jxmzY9soFXg",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-threading",
+    "type": "video",
+    "title": "Python Threading Tutorial: Run Code Concurrently Using the Threading Module",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=IEEhzQoKtQU",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-mp",
+    "type": "video",
+    "title": "Python Multiprocessing Tutorial: Run Code in Parallel Using the Multiprocessing Module",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=fKl2JW_qrso",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-generators",
+    "type": "video",
+    "title": "Python Tutorial: Generators - How to use them and the benefits you receive",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=bD05uGo_sVI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-iterators",
+    "type": "video",
+    "title": "Python Tutorial: Iterators and Iterables - What Are They and How Do They Work?",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=jTYiNjvnHZY",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-comprehensions",
+    "type": "video",
+    "title": "Python Tutorial: Comprehensions - How they work and why you should be using them",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=3dt4OGnU5sM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-datetime",
+    "type": "video",
+    "title": "Python Tutorial: Datetime Module - How to work with Dates, Times, Timedeltas, and Timezones",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=eirjjyP2qcQ",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-namedtuple",
+    "type": "video",
+    "title": "Python Tutorial: Namedtuple - When and why should you use namedtuples?",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=GfxJYp9_nJA",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-sorting",
+    "type": "video",
+    "title": "Python Tutorial: Sorting Lists, Tuples, and Objects",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=D3JvDWO-BY4",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-oop1",
+    "type": "video",
+    "title": "Python OOP Tutorial 1: Classes and Instances",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=ZDa-Z5JzLYM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-oop3",
+    "type": "video",
+    "title": "Python OOP Tutorial 3: classmethods and staticmethods",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=rq8cL2XMM5M",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-oop5",
+    "type": "video",
+    "title": "Python OOP Tutorial 5: Special (Magic/Dunder) Methods",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=3ohzBxoFHAY",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-oop6",
+    "type": "video",
+    "title": "Python OOP Tutorial 6: Property Decorators - Getters, Setters, and Deleters",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=jCzT9XFZ5bw",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-strrepr",
+    "type": "video",
+    "title": "Python Tutorial: str() vs repr()",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=5cvM-crlDvg",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-main",
+    "type": "video",
+    "title": "Python Tutorial: if __name__ == '__main__'",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=sugvnHA7ElY",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-regex",
+    "type": "video",
+    "title": "Python Tutorial: re Module - How to Write and Match Regular Expressions (Regex)",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=K8L6KVGG-7o",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-csv",
+    "type": "video",
+    "title": "Python Tutorial: CSV Module - How to Read, Parse, and Write CSV Files",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=q5uM4VKywbA",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-json",
+    "type": "video",
+    "title": "Python Tutorial: Working with JSON Data using the json Module",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=9N6a-VLBa2I",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-files",
+    "type": "video",
+    "title": "Python Tutorial: File Objects - Reading and Writing to Files",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=Uh2ebFW8OYM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-pathlib",
+    "type": "video",
+    "title": "Python Tutorial: Pathlib - The Modern Way to Handle File Paths",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=yxa-DJuuTBI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-unittest",
+    "type": "video",
+    "title": "Python Tutorial: Unit Testing Your Code with the unittest Module",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=6tNS--WetLI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "cy-venv",
+    "type": "video",
+    "title": "Python Tutorial: VENV (Mac & Linux) - How to Use Virtual Environments with the Built-In venv Module",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=Kg1Yvry_Ydk",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-pip",
+    "type": "video",
+    "title": "Python Tutorial: pip - An in-depth look at the package management system",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=U2ZN104hIcc",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-uv",
+    "type": "video",
+    "title": "Python Tutorial: UV - A Faster, All-in-One Package Manager to Replace Pip and Venv",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=AMdG7IjgSPM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M01",
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-git",
+    "type": "video",
+    "title": "Git Tutorial for Beginners: Command-Line Fundamentals",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=HVsySz-h9r4",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-git-undo",
+    "type": "video",
+    "title": "Git Tutorial: Fixing Common Mistakes and Undoing Bad Commits",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=FdZecVxzJbk",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-git-stash",
+    "type": "video",
+    "title": "Git Tutorial: Using the Stash Command",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=KLEDKgMmbBI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-term-nav",
+    "type": "video",
+    "title": "Linux/Mac Terminal Tutorial: Navigating your Filesystem",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=j6vKLJxAKfw",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-grep",
+    "type": "video",
+    "title": "Linux/Mac Terminal Tutorial: The Grep Command - Search Files and Directories for Patterns of Text",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=VGgTmxXp7xQ",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "cy-pandas1",
+    "type": "video",
+    "title": "Python Pandas Tutorial (Part 1): Getting Started with Data Analysis - Installation and Loading Data",
+    "author": "Corey Schafer",
+    "url": "https://www.youtube.com/watch?v=ZyhVh-qRZPA",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "arjan-dataclasses",
+    "type": "video",
+    "title": "If You're Not Using Python DATA CLASSES Yet, You Should",
+    "author": "ArjanCodes",
+    "url": "https://www.youtube.com/watch?v=vRVVyl9uaZc",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "arjan-protocol",
+    "type": "video",
+    "title": "Protocol Or ABC In Python - When to Use Which One?",
+    "author": "ArjanCodes",
+    "url": "https://www.youtube.com/watch?v=xvb5hGLoK0A",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "arjan-asyncio",
+    "type": "video",
+    "title": "Next-Level Concurrent Programming In Python With Asyncio",
+    "author": "ArjanCodes",
+    "url": "https://www.youtube.com/watch?v=GpqAQxH1Afc",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "arjan-pathlib",
+    "type": "video",
+    "title": "A Deep Dive Into Pathlib And The Magic Behind It",
+    "author": "ArjanCodes",
+    "url": "https://www.youtube.com/watch?v=UcKkmwaRbsQ",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "arjan-uv",
+    "type": "video",
+    "title": "This Tool Replaces pip, Poetry, pyenv, and More (It's Fast)",
+    "author": "ArjanCodes",
+    "url": "https://www.youtube.com/watch?v=qh98qOND6MI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "mcoding-dataclasses",
+    "type": "video",
+    "title": "Python dataclasses will save you HOURS, also featuring attrs",
+    "author": "mCoding",
+    "url": "https://www.youtube.com/watch?v=vBH6GRJ1REM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "mcoding-logging",
+    "type": "video",
+    "title": "Modern Python logging",
+    "author": "mCoding",
+    "url": "https://www.youtube.com/watch?v=9L77QExPmI0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "anthony-protocol",
+    "type": "video",
+    "title": "structural subtyping in python with Protocol! (anthony explains #164)",
+    "author": "anthonywritescode",
+    "url": "https://www.youtube.com/watch?v=QjFChmQHJxk",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "anthony-fixtures",
+    "type": "video",
+    "title": "pytest: everything you need to know about fixtures (anthony explains #487)",
+    "author": "anthonywritescode",
+    "url": "https://www.youtube.com/watch?v=ScEQRKwUePI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "twt-typing",
+    "type": "video",
+    "title": "Python Typing - Type Hints & Annotations",
+    "author": "Tech With Tim",
+    "url": "https://www.youtube.com/watch?v=QORvB-_mbZ0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "twt-asyncio",
+    "type": "video",
+    "title": "Asyncio in Python - Full Tutorial",
+    "author": "Tech With Tim",
+    "url": "https://www.youtube.com/watch?v=Qb9s3UiMSTA",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M03"
+    ]
+  },
+  {
+    "id": "ned-names-talk",
+    "type": "video",
+    "title": "Facts and Myths about Python names and values (PyCon 2015)",
+    "author": "Ned Batchelder / PyCon 2015",
+    "url": "https://www.youtube.com/watch?v=_AEJHKGk9ns",
+    "free": true,
+    "language": "en",
+    "notes": "25:20. Embedding disabled so oEmbed fails; existence verified via search + nedbatchelder.com 2026-10-20.",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "ned-unicode",
+    "type": "video",
+    "title": "Pragmatic Unicode, or, How do I stop the pain?",
+    "author": "Ned Batchelder / Next Day Video (PyCon 2012)",
+    "url": "https://www.youtube.com/watch?v=sgHbC6udIqc",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M01"
+    ]
+  },
+  {
+    "id": "hettinger-idiomatic",
+    "type": "video",
+    "title": "Transforming Code into Beautiful, Idiomatic Python",
+    "author": "Raymond Hettinger / Next Day Video",
+    "url": "https://www.youtube.com/watch?v=OSGv2VnC0go",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "hettinger-concurrency",
+    "type": "video",
+    "title": "Raymond Hettinger, Keynote on Concurrency, PyBay 2017",
+    "author": "SF Python",
+    "url": "https://www.youtube.com/watch?v=9zinZmE3Ogk",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "beazley-conc",
+    "type": "video",
+    "title": "Python Concurrency From the Ground Up: LIVE! (PyCon 2015)",
+    "author": "David Beazley / PyCon 2015",
+    "url": "https://www.youtube.com/watch?v=MCs5OvhV9S4",
+    "free": true,
+    "language": "en",
+    "notes": "Embedding disabled so oEmbed fails; existence verified via dabeaz.com talks page + search 2026-10-20.",
+    "modules": [
+      "M01"
+    ]
+  },
+  {
+    "id": "ms-2020-shell",
+    "type": "video",
+    "title": "Lecture 1: Course Overview + The Shell (2020)",
+    "author": "Missing Semester",
+    "url": "https://www.youtube.com/watch?v=Z56Jmr9Z34Q",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00",
+      "M02"
+    ]
+  },
+  {
+    "id": "ms-2020-wrangling",
+    "type": "video",
+    "title": "Lecture 4: Data Wrangling (2020)",
+    "author": "Missing Semester",
+    "url": "https://www.youtube.com/watch?v=sz_dsktIjt4",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "ms-2020-cmdenv",
+    "type": "video",
+    "title": "Lecture 5: Command-line Environment (2020)",
+    "author": "Missing Semester",
+    "url": "https://www.youtube.com/watch?v=e8BO_dYxk5c",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02",
+      "M03"
+    ]
+  },
+  {
+    "id": "ms-2020-git",
+    "type": "video",
+    "title": "Lecture 6: Version Control (git) (2020)",
+    "author": "Missing Semester",
+    "url": "https://www.youtube.com/watch?v=2sjqTHE0zok",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "ms-2020-debug",
+    "type": "video",
+    "title": "Lecture 7: Debugging and Profiling (2020)",
+    "author": "Missing Semester",
+    "url": "https://www.youtube.com/watch?v=l812pUnKxME",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "fcc-git",
+    "type": "video",
+    "title": "Git and GitHub for Beginners - Crash Course",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "fcc-bash",
+    "type": "video",
+    "title": "Bash Scripting Tutorial for Beginners",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=tK9Oc6AEnR4",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "fcc-pytest",
+    "type": "video",
+    "title": "Pytest Tutorial – How to Test Python Code",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=cHYq1MRoyI0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01",
+      "M02"
+    ]
+  },
+  {
+    "id": "fcc-dsa",
+    "type": "video",
+    "title": "Algorithms and Data Structures Tutorial - Full Course for Beginners",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=8hly31xKli0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "fcc-ds-adv",
+    "type": "video",
+    "title": "Data Structures Easy to Advanced Course - Full Tutorial from a Google Engineer",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=RBSGKlAvoiM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "fcc-sql",
+    "type": "video",
+    "title": "SQL Tutorial - Full Database Course for Beginners",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "fcc-postgres",
+    "type": "video",
+    "title": "Learn PostgreSQL Tutorial - Full Course for Beginners",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=qw--VYLpxG4",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "fcc-numpy",
+    "type": "video",
+    "title": "Python NumPy Tutorial for Beginners",
+    "author": "freeCodeCamp.org",
+    "url": "https://www.youtube.com/watch?v=QUT1VHiLmmI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "fcc-fastapi",
+    "type": "video",
+    "title": "Python API Development - Comprehensive Course for Beginners",
+    "author": "freeCodeCamp.org (Sanjeev Thiyagarajan)",
+    "url": "https://www.youtube.com/watch?v=0sOvCWFmrtA",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "galli-pandas",
+    "type": "video",
+    "title": "Complete Python Pandas Data Science Tutorial! (2025 Updated Edition)",
+    "author": "Keith Galli",
+    "url": "https://www.youtube.com/watch?v=2uvysYbKdjM",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "techtfq-window",
+    "type": "video",
+    "title": "SQL Window Function | How to write SQL Query using RANK, DENSE RANK, LEAD/LAG",
+    "author": "techTFQ",
+    "url": "https://www.youtube.com/watch?v=Ww71knvhQ-s",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "nana-docker",
+    "type": "video",
+    "title": "Docker Tutorial for Beginners [FULL COURSE in 3 Hours]",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=3c-iBn73dDE",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "nana-compose",
+    "type": "video",
+    "title": "Docker Compose Tutorial - Docker in Practice || Docker Tutorial 9",
+    "author": "TechWorld with Nana",
+    "url": "https://www.youtube.com/watch?v=MVIcrmeV_6c",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "fireship-bigo",
+    "type": "video",
+    "title": "Big-O Notation in 100 Seconds",
+    "author": "Fireship",
+    "url": "https://www.youtube.com/watch?v=g2o22C3CRfU",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M03"
+    ]
+  },
+  {
+    "id": "fireship-docker",
+    "type": "video",
+    "title": "Docker in 100 Seconds",
+    "author": "Fireship",
+    "url": "https://www.youtube.com/watch?v=Gjnup-PuquQ",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "fireship-git",
+    "type": "video",
+    "title": "Git Explained in 100 Seconds",
+    "author": "Fireship",
+    "url": "https://www.youtube.com/watch?v=hwP7WQkmECE",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M00"
+    ]
+  },
+  {
+    "id": "fireship-linux",
+    "type": "video",
+    "title": "Linux in 100 Seconds",
+    "author": "Fireship",
+    "url": "https://www.youtube.com/watch?v=rrB13utjYV4",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M02"
+    ]
+  },
+  {
+    "id": "fireship-sql",
+    "type": "video",
+    "title": "SQL Explained in 100 Seconds",
+    "author": "Fireship",
+    "url": "https://www.youtube.com/watch?v=zsjvFFKOm3c",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M04"
+    ]
+  },
+  {
+    "id": "py-truth",
+    "type": "doc",
+    "title": "Built-in Types — Truth Value Testing and Boolean Operations",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/library/stdtypes.html#truth-value-testing",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M01"
+    ]
+  }
+]

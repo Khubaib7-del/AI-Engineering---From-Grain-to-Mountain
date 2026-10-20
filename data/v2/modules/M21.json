@@ -1,0 +1,2563 @@
+{
+ "id": "M21",
+ "phase": "P1 Foundations",
+ "title": "DevOps and Cloud Foundations",
+ "summary": "Linux administration, Docker, GitHub Actions CI/CD, cloud basics (AWS first), Terraform, Kubernetes on k3d, and Prometheus/Grafana/SLOs. Taken right after M03 and alongside M04-M08 so every later build ships like a team would. Every cloud unit has a no-card path (local VM/WSL2, LocalStack, Terraform Docker provider, k3d, KodeKloud free sandbox, Hugging Face Docker Spaces).",
+ "hours": 142,
+ "prerequisites": [
+  "M02",
+  "M03"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M21.S1",
+   "title": "Linux administration",
+   "units": [
+    {
+     "id": "M21.U01",
+     "title": "Linux server basics: navigation, packages, services, logs",
+     "hours": 10,
+     "depth": "core",
+     "week": 32,
+     "prerequisites": [],
+     "outcomes": [
+      "You can navigate the Linux filesystem hierarchy and say what lives in /etc, /var/log, /usr/bin and /home.",
+      "You can install, upgrade and remove packages with apt and explain where repositories are configured.",
+      "You can start, stop, enable and inspect a systemd service and read its logs with journalctl.",
+      "You can edit a config file in vim or nano over SSH without a GUI."
+     ],
+     "topics": [
+      {
+       "id": "M21.01.01",
+       "title": "Filesystem hierarchy"
+      },
+      {
+       "id": "M21.01.02",
+       "title": "apt and package repositories"
+      },
+      {
+       "id": "M21.01.03",
+       "title": "systemd services (systemctl)"
+      },
+      {
+       "id": "M21.01.04",
+       "title": "Logs: journalctl and /var/log"
+      },
+      {
+       "id": "M21.01.05",
+       "title": "Terminal editors (vim/nano)"
+      }
+     ],
+     "learn": {
+      "resourceId": "linux-upskill",
+      "title": "Linux Upskill Challenge",
+      "url": "https://linuxupskillchallenge.org/01/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Days 0-7: Day 0 Get Your Own Server; Day 1 Get to know your server; Day 2 Basic navigation; Day 3 Power trip! (sudo); Day 4 Installing software, exploring the file structure; Day 5 More or less; Day 6 Editing with vim; Day 7 The server and its services"
+     },
+     "covers": [
+      "Setting up a remote Ubuntu server and logging in over SSH (Day 0-1)",
+      "ls/cd/pwd navigation, man pages and the filesystem layout (Day 2, Day 4)",
+      "sudo, root vs normal user, reading /var/log/auth.log (Day 3)",
+      "apt update/upgrade/install and the /etc/apt sources (Day 4)",
+      "less/more and reading text files (Day 5); vim basics (Day 6)",
+      "Installing Apache, checking it with systemctl status, and its config/log locations (Day 7)"
+     ],
+     "gaps": [
+      {
+       "topic": "journalctl filtering (-u, -f, --since) in depth",
+       "resource": {
+        "resourceId": "yt-llt-journalctl",
+        "title": "journalctl Basics: How to Easily Check Your Linux Logs",
+        "url": "https://www.youtube.com/watch?v=0dG3vUYt7Uk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video (19 min): chapters 'Inspecting a service' 5:26 and 'Viewing log entries from a particular time' 11:59"
+       }
+      },
+      {
+       "topic": "systemctl enable vs start, unit files, restart vs reload",
+       "resource": {
+        "resourceId": "yt-llt-systemd",
+        "title": "Systemd Explained: How to Manage Linux Services Easily",
+        "url": "https://www.youtube.com/watch?v=Kzpm-rGAXos",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Running the challenge without a cloud card",
+       "resource": {
+        "resourceId": "linux-upskill",
+        "title": "Linux Upskill Challenge",
+        "url": "https://linuxupskillchallenge.org/00/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Day 0 'Get Your Own Server' - read the local VM option; use WSL2 or Multipass Ubuntu"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Break and fix nginx",
+      "brief": "No-card path: local Ubuntu VM (VirtualBox/Multipass) or WSL2 Ubuntu; no cloud account needed. Install nginx, enable it on boot, reboot to prove it, then introduce a syntax error in /etc/nginx/sites-enabled/default, restart, diagnose with `systemctl status nginx` and `journalctl -u nginx --since '10 min ago'`, fix it.",
+      "done_when": "A NOTES.md in your M21 repo lists every command you ran, the exact journalctl line that revealed the error, and `nginx -t` output before/after; `systemctl is-enabled nginx` prints `enabled`."
+     },
+     "quiz": [
+      {
+       "id": "M21.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Which command shows the logs of a single systemd unit?",
+       "options": [
+        "dmesg",
+        "journalctl -u nginx",
+        "tail /etc/nginx",
+        "systemctl logs nginx"
+       ],
+       "answer": 1,
+       "explain": "journalctl reads the systemd journal; -u filters to one unit. `systemctl logs` does not exist."
+      },
+      {
+       "id": "M21.U01.Q2",
+       "kind": "mcq",
+       "prompt": "What mainly lives in /etc?",
+       "options": [
+        "Executable binaries",
+        "System-wide configuration files",
+        "User home directories",
+        "Temporary files"
+       ],
+       "answer": 1,
+       "explain": "/etc holds host-specific configuration (nginx, apt sources, ssh). Binaries live in /usr/bin, homes in /home, temp in /tmp."
+      },
+      {
+       "id": "M21.U01.Q3",
+       "kind": "mcq",
+       "prompt": "What does `systemctl enable nginx` do?",
+       "options": [
+        "Starts nginx immediately",
+        "Configures nginx to start at boot",
+        "Installs nginx",
+        "Reloads nginx config"
+       ],
+       "answer": 1,
+       "explain": "enable creates the symlinks that start the unit at boot; it does not start it now unless you add --now."
+      },
+      {
+       "id": "M21.U01.Q4",
+       "kind": "short",
+       "prompt": "Explain the difference between `systemctl restart` and `systemctl reload`, and give a case where reload is not enough.",
+       "rubric": [
+        "Restart stops and starts the process (drops connections, picks up everything).",
+        "Reload sends a signal (often SIGHUP) so the running process re-reads config without dropping connections.",
+        "Names a case where reload is insufficient: changed listening port/binary upgrade/new module or a service that does not implement reload."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U02",
+     "title": "Users, permissions, processes, scheduling, text processing",
+     "hours": 10,
+     "depth": "core",
+     "week": 33,
+     "prerequisites": [
+      "M21.U01"
+     ],
+     "outcomes": [
+      "You can create users and groups, grant sudo, and apply least-privilege file permissions with chmod/chown.",
+      "You can find and stop a misbehaving process and explain SIGTERM vs SIGKILL.",
+      "You can schedule a job with cron and with a systemd timer.",
+      "You can chain grep/sed/awk/find to answer a question about log files."
+     ],
+     "topics": [
+      {
+       "id": "M21.01.06",
+       "title": "Users, groups and sudo"
+      },
+      {
+       "id": "M21.01.07",
+       "title": "chmod, chown and umask"
+      },
+      {
+       "id": "M21.01.08",
+       "title": "Processes and signals (ps, top, kill)"
+      },
+      {
+       "id": "M21.01.09",
+       "title": "cron and systemd timers"
+      },
+      {
+       "id": "M21.01.10",
+       "title": "grep/sed/awk/find pipelines"
+      }
+     ],
+     "learn": {
+      "resourceId": "linux-upskill",
+      "title": "Linux Upskill Challenge",
+      "url": "https://linuxupskillchallenge.org/08/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Day 8 The infamous grep and other text processors; Day 10 Scheduling tasks; Day 11 Finding things; Day 13 Users and Groups; Day 14 Who has permission?"
+     },
+     "covers": [
+      "grep, cut, sed and awk on auth.log to extract failed logins (Day 8)",
+      "crontab syntax and /etc/cron.* directories; mentions systemd timers (Day 10)",
+      "find, locate, which, whereis (Day 11)",
+      "adduser, groups, /etc/passwd and /etc/group, sudoers (Day 13)",
+      "rwx permission bits, chmod numeric/symbolic, chown, chgrp (Day 14)"
+     ],
+     "gaps": [
+      {
+       "topic": "Processes, job control and signals (SIGTERM vs SIGKILL)",
+       "resource": {
+        "resourceId": "C02",
+        "title": "MIT Missing Semester 2026",
+        "url": "https://missing.csail.mit.edu/2026/command-line-environment/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 'Command-line Environment' - job control and signals section"
+       }
+      },
+      {
+       "topic": "systemd timers as a cron alternative",
+       "resource": {
+        "resourceId": "yt-llt-timers",
+        "title": "Automate Your Tasks with systemd Timers: A Step-by-Step Guide",
+        "url": "https://www.youtube.com/watch?v=n6BuUgkZ5T0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "umask",
+       "resource": {
+        "resourceId": "linux-upskill",
+        "title": "Linux Upskill Challenge",
+        "url": "https://linuxupskillchallenge.org/14/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Day 14 'Who has permission?' extension reading; plus `man umask`"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Nightly rotating backup as a least-privilege user",
+      "brief": "No-card path: same local VM/WSL2. Create user `backup` with no sudo, give it read-only group access to /srv/data, and write `backup.sh` that tars /srv/data into /var/backups/app/ keeping only the newest 7 archives. Schedule it with cron AND with a systemd timer (disable one after testing).",
+      "done_when": "`ls -l` shows archives owned by `backup` with mode 640; running the job 9 times leaves exactly 7 archives; `systemctl list-timers` shows your timer; README states why `backup` cannot write /srv/data."
+     },
+     "quiz": [
+      {
+       "id": "M21.U02.Q1",
+       "kind": "mcq",
+       "prompt": "`chmod 640 report.txt` gives:",
+       "options": [
+        "Owner rw, group r, others none",
+        "Owner rwx, group rw, others none",
+        "Everyone read",
+        "Owner read only"
+       ],
+       "answer": 0,
+       "explain": "6=rw (4+2), 4=r, 0=none, applied to owner, group, others."
+      },
+      {
+       "id": "M21.U02.Q2",
+       "kind": "mcq",
+       "prompt": "SIGTERM vs SIGKILL:",
+       "options": [
+        "Both can be caught",
+        "SIGTERM can be caught for graceful shutdown; SIGKILL cannot",
+        "SIGKILL is the graceful one",
+        "They are the same signal"
+       ],
+       "answer": 1,
+       "explain": "SIGTERM (15) lets the process clean up; SIGKILL (9) is handled by the kernel and cannot be trapped."
+      },
+      {
+       "id": "M21.U02.Q3",
+       "kind": "mcq",
+       "prompt": "The five cron time fields, in order, are:",
+       "options": [
+        "hour minute day month weekday",
+        "minute hour day-of-month month day-of-week",
+        "second minute hour day month",
+        "weekday month day hour minute"
+       ],
+       "answer": 1,
+       "explain": "Cron is `m h dom mon dow command`; `0 2 * * *` means 02:00 daily."
+      },
+      {
+       "id": "M21.U02.Q4",
+       "kind": "short",
+       "prompt": "Why should the main process inside a container handle SIGTERM? Connect your answer to what Kubernetes does when it deletes a pod.",
+       "rubric": [
+        "Kubernetes sends SIGTERM to PID 1, waits terminationGracePeriodSeconds (default 30 s), then SIGKILL.",
+        "Handling SIGTERM lets the app stop accepting work, finish in-flight requests, flush/close connections.",
+        "Mentions PID 1 signal-forwarding pitfalls (shell-form CMD) or exec-form/tini as a fix."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U03",
+     "title": "Bash scripting, SSH and network troubleshooting",
+     "hours": 10,
+     "depth": "core",
+     "week": 34,
+     "prerequisites": [
+      "M21.U02"
+     ],
+     "outcomes": [
+      "You can write a defensive bash script with arguments, exit codes and `set -euo pipefail`.",
+      "You can set up SSH key auth with an ~/.ssh/config entry and copy files with scp/rsync.",
+      "You can find which process owns a port and debug 'works on the server, not from my laptop'.",
+      "You can open and close ports with ufw."
+     ],
+     "topics": [
+      {
+       "id": "M21.01.11",
+       "title": "Bash scripts: set -euo pipefail, args, exit codes"
+      },
+      {
+       "id": "M21.01.12",
+       "title": "SSH keys, ~/.ssh/config, scp/rsync"
+      },
+      {
+       "id": "M21.01.13",
+       "title": "Ports and sockets: ss, curl -v, dig, ping, traceroute"
+      },
+      {
+       "id": "M21.01.14",
+       "title": "Firewall basics (ufw)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C02",
+      "title": "MIT Missing Semester 2026",
+      "url": "https://missing.csail.mit.edu/2026/course-shell/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 1 'Course Overview + Introduction to the Shell' (2026)"
+     },
+     "covers": [
+      "What the shell is, paths, pipes and redirection, permissions basics",
+      "Composing programs with |, >, >> and running scripts",
+      "Lecture exercises on writing small shell programs"
+     ],
+     "gaps": [
+      {
+       "topic": "Networking tools (ss/netstat, ping, traceroute, dig)",
+       "resource": {
+        "resourceId": "linux-upskill",
+        "title": "Linux Upskill Challenge",
+        "url": "https://linuxupskillchallenge.org/09/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Day 9 'Diving into networking'"
+       }
+      },
+      {
+       "topic": "scp/rsync/sftp file transfer",
+       "resource": {
+        "resourceId": "linux-upskill",
+        "title": "Linux Upskill Challenge",
+        "url": "https://linuxupskillchallenge.org/12/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Day 12 'Transferring files'"
+       }
+      },
+      {
+       "topic": "Bash scripting with arguments and exit codes",
+       "resource": {
+        "resourceId": "linux-upskill",
+        "title": "Linux Upskill Challenge",
+        "url": "https://linuxupskillchallenge.org/20/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Day 20 'Scripting'"
+       }
+      },
+      {
+       "topic": "SSH keys and ~/.ssh/config",
+       "resource": {
+        "resourceId": "C02",
+        "title": "MIT Missing Semester 2026",
+        "url": "https://missing.csail.mit.edu/2026/command-line-environment/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 'Command-line Environment' - remote machines / SSH section"
+       }
+      },
+      {
+       "topic": "ufw firewall",
+       "resource": {
+        "resourceId": "linux-upskill",
+        "title": "Linux Upskill Challenge",
+        "url": "https://linuxupskillchallenge.org/09/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Day 9 'Diving into networking' (ufw/iptables part)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "healthcheck.sh + Bandit 0-15",
+      "brief": "No-card path: run against your local VM; the SSH target can be the VM from your host. Write `healthcheck.sh URL MAX_MS` that curls the URL, checks HTTP 200 and latency < MAX_MS, logs a line, exits non-zero on failure; run it from cron every 5 min. Separately complete OverTheWire Bandit levels 0-15 (free, SSH-based).",
+      "done_when": "`shellcheck healthcheck.sh` is clean; `./healthcheck.sh http://localhost:9 100; echo $?` prints a non-zero code; you can SSH to the VM with `ssh myvm` (config alias, key auth, password auth disabled); Bandit level 15 password noted (not committed)."
+     },
+     "quiz": [
+      {
+       "id": "M21.U03.Q1",
+       "kind": "mcq",
+       "prompt": "`set -e` makes a bash script:",
+       "options": [
+        "Echo every command",
+        "Exit on the first failing command",
+        "Ignore errors",
+        "Run as root"
+       ],
+       "answer": 1,
+       "explain": "-e exits on a non-zero status (with caveats in conditionals); -x is the echo flag."
+      },
+      {
+       "id": "M21.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Which command shows what is listening on TCP port 8000?",
+       "options": [
+        "ss -ltnp | grep 8000",
+        "ping 8000",
+        "dig 8000",
+        "chmod 8000"
+       ],
+       "answer": 0,
+       "explain": "ss -l (listening) -t (TCP) -n (numeric) -p (process)."
+      },
+      {
+       "id": "M21.U03.Q3",
+       "kind": "mcq",
+       "prompt": "With SSH key authentication, the server stores:",
+       "options": [
+        "Your private key",
+        "Your public key in ~/.ssh/authorized_keys",
+        "Your password hash only",
+        "Both keys"
+       ],
+       "answer": 1,
+       "explain": "The private key never leaves your machine; the server checks a signature against the public key."
+      },
+      {
+       "id": "M21.U03.Q4",
+       "kind": "short",
+       "prompt": "A FastAPI app answers `curl localhost:8000` on the server but not from your laptop. List three causes in the order you would check them, with the command for each.",
+       "rubric": [
+        "Bound to 127.0.0.1 instead of 0.0.0.0 - check with `ss -ltnp`.",
+        "Host firewall (ufw) or cloud security group blocks the port - `ufw status` / SG rules.",
+        "Wrong IP/DNS/port from the laptop or NAT - `curl -v`, `dig`, `traceroute`.",
+        "Order goes from the server outward (process -> host firewall -> network)."
+       ]
+      }
+     ],
+     "backup": {
+      "resourceId": "overthewire",
+      "title": "OverTheWire: Bandit wargame",
+      "url": "https://overthewire.org/wargames/bandit/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Bandit levels 0-15 (SSH practice)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "M21.S2",
+   "title": "Containers in depth",
+   "units": [
+    {
+     "id": "M21.U04",
+     "title": "Docker fundamentals: images, containers, volumes, ports, registries",
+     "hours": 12,
+     "depth": "core",
+     "week": 35,
+     "prerequisites": [
+      "M21.U01"
+     ],
+     "outcomes": [
+      "You can explain image vs container vs layer and write a cache-friendly Dockerfile for a Python API.",
+      "You can persist data with named volumes and bind mounts and publish ports.",
+      "You can push and pull images from Docker Hub/GHCR and pin by digest."
+     ],
+     "topics": [
+      {
+       "id": "M21.02.01",
+       "title": "Image vs container vs layer",
+       "legacyIds": [
+        "M16.03.01"
+       ]
+      },
+      {
+       "id": "M21.02.02",
+       "title": "Dockerfile instructions"
+      },
+      {
+       "id": "M21.02.03",
+       "title": "Volumes and bind mounts"
+      },
+      {
+       "id": "M21.02.04",
+       "title": "Ports and networks"
+      },
+      {
+       "id": "M21.02.05",
+       "title": "Registries (Docker Hub/GHCR), tags vs digests"
+      }
+     ],
+     "learn": {
+      "resourceId": "dwdocker",
+      "title": "DevOps with Docker (University of Helsinki, 2026)",
+      "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-docker-spring-2026/chapter-2",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 2 'Docker basics' - pages: Definitions and Basic Concepts; Running and Stopping Containers; In-depth Dive into Images; Defining Start Conditions; Interacting with the Container via Volumes and Ports; Utilizing Tools from the Registry"
+     },
+     "covers": [
+      "Images, containers, layers and the Docker CLI lifecycle (run/ps/stop/rm/exec)",
+      "Building images from a Dockerfile; FROM/RUN/COPY/WORKDIR/CMD/ENTRYPOINT",
+      "Bind mounts and port publishing (-v, -p)",
+      "Pulling and pushing images to Docker Hub; exercises 1.1-1.16 (graded while the instance is open)"
+     ],
+     "gaps": [
+      {
+       "topic": "Named volumes vs bind mounts",
+       "resource": {
+        "resourceId": "yt-nana-volumes",
+        "title": "Docker Volumes explained in 6 minutes",
+        "url": "https://www.youtube.com/watch?v=p2PH_YPCsis",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video (6 min)"
+       }
+      },
+      {
+       "topic": "Python-specific Dockerfile layer caching (requirements before code)",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/get-started/workshop/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Get started workshop - 'Image-building best practices' (layer caching)"
+       }
+      },
+      {
+       "topic": "GHCR and pinning by digest",
+       "resource": {
+        "resourceId": "gh-actions-docs",
+        "title": "GitHub Actions documentation",
+        "url": "https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Publishing and installing a package with GitHub Actions (GHCR)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "yt-nana-docker",
+      "title": "Docker Tutorial for Beginners [FULL COURSE in 3 Hours]",
+      "url": "https://www.youtube.com/watch?v=3c-iBn73dDE",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full course (3 h)"
+     },
+     "practice": {
+      "title": "Containerize your M03 API with persistent SQLite",
+      "brief": "No-card path: Docker Desktop/Engine locally; Docker Hub and GHCR accounts are free with no card. Write a Dockerfile for your M03 FastAPI app, store SQLite in a named volume, push the image to GHCR.",
+      "done_when": "`docker rm -f` + fresh `docker run -v appdata:/data` still returns previously created rows; a second build after editing only app code reuses the pip layer (`CACHED` in build output); image pullable as `ghcr.io/<you>/api@sha256:...`."
+     },
+     "quiz": [
+      {
+       "id": "M21.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Deleting a container deletes:",
+       "options": [
+        "Its image",
+        "Its writable layer but not named volumes",
+        "All volumes on the host",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "`docker rm` removes the container's thin writable layer; named volumes persist unless you pass -v or prune."
+      },
+      {
+       "id": "M21.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Why put `COPY requirements.txt` + `RUN pip install` before `COPY . .`?",
+       "options": [
+        "Style only",
+        "Layer caching: code edits don't re-install dependencies",
+        "Required syntax",
+        "Security"
+       ],
+       "answer": 1,
+       "explain": "Each instruction is a cached layer; a changed file invalidates that layer and all after it."
+      },
+      {
+       "id": "M21.U04.Q3",
+       "kind": "mcq",
+       "prompt": "`docker run -p 8080:8000 api` maps:",
+       "options": [
+        "Container 8080 to host 8000",
+        "Host 8080 to container 8000",
+        "Both to 8000",
+        "UDP only"
+       ],
+       "answer": 1,
+       "explain": "Format is HOST:CONTAINER."
+      },
+      {
+       "id": "M21.U04.Q4",
+       "kind": "short",
+       "prompt": "Why is `latest` a bad tag for deployments, and what does a digest guarantee?",
+       "rubric": [
+        "`latest` is mutable and just a default name; two pulls can yield different images, breaking reproducibility and rollback.",
+        "A digest (sha256) is content-addressed: it always refers to the exact same bytes.",
+        "Recommends immutable tags (git SHA) plus digest pinning in deploy manifests."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U05",
+     "title": "Docker Compose and multi-service apps",
+     "hours": 8,
+     "depth": "core",
+     "week": 36,
+     "prerequisites": [
+      "M21.U04"
+     ],
+     "outcomes": [
+      "You can run a multi-container stack (API + Postgres + Redis + nginx) with one command.",
+      "You can make startup order safe with healthchecks and `depends_on: condition: service_healthy`.",
+      "You can keep secrets out of images and git while still configuring Compose."
+     ],
+     "topics": [
+      {
+       "id": "M21.02.06",
+       "title": "Compose services, networks, depends_on/healthchecks",
+       "legacyIds": [
+        "M16.03.02"
+       ]
+      },
+      {
+       "id": "M21.02.07",
+       "title": "Env files and secrets in Compose"
+      },
+      {
+       "id": "M21.02.08",
+       "title": "Reverse proxy (nginx) and service discovery by name"
+      },
+      {
+       "id": "M21.02.09",
+       "title": "Postgres + app + worker stacks"
+      }
+     ],
+     "learn": {
+      "resourceId": "dwdocker",
+      "title": "DevOps with Docker (University of Helsinki, 2026)",
+      "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-docker-spring-2026/chapter-3",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 3 'Docker compose' - pages: Migrating to Docker Compose; Docker networking; Volumes in action; Containers in development"
+     },
+     "covers": [
+      "docker-compose.yml services, build vs image, environment",
+      "Compose default network and reaching services by service name",
+      "Volumes for databases; manual scaling of services",
+      "Reverse proxy and using third-party services (databases) inside containers; dev-mode containers with mounted code"
+     ],
+     "gaps": [
+      {
+       "topic": "Healthchecks and startup order (depends_on condition)",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/compose/how-tos/startup-order/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Compose: Control startup and shutdown order"
+       }
+      },
+      {
+       "topic": "Secrets/env files in Compose",
+       "resource": {
+        "resourceId": "yt-nana-compose",
+        "title": "Ultimate Docker Compose Tutorial",
+        "url": "https://www.youtube.com/watch?v=SXwC9fSwct8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video - env variables and secrets segment"
+       }
+      },
+      {
+       "topic": "Background worker pattern (RQ) on Redis",
+       "resource": {
+        "resourceId": "rq",
+        "title": "RQ (Redis Queue) documentation",
+        "url": "https://python-rq.org/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "RQ docs home: Jobs + Workers"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "yt-nana-compose",
+      "title": "Ultimate Docker Compose Tutorial",
+      "url": "https://www.youtube.com/watch?v=SXwC9fSwct8",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full video"
+     },
+     "practice": {
+      "title": "Four-service Compose stack",
+      "brief": "No-card path: all local. Compose file with api (your image), postgres:16 with a healthcheck, redis, nginx reverse proxy on :80 -> api:8000, plus a worker service. `.env` is git-ignored; a committed `.env.example` documents keys.",
+      "done_when": "`docker compose up -d` from a clean clone works; `docker compose ps` shows postgres `healthy` before api starts; `curl localhost/health` returns 200 through nginx; `git grep -i password` finds no real secrets."
+     },
+     "quiz": [
+      {
+       "id": "M21.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Inside the Compose network, the API reaches Postgres at:",
+       "options": [
+        "localhost:5432",
+        "db:5432 (the service name)",
+        "Only the host IP",
+        "0.0.0.0:5432"
+       ],
+       "answer": 1,
+       "explain": "Compose's embedded DNS resolves service names; localhost inside the api container is the api container itself."
+      },
+      {
+       "id": "M21.U05.Q2",
+       "kind": "mcq",
+       "prompt": "`depends_on` WITHOUT a healthcheck condition guarantees:",
+       "options": [
+        "The DB is ready to accept connections",
+        "Only container start order",
+        "Nothing at all",
+        "Automatic restart on failure"
+       ],
+       "answer": 1,
+       "explain": "It orders container starts; readiness needs `condition: service_healthy` plus a healthcheck."
+      },
+      {
+       "id": "M21.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Where should real secrets for a Compose stack go?",
+       "options": [
+        "A committed .env",
+        "Git-ignored env/secret files or a secret store",
+        "Dockerfile ENV",
+        "An image label"
+       ],
+       "answer": 1,
+       "explain": "Anything in the image or git history is effectively public."
+      },
+      {
+       "id": "M21.U05.Q4",
+       "kind": "short",
+       "prompt": "Why is 'it works in Compose' not proof that it will work in production?",
+       "rubric": [
+        "Single host: no multi-node networking, scheduling or failover.",
+        "Different config/secrets/resources/scale in production; no load or real traffic tested.",
+        "Missing production concerns: TLS, rolling deploys, observability, backups."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U06",
+     "title": "Image optimisation, security and GPU containers",
+     "hours": 8,
+     "depth": "core",
+     "week": 37,
+     "prerequisites": [
+      "M21.U05"
+     ],
+     "outcomes": [
+      "You can shrink an image with multi-stage builds, slim bases and .dockerignore.",
+      "You can run containers as non-root and scan images for CVEs.",
+      "You can explain what a GPU container needs on the host."
+     ],
+     "topics": [
+      {
+       "id": "M21.02.10",
+       "title": "Multi-stage builds"
+      },
+      {
+       "id": "M21.02.11",
+       "title": "Slim bases and .dockerignore"
+      },
+      {
+       "id": "M21.02.12",
+       "title": "Non-root user and rootless"
+      },
+      {
+       "id": "M21.02.13",
+       "title": "Image scanning (Trivy / Docker Scout)"
+      },
+      {
+       "id": "M21.02.14",
+       "title": "GPU containers (NVIDIA Container Toolkit, CUDA images)"
+      }
+     ],
+     "learn": {
+      "resourceId": "dwdocker",
+      "title": "DevOps with Docker (University of Helsinki, 2026)",
+      "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-docker-spring-2026/chapter-4",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 4 'Security and optimization' - pages: Official Images and Trust; Deployment Pipelines; Using a Non-root User; Optimizing the Image Size (Alpine variant, preinstalled environments, multi-stage builds); Multi-host Environments"
+     },
+     "covers": [
+      "Trusting official images and inspecting what you pull",
+      "A deployment pipeline (GitHub Actions + automatic container updates)",
+      "Adding and switching to a non-root USER",
+      "Alpine variants, preinstalled-environment base images and multi-stage builds",
+      "Why multi-host needs orchestration (Kubernetes preview)"
+     ],
+     "gaps": [
+      {
+       "topic": "Image vulnerability scanning",
+       "resource": {
+        "resourceId": "trivy",
+        "title": "Trivy vulnerability scanner",
+        "url": "https://github.com/aquasecurity/trivy",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README 'Quick Start' - `trivy image <name>`"
+       }
+      },
+      {
+       "topic": "GPU containers, NVIDIA Container Toolkit, Compose for model + vector DB",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/07-docker-for-ai",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 00 lesson 07 'Docker for AI'"
+       }
+      },
+      {
+       "topic": ".dockerignore and build best practices",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/build/building/best-practices/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Building best practices"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Halve your image",
+      "brief": "No-card path: local Docker; Trivy runs as a container (`docker run aquasec/trivy image ...`). GPU part is read-and-explain only if you have no NVIDIA GPU.",
+      "done_when": "README table shows before/after `docker images` sizes with >=50% reduction, `docker run ... whoami` prints a non-root user, and Trivy HIGH/CRITICAL counts before vs after."
+     },
+     "quiz": [
+      {
+       "id": "M21.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Multi-stage builds mainly:",
+       "options": [
+        "Speed up runtime",
+        "Keep build tools and caches out of the final image",
+        "Enable GPUs",
+        "Replace Compose"
+       ],
+       "answer": 1,
+       "explain": "You compile/install in a builder stage and COPY --from only the artifacts."
+      },
+      {
+       "id": "M21.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Running as root inside a container is risky because:",
+       "options": [
+        "It is slower",
+        "A container escape or mounted-volume abuse gives root-level access",
+        "Docker forbids it",
+        "Logs break"
+       ],
+       "answer": 1,
+       "explain": "Root in the container maps to root on the host unless user namespaces/rootless are used."
+      },
+      {
+       "id": "M21.U06.Q3",
+       "kind": "mcq",
+       "prompt": "GPU access in a container needs:",
+       "options": [
+        "A CUDA base image only",
+        "Host NVIDIA driver + NVIDIA Container Toolkit + `--gpus`",
+        "Privileged mode",
+        "Nothing special"
+       ],
+       "answer": 1,
+       "explain": "The driver lives on the host; the toolkit injects it; the image brings CUDA user-space libraries."
+      },
+      {
+       "id": "M21.U06.Q4",
+       "kind": "short",
+       "prompt": "List three things your .dockerignore must exclude for an ML repo, and why.",
+       "rubric": [
+        ".git and local venvs (size, leaks history).",
+        "Datasets/model checkpoints/mlruns (huge; should come from a registry or volume).",
+        ".env/credentials (secrets would be baked into a layer).",
+        "Notes that excluded files also speed up build context upload."
+       ]
+      }
+     ],
+     "read": {
+      "resourceId": "yt-dd-docker",
+      "title": "Complete Docker Course - From BEGINNER to PRO!",
+      "url": "https://www.youtube.com/watch?v=RqTEHSBrYFw",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full course - sections on image optimisation and security"
+     }
+    }
+   ]
+  },
+  {
+   "id": "M21.S3",
+   "title": "CI/CD with GitHub Actions",
+   "units": [
+    {
+     "id": "M21.U07",
+     "title": "CI with GitHub Actions: workflows, triggers, matrix, caching, secrets",
+     "hours": 8,
+     "depth": "core",
+     "week": 38,
+     "prerequisites": [
+      "M21.U04"
+     ],
+     "outcomes": [
+      "You can write a workflow that lints and tests a Python project on a version matrix with dependency caching.",
+      "You can use secrets safely and restrict GITHUB_TOKEN permissions.",
+      "You can make a failing check block merges with branch protection."
+     ],
+     "topics": [
+      {
+       "id": "M21.03.01",
+       "title": "Workflow/job/step/runner model"
+      },
+      {
+       "id": "M21.03.02",
+       "title": "Triggers: push, PR, schedule, workflow_dispatch"
+      },
+      {
+       "id": "M21.03.03",
+       "title": "Matrix builds"
+      },
+      {
+       "id": "M21.03.04",
+       "title": "Dependency caching (uv/pip)"
+      },
+      {
+       "id": "M21.03.05",
+       "title": "Secrets and least-privilege permissions"
+      },
+      {
+       "id": "M21.03.06",
+       "title": "Required checks and branch protection"
+      }
+     ],
+     "learn": {
+      "resourceId": "gh-actions-docs",
+      "title": "GitHub Actions documentation",
+      "url": "https://docs.github.com/en/actions/tutorials/build-and-test-code/python",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Tutorial 'Building and testing Python' (setup-python, matrix, caching, pytest/ruff)"
+     },
+     "covers": [
+      "setup-python and running a version matrix",
+      "Caching pip dependencies",
+      "Installing dependencies, linting and running pytest",
+      "Packaging test results as artifacts"
+     ],
+     "gaps": [
+      {
+       "topic": "Workflow anatomy: events, jobs, steps, runners",
+       "resource": {
+        "resourceId": "gh-actions-docs",
+        "title": "GitHub Actions documentation",
+        "url": "https://docs.github.com/en/actions/get-started/quickstart",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart for GitHub Actions"
+       }
+      },
+      {
+       "topic": "Secrets and their behaviour on fork PRs",
+       "resource": {
+        "resourceId": "gh-actions-docs",
+        "title": "GitHub Actions documentation",
+        "url": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Using secrets in GitHub Actions"
+       }
+      },
+      {
+       "topic": "Concepts end-to-end in video",
+       "resource": {
+        "resourceId": "yt-nana-gha",
+        "title": "GitHub Actions Tutorial - Basic Concepts and CI/CD Pipeline with Docker",
+        "url": "https://www.youtube.com/watch?v=R8_veQiYBjI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video (32 min)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "CI that blocks bad merges",
+      "brief": "No-card path: GitHub Actions is free for public repos. Add `.github/workflows/ci.yml`: ruff + pytest on Python 3.11 and 3.12 with uv/pip cache, `permissions: contents: read`. Turn on branch protection requiring the check.",
+      "done_when": "A PR with a deliberately failing test shows a red required check and the Merge button disabled; a green run shows a cache hit on the second run; workflow top has `permissions: contents: read`."
+     },
+     "quiz": [
+      {
+       "id": "M21.U07.Q1",
+       "kind": "mcq",
+       "prompt": "By default, jobs in one workflow run:",
+       "options": [
+        "Sequentially",
+        "In parallel unless `needs:` orders them",
+        "On the same runner",
+        "Only on main"
+       ],
+       "answer": 1,
+       "explain": "Jobs are independent and parallel; steps within a job are sequential."
+      },
+      {
+       "id": "M21.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Repository secrets are available to workflows triggered by PRs from forks:",
+       "options": [
+        "Always",
+        "Not by default",
+        "Only in matrix jobs",
+        "Only on schedule"
+       ],
+       "answer": 1,
+       "explain": "GitHub withholds secrets from fork PRs (pull_request) to prevent exfiltration."
+      },
+      {
+       "id": "M21.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Dependency caching primarily reduces:",
+       "options": [
+        "Storage cost",
+        "Job runtime",
+        "Test flakiness",
+        "Secret exposure"
+       ],
+       "answer": 1,
+       "explain": "Restoring a cache skips re-downloading/building packages."
+      },
+      {
+       "id": "M21.U07.Q4",
+       "kind": "short",
+       "prompt": "Why set `permissions: contents: read` at the top of a workflow?",
+       "rubric": [
+        "GITHUB_TOKEN gets only the scopes declared, limiting blast radius if a step/action is compromised.",
+        "Least privilege; jobs that need write (packages, PR comments) opt in explicitly.",
+        "Mentions supply-chain risk from third-party actions."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U08",
+     "title": "CD: build, push, deploy, environments, OIDC, rollback",
+     "hours": 8,
+     "depth": "core",
+     "week": 39,
+     "prerequisites": [
+      "M21.U07"
+     ],
+     "outcomes": [
+      "You can build and push an image tagged with the git SHA on a tag push.",
+      "You can gate a deploy behind a GitHub environment approval.",
+      "You can explain OIDC federation and why it beats long-lived cloud keys.",
+      "You can roll back to the previous SHA in one command."
+     ],
+     "topics": [
+      {
+       "id": "M21.03.07",
+       "title": "Build and push images to GHCR"
+      },
+      {
+       "id": "M21.03.08",
+       "title": "Environments and manual approvals"
+      },
+      {
+       "id": "M21.03.09",
+       "title": "OIDC to cloud (no long-lived keys)"
+      },
+      {
+       "id": "M21.03.10",
+       "title": "Deploy to a free target"
+      },
+      {
+       "id": "M21.03.11",
+       "title": "Continuous delivery vs continuous deployment (general part of old M16.03.03)"
+      }
+     ],
+     "learn": {
+      "resourceId": "gh-actions-docs",
+      "title": "GitHub Actions documentation",
+      "url": "https://docs.github.com/en/actions/how-tos/deploy/deploy-to-third-party-platforms",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "How-to 'Deploying to third-party platforms' + Concept 'OpenID Connect'"
+     },
+     "covers": [
+      "Deployment workflows to cloud/third-party targets",
+      "Environments, protection rules and required reviewers",
+      "OIDC trust between GitHub and a cloud provider (short-lived tokens)"
+     ],
+     "gaps": [
+      {
+       "topic": "Pushing to GHCR from Actions",
+       "resource": {
+        "resourceId": "gh-actions-docs",
+        "title": "GitHub Actions documentation",
+        "url": "https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Publishing and installing a package with GitHub Actions"
+       }
+      },
+      {
+       "topic": "Delivery vs deployment definitions",
+       "resource": {
+        "resourceId": "atlassian-cicd",
+        "title": "Continuous integration vs. delivery vs. deployment",
+        "url": "https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full article"
+       }
+      },
+      {
+       "topic": "Free no-card deploy target",
+       "resource": {
+        "resourceId": "hf-spaces",
+        "title": "Hugging Face Spaces: Docker Spaces",
+        "url": "https://huggingface.co/docs/hub/spaces-sdks-docker",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Docker Spaces guide (deploy any image on free CPU)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Tag-to-deploy pipeline with rollback",
+      "brief": "No-card path: deploy target = a Hugging Face Docker Space (free CPU, no card) or the k3d cluster from U12; Cloud Run only if you already have credits. On `v*` tag: build, push `ghcr.io/<you>/api:<sha>`, deploy behind a `production` environment requiring your approval. Script `rollback.sh <sha>`.",
+      "done_when": "Actions log shows the approval gate and the SHA tag; the deployed /version endpoint returns the SHA; `./rollback.sh <previous-sha>` restores the old /version in under 5 minutes (screen-record it)."
+     },
+     "quiz": [
+      {
+       "id": "M21.U08.Q1",
+       "kind": "mcq",
+       "prompt": "OIDC federation in CI replaces:",
+       "options": [
+        "Docker",
+        "Long-lived cloud access keys stored as secrets",
+        "Branch protection",
+        "Unit tests"
+       ],
+       "answer": 1,
+       "explain": "The job exchanges a signed GitHub token for short-lived cloud credentials."
+      },
+      {
+       "id": "M21.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Continuous DELIVERY means:",
+       "options": [
+        "Every commit auto-deploys to production",
+        "Every commit is releasable; production release can be a manual step",
+        "No tests",
+        "Nightly builds"
+       ],
+       "answer": 1,
+       "explain": "Continuous deployment removes the manual gate; delivery keeps it."
+      },
+      {
+       "id": "M21.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Tagging images with the git SHA enables:",
+       "options": [
+        "Smaller images",
+        "Traceable, exact rollbacks",
+        "GPU use",
+        "Better caching"
+       ],
+       "answer": 1,
+       "explain": "You always know which commit is running and can redeploy any previous one."
+      },
+      {
+       "id": "M21.U08.Q4",
+       "kind": "short",
+       "prompt": "Describe your rollback procedure in three steps and state its worst-case time.",
+       "rubric": [
+        "Identify last-known-good SHA (from deploy log/registry).",
+        "Redeploy that immutable tag/digest (script or re-run workflow) - no rebuild.",
+        "Verify via health/version endpoint and metrics; states a realistic time bound and DB-migration caveat."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M21.S4",
+   "title": "Cloud fundamentals (AWS first, GCP mapping)",
+   "units": [
+    {
+     "id": "M21.U09",
+     "title": "Cloud concepts, IAM and billing safety",
+     "hours": 8,
+     "depth": "core",
+     "week": 40,
+     "prerequisites": [
+      "M21.U03"
+     ],
+     "outcomes": [
+      "You can explain regions/AZs and the shared-responsibility model.",
+      "You can write a least-privilege IAM policy scoped to one bucket.",
+      "You can set budget alerts and explain what they do not do.",
+      "You can choose a no-card practice route when a card is unavailable."
+     ],
+     "topics": [
+      {
+       "id": "M21.04.01",
+       "title": "Regions/AZs, shared responsibility; AWS first with a GCP mapping",
+       "legacyIds": [
+        "M17.01.01"
+       ]
+      },
+      {
+       "id": "M21.04.02",
+       "title": "IAM users/roles/policies, least privilege",
+       "legacyIds": [
+        "M17.01.02"
+       ]
+      },
+      {
+       "id": "M21.04.03",
+       "title": "Budgets and alerts",
+       "legacyIds": [
+        "M17.01.08"
+       ]
+      },
+      {
+       "id": "M21.04.04",
+       "title": "Secrets managers",
+       "legacyIds": [
+        "M17.01.07"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "aws-cpe",
+      "title": "AWS Cloud Practitioner Essentials (AWS Skill Builder)",
+      "url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/134/aws-cloud-practitioner-essentials",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Full course (free Skill Builder login; no card). Focus on the global infrastructure, security/shared-responsibility, and pricing/billing modules."
+     },
+     "covers": [
+      "AWS global infrastructure: regions, AZs, edge locations",
+      "Shared responsibility model and IAM basics",
+      "Pricing, Free Tier and billing tools (module names not inspected)"
+     ],
+     "gaps": [
+      {
+       "topic": "IAM least-privilege practices in detail",
+       "resource": {
+        "resourceId": "aws-docs",
+        "title": "AWS documentation (IAM, Budgets, Free plan)",
+        "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "IAM User Guide: Security best practices in IAM"
+       }
+      },
+      {
+       "topic": "Budget alerts",
+       "resource": {
+        "resourceId": "aws-docs",
+        "title": "AWS documentation (IAM, Budgets, Free plan)",
+        "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Managing your costs with AWS Budgets"
+       }
+      },
+      {
+       "topic": "Same concepts as a video course",
+       "resource": {
+        "resourceId": "yt-fcc-aws-ccp",
+        "title": "AWS Certified Cloud Practitioner Certification Course (CLF-C01)",
+        "url": "https://www.youtube.com/watch?v=SOTamWNgDKc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections on IAM, shared responsibility and billing"
+       }
+      },
+      {
+       "topic": "Hands-on IAM without a card",
+       "resource": {
+        "resourceId": "kodekloud-free",
+        "title": "KodeKloud free courses and labs",
+        "url": "https://kodekloud.com/free-courses",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Free AWS basics labs (browser sandbox)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Safe cloud account (or a sandbox equivalent)",
+      "brief": "With a card: on AWS create a $1 budget alert, enable root MFA, create an IAM role with an S3 read-only policy limited to one bucket ARN. No-card path: do the IAM/S3 labs in KodeKloud's free AWS sandbox, and write the same policy JSON and validate it with LocalStack (`awslocal iam create-policy`) - no AWS account needed.",
+      "done_when": "Repo contains `policy.json` whose Resource is a single bucket ARN (no `*`), a screenshot of either the budget alert or the sandbox/LocalStack policy, and a 5-line note on why root is never used day to day."
+     },
+     "quiz": [
+      {
+       "id": "M21.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Least privilege means:",
+       "options": [
+        "Admin for speed",
+        "Only the permissions a task needs",
+        "One shared user",
+        "No IAM at all"
+       ],
+       "answer": 1,
+       "explain": "Grant the minimum actions on the minimum resources, then widen only when needed."
+      },
+      {
+       "id": "M21.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Under shared responsibility, the customer secures:",
+       "options": [
+        "Data centres",
+        "Their IAM, data and configuration",
+        "Hypervisors",
+        "Physical network"
+       ],
+       "answer": 1,
+       "explain": "The provider secures 'of the cloud'; you secure what you put 'in the cloud'."
+      },
+      {
+       "id": "M21.U09.Q3",
+       "kind": "mcq",
+       "prompt": "An AWS budget alert:",
+       "options": [
+        "Caps spend automatically",
+        "Notifies you; it does not stop spend by itself",
+        "Is free credit",
+        "Deletes resources"
+       ],
+       "answer": 1,
+       "explain": "Budgets notify; automatic actions need explicit Budget Actions or your own automation."
+      },
+      {
+       "id": "M21.U09.Q4",
+       "kind": "short",
+       "prompt": "Write the first three things you do after creating any cloud account, and why.",
+       "rubric": [
+        "Enable MFA on root and stop using root.",
+        "Create a budget/billing alert at a tiny threshold.",
+        "Create a least-privilege IAM user/role (or SSO) for daily work; optionally restrict regions."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U10",
+     "title": "Compute, storage, networking, managed DBs, serverless containers",
+     "hours": 10,
+     "depth": "core",
+     "week": 41,
+     "prerequisites": [
+      "M21.U09",
+      "M21.U04"
+     ],
+     "outcomes": [
+      "You can choose between VM, container platform and serverless containers for an ML API.",
+      "You can store and fetch model artifacts in object storage using roles/env credentials, never hard-coded keys.",
+      "You can draw the network path internet -> load balancer -> security group -> instance.",
+      "You can emulate AWS locally with LocalStack."
+     ],
+     "topics": [
+      {
+       "id": "M21.04.05",
+       "title": "VMs (EC2) vs containers vs serverless",
+       "legacyIds": [
+        "M17.01.04"
+       ]
+      },
+      {
+       "id": "M21.04.06",
+       "title": "Object storage (S3)",
+       "legacyIds": [
+        "M17.01.03"
+       ]
+      },
+      {
+       "id": "M21.04.07",
+       "title": "VPC, subnets and security groups",
+       "legacyIds": [
+        "M17.01.05"
+       ]
+      },
+      {
+       "id": "M21.04.08",
+       "title": "Managed databases (RDS)",
+       "legacyIds": [
+        "M17.01.06"
+       ]
+      },
+      {
+       "id": "M21.04.09",
+       "title": "Serverless containers (Cloud Run / ECS Fargate awareness)"
+      },
+      {
+       "id": "M21.04.10",
+       "title": "LocalStack for offline AWS emulation"
+      }
+     ],
+     "learn": {
+      "resourceId": "kodekloud-free",
+      "title": "KodeKloud free courses and labs",
+      "url": "https://kodekloud.com/free-courses",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Free AWS hands-on labs: S3, EC2 and VPC (browser sandbox; free account, no card)"
+     },
+     "covers": [
+      "Launching an EC2 instance and connecting to it",
+      "Creating S3 buckets and objects",
+      "VPC, subnets and security-group rules (exact lab list not inspected)"
+     ],
+     "gaps": [
+      {
+       "topic": "Serverless containers (Cloud Run)",
+       "resource": {
+        "resourceId": "gcp-docs",
+        "title": "Google Cloud documentation (Cloud Run, free program)",
+        "url": "https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart: Deploy a Python service to Cloud Run"
+       }
+      },
+      {
+       "topic": "LocalStack setup",
+       "resource": {
+        "resourceId": "localstack",
+        "title": "LocalStack documentation",
+        "url": "https://docs.localstack.cloud/aws/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started"
+       }
+      },
+      {
+       "topic": "Testing cloud code against LocalStack",
+       "resource": {
+        "resourceId": "C16",
+        "title": "DataTalksClub MLOps Zoomcamp",
+        "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/06-best-practices",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Module 6.3 'Testing Cloud Services with LocalStack'"
+       }
+      },
+      {
+       "topic": "Config via environment (no hard-coded credentials)",
+       "resource": {
+        "resourceId": "twelve-factor",
+        "title": "The Twelve-Factor App",
+        "url": "https://12factor.net/config",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Factor III 'Config'"
+       }
+      },
+      {
+       "topic": "Managed databases (RDS) concepts",
+       "resource": {
+        "resourceId": "yt-fcc-aws-ccp",
+        "title": "AWS Certified Cloud Practitioner Certification Course (CLF-C01)",
+        "url": "https://www.youtube.com/watch?v=SOTamWNgDKc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Database services section (RDS/DynamoDB)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Model artifact from object storage",
+      "brief": "No-card path: run LocalStack in Docker as the S3 endpoint (`AWS_ENDPOINT_URL=http://localhost:4566`). With credits: real S3 with an instance/role. Upload `model.joblib` to a bucket; your API container downloads it at startup using env-configured credentials (boto3 default chain), never a key in code.",
+      "done_when": "`git grep -E 'AKIA|aws_secret'` returns nothing; container log shows the download from the bucket; README includes a diagram internet -> LB -> SG -> instance with the ports allowed at each hop."
+     },
+     "quiz": [
+      {
+       "id": "M21.U10.Q1",
+       "kind": "mcq",
+       "prompt": "A security group is:",
+       "options": [
+        "A stateful, instance-level virtual firewall",
+        "An IAM group",
+        "A subnet",
+        "A DNS record"
+       ],
+       "answer": 0,
+       "explain": "SGs attach to ENIs/instances and track connections; NACLs are the stateless subnet-level layer."
+      },
+      {
+       "id": "M21.U10.Q2",
+       "kind": "mcq",
+       "prompt": "S3 suits model artifacts because it is:",
+       "options": [
+        "A POSIX filesystem",
+        "Durable, cheap object storage addressed by key",
+        "A relational database",
+        "A cache"
+       ],
+       "answer": 1,
+       "explain": "Objects are immutable blobs by key with high durability; not a filesystem."
+      },
+      {
+       "id": "M21.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Serverless containers (Cloud Run/Fargate) best suit:",
+       "options": [
+        "Multi-day GPU training",
+        "Spiky, stateless HTTP workloads that can scale to zero",
+        "Databases",
+        "Kubernetes control planes"
+       ],
+       "answer": 1,
+       "explain": "You pay per request/time and accept cold starts."
+      },
+      {
+       "id": "M21.U10.Q4",
+       "kind": "short",
+       "prompt": "When would you choose a VM over Cloud Run for an ML API?",
+       "rubric": [
+        "Long-lived state/large model in memory where cold starts are unacceptable.",
+        "GPU or special hardware/drivers, or long-running/background work beyond request timeouts.",
+        "Steady high utilisation making reserved VMs cheaper; needs full OS control."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M21.S5",
+   "title": "Infrastructure as Code",
+   "units": [
+    {
+     "id": "M21.U11",
+     "title": "Terraform: providers, state, plan/apply, variables, modules",
+     "hours": 10,
+     "depth": "core",
+     "week": 42,
+     "prerequisites": [
+      "M21.U08",
+      "M21.U10"
+     ],
+     "outcomes": [
+      "You can describe infrastructure declaratively and run init/plan/apply/destroy.",
+      "You can explain state, remote state and locking, and detect drift.",
+      "You can parameterise with variables/outputs and reuse a module.",
+      "You can run `terraform plan` in CI on pull requests."
+     ],
+     "topics": [
+      {
+       "id": "M21.05.01",
+       "title": "Declarative IaC vs click-ops",
+       "legacyIds": [
+        "M17.01.09"
+       ]
+      },
+      {
+       "id": "M21.05.02",
+       "title": "Providers, resources, data sources"
+      },
+      {
+       "id": "M21.05.03",
+       "title": "State, remote state, locking"
+      },
+      {
+       "id": "M21.05.04",
+       "title": "Variables, outputs, modules"
+      },
+      {
+       "id": "M21.05.05",
+       "title": "Plan in CI, apply with approval"
+      },
+      {
+       "id": "M21.05.06",
+       "title": "Pulumi/CloudFormation awareness"
+      }
+     ],
+     "learn": {
+      "resourceId": "tf-tutorials",
+      "title": "HashiCorp Terraform tutorials and docs",
+      "url": "https://developer.hashicorp.com/terraform/tutorials/docker-get-started",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Tutorial series 'Get Started - Docker' (Install, Build, Change, Destroy, Variables, Outputs) - uses the Docker provider, no cloud account"
+     },
+     "covers": [
+      "Installing Terraform and the Docker provider",
+      "Building, changing and destroying infrastructure (an nginx container)",
+      "Input variables and outputs",
+      "The init/plan/apply workflow and state file"
+     ],
+     "gaps": [
+      {
+       "topic": "State, remote backends and locking",
+       "resource": {
+        "resourceId": "tf-tutorials",
+        "title": "HashiCorp Terraform tutorials and docs",
+        "url": "https://developer.hashicorp.com/terraform/language/state",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Terraform language docs: State"
+       }
+      },
+      {
+       "topic": "Modules and a real cloud provider",
+       "resource": {
+        "resourceId": "yt-dd-tf",
+        "title": "Complete Terraform Course - From BEGINNER to PRO!",
+        "url": "https://www.youtube.com/watch?v=7xngnjfIlK4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full course - modules and remote backend sections"
+       }
+      },
+      {
+       "topic": "Terraform in CI on PRs",
+       "resource": {
+        "resourceId": "tf-tutorials",
+        "title": "HashiCorp Terraform tutorials and docs",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/automation/github-actions",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tutorial 'Automate Terraform with GitHub Actions'"
+       }
+      },
+      {
+       "topic": "Short concept overview",
+       "resource": {
+        "resourceId": "yt-nana-tf",
+        "title": "Terraform explained in 15 mins",
+        "url": "https://www.youtube.com/watch?v=l5k1ai_GBDE",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video (15 min)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Terraform your Compose stack",
+      "brief": "No-card path: Docker provider only - no cloud account. Recreate network + Postgres + API containers in Terraform with variables for image tag and host port; a module for 'service'. A PR workflow posts `terraform plan` output as a comment. Optional with credits: same with the AWS provider + S3 backend.",
+      "done_when": "`terraform apply` from a clean clone brings the stack up and `terraform plan` immediately after shows 'No changes'; manually `docker rm -f` the API container and `terraform plan` shows it will be recreated (drift detected); PR shows the plan comment."
+     },
+     "quiz": [
+      {
+       "id": "M21.U11.Q1",
+       "kind": "mcq",
+       "prompt": "The Terraform state file:",
+       "options": [
+        "Is optional decoration",
+        "Maps config to real resources and must be protected and shared safely",
+        "Holds your source code",
+        "Is safe to commit with secrets"
+       ],
+       "answer": 1,
+       "explain": "State can contain secrets in plain text and is how Terraform knows what it manages."
+      },
+      {
+       "id": "M21.U11.Q2",
+       "kind": "mcq",
+       "prompt": "`terraform plan`:",
+       "options": [
+        "Changes infrastructure",
+        "Shows proposed changes without applying them",
+        "Deletes state",
+        "Only installs providers"
+       ],
+       "answer": 1,
+       "explain": "plan is a dry run; apply executes."
+      },
+      {
+       "id": "M21.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Remote state with locking prevents:",
+       "options": [
+        "Slow plans",
+        "Two people applying at once and corrupting state",
+        "All drift",
+        "Provider upgrades"
+       ],
+       "answer": 1,
+       "explain": "A lock (e.g. DynamoDB/S3 native lock, Terraform Cloud) serialises writes."
+      },
+      {
+       "id": "M21.U11.Q4",
+       "kind": "short",
+       "prompt": "What is configuration drift and how does Terraform detect it?",
+       "rubric": [
+        "Drift = real infrastructure diverges from code (manual/console changes, external processes).",
+        "Terraform refreshes state from provider APIs during plan and diffs it against config.",
+        "Remedy: re-apply or import/update code; prevent with no click-ops and CI-only applies."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M21.S6",
+   "title": "Kubernetes basics",
+   "units": [
+    {
+     "id": "M21.U12",
+     "title": "Kubernetes core objects on a local k3d cluster",
+     "hours": 14,
+     "depth": "core",
+     "week": 43,
+     "prerequisites": [
+      "M21.U06",
+      "M21.U08"
+     ],
+     "outcomes": [
+      "You can deploy an app with a Deployment, Service, ConfigMap and Secret on k3d.",
+      "You can set requests/limits and liveness/readiness/startup probes and explain each.",
+      "You can debug a failing pod and roll back a bad rollout."
+     ],
+     "topics": [
+      {
+       "id": "M21.06.01",
+       "title": "Control plane vs nodes, kubectl",
+       "legacyIds": [
+        "M17.04.01"
+       ]
+      },
+      {
+       "id": "M21.06.02",
+       "title": "Pods, ReplicaSets, Deployments"
+      },
+      {
+       "id": "M21.06.03",
+       "title": "Services (ClusterIP/NodePort/LoadBalancer)"
+      },
+      {
+       "id": "M21.06.04",
+       "title": "ConfigMaps and Secrets"
+      },
+      {
+       "id": "M21.06.05",
+       "title": "Resource requests and limits"
+      },
+      {
+       "id": "M21.06.06",
+       "title": "Liveness/readiness/startup probes"
+      },
+      {
+       "id": "M21.06.07",
+       "title": "Rolling updates and `kubectl rollout undo`"
+      }
+     ],
+     "learn": {
+      "resourceId": "dwk8s",
+      "title": "DevOps with Kubernetes (University of Helsinki, 2026)",
+      "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-2",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 1 'Getting started' + Chapter 2 'Kubernetes basics' - pages: First deploy; Introduction to Debugging; Introduction to Networking; Introduction to Storage"
+     },
+     "covers": [
+      "Creating a k3d cluster and deploying with kubectl and manifests",
+      "Pods, Deployments and rolling updates of a project app",
+      "Debugging with kubectl describe/logs/events",
+      "Services and Ingress for reaching apps",
+      "Volumes and persistent storage basics"
+     ],
+     "gaps": [
+      {
+       "topic": "Liveness, readiness and startup probes",
+       "resource": {
+        "resourceId": "k8s-docs",
+        "title": "Kubernetes documentation",
+        "url": "https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts: Liveness, Readiness, and Startup Probes"
+       }
+      },
+      {
+       "topic": "ConfigMaps and Secrets",
+       "resource": {
+        "resourceId": "yt-nana-k8s-cm",
+        "title": "Kubernetes ConfigMap and Secret as Kubernetes Volumes | Demo",
+        "url": "https://www.youtube.com/watch?v=FAnQTgr04mU",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full demo video"
+       }
+      },
+      {
+       "topic": "Resource requests/limits",
+       "resource": {
+        "resourceId": "k8s-docs",
+        "title": "Kubernetes documentation",
+        "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Resource Management for Pods and Containers"
+       }
+      },
+      {
+       "topic": "Whole-picture video course",
+       "resource": {
+        "resourceId": "yt-nana-k8s",
+        "title": "Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]",
+        "url": "https://www.youtube.com/watch?v=X48VuDVv0do",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full course (4 h) - architecture, Deployments, Services, ConfigMap/Secret sections"
+       }
+      }
+     ],
+     "practice": {
+      "title": "API + Postgres on k3d with probes and a bad rollout",
+      "brief": "No-card path: k3d (k3s in Docker) on your laptop; 8 GB RAM is enough. Deploy API + Postgres with requests/limits, readiness + liveness probes, DB password in a Secret. Then deploy a non-existent image tag.",
+      "done_when": "`kubectl rollout status` hangs on the bad tag while old pods keep serving (curl succeeds throughout); `kubectl rollout undo deployment/api` restores it; manifests committed under k8s/; README explains each probe's thresholds."
+     },
+     "quiz": [
+      {
+       "id": "M21.U12.Q1",
+       "kind": "mcq",
+       "prompt": "A failing READINESS probe:",
+       "options": [
+        "Restarts the container",
+        "Removes the pod from Service endpoints",
+        "Deletes the Deployment",
+        "Scales up"
+       ],
+       "answer": 1,
+       "explain": "Readiness controls traffic; liveness controls restarts."
+      },
+      {
+       "id": "M21.U12.Q2",
+       "kind": "mcq",
+       "prompt": "A failing LIVENESS probe:",
+       "options": [
+        "Restarts the container",
+        "Only logs a warning",
+        "Drains the node",
+        "Does nothing"
+       ],
+       "answer": 0,
+       "explain": "The kubelet kills and restarts the container per restartPolicy."
+      },
+      {
+       "id": "M21.U12.Q3",
+       "kind": "mcq",
+       "prompt": "A pod with no memory limit can:",
+       "options": [
+        "Never be OOM-killed",
+        "Consume node memory and cause evictions or OOM kills of other pods",
+        "Not be scheduled",
+        "Autoscale itself"
+       ],
+       "answer": 1,
+       "explain": "Without limits it competes for all node memory; requests also matter for scheduling."
+      },
+      {
+       "id": "M21.U12.Q4",
+       "kind": "short",
+       "prompt": "Why do clients never address a pod directly, and what does a Service add?",
+       "rubric": [
+        "Pods are ephemeral: IPs change on restart/reschedule/scale.",
+        "A Service gives a stable virtual IP + DNS name and load-balances across ready pods via selectors.",
+        "Mentions endpoints updated by readiness."
+       ]
+      }
+     ],
+     "read": {
+      "resourceId": "k3d",
+      "title": "k3d documentation",
+      "url": "https://k3d.io/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Docs home: Quick start (`k3d cluster create`)"
+     }
+    },
+    {
+     "id": "M21.U13",
+     "title": "Ingress, storage, autoscaling, Helm, GitOps awareness",
+     "hours": 10,
+     "depth": "core",
+     "week": 44,
+     "prerequisites": [
+      "M21.U12"
+     ],
+     "outcomes": [
+      "You can expose services through Ingress and organise a cluster with namespaces.",
+      "You can configure an HPA and explain what metrics it needs.",
+      "You can package an app as a Helm chart with per-environment values.",
+      "You can explain GitOps and when Argo CD is worth it."
+     ],
+     "topics": [
+      {
+       "id": "M21.06.08",
+       "title": "Ingress / Gateway API"
+      },
+      {
+       "id": "M21.06.09",
+       "title": "PersistentVolumes and StatefulSets (awareness)"
+      },
+      {
+       "id": "M21.06.10",
+       "title": "HorizontalPodAutoscaler"
+      },
+      {
+       "id": "M21.06.11",
+       "title": "Helm charts"
+      },
+      {
+       "id": "M21.06.12",
+       "title": "GitOps (Argo CD awareness)"
+      },
+      {
+       "id": "M21.06.13",
+       "title": "Namespaces and RBAC basics"
+      }
+     ],
+     "learn": {
+      "resourceId": "dwk8s",
+      "title": "DevOps with Kubernetes (University of Helsinki, 2026)",
+      "url": "https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-3",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 3 'More building blocks' - pages: Networking between pods; Organizing a cluster; Configuring applications; StatefulSets and Jobs; Monitoring"
+     },
+     "covers": [
+      "Pod-to-pod networking and Services across namespaces",
+      "Organising a cluster with namespaces and labels",
+      "ConfigMaps for configuration",
+      "StatefulSets (e.g. a database) and Jobs/CronJobs",
+      "Monitoring a cluster (Prometheus/Grafana stack introduction)"
+     ],
+     "gaps": [
+      {
+       "topic": "HorizontalPodAutoscaler hands-on",
+       "resource": {
+        "resourceId": "k8s-docs",
+        "title": "Kubernetes documentation",
+        "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Task: HorizontalPodAutoscaler Walkthrough"
+       }
+      },
+      {
+       "topic": "HPA concepts in video",
+       "resource": {
+        "resourceId": "yt-hpa",
+        "title": "Understanding Horizontal Pod Autoscaling",
+        "url": "https://www.youtube.com/watch?v=JJqY_YFZhyY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Helm charts (concepts)",
+       "resource": {
+        "resourceId": "yt-nana-helm",
+        "title": "What is Helm in Kubernetes? Helm and Helm Charts explained",
+        "url": "https://www.youtube.com/watch?v=-ykwb1d0DXU",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Helm charts (hands-on)",
+       "resource": {
+        "resourceId": "helm-docs",
+        "title": "Helm documentation",
+        "url": "https://helm.sh/docs/intro/quickstart/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart Guide"
+       }
+      },
+      {
+       "topic": "Ingress",
+       "resource": {
+        "resourceId": "yt-nana-ingress",
+        "title": "Kubernetes Ingress Tutorial for Beginners",
+        "url": "https://www.youtube.com/watch?v=80Ew_fsV4rM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "GitOps with Argo CD (concepts)",
+       "resource": {
+        "resourceId": "yt-nana-argocd",
+        "title": "ArgoCD Tutorial for Beginners | GitOps CD for Kubernetes",
+        "url": "https://www.youtube.com/watch?v=MeU5_k9ssrs",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video (awareness); course Chapter 5 'GitOps and friends' for depth"
+       }
+      },
+      {
+       "topic": "GitOps with Argo CD (hands-on, optional)",
+       "resource": {
+        "resourceId": "argocd-docs",
+        "title": "Argo CD documentation",
+        "url": "https://argo-cd.readthedocs.io/en/stable/getting_started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting Started"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Ingress + HPA + Helm chart",
+      "brief": "No-card path: k3d ships Traefik ingress and metrics-server. Add an Ingress, set CPU requests, add an HPA at 60% CPU, generate load with `hey`/a curl loop, and watch replicas grow. Convert the manifests to a Helm chart with values-dev.yaml / values-prod.yaml.",
+      "done_when": "`kubectl get hpa -w` output pasted in README shows replicas rising above 1 under load and back down after; `helm install api ./chart -f values-dev.yaml` works from a clean cluster; `helm template` diff shows dev vs prod replica/resource differences."
+     },
+     "quiz": [
+      {
+       "id": "M21.U13.Q1",
+       "kind": "mcq",
+       "prompt": "An HPA scaling on CPU needs:",
+       "options": [
+        "Nothing extra",
+        "metrics-server and CPU requests set on the containers",
+        "GPUs",
+        "Helm"
+       ],
+       "answer": 1,
+       "explain": "Utilisation is computed as usage / request; without requests the HPA cannot compute a percentage."
+      },
+      {
+       "id": "M21.U13.Q2",
+       "kind": "mcq",
+       "prompt": "Helm's main value is:",
+       "options": [
+        "A container runtime",
+        "Templated, versioned packaging of Kubernetes manifests",
+        "Monitoring",
+        "Networking"
+       ],
+       "answer": 1,
+       "explain": "Charts + values + releases with upgrade/rollback."
+      },
+      {
+       "id": "M21.U13.Q3",
+       "kind": "mcq",
+       "prompt": "GitOps means:",
+       "options": [
+        "Using GitHub",
+        "Cluster state continuously reconciles to what is declared in git",
+        "CI only",
+        "Manual kubectl applies"
+       ],
+       "answer": 1,
+       "explain": "An in-cluster agent (Argo CD/Flux) pulls and applies the declared state."
+      },
+      {
+       "id": "M21.U13.Q4",
+       "kind": "short",
+       "prompt": "Why is CPU a poor autoscaling signal for an LLM inference server? (Preview of M17.)",
+       "rubric": [
+        "GPU-bound work: CPU stays low while the GPU/queue is saturated.",
+        "Better signals: request queue depth, running/waiting requests, KV-cache utilisation, latency.",
+        "Mentions slow cold starts making reactive CPU scaling too late."
+       ]
+      }
+     ],
+     "backup": {
+      "resourceId": "yt-nana-k8s-vol",
+      "title": "Kubernetes Volumes explained | Persistent Volume, Persistent Volume Claim & Storage Class",
+      "url": "https://www.youtube.com/watch?v=0swOh5C3OVM",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full video (PersistentVolume, PVC, StorageClass)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "M21.S7",
+   "title": "Monitoring and SRE basics",
+   "units": [
+    {
+     "id": "M21.U14",
+     "title": "Metrics with Prometheus and Grafana; alerting",
+     "hours": 8,
+     "depth": "core",
+     "week": 45,
+     "prerequisites": [
+      "M21.U05"
+     ],
+     "outcomes": [
+      "You can instrument a Python service with counters and histograms and expose /metrics.",
+      "You can write basic PromQL (rate, histogram_quantile) and build a RED dashboard.",
+      "You can define an alert rule and explain label-cardinality risks."
+     ],
+     "topics": [
+      {
+       "id": "M21.07.01",
+       "title": "Metrics vs logs vs traces"
+      },
+      {
+       "id": "M21.07.02",
+       "title": "Prometheus pull model, exporters, PromQL basics"
+      },
+      {
+       "id": "M21.07.03",
+       "title": "Instrumenting Python (counters, histograms)"
+      },
+      {
+       "id": "M21.07.04",
+       "title": "Grafana dashboards"
+      },
+      {
+       "id": "M21.07.05",
+       "title": "Alert rules (Prometheus/Grafana alerting)"
+      }
+     ],
+     "learn": {
+      "resourceId": "prometheus-docs",
+      "title": "Prometheus documentation",
+      "url": "https://prometheus.io/docs/prometheus/latest/getting_started/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Getting started' (first Prometheus server, scraping itself, expression browser, graphing) + 'Instrumentation' best practices"
+     },
+     "covers": [
+      "Downloading/running Prometheus and its config file",
+      "Scrape targets and the pull model",
+      "Using the expression browser and graphing PromQL",
+      "Instrumentation guidance: what to measure, label usage, counters vs gauges vs histograms"
+     ],
+     "gaps": [
+      {
+       "topic": "Python client (Counter/Histogram, /metrics endpoint)",
+       "resource": {
+        "resourceId": "prom-client-py",
+        "title": "Prometheus Python client",
+        "url": "https://prometheus.github.io/client_python/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started + Instrumenting sections"
+       }
+      },
+      {
+       "topic": "Grafana dashboards on Prometheus",
+       "resource": {
+        "resourceId": "grafana-docs",
+        "title": "Grafana documentation",
+        "url": "https://grafana.com/docs/grafana/latest/getting-started/get-started-grafana-prometheus/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Get started with Grafana and Prometheus"
+       }
+      },
+      {
+       "topic": "Alert rules",
+       "resource": {
+        "resourceId": "grafana-docs",
+        "title": "Grafana documentation",
+        "url": "https://grafana.com/docs/grafana/latest/alerting/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Grafana Alerting"
+       }
+      },
+      {
+       "topic": "Architecture explained",
+       "resource": {
+        "resourceId": "yt-nana-prom",
+        "title": "How Prometheus Monitoring works | Prometheus Architecture explained",
+        "url": "https://www.youtube.com/watch?v=h4Sl21AKiDg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      }
+     ],
+     "practice": {
+      "title": "RED dashboard with a latency alert",
+      "brief": "No-card path: Prometheus + Grafana as Compose services next to your API. Expose request count, error count and a latency histogram; Grafana dashboard with Rate/Errors/Duration (p50/p95); alert when p95 > 500 ms for 5 min. Add a `/slow` endpoint to trigger it.",
+      "done_when": "Dashboard JSON exported to repo; screenshot of the alert in Firing state after hitting /slow in a loop; PromQL for p95 uses `histogram_quantile(0.95, sum by (le) (rate(...[5m])))`."
+     },
+     "quiz": [
+      {
+       "id": "M21.U14.Q1",
+       "kind": "mcq",
+       "prompt": "For latency percentiles you should record a:",
+       "options": [
+        "Gauge",
+        "Histogram",
+        "Counter only",
+        "Log line"
+       ],
+       "answer": 1,
+       "explain": "Histograms bucket observations so percentiles can be aggregated across instances."
+      },
+      {
+       "id": "M21.U14.Q2",
+       "kind": "mcq",
+       "prompt": "By default Prometheus:",
+       "options": [
+        "Receives pushed metrics",
+        "Scrapes (pulls) targets over HTTP",
+        "Reads log files",
+        "Traces requests"
+       ],
+       "answer": 1,
+       "explain": "Pull model; Pushgateway exists for short-lived jobs only."
+      },
+      {
+       "id": "M21.U14.Q3",
+       "kind": "mcq",
+       "prompt": "Very high-cardinality labels such as user_id:",
+       "options": [
+        "Are best practice",
+        "Explode the number of series and memory use",
+        "Are required",
+        "Don't matter"
+       ],
+       "answer": 1,
+       "explain": "Every unique label combination is a separate time series."
+      },
+      {
+       "id": "M21.U14.Q4",
+       "kind": "short",
+       "prompt": "Name the four golden signals and say which one your dashboard does not cover yet.",
+       "rubric": [
+        "Latency, traffic, errors, saturation.",
+        "Identifies saturation (CPU/memory/queue/connection pool) as typically missing from RED.",
+        "Proposes a concrete saturation metric."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M21.U15",
+     "title": "SLIs/SLOs, error budgets, tracing, incident review",
+     "hours": 8,
+     "depth": "core",
+     "week": 46,
+     "prerequisites": [
+      "M21.U14"
+     ],
+     "outcomes": [
+      "You can define SLIs and SLOs and compute an error budget.",
+      "You can add OpenTelemetry traces across API -> DB and use correlation IDs in logs.",
+      "You can run a blameless postmortem and write a runbook."
+     ],
+     "topics": [
+      {
+       "id": "M21.07.06",
+       "title": "SLI/SLO/SLA and error budgets"
+      },
+      {
+       "id": "M21.07.07",
+       "title": "OpenTelemetry traces (general)"
+      },
+      {
+       "id": "M21.07.08",
+       "title": "Structured logging and correlation IDs"
+      },
+      {
+       "id": "M21.07.09",
+       "title": "On-call, runbooks, blameless postmortems"
+      }
+     ],
+     "learn": {
+      "resourceId": "sre-book",
+      "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+      "url": "https://sre.google/sre-book/service-level-objectives/",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "SRE Book Chapter 4 'Service Level Objectives' + Chapter 6 'Monitoring Distributed Systems'"
+     },
+     "covers": [
+      "Defining SLIs, SLOs and SLAs; choosing targets; control loops",
+      "Error budgets as the release-velocity/reliability trade",
+      "The four golden signals; symptoms vs causes; alerting philosophy (Ch6)"
+     ],
+     "gaps": [
+      {
+       "topic": "OpenTelemetry tracing in Python",
+       "resource": {
+        "resourceId": "otel-docs",
+        "title": "OpenTelemetry documentation (Python)",
+        "url": "https://opentelemetry.io/docs/languages/python/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Python 'Getting Started'"
+       }
+      },
+      {
+       "topic": "Postmortems",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/workbook/postmortem-culture/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Workbook 'Postmortem Culture: Learning from Failure'"
+       }
+      },
+      {
+       "topic": "SLO math as a short video",
+       "resource": {
+        "resourceId": "yt-gcp-slo",
+        "title": "SLIs, SLOs, SLAs, oh my! (class SRE implements DevOps)",
+        "url": "https://www.youtube.com/watch?v=tEylFyxbDLE",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Tracing concepts end-to-end",
+       "resource": {
+        "resourceId": "yt-fcc-otel",
+        "title": "OpenTelemetry Course - Understand Software Performance",
+        "url": "https://www.youtube.com/watch?v=r8UvWSX3KA8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full course - spans/context propagation sections"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Two SLOs, traces and a staged outage",
+      "brief": "No-card path: Jaeger or Grafana Tempo container locally. Define availability and latency SLOs for your API, compute the 30-day error budget, add OTel auto-instrumentation (FastAPI + DB driver) exporting to Jaeger, log a request ID on every line. Then break the DB connection on purpose for 10 minutes.",
+      "done_when": "SLO.md with SLI definitions and budget minutes; a Jaeger trace screenshot showing API span -> DB span; a one-page blameless postmortem (timeline, impact in budget minutes, root cause, detection gap, 3 action items)."
+     },
+     "quiz": [
+      {
+       "id": "M21.U15.Q1",
+       "kind": "mcq",
+       "prompt": "99.9% monthly availability allows roughly how much downtime?",
+       "options": [
+        "4.3 minutes",
+        "43 minutes",
+        "7 hours",
+        "3.6 days"
+       ],
+       "answer": 1,
+       "explain": "0.1% of ~43,200 minutes is ~43 minutes."
+      },
+      {
+       "id": "M21.U15.Q2",
+       "kind": "mcq",
+       "prompt": "An error budget is used to:",
+       "options": [
+        "Punish teams",
+        "Balance release velocity against reliability",
+        "Set salaries",
+        "Size disks"
+       ],
+       "answer": 1,
+       "explain": "Budget left -> ship faster; budget burnt -> slow down and fix reliability."
+      },
+      {
+       "id": "M21.U15.Q3",
+       "kind": "mcq",
+       "prompt": "A trace is made of:",
+       "options": [
+        "Metrics",
+        "Spans with parent/child relationships",
+        "Log files",
+        "Alerts"
+       ],
+       "answer": 1,
+       "explain": "Spans share a trace ID and are linked by parent span IDs via context propagation."
+      },
+      {
+       "id": "M21.U15.Q4",
+       "kind": "short",
+       "prompt": "Why alert on symptoms (SLO burn) rather than causes (high CPU)?",
+       "rubric": [
+        "Symptoms reflect user impact; causes may not hurt users (false pages).",
+        "Unknown causes still show up as symptoms, so coverage is better.",
+        "Burn-rate alerts tie paging to the error budget; causes go on dashboards."
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Ship it like a team would",
+  "brief": "Take your M03 API (or a small model API) and deliver: a hardened non-root, scanned Docker image; GitHub Actions CI (lint/test/scan) and CD (GHCR + deploy on tag with approval); Terraform-managed infra (Docker provider locally, or AWS/GCP with a budget alert if you have a card); a k3d deployment with probes, limits, HPA and a Helm chart; a Prometheus/Grafana dashboard with one SLO burn alert; a runbook and a postmortem of a staged failure. No-card path: everything runs on your laptop plus GitHub and a free Hugging Face Docker Space. Alternative (after M12): rohitg00 capstone 19/06 'DevOps Troubleshooting Agent for Kubernetes'.",
+  "rubric": [
+   {
+    "criterion": "Reproducibility",
+    "levels": [
+     "0-1: manual steps",
+     "2-3: scripted, some drift",
+     "4: `git clone` + one command recreates everything; README tested by someone else"
+    ]
+   },
+   {
+    "criterion": "Delivery pipeline",
+    "levels": [
+     "0-1: no CI",
+     "2-3: CI only",
+     "4: CI blocks bad merges; CD deploys the tagged SHA; one-command rollback demonstrated"
+    ]
+   },
+   {
+    "criterion": "Security",
+    "levels": [
+     "0-1: secrets in repo",
+     "2-3: env vars",
+     "4: non-root scanned image, least-privilege CI permissions, no long-lived keys, budget alert or no-cloud setup"
+    ]
+   },
+   {
+    "criterion": "Operability",
+    "levels": [
+     "0-1: no metrics",
+     "2-3: dashboard only",
+     "4: SLO defined, alert fires on staged fault, runbook leads to the fix within 15 min"
+    ]
+   },
+   {
+    "criterion": "Explanation",
+    "levels": [
+     "0-1: none",
+     "2-3: diagram",
+     "4: architecture diagram + decision record (why k3d vs cloud, why these probes) + recorded demo"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

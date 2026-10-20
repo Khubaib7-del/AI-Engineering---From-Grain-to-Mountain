@@ -1,0 +1,1273 @@
+{
+ "id": "M00",
+ "phase": "P1 Foundations",
+ "title": "Computer & workstation foundations",
+ "summary": "How computers run programs, files/paths, data representation, problem solving, a working Linux+Git+uv workstation, a study system and the algebra you need — all with real resources (CS50x L0, Crash Course CS, Software Carpentry, Microsoft/uv docs, Khan Academy).",
+ "hours": 35,
+ "prerequisites": [],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M00.S1",
+   "title": "Computer basics",
+   "units": [
+    {
+     "id": "M00.U01",
+     "title": "How a computer runs a program",
+     "hours": 4,
+     "depth": "core",
+     "week": 1,
+     "prerequisites": [],
+     "outcomes": [
+      "You can explain the journey of a program from disk to RAM to CPU.",
+      "You can tell a process from a program and read one in Task Manager / htop.",
+      "You can explain why GPUs suit AI workloads and estimate a model's memory from its parameter count."
+     ],
+     "topics": [
+      {
+       "id": "M00.01.01",
+       "title": "hardware/software"
+      },
+      {
+       "id": "M00.01.02",
+       "title": "CPU versus GPU"
+      },
+      {
+       "id": "M00.01.03",
+       "title": "RAM versus disk"
+      },
+      {
+       "id": "M00.01.04",
+       "title": "operating system"
+      },
+      {
+       "id": "M00.01.08",
+       "title": "process"
+      }
+     ],
+     "learn": {
+      "resourceId": "cc-cs-7",
+      "title": "The Central Processing Unit (CPU): Crash Course Computer Science #7",
+      "url": "https://www.youtube.com/watch?v=FZGugFqdr60",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Crash Course CS #7 'The Central Processing Unit (CPU)' (full episode, ~12 min); then #8 'Instructions & Programs', #18 'Operating Systems', #19 'Memory & Storage' (each ~10-13 min)"
+     },
+     "covers": [
+      "CPU fetch-decode-execute cycle, registers, clock speed (#7)",
+      "Machine instructions and how a program is a sequence of them (#8)",
+      "What an operating system does: scheduling, memory protection, device drivers, processes (#18)",
+      "RAM vs persistent storage (HDD/SSD), volatility, memory hierarchy (#19)"
+     ],
+     "gaps": [
+      {
+       "topic": "instructions & programs (part of the learn sequence)",
+       "resource": {
+        "resourceId": "cc-cs-8",
+        "title": "Instructions & Programs: Crash Course Computer Science #8",
+        "url": "https://www.youtube.com/watch?v=zltgXvg6r3k",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole episode"
+       }
+      },
+      {
+       "topic": "operating system and processes (part of the learn sequence)",
+       "resource": {
+        "resourceId": "cc-cs-18",
+        "title": "Operating Systems: Crash Course Computer Science #18",
+        "url": "https://www.youtube.com/watch?v=26QPDBe-NB8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole episode"
+       }
+      },
+      {
+       "topic": "RAM versus disk (part of the learn sequence)",
+       "resource": {
+        "resourceId": "cc-cs-19",
+        "title": "Memory & Storage: Crash Course Computer Science #19",
+        "url": "https://www.youtube.com/watch?v=TQCr9RV7twk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole episode"
+       }
+      },
+      {
+       "topic": "CPU versus GPU (parallel arithmetic, why AI uses GPUs)",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 03 GPU Setup & Cloud",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/03-gpu-setup-and-cloud",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 03 'GPU Setup & Cloud' — read only the opening concept sections; skip installation"
+       }
+      },
+      {
+       "topic": "hardware/software distinction",
+       "resource": {
+        "resourceId": "cs50x-l0",
+        "title": "CS50x Lecture 0",
+        "url": "https://www.youtube.com/watch?v=UuIEbpQms8o",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "CS50x Lecture 0 'Scratch' — opening segment on what computer science and computers are"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cs50x",
+      "title": "CS50x: Introduction to Computer Science",
+      "url": "https://cs50.harvard.edu/x/notes/0/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "CS50x Lecture 0 notes"
+     },
+     "practice": {
+      "title": "Inspect your own machine",
+      "brief": "Open Task Manager (Windows) or `htop` (WSL/Linux). Write `how-my-computer-works.md` (½ page): name 3 running processes and their RAM, your RAM vs disk size, and compute why a 7B-parameter model needs ~14 GB at fp16 (2 bytes/param).",
+      "done_when": "File committed with 3 processes + RAM figures, disk/RAM sizes and the 7B×2 bytes = 14 GB calculation explained in your own words."
+     },
+     "quiz": [
+      {
+       "id": "M00.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Data that survives a reboot lives in:",
+       "options": [
+        "RAM",
+        "CPU cache",
+        "Disk / SSD",
+        "Registers"
+       ],
+       "answer": 2,
+       "explain": "RAM, caches and registers are volatile; disk/SSD is persistent storage (Crash Course #19)."
+      },
+      {
+       "id": "M00.U01.Q2",
+       "kind": "mcq",
+       "prompt": "A running instance of a program is a:",
+       "options": [
+        "File",
+        "Process",
+        "Thread pool",
+        "Compiler"
+       ],
+       "answer": 1,
+       "explain": "The OS loads the program into memory and runs it as a process with its own address space (Crash Course #18)."
+      },
+      {
+       "id": "M00.U01.Q3",
+       "kind": "mcq",
+       "prompt": "GPUs beat CPUs mainly at:",
+       "options": [
+        "Branch-heavy logic",
+        "Many identical arithmetic operations in parallel",
+        "Disk I/O",
+        "Networking"
+       ],
+       "answer": 1,
+       "explain": "GPUs have thousands of simple cores built for the same arithmetic on many values (matrix maths), which is what neural nets are."
+      },
+      {
+       "id": "M00.U01.Q4",
+       "kind": "mcq",
+       "prompt": "A 7B-parameter model stored in fp16 needs roughly:",
+       "options": [
+        "7 GB",
+        "14 GB",
+        "28 GB",
+        "3.5 GB"
+       ],
+       "answer": 1,
+       "explain": "fp16 = 2 bytes per parameter, so 7e9 × 2 B ≈ 14 GB (before activations/KV cache)."
+      },
+      {
+       "id": "M00.U01.Q5",
+       "kind": "short",
+       "prompt": "Explain what happens, at the level of disk → RAM → CPU → OS, when you double-click a program.",
+       "rubric": [
+        "Program file is read from disk into RAM by the OS",
+        "OS creates a process (memory space, scheduling)",
+        "CPU fetches/decodes/executes instructions from RAM",
+        "Mentions that RAM is volatile / disk persistent"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M00.U02",
+     "title": "Files, paths and the working directory",
+     "hours": 3,
+     "depth": "core",
+     "week": 2,
+     "prerequisites": [
+      "M00.U01"
+     ],
+     "outcomes": [
+      "You can write absolute and relative paths between any two folders.",
+      "You can explain why `open('x.csv')` depends on the current working directory.",
+      "You can tell a terminal from an editor and source code from its execution."
+     ],
+     "topics": [
+      {
+       "id": "M00.01.05",
+       "title": "files/extensions"
+      },
+      {
+       "id": "M00.01.06",
+       "title": "absolute/relative paths"
+      },
+      {
+       "id": "M00.01.07",
+       "title": "working directory"
+      },
+      {
+       "id": "M00.01.09",
+       "title": "terminal versus editor"
+      },
+      {
+       "id": "M00.01.10",
+       "title": "source code versus execution"
+      }
+     ],
+     "learn": {
+      "resourceId": "swc-shell",
+      "title": "The Unix Shell (Software Carpentry)",
+      "url": "https://swcarpentry.github.io/shell-novice/02-filedir.html",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Episode 02 'Navigating Files and Directories' (whole episode incl. exercises)"
+     },
+     "covers": [
+      "Home directory, root `/`, `pwd`, `ls` and its flags",
+      "Absolute vs relative paths, `.` and `..`, `~`",
+      "`cd` and path shortcuts",
+      "File-naming conventions and why extensions are only conventions"
+     ],
+     "gaps": [
+      {
+       "topic": "terminal versus editor / source code versus execution",
+       "resource": {
+        "resourceId": "ms-2020-shell",
+        "title": "Missing Semester 2020 · Lecture 1 The Shell",
+        "url": "https://www.youtube.com/watch?v=Z56Jmr9Z34Q",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Missing Semester 2020 Lecture 1 'Course Overview + The Shell' — 0:00–~25:00 (what a shell is, navigating, paths)"
+       }
+      },
+      {
+       "topic": "file extensions and file types",
+       "resource": {
+        "resourceId": "cy-term-nav",
+        "title": "Linux/Mac Terminal Tutorial: Navigating your Filesystem",
+        "url": "https://www.youtube.com/watch?v=j6vKLJxAKfw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (navigating the filesystem from a terminal)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 11 Linux for AI",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/11-linux-for-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 11 'Linux for AI' — section on the file-system layout"
+     },
+     "practice": {
+      "title": "Working-directory experiment",
+      "brief": "In WSL (or cs50.dev), write the absolute and relative path from `~/code/a/b` to `~/data/x.csv`. Create `script.py` that does `open('x.csv')`; run it from two different directories and explain why it fails in one. Fix it with `Path(__file__).parent / 'x.csv'`.",
+      "done_when": "`paths.md` committed with both paths, the failing + working command lines, and a 3-sentence explanation."
+     },
+     "quiz": [
+      {
+       "id": "M00.U02.Q1",
+       "kind": "mcq",
+       "prompt": "`../data` is resolved relative to:",
+       "options": [
+        "The filesystem root",
+        "Your home directory",
+        "The current working directory",
+        "The script file's folder"
+       ],
+       "answer": 2,
+       "explain": "Relative paths are resolved from the process's current working directory, not the script's location."
+      },
+      {
+       "id": "M00.U02.Q2",
+       "kind": "mcq",
+       "prompt": "An absolute path on Linux starts with:",
+       "options": [
+        "~",
+        "/",
+        ".",
+        "C:"
+       ],
+       "answer": 1,
+       "explain": "`/` is the root; `~` is a shell shortcut that expands to an absolute home path."
+      },
+      {
+       "id": "M00.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Renaming `notes.txt` to `notes.py` changes:",
+       "options": [
+        "The bytes stored",
+        "How programs choose to interpret the file",
+        "File size",
+        "Permissions"
+       ],
+       "answer": 1,
+       "explain": "Extensions are naming conventions; the content is unchanged."
+      },
+      {
+       "id": "M00.U02.Q4",
+       "kind": "mcq",
+       "prompt": "The editor vs the terminal:",
+       "options": [
+        "Both run code",
+        "The editor edits source text; the terminal runs programs (including Python on that source)",
+        "The terminal edits files only",
+        "They are the same tool"
+       ],
+       "answer": 1,
+       "explain": "Source code is text you edit; execution happens when an interpreter runs it, usually started from a terminal."
+      },
+      {
+       "id": "M00.U02.Q5",
+       "kind": "short",
+       "prompt": "Why does 'it works on my machine' so often come down to the working directory?",
+       "rubric": [
+        "Relative paths resolve against cwd",
+        "Different launch locations (IDE vs terminal) give different cwd",
+        "Fix: build paths from __file__ or pass absolute paths/config"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M00.S2",
+   "title": "Data representation",
+   "units": [
+    {
+     "id": "M00.U03",
+     "title": "Bits, bytes, text and numbers",
+     "hours": 3,
+     "depth": "core",
+     "week": 3,
+     "prerequisites": [
+      "M00.U01"
+     ],
+     "outcomes": [
+      "You can convert small numbers between decimal, binary and hex.",
+      "You can explain ASCII vs Unicode vs UTF-8 and why an emoji takes several bytes.",
+      "You can explain why `0.1 + 0.2 != 0.3` in Python."
+     ],
+     "topics": [
+      {
+       "id": "M00.04.01",
+       "title": "binary and hexadecimal"
+      },
+      {
+       "id": "M00.04.02",
+       "title": "bytes and sizes (KB/MB/GB)"
+      },
+      {
+       "id": "M00.04.03",
+       "title": "ASCII, Unicode and UTF-8"
+      },
+      {
+       "id": "M00.04.04",
+       "title": "floating-point imprecision"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50x",
+      "title": "CS50x: Introduction to Computer Science",
+      "url": "https://cs50.harvard.edu/x/notes/0/#computer-science-and-problem-solving",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "CS50x Lecture 0 notes §'Computer Science and Problem Solving' (binary), §ASCII, §Unicode, §RGB"
+     },
+     "covers": [
+      "Binary counting and bits",
+      "ASCII mapping of letters to numbers",
+      "Unicode and emoji code points",
+      "RGB as numbers (representing images)"
+     ],
+     "gaps": [
+      {
+       "topic": "floating-point imprecision",
+       "resource": {
+        "resourceId": "py-float",
+        "title": "Python Tutorial ch. 15 – Floating-Point Arithmetic: Issues and Limitations",
+        "url": "https://docs.python.org/3/tutorial/floatingpoint.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page (0.1 example, representation error)"
+       }
+      },
+      {
+       "topic": "binary and hexadecimal (video)",
+       "resource": {
+        "resourceId": "cc-cs-4",
+        "title": "Representing Numbers and Letters with Binary: Crash Course Computer Science #4",
+        "url": "https://www.youtube.com/watch?v=1GSjbWt0c9M",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole episode (~10 min)"
+       }
+      },
+      {
+       "topic": "Unicode in practice",
+       "resource": {
+        "resourceId": "ned-unicode",
+        "title": "Pragmatic Unicode, or, How do I stop the pain?",
+        "url": "https://www.youtube.com/watch?v=sgHbC6udIqc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "First ~15 min (bytes vs code points, encode/decode)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cs50x-l0",
+      "title": "CS50x - Lecture 0 - Scratch",
+      "url": "https://www.youtube.com/watch?v=UuIEbpQms8o",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 0 video — binary/ASCII/Unicode segment near the start"
+     },
+     "practice": {
+      "title": "Represent things by hand and in Python",
+      "brief": "By hand convert 5, 50, 255 to binary and hex. In Python print `'é'.encode('utf-8')`, `len('😀'.encode('utf-8'))`, `0.1 + 0.2`, and `hex(255)`; explain each output in `data-rep.md`.",
+      "done_when": "All four outputs shown and explained; hand conversions correct (255 = 0b11111111 = 0xff)."
+     },
+     "quiz": [
+      {
+       "id": "M00.U03.Q1",
+       "kind": "mcq",
+       "prompt": "1 byte =",
+       "options": [
+        "4 bits",
+        "8 bits",
+        "16 bits",
+        "1024 bits"
+       ],
+       "answer": 1,
+       "explain": "A byte is 8 bits, 256 possible values."
+      },
+      {
+       "id": "M00.U03.Q2",
+       "kind": "mcq",
+       "prompt": "UTF-8 encodes the letter 'A' in:",
+       "options": [
+        "1 byte",
+        "2 bytes",
+        "4 bytes always",
+        "8 bytes"
+       ],
+       "answer": 0,
+       "explain": "UTF-8 is ASCII-compatible: code points < 128 use one byte; others use 2–4."
+      },
+      {
+       "id": "M00.U03.Q3",
+       "kind": "mcq",
+       "prompt": "`0.1 + 0.2 == 0.3` in Python is:",
+       "options": [
+        "True",
+        "False, because of binary floating point",
+        "An error",
+        "Random"
+       ],
+       "answer": 1,
+       "explain": "0.1 has no exact binary representation, so the sum is 0.30000000000000004."
+      },
+      {
+       "id": "M00.U03.Q4",
+       "kind": "mcq",
+       "prompt": "0xFF in decimal is:",
+       "options": [
+        "15",
+        "255",
+        "256",
+        "16"
+       ],
+       "answer": 1,
+       "explain": "F = 15, so 15×16 + 15 = 255."
+      },
+      {
+       "id": "M00.U03.Q5",
+       "kind": "short",
+       "prompt": "Why can an emoji take more bytes than a letter, and why does that matter when you count 'characters' for an LLM?",
+       "rubric": [
+        "UTF-8 is variable-length; emoji code points need 4 bytes",
+        "len(str) counts code points, len(bytes) counts bytes",
+        "LLMs count tokens, which are built from bytes/subwords, not characters",
+        "So cost/limits differ from character counts"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M00.S3",
+   "title": "First problem solving",
+   "units": [
+    {
+     "id": "M00.U04",
+     "title": "Algorithms, pseudocode, tracing and error messages",
+     "hours": 4,
+     "depth": "core",
+     "week": 4,
+     "prerequisites": [],
+     "outcomes": [
+      "You can write pseudocode for a small task and trace it by hand.",
+      "You can decompose a problem into steps and evaluate Boolean expressions.",
+      "You can read a Python traceback from the bottom line up.",
+      "You back up work (Git/GitHub) instead of hoping."
+     ],
+     "topics": [
+      {
+       "id": "M00.02.01",
+       "title": "input/output"
+      },
+      {
+       "id": "M00.02.02",
+       "title": "algorithms as instructions"
+      },
+      {
+       "id": "M00.02.03",
+       "title": "pseudocode"
+      },
+      {
+       "id": "M00.02.04",
+       "title": "tracing by hand"
+      },
+      {
+       "id": "M00.02.05",
+       "title": "decomposition"
+      },
+      {
+       "id": "M00.02.06",
+       "title": "Boolean logic"
+      },
+      {
+       "id": "M00.02.07",
+       "title": "reading an error message"
+      },
+      {
+       "id": "M00.02.08",
+       "title": "saving and backing up work"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50x",
+      "title": "CS50x: Introduction to Computer Science",
+      "url": "https://cs50.harvard.edu/x/notes/0/#algorithms",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "CS50x Lecture 0 notes §Algorithms and §Pseudocode (phone-book search)"
+     },
+     "covers": [
+      "Algorithms as step-by-step instructions (phone-book example)",
+      "Linear vs halving search intuition",
+      "Pseudocode: functions, conditionals, Boolean expressions, loops"
+     ],
+     "gaps": [
+      {
+       "topic": "reading an error message / tracing in a visualiser",
+       "resource": {
+        "resourceId": "pythontutor",
+        "title": "Python Tutor (code visualiser)",
+        "url": "https://pythontutor.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Use 'Visualize Python' on your own snippet"
+       }
+      },
+      {
+       "topic": "input/output, algorithms (book chapter)",
+       "resource": {
+        "resourceId": "thinkpython3",
+        "title": "Think Python, 3rd edition",
+        "url": "https://allendowney.github.io/ThinkPython/chap01.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 1 'Programming as a way of thinking'"
+       }
+      },
+      {
+       "topic": "saving and backing up work",
+       "resource": {
+        "resourceId": "fireship-git",
+        "title": "Git Explained in 100 Seconds",
+        "url": "https://www.youtube.com/watch?v=hwP7WQkmECE",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (100 s): why version control"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cs50x-l0",
+      "title": "CS50x - Lecture 0 - Scratch",
+      "url": "https://www.youtube.com/watch?v=UuIEbpQms8o",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 0 video — phone-book algorithm + pseudocode segment"
+     },
+     "practice": {
+      "title": "Pseudocode → trace → debug",
+      "brief": "Write pseudocode for 'find the cheapest item in a list'. Trace it by hand on [5, 3, 9] in a table (step, variable values). Paste a deliberately broken Python version into Python Tutor and write down what the last traceback line says.",
+      "done_when": "`trace.md` committed: pseudocode, a full trace table, the traceback's last line quoted and explained."
+     },
+     "quiz": [
+      {
+       "id": "M00.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Decomposition means:",
+       "options": [
+        "Deleting code",
+        "Splitting a problem into smaller sub-problems",
+        "Compiling",
+        "Encryption"
+       ],
+       "answer": 1,
+       "explain": "Decomposition breaks a task into parts you can solve and test separately."
+      },
+      {
+       "id": "M00.U04.Q2",
+       "kind": "mcq",
+       "prompt": "In a Python traceback, the most specific error is usually on:",
+       "options": [
+        "The first line",
+        "The last line",
+        "The middle",
+        "It isn't shown"
+       ],
+       "answer": 1,
+       "explain": "Python prints the call stack oldest-first; the exception type and message are on the last line."
+      },
+      {
+       "id": "M00.U04.Q3",
+       "kind": "mcq",
+       "prompt": "`True and False or True` evaluates to:",
+       "options": [
+        "True",
+        "False",
+        "None",
+        "Error"
+       ],
+       "answer": 0,
+       "explain": "`and` binds tighter: (True and False) = False; False or True = True."
+      },
+      {
+       "id": "M00.U04.Q4",
+       "kind": "mcq",
+       "prompt": "A trace table records:",
+       "options": [
+        "Only the output",
+        "Variable values after each step",
+        "The source file size",
+        "Memory addresses only"
+       ],
+       "answer": 1,
+       "explain": "Tracing means stepping through by hand, writing each variable's value at each step."
+      },
+      {
+       "id": "M00.U04.Q5",
+       "kind": "short",
+       "prompt": "Describe a bug you hit this week and what the error message actually told you.",
+       "rubric": [
+        "Names the exception type",
+        "Identifies the line/cause the message pointed to",
+        "Explains the fix",
+        "Notes what they'd check first next time"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M00.S4",
+   "title": "Workstation setup",
+   "units": [
+    {
+     "id": "M00.U05",
+     "title": "Workstation setup: WSL2, VS Code, uv, Git, GitHub",
+     "hours": 4,
+     "depth": "core",
+     "week": 2,
+     "prerequisites": [
+      "M00.U02"
+     ],
+     "outcomes": [
+      "You have a Linux shell (WSL2 or native), VS Code connected to it, Git, a GitHub account and a uv-managed Python.",
+      "You can verify a toolchain and read exit codes."
+     ],
+     "topics": [
+      {
+       "id": "M00.05.01",
+       "title": "install WSL2 (Linux on Windows)"
+      },
+      {
+       "id": "M00.05.02",
+       "title": "VS Code + WSL remote"
+      },
+      {
+       "id": "M00.05.03",
+       "title": "install Git + create GitHub account"
+      },
+      {
+       "id": "M00.05.04",
+       "title": "install uv and a managed Python"
+      },
+      {
+       "id": "M00.05.05",
+       "title": "verify the toolchain (exit codes)"
+      }
+     ],
+     "learn": {
+      "resourceId": "ms-wsl",
+      "title": "Microsoft Learn — Install WSL",
+      "url": "https://learn.microsoft.com/en-us/windows/wsl/install",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Install WSL' — `wsl --install` and first Ubuntu user setup"
+     },
+     "covers": [
+      "`wsl --install` and default Ubuntu",
+      "Creating the Linux user",
+      "Checking WSL version"
+     ],
+     "gaps": [
+      {
+       "topic": "VS Code + WSL remote",
+       "resource": {
+        "resourceId": "vscode-docs",
+        "title": "Visual Studio Code documentation",
+        "url": "https://code.visualstudio.com/docs/remote/wsl",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Developing in WSL' — install the WSL extension, `code .` from WSL"
+       }
+      },
+      {
+       "topic": "install uv and a managed Python",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/guides/install-python/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Getting started → Installation' then 'Guides → Installing Python'"
+       }
+      },
+      {
+       "topic": "install Git + GitHub account (+ AI-flavoured checklist)",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 01 Dev Environment",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/01-dev-environment",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 01 'Dev Environment' — do steps 1, 2 and 7 only; skip Node/Rust/Julia/GPU"
+       }
+      },
+      {
+       "topic": "uv in video form",
+       "resource": {
+        "resourceId": "cy-uv",
+        "title": "Python Tutorial: UV - A Faster, All-in-One Package Manager to Replace Pip and Venv",
+        "url": "https://www.youtube.com/watch?v=AMdG7IjgSPM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (~installation and `uv python install`, `uv init`, `uv add`)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "codespaces",
+      "title": "GitHub Codespaces overview",
+      "url": "https://docs.github.com/en/codespaces/overview",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "If WSL2 is impossible: create a Codespace from your repo"
+     },
+     "practice": {
+      "title": "Green toolchain",
+      "brief": "Clone rohitg00/ai-engineering-from-scratch and run `python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner` until it exits 0. Also run `git --version`, `uv --version`, `uv run python --version` inside WSL. Save output to `setup-log.md` in a new repo `foundations`.",
+      "done_when": "`verify.py --route beginner` exits 0 (`echo $?` prints 0) and `setup-log.md` with all outputs is pushed to GitHub.",
+      "autograder": "verify.py --route beginner (exit code 0)"
+     },
+     "quiz": [
+      {
+       "id": "M00.U05.Q1",
+       "kind": "mcq",
+       "prompt": "WSL2 gives you:",
+       "options": [
+        "A real Linux kernel running alongside Windows",
+        "A Python IDE",
+        "A cloud VM",
+        "A Windows emulator"
+       ],
+       "answer": 0,
+       "explain": "WSL2 runs a genuine Linux kernel in a lightweight VM integrated with Windows."
+      },
+      {
+       "id": "M00.U05.Q2",
+       "kind": "mcq",
+       "prompt": "`uv python install 3.12` installs:",
+       "options": [
+        "A package",
+        "A managed Python interpreter",
+        "Only a virtualenv",
+        "pip"
+       ],
+       "answer": 1,
+       "explain": "uv can download and manage interpreter versions itself."
+      },
+      {
+       "id": "M00.U05.Q3",
+       "kind": "mcq",
+       "prompt": "`echo $?` after a successful command prints:",
+       "options": [
+        "1",
+        "0",
+        "true",
+        "nothing"
+       ],
+       "answer": 1,
+       "explain": "Exit code 0 means success; non-zero means failure."
+      },
+      {
+       "id": "M00.U05.Q4",
+       "kind": "mcq",
+       "prompt": "If your laptop cannot run WSL2, a free fallback is:",
+       "options": [
+        "Buy a new laptop",
+        "GitHub Codespaces or cs50.dev in the browser",
+        "Use only Notepad",
+        "Skip Git"
+       ],
+       "answer": 1,
+       "explain": "Both give a Linux dev container in the browser."
+      },
+      {
+       "id": "M00.U05.Q5",
+       "kind": "short",
+       "prompt": "Why do we develop inside Linux (WSL) even on a Windows laptop?",
+       "rubric": [
+        "Servers, Docker, CI and cloud VMs run Linux",
+        "Tutorials/commands assume bash",
+        "Avoid Windows path/encoding differences",
+        "One environment from laptop to production"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M00.S5",
+   "title": "Learning method",
+   "units": [
+    {
+     "id": "M00.U06",
+     "title": "How to study this path",
+     "hours": 3,
+     "depth": "core",
+     "week": 1,
+     "prerequisites": [],
+     "outcomes": [
+      "You run a learning log, a mistake log and spaced-repetition cards.",
+      "You have a written AI-assistant policy.",
+      "You can write a minimal reproducible example when asking for help."
+     ],
+     "topics": [
+      {
+       "id": "M00.06.01",
+       "title": "active recall and spaced repetition"
+      },
+      {
+       "id": "M00.06.02",
+       "title": "learning log + mistake log"
+      },
+      {
+       "id": "M00.06.03",
+       "title": "AI-assistant policy"
+      },
+      {
+       "id": "M00.06.04",
+       "title": "asking good questions (minimal reproducible example)"
+      }
+     ],
+     "learn": {
+      "resourceId": "coursera-lhtl",
+      "title": "Learning How to Learn",
+      "url": "https://www.coursera.org/learn/learning-how-to-learn",
+      "type": "course",
+      "free": "audit",
+      "verified": "unverified",
+      "slice": "Modules 1–2 (focused/diffuse modes, chunking, procrastination & memory) in audit mode"
+     },
+     "covers": [
+      "Focused vs diffuse thinking",
+      "Chunking",
+      "Illusions of competence; recall beats rereading",
+      "Spaced repetition"
+     ],
+     "gaps": [
+      {
+       "topic": "AI-assistant policy",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/agentic-coding/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Agentic Coding' lecture — section 'What to watch out for'"
+       }
+      },
+      {
+       "topic": "spaced-repetition tool",
+       "resource": {
+        "resourceId": "anki",
+        "title": "Anki (spaced-repetition flashcards)",
+        "url": "https://apps.ankiweb.net/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Download + create a deck 'Grain'"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "anki",
+      "title": "Anki (spaced-repetition flashcards)",
+      "url": "https://apps.ankiweb.net/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Anki manual 'Getting started'"
+     },
+     "practice": {
+      "title": "Set up your study system",
+      "brief": "Create `learning-log.md` (daily: studied / built / confused me / card added) and `mistakes.md`. Install Anki and add 15 cards from Week 1. Write your AI-use policy in 5 rules (e.g. 'AI may explain; I never paste code I can't re-derive').",
+      "done_when": "Log has ≥5 daily entries, Anki shows ≥15 cards, policy committed to `foundations` repo."
+     },
+     "quiz": [
+      {
+       "id": "M00.U06.Q1",
+       "kind": "mcq",
+       "prompt": "The most effective revision technique here is:",
+       "options": [
+        "Rereading",
+        "Highlighting",
+        "Self-testing (retrieval practice)",
+        "Watching at 2×"
+       ],
+       "answer": 2,
+       "explain": "Retrieval practice strengthens memory far more than rereading."
+      },
+      {
+       "id": "M00.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Spaced repetition schedules reviews:",
+       "options": [
+        "Daily forever",
+        "At increasing intervals",
+        "Only before exams",
+        "Randomly"
+       ],
+       "answer": 1,
+       "explain": "Intervals grow each time you recall correctly."
+      },
+      {
+       "id": "M00.U06.Q3",
+       "kind": "mcq",
+       "prompt": "A minimal reproducible example should:",
+       "options": [
+        "Include the whole project",
+        "Be the smallest code that still shows the bug",
+        "Skip the error text",
+        "Be a screenshot"
+       ],
+       "answer": 1,
+       "explain": "Small, runnable, with the exact error text."
+      },
+      {
+       "id": "M00.U06.Q4",
+       "kind": "short",
+       "prompt": "When is using an AI assistant harmful to learning, even if the code works?",
+       "rubric": [
+        "When it replaces the struggle that builds the skill",
+        "When you can't explain/re-derive the code",
+        "Mentions a rule they will follow (e.g. attempt first, then ask for hints)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M00.S6",
+   "title": "Math bridge",
+   "units": [
+    {
+     "id": "M00.U07",
+     "title": "Math bridge: school algebra refresh",
+     "hours": 11,
+     "depth": "core",
+     "week": 1,
+     "prerequisites": [],
+     "outcomes": [
+      "You can work with fractions, percentages, negatives, exponents and logarithms.",
+      "You can rearrange simple equations, read function graphs and Σ notation.",
+      "You can use scientific notation (1e-3, 7e9)."
+     ],
+     "topics": [
+      {
+       "id": "M00.03.01",
+       "title": "fractions/percentages"
+      },
+      {
+       "id": "M00.03.02",
+       "title": "negative numbers"
+      },
+      {
+       "id": "M00.03.03",
+       "title": "algebraic rearrangement"
+      },
+      {
+       "id": "M00.03.04",
+       "title": "exponents/logarithms"
+      },
+      {
+       "id": "M00.03.05",
+       "title": "functions and graphs"
+      },
+      {
+       "id": "M00.03.06",
+       "title": "summation notation"
+      },
+      {
+       "id": "M00.03.07",
+       "title": "sets and basic logic"
+      },
+      {
+       "id": "M00.03.08",
+       "title": "scientific notation"
+      }
+     ],
+     "learn": {
+      "resourceId": "khan-algebra-basics",
+      "title": "Khan Academy: Algebra basics",
+      "url": "https://www.khanacademy.org/math/algebra-basics",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Units: Foundations (negative numbers, fractions, percentages), Algebraic expressions, Linear equations & inequalities, Graphing lines, Exponents & radicals — each unit test"
+     },
+     "covers": [
+      "Negative numbers, fractions, percentages",
+      "Expressions and equations, rearranging",
+      "Graphing linear functions",
+      "Exponent rules, scientific notation"
+     ],
+     "gaps": [
+      {
+       "topic": "logarithms",
+       "resource": {
+        "resourceId": "khan-algebra",
+        "title": "Khan Academy: Algebra 2 — Logarithms",
+        "url": "https://www.khanacademy.org/math/algebra2",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Algebra 2 → unit 'Logarithms' → lesson 'Introduction to logarithms' (videos + practice) only"
+       }
+      },
+      {
+       "topic": "summation notation and sets/basic logic",
+       "resource": {
+        "resourceId": "mathisfun-algebra",
+        "title": "Math is Fun — Sigma Notation",
+        "url": "https://www.mathsisfun.com/algebra/sigma-notation.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Pages 'Sigma Notation' (algebra/sigma-notation.html) and 'Introduction to Sets'"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "mathisfun-algebra",
+      "title": "Math is Fun — Algebra",
+      "url": "https://www.mathsisfun.com/algebra/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Algebra index for quick refreshers"
+     },
+     "practice": {
+      "title": "Reach Proficient",
+      "brief": "Take the Khan unit tests for the units listed until 'Proficient'. Then compute Σ_{i=1}^{5} i² by hand and with `sum(i**2 for i in range(1, 6))`, and log₂(1024) by hand and with `math.log2`.",
+      "done_when": "Screenshots of 'Proficient' on each listed unit test; both calculations (55 and 10) shown in `math.md`.",
+      "autograder": "Khan Academy unit tests (mastery level)"
+     },
+     "quiz": [
+      {
+       "id": "M00.U07.Q1",
+       "kind": "mcq",
+       "prompt": "log₂(8) =",
+       "options": [
+        "2",
+        "3",
+        "4",
+        "8"
+       ],
+       "answer": 1,
+       "explain": "2³ = 8."
+      },
+      {
+       "id": "M00.U07.Q2",
+       "kind": "mcq",
+       "prompt": "15% of 240 =",
+       "options": [
+        "24",
+        "36",
+        "32",
+        "40"
+       ],
+       "answer": 1,
+       "explain": "0.15 × 240 = 36."
+      },
+      {
+       "id": "M00.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Solve 3x − 7 = 11:",
+       "options": [
+        "4",
+        "6",
+        "18/7",
+        "3"
+       ],
+       "answer": 1,
+       "explain": "3x = 18, x = 6."
+      },
+      {
+       "id": "M00.U07.Q4",
+       "kind": "mcq",
+       "prompt": "7e9 means:",
+       "options": [
+        "7 × 9",
+        "7 × 10⁹",
+        "7⁹",
+        "0.000000007"
+       ],
+       "answer": 1,
+       "explain": "Scientific notation: mantissa × 10^exponent."
+      },
+      {
+       "id": "M00.U07.Q5",
+       "kind": "short",
+       "prompt": "Explain in words what Σ notation means, with one example.",
+       "rubric": [
+        "Σ means 'add up'",
+        "Index variable with start and end",
+        "Worked example with correct result"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "My machine, explained",
+  "brief": "(3h) Public GitHub repo `foundations` containing: setup-log.md with verify.py output and exit 0; how-my-computer-works.md (disk→RAM→CPU, process, path); a hand-traced algorithm; the binary/hex/UTF-8/float exercise; Khan unit-test screenshots; learning log + ≥30 Anki cards + AI policy. Pass at ≥7/10 with no zero on the toolchain row.",
+  "rubric": [
+   {
+    "criterion": "Toolchain works (verify.py exits 0; git, uv, python run from WSL)",
+    "levels": [
+     "0 – missing",
+     "1 – partial",
+     "2 – all green, log committed"
+    ]
+   },
+   {
+    "criterion": "Concept accuracy (process, RAM vs disk, paths)",
+    "levels": [
+     "0 – wrong",
+     "1 – mostly right",
+     "2 – precise, with own example"
+    ]
+   },
+   {
+    "criterion": "Data representation (binary, UTF-8, float)",
+    "levels": [
+     "0 – missing",
+     "1 – computed",
+     "2 – computed and explained"
+    ]
+   },
+   {
+    "criterion": "Problem-solving trace",
+    "levels": [
+     "0 – none",
+     "1 – trace only",
+     "2 – trace + bug found and explained"
+    ]
+   },
+   {
+    "criterion": "Learning system (log, ≥30 Anki cards, AI policy)",
+    "levels": [
+     "0 – none",
+     "1 – partial",
+     "2 – complete"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

@@ -1,0 +1,2089 @@
+{
+ "id": "M10",
+ "phase": "P3 Language models and apps",
+ "title": "LLM application engineering: APIs, context, evals, production",
+ "summary": "The most job-critical module for AI Engineer and FDE roles: reliable API engineering (structured outputs, retries, concurrency, fallbacks), prompt and context engineering, cost levers (caching, routing, batch), systematic evaluation (error analysis → golden sets → calibrated judges → CI) and production (tracing, cost/latency, guardrails). Spine: official provider docs + Hamel Husain/Shreya Shankar eval writing + Anthropic engineering posts + free DLAI short courses + rohitg00 Phase 11/17 builds. Needs only M03 and M09.U01–U03.",
+ "hours": 78,
+ "prerequisites": [
+  "M03"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M10.S1",
+   "title": "Model API engineering",
+   "units": [
+    {
+     "id": "M10.U01",
+     "title": "First API calls done properly",
+     "hours": 6,
+     "depth": "core",
+     "week": 78,
+     "prerequisites": [
+      "M09.U03"
+     ],
+     "outcomes": [
+      "You can call a hosted model and a local model through one interface with the key read from the environment.",
+      "You can pin a dated model snapshot and explain why aliases are risky.",
+      "You can log finish/stop reason, input/output tokens and cost per call, and enforce a token budget."
+     ],
+     "topics": [
+      {
+       "id": "M10.01.01",
+       "title": "Provider SDK"
+      },
+      {
+       "id": "M10.01.02",
+       "title": "Model identifier/version"
+      },
+      {
+       "id": "M10.01.03",
+       "title": "Messages/roles"
+      },
+      {
+       "id": "M10.01.04",
+       "title": "Token budgets"
+      },
+      {
+       "id": "M10.01.09",
+       "title": "Finish reasons"
+      },
+      {
+       "id": "M10.01.12",
+       "title": "Usage accounting"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — APIs & Keys",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/04-apis-and-keys",
+      "slice": "Lesson 00/04 docs/en.md: Step 1 store keys safely → Step 2 first call (Python) → Step 3 TypeScript → Step 4 raw HTTP without an SDK",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Storing API keys in environment variables/.env and keeping them out of git",
+      "A first chat-completion call in Python with an official SDK",
+      "The same call in TypeScript",
+      "The raw HTTP request/response under the SDK (headers, JSON body)"
+     ],
+     "gaps": [
+      {
+       "topic": "Messages, roles and the request shape",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude API — Messages",
+        "url": "https://platform.claude.com/docs/en/api/messages",
+        "slice": "Request body (model, system, messages, max_tokens) and response usage fields",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Model IDs, snapshots vs aliases",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude — Models overview",
+        "url": "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "slice": "Model names/aliases table",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Finish/stop reasons",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude — Handling stop reasons",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons",
+        "slice": "Whole page (end_turn, max_tokens, stop_sequence, tool_use, refusal)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Counting tokens before sending (token budgets)",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude — Token counting",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/token-counting",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Running a free local model",
+       "resource": {
+        "resourceId": "ollama",
+        "title": "Ollama docs — quickstart",
+        "url": "https://docs.ollama.com/",
+        "slice": "Quickstart + API (ollama run / REST /api/chat)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "One interface for hosted + free local models",
+       "resource": {
+        "resourceId": "litellm-docs",
+        "title": "LiteLLM — Ollama provider",
+        "url": "https://docs.litellm.ai/docs/providers/ollama",
+        "slice": "Whole page (model='ollama/...')",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "litellm-docs",
+      "title": "LiteLLM — Getting started",
+      "url": "https://docs.litellm.ai/docs/",
+      "slice": "Getting started + completion() usage and cost tracking",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "ask.py — a disciplined CLI",
+      "brief": "Write ask.py that reads the key from env, pins a dated model ID, sends system + user messages, and appends one JSONL line per call: model, finish/stop reason, input/output tokens, computed cost, latency. It refuses to run when the counted prompt exceeds a budget. Run the same script against a hosted model and a local Ollama model through LiteLLM.",
+      "done_when": "JSONL log with ≥10 calls across two providers (one local), including one deliberately truncated call showing finish_reason/stop_reason = length/max_tokens, and one refused over-budget prompt."
+     },
+     "quiz": [
+      {
+       "id": "M10.U01.Q1",
+       "kind": "mcq",
+       "prompt": "finish_reason = 'length' (OpenAI) / stop_reason = 'max_tokens' (Anthropic) means:",
+       "options": [
+        "Success",
+        "The output hit the max-token limit and is probably truncated",
+        "A content refusal",
+        "A network timeout"
+       ],
+       "answer": 1,
+       "explain": "Treat it as an incomplete answer: raise the limit, shorten the task, or continue."
+      },
+      {
+       "id": "M10.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Pinning a dated model snapshot instead of an alias mainly protects against:",
+       "options": [
+        "Silent behaviour changes when the alias is repointed",
+        "Higher cost",
+        "Rate limits",
+        "Streaming bugs"
+       ],
+       "answer": 0,
+       "explain": "Aliases move to newer snapshots; your evals only hold for the version you tested."
+      },
+      {
+       "id": "M10.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Which content belongs in the system prompt?",
+       "options": [
+        "The user's uploaded document",
+        "Stable behavioural instructions and constraints",
+        "Tool results",
+        "The model's previous answer"
+       ],
+       "answer": 1,
+       "explain": "User data and tool output arrive in user/tool turns; the system prompt sets durable behaviour."
+      },
+      {
+       "id": "M10.U01.Q4",
+       "kind": "short",
+       "prompt": "Why log token usage per request from day one, even in a prototype?",
+       "rubric": [
+        "Cost: usage is what you are billed on and the basis of any cost report",
+        "Debugging: unusually long inputs/outputs reveal prompt bloat or truncation",
+        "Baseline: later optimizations (caching, routing) need a before number"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U02",
+     "title": "Reliability: streaming, timeouts, retries, rate limits, concurrency",
+     "hours": 6,
+     "depth": "core",
+     "week": 78,
+     "prerequisites": [
+      "M10.U01"
+     ],
+     "outcomes": [
+      "You can retry 429/5xx with jittered exponential backoff and refuse to retry 4xx client errors.",
+      "You can run hundreds of calls concurrently with bounded parallelism and per-call timeouts.",
+      "You can stream tokens to a browser via SSE and fall back to a second model on repeated failure."
+     ],
+     "topics": [
+      {
+       "id": "M10.01.05",
+       "title": "Streaming"
+      },
+      {
+       "id": "M10.01.10",
+       "title": "Timeouts"
+      },
+      {
+       "id": "M10.01.11",
+       "title": "Rate limits"
+      },
+      {
+       "id": "M10.01.13",
+       "title": "Async concurrency with bounded parallelism (new)"
+      },
+      {
+       "id": "M10.01.14",
+       "title": "Fallbacks and gateways (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "openai-cookbook",
+      "title": "OpenAI Cookbook — How to handle rate limits",
+      "url": "https://cookbook.openai.com/examples/how_to_handle_rate_limits",
+      "slice": "Whole notebook",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Why rate limits exist; reading a RateLimitError",
+      "Retrying with exponential backoff (Tenacity, backoff library, and a manual implementation with jitter)",
+      "Batching multiple prompts into one request to raise throughput under token limits",
+      "Pointer to a parallel-processing script for bulk jobs"
+     ],
+     "gaps": [
+      {
+       "topic": "Streaming responses from the API",
+       "resource": {
+        "resourceId": "openai-docs",
+        "title": "OpenAI — Streaming API responses",
+        "url": "https://platform.openai.com/docs/guides/streaming-responses",
+        "slice": "Whole guide (stream=True, event types)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "SSE endpoint in FastAPI",
+       "resource": {
+        "resourceId": "fastapi-docs",
+        "title": "FastAPI — Custom Response: StreamingResponse",
+        "url": "https://fastapi.tiangolo.com/advanced/custom-response/",
+        "slice": "StreamingResponse section",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Bounded concurrency with asyncio",
+       "resource": {
+        "resourceId": "python-docs",
+        "title": "Python — asyncio Synchronization Primitives: Semaphore",
+        "url": "https://docs.python.org/3/library/asyncio-sync.html",
+        "slice": "Semaphore / BoundedSemaphore sections",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Timeouts, fallbacks and gateways",
+       "resource": {
+        "resourceId": "litellm-docs",
+        "title": "LiteLLM — Reliability: retries, fallbacks, timeouts",
+        "url": "https://docs.litellm.ai/docs/completion/reliable_completions",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — AI gateways",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/19-ai-gateways",
+      "slice": "Lesson phases/17-infrastructure-and-production/19-ai-gateways (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "500 tasks, no drama",
+      "brief": "Process 500 short tasks with asyncio and a Semaphore(8). Add jittered backoff on 429/5xx, a per-call timeout, an idempotency key in logs, and fallback to a second model after 3 failures. Expose one endpoint that streams a response over Server-Sent Events with FastAPI. Report p50/p95 latency, retries, fallbacks and failures.",
+      "done_when": "A run report showing 500 completed tasks, counts of retries/fallbacks/failures, p50/p95 latency, and a curl or browser demo of the SSE stream."
+     },
+     "quiz": [
+      {
+       "id": "M10.U02.Q1",
+       "kind": "mcq",
+       "prompt": "Jitter is added to exponential backoff to:",
+       "options": [
+        "Avoid synchronized retry storms from many clients",
+        "Make retries faster",
+        "Reduce token usage",
+        "Bypass rate limits"
+       ],
+       "answer": 0,
+       "explain": "Randomized delays spread retries out instead of all clients retrying at the same instant."
+      },
+      {
+       "id": "M10.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Streaming primarily improves:",
+       "options": [
+        "Total cost",
+        "Perceived latency (time to the first visible token)",
+        "Accuracy",
+        "Rate limits"
+       ],
+       "answer": 1,
+       "explain": "Total generation time is similar; users see output sooner."
+      },
+      {
+       "id": "M10.U02.Q3",
+       "kind": "mcq",
+       "prompt": "A 400 'invalid request' error should usually be:",
+       "options": [
+        "Retried 5 times",
+        "Not retried — fix the request",
+        "Retried with higher temperature",
+        "Sent to the fallback model forever"
+       ],
+       "answer": 1,
+       "explain": "Client errors are deterministic; retrying wastes quota."
+      },
+      {
+       "id": "M10.U02.Q4",
+       "kind": "short",
+       "prompt": "When is retrying a tool-calling request unsafe, and how do you make it safe?",
+       "rubric": [
+        "Unsafe when the tool has side effects (payment, email, DB write) that may have already happened",
+        "Fix: idempotency keys / dedup on the server side, or check state before re-executing",
+        "Separates retrying the model call from re-executing the tool"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U03",
+     "title": "Structured outputs and function calling",
+     "hours": 8,
+     "depth": "core",
+     "week": 79,
+     "prerequisites": [
+      "M10.U01"
+     ],
+     "outcomes": [
+      "You can define a Pydantic schema and get schema-valid output via native structured outputs and via validate→repair.",
+      "You can explain what constrained decoding guarantees (syntax) and what it does not (truth).",
+      "You can wire a function/tool call where your code executes the tool, and surface refusals distinctly from invalid JSON."
+     ],
+     "topics": [
+      {
+       "id": "M10.01.06",
+       "title": "Structured output/JSON schema"
+      },
+      {
+       "id": "M10.01.07",
+       "title": "Function calling"
+      },
+      {
+       "id": "M10.01.08",
+       "title": "Refusals"
+      },
+      {
+       "id": "M10.01.15",
+       "title": "Constrained decoding vs validate-and-repair (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "dlai-pydantic",
+      "title": "DeepLearning.AI — Pydantic for LLM Workflows",
+      "url": "https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/",
+      "slice": "All lessons (≈1h50m)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Pydantic models, types and validation errors for LLM data",
+      "Validating LLM JSON responses and feeding validation errors back for a retry",
+      "Passing a Pydantic schema in the API call (structured output / response format)",
+      "Tool (function) calling driven by Pydantic models",
+      "Building a small validated customer-support workflow end to end"
+     ],
+     "gaps": [
+      {
+       "topic": "Native structured outputs and the refusal field",
+       "resource": {
+        "resourceId": "openai-docs",
+        "title": "OpenAI — Structured Outputs guide",
+        "url": "https://platform.openai.com/docs/guides/structured-outputs",
+        "slice": "Sections: supported schemas, refusals, structured outputs vs JSON mode",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Custom validators for business rules",
+       "resource": {
+        "resourceId": "pydantic-docs",
+        "title": "Pydantic — Validators",
+        "url": "https://docs.pydantic.dev/latest/concepts/validators/",
+        "slice": "field_validator / model_validator sections",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "How grammar-constrained decoding masks logits",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Structured outputs & constrained decoding",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding",
+        "slice": "Lesson 05/20: Step 1 regex-constrained generation from scratch → Step 2 Outlines → Step 3 Instructor → Step 4 native APIs",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Function-calling lifecycle (tool schema → call → result message)",
+       "resource": {
+        "resourceId": "openai-docs",
+        "title": "OpenAI — Function calling guide",
+        "url": "https://platform.openai.com/docs/guides/function-calling",
+        "slice": "Whole guide",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "From-scratch schema validator + extraction pipeline",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Structured outputs",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/03-structured-outputs",
+        "slice": "Lesson phases/11-llm-engineering/03-structured-outputs (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "instructor-docs",
+      "title": "Instructor documentation",
+      "url": "https://python.useinstructor.com/",
+      "slice": "Getting started + retries/validation",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Invoice/CV extractor, three ways",
+      "brief": "Define a Pydantic schema with enums, optional fields and a custom validator. On 50 documents compare (i) prompt-only JSON, (ii) native structured outputs, (iii) a validate→repair loop. Report schema-valid rate and field-level accuracy against your hand labels, and how a refusal is represented. Add one tool, lookup_currency_rate, via function calling, executed by your code.",
+      "done_when": "A results table (3 methods × valid rate × field accuracy), 50 hand labels committed, a refusal test case, and a passing test for the tool-call round trip."
+     },
+     "quiz": [
+      {
+       "id": "M10.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Constrained decoding guarantees:",
+       "options": [
+        "Syntactically schema-valid output",
+        "Factually correct values",
+        "Lower cost",
+        "No refusals"
+       ],
+       "answer": 0,
+       "explain": "It masks invalid tokens at each step; it cannot check whether values are true."
+      },
+      {
+       "id": "M10.U03.Q2",
+       "kind": "mcq",
+       "prompt": "In function calling, who executes the function?",
+       "options": [
+        "The model provider",
+        "Your application code",
+        "The tokenizer",
+        "The vector DB"
+       ],
+       "answer": 1,
+       "explain": "The model emits a call with arguments; you run it and return the result."
+      },
+      {
+       "id": "M10.U03.Q3",
+       "kind": "mcq",
+       "prompt": "A schema-valid extraction can still be wrong because:",
+       "options": [
+        "JSON is lossy",
+        "Enums are unsupported",
+        "The values may be hallucinated or misread",
+        "Pydantic is slow"
+       ],
+       "answer": 2,
+       "explain": "Validity ≠ correctness; you still need field-level evals."
+      },
+      {
+       "id": "M10.U03.Q4",
+       "kind": "short",
+       "prompt": "How should your service represent 'the model refused' differently from 'the model produced invalid JSON'?",
+       "rubric": [
+        "Refusal is a distinct, expected outcome (e.g. refusal field/stop_reason) returned to the caller, not retried blindly",
+        "Invalid JSON is a parsing failure: retry/repair, then error",
+        "Both are logged and counted separately in evals"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M10.S2",
+   "title": "Prompt and context engineering",
+   "units": [
+    {
+     "id": "M10.U04",
+     "title": "Prompting fundamentals and reasoning models",
+     "hours": 6,
+     "depth": "core",
+     "week": 79,
+     "prerequisites": [
+      "M10.U01"
+     ],
+     "outcomes": [
+      "You can iterate a prompt with a scored changelog rather than by feel.",
+      "You can separate instructions from untrusted data with delimiters/XML tags and choose diverse few-shot examples.",
+      "You can measure what a larger thinking budget buys in accuracy versus latency and cost."
+     ],
+     "topics": [
+      {
+       "id": "M10.02.01",
+       "title": "Clear task/constraints"
+      },
+      {
+       "id": "M10.02.02",
+       "title": "Examples (few-shot)"
+      },
+      {
+       "id": "M10.02.03",
+       "title": "Instructions vs data"
+      },
+      {
+       "id": "M10.02.10",
+       "title": "Reasoning models, chain-of-thought and thinking budgets (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-docs",
+      "title": "Claude — Prompt engineering overview (and linked technique pages)",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+      "slice": "Overview → be clear and direct → use examples (multishot) → let Claude think (CoT) → use XML tags → system prompts/roles → chain complex prompts → long-context tips",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Prerequisites: success criteria and an empirical test set before prompt engineering",
+      "Being clear, direct and specific; giving context and constraints",
+      "Multishot examples: relevant, diverse, wrapped in tags",
+      "Chain-of-thought prompting ('let Claude think') and structured thinking",
+      "XML tags to separate instructions, data and examples",
+      "System prompts/role prompting, prompt chaining, long-context document placement"
+     ],
+     "gaps": [
+      {
+       "topic": "Thinking budgets (Claude extended thinking)",
+       "resource": {
+        "resourceId": "anthropic-docs",
+        "title": "Claude — Extended thinking",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+        "slice": "How it works + budget_tokens + pricing",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reasoning effort on OpenAI reasoning models",
+       "resource": {
+        "resourceId": "openai-docs",
+        "title": "OpenAI — Reasoning models guide",
+        "url": "https://platform.openai.com/docs/guides/reasoning",
+        "slice": "Reasoning effort, reasoning tokens, cost",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "promptingguide",
+      "title": "Prompt Engineering Guide — techniques",
+      "url": "https://www.promptingguide.ai/",
+      "slice": "Techniques section: few-shot, chain-of-thought, self-consistency",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "dlai-prompt-eng-devs",
+      "title": "DeepLearning.AI — ChatGPT Prompt Engineering for Developers",
+      "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/",
+      "slice": "Lessons: guidelines, iterative, summarizing, inferring, transforming",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Four-version prompt changelog + thinking budget",
+      "brief": "Take one classification task with 40 labelled items. Score 4 prompt versions (bare → constraints → delimited data with XML tags → 3 diverse examples) and keep a changelog of accuracy per version. Then run the best prompt on a reasoning model at two thinking/effort settings and compare accuracy, latency and cost.",
+      "done_when": "A changelog table with 4 prompt versions × accuracy, plus 2 reasoning settings × accuracy × p50 latency × cost per item."
+     },
+     "quiz": [
+      {
+       "id": "M10.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Wrapping untrusted input in delimiters/XML tags mainly helps:",
+       "options": [
+        "Cost",
+        "Tokenization",
+        "The model distinguish instructions from data",
+        "Caching"
+       ],
+       "answer": 2,
+       "explain": "Clear boundaries reduce the chance the model follows text inside the data as instructions (not a full injection defence)."
+      },
+      {
+       "id": "M10.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Few-shot examples work best when they are:",
+       "options": [
+        "Many near-duplicates",
+        "Diverse and canonical for the expected behaviour",
+        "Only edge cases",
+        "Unlabeled"
+       ],
+       "answer": 1,
+       "explain": "Near-duplicates teach surface patterns; diverse examples show the decision boundary."
+      },
+      {
+       "id": "M10.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Raising a reasoning model's thinking budget typically trades:",
+       "options": [
+        "Accuracy for nothing",
+        "Lower cost for accuracy",
+        "More latency and cost for potentially higher accuracy on hard tasks",
+        "Context length for speed"
+       ],
+       "answer": 2,
+       "explain": "Thinking tokens are billed and take time; gains concentrate on hard, multi-step problems."
+      },
+      {
+       "id": "M10.U04.Q4",
+       "kind": "short",
+       "prompt": "Why can a prompt change that fixes one failure category make overall quality worse, and how do you detect it?",
+       "rubric": [
+        "Explains interaction effects: new instructions shift behaviour on other cases (over-correction)",
+        "Detection: re-run the full labelled set, not just the failing examples; compare per-category",
+        "Mentions keeping a frozen regression set/changelog"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U05",
+     "title": "Context engineering",
+     "hours": 6,
+     "depth": "core",
+     "week": 80,
+     "prerequisites": [
+      "M10.U04"
+     ],
+     "outcomes": [
+      "You can explain context rot and measure recall degradation with context length and distractors.",
+      "You can implement compaction for long conversations and test recall against full history.",
+      "You can design just-in-time context: references in context, data loaded via tools when needed."
+     ],
+     "topics": [
+      {
+       "id": "M10.02.04",
+       "title": "Context assembly"
+      },
+      {
+       "id": "M10.02.06",
+       "title": "Long-context trade-offs"
+      },
+      {
+       "id": "M10.02.08",
+       "title": "Conversation summaries"
+      },
+      {
+       "id": "M10.02.11",
+       "title": "Context rot, compaction and just-in-time context (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-eng",
+      "title": "Anthropic Engineering — Effective context engineering for AI agents (Sep 2025)",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+      "slice": "Whole post, then Chroma Research 'Context Rot' https://research.trychroma.com/context-rot (results sections)",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Context as a finite 'attention budget'; context rot as token count grows",
+      "Anatomy of effective context: system-prompt altitude, tool design, curated examples",
+      "Just-in-time retrieval with lightweight references vs pre-loading",
+      "Long-horizon techniques: compaction, structured note-taking (memory files), sub-agent architectures",
+      "Chroma: measured performance degradation with input length across 18 models; effects of needle–question similarity, distractors and haystack structure"
+     ],
+     "gaps": [
+      {
+       "topic": "Position effects in long context",
+       "resource": {
+        "resourceId": "paper-lost-in-the-middle",
+        "title": "Lost in the Middle: How Language Models Use Long Contexts",
+        "url": "https://arxiv.org/abs/2307.03172",
+        "slice": "§2–3 (multi-document QA and key-value retrieval results)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Building a conversation compressor and context budget manager in code",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Context engineering",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/05-context-engineering",
+        "slice": "Lesson 11/05: Steps 1–6 (token counter, budget manager, lost-in-the-middle reordering, history compressor, assembly pipeline)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-context-engineering",
+      "title": "DeepLearning.AI — Context Engineering (audit free)",
+      "url": "https://www.deeplearning.ai/courses/context-engineering",
+      "slice": "Optional depth",
+      "type": "course",
+      "free": "audit",
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Needle test + compaction",
+      "brief": "Insert a fact at 5 positions in contexts of 2k/16k/64k tokens (with distractors) and plot accuracy by position and length for one model. Then implement compaction for a 40-turn support chat (summarize old turns, keep a structured facts block) and measure accuracy on 20 recall questions vs full history, plus token savings.",
+      "done_when": "A heat-map/plot of accuracy by position × length, and a table: full history vs compacted → accuracy on 20 questions and tokens per turn."
+     },
+     "quiz": [
+      {
+       "id": "M10.U05.Q1",
+       "kind": "mcq",
+       "prompt": "'Context rot' refers to:",
+       "options": [
+        "Cache expiry",
+        "Outdated documents",
+        "Declining recall/precision as more tokens are added to the context",
+        "Tokenizer drift"
+       ],
+       "answer": 2,
+       "explain": "Even within the window, models use long contexts less reliably."
+      },
+      {
+       "id": "M10.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Compaction is:",
+       "options": [
+        "Gzip-ing prompts",
+        "Quantizing the model",
+        "Summarizing/condensing history to continue in a fresh context",
+        "Deleting the system prompt"
+       ],
+       "answer": 2,
+       "explain": "It keeps the important state while freeing the window."
+      },
+      {
+       "id": "M10.U05.Q3",
+       "kind": "mcq",
+       "prompt": "'Just-in-time' context means:",
+       "options": [
+        "Pre-loading everything up front",
+        "Caching outputs",
+        "Streaming",
+        "Keeping references and loading data via tools when needed"
+       ],
+       "answer": 3,
+       "explain": "Agents fetch files/records on demand instead of stuffing them in."
+      },
+      {
+       "id": "M10.U05.Q4",
+       "kind": "short",
+       "prompt": "Give one case where stuffing a 200k-token window beats retrieval, and one where it doesn't.",
+       "rubric": [
+        "Beats retrieval: a single bounded document needing global reasoning (e.g. one contract) that fits and is reused (cacheable)",
+        "Loses: large/changing corpora, needle facts, cost/latency-sensitive traffic, permission filtering",
+        "Mentions measuring both on the same eval"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U06",
+     "title": "Prompt management, caching, routing and batch",
+     "hours": 6,
+     "depth": "core",
+     "week": 80,
+     "prerequisites": [
+      "M10.U04",
+      "M10.U02"
+     ],
+     "outcomes": [
+      "You can version prompts as files and log the prompt ID on every call.",
+      "You can restructure a prompt so its static prefix is cacheable and measure cached-token share and savings.",
+      "You can build a cheap→strong router and run offline work through a batch API, and explain semantic-cache risks."
+     ],
+     "topics": [
+      {
+       "id": "M10.02.05",
+       "title": "Prompt templates/versioning"
+      },
+      {
+       "id": "M10.02.07",
+       "title": "Caching"
+      },
+      {
+       "id": "M10.02.09",
+       "title": "Model routing"
+      },
+      {
+       "id": "M10.02.12",
+       "title": "Batch APIs (new)"
+      },
+      {
+       "id": "M10.02.13",
+       "title": "Semantic caching and its risks (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-docs",
+      "title": "Claude — Prompt caching",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+      "slice": "Whole page (cache_control breakpoints, prefix order tools→system→messages, minimum length, TTL, pricing, usage fields), then rohitg00 11/15 prompt-caching for OpenAI/Gemini and hit-rate measurement",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "How prefix caching works and cache_control breakpoints",
+      "Prefix hierarchy tools → system → messages; what invalidates the cache",
+      "Minimum cacheable length, 5-minute default TTL and 1-hour option",
+      "Pricing: cache writes cost more than base input, cache reads much less",
+      "Reading cache_creation_input_tokens / cache_read_input_tokens to verify hits"
+     ],
+     "gaps": [
+      {
+       "topic": "Prompt versioning and templates",
+       "resource": {
+        "resourceId": "langfuse-docs",
+        "title": "Langfuse — Prompt management overview",
+        "url": "https://langfuse.com/docs/prompt-management/overview",
+        "slice": "Whole page (versions, labels, linking prompts to traces)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Batch APIs across providers",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Batch APIs — the 50% discount",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/15-batch-apis",
+        "slice": "Lesson phases/17-infrastructure-and-production/15-batch-apis (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Batch API mechanics (JSONL input, polling, results)",
+       "resource": {
+        "resourceId": "openai-docs",
+        "title": "OpenAI — Batch API guide",
+        "url": "https://platform.openai.com/docs/guides/batch",
+        "slice": "Whole guide",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Model routing signals and patterns",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Model routing as a cost-reduction primitive",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/16-model-routing",
+        "slice": "Lesson phases/17-infrastructure-and-production/16-model-routing (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Learned routing evidence",
+       "resource": {
+        "resourceId": "paper-routellm",
+        "title": "RouteLLM: Learning to Route LLMs with Preference Data",
+        "url": "https://arxiv.org/abs/2406.18665",
+        "slice": "§1–4",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Semantic caching and its failure modes",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Prompt & semantic caching",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/14-prompt-semantic-caching",
+        "slice": "Lesson phases/17-infrastructure-and-production/14-prompt-semantic-caching (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Caching, rate limiting & cost optimization",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/11-caching-cost",
+      "slice": "Lesson phases/11-llm-engineering/11-caching-cost (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Cheaper without getting worse",
+      "brief": "Move prompts to versioned files whose ID is logged on every call. Restructure a RAG prompt so instructions + tool definitions form a stable cacheable prefix; measure cached-token share and cost per request before/after. Build a 2-tier router (cheap model, escalate on low confidence or validation failure) and report cost and quality vs always-strong on your eval set. Push 200 offline items through a batch API.",
+      "done_when": "A before/after table (cached share, cost/request), a router table (cost, pass rate) vs always-strong, and a completed batch job with results joined back to inputs."
+     },
+     "quiz": [
+      {
+       "id": "M10.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Prompt caching only helps when:",
+       "options": [
+        "The variable part comes first",
+        "Temperature is 0",
+        "A long identical prefix is reused across requests",
+        "Streaming is on"
+       ],
+       "answer": 2,
+       "explain": "Caches match on exact prefixes; anything variable must come after the cached part."
+      },
+      {
+       "id": "M10.U06.Q2",
+       "kind": "mcq",
+       "prompt": "The main risk of semantic (embedding-similarity) caching is:",
+       "options": [
+        "Higher cost",
+        "Returning a cached answer to a question that is similar but materially different",
+        "Slow lookups",
+        "Token limits"
+       ],
+       "answer": 1,
+       "explain": "'Refund for order 123' and 'refund for order 124' embed almost identically."
+      },
+      {
+       "id": "M10.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Batch APIs are a good fit for:",
+       "options": [
+        "Live chat",
+        "Offline evals and backfills that tolerate hours of latency",
+        "Streaming UIs",
+        "Interactive tool-calling loops"
+       ],
+       "answer": 1,
+       "explain": "They trade latency (up to ~24h) for a large discount."
+      },
+      {
+       "id": "M10.U06.Q4",
+       "kind": "short",
+       "prompt": "How would you prove your router saved money without lowering quality?",
+       "rubric": [
+        "Same frozen eval set for router vs always-strong; report pass rate with confidence intervals",
+        "Cost per successful task, not just per call",
+        "Inspect escalation rate and failures of cheap-model answers that were not escalated"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M10.S3",
+   "title": "Evaluation (systematic, not vibes)",
+   "units": [
+    {
+     "id": "M10.U07",
+     "title": "Error analysis first",
+     "hours": 6,
+     "depth": "core",
+     "week": 81,
+     "prerequisites": [
+      "M10.U03",
+      "M10.U04"
+     ],
+     "outcomes": [
+      "You can read and annotate 100 traces, open-code failures and cluster them into a failure taxonomy (axial coding).",
+      "You can write precise binary pass/fail criteria for the top failure modes.",
+      "You can explain why error analysis precedes choosing metrics or frameworks."
+     ],
+     "topics": [
+      {
+       "id": "M10.03.01",
+       "title": "Task rubric"
+      },
+      {
+       "id": "M10.03.05",
+       "title": "Human review"
+      },
+      {
+       "id": "M10.03.12",
+       "title": "Trace review, open/axial coding, failure taxonomy (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "hamel-evals",
+      "title": "Hamel Husain — A Field Guide to Rapidly Improving AI Products",
+      "url": "https://hamel.dev/blog/posts/field-guide/",
+      "slice": "Whole post, then 'Your AI Product Needs Evals' https://hamel.dev/blog/posts/evals/ (whole post)",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Error analysis as the highest-ROI activity; bottom-up failure categories from real data",
+      "Building a simple custom data viewer to read traces fast",
+      "Empowering domain experts to write prompts and judge outputs",
+      "Bootstrapping with synthetic inputs; binary pass/fail over Likert scales",
+      "Three levels of evals: unit-test assertions, human + model eval over logged traces, A/B tests (evals post)",
+      "Case study: iterating an AI real-estate assistant (Rechat) through evals"
+     ],
+     "gaps": [
+      {
+       "topic": "Open and axial coding, step by step",
+       "resource": {
+        "resourceId": "hamel-evals",
+        "title": "Hamel Husain & Shreya Shankar — LLM Evals FAQ",
+        "url": "https://hamel.dev/blog/posts/evals-faq/",
+        "slice": "Questions on error analysis, open/axial coding and how many traces to review",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "aie-book-summaries",
+      "title": "Chip Huyen — AI Engineering chapter summaries (ch. 3–4 evaluation)",
+      "url": "https://github.com/chiphuyen/aie-book/blob/main/chapter-summaries.md",
+      "slice": "Chapters 3 'Evaluation Methodology' and 4 'Evaluate AI Systems' summaries",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "100 traces → failure taxonomy",
+      "brief": "Log 100 real or synthetic traces from your U03 extractor or a chatbot. Write a free-text note on every failure (open coding), cluster notes into 5–8 failure modes (axial coding) and count them. Pick the top 2 and write a binary pass/fail definition for each with 2 pass and 2 fail examples.",
+      "done_when": "A spreadsheet/CSV with 100 annotated traces, a frequency table of 5–8 failure modes, and two written pass/fail definitions with examples."
+     },
+     "quiz": [
+      {
+       "id": "M10.U07.Q1",
+       "kind": "mcq",
+       "prompt": "The recommended first step before choosing eval metrics is:",
+       "options": [
+        "Adopt a framework's default metrics",
+        "Build a leaderboard",
+        "Read and annotate real traces to find failure modes",
+        "Fine-tune a model"
+       ],
+       "answer": 2,
+       "explain": "Generic metrics measure things that may not be your failures."
+      },
+      {
+       "id": "M10.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Binary pass/fail criteria are often preferred over 1–5 scales because:",
+       "options": [
+        "They are cheaper to compute",
+        "LLMs cannot output numbers",
+        "They are clearer, more consistent between raters, and actionable",
+        "They hide errors"
+       ],
+       "answer": 2,
+       "explain": "Likert midpoints are ambiguous and drift between raters."
+      },
+      {
+       "id": "M10.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Axial coding means:",
+       "options": [
+        "Grouping open-coded notes into higher-level failure categories",
+        "Labelling tokens",
+        "Computing BLEU",
+        "Building a vector index"
+       ],
+       "answer": 0,
+       "explain": "Open coding = free notes; axial coding = relating them into a taxonomy."
+      },
+      {
+       "id": "M10.U07.Q4",
+       "kind": "short",
+       "prompt": "Your top failure mode is 'ignores the user's date format.' Write a precise pass/fail definition.",
+       "rubric": [
+        "States the input condition (user specified a format explicitly or by example)",
+        "Pass = every date in the output uses that format; Fail = any date in another format",
+        "Covers edge cases: no dates in output, ambiguous formats"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U08",
+     "title": "Golden datasets, code-based checks and synthetic cases",
+     "hours": 6,
+     "depth": "core",
+     "week": 81,
+     "prerequisites": [
+      "M10.U07"
+     ],
+     "outcomes": [
+      "You can build a golden set from traces plus synthetic cases generated over explicit dimensions, and freeze a held-out split.",
+      "You can choose exact-match, semantic or deterministic checks per field/criterion.",
+      "You can explain and detect eval contamination."
+     ],
+     "topics": [
+      {
+       "id": "M10.03.02",
+       "title": "Gold dataset"
+      },
+      {
+       "id": "M10.03.03",
+       "title": "Exact match and semantic measures"
+      },
+      {
+       "id": "M10.03.04",
+       "title": "Deterministic checks"
+      },
+      {
+       "id": "M10.03.08",
+       "title": "Contamination"
+      },
+      {
+       "id": "M10.03.13",
+       "title": "Synthetic test-case generation by dimensions (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-eval-guidebook",
+      "title": "Hugging Face — LLM Evaluation Guidebook",
+      "url": "https://huggingface.co/spaces/OpenEvals/evaluation-guidebook",
+      "slice": "Sections: automatic benchmarks (designing your own eval, metrics), human evaluation basics, model-as-judge basics, troubleshooting; contamination notes",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Designing your own evaluation: task definition, dataset sources, sample selection",
+      "Metric families: exact match, n-gram overlap (BLEU/ROUGE), model-based scores; when each fails",
+      "Human evaluation basics and annotator guidelines",
+      "Model-as-a-judge basics",
+      "Contamination and reproducibility/troubleshooting (prompt format, tokenization, normalization)"
+     ],
+     "gaps": [
+      {
+       "topic": "Synthetic test cases generated over dimensions",
+       "resource": {
+        "resourceId": "hamel-evals",
+        "title": "LLM Evals FAQ — synthetic data questions",
+        "url": "https://hamel.dev/blog/posts/evals-faq/",
+        "slice": "Questions on generating synthetic data with dimensions/tuples",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Semantic similarity metrics",
+       "resource": {
+        "resourceId": "paper-bertscore",
+        "title": "BERTScore: Evaluating Text Generation with BERT",
+        "url": "https://arxiv.org/abs/1904.09675",
+        "slice": "§3 (method) and limitations",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Deterministic/assertion checks in production",
+       "resource": {
+        "resourceId": "applied-llms",
+        "title": "What We've Learned From A Year of Building with LLMs",
+        "url": "https://applied-llms.org/",
+        "slice": "Tactical → 'Evaluation & Monitoring' section",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "150-case golden set",
+      "brief": "Build 150 cases: 100 sampled from your U07 traces and 50 synthetic ones generated over explicit dimensions (persona × task × difficulty), each hand-verified. Write code-based assertions (regex, schema, numeric tolerance, forbidden phrases). Freeze a 30% held-out split you never tune on and add a contamination check (no held-out item appears in prompts/few-shot examples).",
+      "done_when": "golden.jsonl (150 rows with dimension tags), assertions passing in pytest, a frozen test split file with a hash recorded, and a contamination check script."
+     },
+     "quiz": [
+      {
+       "id": "M10.U08.Q1",
+       "kind": "mcq",
+       "prompt": "A held-out test split exists to:",
+       "options": [
+        "Estimate quality on cases you did not tune prompts against",
+        "Train the judge",
+        "Increase data",
+        "Speed up CI"
+       ],
+       "answer": 0,
+       "explain": "Tuning on everything overfits your prompts to the eval."
+      },
+      {
+       "id": "M10.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Exact match is appropriate for:",
+       "options": [
+        "Open-ended summaries",
+        "Extracted IDs, dates or labels",
+        "Tone",
+        "Creativity"
+       ],
+       "answer": 1,
+       "explain": "Exact match works when there is one correct normalized string."
+      },
+      {
+       "id": "M10.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Synthetic test generation is most useful when you:",
+       "options": [
+        "Skip human review",
+        "Define dimensions to cover, then review samples",
+        "Generate 1M cases",
+        "Reuse training examples"
+       ],
+       "answer": 1,
+       "explain": "Dimensions give coverage; review removes unrealistic or wrong cases."
+      },
+      {
+       "id": "M10.U08.Q4",
+       "kind": "short",
+       "prompt": "How could your eval set become contaminated, and how would you detect it?",
+       "rubric": [
+        "Cases copied into few-shot examples/prompts, or used for tuning; public benchmark items in model training data",
+        "Detection: string/embedding overlap checks between eval items and prompts/training data; suspiciously high held-out scores",
+        "Prevention: frozen hashed split, provenance per item"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U09",
+     "title": "LLM-as-judge, calibrated",
+     "hours": 6,
+     "depth": "core",
+     "week": 82,
+     "prerequisites": [
+      "M10.U08"
+     ],
+     "outcomes": [
+      "You can write a single-criterion judge prompt with definitions and few-shot examples.",
+      "You can calibrate it on a dev split and report TPR, TNR and agreement on an untouched test split.",
+      "You can test pairwise judges for position bias."
+     ],
+     "topics": [
+      {
+       "id": "M10.03.06",
+       "title": "Judge calibration/bias"
+      },
+      {
+       "id": "M10.03.07",
+       "title": "Pairwise/blind judging"
+      }
+     ],
+     "learn": {
+      "resourceId": "hamel-evals",
+      "title": "Hamel Husain — Using LLM-as-a-Judge for Evaluation: A Complete Guide",
+      "url": "https://hamel.dev/blog/posts/llm-judge/",
+      "slice": "Whole post",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Finding the principal domain expert and building a dataset of real interactions",
+      "Pass/fail judgments with written critiques from the expert",
+      "Iterating the judge prompt using expert critiques as few-shot examples",
+      "Measuring judge–expert agreement and when it is good enough",
+      "Error analysis with the judge; when to build specialized judges"
+     ],
+     "gaps": [
+      {
+       "topic": "Position, verbosity and self-enhancement bias in judges",
+       "resource": {
+        "resourceId": "paper-llm-as-judge-mtbench",
+        "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+        "url": "https://arxiv.org/abs/2306.05685",
+        "slice": "§3 (LLM-as-a-judge, limitations: position/verbosity/self-enhancement bias)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Criteria drift and aligning evaluators with human preferences",
+       "resource": {
+        "resourceId": "paper-who-validates-validators",
+        "title": "Who Validates the Validators?",
+        "url": "https://arxiv.org/abs/2404.12272",
+        "slice": "§1–4",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Judge code you can run",
+       "resource": {
+        "resourceId": "hf-cookbook",
+        "title": "HF Cookbook — Using LLM-as-a-judge for an automated and versatile evaluation",
+        "url": "https://huggingface.co/learn/cookbook/en/llm_judge",
+        "slice": "Whole notebook",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "eugeneyan",
+      "title": "Eugene Yan — Evaluating the Effectiveness of LLM-Evaluators",
+      "url": "https://eugeneyan.com/writing/llm-evaluators/",
+      "slice": "Whole post",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Calibrated judge report",
+      "brief": "For one failure mode from U07, hand-label 80 outputs pass/fail. Write a judge prompt with a precise definition and examples. Split 40 dev / 40 test, iterate only on dev, then report TPR, TNR and raw agreement on test. For a pairwise version, swap A/B order on 30 pairs and report the position-bias rate.",
+      "done_when": "A report with confusion matrix on the 40 test items, TPR and TNR, the final judge prompt, and a position-swap consistency percentage."
+     },
+     "quiz": [
+      {
+       "id": "M10.U09.Q1",
+       "kind": "mcq",
+       "prompt": "A judge with 95% accuracy on a dataset where 95% of outputs pass may be useless because:",
+       "options": [
+        "It is too slow",
+        "Accuracy is always valid",
+        "Judges cannot fail",
+        "It may approve everything — check TNR on the failures"
+       ],
+       "answer": 3,
+       "explain": "On imbalanced data, measure TPR and TNR separately."
+      },
+      {
+       "id": "M10.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Position bias is tested by:",
+       "options": [
+        "Changing temperature",
+        "Using a bigger model",
+        "Making prompts longer",
+        "Swapping the order of A and B and checking consistency"
+       ],
+       "answer": 3,
+       "explain": "Zheng et al. found judges often prefer the first (or second) answer regardless of content."
+      },
+      {
+       "id": "M10.U09.Q3",
+       "kind": "mcq",
+       "prompt": "You should iterate the judge prompt on:",
+       "options": [
+        "The test split",
+        "A dev split, then report on an untouched test split",
+        "Production traffic only",
+        "The training data"
+       ],
+       "answer": 1,
+       "explain": "Otherwise the reported agreement is overfit."
+      },
+      {
+       "id": "M10.U09.Q4",
+       "kind": "short",
+       "prompt": "Why must a judge's criterion be one specific failure mode rather than 'overall quality'?",
+       "rubric": [
+        "Specific criteria are measurable and calibratable against human labels",
+        "'Overall quality' mixes dimensions, drifts and gives non-actionable scores",
+        "Ties each judge to a failure mode from error analysis"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U10",
+     "title": "Regression suites and evals in CI",
+     "hours": 5,
+     "depth": "core",
+     "week": 82,
+     "prerequisites": [
+      "M10.U09"
+     ],
+     "outcomes": [
+      "You can run code checks plus a calibrated judge on a frozen set in GitHub Actions when LLM code changes.",
+      "You can set a regression gate that accounts for sampling noise (confidence intervals).",
+      "You can post per-case diffs of newly failing cases to a PR."
+     ],
+     "topics": [
+      {
+       "id": "M10.03.10",
+       "title": "Regression suites"
+      },
+      {
+       "id": "M10.03.14",
+       "title": "Eval tooling (promptfoo/DeepEval/Inspect) and CI gates (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "promptfoo-docs",
+      "title": "promptfoo — Intro + configuration, then GitHub Action integration",
+      "url": "https://www.promptfoo.dev/docs/intro/",
+      "slice": "Intro → getting started/config (prompts, providers, tests, assertions) → Integrations: GitHub Action https://www.promptfoo.dev/docs/integrations/github-action/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Declarative eval suites: prompts × providers × test cases",
+      "Assertion types: deterministic (contains, regex, JSON schema, javascript/python) and model-graded (llm-rubric)",
+      "Running evals from the CLI, caching, and viewing results",
+      "GitHub Action that runs evals on PRs and comments a before/after comparison"
+     ],
+     "gaps": [
+      {
+       "topic": "Confidence intervals and paired comparisons for evals",
+       "resource": {
+        "resourceId": "paper-error-bars-evals",
+        "title": "Adding Error Bars to Evals",
+        "url": "https://arxiv.org/abs/2411.00640",
+        "slice": "§2–4 (CLT intervals, clustered SEs, paired differences)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Path-filtered triggers and job setup",
+       "resource": {
+        "resourceId": "gh-actions-docs",
+        "title": "GitHub Actions — Workflow syntax (on.pull_request.paths)",
+        "url": "https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions",
+        "slice": "on.<push|pull_request>.paths section",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Building an eval runner + CI comparison in Python",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Evaluation & testing LLM applications",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/10-evaluation",
+        "slice": "Lesson 11/10: 'Sample Size and Confidence', 'Regression Testing', Build It steps 4–5 (note: its judge is simulated)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "dlai-evaluating-agents",
+      "title": "DeepLearning.AI — Evaluating AI Agents",
+      "url": "https://www.deeplearning.ai/short-courses/evaluating-ai-agents/",
+      "slice": "All lessons (component, router and trajectory evals; structured experiments; monitoring)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "inspect-ai",
+      "title": "Inspect (UK AISI)",
+      "url": "https://inspect.aisi.org.uk/",
+      "slice": "Tutorial + scorers",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Eval gate in CI",
+      "brief": "Add a GitHub Actions workflow that runs your code checks plus the U09 judge on the frozen split whenever files in prompts/ or src/llm/ change. Fail the build when pass rate drops by more than an agreed margin (justify it with a confidence interval) and post a markdown diff of newly failing cases to the PR.",
+      "done_when": "A PR that intentionally degrades a prompt shows a failed check and a bot comment listing the newly failing cases; a passing PR shows green."
+     },
+     "quiz": [
+      {
+       "id": "M10.U10.Q1",
+       "kind": "mcq",
+       "prompt": "With 50 test cases at 90% pass rate, the 95% confidence interval is roughly:",
+       "options": [
+        "±1 point",
+        "±30 points",
+        "±8–10 points, so small regressions are undetectable",
+        "Exact"
+       ],
+       "answer": 2,
+       "explain": "Binomial SE = sqrt(0.9·0.1/50) ≈ 4.2 points; ×1.96 ≈ ±8."
+      },
+      {
+       "id": "M10.U10.Q2",
+       "kind": "mcq",
+       "prompt": "CI evals should run on every PR that:",
+       "options": [
+        "Touches docs only",
+        "Changes the README",
+        "Never — run them manually",
+        "Changes prompts, models, retrieval or LLM code"
+       ],
+       "answer": 3,
+       "explain": "Path filters keep cost down while catching real regressions."
+      },
+      {
+       "id": "M10.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A useful regression report shows:",
+       "options": [
+        "Per-case diffs of newly failing cases",
+        "Only the mean score",
+        "Only cost",
+        "Token counts"
+       ],
+       "answer": 0,
+       "explain": "Means hide which behaviours broke."
+      },
+      {
+       "id": "M10.U10.Q4",
+       "kind": "short",
+       "prompt": "How do you keep CI eval cost bounded as the suite grows?",
+       "rubric": [
+        "Path filters / run only on relevant changes; cheap deterministic checks first, judge only where needed",
+        "Caching unchanged results, sampling a stratified subset on PRs and the full suite nightly",
+        "Batch APIs or cheaper judge models calibrated against the expensive one"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M10.S4",
+   "title": "Production: observability, cost and latency, guardrails",
+   "units": [
+    {
+     "id": "M10.U11",
+     "title": "Tracing, observability and online evaluation",
+     "hours": 6,
+     "depth": "core",
+     "week": 83,
+     "prerequisites": [
+      "M10.U07"
+     ],
+     "outcomes": [
+      "You can instrument every request as a trace with spans for retrieval, LLM calls and tools (model, tokens, cost, latency, prompt version).",
+      "You can capture user feedback and run a judge on a sample of production traces.",
+      "You can redact PII before traces are stored."
+     ],
+     "topics": [
+      {
+       "id": "M10.03.11",
+       "title": "Traces"
+      },
+      {
+       "id": "M10.04.01",
+       "title": "OTel GenAI semantic conventions and spans (new)"
+      },
+      {
+       "id": "M10.04.02",
+       "title": "Online evals and user feedback capture (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "langfuse-docs",
+      "title": "Langfuse — Observability overview",
+      "url": "https://langfuse.com/docs/observability/overview",
+      "slice": "Overview + data model (traces, observations, sessions, scores); then LLM Zoomcamp module 5 'Monitoring' files 04-metrics → 08-user-feedback → 09-built-in-judge → 10-feedback-dashboard https://github.com/DataTalksClub/llm-zoomcamp/tree/main/05-monitoring",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Langfuse data model: traces, observations (spans, generations), sessions, users, scores",
+      "Capturing model, token usage, cost and latency per generation; SDK and OpenTelemetry integration",
+      "Zoomcamp: logging conversations and metrics to a database, a chat app, user feedback capture",
+      "Zoomcamp: a built-in LLM judge over logged answers, feedback dashboards (Streamlit/Grafana), docker-compose deployment"
+     ],
+     "gaps": [
+      {
+       "topic": "Standard span/attribute names for GenAI",
+       "resource": {
+        "resourceId": "otel-genai",
+        "title": "OpenTelemetry — Semantic conventions for Generative AI",
+        "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+        "slice": "GenAI spans + metrics pages",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "PII detection and redaction",
+       "resource": {
+        "resourceId": "presidio",
+        "title": "Microsoft Presidio",
+        "url": "https://microsoft.github.io/presidio/",
+        "slice": "Analyzer + anonymizer quickstart; adding custom recognizers (for CNIC/PK phone patterns)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "phoenix-docs",
+      "title": "Arize Phoenix documentation",
+      "url": "https://arize.com/docs/phoenix",
+      "slice": "Tracing quickstart + evals",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Every request is a trace",
+      "brief": "Instrument your app so every request yields a trace: spans for retrieval, each LLM call (model, tokens, cost, latency, prompt version) and tool calls, plus thumbs up/down feedback attached to the trace. Build a dashboard for p95 latency, cost/day and feedback rate. Run your U09 judge nightly on a 5% sample of traces. Redact phone numbers and CNICs before storage.",
+      "done_when": "A screenshot/link of a trace tree with all span types, a dashboard with the three metrics, a nightly judge job log, and a test proving PII is redacted in stored traces."
+     },
+     "quiz": [
+      {
+       "id": "M10.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A trace differs from a log line in that it:",
+       "options": [
+        "Is cheaper to store",
+        "Has no timestamps",
+        "Links the nested spans of one request end to end",
+        "Stores model weights"
+       ],
+       "answer": 2,
+       "explain": "Parent/child spans let you see where time, cost and errors occurred inside one request."
+      },
+      {
+       "id": "M10.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Online evaluation means:",
+       "options": [
+        "Evaluating only before launch",
+        "Scoring sampled live traffic continuously",
+        "GPU benchmarking",
+        "A/B testing UIs only"
+       ],
+       "answer": 1,
+       "explain": "It catches drift and failure modes that never appeared offline."
+      },
+      {
+       "id": "M10.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Which should be redacted before storing traces?",
+       "options": [
+        "Model name",
+        "Latency",
+        "Prompt version",
+        "PII such as phone numbers and CNIC numbers"
+       ],
+       "answer": 3,
+       "explain": "Traces often contain raw user input; storing PII creates legal and security risk."
+      },
+      {
+       "id": "M10.U11.Q4",
+       "kind": "short",
+       "prompt": "Which three fields would you require on every LLM span, and why?",
+       "rubric": [
+        "Model ID/version and prompt version (reproducibility, regressions)",
+        "Token usage + cost and latency (cost/latency engineering)",
+        "Trace/request/user or session ID and outcome/status (debugging, joining feedback)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U12",
+     "title": "Cost and latency engineering",
+     "hours": 5,
+     "depth": "core",
+     "week": 83,
+     "prerequisites": [
+      "M09.U10",
+      "M10.U06",
+      "M10.U11"
+     ],
+     "outcomes": [
+      "You can report TTFT, total latency p50/p95, tokens in/out, cache hit rate and cost per request and per successful task.",
+      "You can propose and measure two optimizations with a before/after table.",
+      "You can reason about cascades and unit economics."
+     ],
+     "topics": [
+      {
+       "id": "M10.03.09",
+       "title": "Cost/latency"
+      },
+      {
+       "id": "M10.04.03",
+       "title": "TTFT/TPOT/tokens-per-second at the app layer (new)"
+      },
+      {
+       "id": "M10.04.04",
+       "title": "Cost per successful task, cascades and unit economics (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "huyen-genai-platform",
+      "title": "Chip Huyen — Building A Generative AI Platform",
+      "url": "https://huyenchip.com/2024/07/25/genai-platform.html",
+      "slice": "Whole essay, then BentoML LLM Inference Handbook metrics pages https://bentoml.com/llm/ (inference metrics: latency, TTFT, TPOT/ITL, throughput, goodput)",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Platform components: context enhancement, guardrails, model router and gateway (Huyen)",
+      "Caches: prompt cache, exact cache, semantic cache (Huyen)",
+      "Complex logic/write actions, observability and orchestration (Huyen)",
+      "Inference metrics: TTFT, TPOT/inter-token latency, end-to-end latency, throughput, goodput (BentoML)",
+      "Prefill vs decode cost and how batching trades latency for throughput (BentoML)"
+     ],
+     "gaps": [
+      {
+       "topic": "Cost per successful task and LLM FinOps",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — FinOps for LLMs",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/27-finops-llms",
+        "slice": "Lesson phases/17-infrastructure-and-production/27-finops-llms (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Goodput and SLO-aware inference metrics",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Inference metrics: TTFT, TPOT, goodput",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/08-inference-metrics-goodput",
+        "slice": "Lesson phases/17-infrastructure-and-production/08-inference-metrics-goodput (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Cost/latency report with two fixes",
+      "brief": "For your app, report TTFT and total latency p50/p95, tokens in/out per request, cache hit rate, and cost per request and per successful task (cost ÷ eval pass rate). Propose and test two optimizations (e.g. prompt trimming + cascade) and show a before/after table with quality held constant.",
+      "done_when": "A report with the metric table, two optimizations each with before/after numbers, and the eval pass rate unchanged within its CI."
+     },
+     "quiz": [
+      {
+       "id": "M10.U12.Q1",
+       "kind": "mcq",
+       "prompt": "TPOT (time per output token) mainly reflects:",
+       "options": [
+        "Prefill",
+        "Decode speed",
+        "DNS lookup",
+        "Tokenization"
+       ],
+       "answer": 1,
+       "explain": "After the first token, each new token is a decode step."
+      },
+      {
+       "id": "M10.U12.Q2",
+       "kind": "mcq",
+       "prompt": "'Cost per successful task' beats cost per call because it:",
+       "options": [
+        "Is a smaller number",
+        "Accounts for retries and failures that deliver no value",
+        "Is how providers bill",
+        "Ignores tokens"
+       ],
+       "answer": 1,
+       "explain": "A cheap model that fails half the time can cost more per success."
+      },
+      {
+       "id": "M10.U12.Q3",
+       "kind": "mcq",
+       "prompt": "The cheapest first optimization for a verbose system is often:",
+       "options": [
+        "Fine-tuning",
+        "Buying GPUs",
+        "Trimming/caching the prompt and capping output tokens",
+        "Switching to beam search"
+       ],
+       "answer": 2,
+       "explain": "Input and output tokens are the bill; cutting them is fast and safe."
+      },
+      {
+       "id": "M10.U12.Q4",
+       "kind": "short",
+       "prompt": "Your p95 latency doubled after adding RAG. List three places to look, in order.",
+       "rubric": [
+        "Retrieval/vector DB and reranker latency per span",
+        "Prompt length growth → prefill time (more chunks), cache misses",
+        "Extra LLM calls (query rewriting, multi-query) or network/cold starts"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M10.U13",
+     "title": "Guardrails and app-level safety",
+     "hours": 6,
+     "depth": "core",
+     "week": 84,
+     "prerequisites": [
+      "M10.U03",
+      "M10.U08"
+     ],
+     "outcomes": [
+      "You can add input and output guards and measure block rate, false-positive rate and added latency.",
+      "You can build an adversarial set covering direct and indirect prompt injection.",
+      "You can explain the lethal trifecta and why prompt instructions alone do not stop injection."
+     ],
+     "topics": [
+      {
+       "id": "M10.04.05",
+       "title": "Input/output guardrails (new)"
+      },
+      {
+       "id": "M10.04.06",
+       "title": "Prompt-injection basics (threat modelling stays in M18.01) (new)"
+      },
+      {
+       "id": "M10.04.07",
+       "title": "PII redaction and safe logging (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "owasp-llm-top10",
+      "title": "OWASP Top 10 for LLM Applications (2025)",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "slice": "LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM07 System Prompt Leakage, LLM10 Unbounded Consumption; then DLAI 'Safe and Reliable AI via Guardrails' (all lessons)",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "OWASP: direct vs indirect prompt injection, sensitive information disclosure, improper output handling, excessive agency, system-prompt leakage, unbounded consumption (with mitigations per risk)",
+      "DLAI: failure modes of a RAG chatbot; building validators; input and output guards",
+      "DLAI: hallucination detection with an NLI model, keeping a chatbot on topic, PII detection, competitor-mention checks"
+     ],
+     "gaps": [
+      {
+       "topic": "PII redaction with custom recognizers",
+       "resource": {
+        "resourceId": "presidio",
+        "title": "Microsoft Presidio",
+        "url": "https://microsoft.github.io/presidio/",
+        "slice": "Analyzer: adding custom recognizers (regex for CNIC #####-#######-#, +92 phones)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Lethal trifecta and the limits of prompt-level defences",
+       "resource": {
+        "resourceId": "willison",
+        "title": "Simon Willison — The lethal trifecta for AI agents",
+        "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Guardrail pipeline built from scratch",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Guardrails, safety & content filtering",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/12-guardrails",
+        "slice": "Lesson phases/11-llm-engineering/12-guardrails (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-guardrails",
+      "title": "DeepLearning.AI — Safe and Reliable AI via Guardrails",
+      "url": "https://www.deeplearning.ai/short-courses/safe-and-reliable-ai-via-guardrails/",
+      "slice": "All lessons",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Guarded service with measured trade-offs",
+      "brief": "Add an input guard (topic/jailbreak classifier + length limits), an output guard (schema + PII regex for Pakistani phone/CNIC formats + a groundedness check for RAG answers) and a 40-case adversarial set (direct injection and indirect injection via a retrieved document). Report block rate, false-positive rate on 100 benign cases, and p50 latency added.",
+      "done_when": "A table: block rate on 40 attacks, false-positive rate on 100 benign cases, added latency; PII redaction unit tests pass."
+     },
+     "quiz": [
+      {
+       "id": "M10.U13.Q1",
+       "kind": "mcq",
+       "prompt": "Indirect prompt injection arrives via:",
+       "options": [
+        "The system prompt",
+        "The tokenizer",
+        "Untrusted content the app retrieves or receives (web pages, emails, documents)",
+        "The API key"
+       ],
+       "answer": 2,
+       "explain": "The attacker never talks to the model directly; their text is pulled into context."
+      },
+      {
+       "id": "M10.U13.Q2",
+       "kind": "mcq",
+       "prompt": "A guardrail with a high block rate but 15% false positives on benign traffic is:",
+       "options": [
+        "Excellent",
+        "Required by law",
+        "Likely unusable without tuning — measure both sides",
+        "Irrelevant"
+       ],
+       "answer": 2,
+       "explain": "Blocking one in seven legitimate users destroys the product."
+      },
+      {
+       "id": "M10.U13.Q3",
+       "kind": "mcq",
+       "prompt": "The 'lethal trifecta' combines private data access, untrusted content, and:",
+       "options": [
+        "Streaming",
+        "Long context",
+        "An external communication/exfiltration channel",
+        "Caching"
+       ],
+       "answer": 2,
+       "explain": "With all three, injected instructions can leak private data."
+      },
+      {
+       "id": "M10.U13.Q4",
+       "kind": "short",
+       "prompt": "Why can't a system prompt that says 'ignore instructions in documents' be your only injection defence?",
+       "rubric": [
+        "Models follow instructions probabilistically; adversarial text can override system prompts",
+        "Defence in depth: least-privilege tools, removing an exfiltration path, output filtering, human approval",
+        "Must be tested with an adversarial set, not assumed"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Evaluated, observable extraction or support service",
+  "brief": "Ship a FastAPI service — e.g. Urdu/English customer-message triage + structured extraction, or CV→job-match JSON — deployed on a free tier with a public README. It must have structured outputs, retries/fallbacks, an error-analysis-driven eval suite gated in CI, tracing with cost/latency, and input/output guardrails.",
+  "rubric": [
+   {
+    "criterion": "API engineering (20%)",
+    "levels": [
+     "Excellent: structured outputs, jittered retries, timeouts, fallback model, async batch path, pinned model IDs",
+     "Adequate: works with basic error handling",
+     "Fail: crashes on 429 or invalid JSON"
+    ]
+   },
+   {
+    "criterion": "Evaluation (30%)",
+    "levels": [
+     "Excellent: error-analysis notebook → failure taxonomy; ≥150-case golden set with frozen test split; code checks + judge with reported TPR/TNR; CI gate",
+     "Adequate: golden set + metrics",
+     "Fail: 'looks good' screenshots"
+    ]
+   },
+   {
+    "criterion": "Observability (15%)",
+    "levels": [
+     "Excellent: traces with cost/latency/prompt version; dashboard; sampled online evals",
+     "Adequate: logs with tokens",
+     "Fail: none"
+    ]
+   },
+   {
+    "criterion": "Cost/latency (15%)",
+    "levels": [
+     "Excellent: p50/p95, TTFT, cost per successful task, one measured optimization",
+     "Adequate: cost per call",
+     "Fail: none"
+    ]
+   },
+   {
+    "criterion": "Safety (20%)",
+    "levels": [
+     "Excellent: input/output guards, PII redaction, adversarial set with block and false-positive rates",
+     "Adequate: basic validation",
+     "Fail: none"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

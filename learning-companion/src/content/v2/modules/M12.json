@@ -1,0 +1,3620 @@
+{
+ "id": "M12",
+ "phase": "P4 Build AI systems",
+ "title": "Agents, tools and protocols",
+ "summary": "Build agents from raw API calls up: tool calling on the wire, a bounded loop, context and memory, durable execution, MCP (2026-07-28 stateless spec) with OAuth, Agent Skills, A2A, subagents, coding and browser agents, runtime security, and an eval + observability stack. Frameworks are studied as examples after you can build without them. Primary spine: rohitg00 phases 13–14 + Anthropic engineering posts + official specs.",
+ "hours": 128,
+ "deepHours": 10,
+ "prerequisites": [
+  "M03",
+  "M21",
+  "M10",
+  "M11"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde"
+ ],
+ "optionalFor": [
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M12.S1",
+   "title": "Agent fundamentals from scratch",
+   "units": [
+    {
+     "id": "M12.U01",
+     "title": "Workflows vs agents: when not to build an agent",
+     "hours": 3,
+     "depth": "core",
+     "week": 92,
+     "prerequisites": [],
+     "outcomes": [
+      "You can classify a task as single call, prompt chain, router, parallelization, orchestrator-workers, evaluator-optimizer or autonomous agent and justify the choice.",
+      "You can name the latency/cost/reliability metric that would show an agent is worse than a fixed workflow."
+     ],
+     "topics": [
+      {
+       "id": "M12.01.01",
+       "title": "Workflow versus agent"
+      },
+      {
+       "id": "M12.01.04",
+       "title": "Deterministic routing"
+      },
+      {
+       "id": "M12.04.08",
+       "title": "Compare agent against deterministic workflow"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-building-effective-agents",
+      "title": "Building effective agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post incl. Appendix 1 (Agents in practice) and Appendix 2 (Prompt engineering your tools)"
+     },
+     "covers": [
+      "Definition: workflows (predefined code paths) vs agents (LLM dynamically directs its own process and tool use)",
+      "Augmented LLM building block (retrieval, tools, memory)",
+      "Five workflow patterns: prompt chaining, routing, parallelization (sectioning/voting), orchestrator-workers, evaluator-optimizer",
+      "When to use agents and the advice to start with direct LLM API calls before frameworks",
+      "Appendix: customer-support and coding agents as cases; tool-definition prompt engineering"
+     ],
+     "gaps": [
+      {
+       "topic": "Talk version with the 'think like your agent' advice",
+       "resource": {
+        "resourceId": "yt-barry-zhang-effective-agents",
+        "title": "How We Build Effective Agents — Barry Zhang (AI Engineer Summit)",
+        "url": "https://www.youtube.com/watch?v=D7_ipDqhtwk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full talk (~15 min)"
+       }
+      },
+      {
+       "topic": "Free tool-capable model to run the exercises",
+       "resource": {
+        "resourceId": "ollama-tool-calling",
+        "title": "Ollama — Tool calling",
+        "url": "https://docs.ollama.com/capabilities/tool-calling",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tool calling page"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Anthropic Workflow Patterns",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/12-anthropic-workflow-patterns",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 12 anthropic workflow patterns"
+     },
+     "practice": {
+      "title": "Five-task architecture triage",
+      "brief": "Take 5 tasks: FAQ answer, ticket routing, invoice extraction, multi-file code fix, open-ended research. For each pick single call / chain / router / parallel / orchestrator-workers / evaluator-optimizer / agent and justify it in 2 lines with expected latency, cost per task and the failure you fear most. Implement the router one in plain Python against a free model (Ollama or a provider free tier).",
+      "done_when": "A table of 5 rows (task, pattern, latency estimate, cost estimate, main risk) is committed, and the router runs on 20 sample tickets with ≥ 90% correct routes logged."
+     },
+     "quiz": [
+      {
+       "id": "M12.U01.Q1",
+       "kind": "mcq",
+       "prompt": "In Anthropic's definition, an agent differs from a workflow because…",
+       "options": [
+        "it uses more than one LLM call",
+        "the LLM dynamically directs its own process and tool use",
+        "it uses MCP",
+        "it has long-term memory"
+       ],
+       "answer": 1,
+       "explain": "Workflows follow predefined code paths; agents let the model decide the next step and tool."
+      },
+      {
+       "id": "M12.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Best fit for 'classify the support query, then send it to a specialized prompt':",
+       "options": [
+        "Evaluator-optimizer",
+        "Autonomous agent",
+        "Routing",
+        "Voting"
+       ],
+       "answer": 2,
+       "explain": "Routing classifies an input and directs it to a specialised follow-up."
+      },
+      {
+       "id": "M12.U01.Q3",
+       "kind": "mcq",
+       "prompt": "The post's recommended first step before adopting a framework is to…",
+       "options": [
+        "use LLM APIs directly and understand the underlying calls",
+        "pick the most-starred framework",
+        "build multi-agent from day one",
+        "fine-tune a model"
+       ],
+       "answer": 0,
+       "explain": "Frameworks hide prompts and responses; start with a few lines of direct API code."
+      },
+      {
+       "id": "M12.U01.Q4",
+       "kind": "short",
+       "prompt": "Give one task where an agent is worse than a fixed workflow, and name the metric that would show it.",
+       "rubric": [
+        "Names a concrete, well-specified task with a predictable path (e.g. invoice field extraction)",
+        "Names a measurable metric (cost per task, p95 latency, error rate, variance across runs)",
+        "Explains why autonomy adds risk or cost without adding success"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U02",
+     "title": "Tool calling on the wire: schemas, structured output, parallel and streaming calls",
+     "hours": 6,
+     "depth": "core",
+     "week": 92,
+     "prerequisites": [
+      "M12.U01"
+     ],
+     "outcomes": [
+      "You can send the same tool set to two providers with raw HTTP and explain every field of the request and response.",
+      "You can validate model-generated tool arguments with JSON Schema/Pydantic and repair or reject bad calls.",
+      "You can execute parallel tool calls concurrently and return results correlated by call id."
+     ],
+     "topics": [
+      {
+       "id": "M12.01.03",
+       "title": "Tool schemas"
+      },
+      {
+       "id": "M12.01.10",
+       "title": "Parallel independent tools"
+      },
+      {
+       "id": "M12.01.12",
+       "title": "Structured output for tool arguments"
+      },
+      {
+       "id": "M12.01.13",
+       "title": "Streaming tool calls and provider differences"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — The Tool Interface (+4 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 13 · Lesson 01 the tool interface; Lesson 02 function calling deep dive; Lesson 03 parallel and streaming tool calls; Lesson 04 structured output; Lesson 05 tool schema design"
+     },
+     "covers": [
+      "13/01: describe → decide → execute → observe; the trust split (model proposes, your code executes); circuit breakers",
+      "13/02: OpenAI vs Anthropic vs Gemini shape diffs field by field, tool_choice behaviour, limits, errors and repair, translator pattern",
+      "13/03: enabling parallel calls, id correlation, concurrent execution, streaming tool-call deltas, partial-JSON parse-early trap, out-of-order completion",
+      "13/04: JSON Schema 2020-12, Pydantic/Zod bindings, refusals, constrained decoding, three failure modes and retry strategy, small-model support",
+      "13/05: tool naming, description pattern, atomic vs monolithic tools, parameter design, error messages as teaching signals, versioning"
+     ],
+     "gaps": [
+      {
+       "topic": "Tool use and function calling recap in the agent phase",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Tool Use And Function Calling",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/06-tool-use-and-function-calling",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 06 tool use and function calling"
+       }
+      },
+      {
+       "topic": "JSON Schema basics (types, required, enums)",
+       "resource": {
+        "resourceId": "json-schema-getting-started",
+        "title": "JSON Schema — Getting started step-by-step",
+        "url": "https://json-schema.org/learn/getting-started-step-by-step",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Step-by-step guide"
+       }
+      },
+      {
+       "topic": "Pydantic model validation",
+       "resource": {
+        "resourceId": "pydantic-models",
+        "title": "Pydantic — Models",
+        "url": "https://docs.pydantic.dev/latest/concepts/models/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Models page: validation, model_validate, errors"
+       }
+      },
+      {
+       "topic": "Provider wire formats from the source",
+       "resource": {
+        "resourceId": "claude-tool-use",
+        "title": "Claude — Tool use overview",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tool use overview: tool_use / tool_result blocks"
+       }
+      },
+      {
+       "topic": "Running the exercise free and locally",
+       "resource": {
+        "resourceId": "ollama-tool-calling",
+        "title": "Ollama — Tool calling",
+        "url": "https://docs.ollama.com/capabilities/tool-calling",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tool calling page"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "openai-function-calling",
+      "title": "OpenAI API — Function calling guide",
+      "url": "https://platform.openai.com/docs/guides/function-calling",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Function calling guide (parallel calls, strict mode)"
+     },
+     "backup": {
+      "resourceId": "gemini-function-calling",
+      "title": "Gemini API — Function calling",
+      "url": "https://ai.google.dev/gemini-api/docs/function-calling",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Function calling page"
+     },
+     "practice": {
+      "title": "Same tools, two providers, raw JSON",
+      "brief": "Call two different providers (or one provider plus local Ollama) with the same 3 tools using raw HTTP or the thin SDK, no agent framework. Log the exact request and response JSON, including one turn with two parallel tool calls and one streamed tool call. Validate every argument with Pydantic and feed a validation error back to the model once. Write a 1-page diff of the message formats.",
+      "done_when": "Repo contains logs/*.json for both providers, a passing pytest that rejects a malformed argument, and a DIFF.md comparing at least 6 fields (tool definition, call id, arguments encoding, result message role, parallel flag, stop reason)."
+     },
+     "quiz": [
+      {
+       "id": "M12.U02.Q1",
+       "kind": "mcq",
+       "prompt": "A model's tool call is…",
+       "options": [
+        "executed by the provider on your machine",
+        "always safe to run",
+        "a structured request that your code must validate and execute",
+        "a final answer to the user"
+       ],
+       "answer": 2,
+       "explain": "The model only proposes; the host executes, so validation and authorization live in your code."
+      },
+      {
+       "id": "M12.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Two independent tool calls come back in one turn. You should…",
+       "options": [
+        "drop the second call",
+        "run them concurrently and return each result with its matching call id",
+        "merge them into one string without ids",
+        "restart the conversation"
+       ],
+       "answer": 1,
+       "explain": "Results must be correlated by id; order of completion can differ from order of request."
+      },
+      {
+       "id": "M12.U02.Q3",
+       "kind": "mcq",
+       "prompt": "The main reason to validate tool arguments with a schema/Pydantic is that…",
+       "options": [
+        "it speeds up inference",
+        "the provider requires it",
+        "models can emit malformed or out-of-range arguments",
+        "it cuts tokens"
+       ],
+       "answer": 2,
+       "explain": "Even with constrained decoding, values can be semantically invalid; validate before executing."
+      },
+      {
+       "id": "M12.U02.Q4",
+       "kind": "short",
+       "prompt": "Why does a vague tool description cause wrong-tool selection, and how would you test for it?",
+       "rubric": [
+        "Explains the model chooses tools from names/descriptions only",
+        "Proposes a test set of prompts with expected tool, including near-miss prompts",
+        "Mentions measuring selection accuracy before/after rewriting descriptions"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U03",
+     "title": "The agent loop from scratch",
+     "hours": 8,
+     "depth": "core",
+     "week": 93,
+     "prerequisites": [
+      "M12.U02"
+     ],
+     "outcomes": [
+      "You can write a ~200-line framework-free agent loop with a tool registry, structured state, budgets and a stop-reason enum.",
+      "You can make the loop recover from or stop cleanly on a failing tool, and emit a JSONL trace of every step."
+     ],
+     "topics": [
+      {
+       "id": "M12.01.02",
+       "title": "Observation/action loop",
+       "legacyIds": [
+        "M12.05.01"
+       ]
+      },
+      {
+       "id": "M12.01.06",
+       "title": "ReAct"
+      },
+      {
+       "id": "M12.01.07",
+       "title": "Stopping criteria"
+      },
+      {
+       "id": "M12.01.08",
+       "title": "Max steps"
+      },
+      {
+       "id": "M12.01.09",
+       "title": "Budget/time limits"
+      },
+      {
+       "id": "M12.01.11",
+       "title": "Structured state"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — The Agent Loop",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/01-the-agent-loop",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 14 · Lesson 01 the agent loop"
+     },
+     "covers": [
+      "Observe → think → act loop in stdlib Python (< 200 lines)",
+      "Thought/Action/Observation (ReAct) message structure",
+      "Stop conditions: final answer, max steps, errors",
+      "The 2025–26 shift to native reasoning models: explicit 'Thought:' prompting becomes optional, act/observe loop stays"
+     ],
+     "gaps": [
+      {
+       "topic": "Same loop in another language, with an edit tool",
+       "resource": {
+        "resourceId": "amp-how-to-build-agent",
+        "title": "How to Build an Agent",
+        "url": "https://ampcode.com/how-to-build-an-agent",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "Original ReAct method and results",
+       "resource": {
+        "resourceId": "react-paper",
+        "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 1–3"
+       }
+      },
+      {
+       "topic": "Loop contract, states and budget envelope as a build series",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Agent Harness Loop Contract (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 · Lesson 20 agent harness loop contract; Lesson 23 function call dispatcher"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "amp-how-to-build-agent",
+      "title": "How to Build an Agent",
+      "url": "https://ampcode.com/how-to-build-an-agent",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "agent.py — a bounded loop",
+      "brief": "Build agent.py (~200 lines, no framework): tool registry, loop with max_steps + wall-clock + token budget, a dataclass for state, a StopReason enum, JSONL trace output. Tools: read_file, search_notes, calculator. Then inject a failing tool (raises 50% of the time) and show the loop retrying once, then stopping with a clear stop reason.",
+      "done_when": "`python agent.py --task ...` finishes 10 sample tasks; trace.jsonl has one line per step with step, tool, args, result/error, tokens; a test proves the loop stops at max_steps and on budget exhaustion."
+     },
+     "quiz": [
+      {
+       "id": "M12.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Which stop condition prevents an infinite tool loop when the model never says 'done'?",
+       "options": [
+        "temperature 0",
+        "a longer system prompt",
+        "streaming",
+        "max_steps / budget limits"
+       ],
+       "answer": 3,
+       "explain": "Only a hard bound guarantees termination."
+      },
+      {
+       "id": "M12.U03.Q2",
+       "kind": "mcq",
+       "prompt": "An 'observation' in ReAct is…",
+       "options": [
+        "the model's plan",
+        "the tool result fed back into context",
+        "the user prompt",
+        "the final answer"
+       ],
+       "answer": 1,
+       "explain": "Act produces a tool call; the observation is its result appended for the next step."
+      },
+      {
+       "id": "M12.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Native reasoning models (2025–26) mainly change…",
+       "options": [
+        "whether you prompt explicit 'Thought:' text; the act/observe loop stays",
+        "the need for tools",
+        "JSON Schema",
+        "nothing at all"
+       ],
+       "answer": 0,
+       "explain": "Reasoning happens inside the model, but tool execution and observation remain your loop's job."
+      },
+      {
+       "id": "M12.U03.Q4",
+       "kind": "short",
+       "prompt": "List your loop's stop reasons and say which one should page a human.",
+       "rubric": [
+        "Lists ≥ 4 distinct stop reasons (done, max_steps, budget, tool_fatal, policy_denied…)",
+        "Picks one that signals an unsafe or unresolvable state",
+        "Justifies with impact (side effects, cost, user waiting)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U04",
+     "title": "Tool design: the agent-computer interface",
+     "hours": 4,
+     "depth": "core",
+     "week": 93,
+     "prerequisites": [
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can redesign tools with narrow inputs, actionable errors, pagination/truncation and idempotency keys.",
+      "You can measure the effect of a tool redesign on tool-error rate and task success."
+     ],
+     "topics": [
+      {
+       "id": "M12.05.03",
+       "title": "Tool design: narrow schemas, typed inputs, clear errors and idempotency"
+      },
+      {
+       "id": "M12.02.02",
+       "title": "Idempotent tools"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-writing-tools",
+      "title": "Writing effective tools for agents — with agents",
+      "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post"
+     },
+     "covers": [
+      "Prototype → evaluate → let agents improve tools workflow",
+      "Choosing the right tools (fewer, consolidated, task-shaped)",
+      "Namespacing tools; returning meaningful, token-efficient context",
+      "Response format, pagination, truncation and helpful error messages",
+      "Prompt-engineering tool descriptions"
+     ],
+     "gaps": [
+      {
+       "topic": "Idempotency keys in API design",
+       "resource": {
+        "resourceId": "stripe-idempotency",
+        "title": "Designing robust and predictable APIs with idempotency",
+        "url": "https://stripe.com/blog/idempotency",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "Agent-computer interface research",
+       "resource": {
+        "resourceId": "swe-agent-paper",
+        "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+        "url": "https://arxiv.org/abs/2405.15793",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 2 (ACI design) and ablations"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Tool Schema Design",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/05-tool-schema-design",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 13 · Lesson 05 tool schema design"
+     },
+     "practice": {
+      "title": "Redesign three tools and measure",
+      "brief": "Redesign your 3 tools from M12.U03: narrow typed inputs, error messages that say what to change, pagination/truncation for big outputs, absolute paths, and an idempotency key on any write tool. Run the same 20 tasks before and after.",
+      "done_when": "A before/after table shows tool-error rate and task success on 20 tasks; a test proves the write tool returns the same object when retried with the same idempotency key."
+     },
+     "quiz": [
+      {
+       "id": "M12.U04.Q1",
+       "kind": "mcq",
+       "prompt": "An idempotent create_ticket tool…",
+       "options": [
+        "returns the same ticket when retried with the same idempotency key",
+        "creates a new ticket on every retry",
+        "can never fail",
+        "needs no input"
+       ],
+       "answer": 0,
+       "explain": "Idempotency makes retries safe after timeouts."
+      },
+      {
+       "id": "M12.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Absolute file paths help agent tools because…",
+       "options": [
+        "they are faster",
+        "they are a security control by themselves",
+        "they remove ambiguity after the working directory changes",
+        "they use fewer tokens"
+       ],
+       "answer": 2,
+       "explain": "SWE-agent/Anthropic both report fewer mistakes with absolute paths."
+      },
+      {
+       "id": "M12.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A good tool error message…",
+       "options": [
+        "is 'Error 500'",
+        "says what was wrong and how to fix the call",
+        "is a raw stack trace only",
+        "is silent"
+       ],
+       "answer": 1,
+       "explain": "The error is the model's only feedback signal."
+      },
+      {
+       "id": "M12.U04.Q4",
+       "kind": "short",
+       "prompt": "Why do 40 overlapping tools perform worse than 8 well-scoped ones?",
+       "rubric": [
+        "Mentions selection confusion between similar descriptions",
+        "Mentions context/token cost of tool definitions",
+        "Suggests consolidation or namespacing as the fix"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U05",
+     "title": "Planning and self-correction patterns",
+     "hours": 6,
+     "depth": "core",
+     "week": 94,
+     "prerequisites": [
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can implement ReAct, plan-then-execute (ReWOO) and a reflection retry on top of your loop.",
+      "You can compare patterns fairly at equal token budget on the same task set."
+     ],
+     "topics": [
+      {
+       "id": "M12.01.05",
+       "title": "Planning"
+      },
+      {
+       "id": "M12.01.15",
+       "title": "Plan-and-execute / ReWOO"
+      },
+      {
+       "id": "M12.01.16",
+       "title": "Reflection / critic"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Rewoo Plan And Execute (+2 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 02 rewoo plan and execute; Lesson 03 reflexion verbal rl; Lesson 05 self refine and critic"
+     },
+     "covers": [
+      "14/02 ReWOO: planner emits a full plan with variable references, workers execute, solver composes; fewer LLM calls",
+      "14/03 Reflexion: verbal self-reflection stored in episodic memory across attempts",
+      "14/05 Self-refine and critic loops: generate → critique → revise, and when to stop"
+     ],
+     "gaps": [
+      {
+       "topic": "Tree-of-thoughts/LATS search and HTN/evolutionary planning (optional depth)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Tree Of Thoughts Lats (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 04 tree of thoughts lats; Lesson 11 planning htn and evolutionary"
+       }
+      },
+      {
+       "topic": "Planning, reflection and memory overview in one essay",
+       "resource": {
+        "resourceId": "lilianweng-agents",
+        "title": "LLM Powered Autonomous Agents",
+        "url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Component One: Planning"
+       }
+      },
+      {
+       "topic": "Reflexion method details",
+       "resource": {
+        "resourceId": "reflexion-paper",
+        "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+        "url": "https://arxiv.org/abs/2303.11366",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 1–3"
+       }
+      },
+      {
+       "topic": "Video lectures on reflection and planning",
+       "resource": {
+        "resourceId": "dlai-agentic-ai",
+        "title": "Agentic AI (DeepLearning.AI, Andrew Ng)",
+        "url": "https://www.deeplearning.ai/courses/agentic-ai",
+        "type": "course",
+        "free": "partial",
+        "verified": "unverified",
+        "slice": "Module 2 Reflection and Module 4 Planning videos (free)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-agentic-ai",
+      "title": "Agentic AI (DeepLearning.AI, Andrew Ng)",
+      "url": "https://www.deeplearning.ai/courses/agentic-ai",
+      "type": "course",
+      "free": "partial",
+      "verified": "unverified",
+      "slice": "Reflection and planning modules"
+     },
+     "practice": {
+      "title": "Three patterns, one budget",
+      "brief": "Run the same 15 tasks with your loop as (i) ReAct, (ii) plan-then-execute and (iii) ReAct + one reflection retry, at an equal token budget per task. Record success, steps, tokens and cost.",
+      "done_when": "results.csv has 45 rows (15 tasks × 3 patterns) and a short write-up states which pattern won and on which task types."
+     },
+     "quiz": [
+      {
+       "id": "M12.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Plan-and-execute mainly reduces…",
+       "options": [
+        "the number of model calls spent re-planning at each step",
+        "safety risk to zero",
+        "the need for tools",
+        "context length to zero"
+       ],
+       "answer": 0,
+       "explain": "The plan is produced once; workers run without re-reasoning each step."
+      },
+      {
+       "id": "M12.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Reflexion stores…",
+       "options": [
+        "gradient updates",
+        "new model weights",
+        "verbal feedback from past attempts in memory",
+        "nothing"
+       ],
+       "answer": 2,
+       "explain": "It is 'verbal RL': no weight updates."
+      },
+      {
+       "id": "M12.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Comparing patterns fairly requires…",
+       "options": [
+        "an equal budget and the same task set",
+        "different tasks per pattern",
+        "one run each",
+        "the best-looking demo"
+       ],
+       "answer": 0,
+       "explain": "Otherwise you are measuring budget or task difficulty, not the pattern."
+      },
+      {
+       "id": "M12.U05.Q4",
+       "kind": "short",
+       "prompt": "When does a reflection step hurt the outcome?",
+       "rubric": [
+        "Mentions the critic can be wrong and talk the model out of a correct answer",
+        "Mentions cost/latency when first-try success is already high",
+        "Mentions the need for an external signal (tests) rather than self-judgement"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U06",
+     "title": "Code as action, and code-execution tools",
+     "hours": 4,
+     "depth": "core",
+     "week": 94,
+     "prerequisites": [
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can give an agent a sandboxed run_python tool (container, no network, CPU/time limits, read-only mount).",
+      "You can compare code-actions with JSON tool calls on data-wrangling tasks."
+     ],
+     "topics": [
+      {
+       "id": "M12.01.14",
+       "title": "Code as action"
+      }
+     ],
+     "learn": {
+      "resourceId": "codeact-paper",
+      "title": "Executable Code Actions Elicit Better LLM Agents (CodeAct)",
+      "url": "https://arxiv.org/abs/2402.01030",
+      "type": "paper",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Sections 1–3 (motivation, CodeAct framework, comparison with JSON/text actions)"
+     },
+     "covers": [
+      "Code as a unified action space: control flow and composition of many tools in one action",
+      "Benchmarks showing higher success than JSON/text actions",
+      "Multi-turn interaction with interpreter feedback for self-debugging"
+     ],
+     "gaps": [
+      {
+       "topic": "Code execution with MCP and on-demand tool loading",
+       "resource": {
+        "resourceId": "anthropic-code-exec-mcp",
+        "title": "Code execution with MCP",
+        "url": "https://www.anthropic.com/engineering/code-execution-with-mcp",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "Container CPU/memory limits",
+       "resource": {
+        "resourceId": "docker-resource-constraints",
+        "title": "Docker — Resource constraints",
+        "url": "https://docs.docker.com/engine/containers/resource_constraints/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Memory and CPU sections"
+       }
+      },
+      {
+       "topic": "A working CodeAgent vs ToolCallingAgent",
+       "resource": {
+        "resourceId": "smolagents",
+        "title": "smolagents",
+        "url": "https://github.com/huggingface/smolagents",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README: CodeAgent vs ToolCallingAgent"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "smolagents",
+      "title": "smolagents",
+      "url": "https://github.com/huggingface/smolagents",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Sandboxed run_python",
+      "brief": "Add a run_python tool that runs model-written code inside a Docker container with --network none, CPU/memory/time limits and a read-only data mount. Compare code-action vs JSON tool calls on 10 CSV-wrangling tasks.",
+      "done_when": "Both variants run on 10 tasks; a table shows success, steps and tokens; a test proves the sandbox cannot reach the network and is killed after the time limit."
+     },
+     "quiz": [
+      {
+       "id": "M12.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Code-as-action helps mainly because…",
+       "options": [
+        "it is always safer",
+        "no sandbox is needed",
+        "it is cheaper per token in every case",
+        "code can compose many operations and loops in one action"
+       ],
+       "answer": 3,
+       "explain": "One code block can do what would take many JSON tool turns."
+      },
+      {
+       "id": "M12.U06.Q2",
+       "kind": "mcq",
+       "prompt": "The minimum sandbox control for model-written code is…",
+       "options": [
+        "none",
+        "running as root for convenience",
+        "running inside the API server process",
+        "an isolated container/process with no secrets, limited network and resource limits"
+       ],
+       "answer": 3,
+       "explain": "Model-written code is untrusted code."
+      },
+      {
+       "id": "M12.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Loading tool definitions on demand rather than all up front reduces…",
+       "options": [
+        "accuracy",
+        "security",
+        "latency to zero",
+        "context tokens"
+       ],
+       "answer": 3,
+       "explain": "Anthropic's code-execution-with-MCP post shows big token savings from on-demand tool loading."
+      },
+      {
+       "id": "M12.U06.Q4",
+       "kind": "short",
+       "prompt": "What can a model-written script do that a typed function tool cannot, and which risk does that add?",
+       "rubric": [
+        "Names composition/loops/arbitrary libraries",
+        "Names arbitrary code execution / exfiltration / resource abuse as the risk",
+        "Names a concrete control (sandbox, egress block, limits)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M12.S2",
+   "title": "Context, memory and durable state",
+   "units": [
+    {
+     "id": "M12.U07",
+     "title": "Context engineering",
+     "hours": 4,
+     "depth": "core",
+     "week": 94,
+     "prerequisites": [
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can account for tokens per step and compact context at a threshold without losing critical facts.",
+      "You can choose just-in-time retrieval (handles first, contents later) over pre-loading."
+     ],
+     "topics": [
+      {
+       "id": "M12.05.02",
+       "title": "Context engineering: selection, ordering, compaction and token budgets"
+      },
+      {
+       "id": "M12.02.07",
+       "title": "Summarization losses"
+      },
+      {
+       "id": "M12.02.12",
+       "title": "Compaction"
+      },
+      {
+       "id": "M12.02.13",
+       "title": "Just-in-time retrieval / progressive disclosure"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-context-engineering",
+      "title": "Effective context engineering for AI agents",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post"
+     },
+     "covers": [
+      "Context engineering vs prompt engineering; context rot and the attention budget",
+      "Anatomy of effective context: system prompts at the right altitude, tools, examples",
+      "Just-in-time context retrieval and progressive disclosure",
+      "Long-horizon techniques: compaction, structured note-taking, sub-agent architectures"
+     ],
+     "gaps": [
+      {
+       "topic": "'Own your context window' and other reliability factors",
+       "resource": {
+        "resourceId": "12-factor-agents",
+        "title": "12-Factor Agents",
+        "url": "https://github.com/humanlayer/12-factor-agents",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Factor 3: Own your context window"
+       }
+      },
+      {
+       "topic": "Talk version",
+       "resource": {
+        "resourceId": "yt-12-factor-agents",
+        "title": "12-Factor Agents: Patterns of reliable LLM applications — Dex Horthy",
+        "url": "https://www.youtube.com/watch?v=8kMaTybvDUw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full talk"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "12-factor-agents",
+      "title": "12-Factor Agents",
+      "url": "https://github.com/humanlayer/12-factor-agents",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Compaction at 70%",
+      "brief": "Add token accounting to your loop and a compaction step at 70% of budget that keeps the goal, decisions, open issues, tool-call ids and the raw observations of failed steps. Run a 30-step task with and without compaction.",
+      "done_when": "A report shows success with vs without compaction, tokens saved, and a list of facts that were lost (or 'none') checked by a test that asserts the goal and failed-step ids survive compaction."
+     },
+     "quiz": [
+      {
+       "id": "M12.U07.Q1",
+       "kind": "mcq",
+       "prompt": "'Context rot' means…",
+       "options": [
+        "model weights degrade over time",
+        "cache expiry",
+        "performance drops as the context fills with irrelevant tokens",
+        "tokenizer bugs"
+       ],
+       "answer": 2,
+       "explain": "More tokens ≠ better; attention is a finite budget."
+      },
+      {
+       "id": "M12.U07.Q2",
+       "kind": "mcq",
+       "prompt": "A safe compaction keeps…",
+       "options": [
+        "only the final answer",
+        "nothing",
+        "the system prompt only",
+        "the goal, decisions, open issues and references to raw observations"
+       ],
+       "answer": 3,
+       "explain": "Compaction must keep what the next step needs plus pointers to evidence."
+      },
+      {
+       "id": "M12.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Just-in-time context means…",
+       "options": [
+        "loading identifiers/handles and fetching contents when needed",
+        "pre-loading everything",
+        "fine-tuning",
+        "a larger model"
+       ],
+       "answer": 0,
+       "explain": "Keep lightweight references, pull details on demand."
+      },
+      {
+       "id": "M12.U07.Q4",
+       "kind": "short",
+       "prompt": "Name one fact your agent must never lose in compaction, and explain how you'd enforce it.",
+       "rubric": [
+        "Names a concrete fact (user goal, approval state, failed-step evidence)",
+        "Enforces it structurally (pinned state field, not left to the summariser)",
+        "Adds a test or assertion"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U08",
+     "title": "Memory architecture",
+     "hours": 5,
+     "depth": "core",
+     "week": 95,
+     "prerequisites": [
+      "M12.U07"
+     ],
+     "outcomes": [
+      "You can implement working, episodic and durable memory layers with provenance.",
+      "You can correct and delete a wrong memory and explain the injection risk of auto-written memories."
+     ],
+     "topics": [
+      {
+       "id": "M12.02.05",
+       "title": "Short/long-term memory",
+       "legacyIds": [
+        "M12.05.04"
+       ]
+      },
+      {
+       "id": "M12.02.06",
+       "title": "Retrieval of memory"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Memory Virtual Context Memgpt (+2 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 07 memory virtual context memgpt; Lesson 08 memory blocks sleep time compute; Lesson 09 hybrid memory mem0"
+     },
+     "covers": [
+      "14/07 MemGPT virtual context: paging between context and external storage",
+      "14/08 Memory blocks and sleep-time compute: editable core memory, background consolidation",
+      "14/09 Hybrid memory (mem0-style): extract facts, vector + structured store, update/delete"
+     ],
+     "gaps": [
+      {
+       "topic": "Memory types (sensory/short/long-term) explained",
+       "resource": {
+        "resourceId": "lilianweng-agents",
+        "title": "LLM Powered Autonomous Agents",
+        "url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Component Two: Memory"
+       }
+      },
+      {
+       "topic": "Original virtual-context design",
+       "resource": {
+        "resourceId": "memgpt-paper",
+        "title": "MemGPT: Towards LLMs as Operating Systems",
+        "url": "https://arxiv.org/abs/2310.08560",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 1–3"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "memgpt-paper",
+      "title": "MemGPT: Towards LLMs as Operating Systems",
+      "url": "https://arxiv.org/abs/2310.08560",
+      "type": "paper",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Three memory layers with forget()",
+      "brief": "Implement working state (in the loop), episodic memory (SQLite log of runs) and durable user facts (table with source, timestamp, confidence). Add forget(fact_id) and a correction flow. Test a wrong memory written from a tool output and its correction.",
+      "done_when": "Tests pass for write → retrieve → correct → forget; each durable fact row has source and timestamp; a test shows a fact injected via tool output is quarantined or flagged rather than trusted."
+     },
+     "quiz": [
+      {
+       "id": "M12.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Durable user memory differs from RAG over documents because…",
+       "options": [
+        "it is always vectors",
+        "it is written by the agent and needs provenance, correction and deletion",
+        "it is never retrieved",
+        "there is no difference"
+       ],
+       "answer": 1,
+       "explain": "Agent-written facts can be wrong and must be editable."
+      },
+      {
+       "id": "M12.U08.Q2",
+       "kind": "mcq",
+       "prompt": "The risk of auto-writing memories from tool output is that…",
+       "options": [
+        "injected or false facts persist across sessions",
+        "tokens get slower",
+        "you need a bigger model",
+        "there is none"
+       ],
+       "answer": 0,
+       "explain": "Memory turns a one-off injection into a persistent one."
+      },
+      {
+       "id": "M12.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Episodic memory is best described as…",
+       "options": [
+        "model weights",
+        "the system prompt",
+        "the record of past interactions/trajectories",
+        "embeddings only"
+       ],
+       "answer": 2,
+       "explain": "Episodic = what happened; semantic = facts."
+      },
+      {
+       "id": "M12.U08.Q4",
+       "kind": "short",
+       "prompt": "Design the schema row for one durable memory fact and justify each field.",
+       "rubric": [
+        "Includes content, source/provenance, timestamp, confidence or status",
+        "Includes a user/tenant key and an id for deletion",
+        "Justifies each field by a use (audit, decay, deletion, conflict resolution)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U09",
+     "title": "Durable execution, checkpoints, retries, human-in-the-loop",
+     "hours": 7,
+     "depth": "core",
+     "week": 95,
+     "prerequisites": [
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can make an agent resumable after a crash using per-step checkpoints.",
+      "You can add approval interrupts before writes and a retry policy that never blindly retries non-idempotent actions."
+     ],
+     "topics": [
+      {
+       "id": "M12.02.01",
+       "title": "Persistent checkpoints"
+      },
+      {
+       "id": "M12.02.03",
+       "title": "Retry policy"
+      },
+      {
+       "id": "M12.02.04",
+       "title": "Human review",
+       "legacyIds": [
+        "M12.05.08"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "langgraph-persistence",
+      "title": "LangGraph — Persistence",
+      "url": "https://docs.langchain.com/oss/python/langgraph/persistence",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Persistence page (checkpointers, threads, state history, replay) + Interrupts page"
+     },
+     "covers": [
+      "Checkpointers save graph state at every super-step, keyed by thread",
+      "State history, replay and time-travel from a checkpoint",
+      "Interrupts: pause before/after a node for human approval, then resume with Command",
+      "Durable execution modes and why side-effecting nodes must be idempotent"
+     ],
+     "gaps": [
+      {
+       "topic": "Production agent runtimes",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Production Runtimes",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/29-production-runtimes",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 29 production runtimes"
+       }
+      },
+      {
+       "topic": "Interrupt/resume API",
+       "resource": {
+        "resourceId": "langgraph-interrupts",
+        "title": "LangGraph — Interrupts",
+        "url": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Interrupts page"
+       }
+      },
+      {
+       "topic": "Retries, timeouts and jitter done right",
+       "resource": {
+        "resourceId": "aws-backoff-jitter",
+        "title": "Timeouts, retries and backoff with jitter (Amazon Builders' Library)",
+        "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole article"
+       }
+      },
+      {
+       "topic": "Durable execution for long-running background agents",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Durable Execution (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/15-autonomous-systems",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 15 · Lesson 12 durable execution; Lesson 16 checkpoints rollback"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "langchain-academy-langgraph",
+      "title": "Introduction to LangGraph (LangChain Academy)",
+      "url": "https://academy.langchain.com/courses/intro-to-langgraph",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Module 3 (human-in-the-loop) and Module 4 (persistence)"
+     },
+     "practice": {
+      "title": "Kill it mid-tool-call",
+      "brief": "Make your plain-Python agent resumable: persist state to SQLite after each step, kill the process mid-tool-call and resume. Add an approval interrupt before any write tool, and exponential backoff with jitter that does not retry non-idempotent writes without checking external state.",
+      "done_when": "A scripted test kills the process at a random step 5 times and every run resumes to completion with no duplicated write; the approval prompt blocks writes until approved."
+     },
+     "quiz": [
+      {
+       "id": "M12.U09.Q1",
+       "kind": "mcq",
+       "prompt": "After a crash during a non-idempotent payment tool, the safe action is to…",
+       "options": [
+        "blindly retry",
+        "skip it silently",
+        "check the external system state/idempotency key before retrying",
+        "restart from step 0"
+       ],
+       "answer": 2,
+       "explain": "You must know whether the side effect already happened."
+      },
+      {
+       "id": "M12.U09.Q2",
+       "kind": "mcq",
+       "prompt": "A checkpoint should contain…",
+       "options": [
+        "enough state to resume deterministically (messages, tool results, step counter, pending approvals)",
+        "only the last message",
+        "the model weights",
+        "logs only"
+       ],
+       "answer": 0,
+       "explain": "Resume needs the full decision state."
+      },
+      {
+       "id": "M12.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Exponential backoff with jitter prevents…",
+       "options": [
+        "all errors",
+        "prompt injection",
+        "synchronized retry storms",
+        "cost"
+       ],
+       "answer": 2,
+       "explain": "Jitter spreads retries so clients don't hammer a recovering service together."
+      },
+      {
+       "id": "M12.U09.Q4",
+       "kind": "short",
+       "prompt": "Which steps in your agent are safe to replay, and which aren't?",
+       "rubric": [
+        "Classifies reads/pure computations as safe",
+        "Classifies writes/external side effects as unsafe unless idempotent",
+        "Describes how the checkpoint records completion of side effects"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M12.S3",
+   "title": "Protocols and capability packaging",
+   "units": [
+    {
+     "id": "M12.U10",
+     "title": "MCP (spec 2026-07-28): server and client",
+     "hours": 8,
+     "depth": "core",
+     "week": 96,
+     "prerequisites": [
+      "M12.U02"
+     ],
+     "outcomes": [
+      "You can build a stateless MCP server with tools, a resource and a prompt over stdio and Streamable HTTP.",
+      "You can write a client that discovers capabilities with server/discover, handles version errors and plugs MCP tools into your loop."
+     ],
+     "topics": [
+      {
+       "id": "M12.03.08",
+       "title": "MCP client/server"
+      },
+      {
+       "id": "M12.03.09",
+       "title": "Resources/tools/prompts"
+      },
+      {
+       "id": "M12.03.10",
+       "title": "Transports"
+      },
+      {
+       "id": "M12.03.12",
+       "title": "Protocol version pinning"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Mcp Fundamentals (+4 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 13 · Lesson 06 mcp fundamentals; Lesson 07 building an mcp server; Lesson 08 building an mcp client; Lesson 09 mcp transports; Lesson 10 mcp resources and prompts"
+     },
+     "covers": [
+      "13/06: server primitives, JSON-RPC envelopes, required request metadata, discovery without a handshake, one request lifecycle, legacy compatibility",
+      "13/07: modern dispatch loop, request validation, mandatory discovery, tools/resources/prompts, typed results, no server-initiated requests",
+      "13/08: building every request from scratch, modern discovery, stdio compatibility probe, allowlisting, tool caching, collision-safe namespace merge, routing",
+      "13/09: stdio vs Streamable HTTP (POST-only, origin validation, required headers, request-scoped SSE, subscriptions/listen)",
+      "13/10: resources as stable URI contracts, prompts as user-controlled templates, cache hints, subscriptions"
+     ],
+     "gaps": [
+      {
+       "topic": "Tool contracts, reliability/cancellation and conformance/versioning operations",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Mcp Tool Contracts And Content (+2 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 28 mcp tool contracts and content; Lesson 29 mcp reliability cancellation and flow control; Lesson 31 mcp conformance versioning and operations"
+       }
+      },
+      {
+       "topic": "Deprecated/advanced MCP features as history (sampling, roots/elicitation, async tasks, MCP apps)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Mcp Sampling (+3 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 11 mcp sampling; Lesson 12 mcp roots and elicitation; Lesson 13 mcp async tasks; Lesson 14 mcp apps"
+       }
+      },
+      {
+       "topic": "Official build guide and SDK",
+       "resource": {
+        "resourceId": "mcp-build-server",
+        "title": "MCP — Build an MCP server (2026-07-28 docs)",
+        "url": "https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Build an MCP server"
+       }
+      },
+      {
+       "topic": "What changed in 2026-07-28 (stateless, deprecations)",
+       "resource": {
+        "resourceId": "mcp-versioning",
+        "title": "MCP — Versioning (current spec 2026-07-28, stateless)",
+        "url": "https://modelcontextprotocol.io/specification/versioning",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Versioning page"
+       }
+      },
+      {
+       "topic": "Testing tool",
+       "resource": {
+        "resourceId": "mcp-inspector",
+        "title": "MCP Inspector",
+        "url": "https://modelcontextprotocol.io/docs/tools/inspector",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Inspector page"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "mcp-python-sdk",
+      "title": "MCP Python SDK",
+      "url": "https://github.com/modelcontextprotocol/python-sdk",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "README"
+     },
+     "backup": {
+      "resourceId": "hf-mcp-course",
+      "title": "Hugging Face MCP Course",
+      "url": "https://huggingface.co/learn/mcp-course/unit0/introduction",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Units 1–2 (intuition only; pre-2026-07-28 wire details)"
+     },
+     "practice": {
+      "title": "Notes MCP server + client",
+      "brief": "Build an MCP server over your own notes corpus with 2 tools, 1 resource and 1 prompt, on stdio and Streamable HTTP. Write a minimal client that calls server/discover, handles an unsupported-protocol-version error, merges tools with namespacing and plugs into your M12.U03 loop. Test it with the MCP Inspector.",
+      "done_when": "Inspector screenshot/log shows all 4 primitives; client tests pass for discovery, a version mismatch and a tool call over both transports."
+     },
+     "quiz": [
+      {
+       "id": "M12.U10.Q1",
+       "kind": "mcq",
+       "prompt": "In MCP 2026-07-28, protocol version negotiation happens…",
+       "options": [
+        "once in an initialize handshake",
+        "never",
+        "through OAuth",
+        "per request via _meta (plus an HTTP header on Streamable HTTP)"
+       ],
+       "answer": 3,
+       "explain": "The 2026-07-28 core is stateless; there is no initialize handshake."
+      },
+      {
+       "id": "M12.U10.Q2",
+       "kind": "mcq",
+       "prompt": "MCP tools vs resources:",
+       "options": [
+        "they are the same thing",
+        "resources run code",
+        "tools are model-invoked actions; resources are URI-addressed data",
+        "tools are prompt templates"
+       ],
+       "answer": 2,
+       "explain": "Prompts are user-controlled templates; resources are read by URI."
+      },
+      {
+       "id": "M12.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Does MCP itself decide whether an action is authorized?",
+       "options": [
+        "Yes, automatically",
+        "No — authorization stays with the host, credentials and your policy",
+        "Only on stdio",
+        "Only for resources"
+       ],
+       "answer": 1,
+       "explain": "MCP is a transport/contract; policy is your job."
+      },
+      {
+       "id": "M12.U10.Q4",
+       "kind": "short",
+       "prompt": "Why does a stateless protocol core make horizontal scaling and retries easier?",
+       "rubric": [
+        "Any replica can serve any request (no session affinity)",
+        "Retries don't depend on server-held session state",
+        "Mentions that application state must then be explicit (ids/handles)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U11",
+     "title": "MCP auth and protocol security",
+     "hours": 6,
+     "depth": "core",
+     "week": 96,
+     "prerequisites": [
+      "M12.U10"
+     ],
+     "outcomes": [
+      "You can protect an HTTP MCP server with OAuth 2.1 (PKCE, audience-bound tokens, scopes).",
+      "You can detect tool poisoning and rug-pulls with descriptor pinning, namespacing and allowlists."
+     ],
+     "topics": [
+      {
+       "id": "M12.03.11",
+       "title": "Authentication"
+      },
+      {
+       "id": "M12.03.13",
+       "title": "Tool poisoning and registry trust"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Mcp Security Tool Poisoning (+3 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 13 · Lesson 15 mcp security tool poisoning; Lesson 16 mcp security oauth 2 1; Lesson 18 mcp auth production; Lesson 30 mcp registry supply chain and drift"
+     },
+     "covers": [
+      "13/15: seven attack surfaces, validate routing before policy, pin the whole descriptor, static scanning as a tripwire, namespacing, rule of two for high-risk calls",
+      "13/16: the three OAuth roles, protected-resource metadata, client ID metadata documents vs DCR, PKCE, exact iss validation",
+      "13/18: RFC 8414/9728/8707/7636 in production, MCP 2026-07-28 auth profile, JWKS rotation, validation routine",
+      "13/30: registry supply chain, descriptor drift detection"
+     ],
+     "gaps": [
+      {
+       "topic": "Gateways, registries and an LLM routing layer",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Mcp Gateways And Registries (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 17 mcp gateways and registries; Lesson 21 llm routing layer"
+       }
+      },
+      {
+       "topic": "Normative spec text",
+       "resource": {
+        "resourceId": "mcp-authorization",
+        "title": "MCP Specification 2026-07-28 — Authorization",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Authorization section"
+       }
+      },
+      {
+       "topic": "OAuth flows from first principles",
+       "resource": {
+        "resourceId": "oauth-com",
+        "title": "OAuth 2.0 Simplified",
+        "url": "https://www.oauth.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Authorization Code + PKCE chapters"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "oauth-com",
+      "title": "OAuth 2.0 Simplified",
+      "url": "https://www.oauth.com/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Scoped tokens and a poisoned tool",
+      "brief": "Put your HTTP MCP server behind OAuth (local auth server or a free IdP tier — check current terms). Issue one read-scoped and one write-scoped token. Add a 'poisoned' third-party tool whose description hides instructions and show your host's allowlist + description-hash pinning blocks it.",
+      "done_when": "Tests show: no token → 401; read token on a write tool → 403; a changed tool description after approval → blocked with a logged pin mismatch."
+     },
+     "quiz": [
+      {
+       "id": "M12.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Tool poisoning is…",
+       "options": [
+        "malicious instructions hidden in tool descriptions/metadata that the model reads",
+        "slow tools",
+        "malformed JSON",
+        "expired tokens"
+       ],
+       "answer": 0,
+       "explain": "Descriptions enter the model's context, so they are an injection channel."
+      },
+      {
+       "id": "M12.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Forwarding the user's token unchanged to downstream APIs (token passthrough) is…",
+       "options": [
+        "recommended",
+        "required by MCP",
+        "irrelevant",
+        "an anti-pattern — issue properly scoped tokens per audience"
+       ],
+       "answer": 3,
+       "explain": "Audience-bound tokens prevent confused-deputy attacks."
+      },
+      {
+       "id": "M12.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Pinning a tool's description hash protects against…",
+       "options": [
+        "latency",
+        "rug-pull changes after approval",
+        "cost",
+        "hallucination in general"
+       ],
+       "answer": 1,
+       "explain": "A server can silently change a tool's description after you approved it."
+      },
+      {
+       "id": "M12.U11.Q4",
+       "kind": "short",
+       "prompt": "Explain the difference between authenticating the client app and authorizing the user's action.",
+       "rubric": [
+        "Client authentication = which app is calling",
+        "User authorization = whether this user may perform this action on this resource (scopes/policy)",
+        "Gives an example where the first passes and the second must fail"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U12",
+     "title": "Agent Skills: packaging procedures with progressive disclosure",
+     "hours": 4,
+     "depth": "core",
+     "week": 97,
+     "prerequisites": [
+      "M12.U07"
+     ],
+     "outcomes": [
+      "You can author a SKILL.md skill with scripts and references.",
+      "You can implement skill discovery (metadata first, body on activation) and measure activation precision."
+     ],
+     "topics": [
+      {
+       "id": "M12.06.01",
+       "title": "SKILL.md format"
+      },
+      {
+       "id": "M12.06.02",
+       "title": "Skill discovery and activation"
+      },
+      {
+       "id": "M12.06.03",
+       "title": "Skill evals and permissions"
+      }
+     ],
+     "learn": {
+      "resourceId": "agentskills-spec",
+      "title": "Agent Skills — Specification",
+      "url": "https://agentskills.io/specification",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Specification page (SKILL.md frontmatter, directory layout, progressive disclosure)"
+     },
+     "covers": [
+      "Skill = folder with SKILL.md (name + description frontmatter + instructions), optional scripts/ and references/",
+      "Progressive disclosure: metadata loaded at startup, body on activation, files on demand",
+      "Naming/description constraints that drive activation"
+     ],
+     "gaps": [
+      {
+       "topic": "Skill libraries that grow (Voyager) — optional history",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Skill Libraries Voyager",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/10-skill-libraries-voyager",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 10 skill libraries voyager"
+       }
+      },
+      {
+       "topic": "Discovery pipeline, disclosure levels and catalogue budgets",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Skill Discovery And Progressive Disclosure (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 24 skill discovery and progressive disclosure; Lesson 25 skill invocation and routing"
+       }
+      },
+      {
+       "topic": "Skill permissions, sandboxes and evaluation layers",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Skill Permissions Sandboxes And Trust (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 26 skill permissions sandboxes and trust; Lesson 27 skill evals packaging and portability"
+       }
+      },
+      {
+       "topic": "Hands-on first skill in a real host",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Skills And Agent Sdks",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/22-skills-and-agent-sdks",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 22 skills and agent sdks"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "mcp-agent-skills",
+      "title": "MCP docs — Build with Agent Skills",
+      "url": "https://modelcontextprotocol.io/docs/2026-07-28/develop/build-with-agent-skills",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified"
+     },
+     "practice": {
+      "title": "Two skills and an activation eval",
+      "brief": "Write 2 skills (e.g. 'write a dataset card', 'triage a failing CI log'), each with SKILL.md, a script and a reference file. Add discovery to your agent: names/descriptions only at startup, full body on activation. Measure activation precision/recall on 20 prompts including near misses.",
+      "done_when": "Both skills validate against the spec; an eval prints activation precision and recall on 20 labelled prompts (≥ 0.8 each)."
+     },
+     "quiz": [
+      {
+       "id": "M12.U12.Q1",
+       "kind": "mcq",
+       "prompt": "The minimum Agent Skill is…",
+       "options": [
+        "a Python package",
+        "an MCP server",
+        "a folder with SKILL.md containing name/description metadata plus instructions",
+        "a fine-tuned model"
+       ],
+       "answer": 2,
+       "explain": "Everything else is optional."
+      },
+      {
+       "id": "M12.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Progressive disclosure means…",
+       "options": [
+        "loading only names/descriptions first and the full instructions when relevant",
+        "streaming tokens",
+        "showing users the prompt",
+        "hiding errors"
+       ],
+       "answer": 0,
+       "explain": "Keeps the catalogue cheap in context."
+      },
+      {
+       "id": "M12.U12.Q3",
+       "kind": "mcq",
+       "prompt": "Skill vs MCP:",
+       "options": [
+        "they are identical",
+        "skills package instructions/procedures; MCP connects to tools/data",
+        "MCP replaces skills",
+        "skills are a transport"
+       ],
+       "answer": 1,
+       "explain": "They compose: a skill can tell the agent how to use MCP tools."
+      },
+      {
+       "id": "M12.U12.Q4",
+       "kind": "short",
+       "prompt": "When would you ship a capability as a skill rather than an MCP server?",
+       "rubric": [
+        "Skill when it is procedure/know-how the agent follows with existing tools",
+        "MCP when it needs a live connection to a system/API with its own auth",
+        "Mentions portability or permissions trade-off"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U13",
+     "title": "A2A: agent-to-agent interoperability",
+     "hours": 4,
+     "depth": "core",
+     "week": 97,
+     "prerequisites": [
+      "M12.U10"
+     ],
+     "outcomes": [
+      "You can expose an agent as an A2A server with an Agent Card and consume it from a client built differently.",
+      "You can explain when A2A beats a plain REST API and how it relates to MCP."
+     ],
+     "topics": [
+      {
+       "id": "M12.03.14",
+       "title": "A2A protocol"
+      }
+     ],
+     "learn": {
+      "resourceId": "a2a-docs",
+      "title": "A2A Protocol documentation (v1.0)",
+      "url": "https://a2a-protocol.org/latest/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'What is A2A', 'A2A and MCP', 'Life of a Task', then the Python quickstart"
+     },
+     "covers": [
+      "A2A goals: communication between independent, opaque agents (not tool calls)",
+      "Agent Card for discovery (skills, endpoint, auth)",
+      "Task lifecycle states, messages/parts, artifacts, streaming updates",
+      "Relationship to MCP (agent↔agent vs agent↔tool)"
+     ],
+     "gaps": [
+      {
+       "topic": "Agent Cards, signed cards, three protocol bindings",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — A2A Protocol",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/19-a2a-protocol",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 19 a2a protocol"
+       }
+      },
+      {
+       "topic": "Runnable examples",
+       "resource": {
+        "resourceId": "a2a-samples",
+        "title": "A2A samples",
+        "url": "https://github.com/a2aproject/a2a-samples",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "samples/python"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "a2a-samples",
+      "title": "A2A samples",
+      "url": "https://github.com/a2aproject/a2a-samples",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Two agents, two stacks",
+      "brief": "Expose your research agent as an A2A server with an Agent Card. Write a client agent in a different framework or plain Python that discovers it, delegates a task, streams progress and handles a failed task state.",
+      "done_when": "A recorded run shows discovery via the Agent Card, a streamed task, and a deliberately failed task handled by the client with a clear message."
+     },
+     "quiz": [
+      {
+       "id": "M12.U13.Q1",
+       "kind": "mcq",
+       "prompt": "A2A is designed for…",
+       "options": [
+        "agent→tool calls",
+        "model training",
+        "communication between independent, opaque agents",
+        "vector search"
+       ],
+       "answer": 2,
+       "explain": "MCP covers tools; A2A covers peers."
+      },
+      {
+       "id": "M12.U13.Q2",
+       "kind": "mcq",
+       "prompt": "An Agent Card is used for…",
+       "options": [
+        "discovery: describing an agent's skills, endpoint and auth",
+        "billing",
+        "memory",
+        "logging"
+       ],
+       "answer": 0,
+       "explain": "Clients read it to decide how to call the agent."
+      },
+      {
+       "id": "M12.U13.Q3",
+       "kind": "mcq",
+       "prompt": "According to its own docs, A2A is NOT…",
+       "options": [
+        "a sub-agent/tool-call protocol",
+        "an open standard",
+        "open-governed",
+        "Apache-licensed"
+       ],
+       "answer": 0,
+       "explain": "It preserves opacity between agents rather than exposing internals."
+      },
+      {
+       "id": "M12.U13.Q4",
+       "kind": "short",
+       "prompt": "Give a real case where A2A beats just calling the other team's REST API, and one where it doesn't.",
+       "rubric": [
+        "A2A case: long-running, multi-turn, streaming delegation across orgs/frameworks",
+        "REST case: a simple deterministic request/response",
+        "Mentions cost of extra protocol surface"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M12.S4",
+   "title": "Orchestration, subagents and frameworks as examples",
+   "units": [
+    {
+     "id": "M12.U14",
+     "title": "Orchestration patterns: router, supervisor, handoff",
+     "hours": 4,
+     "depth": "core",
+     "week": 97,
+     "prerequisites": [
+      "M12.U01",
+      "M12.U03"
+     ],
+     "outcomes": [
+      "You can implement router, supervisor and handoff variants of the same system in plain Python.",
+      "You can design the failure path when a downstream agent is unavailable."
+     ],
+     "topics": [
+      {
+       "id": "M12.05.05",
+       "title": "Orchestration patterns: router, sequential workflow, graph, supervisor and handoff"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Orchestration Patterns",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/28-orchestration-patterns",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 28 orchestration patterns"
+     },
+     "covers": [
+      "Router vs sequential vs graph vs supervisor vs handoff orchestration",
+      "When deterministic routing beats LLM routing",
+      "Control transfer and context passing between agents"
+     ],
+     "gaps": [
+      {
+       "topic": "Handoffs and guardrails in a real SDK",
+       "resource": {
+        "resourceId": "openai-agents-sdk",
+        "title": "OpenAI Agents SDK (Python) docs",
+        "url": "https://openai.github.io/openai-agents-python/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Handoffs page"
+       }
+      },
+      {
+       "topic": "Supervisor and handoff patterns (multi-agent phase)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Supervisor Orchestrator Pattern (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/16-multi-agent-and-swarms",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 16 · Lesson 05 supervisor orchestrator pattern; Lesson 11 handoffs and routines"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "openai-agents-sdk",
+      "title": "OpenAI Agents SDK (Python) docs",
+      "url": "https://openai.github.io/openai-agents-python/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Support triage three ways",
+      "brief": "Implement router, supervisor and handoff variants of a support-triage system in plain Python and compare them on 30 simulated tickets (accuracy, LLM calls, latency). Simulate one downstream agent being down.",
+      "done_when": "A table compares the 3 variants on 30 tickets; the 'agent down' case returns a graceful fallback in every variant."
+     },
+     "quiz": [
+      {
+       "id": "M12.U14.Q1",
+       "kind": "mcq",
+       "prompt": "A handoff transfers…",
+       "options": [
+        "model weights",
+        "a database",
+        "nothing",
+        "control of the conversation to another agent"
+       ],
+       "answer": 3,
+       "explain": "The receiving agent continues with the conversation context."
+      },
+      {
+       "id": "M12.U14.Q2",
+       "kind": "mcq",
+       "prompt": "A supervisor pattern adds…",
+       "options": [
+        "a coordinating agent that delegates and aggregates",
+        "a cheaper model",
+        "no extra calls",
+        "RLHF"
+       ],
+       "answer": 0,
+       "explain": "It costs extra calls in exchange for coordination."
+      },
+      {
+       "id": "M12.U14.Q3",
+       "kind": "mcq",
+       "prompt": "Prefer a deterministic router when…",
+       "options": [
+        "categories are clear and classification is reliable",
+        "never",
+        "tasks are open-ended",
+        "always"
+       ],
+       "answer": 0,
+       "explain": "Deterministic code is cheaper and testable."
+      },
+      {
+       "id": "M12.U14.Q4",
+       "kind": "short",
+       "prompt": "Describe (in text) the failure path when a handoff target agent is down.",
+       "rubric": [
+        "Detection (timeout/health check)",
+        "Fallback (retry, alternate agent, human queue) with user messaging",
+        "State preserved so the conversation can resume"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U15",
+     "title": "Subagents and multi-agent systems: context isolation, cost and failure",
+     "hours": 5,
+     "depth": "core",
+     "week": 98,
+     "prerequisites": [
+      "M12.U14"
+     ],
+     "outcomes": [
+      "You can spawn parallel subagents with isolated contexts, a shared token ledger, depth limits and cancellation.",
+      "You can decide with evidence whether multi-agent beats a single agent for a task."
+     ],
+     "topics": [
+      {
+       "id": "M12.04.09",
+       "title": "Multi-agent costs and coordination failure"
+      },
+      {
+       "id": "M12.07.01",
+       "title": "Subagent context isolation"
+      },
+      {
+       "id": "M12.07.02",
+       "title": "Parallel fan-out/fan-in"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-multi-agent",
+      "title": "How we built our multi-agent research system",
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post"
+     },
+     "covers": [
+      "Orchestrator-worker architecture for research: lead agent spawns parallel subagents",
+      "Token usage explains most performance variance; multi-agent uses ~15× chat tokens",
+      "Prompting principles: teach delegation, scale effort to query complexity, tool selection heuristics",
+      "Evaluation (LLM-judge rubric, small samples early) and production reliability (stateful errors, rainbow deploys)"
+     ],
+     "gaps": [
+      {
+       "topic": "Debate and agentic failure modes (optional)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Multi Agent Debate (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 25 multi agent debate; Lesson 26 failure modes agentic"
+       }
+      },
+      {
+       "topic": "Why multi-agent, and its failure modes (MAST, groupthink)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Why Multi Agent (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/16-multi-agent-and-swarms",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 16 · Lesson 01 why multi agent; Lesson 23 failure modes mast groupthink"
+       }
+      },
+      {
+       "topic": "Subagents as an SDK feature",
+       "resource": {
+        "resourceId": "claude-agent-sdk-subagents",
+        "title": "Claude Agent SDK — Subagents",
+        "url": "https://platform.claude.com/docs/en/agent-sdk/subagents",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Subagents page"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "claude-agent-sdk-subagents",
+      "title": "Claude Agent SDK — Subagents",
+      "url": "https://platform.claude.com/docs/en/agent-sdk/subagents",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Research fan-out vs single agent",
+      "brief": "Build a parent agent that spawns 3 research subagents with isolated contexts, a shared token ledger, depth limit 1, timeouts and cancellation. Compare to a single agent on 10 research questions: rubric quality, tokens and wall time.",
+      "done_when": "A comparison table on 10 questions exists; a test proves the ledger stops all subagents when the shared budget is exhausted."
+     },
+     "quiz": [
+      {
+       "id": "M12.U15.Q1",
+       "kind": "mcq",
+       "prompt": "The main benefit of subagents is that…",
+       "options": [
+        "they are always cheaper",
+        "each gets a clean, focused context and independent work runs in parallel",
+        "no evaluation is needed",
+        "they always use fewer tokens"
+       ],
+       "answer": 1,
+       "explain": "Isolation + parallelism, at a token cost."
+      },
+      {
+       "id": "M12.U15.Q2",
+       "kind": "mcq",
+       "prompt": "A common multi-agent failure is…",
+       "options": [
+        "agents duplicate work or contradict each other without coordination",
+        "faster answers",
+        "lower cost",
+        "better recall always"
+       ],
+       "answer": 0,
+       "explain": "Coordination failures dominate MAST-style taxonomies."
+      },
+      {
+       "id": "M12.U15.Q3",
+       "kind": "mcq",
+       "prompt": "You need a shared budget ledger because…",
+       "options": [
+        "the API requires it",
+        "it is needed for memory",
+        "subagents can multiply token spend",
+        "it is needed for MCP"
+       ],
+       "answer": 2,
+       "explain": "Each subagent burns its own context."
+      },
+      {
+       "id": "M12.U15.Q4",
+       "kind": "short",
+       "prompt": "When is a single agent with better tools the right answer instead of a swarm?",
+       "rubric": [
+        "Tightly coupled tasks needing shared context",
+        "Low parallelism / sequential dependencies",
+        "Budget-sensitive tasks where 15× tokens isn't justified"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U16",
+     "title": "Frameworks and SDKs as examples: one graph framework plus one SDK",
+     "hours": 12,
+     "depth": "core",
+     "week": 99,
+     "prerequisites": [
+      "M12.U09",
+      "M12.U10"
+     ],
+     "outcomes": [
+      "You can port your plain-Python agent to LangGraph and to one agent SDK.",
+      "You can choose a framework with a measured comparison grid instead of popularity."
+     ],
+     "topics": [
+      {
+       "id": "M12.03.01",
+       "title": "Plain Python baseline"
+      },
+      {
+       "id": "M12.03.02",
+       "title": "LangGraph"
+      },
+      {
+       "id": "M12.03.07",
+       "title": "PydanticAI"
+      },
+      {
+       "id": "M12.03.03",
+       "title": "Awareness: LangChain ecosystem"
+      },
+      {
+       "id": "M12.03.04",
+       "title": "Awareness: LlamaIndex Workflows"
+      },
+      {
+       "id": "M12.03.05",
+       "title": "Awareness: smolagents"
+      },
+      {
+       "id": "M12.03.06",
+       "title": "Awareness: CrewAI"
+      },
+      {
+       "id": "M12.03.15",
+       "title": "Agent SDK choice: OpenAI Agents SDK / Claude Agent SDK / Google ADK"
+      }
+     ],
+     "learn": {
+      "resourceId": "langgraph-overview",
+      "title": "LangGraph — Overview",
+      "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Overview → Quickstart → Graph API → Persistence"
+     },
+     "covers": [
+      "StateGraph, nodes, edges, conditional edges",
+      "Built-in persistence/checkpointers and interrupts",
+      "Streaming and LangSmith/OTel tracing hooks",
+      "Prebuilt ReAct agent vs custom graphs"
+     ],
+     "gaps": [
+      {
+       "topic": "Framework tour as lessons: LangGraph, AutoGen, CrewAI, OpenAI Agents SDK, Claude Agent SDK, Agno/Mastra",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Langgraph Stateful Graphs (+5 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 13 langgraph stateful graphs; Lesson 14 autogen actor model; Lesson 15 crewai role based crews; Lesson 16 openai agents sdk; Lesson 17 claude agent sdk; Lesson 18 agno and mastra runtimes"
+       }
+      },
+      {
+       "topic": "SDK option: OpenAI Agents SDK",
+       "resource": {
+        "resourceId": "openai-agents-sdk",
+        "title": "OpenAI Agents SDK (Python) docs",
+        "url": "https://openai.github.io/openai-agents-python/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart"
+       }
+      },
+      {
+       "topic": "SDK option: Claude Agent SDK",
+       "resource": {
+        "resourceId": "claude-agent-sdk",
+        "title": "Claude Agent SDK — Overview",
+        "url": "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Overview"
+       }
+      },
+      {
+       "topic": "SDK option: Pydantic AI",
+       "resource": {
+        "resourceId": "pydantic-ai",
+        "title": "Pydantic AI docs",
+        "url": "https://ai.pydantic.dev/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Agents page"
+       }
+      },
+      {
+       "topic": "SDK option: Google ADK",
+       "resource": {
+        "resourceId": "google-adk",
+        "title": "Google Agent Development Kit (ADK)",
+        "url": "https://adk.dev/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Get started"
+       }
+      },
+      {
+       "topic": "LangChain in 8 minutes (awareness)",
+       "resource": {
+        "resourceId": "yt-ibm-what-is-langchain",
+        "title": "What is LangChain?",
+        "url": "https://www.youtube.com/watch?v=1bUy-1hGZpI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Comparison checklist used in this repo",
+       "resource": {
+        "resourceId": "grain-doc16",
+        "title": "Grain to Mountain doc 16 — Agent frameworks and protocols",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/16-agent-frameworks-and-protocols.md",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Framework comparison checklist"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hf-agents-course",
+      "title": "Hugging Face Agents Course",
+      "url": "https://huggingface.co/learn/agents-course/en/unit0/introduction",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Unit 2 (smolagents, LlamaIndex, LangGraph)"
+     },
+     "practice": {
+      "title": "Same task, three implementations",
+      "brief": "Implement the same bounded task three times: plain Python, LangGraph, and one SDK (OpenAI Agents SDK, Claude Agent SDK, Pydantic AI or Google ADK). Fill a comparison grid: provider portability, schema validation, persistence, interrupt/resume, tracing export, concurrency, sandboxing, permission hooks, lines of code. Write a 1-page recommendation memo.",
+      "done_when": "Three runnable implementations pass the same 10-task test; GRID.md and MEMO.md are committed."
+     },
+     "quiz": [
+      {
+       "id": "M12.U16.Q1",
+       "kind": "mcq",
+       "prompt": "The main value of learning the plain-Python loop first is that…",
+       "options": [
+        "frameworks are banned",
+        "it is faster at runtime",
+        "MCP requires it",
+        "you can debug what the framework hides"
+       ],
+       "answer": 3,
+       "explain": "You know what the abstractions compile down to."
+      },
+      {
+       "id": "M12.U16.Q2",
+       "kind": "mcq",
+       "prompt": "LangGraph vs LangChain:",
+       "options": [
+        "they are identical",
+        "LangChain replaced LangGraph",
+        "LangGraph is a vector DB",
+        "LangGraph is lower-level stateful orchestration; LangChain is the broader integration/agent ecosystem"
+       ],
+       "answer": 3,
+       "explain": "LangChain agents run on LangGraph under the hood."
+      },
+      {
+       "id": "M12.U16.Q3",
+       "kind": "mcq",
+       "prompt": "A sound reason to pick an SDK is that…",
+       "options": [
+        "it has the most GitHub stars",
+        "a viral demo",
+        "it's the newest release",
+        "it meets your persistence, tracing, provider and permission requirements in measured tests"
+       ],
+       "answer": 3,
+       "explain": "Decide with your grid."
+      },
+      {
+       "id": "M12.U16.Q4",
+       "kind": "short",
+       "prompt": "Name one thing your framework did implicitly that surprised you when tracing it.",
+       "rubric": [
+        "Names a concrete hidden behaviour (extra prompt, retries, state merge, tool-call formatting)",
+        "Shows it from a trace or log",
+        "States whether it is acceptable and how to override it"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M12.S5",
+   "title": "Coding agents, computer use and runtime controls",
+   "units": [
+    {
+     "id": "M12.U17",
+     "title": "Coding-agent harness anatomy",
+     "hours": 10,
+     "depth": "core",
+     "week": 100,
+     "prerequisites": [
+      "M12.U06"
+     ],
+     "outcomes": [
+      "You can build a coding agent that edits in a git worktree, runs tests as a verification gate and obeys a command denylist.",
+      "You can distinguish a harness improvement from a model improvement and measure each."
+     ],
+     "topics": [
+      {
+       "id": "M12.08.01",
+       "title": "Edit tools"
+      },
+      {
+       "id": "M12.08.02",
+       "title": "Test/verification gates"
+      },
+      {
+       "id": "M12.08.03",
+       "title": "Repo memory and instruction files"
+      },
+      {
+       "id": "M12.08.04",
+       "title": "Worktree isolation"
+      }
+     ],
+     "learn": {
+      "resourceId": "mini-swe-agent",
+      "title": "mini-swe-agent",
+      "url": "https://github.com/SWE-agent/mini-swe-agent",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Read the whole agent (agents/default.py, environments/local.py, config yaml) — ~100-line core"
+     },
+     "covers": [
+      "A minimal SWE agent: bash-only action space, linear history, subprocess per command",
+      "Step limits, cost limits and format-error handling",
+      "How a simple harness scores on SWE-bench Verified"
+     ],
+     "gaps": [
+      {
+       "topic": "Rest of the workbench series: why models fail, minimal workbench, init scripts, runtime feedback, real repos, capstone",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Agent Workbench Why Models Fail (+5 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 31 agent workbench why models fail; Lesson 32 minimal agent workbench; Lesson 35 initialization scripts; Lesson 37 runtime feedback loops; Lesson 41 workbench for real repos; Lesson 42 agent workbench capstone"
+       }
+      },
+      {
+       "topic": "Initializer + coding agent, progress files, multi-session work",
+       "resource": {
+        "resourceId": "anthropic-long-running-harness",
+        "title": "Effective harnesses for long-running agents",
+        "url": "https://www.anthropic.com/research/effective-harnesses-for-long-running-agents",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      },
+      {
+       "topic": "Worktree mechanics",
+       "resource": {
+        "resourceId": "git-worktree",
+        "title": "git-worktree documentation",
+        "url": "https://git-scm.com/docs/git-worktree",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "add / list / remove"
+       }
+      },
+      {
+       "topic": "Workbench series: instructions as constraints, repo memory, scope contracts, verification gates, reviewer agent, handoff",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Instructions As Executable Constraints (+5 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 33 instructions as executable constraints; Lesson 34 repo memory and state; Lesson 36 scope contracts; Lesson 38 verification gates; Lesson 39 reviewer agent; Lesson 40 multi session handoff"
+       }
+      },
+      {
+       "topic": "Practical habits from a production coding agent",
+       "resource": {
+        "resourceId": "claude-code-best-practices",
+        "title": "Claude Code: Best practices for agentic coding",
+        "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole post"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Coding Agent Landscape (+1 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/15-autonomous-systems",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 15 · Lesson 09 coding agent landscape; Lesson 10 claude code permission modes"
+     },
+     "practice": {
+      "title": "Coding agent on seeded bugs",
+      "brief": "Extend your agent into a coding agent for a small repo of your own: works in a git worktree, view/edit/run_tests tools, tests-must-pass gate, a command denylist, and an AGENTS.md-style instruction file. Seed 10 bugs and run it.",
+      "done_when": "Report shows success on 10 seeded bugs, number of unauthorized changes (target 0), cost per fix; the main checkout is untouched after all runs."
+     },
+     "quiz": [
+      {
+       "id": "M12.U17.Q1",
+       "kind": "mcq",
+       "prompt": "A verification gate means…",
+       "options": [
+        "the agent self-reports 'done'",
+        "an objective check (tests/lint/build) must pass before completion",
+        "a human reads every token",
+        "a longer prompt"
+       ],
+       "answer": 1,
+       "explain": "Don't trust self-assessment."
+      },
+      {
+       "id": "M12.U17.Q2",
+       "kind": "mcq",
+       "prompt": "Worktree/container isolation mainly prevents…",
+       "options": [
+        "the agent damaging the main checkout or host",
+        "hallucination",
+        "cost",
+        "slow tests"
+       ],
+       "answer": 0,
+       "explain": "Blast-radius control."
+      },
+      {
+       "id": "M12.U17.Q3",
+       "kind": "mcq",
+       "prompt": "Long-running harnesses use progress files and git commits so that…",
+       "options": [
+        "a fresh context window can resume work reliably",
+        "the model trains on them",
+        "it looks tidy",
+        "tests can be skipped"
+       ],
+       "answer": 0,
+       "explain": "State lives outside the context window."
+      },
+      {
+       "id": "M12.U17.Q4",
+       "kind": "short",
+       "prompt": "What is the difference between a harness improvement and a model improvement? Give an example of each.",
+       "rubric": [
+        "Harness = tools, prompts, context, gates, permissions around a fixed model",
+        "Model = weights/capability change",
+        "Concrete example of each with how you'd measure it"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U18",
+     "title": "Computer-use and browser agents",
+     "hours": 5,
+     "depth": "core",
+     "week": 101,
+     "prerequisites": [
+      "M12.U17"
+     ],
+     "outcomes": [
+      "You can run a screenshot→action or DOM-driven browser agent in an isolated environment against a site you control.",
+      "You can measure injection resistance and duplicate-action errors and gate form submissions."
+     ],
+     "topics": [
+      {
+       "id": "M12.08.05",
+       "title": "Computer-use and browser agents"
+      }
+     ],
+     "learn": {
+      "resourceId": "claude-computer-use",
+      "title": "Claude — Computer use tool",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Computer use tool page: how it works, the agent loop, security considerations"
+     },
+     "covers": [
+      "Screenshot → model → mouse/keyboard action loop",
+      "Reference implementation in a container/VM",
+      "Security guidance: isolated VM, no sensitive data, allowlisted domains, human confirmation for consequential actions",
+      "Known limitations: latency, coordinate errors, prompt injection from page content"
+     ],
+     "gaps": [
+      {
+       "topic": "Open-source browser agent library",
+       "resource": {
+        "resourceId": "browser-use",
+        "title": "browser-use",
+        "url": "https://github.com/browser-use/browser-use",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README quickstart"
+       }
+      },
+      {
+       "topic": "Deterministic browser automation underneath",
+       "resource": {
+        "resourceId": "playwright-python",
+        "title": "Playwright for Python — Getting started",
+        "url": "https://playwright.dev/python/docs/intro",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started"
+       }
+      },
+      {
+       "topic": "Browser agents and computer-use concepts",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Browser Agents",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/15-autonomous-systems/11-browser-agents",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 15 · Lesson 11 browser agents"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Computer Use Agents",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/21-computer-use-agents",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 21 computer use agents"
+     },
+     "practice": {
+      "title": "Local site, hidden injection",
+      "brief": "In a VM or container, against a local test site you host, build a read-only extraction task and then a gated form-submit task. Plant a hidden prompt-injection string on the page and measure success, duplicate clicks and injection resistance over 20 runs.",
+      "done_when": "A table over 20 runs shows success rate, duplicate submits and injection-success rate; form submit requires an approval step that is logged."
+     },
+     "quiz": [
+      {
+       "id": "M12.U18.Q1",
+       "kind": "mcq",
+       "prompt": "Computer-use agents usually observe via…",
+       "options": [
+        "model weights",
+        "screenshots/accessibility tree, and act via mouse/keyboard actions",
+        "SQL",
+        "MCP only"
+       ],
+       "answer": 1,
+       "explain": "Perception is visual or DOM-based."
+      },
+      {
+       "id": "M12.U18.Q2",
+       "kind": "mcq",
+       "prompt": "The highest-risk input for a browser agent is…",
+       "options": [
+        "the user prompt",
+        "the system prompt",
+        "untrusted web page content",
+        "the tool schema"
+       ],
+       "answer": 2,
+       "explain": "Any page can carry instructions."
+      },
+      {
+       "id": "M12.U18.Q3",
+       "kind": "mcq",
+       "prompt": "Prefer an API over computer use when…",
+       "options": [
+        "never",
+        "the UI is fancy",
+        "a stable API exists",
+        "cost doesn't matter"
+       ],
+       "answer": 2,
+       "explain": "APIs are faster, cheaper and more reliable."
+      },
+      {
+       "id": "M12.U18.Q4",
+       "kind": "short",
+       "prompt": "List 3 controls you'd require before letting a browser agent submit forms on a real site.",
+       "rubric": [
+        "Isolation (VM/container, no personal session data)",
+        "Human approval or propose-then-commit for submits",
+        "Domain allowlist / egress control and audit log"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U19",
+     "title": "Agent security essentials and runtime controls",
+     "hours": 5,
+     "depth": "core",
+     "week": 101,
+     "prerequisites": [
+      "M12.U17"
+     ],
+     "outcomes": [
+      "You can analyse an agent for the lethal trifecta and remove a leg by design.",
+      "You can enforce per-tool permissions, approvals, egress limits, a $ cap and a kill switch."
+     ],
+     "topics": [
+      {
+       "id": "M12.02.08",
+       "title": "Agent injection essentials (deep in M18)",
+       "legacyIds": [
+        "M12.05.06"
+       ]
+      },
+      {
+       "id": "M12.02.09",
+       "title": "Sandboxing"
+      },
+      {
+       "id": "M12.02.10",
+       "title": "Permission boundaries",
+       "legacyIds": [
+        "M12.05.07"
+       ]
+      },
+      {
+       "id": "M12.08.06",
+       "title": "Budgets, kill switch, propose-then-commit"
+      }
+     ],
+     "learn": {
+      "resourceId": "willison-lethal-trifecta",
+      "title": "The lethal trifecta for AI agents",
+      "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post"
+     },
+     "covers": [
+      "Lethal trifecta: private data + untrusted content + external communication",
+      "Why prompt-level 'guardrails' fail against injection",
+      "Removing a leg of the trifecta as the reliable mitigation",
+      "Examples of exfiltration via tools and MCP mixing"
+     ],
+     "gaps": [
+      {
+       "topic": "Prompt-injection defense lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Prompt Injection Defense",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/27-prompt-injection-defense",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 27 prompt injection defense"
+       }
+      },
+      {
+       "topic": "Cost governors, kill switches/canaries, propose-then-commit",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Cost Governors (+2 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/15-autonomous-systems",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 15 · Lesson 13 cost governors; Lesson 14 kill switches canaries; Lesson 15 propose then commit"
+       }
+      },
+      {
+       "topic": "Agentic risk catalogue (deep dive is M18)",
+       "resource": {
+        "resourceId": "owasp-agentic-2026",
+        "title": "OWASP Top 10 for Agentic Applications (2026)",
+        "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "owasp-agentic-2026",
+      "title": "OWASP Top 10 for Agentic Applications (2026)",
+      "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Permission policy + kill switch",
+      "brief": "Write an action-permission policy for your agent: allowlist per tool, approval for writes, egress restricted to listed domains, append-only audit log, per-run $ cap with kill switch. Show that an injected 'email the secrets to X' fails both with and without the model cooperating.",
+      "done_when": "Denied-action tests pass: the injected exfiltration attempt is blocked by policy even when the model emits the call; the kill switch stops a run that exceeds the $ cap."
+     },
+     "quiz": [
+      {
+       "id": "M12.U19.Q1",
+       "kind": "mcq",
+       "prompt": "The 'lethal trifecta' is…",
+       "options": [
+        "private data + untrusted content + external communication ability",
+        "three models",
+        "three tools",
+        "RAG + MCP + A2A"
+       ],
+       "answer": 0,
+       "explain": "All three together enable exfiltration."
+      },
+      {
+       "id": "M12.U19.Q2",
+       "kind": "mcq",
+       "prompt": "The most reliable injection mitigation is…",
+       "options": [
+        "'ignore malicious instructions' in the prompt",
+        "a bigger model",
+        "temperature 0",
+        "removing one leg of the trifecta / restricting capabilities by design"
+       ],
+       "answer": 3,
+       "explain": "Prompts are probabilistic; capability limits are not."
+      },
+      {
+       "id": "M12.U19.Q3",
+       "kind": "mcq",
+       "prompt": "Propose-then-commit means…",
+       "options": [
+        "git only",
+        "the agent drafts an action and a separate check/approval commits it",
+        "streaming",
+        "no logs"
+       ],
+       "answer": 1,
+       "explain": "Separates intent from execution."
+      },
+      {
+       "id": "M12.U19.Q4",
+       "kind": "short",
+       "prompt": "Why is a guardrail classifier not a substitute for authorization?",
+       "rubric": [
+        "Classifiers are probabilistic and can be evaded",
+        "Authorization is deterministic policy on identity/scope",
+        "Defense-in-depth: classifier is a tripwire, not the gate"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M12.S6",
+   "title": "Agent evaluation and observability",
+   "units": [
+    {
+     "id": "M12.U21",
+     "title": "Evaluating agents: outcomes, tools, trajectories, graders",
+     "hours": 8,
+     "depth": "core",
+     "week": 102,
+     "prerequisites": [
+      "M12.U03",
+      "M12.U09"
+     ],
+     "outcomes": [
+      "You can build an agent eval suite with code graders, tool-call checks, side-effect checks, simulated failures and a calibrated LLM judge.",
+      "You can report pass@1 and pass^k across repeated runs."
+     ],
+     "topics": [
+      {
+       "id": "M12.04.01",
+       "title": "Task success",
+       "legacyIds": [
+        "M12.05.09"
+       ]
+      },
+      {
+       "id": "M12.04.02",
+       "title": "Tool correctness"
+      },
+      {
+       "id": "M12.04.03",
+       "title": "Side effects"
+      },
+      {
+       "id": "M12.04.04",
+       "title": "Recovery tests"
+      },
+      {
+       "id": "M12.04.05",
+       "title": "Trajectory analysis"
+      },
+      {
+       "id": "M12.04.06",
+       "title": "Simulated tools"
+      },
+      {
+       "id": "M12.04.07",
+       "title": "Safety cases"
+      }
+     ],
+     "learn": {
+      "resourceId": "anthropic-agent-evals",
+      "title": "Demystifying evals for AI agents",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole post"
+     },
+     "covers": [
+      "Tasks, trials, graders, transcripts and outcomes as eval vocabulary",
+      "Code-based, model-based and human graders and when to use each",
+      "Evaluating outcomes (final state) vs transcripts/trajectories",
+      "pass@k vs pass^k for stochastic agents; starting with 20–50 tasks from real failures",
+      "Maintaining evals: saturation, reading transcripts"
+     ],
+     "gaps": [
+      {
+       "topic": "Error analysis and judge calibration in depth",
+       "resource": {
+        "resourceId": "hamel-evals-faq",
+        "title": "LLM Evals: Everything You Need to Know (FAQ)",
+        "url": "https://hamel.dev/blog/posts/evals-faq/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Error analysis and LLM-as-judge sections"
+       }
+      },
+      {
+       "topic": "Why every AI product needs evals (levels 1–3)",
+       "resource": {
+        "resourceId": "hamel-your-product-needs-evals",
+        "title": "Your AI Product Needs Evals",
+        "url": "https://hamel.dev/blog/posts/evals/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Eval tooling option",
+       "resource": {
+        "resourceId": "pydantic-evals",
+        "title": "Pydantic Evals",
+        "url": "https://ai.pydantic.dev/evals/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Evals page"
+       }
+      },
+      {
+       "topic": "Course treatment of agent observability/evals",
+       "resource": {
+        "resourceId": "hf-agents-bonus2",
+        "title": "HF Agents Course — Bonus Unit 2: Observability and Evaluation",
+        "url": "https://huggingface.co/learn/agents-course/bonus-unit2/introduction",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Eval Driven Agent Development",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/30-eval-driven-agent-development",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Phase 14 · Lesson 30 eval driven agent development"
+     },
+     "practice": {
+      "title": "40-task agent eval suite",
+      "brief": "Build a 40-task eval suite: code graders on final state, tool-call correctness checks, side-effect checks (no unauthorized writes), recovery tests with simulated tool failures, and an LLM-judge rubric calibrated against 20 of your own labels. Run each task 3×.",
+      "done_when": "`make eval` prints pass@1, pass^3, judge–human agreement (e.g. Cohen's κ) and a failure gallery of ≥ 5 transcripts."
+     },
+     "quiz": [
+      {
+       "id": "M12.U21.Q1",
+       "kind": "mcq",
+       "prompt": "Grading only the final text answer misses…",
+       "options": [
+        "nothing",
+        "latency only",
+        "unsafe or wasteful trajectories that happen to end correctly",
+        "tokens only"
+       ],
+       "answer": 2,
+       "explain": "Grade the path and side effects too."
+      },
+      {
+       "id": "M12.U21.Q2",
+       "kind": "mcq",
+       "prompt": "Simulated (mock) tools in evals let you…",
+       "options": [
+        "skip grading",
+        "inject failures deterministically and avoid real side effects",
+        "train models",
+        "avoid traces"
+       ],
+       "answer": 1,
+       "explain": "Recovery behaviour needs controlled failures."
+      },
+      {
+       "id": "M12.U21.Q3",
+       "kind": "mcq",
+       "prompt": "Before trusting an LLM judge you should…",
+       "options": [
+        "use the biggest model",
+        "set temperature 1",
+        "nothing",
+        "measure agreement with human labels"
+       ],
+       "answer": 3,
+       "explain": "An uncalibrated judge is an unknown instrument."
+      },
+      {
+       "id": "M12.U21.Q4",
+       "kind": "short",
+       "prompt": "Why report variance across repeated runs of a stochastic agent?",
+       "rubric": [
+        "Single runs can be lucky/unlucky",
+        "pass^k captures reliability users feel",
+        "Variance determines whether a difference between versions is real"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U22",
+     "title": "Benchmarks, fair harness experiments, cost per success",
+     "hours": 6,
+     "depth": "core",
+     "week": 102,
+     "prerequisites": [
+      "M12.U21"
+     ],
+     "outcomes": [
+      "You can run a pinned 2×2 (model × harness) experiment and report paired success with 95% CIs.",
+      "You can compute cost per success and decide whether a gain is worth its cost."
+     ],
+     "topics": [
+      {
+       "id": "M12.05.10",
+       "title": "Benchmarks: task definition, scoring rules, contamination and reproducibility"
+      },
+      {
+       "id": "M12.04.10",
+       "title": "Cost-per-success ledger"
+      }
+     ],
+     "learn": {
+      "resourceId": "tau-bench-paper",
+      "title": "τ-bench: A Benchmark for Tool-Agent-User Interaction",
+      "url": "https://arxiv.org/abs/2406.12045",
+      "type": "paper",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Sections 1–4 (task design, user simulator, pass^k metric, results)"
+     },
+     "covers": [
+      "Tool-agent-user interaction benchmark with a simulated user and domain policies",
+      "Database-state comparison as the outcome grader",
+      "pass^k reliability metric and the drop in consistency over repeated trials"
+     ],
+     "gaps": [
+      {
+       "topic": "Confidence intervals for eval scores",
+       "resource": {
+        "resourceId": "error-bars-evals",
+        "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+        "url": "https://arxiv.org/abs/2411.00640",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 2–4"
+       }
+      },
+      {
+       "topic": "Benchmark harness to run locally",
+       "resource": {
+        "resourceId": "tau2-bench",
+        "title": "tau2-bench",
+        "url": "https://github.com/sierra-research/tau2-bench",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      },
+      {
+       "topic": "Fair 2×2 recipe and cost ledger in this repo",
+       "resource": {
+        "resourceId": "grain-doc17",
+        "title": "Grain to Mountain doc 17 — Benchmarks, costs and harness study",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/17-benchmarks-costs-and-harness-study.md",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Fair harness experiment section"
+       }
+      },
+      {
+       "topic": "Benchmark landscape (SWE-bench, GAIA, WebArena, OSWorld)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Benchmarks Swebench Gaia (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 19 benchmarks swebench gaia; Lesson 20 benchmarks webarena osworld"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "swebench",
+      "title": "SWE-bench",
+      "url": "https://www.swebench.com/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "2×2 with confidence intervals",
+      "brief": "Run a 2 models × 2 harness variants experiment on your fixed task set with everything pinned (prompts, tools, seeds where possible, model versions). Report paired success with 95% CI, p95 latency and cost per success.",
+      "done_when": "RESULTS.md contains the 2×2 table with CIs, p95 latency, cost per success, and a decision paragraph."
+     },
+     "quiz": [
+      {
+       "id": "M12.U22.Q1",
+       "kind": "mcq",
+       "prompt": "An agent benchmark score measures…",
+       "options": [
+        "the model alone",
+        "the GPU",
+        "the prompt only",
+        "the whole system: model + harness + tools + budget"
+       ],
+       "answer": 3,
+       "explain": "Change the harness, change the score."
+      },
+      {
+       "id": "M12.U22.Q2",
+       "kind": "mcq",
+       "prompt": "Cost per success is…",
+       "options": [
+        "price per token",
+        "cost of one call",
+        "the monthly bill",
+        "total spend across all attempts ÷ successful tasks"
+       ],
+       "answer": 3,
+       "explain": "Failed attempts still cost money."
+      },
+      {
+       "id": "M12.U22.Q3",
+       "kind": "mcq",
+       "prompt": "Contamination risk means…",
+       "options": [
+        "dirty GPUs",
+        "slow tests",
+        "benchmark items may be in the model's training data",
+        "bad JSON"
+       ],
+       "answer": 2,
+       "explain": "Inflated scores on leaked items."
+      },
+      {
+       "id": "M12.U22.Q4",
+       "kind": "short",
+       "prompt": "Your harness tweak adds +6% success but +40% cost. How do you decide?",
+       "rubric": [
+        "Checks whether +6% is outside the CI (statistically real)",
+        "Computes cost per success before/after",
+        "Ties the decision to the business value of a success vs cost budget"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U23",
+     "title": "Observability: OTel GenAI traces, redaction, audit logs, incident replay",
+     "hours": 4,
+     "depth": "core",
+     "week": 103,
+     "prerequisites": [
+      "M12.U21"
+     ],
+     "outcomes": [
+      "You can emit OpenTelemetry GenAI spans for model calls, tool calls and approvals with token and cost attributes.",
+      "You can redact PII before export and replay a failed run from its trace."
+     ],
+     "topics": [
+      {
+       "id": "M12.05.11",
+       "title": "Observability: traces, spans, prompts, tool events, tokens, latency and failures"
+      },
+      {
+       "id": "M12.05.12",
+       "title": "Privacy-aware trace retention, redaction and incident replay"
+      },
+      {
+       "id": "M12.02.11",
+       "title": "Audit logs"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Opentelemetry Genai",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/20-opentelemetry-genai",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 13 · Lesson 20 opentelemetry genai"
+     },
+     "covers": [
+      "GenAI span hierarchy and span kinds",
+      "Required gen_ai.* attributes (system, model, tokens)",
+      "Opt-in content capture and events on spans",
+      "Exporters, propagation across MCP, metrics"
+     ],
+     "gaps": [
+      {
+       "topic": "Phase 13 capstone: tool ecosystem with traces",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Capstone Tool Ecosystem",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/23-capstone-tool-ecosystem",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 23 capstone tool ecosystem"
+       }
+      },
+      {
+       "topic": "Normative semantic conventions",
+       "resource": {
+        "resourceId": "otel-genai-semconv",
+        "title": "OpenTelemetry — Semantic conventions for Generative AI",
+        "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "GenAI spans and metrics pages"
+       }
+      },
+      {
+       "topic": "Instrumenting Python from zero",
+       "resource": {
+        "resourceId": "otel-python-start",
+        "title": "OpenTelemetry Python — Getting started",
+        "url": "https://opentelemetry.io/docs/languages/python/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started"
+       }
+      },
+      {
+       "topic": "Local trace backend",
+       "resource": {
+        "resourceId": "jaeger-start",
+        "title": "Jaeger — Getting started",
+        "url": "https://www.jaegertracing.io/docs/latest/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "All-in-one Docker"
+       }
+      },
+      {
+       "topic": "Agent observability platforms compared",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Otel Genai Conventions (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 14 · Lesson 23 otel genai conventions; Lesson 24 agent observability platforms"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "langfuse",
+      "title": "Langfuse (open-source LLM observability)",
+      "url": "https://github.com/langfuse/langfuse",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Self-hosting docs via README"
+     },
+     "practice": {
+      "title": "Traces you can replay",
+      "brief": "Emit OTel spans (model call, tool call, approval) with token and cost attributes into local Jaeger or self-hosted Langfuse. Redact PII before export. Keep a separate append-only audit log of approvals. Replay one failed run from its trace.",
+      "done_when": "A screenshot of a trace tree for one run; a test proves seeded PII never reaches the exporter; REPLAY.md walks through a failed run."
+     },
+     "quiz": [
+      {
+       "id": "M12.U23.Q1",
+       "kind": "mcq",
+       "prompt": "A trace span for a tool call should include…",
+       "options": [
+        "only the answer",
+        "tool name, redacted args, duration, status and parent span",
+        "the API key",
+        "nothing"
+       ],
+       "answer": 1,
+       "explain": "Enough to reconstruct what happened, minus secrets."
+      },
+      {
+       "id": "M12.U23.Q2",
+       "kind": "mcq",
+       "prompt": "Redaction should happen…",
+       "options": [
+        "before traces leave the process/trust boundary",
+        "after export",
+        "never",
+        "only in the UI"
+       ],
+       "answer": 0,
+       "explain": "Once exported, data has leaked."
+      },
+      {
+       "id": "M12.U23.Q3",
+       "kind": "mcq",
+       "prompt": "An audit log differs from a debug trace because…",
+       "options": [
+        "it is shorter",
+        "it is optional",
+        "there is no difference",
+        "it is append-only, retained and records who authorized what"
+       ],
+       "answer": 3,
+       "explain": "Audit logs are evidence; traces are diagnostics."
+      },
+      {
+       "id": "M12.U23.Q4",
+       "kind": "short",
+       "prompt": "Which three trace fields would you check first in an 'the agent emailed the wrong customer' incident?",
+       "rubric": [
+        "Tool call args for the send action (recipient)",
+        "The retrieval/tool result that supplied the address (provenance)",
+        "The approval record / policy decision for that call"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U20",
+     "title": "Optional: harness source study (Codex CLI, Prime Agent, DeepSeek harness)",
+     "hours": 10,
+     "depth": "deep",
+     "prerequisites": [
+      "M12.U17",
+      "M12.U21"
+     ],
+     "outcomes": [
+      "You can trace a request through a real agent client's entry point, event loop, context builder, tool executor, permissions and persistence.",
+      "You can port one design idea and measure it."
+     ],
+     "topics": [
+      {
+       "id": "M12.09.01",
+       "title": "Harness source study (pinned commit)"
+      }
+     ],
+     "learn": {
+      "resourceId": "grain-doc17",
+      "title": "Grain to Mountain doc 17 — Benchmarks, costs and harness study",
+      "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/17-benchmarks-costs-and-harness-study.md",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Source-study section"
+     },
+     "covers": [
+      "Fair harness experiment design and cost-per-success ledger",
+      "What to trace in a harness source tree",
+      "Which repos to read and at which layers"
+     ],
+     "gaps": [
+      {
+       "topic": "Codex CLI source",
+       "resource": {
+        "resourceId": "codex-cli",
+        "title": "OpenAI Codex CLI",
+        "url": "https://github.com/openai/codex",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Pinned commit; codex-rs core"
+       }
+      },
+      {
+       "topic": "Prime/DeepSeek harness notes in this repo",
+       "resource": {
+        "resourceId": "grain-doc20",
+        "title": "Grain to Mountain doc 20 — Prime and DeepSeek harness study",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/20-prime-and-deepseek-harness-study.md",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "codex-cli",
+      "title": "OpenAI Codex CLI",
+      "url": "https://github.com/openai/codex",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified"
+     },
+     "practice": {
+      "title": "Trace two requests through a real harness",
+      "brief": "Pin a commit of one harness (e.g. Codex CLI). Trace one successful and one failing request through entry point, event loop, context builder, tool executor, permissions and persistence. Port one design idea into your own harness and measure it with your M12.U21 suite.",
+      "done_when": "A TRACE.md with file:line references for each layer, and a before/after eval run for the ported idea."
+     },
+     "quiz": [
+      {
+       "id": "M12.U20.Q1",
+       "kind": "mcq",
+       "prompt": "Reading a public agent client repo reveals…",
+       "options": [
+        "proprietary weights",
+        "training data",
+        "runtime/tool/permission logic but not the hosted model",
+        "nothing useful"
+       ],
+       "answer": 2,
+       "explain": "The harness is open; the model isn't."
+      },
+      {
+       "id": "M12.U20.Q2",
+       "kind": "mcq",
+       "prompt": "You pin a commit because…",
+       "options": [
+        "it is faster",
+        "the license requires it",
+        "architectures change quickly",
+        "style"
+       ],
+       "answer": 2,
+       "explain": "References must stay valid."
+      },
+      {
+       "id": "M12.U20.Q3",
+       "kind": "mcq",
+       "prompt": "A 'self-improving harness' (Prime Agent style) updates…",
+       "options": [
+        "model weights automatically",
+        "the GPU",
+        "supplemental prompts/skills/state, with rollback",
+        "nothing"
+       ],
+       "answer": 2,
+       "explain": "It changes the harness, not weights."
+      },
+      {
+       "id": "M12.U20.Q4",
+       "kind": "short",
+       "prompt": "Describe one design trade-off you found and the alternative you'd choose.",
+       "rubric": [
+        "Names a concrete trade-off with file reference",
+        "States the alternative and its cost",
+        "Says how you'd measure which is better"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Bounded, observable, interoperable agent",
+  "brief": "Ship a domain agent on your own data (suggested: a study-notes or university-admin assistant). Required: plain-Python core plus one framework port; an MCP server on the 2026-07-28 spec; one Agent Skill; one subagent fan-out; checkpoint/resume; approval before writes; OTel trace export; a 40-task eval suite with repeated runs; a cost-per-success report; a 1-page threat model. Optional: an A2A endpoint. Scaffold idea: rohitg00 phase 19 lessons 20–29 (agent harness series).",
+  "rubric": [
+   {
+    "criterion": "Correctness and evals",
+    "levels": [
+     "0: no eval suite",
+     "1: <20 tasks, final-answer grading only",
+     "2: 40 tasks with code graders and repeated runs",
+     "3: 40+ tasks, code graders + calibrated judge (agreement reported), pass^k, honest failure gallery"
+    ]
+   },
+   {
+    "criterion": "Reliability",
+    "levels": [
+     "0: crashes lose work",
+     "1: retries exist but duplicate side effects possible",
+     "2: resumes after kill; budgets enforced",
+     "3: survives kill mid-tool-call with no duplicate side effects; budgets proven by tests"
+    ]
+   },
+   {
+    "criterion": "Security",
+    "levels": [
+     "0: no threat model",
+     "1: threat model only",
+     "2: approvals + allowlists with denied-action tests",
+     "3: lethal-trifecta analysis, denied-action tests, tool-description pinning, scoped auth"
+    ]
+   },
+   {
+    "criterion": "Protocol and architecture",
+    "levels": [
+     "0: no MCP",
+     "1: MCP server works only in one transport",
+     "2: spec-conformant MCP server, skill works",
+     "3: conformant MCP, skill activation measured, ADRs for framework choice"
+    ]
+   },
+   {
+    "criterion": "Communication",
+    "levels": [
+     "0: no README",
+     "1: README without results",
+     "2: README with architecture + results table",
+     "3: README with diagram, cost/latency table, limitations and a 3-minute demo video"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

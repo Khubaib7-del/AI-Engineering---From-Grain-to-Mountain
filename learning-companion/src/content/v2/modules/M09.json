@@ -1,0 +1,1685 @@
+{
+ "id": "M09",
+ "phase": "P3 Language models and apps",
+ "title": "NLP, transformers and language models",
+ "summary": "From text to tokens to a working GPT you understand line by line: tokenization (with Urdu cost realities), neural LMs, self-attention, the Transformer block and modern variants, pretraining, decoding and KV-cache inference, then HF library fluency. Spine: Karpathy Zero to Hero + Raschka LLMs-from-scratch; HF LLM Course for library fluency. U01–U04 only need M03 Python and can run before M10.",
+ "hours": 90,
+ "prerequisites": [
+  "M08"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M09.S1",
+   "title": "How LLMs work (mental model)",
+   "units": [
+    {
+     "id": "M09.U01",
+     "title": "The LLM lifecycle in one sitting",
+     "hours": 5,
+     "depth": "core",
+     "week": 69,
+     "prerequisites": [],
+     "outcomes": [
+      "You can draw the pipeline pretraining data → base model → SFT → RL → deployed assistant and say what each stage changes.",
+      "You can predict how a base model and its instruct sibling respond differently to the same prompt.",
+      "You can explain hallucination as fluent output unsupported by training data or context, and name mitigations (tools, retrieval, refusal training)."
+     ],
+     "topics": [
+      {
+       "id": "M09.03.01",
+       "title": "Pretraining vs instruction tuning vs inference (the lifecycle)",
+       "legacyIds": [
+        "M09.04.01"
+       ]
+      },
+      {
+       "id": "M09.03.02",
+       "title": "Base vs instruct models",
+       "legacyIds": [
+        "M13.05.01"
+       ]
+      },
+      {
+       "id": "M09.03.08",
+       "title": "Hallucinations"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-deep-dive",
+      "title": "Deep Dive into LLMs like ChatGPT",
+      "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI",
+      "slice": "Full video (3h31m): pretraining data → tokenization → neural net I/O → inference → GPT-2 & Llama 3.1 base demo → post-training (SFT conversations) → hallucinations & tool use → RL / DeepSeek-R1 → RLHF",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Pretraining data collection and filtering (FineWeb as the worked example)",
+      "Tokenization and why models see tokens, not characters",
+      "Neural network input/output and inference as repeated next-token sampling",
+      "Base-model behaviour (a Llama 3.1 base demo: it continues documents, it is not an assistant)",
+      "Post-training on conversation data; the assistant as a simulation of human labellers",
+      "Hallucinations, the mitigations (knowing what it doesn't know, web search/tools), 'knowledge of self'",
+      "'Models need tokens to think' and jagged capabilities (counting, spelling)",
+      "RL stage, DeepSeek-R1-style reasoning, RLHF and its limits"
+     ],
+     "gaps": [
+      {
+       "topic": "Running a base and an instruct checkpoint locally and applying a chat template",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Generation with LLMs (LLM tutorial)",
+        "url": "https://huggingface.co/docs/transformers/en/llm_tutorial",
+        "slice": "Sections: generate text; common pitfalls (generation length, padding side, chat template)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "karpathy-intro-llms",
+      "title": "[1hr Talk] Intro to Large Language Models",
+      "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
+      "slice": "Full talk (shorter overview of the same lifecycle)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Base vs instruct, side by side",
+      "brief": "Pick one model family with a base and an instruct checkpoint on the HF Hub (e.g. Qwen/Qwen2.5-0.5B and Qwen/Qwen2.5-0.5B-Instruct). Send both the same 5 prompts (a question, an instruction, a half-written email, a list, a harmful request) with the instruct model's chat template applied only to the instruct model. Log the outputs, then draw a one-page lifecycle diagram labelling which stage explains each difference.",
+      "done_when": "A notebook or script with 10 logged generations (5 prompts × 2 models), plus a diagram image/markdown that labels each observed difference with the training stage responsible."
+     },
+     "quiz": [
+      {
+       "id": "M09.U01.Q1",
+       "kind": "mcq",
+       "prompt": "A base (pretrained-only) model given 'What is the capital of France?' most likely:",
+       "options": [
+        "Refuses to answer",
+        "Answers 'Paris.' politely as an assistant",
+        "Asks a clarifying question",
+        "Continues the text, possibly by writing more quiz questions"
+       ],
+       "answer": 3,
+       "explain": "A base model has only learned to continue documents; assistant behaviour comes from post-training."
+      },
+      {
+       "id": "M09.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Hallucination is best described as:",
+       "options": [
+        "A sampling bug in the decoder",
+        "Fluent output not supported by training data or the provided context",
+        "A tokenizer error",
+        "GPU non-determinism"
+       ],
+       "answer": 1,
+       "explain": "The model produces plausible continuations whether or not it has the knowledge; Karpathy frames this as the statistical simulation of a confident labeller."
+      },
+      {
+       "id": "M09.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Which stage changes assistant-like behaviour most while using the least data?",
+       "options": [
+        "Post-training (SFT/RL)",
+        "Pretraining",
+        "Tokenizer training",
+        "Inference"
+       ],
+       "answer": 0,
+       "explain": "Post-training uses orders of magnitude less data than pretraining but shapes format, tone and helpfulness."
+      },
+      {
+       "id": "M09.U01.Q4",
+       "kind": "short",
+       "prompt": "Why does 'the model knows X' not imply 'the model will say X correctly when asked'?",
+       "rubric": [
+        "Distinguishes knowledge stored in weights (lossy, probabilistic) from what sampling produces for a given prompt",
+        "Mentions at least one cause: sampling randomness, prompt phrasing, tokenization, or post-training not teaching the model to surface/abstain",
+        "Gives a mitigation such as retrieval, tool use, or training the model to say 'I don't know'"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M09.S2",
+   "title": "From text to tokens",
+   "units": [
+    {
+     "id": "M09.U02",
+     "title": "Text normalization, n-grams and word vectors",
+     "hours": 8,
+     "depth": "core",
+     "week": 70,
+     "prerequisites": [
+      "M09.U01"
+     ],
+     "outcomes": [
+      "You can apply Unicode NFC/NFKC normalization and show where it changes token counts.",
+      "You can build and smooth a bigram language model and compute its perplexity.",
+      "You can explain the skip-gram objective and why static word vectors fail on code-mixed Urdu/English."
+     ],
+     "topics": [
+      {
+       "id": "M09.01.01",
+       "title": "Text normalization"
+      },
+      {
+       "id": "M09.01.02",
+       "title": "Unicode/multilingual data"
+      },
+      {
+       "id": "M09.01.03",
+       "title": "N-grams"
+      },
+      {
+       "id": "M09.01.05",
+       "title": "Word/subword embeddings"
+      }
+     ],
+     "learn": {
+      "resourceId": "B08",
+      "title": "Speech and Language Processing (3rd ed. draft) — ch. 2, 3, 5",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/2.pdf",
+      "slice": "Ch. 2 'Words and Tokens' (whole chapter) → ch. 3 'N-gram Language Models' (https://web.stanford.edu/~jurafsky/slp3/3.pdf, §3.1–3.6) → ch. 5 'Embeddings' (https://web.stanford.edu/~jurafsky/slp3/5.pdf, vector semantics, cosine, word2vec skip-gram with negative sampling)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Words, morphemes, Unicode code points and UTF-8 encoding; corpora; regular-expression and subword tokenization (ch. 2)",
+      "N-gram probabilities by maximum likelihood, the Markov assumption, perplexity as the evaluation metric, sampling from an LM (ch. 3)",
+      "Smoothing: Laplace/add-k, interpolation and backoff for unseen n-grams (ch. 3)",
+      "Distributional hypothesis, vector semantics, cosine similarity, word2vec skip-gram with negative sampling, embedding bias (ch. 5)"
+     ],
+     "gaps": [
+      {
+       "topic": "Exact behaviour of NFC vs NFKC in code",
+       "resource": {
+        "resourceId": "python-docs",
+        "title": "Python docs — unicodedata.normalize",
+        "url": "https://docs.python.org/3/library/unicodedata.html",
+        "slice": "unicodedata.normalize(form, unistr) section",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Word vectors explained in lecture form (if the book chapter is too dense)",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N Spring 2024 — Lecture 1: Intro and Word Vectors",
+        "url": "https://www.youtube.com/watch?v=DzpHeXVSC5I",
+        "slice": "Full lecture (word2vec derivation in second half)",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Multilingual and code-mixed text handling",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Multilingual NLP",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/05-nlp-foundations-to-advanced/18-multilingual-nlp",
+        "slice": "Lesson phases/05-nlp-foundations-to-advanced/18-multilingual-nlp (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Text processing",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/05-nlp-foundations-to-advanced/01-text-processing",
+      "slice": "Lessons 05/01 text-processing and 05/03 word-embeddings-word2vec (build-it code)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Bilingual bigram LM with normalization",
+      "brief": "Collect ~1 MB English and ~1 MB Urdu (Nastaliq or Roman) public-domain text. Normalize with unicodedata.normalize (NFC and NFKC) and find one string where normalization changes the character/token count. Train a bigram LM with add-one smoothing per language and report held-out perplexity. Train a small word2vec (gensim) on the English half and list the 5 nearest neighbours for 5 words.",
+      "done_when": "Script prints held-out perplexity for both languages, shows one before/after normalization example with differing lengths, and lists word2vec neighbours; README explains one failure on code-mixed text."
+     },
+     "quiz": [
+      {
+       "id": "M09.U02.Q1",
+       "kind": "mcq",
+       "prompt": "NFKC normalization can:",
+       "options": [
+        "Translate text between scripts",
+        "Map compatibility characters (e.g. ligatures, full-width forms) to a canonical form",
+        "Always remove all diacritics",
+        "Split text into subword tokens"
+       ],
+       "answer": 1,
+       "explain": "NFKC applies compatibility decomposition then canonical composition; it changes visually similar code points, not language."
+      },
+      {
+       "id": "M09.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Add-one (Laplace) smoothing in n-gram LMs exists to:",
+       "options": [
+        "Speed up training",
+        "Reduce the vocabulary size",
+        "Normalize Unicode",
+        "Avoid zero probability for n-grams unseen in training"
+       ],
+       "answer": 3,
+       "explain": "A single unseen bigram would otherwise give the whole test sentence probability zero (infinite perplexity)."
+      },
+      {
+       "id": "M09.U02.Q3",
+       "kind": "mcq",
+       "prompt": "word2vec's skip-gram objective predicts:",
+       "options": [
+        "The next sentence",
+        "A document label",
+        "Part-of-speech tags",
+        "Context words from a centre word"
+       ],
+       "answer": 3,
+       "explain": "Skip-gram learns embeddings by predicting surrounding words; CBOW does the reverse."
+      },
+      {
+       "id": "M09.U02.Q4",
+       "kind": "short",
+       "prompt": "Give one concrete reason a word-level vocabulary fails on Urdu/English code-mixed chat.",
+       "rubric": [
+        "Names a specific mechanism: spelling variation in Roman Urdu (e.g. 'nahi'/'nahin'), script mixing, or out-of-vocabulary rates",
+        "Connects it to unknown tokens or exploding vocabulary size",
+        "Points to subword/byte-level tokenization as the remedy"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M09.U03",
+     "title": "Subword tokenization (BPE) and tokenizer pitfalls",
+     "hours": 8,
+     "depth": "core",
+     "week": 71,
+     "prerequisites": [
+      "M09.U02"
+     ],
+     "outcomes": [
+      "You can implement byte-level BPE (train, encode, decode) that round-trips arbitrary strings.",
+      "You can explain GPT-style regex pre-tokenization and special tokens.",
+      "You can measure and explain why the same text costs more tokens in Urdu than in English."
+     ],
+     "topics": [
+      {
+       "id": "M09.01.07",
+       "title": "Tokenization: BPE/WordPiece/Unigram"
+      },
+      {
+       "id": "M09.01.10",
+       "title": "Tokenizer pitfalls and per-language token cost (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-z2h",
+      "title": "Let's build the GPT Tokenizer",
+      "url": "https://www.youtube.com/watch?v=zduSFxRajkE",
+      "slice": "Full video (2h13m) with code at https://github.com/karpathy/minbpe",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Unicode code points vs UTF-8 bytes; why byte-level BPE has no unknown tokens",
+      "BPE training loop: count adjacent pairs, merge the most frequent, repeat; encode and decode",
+      "GPT-2/GPT-4 regex pre-tokenization and the tiktoken library",
+      "Special tokens (e.g. <|endoftext|>) and extending vocab for chat",
+      "SentencePiece (Llama) vs byte-level BPE; vocabulary-size trade-offs",
+      "Tokenization-caused failures: spelling/counting, arithmetic, trailing whitespace, non-English inefficiency, 'SolidGoldMagikarp' glitch tokens"
+     ],
+     "gaps": [
+      {
+       "topic": "WordPiece and Unigram (the unit topic names them; the video focuses on BPE/SentencePiece)",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Summary of the tokenizers",
+        "url": "https://huggingface.co/docs/transformers/en/tokenizer_summary",
+        "slice": "Sections: Byte-Pair Encoding, WordPiece, Unigram, SentencePiece",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Counting tokens with production encodings (o200k_base)",
+       "resource": {
+        "resourceId": "tiktoken",
+        "title": "tiktoken README",
+        "url": "https://github.com/openai/tiktoken",
+        "slice": "README usage: get_encoding / encoding_for_model",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "C09",
+      "title": "HF LLM Course 6.5 — Byte-Pair Encoding tokenization",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter6/5",
+      "slice": "Section 6.5 (training BPE step by step in code)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "minbpe-style tokenizer + language cost report",
+      "brief": "Implement byte-level BPE (train/encode/decode) yourself, with a round-trip test over 1,000 random Unicode strings (include Urdu and emoji). Train it on mixed English/Urdu text at vocab 1k and 4k. For the same paragraph in English, Urdu (Nastaliq) and Roman Urdu, report tokens per word with your tokenizer and with tiktoken o200k_base, and write the API-cost implication at a stated price per 1M tokens.",
+      "done_when": "All round-trip tests pass (decode(encode(s)) == s); a table shows tokens/word for 3 language variants × 3 tokenizers; README states the cost ratio Urdu:English."
+     },
+     "quiz": [
+      {
+       "id": "M09.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Byte-level BPE guarantees:",
+       "options": [
+        "One token per word",
+        "Identical token counts across languages",
+        "No unknown tokens, because every byte is in the base vocabulary",
+        "No merges are needed"
+       ],
+       "answer": 2,
+       "explain": "Any string is a byte sequence and all 256 bytes are base tokens, so encoding never fails."
+      },
+      {
+       "id": "M09.U03.Q2",
+       "kind": "mcq",
+       "prompt": "A frequent cause of LLMs failing at counting letters in a word is:",
+       "options": [
+        "The softmax",
+        "The KV cache",
+        "Tokens spanning multiple characters, so the model never sees individual letters",
+        "The learning rate"
+       ],
+       "answer": 2,
+       "explain": "Karpathy shows 'strawberry'-style failures trace back to multi-character tokens."
+      },
+      {
+       "id": "M09.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Each step of BPE training:",
+       "options": [
+        "Splits rare words into characters",
+        "Removes stop words",
+        "Lowercases the corpus",
+        "Merges the most frequent adjacent pair into a new token"
+       ],
+       "answer": 3,
+       "explain": "BPE is a greedy compression algorithm over pair frequencies."
+      },
+      {
+       "id": "M09.U03.Q4",
+       "kind": "short",
+       "prompt": "Why can the same API request cost noticeably more in Urdu than in English?",
+       "rubric": [
+        "Explains that tokenizers trained on English-heavy data have fewer merges for Urdu, so more tokens per word",
+        "Links tokens to billing and to context/latency (more tokens = more cost and slower)",
+        "Gives a measured or estimated ratio, or names a mitigation (model with better multilingual tokenizer, shorter prompts)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M09.U04",
+     "title": "Batching text: padding, truncation, attention masks",
+     "hours": 4,
+     "depth": "core",
+     "week": 71,
+     "prerequisites": [
+      "M09.U03"
+     ],
+     "outcomes": [
+      "You can batch variable-length sequences with padding and an attention mask and show what breaks without the mask.",
+      "You can choose truncation settings and log when text is silently cut.",
+      "You can explain why decoder-only batched generation uses left padding."
+     ],
+     "topics": [
+      {
+       "id": "M09.01.08",
+       "title": "Padding/truncation"
+      },
+      {
+       "id": "M09.01.09",
+       "title": "Attention masks"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course ch. 2 — Using 🤗 Transformers",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter2/4",
+      "slice": "Sections 2.4 Tokenizers → 2.5 Handling multiple sequences (https://huggingface.co/learn/llm-course/en/chapter2/5) → 2.6 Putting it all together (https://huggingface.co/learn/llm-course/en/chapter2/6)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Tokenizer loading, encoding to input IDs and decoding (2.4)",
+      "Why models expect batches; padding to equal length; attention masks so padding is ignored (2.5)",
+      "Longer sequences, model max length and truncation (2.5)",
+      "Tokenizer call options padding=/truncation=/return_tensors= and special tokens added automatically (2.6)"
+     ],
+     "gaps": [
+      {
+       "topic": "Left vs right padding for generation (not covered in ch. 2)",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — LLM tutorial, 'Wrong padding side' pitfall",
+        "url": "https://huggingface.co/docs/transformers/en/llm_tutorial",
+        "slice": "Common pitfalls → padding side",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Full table of padding/truncation strategies",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Padding and truncation",
+        "url": "https://huggingface.co/docs/transformers/en/pad_truncation",
+        "slice": "Whole page (strategy table)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "raschka-llms-from-scratch",
+      "title": "Build an LLM from Scratch 2: Working with text data",
+      "url": "https://www.youtube.com/watch?v=341Rb8fJxY0",
+      "slice": "Video 2 + ch. 2 notebook https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/01_main-chapter-code/ch02.ipynb (data loader, sliding windows)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Mask-or-break demo",
+      "brief": "Batch three sentences of different lengths through a small model (distilbert for classification, and a small causal LM). Show logits differ when you drop attention_mask. Generate with the causal LM using right vs left padding and show the right-padded generation is wrong. Add a truncation logger that warns with the number of dropped tokens.",
+      "done_when": "Notebook shows (1) logits with/without mask differ, (2) left-padded generation correct while right-padded is degraded, (3) a warning line from your truncation logger for an over-long input."
+     },
+     "quiz": [
+      {
+       "id": "M09.U04.Q1",
+       "kind": "mcq",
+       "prompt": "In the attention mask, padding positions are set so that:",
+       "options": [
+        "Padding gets extra weight",
+        "Padding tokens receive zero attention weight",
+        "The loss doubles",
+        "Positions shift by one"
+       ],
+       "answer": 1,
+       "explain": "Mask value 0 → the score is set to −∞ before softmax, so padding contributes nothing."
+      },
+      {
+       "id": "M09.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Truncation that silently drops the end of a document mostly risks:",
+       "options": [
+        "Running out of GPU memory",
+        "Tokenizer exceptions",
+        "Higher latency",
+        "Losing the answer-bearing text"
+       ],
+       "answer": 3,
+       "explain": "Truncation is silent by default; the lost text is simply not seen by the model."
+      },
+      {
+       "id": "M09.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Decoder-only batched generation usually pads on the:",
+       "options": [
+        "Right",
+        "Both sides",
+        "Never pads",
+        "Left"
+       ],
+       "answer": 3,
+       "explain": "New tokens are appended on the right, so real tokens must be contiguous at the right edge."
+      },
+      {
+       "id": "M09.U04.Q4",
+       "kind": "short",
+       "prompt": "What bug appears in a RAG system if chunks are truncated by the embedding model's max length without logging?",
+       "rubric": [
+        "Identifies that the tail of long chunks is never embedded, so queries matching that text fail to retrieve it",
+        "Notes it is silent: no error, just lower recall",
+        "Proposes a fix: chunk below max length, or log/alert on truncation"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M09.S3",
+   "title": "Neural LMs and the Transformer",
+   "units": [
+    {
+     "id": "M09.U05",
+     "title": "Neural language modelling, loss and perplexity",
+     "hours": 10,
+     "depth": "core",
+     "week": 72,
+     "prerequisites": [
+      "M09.U02"
+     ],
+     "outcomes": [
+      "You can train a character-level neural LM and read its train/val loss curves.",
+      "You can compute perplexity as exp(mean NLL) and explain why it is tokenizer-dependent.",
+      "You can explain the sequential bottleneck and vanishing gradients of RNNs that Transformers remove."
+     ],
+     "topics": [
+      {
+       "id": "M09.03.09",
+       "title": "Perplexity"
+      },
+      {
+       "id": "M09.01.06",
+       "title": "RNN/LSTM intuition"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-z2h",
+      "title": "The spelled-out intro to language modeling: building makemore",
+      "url": "https://www.youtube.com/watch?v=PaCmpygFfXo",
+      "slice": "makemore Part 1 (bigram, 1h57m) then Part 2: MLP https://youtu.be/TCH_1BHY58I (1h15m)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Bigram LM from counts, sampling, and the negative log-likelihood loss (Part 1)",
+      "Model smoothing via fake counts; the same bigram as a one-layer neural net with one-hot inputs and softmax (Part 1)",
+      "Bengio-style MLP LM: embedding lookup table, hidden layer, cross-entropy (Part 2)",
+      "Minibatches, finding a learning rate, train/dev/test splits, under- vs overfitting (Part 2)",
+      "Sampling names from the trained model (Parts 1–2)"
+     ],
+     "gaps": [
+      {
+       "topic": "Perplexity as an evaluation metric (makemore reports loss, not perplexity)",
+       "resource": {
+        "resourceId": "B08",
+        "title": "SLP3 ch. 3 §3.3 'Evaluating Language Models: Perplexity'",
+        "url": "https://web.stanford.edu/~jurafsky/slp3/3.pdf",
+        "slice": "§3.3 (perplexity definition, relation to entropy)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Perplexity of fixed-length models and tokenizer dependence",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Perplexity of fixed-length models",
+        "url": "https://huggingface.co/docs/transformers/en/perplexity",
+        "slice": "Whole page (sliding-window evaluation)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "RNN/LSTM intuition (makemore parts 1–2 stop at MLPs)",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N Spring 2024 — Lecture 5: Recurrent Neural Networks",
+        "url": "https://www.youtube.com/watch?v=fyc0Jzr74y4",
+        "slice": "Full lecture (RNN LMs, vanishing gradients, LSTMs)",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "B08",
+      "title": "SLP3 ch. 14 — RNNs and LSTMs",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/14.pdf",
+      "slice": "Whole chapter",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Pakistani-names makemore",
+      "brief": "Collect ≥5,000 Pakistani first names (or city names). Train a character-level MLP LM; plot train/val loss; report test perplexity = exp(mean NLL). Sample 20 names at temperature 0.5 and 1.2. Then compare against an RNN (torch.nn.GRU) of similar parameter count.",
+      "done_when": "Plot with both loss curves, a reported perplexity number on a held-out split, 40 samples, and a 3-line MLP-vs-GRU comparison."
+     },
+     "quiz": [
+      {
+       "id": "M09.U05.Q1",
+       "kind": "mcq",
+       "prompt": "A perplexity of 1 on a test set means:",
+       "options": [
+        "Random guessing",
+        "Overfitting",
+        "Infinite loss",
+        "The model predicts every test token with probability 1"
+       ],
+       "answer": 3,
+       "explain": "PPL = exp(mean NLL); NLL = 0 only when every correct token gets probability 1."
+      },
+      {
+       "id": "M09.U05.Q2",
+       "kind": "mcq",
+       "prompt": "The main practical weakness of vanilla RNNs that Transformers address is:",
+       "options": [
+        "Too many parameters",
+        "No embeddings",
+        "No softmax",
+        "Sequential computation plus vanishing gradients over long ranges"
+       ],
+       "answer": 3,
+       "explain": "RNNs process tokens one at a time (no parallelism over time) and struggle to carry gradients far back."
+      },
+      {
+       "id": "M09.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Cross-entropy loss for next-token prediction is:",
+       "options": [
+        "The negative log-probability the model assigns to the correct next token",
+        "Mean squared error of the logits",
+        "Accuracy",
+        "KL divergence to the uniform distribution"
+       ],
+       "answer": 0,
+       "explain": "Karpathy derives it directly from the likelihood of the training data."
+      },
+      {
+       "id": "M09.U05.Q4",
+       "kind": "short",
+       "prompt": "Why can't you compare perplexities of two models with different tokenizers directly?",
+       "rubric": [
+        "States that perplexity is per token, and the token unit differs between tokenizers",
+        "Gives the fix: normalize to bits-per-byte/character or per word",
+        "Optional: mentions sliding-window/context-length effects"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M09.U06",
+     "title": "Self-attention from scratch",
+     "hours": 10,
+     "depth": "core",
+     "week": 73,
+     "prerequisites": [
+      "M09.U05"
+     ],
+     "outcomes": [
+      "You can implement single-head and multi-head causal self-attention with shape assertions.",
+      "You can prove with a test that position t never attends to t+1.",
+      "You can explain scaling by √d_k and the O(n²) cost of attention."
+     ],
+     "topics": [
+      {
+       "id": "M09.02.01",
+       "title": "Q/K/V"
+      },
+      {
+       "id": "M09.02.02",
+       "title": "Scaled dot-product attention"
+      },
+      {
+       "id": "M09.02.03",
+       "title": "Multi-head attention"
+      },
+      {
+       "id": "M09.02.08",
+       "title": "Causal mask"
+      }
+     ],
+     "learn": {
+      "resourceId": "raschka-llms-from-scratch",
+      "title": "Build an LLM from Scratch — ch. 3 'Coding attention mechanisms'",
+      "url": "https://github.com/rasbt/LLMs-from-scratch/blob/main/ch03/01_main-chapter-code/ch03.ipynb",
+      "slice": "Ch. 3 notebook (all sections 3.1–3.6) + free video 3 https://www.youtube.com/watch?v=-Ll8DtpNtvk",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "The problem with modelling long sequences; attention as a fix (3.1–3.2)",
+      "Simplified self-attention without trainable weights: dot products, softmax, context vectors (3.3)",
+      "Self-attention with trainable Wq, Wk, Wv and scaled dot-product (3.4)",
+      "Causal attention mask (−∞ above the diagonal) and dropout on attention weights (3.5)",
+      "Multi-head attention: stacking heads, then the efficient weight-split implementation (3.6)"
+     ],
+     "gaps": [
+      {
+       "topic": "Visual intuition for what Q, K and V do",
+       "resource": {
+        "resourceId": "3b1b-dl",
+        "title": "3Blue1Brown — Attention in transformers, step-by-step (DL ch. 6)",
+        "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc",
+        "slice": "Full video (26 min)",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Quadratic cost and the motivation for Transformers over RNNs",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N 2023 — Lecture 8: Self-Attention and Transformers",
+        "url": "https://www.youtube.com/watch?v=LWMzyfvuehA",
+        "slice": "Full lecture",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "PyTorch fused attention API used for the parity test",
+       "resource": {
+        "resourceId": "pytorch-docs",
+        "title": "PyTorch — torch.nn.functional.scaled_dot_product_attention",
+        "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html",
+        "slice": "Function reference incl. is_causal and the reference implementation",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Original paper (read alongside the build)",
+       "resource": {
+        "resourceId": "P03",
+        "title": "Attention Is All You Need",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "slice": "§3.1–3.2 (encoder/decoder stacks, scaled dot-product and multi-head attention)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-attention-pytorch",
+      "title": "DeepLearning.AI — Attention in Transformers: Concepts and Code in PyTorch",
+      "url": "https://www.deeplearning.ai/short-courses/attention-in-transformers-concepts-and-code-in-pytorch/",
+      "slice": "Whole short course",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Causal attention with tests",
+      "brief": "Implement single-head then multi-head causal self-attention in PyTorch. Add shape assertions at every step and a unit test that perturbing token t+1 never changes the output at position t. Compare your output with torch.nn.functional.scaled_dot_product_attention(is_causal=True) and assert max abs diff < 1e-5. Read P03 sections 3.1–3.2.3 and write a 5-line paper card.",
+      "done_when": "pytest passes: shape tests, the causal-leak test and the SDPA parity test; paper card for P03 committed."
+     },
+     "quiz": [
+      {
+       "id": "M09.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Scaling attention scores by √d_k prevents:",
+       "options": [
+        "Softmax saturation caused by large dot products",
+        "Overflow in the embeddings",
+        "Causal leakage",
+        "Padding errors"
+       ],
+       "answer": 0,
+       "explain": "Dot products grow with dimension; large logits push softmax to one-hot and kill gradients."
+      },
+      {
+       "id": "M09.U06.Q2",
+       "kind": "mcq",
+       "prompt": "In causal self-attention, the mask sets future positions to:",
+       "options": [
+        "−∞ before the softmax",
+        "0 before the softmax",
+        "1 after the softmax",
+        "The row mean"
+       ],
+       "answer": 0,
+       "explain": "−∞ becomes weight 0 after softmax; setting 0 before softmax would still give them weight."
+      },
+      {
+       "id": "M09.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Multi-head attention mainly lets the model:",
+       "options": [
+        "Use less memory",
+        "Attend to different relation types in different representation subspaces",
+        "Skip layer norm",
+        "Avoid positional information"
+       ],
+       "answer": 1,
+       "explain": "Each head has its own projections, so heads can specialise."
+      },
+      {
+       "id": "M09.U06.Q4",
+       "kind": "short",
+       "prompt": "How does attention cost grow with sequence length n, and why does that matter for long-context apps?",
+       "rubric": [
+        "States O(n²) time/memory for the score matrix (per layer, per head)",
+        "Connects it to latency/cost of long prompts or long documents",
+        "Mentions a mitigation (FlashAttention, sparse/sliding attention, retrieval instead of stuffing)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M09.U07",
+     "title": "The Transformer block and a GPT model",
+     "hours": 14,
+     "depth": "core",
+     "week": 74,
+     "prerequisites": [
+      "M09.U06"
+     ],
+     "outcomes": [
+      "You can build a GPT (embeddings → N pre-norm blocks → LM head) and count its parameters by hand.",
+      "You can explain RoPE, RMSNorm, SwiGLU and GQA and swap them into your model.",
+      "You can say when to use encoder-only, decoder-only or encoder-decoder models today (embeddings/rerankers vs generation)."
+     ],
+     "topics": [
+      {
+       "id": "M09.02.04",
+       "title": "Positional embeddings/RoPE"
+      },
+      {
+       "id": "M09.02.05",
+       "title": "Feed-forward blocks"
+      },
+      {
+       "id": "M09.02.06",
+       "title": "Residual connections/layer norm"
+      },
+      {
+       "id": "M09.02.07",
+       "title": "Encoder/decoder/encoder-decoder"
+      },
+      {
+       "id": "M09.02.09",
+       "title": "Next-token objective"
+      },
+      {
+       "id": "M09.02.10",
+       "title": "Modern block variants: RMSNorm, SwiGLU, GQA, RoPE (new)"
+      },
+      {
+       "id": "M09.02.11",
+       "title": "Encoder-only models today: embeddings, rerankers, classifiers (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-z2h",
+      "title": "Let's build GPT: from scratch, in code, spelled out",
+      "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+      "slice": "Full video (1h56m), then Raschka ch. 4 notebook https://github.com/rasbt/LLMs-from-scratch/blob/main/ch04/01_main-chapter-code/ch04.ipynb",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Character-level data pipeline, train/val split, bigram baseline (Karpathy)",
+      "The 'mathematical trick' of self-attention via masked weighted averages; single and multi-head attention (Karpathy)",
+      "Feed-forward layer, residual connections, LayerNorm (pre-norm), dropout, scaling up the model (Karpathy)",
+      "Decoder-only vs encoder vs encoder-decoder (Karpathy's closing notes) and how pretraining → fine-tuning makes ChatGPT",
+      "GPT-2 architecture in code: LayerNorm, GELU feed-forward, shortcut connections, TransformerBlock, GPTModel, parameter count, greedy text generation (Raschka ch. 4)",
+      "Learned absolute positional embeddings (both); next-token objective (both)"
+     ],
+     "gaps": [
+      {
+       "topic": "RoPE, RMSNorm, SwiGLU, GQA, MLA in current open models (neither primary covers them)",
+       "resource": {
+        "resourceId": "raschka-magazine",
+        "title": "Raschka — The Big LLM Architecture Comparison",
+        "url": "https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison",
+        "slice": "Sections on DeepSeek-V3 (MLA, MoE), OLMo 2 (norm placement), Gemma 3, Llama/Qwen (GQA, RoPE)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Rotary position embedding derivation",
+       "resource": {
+        "resourceId": "paper-roformer",
+        "title": "RoFormer: Enhanced Transformer with Rotary Position Embedding",
+        "url": "https://arxiv.org/abs/2104.09864",
+        "slice": "§3.2–3.4",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Encoder-only models today (embeddings, rerankers, classifiers)",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Finally, a Replacement for BERT: Introducing ModernBERT",
+        "url": "https://huggingface.co/blog/modernbert",
+        "slice": "Whole post (why encoders still power retrieval/classification)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Encoder vs decoder vs encoder-decoder pretraining",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N 2023 — Lecture 9: Pretraining",
+        "url": "https://www.youtube.com/watch?v=DGfCRXuNA2w",
+        "slice": "Full lecture (BERT, T5, GPT pretraining families)",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cs224n",
+      "title": "CS224N Winter 2026 — Lecture 5 Transformers slides",
+      "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture05-transformers.pdf",
+      "slice": "Whole deck",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "10M-parameter GPT + one modern swap",
+      "brief": "Build a ~10M-parameter GPT and train it on TinyShakespeare or a public-domain Urdu poetry corpus (CPU or free Colab). Count parameters by hand in a markdown table and check against sum(p.numel()). Then swap LayerNorm→RMSNorm and GELU-MLP→SwiGLU (and optionally add RoPE) and compare val loss at the same step count with 2 seeds.",
+      "done_when": "Repo trains end to end; the hand count equals sum(p.numel()); a plot shows baseline vs modern-block val loss for 2 seeds each."
+     },
+     "quiz": [
+      {
+       "id": "M09.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Residual connections primarily:",
+       "options": [
+        "Add positional information",
+        "Normalize activations",
+        "Ease gradient flow through deep stacks",
+        "Mask future tokens"
+       ],
+       "answer": 2,
+       "explain": "The identity path lets gradients bypass each sublayer."
+      },
+      {
+       "id": "M09.U07.Q2",
+       "kind": "mcq",
+       "prompt": "RoPE encodes position by:",
+       "options": [
+        "Adding a learned vector to each embedding",
+        "Rotating query and key vectors by position-dependent angles",
+        "Concatenating a position index",
+        "Running a separate RNN"
+       ],
+       "answer": 1,
+       "explain": "Rotation makes the q·k dot product depend on relative position."
+      },
+      {
+       "id": "M09.U07.Q3",
+       "kind": "mcq",
+       "prompt": "For sentence embeddings used in retrieval, the most common architecture family is:",
+       "options": [
+        "Decoder-only",
+        "Diffusion",
+        "CNN",
+        "Encoder-only (BERT-style)"
+       ],
+       "answer": 3,
+       "explain": "Bidirectional encoders produce a representation of the whole input; most embedding models and cross-encoder rerankers are encoders."
+      },
+      {
+       "id": "M09.U07.Q4",
+       "kind": "short",
+       "prompt": "What does grouped-query attention save at inference time, and what does it trade off?",
+       "rubric": [
+        "States that several query heads share one key/value head",
+        "Says it shrinks the KV cache (memory, bandwidth) roughly by n_heads/n_kv_heads",
+        "Names the trade-off: some quality/expressiveness loss vs full multi-head attention"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M09.S4",
+   "title": "From pretraining to generation",
+   "units": [
+    {
+     "id": "M09.U08",
+     "title": "Pretraining a small LM and scaling intuition",
+     "hours": 10,
+     "depth": "core",
+     "week": 75,
+     "prerequisites": [
+      "M09.U07"
+     ],
+     "outcomes": [
+      "You can run a pretraining loop with train/val loss, warmup + cosine LR, and token accounting.",
+      "You can load GPT-2 124M weights into your own architecture and generate.",
+      "You can explain data filtering/dedup/mixtures and Chinchilla-style compute-optimal training at an intuitive level."
+     ],
+     "topics": [
+      {
+       "id": "M09.04.02",
+       "title": "Corpus collection, filtering, deduplication and data mixtures"
+      },
+      {
+       "id": "M09.04.03",
+       "title": "Compute and data scaling laws"
+      },
+      {
+       "id": "M09.04.04",
+       "title": "Pretraining objectives: causal, masked and sequence-to-sequence"
+      },
+      {
+       "id": "M09.04.05",
+       "title": "Training tokens, batch size, steps and learning-rate schedule"
+      }
+     ],
+     "learn": {
+      "resourceId": "raschka-llms-from-scratch",
+      "title": "Build an LLM from Scratch — ch. 5 'Pretraining on unlabeled data'",
+      "url": "https://github.com/rasbt/LLMs-from-scratch/blob/main/ch05/01_main-chapter-code/ch05.ipynb",
+      "slice": "Ch. 5 notebook (5.1–5.5) + free video 5 https://www.youtube.com/watch?v=Zar2TJv-sE0",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Evaluating generative models: text generation, cross-entropy and perplexity on train/val (5.1)",
+      "Training loop for an LLM; reading train vs val loss for overfitting (5.2)",
+      "Decoding strategies to control randomness: temperature scaling and top-k (5.3)",
+      "Saving and loading model and optimizer state (5.4)",
+      "Loading pretrained OpenAI GPT-2 weights into the from-scratch model (5.5)"
+     ],
+     "gaps": [
+      {
+       "topic": "Learning-rate warmup and cosine decay (ch. 5 uses a plain AdamW loop)",
+       "resource": {
+        "resourceId": "raschka-llms-from-scratch",
+        "title": "Build an LLM from Scratch — Appendix D 'Adding bells and whistles to the training loop'",
+        "url": "https://github.com/rasbt/LLMs-from-scratch/tree/main/appendix-D",
+        "slice": "D.1 LR warmup, D.2 cosine decay, D.3 gradient clipping",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Corpus collection, filtering, dedup and mixtures",
+       "resource": {
+        "resourceId": "fineweb-blog",
+        "title": "FineWeb: decanting the web for the finest text data at scale",
+        "url": "https://huggingface.co/spaces/HuggingFaceFW/blogpost-fineweb-v1",
+        "slice": "Sections: text extraction, base filtering, deduplication, quality filters",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Scaling laws intuition",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Scaling laws",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/07-transformers-deep-dive/13-scaling-laws",
+        "slice": "Lesson phases/07-transformers-deep-dive/13-scaling-laws (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Causal vs masked vs seq2seq objectives",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N 2023 — Lecture 9: Pretraining",
+        "url": "https://www.youtube.com/watch?v=DGfCRXuNA2w",
+        "slice": "Full lecture",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cs224n",
+      "title": "CS224N Winter 2026 — Pretraining (Scaling, Systems, Data) slides",
+      "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture07-pretraining.pdf",
+      "slice": "Whole deck",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Pretrain with a schedule, then load GPT-2",
+      "brief": "Pretrain your U07 model twice on the same token budget: constant LR vs linear warmup + cosine decay. Log tokens seen, train/val loss and LR per step. Then load GPT-2 124M weights into your architecture (as in 5.5) and generate 3 samples. Write a 1-page note on what a real pretraining corpus pipeline (FineWeb) does that yours does not.",
+      "done_when": "Two loss curves on one plot with LR overlaid; GPT-2 weights load with no missing keys and generate coherent text; note references FineWeb's filtering and dedup steps."
+     },
+     "quiz": [
+      {
+       "id": "M09.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Chinchilla-style scaling suggests that for a fixed compute budget you should:",
+       "options": [
+        "Maximize parameters only",
+        "Minimize data",
+        "Balance parameters and training tokens (scale both)",
+        "Use a larger tokenizer"
+       ],
+       "answer": 2,
+       "explain": "Hoffmann et al. found earlier large models were undertrained; ~20 tokens/parameter was compute-optimal in their setup."
+      },
+      {
+       "id": "M09.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Deduplicating pretraining data mainly reduces:",
+       "options": [
+        "Vocabulary size",
+        "Context length",
+        "Memorization and wasted compute on repeated text",
+        "KV-cache size"
+       ],
+       "answer": 2,
+       "explain": "Duplicates are over-weighted and memorized; FineWeb shows dedup choices change downstream quality."
+      },
+      {
+       "id": "M09.U08.Q3",
+       "kind": "mcq",
+       "prompt": "A masked-LM objective (BERT) differs from causal LM in that it:",
+       "options": [
+        "Predicts masked tokens using both left and right context",
+        "Predicts only the next token",
+        "Has no loss",
+        "Requires RL"
+       ],
+       "answer": 0,
+       "explain": "Bidirectional context makes MLM good for understanding/embeddings but not for left-to-right generation."
+      },
+      {
+       "id": "M09.U08.Q4",
+       "kind": "short",
+       "prompt": "Why does learning-rate warmup help early Transformer training?",
+       "rubric": [
+        "Mentions that early updates with large LR on random weights are unstable (exploding/large-gradient steps)",
+        "Mentions Adam's second-moment estimates are unreliable in the first steps",
+        "Describes warmup as linearly increasing LR over the first N steps before decay"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M09.U09",
+     "title": "Decoding and sampling controls",
+     "hours": 4,
+     "depth": "core",
+     "week": 75,
+     "prerequisites": [
+      "M09.U08"
+     ],
+     "outcomes": [
+      "You can implement greedy, beam, temperature, top-k and top-p decoding over raw logits.",
+      "You can implement stop sequences and EOS handling.",
+      "You can explain why sampling settings change outputs but never weights, and why temperature 0 is still not deterministic on hosted APIs."
+     ],
+     "topics": [
+      {
+       "id": "M09.03.05",
+       "title": "Temperature/top-p/top-k",
+       "legacyIds": [
+        "M09.04.08"
+       ]
+      },
+      {
+       "id": "M09.03.06",
+       "title": "Greedy/beam search"
+      },
+      {
+       "id": "M09.03.07",
+       "title": "Stop tokens"
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-blog",
+      "title": "HF blog — How to generate text: using different decoding methods",
+      "url": "https://huggingface.co/blog/how-to-generate",
+      "slice": "Whole post",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Greedy search and its repetition problem",
+      "Beam search, n-gram repetition penalties and num_return_sequences",
+      "Sampling, temperature scaling of the softmax",
+      "Top-k sampling and its fixed-size problem; top-p (nucleus) sampling",
+      "Combining top-k and top-p in generate()"
+     ],
+     "gaps": [
+      {
+       "topic": "Stop tokens / stop strings and EOS handling (not in the blog post)",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Generation strategies",
+        "url": "https://huggingface.co/docs/transformers/en/generation_strategies",
+        "slice": "Decoding strategies + GenerationConfig (eos_token_id, stop_strings, max_new_tokens)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Why temperature 0 is non-deterministic on servers",
+       "resource": {
+        "resourceId": "thinkingmachines-nondeterminism",
+        "title": "Defeating Nondeterminism in LLM Inference",
+        "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+        "slice": "Whole post (batch invariance)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hf-transformers-docs",
+      "title": "HF Transformers — Generation with LLMs",
+      "url": "https://huggingface.co/docs/transformers/en/llm_tutorial",
+      "slice": "Whole page",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Decoder playground",
+      "brief": "Implement greedy, temperature, top-k, top-p and beam (width 4) over your own model's logits (no generate()). For one prompt generate 10 samples per setting and report distinct-2 (diversity) and repetition rate. Add a stop-sequence check that halts on a user-provided string and on EOS.",
+      "done_when": "A table of distinct-2 and repetition per decoding setting; a test showing generation halts exactly at the stop string."
+     },
+     "quiz": [
+      {
+       "id": "M09.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Top-p = 0.9 samples from:",
+       "options": [
+        "The 90 most likely tokens",
+        "Tokens whose individual probability exceeds 0.9",
+        "The smallest set of tokens whose cumulative probability is at least 0.9",
+        "A uniform 90% of the vocabulary"
+       ],
+       "answer": 2,
+       "explain": "Nucleus size adapts to how peaked the distribution is."
+      },
+      {
+       "id": "M09.U09.Q2",
+       "kind": "mcq",
+       "prompt": "As temperature → 0, sampling approaches:",
+       "options": [
+        "Uniform sampling",
+        "Beam search with width 10",
+        "Greedy decoding",
+        "Random tokens"
+       ],
+       "answer": 2,
+       "explain": "Dividing logits by a tiny T makes the argmax token's probability → 1."
+      },
+      {
+       "id": "M09.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Changing temperature changes:",
+       "options": [
+        "The model weights",
+        "The tokenizer",
+        "The training loss",
+        "Only the sampling distribution at inference time"
+       ],
+       "answer": 3,
+       "explain": "Decoding settings act on logits after the forward pass (this is the merged M09.04.08 point)."
+      },
+      {
+       "id": "M09.U09.Q4",
+       "kind": "short",
+       "prompt": "Why is temperature 0 still not a guarantee of identical outputs from a hosted API?",
+       "rubric": [
+        "Mentions batch-dependent numerics: floating-point non-associativity changes with batch size/server load",
+        "Mentions other sources: MoE routing, different hardware/kernels, silent model updates behind an alias",
+        "Suggests mitigations: seeds where supported, pinned snapshots, tolerant evals"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M09.U10",
+     "title": "Inference mechanics: context window, prefill/decode, KV cache",
+     "hours": 5,
+     "depth": "core",
+     "week": 76,
+     "prerequisites": [
+      "M09.U07"
+     ],
+     "outcomes": [
+      "You can explain prefill vs decode and which one dominates time-to-first-token.",
+      "You can add a KV cache to your GPT and measure the speed-up.",
+      "You can compute KV-cache memory for a real model config (with GQA)."
+     ],
+     "topics": [
+      {
+       "id": "M09.03.03",
+       "title": "Context window"
+      },
+      {
+       "id": "M09.03.04",
+       "title": "KV cache: purpose and memory cost",
+       "legacyIds": [
+        "M09.04.07"
+       ]
+      },
+      {
+       "id": "M09.04.06",
+       "title": "Inference prefill vs autoregressive decoding"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course 1.8 — Deep dive into Text Generation Inference with LLMs",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter1/8",
+      "slice": "Section 1.8 (whole page)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "The two-phase process: prefill (process the prompt in parallel) and decode (one token at a time)",
+      "Sampling strategies recap: temperature, top-k/top-p, repetition penalties, beam search",
+      "Practical metrics: time to first token, time per output token, throughput, VRAM",
+      "Context length trade-offs and the KV cache as the key optimization"
+     ],
+     "gaps": [
+      {
+       "topic": "Implementing a KV cache in your own GPT",
+       "resource": {
+        "resourceId": "raschka-llms-from-scratch",
+        "title": "LLMs-from-scratch — ch04/03_kv-cache bonus code",
+        "url": "https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04/03_kv-cache",
+        "slice": "README + gpt_with_kv_cache.py",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "KV-cache memory and cache classes in practice",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Cache strategies",
+        "url": "https://huggingface.co/docs/transformers/en/kv_cache",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Serving-time batching (moved to M17.02.06; awareness only here)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — KV cache & FlashAttention",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/07-transformers-deep-dive/12-kv-cache-flash-attention",
+        "slice": "Lesson phases/07-transformers-deep-dive/12-kv-cache-flash-attention (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "KV cache, measured",
+      "brief": "Add a KV cache to your U07 GPT. Measure tokens/sec with and without it for 256 generated tokens on the same hardware (3 runs each). Compute KV-cache memory = 2 × layers × kv_heads × head_dim × seq_len × batch × bytes for Llama-3-8B (GQA, 8 KV heads) at 8k context, bf16, and compare with 32 KV heads.",
+      "done_when": "A table with mean±std tokens/sec cached vs uncached; outputs identical with and without cache; a worked KV-memory calculation for both head counts."
+     },
+     "quiz": [
+      {
+       "id": "M09.U10.Q1",
+       "kind": "mcq",
+       "prompt": "The KV cache avoids:",
+       "options": [
+        "Recomputing keys and values for past tokens at every decode step",
+        "Storing model weights",
+        "Tokenization",
+        "Sampling"
+       ],
+       "answer": 0,
+       "explain": "Past K/V are reused; only the new token's K/V are computed each step."
+      },
+      {
+       "id": "M09.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Time-to-first-token is dominated by:",
+       "options": [
+        "Decode",
+        "Prefill of the prompt",
+        "Detokenization",
+        "DNS lookup"
+       ],
+       "answer": 1,
+       "explain": "The whole prompt must be processed before the first output token exists."
+      },
+      {
+       "id": "M09.U10.Q3",
+       "kind": "mcq",
+       "prompt": "KV-cache memory grows linearly with:",
+       "options": [
+        "Vocabulary size",
+        "Sequence length × batch size",
+        "Temperature",
+        "Number of stop tokens"
+       ],
+       "answer": 1,
+       "explain": "Each token in each sequence stores K and V per layer."
+      },
+      {
+       "id": "M09.U10.Q4",
+       "kind": "short",
+       "prompt": "Why does a very long system prompt hurt latency and cost even when the answer is short?",
+       "rubric": [
+        "Explains that prefill work and input-token billing scale with prompt length",
+        "Mentions KV-cache memory per request, which limits batch size/throughput",
+        "Mentions prompt caching or trimming as a mitigation"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M09.S5",
+   "title": "Using pretrained models",
+   "units": [
+    {
+     "id": "M09.U11",
+     "title": "HF ecosystem: datasets, Trainer and fine-tuning a classifier",
+     "hours": 12,
+     "depth": "core",
+     "week": 77,
+     "prerequisites": [
+      "M09.U04",
+      "M09.U07"
+     ],
+     "outcomes": [
+      "You can load, slice and tokenize a Hub dataset efficiently with datasets.map(batched=True).",
+      "You can fine-tune an encoder with Trainer, evaluate per epoch and report macro-F1 with a confusion matrix.",
+      "You can do error analysis on misclassifications and propose data fixes."
+     ],
+     "topics": [
+      {
+       "id": "M09.03.10",
+       "title": "HF Transformers/Datasets/Tokenizers"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course ch. 3 'Fine-tuning a pretrained model' + ch. 5 'The 🤗 Datasets library'",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter3/1",
+      "slice": "3.2 Processing the data → 3.3 Fine-tuning with the Trainer API → 3.4 A full training loop; then 5.2–5.3 (loading local/remote data, slice and dice) https://huggingface.co/learn/llm-course/en/chapter5/1",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Loading a Hub dataset, tokenizing with Dataset.map(batched=True), dynamic padding with DataCollatorWithPadding (3.2)",
+      "TrainingArguments, Trainer, evaluation with the evaluate library (3.3)",
+      "A full manual training loop and Accelerate (3.4)",
+      "Loading local/remote datasets; filter, map, shuffle, select, train_test_split (5.2–5.3)"
+     ],
+     "gaps": [
+      {
+       "topic": "Macro-F1 and confusion matrices (the course uses accuracy/F1 via evaluate without explaining imbalance)",
+       "resource": {
+        "resourceId": "sklearn-metrics",
+        "title": "scikit-learn — Classification metrics (f1_score average='macro', confusion_matrix)",
+        "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+        "slice": "§ Classification metrics → confusion matrix, precision/recall/F1, multiclass averaging",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "raschka-llms-from-scratch",
+      "title": "Build an LLM from Scratch — ch. 6 'Finetuning for classification'",
+      "url": "https://github.com/rasbt/LLMs-from-scratch/blob/main/ch06/01_main-chapter-code/ch06.ipynb",
+      "slice": "Ch. 6 notebook + video 6 https://www.youtube.com/watch?v=5PFXJYme4ik",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Module gate: Urdu/Roman-Urdu sentiment classifier",
+      "brief": "Fine-tune a small encoder (distilbert-base-multilingual-cased or a multilingual MiniLM) on an Urdu or Roman-Urdu sentiment dataset from the Hub with eval each epoch. Report macro-F1, a confusion matrix, and 20 misclassified examples grouped into error categories with one hypothesis and one data fix per category.",
+      "done_when": "Model card on the Hub or README with macro-F1 on a held-out split, a confusion-matrix image, and an error table (20 rows, ≥3 categories)."
+     },
+     "quiz": [
+      {
+       "id": "M09.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Trainer with eval_strategy='epoch' and a held-out split is used to:",
+       "options": [
+        "Speed up training",
+        "Detect overfitting by evaluating after each epoch",
+        "Tokenize the data",
+        "Push to the Hub"
+       ],
+       "answer": 1,
+       "explain": "Rising eval loss with falling train loss signals overfitting."
+      },
+      {
+       "id": "M09.U11.Q2",
+       "kind": "mcq",
+       "prompt": "With imbalanced classes, the better headline metric is usually:",
+       "options": [
+        "Accuracy",
+        "Macro-F1",
+        "Training loss",
+        "Perplexity"
+       ],
+       "answer": 1,
+       "explain": "Accuracy can be high by predicting the majority class; macro-F1 averages per-class F1."
+      },
+      {
+       "id": "M09.U11.Q3",
+       "kind": "mcq",
+       "prompt": "datasets.map(batched=True) is used to:",
+       "options": [
+        "Train faster on GPU",
+        "Shuffle the dataset",
+        "Evaluate the model",
+        "Apply tokenization efficiently over batches of examples"
+       ],
+       "answer": 3,
+       "explain": "Batched map calls the fast tokenizer on many rows at once and caches the result."
+      },
+      {
+       "id": "M09.U11.Q4",
+       "kind": "short",
+       "prompt": "Name two error categories you found and one data change for each.",
+       "rubric": [
+        "Two distinct, specific categories (e.g. sarcasm, Roman-Urdu spelling variants, label noise)",
+        "Each has a concrete data action (relabel, augment, add examples, normalize spelling)",
+        "Evidence: counts or examples from the error table"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Tiny GPT, fully understood",
+  "brief": "Build, train and ship a small GPT (≥10M parameters) with your own BPE tokenizer on a corpus you choose (Urdu poetry, Pakistani law summaries, cricket commentary…). Deliver a repo with tests, a training report, a sampling demo (Gradio or HF Space) and a 2-page write-up explaining every tensor shape.",
+  "rubric": [
+   {
+    "criterion": "Correctness tests (25%)",
+    "levels": [
+     "Excellent: tokenizer round-trip, causal-mask leak test, shape tests and parity with F.scaled_dot_product_attention",
+     "Adequate: some tests",
+     "Fail: no tests"
+    ]
+   },
+   {
+    "criterion": "Training evidence (25%)",
+    "levels": [
+     "Excellent: train/val curves, LR schedule, held-out perplexity, seed recorded",
+     "Adequate: curves only",
+     "Fail: a loss screenshot"
+    ]
+   },
+   {
+    "criterion": "Ablation (20%)",
+    "levels": [
+     "Excellent: one controlled change (RMSNorm/SwiGLU or vocab size) with ≥2 seeds",
+     "Adequate: single run",
+     "Fail: none"
+    ]
+   },
+   {
+    "criterion": "Inference (15%)",
+    "levels": [
+     "Excellent: KV cache with measured tokens/sec; temperature/top-p/stop controls",
+     "Adequate: sampling works",
+     "Fail: broken generation"
+    ]
+   },
+   {
+    "criterion": "Explanation (15%)",
+    "levels": [
+     "Excellent: explains every tensor shape and one failure mode clearly",
+     "Adequate: partial",
+     "Fail: copied text"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}
