@@ -1,0 +1,1550 @@
+{
+ "id": "M14",
+ "phase": "P6 Go deeper",
+ "title": "LLMs from scratch and research methods",
+ "summary": "Model-side depth for research/ML engineers: reproduce GPT-2 124M with build-nanogpt, then the CS336 (Spring 2026) summit at reduced scale — A1 basics, data filtering/dedup, FLOPs/memory accounting and scaling laws, base-model evaluation, GQA/MLA/MoE, SSM/hybrid awareness, optional nanochat end to end — plus research methods (paper reading, pre-registered experiments, reproduction reports). Prerequisites are M08 + M09 (not M13); every compute-heavy step has a free-GPU/CPU scale-down. Optional for the three job tracks.",
+ "hours": 90,
+ "deepHours": 17,
+ "prerequisites": [
+  "M08",
+  "M09"
+ ],
+ "tracks": [],
+ "optionalFor": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M14.S1",
+   "title": "Build and train a small decoder end to end",
+   "units": [
+    {
+     "id": "M14.U01",
+     "title": "Reproduce the GPT-2 (124M) training pipeline",
+     "hours": 16,
+     "depth": "core",
+     "prerequisites": [],
+     "outcomes": [
+      "You can write a GPT-2 training script with a token data loader, AdamW, warmup+cosine LR, gradient clipping and gradient accumulation.",
+      "You can speed it up with TF32/bf16, torch.compile, fused attention and 'nice' tensor sizes, and measure tokens/sec.",
+      "You can checkpoint and resume so the loss curve continues exactly."
+     ],
+     "topics": [
+      {
+       "id": "M14.01.03",
+       "title": "Data loader"
+      },
+      {
+       "id": "M14.01.04",
+       "title": "Causal Transformer at scale (basics live in M09)"
+      },
+      {
+       "id": "M14.01.06",
+       "title": "Training loop"
+      },
+      {
+       "id": "M14.01.07",
+       "title": "Checkpoint/resume"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-z2h",
+      "title": "Let's reproduce GPT-2 (124M)",
+      "url": "https://www.youtube.com/watch?v=l8pRSuU81PU",
+      "slice": "Full video (4h01m) with code at https://github.com/karpathy/build-nanogpt (one commit per step)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Implementing the GPT-2 nn.Module and loading the HF GPT-2 weights to check it",
+      "Token data loader over a text file, then over FineWeb-Edu shards; train/val split",
+      "Speed-ups: TF32, bf16 autocast, torch.compile, FlashAttention via SDPA, vocab padded to 50304",
+      "GPT-3-style hyperparameters: AdamW betas, weight decay, gradient-norm clipping, warmup + cosine LR",
+      "Gradient accumulation for a 0.5M-token batch and DistributedDataParallel",
+      "Validation loss, HellaSwag evaluation, sampling, and comparing against GPT-2/GPT-3 baselines"
+     ],
+     "gaps": [
+      {
+       "topic": "What a full checkpoint must contain",
+       "resource": {
+        "resourceId": "pytorch-docs",
+        "title": "PyTorch tutorial — Saving and loading models (general checkpoint)",
+        "url": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html",
+        "slice": "'Saving & Loading a General Checkpoint for Inference and/or Resuming Training'",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Mixed precision on GPUs without bf16 (T4)",
+       "resource": {
+        "resourceId": "pytorch-docs",
+        "title": "PyTorch — Automatic Mixed Precision (torch.amp)",
+        "url": "https://docs.pytorch.org/docs/stable/amp.html",
+        "slice": "Autocasting + GradScaler sections",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Pre-training a mini GPT",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/04-pre-training-mini-gpt",
+      "slice": "Lesson phases/10-llms-from-scratch/04-pre-training-mini-gpt (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Reduced-scale GPT-2 reproduction",
+      "brief": "Reproduce build-nanogpt at reduced scale (10–50M params on a FineWeb-Edu sample on a free T4/Kaggle GPU). Include mixed precision (fp16+GradScaler on T4, bf16 where supported), gradient accumulation, torch.compile if available, and a val-loss + HellaSwag-style eval hook. Kill the run mid-way, resume, and show the loss continues identically (same data position and RNG).",
+      "done_when": "A loss plot spanning a kill/resume boundary with no jump, tokens/sec before/after each speed-up, and an eval-hook log."
+     },
+     "quiz": [
+      {
+       "id": "M14.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Gradient accumulation lets you:",
+       "options": [
+        "Simulate a larger batch size with limited GPU memory",
+        "Use less data",
+        "Skip backprop",
+        "Avoid LR schedules"
+       ],
+       "answer": 0,
+       "explain": "Sum gradients over micro-batches (scaled), then step once."
+      },
+      {
+       "id": "M14.U01.Q2",
+       "kind": "mcq",
+       "prompt": "bf16 mixed precision is preferred over fp16 on modern GPUs mainly because:",
+       "options": [
+        "It is more precise",
+        "It uses less memory than fp16",
+        "PyTorch requires it",
+        "Its wider exponent range avoids most loss-scaling issues"
+       ],
+       "answer": 3,
+       "explain": "bf16 keeps fp32's exponent range; fp16 needs a GradScaler (and T4s lack bf16 tensor cores)."
+      },
+      {
+       "id": "M14.U01.Q3",
+       "kind": "mcq",
+       "prompt": "A correct resume must restore:",
+       "options": [
+        "Only model weights",
+        "Only the optimizer",
+        "The tokenizer",
+        "Weights, optimizer state, LR-scheduler step, data-loader position and RNG state"
+       ],
+       "answer": 3,
+       "explain": "Missing any of these changes the trajectory."
+      },
+      {
+       "id": "M14.U01.Q4",
+       "kind": "short",
+       "prompt": "Your resumed run's loss jumps up for 200 steps. List two likely causes.",
+       "rubric": [
+        "Optimizer state (Adam moments) not restored → effectively a cold optimizer",
+        "LR schedule restarted (warmup again / wrong step) or data loader restarted at shard 0",
+        "Mentions RNG/dropout or mixed-precision scaler state as secondary causes"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M14.U02",
+     "title": "CS336 Assignment 1 (Basics) at reduced scale",
+     "hours": 30,
+     "depth": "core",
+     "prerequisites": [
+      "M14.U01"
+     ],
+     "outcomes": [
+      "You can implement a performance-grade byte-level BPE tokenizer, a Transformer LM, AdamW and a cosine schedule from scratch to the A1 spec.",
+      "You can pass the assignment's provided tests and train on TinyStories at reduced scale.",
+      "You can document every deviation from the spec (scale, steps, hardware)."
+     ],
+     "topics": [
+      {
+       "id": "M14.01.01",
+       "title": "BPE tokenizer (performance-grade)"
+      },
+      {
+       "id": "M14.01.05",
+       "title": "Optimizer/schedule: AdamW from scratch, cosine with warmup"
+      },
+      {
+       "id": "M14.01.08",
+       "title": "Perplexity (at scale)"
+      },
+      {
+       "id": "M14.01.09",
+       "title": "Sampling (at scale)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C14",
+      "title": "CS336 Spring 2026 — Lectures 1–3 + Assignment 1 (Basics)",
+      "url": "https://cs336.stanford.edu/",
+      "slice": "Lecture 1 Overview & tokenization (https://www.youtube.com/watch?v=JuoVZkPBiKk) → Lecture 2 PyTorch & resource accounting (https://www.youtube.com/watch?v=kuYAsz7zspQ) → Lecture 3 Architectures (https://www.youtube.com/watch?v=lVynu4bo1rY) → A1 handout and tests https://github.com/stanford-cs336/assignment1-basics",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Course overview, why build LMs from scratch, tokenization and BPE (L1)",
+      "PyTorch tensors, einops, memory and FLOP accounting for training (L2)",
+      "Transformer architecture variants and hyperparameters: pre-norm, RMSNorm, SwiGLU, RoPE, widths/heads (L3)",
+      "A1 spec: train a byte-level BPE tokenizer; implement Linear/Embedding/RMSNorm/SwiGLU/RoPE/attention/Transformer LM; cross-entropy; AdamW; cosine LR with warmup; gradient clipping; data loading; checkpointing; decoding",
+      "A1 experiments: train on TinyStories (and OpenWebText) and report losses/ablations"
+     ],
+     "gaps": [
+      {
+       "topic": "Reference BPE implementation to compare against (after your own)",
+       "resource": {
+        "resourceId": "minbpe",
+        "title": "Karpathy minbpe",
+        "url": "https://github.com/karpathy/minbpe",
+        "slice": "basic.py and regex.py",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Why TinyStories is a sensible reduced-scale dataset",
+       "resource": {
+        "resourceId": "paper-tinystories",
+        "title": "TinyStories",
+        "url": "https://arxiv.org/abs/2305.07759",
+        "slice": "§1–3",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Building a tokenizer",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/02-building-a-tokenizer",
+      "slice": "Lessons 10/01 tokenizers and 10/02 building-a-tokenizer",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "A1, honestly scaled",
+      "brief": "Complete A1's components and pass its provided tests. Train at the handout's smallest configuration, or smaller, on TinyStories (free GPU or CPU). Document every deviation from the spec (scale, steps, hardware). Do not look at others' solutions; the course honour policy also forbids AI autocomplete for assignments.",
+      "done_when": "All provided A1 tests pass locally; a training report with val loss/perplexity, generated samples, and a deviations table."
+     },
+     "quiz": [
+      {
+       "id": "M14.U02.Q1",
+       "kind": "mcq",
+       "prompt": "AdamW differs from Adam + L2 regularization by:",
+       "options": [
+        "Having no momentum",
+        "Using SGD",
+        "Having no bias correction",
+        "Decoupling weight decay from the gradient-based update"
+       ],
+       "answer": 3,
+       "explain": "Loshchilov & Hutter: decay is applied directly to weights, not through the adaptive gradient."
+      },
+      {
+       "id": "M14.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Regex pre-tokenization before BPE mainly prevents:",
+       "options": [
+        "Merges across word/category boundaries such as letters with punctuation",
+        "Slow training only",
+        "Unicode errors",
+        "Large vocabularies"
+       ],
+       "answer": 0,
+       "explain": "It stops tokens like 'dog.' or 'dog!' from becoming separate merged units."
+      },
+      {
+       "id": "M14.U02.Q3",
+       "kind": "mcq",
+       "prompt": "With warmup + cosine decay, the LR at the final step is:",
+       "options": [
+        "Near the configured minimum",
+        "The peak",
+        "Always exactly zero",
+        "Random"
+       ],
+       "answer": 0,
+       "explain": "Cosine anneals from max to min_lr over the decay horizon."
+      },
+      {
+       "id": "M14.U02.Q4",
+       "kind": "short",
+       "prompt": "Which A1 test failed first for you, and what did it teach you?",
+       "rubric": [
+        "Names the specific test and the bug",
+        "Explains the underlying concept (e.g. RoPE pairing, numerical stability in softmax/cross-entropy, merge tie-breaking)",
+        "States how the fix was verified"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M14.S2",
+   "title": "Data, scaling and evaluation",
+   "units": [
+    {
+     "id": "M14.U03",
+     "title": "Pretraining data: filtering, deduplication, mixtures",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M14.U01"
+     ],
+     "outcomes": [
+      "You can turn raw Common Crawl into training text: extraction, language ID, quality filtering, PII masking, dedup.",
+      "You can measure keep-rates per stage and show filtered data trains a better model at equal tokens.",
+      "You can explain mixtures and contamination, and why aggressive filters hurt low-resource languages."
+     ],
+     "topics": [
+      {
+       "id": "M14.01.02",
+       "title": "Corpus cleaning/dedup (at scale)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C14",
+      "title": "CS336 Spring 2026 — Lectures 13–14 (Data) + Assignment 4 (Data)",
+      "url": "https://cs336.stanford.edu/",
+      "slice": "Lecture 13 Data: sources, datasets (https://www.youtube.com/watch?v=-qm0ln33G24) → Lecture 14 Data: filtering, dedup, mixing (https://www.youtube.com/watch?v=5sxHosTLPF8) → A4 handout https://github.com/stanford-cs336/assignment4-data",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Where pretraining data comes from: Common Crawl, Wikipedia, books, code, papers; licensing (L13)",
+      "Historical datasets and what they changed: C4, The Pile, RefinedWeb, FineWeb, DCLM (L13)",
+      "HTML/WARC→text extraction, language identification, quality filtering with heuristics and classifiers, toxicity/PII (L14)",
+      "Exact and fuzzy dedup (MinHash + LSH), data mixing and synthetic data (L14)",
+      "A4: implement these filters on real Common Crawl files and train on the result"
+     ],
+     "gaps": [
+      {
+       "topic": "MinHash/LSH theory",
+       "resource": {
+        "resourceId": "mmds-book",
+        "title": "Mining of Massive Datasets ch. 3",
+        "url": "http://infolab.stanford.edu/~ullman/mmds/ch3n.pdf",
+        "slice": "§3.3–3.4",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Production tooling for filtering/dedup pipelines",
+       "resource": {
+        "resourceId": "datatrove",
+        "title": "datatrove",
+        "url": "https://github.com/huggingface/datatrove",
+        "slice": "README examples (filters, MinHash dedup)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "smol-training-playbook",
+      "title": "The Smol Training Playbook",
+      "url": "https://huggingface.co/spaces/HuggingFaceTB/smol-training-playbook",
+      "slice": "Data curation chapters",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "One WET file to clean tokens",
+      "brief": "From one Common Crawl WET file implement language ID, a heuristic or classifier quality filter, PII masking and MinHash near-dedup. Report keep-rate per stage (also for Urdu documents specifically). Train two tiny models on filtered vs unfiltered text at equal token counts and compare val loss on a clean held-out set.",
+      "done_when": "A funnel table of keep-rates (all + Urdu), and a plot of two val-loss curves at equal tokens."
+     },
+     "quiz": [
+      {
+       "id": "M14.U03.Q1",
+       "kind": "mcq",
+       "prompt": "MinHash + LSH is used for:",
+       "options": [
+        "Exact dedup only",
+        "Efficient approximate near-duplicate detection",
+        "Tokenization",
+        "Quality scoring"
+       ],
+       "answer": 1,
+       "explain": "It estimates Jaccard similarity without comparing all pairs."
+      },
+      {
+       "id": "M14.U03.Q2",
+       "kind": "mcq",
+       "prompt": "A data mixture specifies:",
+       "options": [
+        "The learning rate",
+        "Model width",
+        "Batch size",
+        "The sampling proportions of different sources/domains"
+       ],
+       "answer": 3,
+       "explain": "E.g. web 60%, code 20%, books 10%…"
+      },
+      {
+       "id": "M14.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Benchmark contamination in pretraining data inflates:",
+       "options": [
+        "Training loss",
+        "Evaluation scores on the contaminated benchmarks",
+        "Throughput",
+        "Vocabulary size"
+       ],
+       "answer": 1,
+       "explain": "The model has seen test items."
+      },
+      {
+       "id": "M14.U03.Q4",
+       "kind": "short",
+       "prompt": "Why can aggressive quality filtering hurt low-resource languages like Urdu?",
+       "rubric": [
+        "Quality classifiers/heuristics are trained on English-like 'good' text and misjudge Urdu/Roman-Urdu",
+        "Language-ID errors on code-mixed text drop valid documents",
+        "Result: tiny remaining Urdu share → worse Urdu capability; mitigation: per-language thresholds"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M14.U04",
+     "title": "Scaling laws and compute accounting",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M14.U02"
+     ],
+     "outcomes": [
+      "You can estimate training FLOPs (≈6·N·D), parameter/optimizer/activation memory and MFU.",
+      "You can fit a loss-vs-compute power law on tiny runs and predict a held-out run.",
+      "You can explain Kaplan vs Chinchilla and why labs over-train small models."
+     ],
+     "topics": [
+      {
+       "id": "M14.01.10",
+       "title": "Scaling-law intuition → quantitative"
+      },
+      {
+       "id": "M14.01.11",
+       "title": "FLOPs/memory accounting: 6·N·D, activation memory (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C14",
+      "title": "CS336 Spring 2026 — Lecture 2 resource-accounting trace + Lecture 9 Scaling laws",
+      "url": "https://cs336.stanford.edu/lectures/?trace=lecture_02",
+      "slice": "Lecture 2 trace (memory, FLOPs, MFU sections) → Lecture 9 video https://www.youtube.com/watch?v=Q15rhEWZPQ4 with slides https://github.com/stanford-cs336/lectures/blob/main/lecture_09.pdf",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Memory accounting: float32/bf16/fp8 tensors, parameters, gradients, optimizer state (L2)",
+      "FLOP accounting for matmuls; forward ≈ 2·N·D, training ≈ 6·N·D; model FLOPs utilization (L2)",
+      "Scaling-law history: power laws in data, model size and compute (L9)",
+      "Kaplan et al. vs Chinchilla compute-optimal allocation (L9)",
+      "Using scaling laws to choose hyperparameters and extrapolate (L9)"
+     ],
+     "gaps": [
+      {
+       "topic": "Activation memory and parallelism memory in detail",
+       "resource": {
+        "resourceId": "ultrascale-playbook",
+        "title": "The Ultra-Scale Playbook",
+        "url": "https://huggingface.co/spaces/nanotron/ultrascale-playbook",
+        "slice": "'Memory usage in Transformers' and activation recomputation sections",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Primary papers",
+       "resource": {
+        "resourceId": "paper-kaplan-scaling",
+        "title": "Scaling Laws for Neural Language Models",
+        "url": "https://arxiv.org/abs/2001.08361",
+        "slice": "§1–3; then Chinchilla https://arxiv.org/abs/2203.15556 §3",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Second scaling-laws lecture (data-constrained / practical)",
+       "resource": {
+        "resourceId": "C14",
+        "title": "CS336 Spring 2026 — Lecture 11: Scaling Laws",
+        "url": "https://www.youtube.com/watch?v=vTfEyOyzV9E",
+        "slice": "Full lecture",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Scaling laws",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/07-transformers-deep-dive/13-scaling-laws",
+      "slice": "Lesson phases/07-transformers-deep-dive/13-scaling-laws (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Five tiny runs, one prediction",
+      "brief": "Train 5 tiny models across ~2 orders of magnitude of compute (vary N and D), log FLOPs using 6·N·D, fit a power law of loss vs compute in log-log space, and predict the loss of a 6th run before training it. Report the prediction error and the reasons extrapolation is risky. Also compute memory for your largest run (params + grads + Adam + activations) and compare with measured peak VRAM.",
+      "done_when": "A log-log plot with fit, a predicted vs actual loss for run 6, and a memory estimate vs measured table."
+     },
+     "quiz": [
+      {
+       "id": "M14.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Training FLOPs for a dense Transformer are roughly:",
+       "options": [
+        "6·N·D",
+        "N·D",
+        "N²·D",
+        "D/N"
+       ],
+       "answer": 0,
+       "explain": "2 for the forward pass and 4 for the backward per parameter per token."
+      },
+      {
+       "id": "M14.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Chinchilla's main correction to earlier scaling practice was that models were:",
+       "options": [
+        "Over-trained",
+        "Too small",
+        "Using bad tokenizers",
+        "Under-trained on too few tokens for their size"
+       ],
+       "answer": 3,
+       "explain": "Compute-optimal training uses many more tokens per parameter than GPT-3 did."
+      },
+      {
+       "id": "M14.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A power-law relationship plotted on log-log axes appears as:",
+       "options": [
+        "A straight line",
+        "A parabola",
+        "An exponential curve",
+        "A step"
+       ],
+       "answer": 0,
+       "explain": "log L = a + b·log C."
+      },
+      {
+       "id": "M14.U04.Q4",
+       "kind": "short",
+       "prompt": "Why do labs now often train smaller models far beyond 'Chinchilla-optimal' token counts?",
+       "rubric": [
+        "Chinchilla minimizes training compute only; inference cost dominates for widely deployed models",
+        "A smaller over-trained model is cheaper/faster to serve for similar quality",
+        "Data availability and quality filtering also shape the choice"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M14.U05",
+     "title": "Evaluating base models and benchmark validity",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M14.U01"
+     ],
+     "outcomes": [
+      "You can evaluate base models with lm-eval-harness on log-likelihood multiple-choice tasks.",
+      "You can show how prompt format and scoring choices move scores.",
+      "You can check for benchmark contamination and say what a benchmark does and doesn't tell you."
+     ],
+     "topics": [
+      {
+       "id": "M14.03.06",
+       "title": "Benchmark validity"
+      },
+      {
+       "id": "M14.01.12",
+       "title": "lm-eval-harness and contamination checks (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C14",
+      "title": "CS336 Spring 2026 — Lecture 12: Evaluation",
+      "url": "https://cs336.stanford.edu/lectures/?trace=lecture_12",
+      "slice": "Lecture 12 trace + video https://www.youtube.com/watch?v=JpAxdTWQJxM; then CS224N 2026 'Benchmarking and Evaluation' slides https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture11-evaluation.pdf",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "What evaluation is for and how the choice of eval shapes model development",
+      "Perplexity and held-out loss as base-model metrics",
+      "Standard benchmarks (knowledge, reasoning, instruction following, agents) and how they are scored",
+      "Contamination, benchmark saturation and validity concerns",
+      "Human/LLM-judge evaluation and arena-style comparisons"
+     ],
+     "gaps": [
+      {
+       "topic": "Running evals on HF models",
+       "resource": {
+        "resourceId": "lm-eval-harness",
+        "title": "EleutherAI lm-evaluation-harness",
+        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+        "slice": "README: install, basic usage with --model hf, --num_fewshot, task list; decontamination docs",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Benchmarking lecture (video)",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N Spring 2024 — Lecture 11: Benchmarking (Yann Dubois)",
+        "url": "https://www.youtube.com/watch?v=TO0CqzqiArM",
+        "slice": "Full lecture",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Pitfalls: normalization, prompt sensitivity, reproducibility",
+       "resource": {
+        "resourceId": "hf-eval-guidebook",
+        "title": "HF LLM Evaluation Guidebook — troubleshooting/reproducibility",
+        "url": "https://huggingface.co/spaces/OpenEvals/evaluation-guidebook",
+        "slice": "Troubleshooting and automatic-benchmark sections",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Evaluation (benchmarks)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/10-evaluation",
+      "slice": "Lesson phases/10-llms-from-scratch/10-evaluation (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "How fragile is a benchmark score?",
+      "brief": "Evaluate your U01/U02 models and GPT-2 124M on 3 tasks via lm-eval-harness. Then change only the prompt format (0-shot vs 5-shot, answer-letter vs full-text log-likelihood scoring) and report how much scores move. Run an n-gram overlap check between your training data and one benchmark. Write a half-page 'what this benchmark does and doesn't tell you'.",
+      "done_when": "A table of 3 models × 3 tasks × 2–3 formats, an overlap-check result, and the half-page note."
+     },
+     "quiz": [
+      {
+       "id": "M14.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Log-likelihood multiple-choice scoring compares:",
+       "options": [
+        "Generated text to the answer",
+        "Human ratings",
+        "BLEU",
+        "The model's probability of each answer option"
+       ],
+       "answer": 3,
+       "explain": "The option with highest (possibly length-normalized) log-prob is the prediction."
+      },
+      {
+       "id": "M14.U05.Q2",
+       "kind": "mcq",
+       "prompt": "A large score change from prompt formatting alone indicates:",
+       "options": [
+        "A strong model",
+        "A measurement sensitivity you must report",
+        "Contamination, always",
+        "A bug in PyTorch"
+       ],
+       "answer": 1,
+       "explain": "Report the format and compare like with like."
+      },
+      {
+       "id": "M14.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Benchmark saturation means:",
+       "options": [
+        "The dataset is too big",
+        "GPUs are full",
+        "Scores are random",
+        "Top models score near ceiling, so it no longer discriminates"
+       ],
+       "answer": 3,
+       "explain": "Then remaining errors may be label noise."
+      },
+      {
+       "id": "M14.U05.Q4",
+       "kind": "short",
+       "prompt": "How would you check whether a benchmark leaked into your training data?",
+       "rubric": [
+        "n-gram (e.g. 13-gram) or exact-substring overlap between benchmark items and the training corpus",
+        "Compare performance on clean vs overlapping subsets; canary strings; perplexity on test items vs paraphrases",
+        "Report contamination rate alongside scores"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M14.S3",
+   "title": "Modern architectures",
+   "units": [
+    {
+     "id": "M14.U06",
+     "title": "Attention variants and mixture of experts",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M14.U02"
+     ],
+     "outcomes": [
+      "You can add GQA and a top-2 MoE FFN with a load-balancing loss to your model and compare params, active params, KV-cache size and loss.",
+      "You can explain MQA/GQA/MLA and sliding-window/sparse attention trade-offs.",
+      "You can explain RoPE scaling for long context."
+     ],
+     "topics": [
+      {
+       "id": "M14.03.01",
+       "title": "Mixture of experts/routing"
+      },
+      {
+       "id": "M14.03.02",
+       "title": "Sparse attention"
+      },
+      {
+       "id": "M14.03.07",
+       "title": "GQA/MQA/MLA and long-context RoPE scaling (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C14",
+      "title": "CS336 Spring 2026 — Lecture 3 Architectures + Lecture 4 Attention alternatives & MoE",
+      "url": "https://www.youtube.com/watch?v=lVynu4bo1rY",
+      "slice": "Lecture 3 video + slides https://github.com/stanford-cs336/lectures/blob/main/lecture_03.pdf → Lecture 4 video https://www.youtube.com/watch?v=cKSwj_qZ8Jg + slides https://github.com/stanford-cs336/lectures/blob/main/lecture_04.pdf",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Survey of modern architecture choices: norm placement, RMSNorm, gated activations, RoPE, hyperparameter ratios (L3)",
+      "Stability tricks (e.g. z-loss, QK-norm) and inference-motivated changes such as MQA/GQA (L3)",
+      "Alternatives to full attention: linear/sub-quadratic and local/sparse attention (L4)",
+      "Mixture of experts: routing, top-k, expert capacity, load-balancing losses, fine-grained/shared experts (L4)"
+     ],
+     "gaps": [
+      {
+       "topic": "MLA (DeepSeek)",
+       "resource": {
+        "resourceId": "paper-deepseek-v2-mla",
+        "title": "DeepSeek-V2 (Multi-head Latent Attention)",
+        "url": "https://arxiv.org/abs/2405.04434",
+        "slice": "§2.1 MLA",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "GQA",
+       "resource": {
+        "resourceId": "paper-gqa",
+        "title": "GQA: Training Generalized Multi-Query Transformer Models",
+        "url": "https://arxiv.org/abs/2305.13245",
+        "slice": "§2",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "RoPE scaling for long context",
+       "resource": {
+        "resourceId": "paper-yarn",
+        "title": "YaRN: Efficient Context Window Extension",
+        "url": "https://arxiv.org/abs/2309.00071",
+        "slice": "§2–3 (position interpolation, NTK-aware, YaRN)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Sparse/sliding-window attention",
+       "resource": {
+        "resourceId": "weng-blog",
+        "title": "Lilian Weng — The Transformer Family Version 2.0",
+        "url": "https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/",
+        "slice": "Sections on sparse attention patterns and efficient attention",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "MoE intuition and history",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Mixture of Experts Explained",
+        "url": "https://huggingface.co/blog/moe",
+        "slice": "Whole post; then Switch Transformers https://arxiv.org/abs/2101.03961 §2",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reference GQA/MLA/MoE code",
+       "resource": {
+        "resourceId": "raschka-llms-from-scratch",
+        "title": "LLMs-from-scratch ch04 bonus folders (GQA, MLA, MoE, SWA)",
+        "url": "https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04",
+        "slice": "Bonus subfolders in ch04",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "raschka-magazine",
+      "title": "Raschka — The Big LLM Architecture Comparison",
+      "url": "https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison",
+      "slice": "Whole article",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "GQA + MoE ablation",
+      "brief": "Add GQA (n_kv_heads < n_heads) and a top-2 MoE FFN with a load-balancing loss to your A1 model. At equal compute compare: total params, active params per token, KV-cache size and val loss. Plot expert utilisation with and without the balancing loss.",
+      "done_when": "A comparison table (dense / GQA / MoE / GQA+MoE) and an expert-utilisation plot showing collapse without balancing."
+     },
+     "quiz": [
+      {
+       "id": "M14.U06.Q1",
+       "kind": "mcq",
+       "prompt": "In a top-2 MoE layer, each token is processed by:",
+       "options": [
+        "All experts",
+        "One random expert",
+        "The 2 experts chosen by the router",
+        "None"
+       ],
+       "answer": 2,
+       "explain": "Outputs are combined by the router weights."
+      },
+      {
+       "id": "M14.U06.Q2",
+       "kind": "mcq",
+       "prompt": "An MoE load-balancing loss prevents:",
+       "options": [
+        "Overfitting",
+        "The router collapsing onto a few experts",
+        "Long-context failures",
+        "Quantization error"
+       ],
+       "answer": 1,
+       "explain": "Without it, popular experts get more traffic and more training (rich-get-richer)."
+      },
+      {
+       "id": "M14.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Multi-head latent attention (MLA) mainly reduces:",
+       "options": [
+        "KV-cache memory by compressing keys/values into a latent",
+        "MLP parameters",
+        "Vocabulary size",
+        "Training tokens"
+       ],
+       "answer": 0,
+       "explain": "DeepSeek-V2 caches a low-rank latent instead of full K/V."
+      },
+      {
+       "id": "M14.U06.Q4",
+       "kind": "short",
+       "prompt": "Why do MoE models have high total parameters but lower per-token compute, and what does that do to serving memory?",
+       "rubric": [
+        "Only k of E experts run per token, so FLOPs scale with active params",
+        "All experts must still be held in memory (or sharded), so memory scales with total params",
+        "Serving needs expert parallelism / more GPUs despite low FLOPs"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M14.U07",
+     "title": "State-space/hybrid models and reasoning training (awareness)",
+     "hours": 5,
+     "depth": "deep",
+     "prerequisites": [
+      "M14.U06",
+      "M13.U09"
+     ],
+     "outcomes": [
+      "You can explain selective state-space models (Mamba) and their linear scaling.",
+      "You can compare dense, MoE, SSM and hybrid architectures on cost, memory, long context and tooling maturity.",
+      "You can describe how retrieval and RL-for-reasoning enter training (RETRO, RLVR, search-augmented RL)."
+     ],
+     "topics": [
+      {
+       "id": "M14.03.03",
+       "title": "State-space model awareness"
+      },
+      {
+       "id": "M14.03.04",
+       "title": "Retrieval and reasoning training"
+      },
+      {
+       "id": "M14.03.05",
+       "title": "Architecture trade-offs"
+      }
+     ],
+     "learn": {
+      "resourceId": "paper-mamba",
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "url": "https://arxiv.org/abs/2312.00752",
+      "slice": "§1–3 (motivation, selective SSMs, hardware-aware scan, Mamba block), then CS336 Spring 2026 Lecture 16 'Post-Training: RLVR' video https://www.youtube.com/watch?v=dIFAi87Ws4E",
+      "type": "paper",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Structured state-space models and their recurrent/convolutional views (Mamba §2)",
+      "The selection mechanism: input-dependent SSM parameters (Mamba §3)",
+      "Hardware-aware parallel scan and the simplified Mamba block (Mamba §3)",
+      "Linear-time scaling in sequence length and constant-size recurrent state at inference",
+      "RL from verifiable rewards for reasoning and how it fits post-training (CS336 L16)"
+     ],
+     "gaps": [
+      {
+       "topic": "Visual explanation of SSMs/Mamba",
+       "resource": {
+        "resourceId": "grootendorst-mamba",
+        "title": "A Visual Guide to Mamba and State Space Models",
+        "url": "https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-mamba-and-state",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Hybrid SSM–Transformer models",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Jamba hybrid SSM–Transformer",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer",
+        "slice": "Lesson phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Retrieval inside pretraining",
+       "resource": {
+        "resourceId": "paper-retro",
+        "title": "RETRO",
+        "url": "https://arxiv.org/abs/2112.04426",
+        "slice": "§2 (architecture)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "RL for search-augmented reasoning",
+       "resource": {
+        "resourceId": "paper-search-r1",
+        "title": "Search-R1",
+        "url": "https://arxiv.org/abs/2503.09516",
+        "slice": "§1–3",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reasoning models landscape",
+       "resource": {
+        "resourceId": "raschka-magazine",
+        "title": "Raschka — Understanding Reasoning LLMs",
+        "url": "https://magazine.sebastianraschka.com/p/understanding-reasoning-llms",
+        "slice": "Whole article",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Architecture trade-off table",
+      "brief": "Write a 2-page comparison table: dense Transformer vs MoE vs SSM vs hybrid (e.g. Jamba-style) on training cost, inference memory, long-context behaviour and tooling maturity. Include one cited experiment from the literature per row. Add a paragraph on retrieval-augmented pretraining (RETRO) and RL-for-search (Search-R1).",
+      "done_when": "Table with 4 rows × 4 criteria, ≥4 citations, and the retrieval/reasoning paragraph."
+     },
+     "quiz": [
+      {
+       "id": "M14.U07.Q1",
+       "kind": "mcq",
+       "prompt": "SSMs like Mamba scale with sequence length roughly:",
+       "options": [
+        "Quadratically",
+        "Exponentially",
+        "Constant",
+        "Linearly"
+       ],
+       "answer": 3,
+       "explain": "A recurrent scan processes each token once with a fixed-size state."
+      },
+      {
+       "id": "M14.U07.Q2",
+       "kind": "mcq",
+       "prompt": "A hybrid architecture interleaves:",
+       "options": [
+        "Attention layers with SSM/linear-attention layers",
+        "CNN and RNN layers",
+        "Two tokenizers",
+        "MoE and dense optimizers"
+       ],
+       "answer": 0,
+       "explain": "Attention keeps precise recall; SSM layers cut cost."
+      },
+      {
+       "id": "M14.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Test-time compute scaling improves answers by:",
+       "options": [
+        "Larger weights",
+        "Spending more inference tokens/samples on hard problems",
+        "A bigger vocabulary",
+        "Pretraining longer"
+       ],
+       "answer": 1,
+       "explain": "Reasoning traces, best-of-N and search use inference compute."
+      },
+      {
+       "id": "M14.U07.Q4",
+       "kind": "short",
+       "prompt": "Why haven't SSM-only models displaced Transformers in practice?",
+       "rubric": [
+        "Weaker exact recall/in-context retrieval and copying vs attention",
+        "Ecosystem maturity: kernels, serving stacks, tooling built around attention/KV cache",
+        "Hybrids capture much of the benefit, so pure SSMs lack a decisive advantage"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M14.U08",
+     "title": "Full-stack capstone path: nanochat (optional, compute-dependent)",
+     "hours": 12,
+     "depth": "deep",
+     "prerequisites": [
+      "M14.U02",
+      "M14.U05",
+      "M13.U04"
+     ],
+     "outcomes": [
+      "You can map every stage of an end-to-end LLM pipeline (tokenizer → base pretrain → eval → SFT → RL → chat) in one codebase.",
+      "You can run the pipeline at a scale your budget allows and report per-stage metrics.",
+      "You can attribute capability changes to the stage that produced them."
+     ],
+     "topics": [
+      {
+       "id": "M14.01.13",
+       "title": "End-to-end pipeline: tokenizer → pretrain → SFT → RL → eval → chat UI (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "nanochat",
+      "title": "Karpathy — nanochat",
+      "url": "https://github.com/karpathy/nanochat",
+      "slice": "README + runs/speedrun.sh (reference pipeline) + runs/runcpu.sh (CPU/MPS smoke test) + scripts/ tok_train → base_train → base_eval → chat_sft → chat_rl → chat_eval → chat_cli",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Single-dial design: --depth sets width, heads, LR adjustments and training horizon for compute-optimal runs",
+      "Tokenizer training and evaluation (tok_train/tok_eval)",
+      "Base pretraining with val bits-per-byte and the DCLM CORE metric (base_train/base_eval)",
+      "Chat SFT, optional RL, chat evaluation, and CLI/web chat with a KV-cache inference engine",
+      "Explicit precision control (bf16 on Ampere+, fp32/fp16 on T4), device-batch-size tuning for smaller GPUs, CPU/MPS script"
+     ],
+     "gaps": [
+      {
+       "topic": "Alignment & reasoning RL at assignment depth",
+       "resource": {
+        "resourceId": "cs336-a5",
+        "title": "CS336 Assignment 5 (Alignment & reasoning RL)",
+        "url": "https://github.com/stanford-cs336/assignment5-alignment",
+        "slice": "Handout (SFT, expert iteration, GRPO on math)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Pipeline overview from scratch",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Building a complete LLM pipeline",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/13-building-complete-llm-pipeline",
+        "slice": "Lesson phases/10-llms-from-scratch/13-building-complete-llm-pipeline (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Annotated nanochat run",
+      "brief": "Read the whole codebase and produce an annotated architecture map (one paragraph per file in nanochat/ and scripts/). Run runcpu.sh or a small --depth on a free GPU (reduce --device-batch-size), and report each stage's metrics (tokenizer compression, val bpb, CORE or a subset, SFT/RL evals). State plainly that the headline speedrun assumes a rented 8×H100 node and how you scaled down.",
+      "done_when": "Architecture map committed; a per-stage metrics table from your own run; a scale-down statement with hardware and wall-clock."
+     },
+     "quiz": [
+      {
+       "id": "M14.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Why does nanochat report validation loss in bits per byte rather than per-token loss?",
+       "options": [
+        "It is always smaller",
+        "It is required by PyTorch",
+        "It is invariant to vocabulary size, so runs with different tokenizers compare fairly",
+        "It removes the need for evaluation"
+       ],
+       "answer": 2,
+       "explain": "Per-token loss depends on how much text a token covers."
+      },
+      {
+       "id": "M14.U08.Q2",
+       "kind": "mcq",
+       "prompt": "The cheapest stage to rerun when changing chat behaviour is:",
+       "options": [
+        "SFT/RL on the existing base model",
+        "Pretraining",
+        "Tokenizer training",
+        "Data download"
+       ],
+       "answer": 0,
+       "explain": "Pretraining dominates compute; post-training reuses the base."
+      },
+      {
+       "id": "M14.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Reporting evals at each stage lets you:",
+       "options": [
+        "Skip testing",
+        "Attribute capability changes to the stage that caused them",
+        "Reduce cost",
+        "Avoid seeds"
+       ],
+       "answer": 1,
+       "explain": "Otherwise a regression could come from anywhere."
+      },
+      {
+       "id": "M14.U08.Q4",
+       "kind": "short",
+       "prompt": "Which stage gave the largest jump on your chosen eval, and why do you think so?",
+       "rubric": [
+        "Names the stage and the measured before/after",
+        "Gives a mechanism (e.g. SFT teaches format for chat evals; RL on GSM8K targets verifiable math)",
+        "Notes confounds (eval format, sample size)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M14.S4",
+   "title": "Research methods (also used by M15–M20)",
+   "units": [
+    {
+     "id": "M14.U09",
+     "title": "Reading papers and designing experiments",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [],
+     "outcomes": [
+      "You can read a paper in passes and write a paper card (claim, method, evidence, limitations).",
+      "You can pre-register an experiment: hypothesis, baseline, one changed variable, metric, seeds, stopping rule.",
+      "You can separate scientific, nuisance and fixed hyperparameters and report uncertainty."
+     ],
+     "topics": [
+      {
+       "id": "M14.02.01",
+       "title": "Reading abstract/method/experiments/limitations"
+      },
+      {
+       "id": "M14.02.02",
+       "title": "Hypothesis"
+      },
+      {
+       "id": "M14.02.03",
+       "title": "Baselines"
+      },
+      {
+       "id": "M14.02.04",
+       "title": "Ablations"
+      },
+      {
+       "id": "M14.02.05",
+       "title": "Seeds"
+      },
+      {
+       "id": "M14.02.06",
+       "title": "Uncertainty"
+      }
+     ],
+     "learn": {
+      "resourceId": "tuning-playbook",
+      "title": "Google Research — Deep Learning Tuning Playbook",
+      "url": "https://github.com/google-research/tuning_playbook",
+      "slice": "Sections: 'A scientific approach to improving model performance' (incremental tuning, scientific vs nuisance vs fixed hyperparameters, designing studies) and 'Determining the number of steps'; then Karpathy 'A Recipe for Training Neural Networks' https://karpathy.github.io/2019/04/25/recipe/",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Choosing the initial configuration: architecture, optimizer, batch size",
+      "Incremental tuning strategy; exploration before exploitation",
+      "Scientific, nuisance and fixed hyperparameters; designing studies that compare fairly",
+      "Interpreting results: isolation plots, checking search-space boundaries, training-curve diagnostics",
+      "Karpathy's recipe: become one with the data, end-to-end skeleton with dumb baselines, overfit, regularize, tune, squeeze"
+     ],
+     "gaps": [
+      {
+       "topic": "How to read a paper (three-pass method)",
+       "resource": {
+        "resourceId": "paper-keshav-read",
+        "title": "S. Keshav — How to Read a Paper",
+        "url": "http://ccr.sigcomm.org/online/files/p83-keshavA.pdf",
+        "slice": "Whole 2-page paper",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Statistical uncertainty for model comparisons",
+       "resource": {
+        "resourceId": "paper-error-bars-evals",
+        "title": "Adding Error Bars to Evals",
+        "url": "https://arxiv.org/abs/2411.00640",
+        "slice": "§2–4",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Project-level practical tips",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "CS224N Winter 2026 — Final Projects: Practical Tips slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture06-final-project.pdf",
+        "slice": "Whole deck",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Pre-registered mini-experiment",
+      "brief": "Write paper cards for P03 and one new paper (e.g. DeepSeekMath/GRPO). Pre-register a small experiment on your M14 codebase (hypothesis, baseline, the one variable changed, metric, seeds = 3, stopping rule), run it, and report mean ± std or a bootstrap CI.",
+      "done_when": "Two paper cards, a dated pre-registration committed before the runs, and a result with uncertainty that states whether the hypothesis survived."
+     },
+     "quiz": [
+      {
+       "id": "M14.U09.Q1",
+       "kind": "mcq",
+       "prompt": "An ablation removes or changes one component in order to:",
+       "options": [
+        "Speed up training",
+        "Measure that component's contribution",
+        "Tune all hyperparameters",
+        "Increase data"
+       ],
+       "answer": 1,
+       "explain": "Everything else is held fixed."
+      },
+      {
+       "id": "M14.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Reporting results over multiple seeds addresses:",
+       "options": [
+        "Contamination",
+        "Run-to-run variance from initialization and data order",
+        "Tokenizer bias",
+        "Cost"
+       ],
+       "answer": 1,
+       "explain": "A single seed can make noise look like an effect."
+      },
+      {
+       "id": "M14.U09.Q3",
+       "kind": "mcq",
+       "prompt": "A 'nuisance' hyperparameter (tuning playbook) is one that:",
+       "options": [
+        "You are studying",
+        "Is fixed forever",
+        "Doesn't matter",
+        "Must be re-tuned for a fair comparison but isn't the object of study"
+       ],
+       "answer": 3,
+       "explain": "E.g. learning rate when comparing architectures."
+      },
+      {
+       "id": "M14.U09.Q4",
+       "kind": "short",
+       "prompt": "Write a falsifiable hypothesis for one change you made in M14.U01–U06.",
+       "rubric": [
+        "States a specific change and a measurable predicted outcome with direction and size (e.g. RMSNorm lowers val loss at 5k steps by ≥0.02)",
+        "Names the baseline, metric and seeds",
+        "Says what result would refute it"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M14.U10",
+     "title": "Reproduction, logging and technical writing",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M14.U09"
+     ],
+     "outcomes": [
+      "You can distinguish replication from reproduction and state your definition.",
+      "You can keep an experiment log that makes every run reproducible (config, commit, data version, seed, hardware).",
+      "You can write a 4-page reproduction report with negative results and peer-review someone else's."
+     ],
+     "topics": [
+      {
+       "id": "M14.02.07",
+       "title": "Replication vs reproduction"
+      },
+      {
+       "id": "M14.02.08",
+       "title": "Experiment log"
+      },
+      {
+       "id": "M14.02.09",
+       "title": "Negative results"
+      },
+      {
+       "id": "M14.02.10",
+       "title": "Peer review"
+      },
+      {
+       "id": "M14.02.11",
+       "title": "Technical writing"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs224n-report",
+      "title": "CS224N — Project Report Instructions",
+      "url": "https://web.stanford.edu/class/cs224n/project/Project_Report_Instructions.pdf",
+      "slice": "Whole document; plus the tuning playbook's experiment-tracking guidance https://github.com/google-research/tuning_playbook",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Required report sections: abstract, introduction, related work, approach, experiments (data, evaluation, details, results), analysis, conclusion",
+      "Writing results honestly: baselines, ablations, qualitative analysis and limitations",
+      "Tuning playbook: tracking experiments in a spreadsheet/log with config, link to runs, and outcomes"
+     ],
+     "gaps": [
+      {
+       "topic": "Replication vs reproduction and the reproducibility checklist",
+       "resource": {
+        "resourceId": "paper-ml-reproducibility",
+        "title": "Improving Reproducibility in ML Research (Pineau et al.)",
+        "url": "https://arxiv.org/abs/2003.12206",
+        "slice": "§2 definitions, §4 checklist; checklist PDF https://www.cs.mcgill.ca/~jpineau/ReproducibilityChecklist.pdf",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Peer review criteria",
+       "resource": {
+        "resourceId": "neurips-reviewer-guidelines",
+        "title": "NeurIPS Reviewer Guidelines",
+        "url": "https://neurips.cc/Conferences/2024/ReviewerGuidelines",
+        "slice": "Review form sections",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Technical writing craft",
+       "resource": {
+        "resourceId": "deeplearning-ms-research-writing",
+        "title": "Simon Peyton Jones — How to Write a Great Research Paper",
+        "url": "https://www.youtube.com/watch?v=VK51E3gHENc",
+        "slice": "Full talk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Model cards for released checkpoints",
+       "resource": {
+        "resourceId": "P24",
+        "title": "Model Cards for Model Reporting",
+        "url": "https://arxiv.org/abs/1810.03993",
+        "slice": "§4",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Reproduction report + peer review",
+      "brief": "Write a 4-page reproduction report for your M14 capstone (abstract, setup, deviations, results with uncertainty, negative results, limitations, compute log). Fill the ML Reproducibility Checklist. Peer-review one classmate's or online learner's report using NeurIPS-style criteria (summary, strengths, weaknesses, questions, score).",
+      "done_when": "Report PDF + filled checklist in the repo; a written review of another report."
+     },
+     "quiz": [
+      {
+       "id": "M14.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Reproduction (vs replication) commonly means:",
+       "options": [
+        "Rerunning identical code and data",
+        "Independently reimplementing to see if the claim holds (terminology varies — state your definition)",
+        "Copying results",
+        "Reading the paper"
+       ],
+       "answer": 1,
+       "explain": "Communities use the terms inconsistently; say which you mean."
+      },
+      {
+       "id": "M14.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Negative results are valuable because they:",
+       "options": [
+        "Are easy",
+        "Are preferred by reviewers",
+        "Prevent others repeating dead ends and bound a claim's generality",
+        "Are cheaper"
+       ],
+       "answer": 2,
+       "explain": "They are evidence about where a method stops working."
+      },
+      {
+       "id": "M14.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A good experiment log records:",
+       "options": [
+        "Only final metrics",
+        "Screenshots",
+        "Only successful runs",
+        "Config, commit hash, data version, seed, hardware, results and notes for every run"
+       ],
+       "answer": 3,
+       "explain": "Anything missing makes the run unreproducible."
+      },
+      {
+       "id": "M14.U10.Q4",
+       "kind": "short",
+       "prompt": "Which deviation from the original paper most threatens your conclusion, and why?",
+       "rubric": [
+        "Names a concrete deviation (scale, data, steps, hardware, hyperparameter)",
+        "Explains the mechanism by which it could change the outcome",
+        "Proposes a check or states the limitation explicitly"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Reduced-scale reproduction",
+  "brief": "Reproduce one quantitative claim from a paper in this module (e.g. RMSNorm vs LayerNorm stability, GQA's KV saving with negligible loss change, a scaling-law exponent at tiny scale, or dedup's effect on validation loss) using your own A1 codebase, with a 4-page report, public repo and a 5-minute walkthrough video.",
+  "rubric": [
+   {
+    "criterion": "Claim and design (20%)",
+    "levels": [
+     "Excellent: exact claim quoted; pre-registered hypothesis; justified reduced scale",
+     "Adequate: claim stated",
+     "Fail: vague goal"
+    ]
+   },
+   {
+    "criterion": "Implementation (25%)",
+    "levels": [
+     "Excellent: own code passing CS336-style tests; config-driven; resumable",
+     "Adequate: works",
+     "Fail: copied code"
+    ]
+   },
+   {
+    "criterion": "Evidence (25%)",
+    "levels": [
+     "Excellent: ≥3 seeds, confidence intervals, compute log (GPU-hours, cost), plots",
+     "Adequate: single seed",
+     "Fail: anecdote"
+    ]
+   },
+   {
+    "criterion": "Honesty (15%)",
+    "levels": [
+     "Excellent: deviations and negative results explicit; threats to validity",
+     "Adequate: some caveats",
+     "Fail: overclaims"
+    ]
+   },
+   {
+    "criterion": "Communication (15%)",
+    "levels": [
+     "Excellent: 4-page report + public repo + 5-min video walkthrough",
+     "Adequate: report only",
+     "Fail: notebook dump"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

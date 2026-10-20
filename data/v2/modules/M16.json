@@ -1,0 +1,1932 @@
+{
+ "id": "M16",
+ "phase": "P5 Ship and operate",
+ "title": "MLOps and data pipelines",
+ "summary": "MLOps Zoomcamp as the spine (modules 1-6, pinned to section numbers), with the gaps filled: Prefect as the concrete orchestrator, Pandera for data quality, LocalStack instead of card-gated AWS streaming, k3d canaries, and an LLMOps sub-module (Langfuse tracing, eval gates, A/B tests, cost attribution) paired with rohitg00 Phase 17 lessons. Requires M21 (Docker/CI) first.",
+ "hours": 95,
+ "prerequisites": [
+  "M07",
+  "M03",
+  "M21"
+ ],
+ "tracks": [
+  "mlops",
+  "ai-engineer"
+ ],
+ "optionalFor": [
+  "fde"
+ ],
+ "submodules": [
+  {
+   "id": "M16.S1",
+   "title": "Reproducibility and lifecycle",
+   "units": [
+    {
+     "id": "M16.U01",
+     "title": "MLOps lifecycle, maturity levels, notebook -> pipeline",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M21.U07"
+     ],
+     "outcomes": [
+      "You can describe the ML lifecycle and place a team at Google MLOps maturity level 0, 1 or 2.",
+      "You can explain CD4ML and why ML delivery ships pipelines, not just code.",
+      "You can explain train/serve skew at an introductory level."
+     ],
+     "topics": [
+      {
+       "id": "M16.01.10",
+       "title": "MLOps maturity levels (Google L0/L1/L2)"
+      },
+      {
+       "id": "M16.01.11",
+       "title": "CD4ML principles"
+      },
+      {
+       "id": "M16.01.08",
+       "title": "Train/serve skew (intro)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C16",
+      "title": "DataTalksClub MLOps Zoomcamp",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/01-intro",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 1 'Introduction': 1.1 Introduction; 1.2 GitHub Codespaces; 1.4 Reading Parquet Data; 1.5 Training a Ride Duration Prediction Model; 1.6 Course Overview; 1.7 MLOps Maturity Model (skip 1.3 VM in AWS)"
+     },
+     "covers": [
+      "What MLOps is, using the NYC taxi ride-duration problem",
+      "Environment setup (Codespaces as the no-card option)",
+      "Training a baseline duration model in a notebook",
+      "Why notebooks are not enough; course map of later modules",
+      "Microsoft's MLOps maturity model levels 0-4"
+     ],
+     "gaps": [
+      {
+       "topic": "Google's L0/L1/L2 continuous-training framing",
+       "resource": {
+        "resourceId": "google-mlops",
+        "title": "MLOps: Continuous delivery and automation pipelines in machine learning",
+        "url": "https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full article: 'MLOps level 0', 'MLOps level 1', 'MLOps level 2'"
+       }
+      },
+      {
+       "topic": "CD4ML principles",
+       "resource": {
+        "resourceId": "cd4ml",
+        "title": "Continuous Delivery for Machine Learning (CD4ML)",
+        "url": "https://martinfowler.com/articles/cd4ml.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full article"
+       }
+      },
+      {
+       "topic": "Train/serve skew intro",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 02 lesson 21 'Feature Stores and Training-Serving Skew' (first half)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Maturity assessment",
+      "brief": "No-card path: GitHub Codespaces (free monthly hours, no card) or local Python; skip unit 1.3 (AWS VM). Reproduce the 1.5 duration model, then classify three teams (real or hypothetical) at Google L0/L1/L2 and give each one next step.",
+      "done_when": "Notebook reproduces the module's RMSE within +/-0.5; MATURITY.md has three rows (team, level, evidence, next step) and one paragraph on where train/serve skew could enter your own model."
+     },
+     "quiz": [
+      {
+       "id": "M16.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Google MLOps level 1 adds:",
+       "options": [
+        "Manual notebooks",
+        "Automated continuous-training pipelines",
+        "Only CI for code",
+        "Kubernetes"
+       ],
+       "answer": 1,
+       "explain": "Level 1 automates the training pipeline (CT); level 2 automates the pipeline's own CI/CD."
+      },
+      {
+       "id": "M16.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Train/serve skew is:",
+       "options": [
+        "A GPU difference",
+        "Features computed differently at training and serving time",
+        "Model size growth",
+        "Dataset size growth"
+       ],
+       "answer": 1,
+       "explain": "Same raw input, different feature values -> silently worse predictions."
+      },
+      {
+       "id": "M16.U01.Q3",
+       "kind": "mcq",
+       "prompt": "In MLOps, CD delivers:",
+       "options": [
+        "Only application code",
+        "A training pipeline and/or model service, not just code",
+        "Notebooks",
+        "Datasets only"
+       ],
+       "answer": 1,
+       "explain": "The deployable unit includes data/model/pipeline."
+      },
+      {
+       "id": "M16.U01.Q4",
+       "kind": "short",
+       "prompt": "Why is 'retrain manually when someone notices' MLOps level 0?",
+       "rubric": [
+        "Manual, script/notebook-driven, no automated pipeline or CT.",
+        "Infrequent releases, no monitoring-triggered retraining, disconnect between DS and ops.",
+        "Names what moving to level 1 would automate."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U02",
+     "title": "Experiment tracking and model registry (MLflow)",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U01"
+     ],
+     "outcomes": [
+      "You can log params, metrics and artifacts for many runs and compare them.",
+      "You can register a model, assign an alias/stage and load it by alias in another process.",
+      "You can explain serialization formats and why untrusted pickle is dangerous."
+     ],
+     "topics": [
+      {
+       "id": "M16.01.03",
+       "title": "Experiment tracking"
+      },
+      {
+       "id": "M16.01.04",
+       "title": "MLflow"
+      },
+      {
+       "id": "M16.01.05",
+       "title": "Artifact and model registry"
+      },
+      {
+       "id": "M16.01.12",
+       "title": "Model serialization formats and pickle risks"
+      }
+     ],
+     "learn": {
+      "resourceId": "C16",
+      "title": "DataTalksClub MLOps Zoomcamp",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/02-experiment-tracking",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 2 'Experiment Tracking and Model Management': 2.1 Experiment Tracking Intro; 2.2 Getting Started with MLflow; 2.3 Experiment Tracking with MLflow; 2.4 Model Management; 2.5 Model Registry; 2.6 MLflow in Practice; 2.7 MLflow: Benefits, Limitations and Alternatives"
+     },
+     "covers": [
+      "Concepts: experiment, run, metadata; why tracking matters",
+      "MLflow UI/backend store setup and autologging",
+      "Hyperparameter search logged to MLflow",
+      "Model management: logging models and artifacts",
+      "Model registry: versions, stages/aliases, promotion via client API",
+      "Deployment scenarios (single dev, team, remote tracking server)",
+      "Alternatives (W&B, Neptune, Comet...)"
+     ],
+     "gaps": [
+      {
+       "topic": "Pickle/serialization security",
+       "resource": {
+        "resourceId": "mlflow-docs",
+        "title": "MLflow documentation",
+        "url": "https://mlflow.org/docs/latest/ml/model-registry/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "MLflow Model Registry docs (aliases) + Python docs pickle security warning https://docs.python.org/3/library/pickle.html"
+       }
+      },
+      {
+       "topic": "Same workflow explained in Hindi/Urdu-friendly English",
+       "resource": {
+        "resourceId": "yt-codebasics-mlflow",
+        "title": "MLFlow Tutorial | ML Ops Tutorial",
+        "url": "https://www.youtube.com/watch?v=6ngxBkx05Fs",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "B11",
+      "title": "Made With ML (MLOps course, online reference)",
+      "url": "https://madewithml.com/courses/mlops/experiment-tracking",
+      "type": "book",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Lesson 'Experiment Tracking'"
+     },
+     "practice": {
+      "title": "20 tracked runs, promoted by alias",
+      "brief": "No-card path: local MLflow server (`mlflow server --backend-store-uri sqlite:///mlflow.db`) - no cloud. Track 20 runs of a sklearn model (params, metrics, artifacts, git SHA tag), register the best, set alias `champion`, load it via `models:/name@champion` in a separate script.",
+      "done_when": "MLflow UI screenshot with 20 runs sorted by metric; `python predict.py` loads by alias and prints a prediction; README explains why serving code never hard-codes a version number."
+     },
+     "quiz": [
+      {
+       "id": "M16.U02.Q1",
+       "kind": "mcq",
+       "prompt": "A model registry adds over plain artifact logging:",
+       "options": [
+        "GPUs",
+        "Versioned, named models with lifecycle stages/aliases",
+        "Tracing",
+        "Data validation"
+       ],
+       "answer": 1,
+       "explain": "Registry = catalogue + versions + promotion workflow."
+      },
+      {
+       "id": "M16.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Loading an untrusted pickle file is dangerous because:",
+       "options": [
+        "It is large",
+        "Unpickling can execute arbitrary code",
+        "It is slow",
+        "It loses precision"
+       ],
+       "answer": 1,
+       "explain": "pickle can reconstruct arbitrary objects, including ones that run code; prefer safetensors/ONNX/skops for untrusted sources."
+      },
+      {
+       "id": "M16.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Which should be logged per run?",
+       "options": [
+        "Only accuracy",
+        "Params, metrics, code version, data version and artifacts",
+        "Only the model file",
+        "Nothing if the code is in git"
+       ],
+       "answer": 1,
+       "explain": "Everything needed to reproduce and compare."
+      },
+      {
+       "id": "M16.U02.Q4",
+       "kind": "short",
+       "prompt": "Why reference a model by alias (e.g. `champion`) instead of a version number in serving code?",
+       "rubric": [
+        "Promotion/rollback becomes a registry change, not a code change/redeploy.",
+        "Decouples deployment from model iteration; auditable alias moves.",
+        "Notes the need to pin/log the resolved version at load time for traceability."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U03",
+     "title": "Data and model versioning, config, determinism, lineage",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U02"
+     ],
+     "outcomes": [
+      "You can version datasets with DVC and reproduce a past run from a git tag.",
+      "You can manage config separately from code.",
+      "You can explain what seeds do and do not guarantee.",
+      "You can write a simple data contract."
+     ],
+     "topics": [
+      {
+       "id": "M16.01.01",
+       "title": "Dataset/version lineage"
+      },
+      {
+       "id": "M16.01.02",
+       "title": "DVC awareness"
+      },
+      {
+       "id": "M16.01.06",
+       "title": "Config management"
+      },
+      {
+       "id": "M16.01.07",
+       "title": "Seeds and determinism"
+      },
+      {
+       "id": "M16.01.09",
+       "title": "Data contracts"
+      }
+     ],
+     "learn": {
+      "resourceId": "dvc-docs",
+      "title": "DVC Get Started",
+      "url": "https://dvc.org/doc/start",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Get Started: Data and model versioning; Data pipelines; Experiment tracking (DVC)"
+     },
+     "covers": [
+      "dvc init, dvc add, remotes, push/pull",
+      "Pointer .dvc files in git, checkout of old versions",
+      "dvc.yaml pipelines with stages, deps and outs; dvc repro"
+     ],
+     "gaps": [
+      {
+       "topic": "Versioning code, data and models together",
+       "resource": {
+        "resourceId": "B11",
+        "title": "Made With ML (MLOps course, online reference)",
+        "url": "https://madewithml.com/courses/mlops/versioning/",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Lesson 'Versioning Code, Data and Models'"
+       }
+      },
+      {
+       "topic": "DVC hands-on video",
+       "resource": {
+        "resourceId": "yt-dvc",
+        "title": "Versioning Data with DVC (Hands-On Tutorial!)",
+        "url": "https://www.youtube.com/watch?v=kLKBcPonMYw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Determinism beyond seeds (GPU nondeterminism)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch tutorials (DDP series, profiler)",
+        "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "PyTorch notes: Reproducibility"
+       }
+      },
+      {
+       "topic": "Data management for AI projects (lineage, contracts)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/09-data-management",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 00 lesson 09 'Data Management'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Reproduce run N",
+      "brief": "No-card path: DVC with a local directory remote (or Google Drive remote). Version two dataset snapshots, tag `run-1` and `run-2`, keep hyperparameters in params.yaml.",
+      "done_when": "`git checkout run-1 && dvc checkout && dvc repro` reproduces run-1's metric exactly (diff shown in README); a data_contract.yaml lists columns, types, ranges and freshness."
+     },
+     "quiz": [
+      {
+       "id": "M16.U03.Q1",
+       "kind": "mcq",
+       "prompt": "DVC stores large data:",
+       "options": [
+        "Inside git",
+        "In a remote, with small pointer files in git",
+        "Only in MLflow",
+        "Nowhere"
+       ],
+       "answer": 1,
+       "explain": "Git tracks .dvc metadata; the bytes live in the cache/remote."
+      },
+      {
+       "id": "M16.U03.Q2",
+       "kind": "mcq",
+       "prompt": "A data contract specifies:",
+       "options": [
+        "Price",
+        "Schema, types, ranges and freshness the producer guarantees",
+        "The model",
+        "The cloud"
+       ],
+       "answer": 1,
+       "explain": "It is an agreement between data producers and consumers."
+      },
+      {
+       "id": "M16.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Setting seeds guarantees full reproducibility:",
+       "options": [
+        "Always",
+        "Not on its own: GPU nondeterminism, library versions and data order also matter",
+        "Only on CPU",
+        "It is never needed"
+       ],
+       "answer": 1,
+       "explain": "Seeds are necessary but not sufficient."
+      },
+      {
+       "id": "M16.U03.Q4",
+       "kind": "short",
+       "prompt": "List the four things needed to reproduce a model exactly.",
+       "rubric": [
+        "Code version (commit).",
+        "Data version (snapshot/hash).",
+        "Config/hyperparameters.",
+        "Environment (library versions/container, hardware/determinism settings) - plus seeds."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M16.S2",
+   "title": "Data pipelines and orchestration",
+   "units": [
+    {
+     "id": "M16.U04",
+     "title": "Pipelines and orchestration (Prefect)",
+     "hours": 12,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U03",
+      "M21.U05"
+     ],
+     "outcomes": [
+      "You can refactor a notebook into a parameterised, testable script.",
+      "You can build a Prefect flow with tasks, retries and schedules.",
+      "You can backfill past intervals idempotently.",
+      "You can compare Airflow, Prefect and Dagster."
+     ],
+     "topics": [
+      {
+       "id": "M16.02.01",
+       "title": "Batch vs stream"
+      },
+      {
+       "id": "M16.02.02",
+       "title": "ETL vs ELT"
+      },
+      {
+       "id": "M16.02.03",
+       "title": "Orchestration"
+      },
+      {
+       "id": "M16.02.04",
+       "title": "Airflow/Prefect/Dagster alternatives"
+      },
+      {
+       "id": "M16.02.06",
+       "title": "Scheduling"
+      },
+      {
+       "id": "M16.02.07",
+       "title": "Backfills"
+      },
+      {
+       "id": "M16.02.10",
+       "title": "Idempotent, parameterised tasks"
+      }
+     ],
+     "learn": {
+      "resourceId": "C16",
+      "title": "DataTalksClub MLOps Zoomcamp",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/03-orchestration",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 3 'Orchestration and ML Pipelines': 3.1 Introduction to ML Pipelines; 3.2 Turning the Notebook into a Python Script; 3.3 Using an Orchestrator"
+     },
+     "covers": [
+      "What an ML pipeline is (download -> transform -> train -> register)",
+      "Refactoring the notebook into a parameterised script",
+      "Choosing and running an orchestrator (tool-agnostic: Airflow/Prefect named as options)"
+     ],
+     "gaps": [
+      {
+       "topic": "Concrete orchestrator: flows, tasks, retries, deployments, schedules",
+       "resource": {
+        "resourceId": "prefect-docs",
+        "title": "Prefect 3 documentation",
+        "url": "https://docs.prefect.io/v3/get-started/quickstart",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart, then Concepts: Flows"
+       }
+      },
+      {
+       "topic": "Airflow fundamentals (most common in job ads)",
+       "resource": {
+        "resourceId": "prefect-docs",
+        "title": "Apache Airflow Tutorial: Fundamental Concepts",
+        "url": "https://airflow.apache.org/docs/apache-airflow/stable/tutorial/fundamentals.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Apache Airflow tutorial 'Fundamental Concepts'"
+       }
+      },
+      {
+       "topic": "Orchestration patterns",
+       "resource": {
+        "resourceId": "B11",
+        "title": "Made With ML (MLOps course, online reference)",
+        "url": "https://madewithml.com/courses/mlops/orchestration/",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Lesson 'Orchestration'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Monthly training flow with backfill",
+      "brief": "No-card path: Prefect server runs locally (`prefect server start`); no Prefect Cloud needed. Flow: download(month) -> features -> train -> log to MLflow, with task retries=2 and a monthly schedule. Backfill three past months.",
+      "done_when": "Prefect UI shows 3 backfill runs; re-running the same month overwrites the same output path (no duplicates) - proven by listing outputs; flow takes `year, month` parameters and never calls `today()`."
+     },
+     "quiz": [
+      {
+       "id": "M16.U04.Q1",
+       "kind": "mcq",
+       "prompt": "A backfill:",
+       "options": [
+        "Deletes history",
+        "Re-runs a pipeline for past intervals",
+        "Adds GPUs",
+        "Scales workers"
+       ],
+       "answer": 1,
+       "explain": "Used after bug fixes or for new pipelines needing history."
+      },
+      {
+       "id": "M16.U04.Q2",
+       "kind": "mcq",
+       "prompt": "A task is idempotent if:",
+       "options": [
+        "It runs only once",
+        "Re-running it with the same inputs yields the same result without piling up side effects",
+        "It never fails",
+        "It is async"
+       ],
+       "answer": 1,
+       "explain": "E.g. overwrite partition output instead of appending."
+      },
+      {
+       "id": "M16.U04.Q3",
+       "kind": "mcq",
+       "prompt": "ELT differs from ETL by:",
+       "options": [
+        "Skipping load",
+        "Loading raw data first, then transforming in the warehouse",
+        "Having no transformations",
+        "Being streaming only"
+       ],
+       "answer": 1,
+       "explain": "Cheap warehouse compute made transform-after-load common."
+      },
+      {
+       "id": "M16.U04.Q4",
+       "kind": "short",
+       "prompt": "Why pass the data period as a flow parameter instead of using `today()` inside the code?",
+       "rubric": [
+        "Enables backfills and re-runs of any interval.",
+        "Deterministic/idempotent runs; testable.",
+        "Scheduler supplies the logical date; avoids timezone/late-run bugs."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U05",
+     "title": "Data quality and validation",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U04"
+     ],
+     "outcomes": [
+      "You can define schema and value checks with Pandera.",
+      "You can choose fail-fast vs quarantine for bad data.",
+      "You can place data checks at ingestion, training and serving."
+     ],
+     "topics": [
+      {
+       "id": "M16.02.08",
+       "title": "Data quality"
+      },
+      {
+       "id": "M16.02.11",
+       "title": "Schema/value checks with Pandera"
+      },
+      {
+       "id": "M16.02.12",
+       "title": "Fail-fast vs quarantine"
+      }
+     ],
+     "learn": {
+      "resourceId": "pandera-docs",
+      "title": "Pandera documentation",
+      "url": "https://pandera.readthedocs.io/en/stable/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Docs: 'DataFrame Schemas' + 'Checks' + 'Lazy Validation' pages"
+     },
+     "covers": [
+      "DataFrameSchema/DataFrameModel definitions with dtypes",
+      "Built-in and custom Checks (ranges, nulls, uniqueness)",
+      "Lazy validation to collect all failures (for quarantine reports)"
+     ],
+     "gaps": [
+      {
+       "topic": "Data-quality monitoring in a running system",
+       "resource": {
+        "resourceId": "C16",
+        "title": "DataTalksClub MLOps Zoomcamp",
+        "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/05-monitoring",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Module 5.7 'Data Quality Monitoring'"
+       }
+      },
+      {
+       "topic": "Alternative tool",
+       "resource": {
+        "resourceId": "evidently",
+        "title": "Evidently AI docs + open-source ML observability course",
+        "url": "https://docs.evidentlyai.com/quickstart_ml",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Evidently quickstart (data tests/reports)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Quarantine bad rows",
+      "brief": "No-card path: all local. Add a Pandera validation task to the U04 flow. Inject 2% nulls and out-of-range trip durations.",
+      "done_when": "Run log shows N rows quarantined to `quarantine/<month>.parquet` with a failure-case report, the flow continues on clean rows, and a separate test proves a missing column fails the run fast."
+     },
+     "quiz": [
+      {
+       "id": "M16.U05.Q1",
+       "kind": "mcq",
+       "prompt": "A schema check catches:",
+       "options": [
+        "Concept drift",
+        "Wrong types, missing columns, out-of-range values",
+        "Latency",
+        "Label delay"
+       ],
+       "answer": 1,
+       "explain": "Schema/value checks are structural; drift needs distribution comparison."
+      },
+      {
+       "id": "M16.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Quarantining bad rows instead of failing the run suits:",
+       "options": [
+        "Critical financial totals",
+        "High-volume feeds where a few bad rows should not block everything",
+        "Never",
+        "Training only"
+       ],
+       "answer": 1,
+       "explain": "When correctness of the aggregate is critical, fail fast instead."
+      },
+      {
+       "id": "M16.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Data checks belong:",
+       "options": [
+        "Only at training",
+        "At ingestion, before training, and on serving inputs",
+        "Only in dashboards",
+        "Only in CI"
+       ],
+       "answer": 1,
+       "explain": "Bad data can enter at every boundary."
+      },
+      {
+       "id": "M16.U05.Q4",
+       "kind": "short",
+       "prompt": "Give one data bug a schema check cannot catch, and how you would catch it.",
+       "rubric": [
+        "Example: valid-looking but wrong values (unit change, label shift, duplicated days, distribution drift).",
+        "Catch with distribution/drift tests, reconciliation counts, or business-rule checks across rows/time."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U06",
+     "title": "Feature stores, training triggers and skew (awareness)",
+     "hours": 4,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U04"
+     ],
+     "outcomes": [
+      "You can explain what a feature store promises and when a team actually needs one.",
+      "You can prevent skew with one shared feature module.",
+      "You can define sensible retraining triggers."
+     ],
+     "topics": [
+      {
+       "id": "M16.02.05",
+       "title": "Feature stores"
+      },
+      {
+       "id": "M16.02.09",
+       "title": "Training triggers"
+      },
+      {
+       "id": "M16.02.13",
+       "title": "Train/serve skew in depth: shared feature code"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 02 lesson 21 'Feature Stores and Training-Serving Skew' (docs/en.md + quiz)"
+     },
+     "covers": [
+      "Offline vs online feature stores and point-in-time correctness",
+      "Sources of training-serving skew",
+      "Toy simulation of skew (stdlib code)"
+     ],
+     "gaps": [
+      {
+       "topic": "Real-time features and freshness",
+       "resource": {
+        "resourceId": "huyen-blog",
+        "title": "Chip Huyen blog",
+        "url": "https://huyenchip.com/2022/01/02/real-time-machine-learning-challenges-and-solutions.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Article 'Real-time machine learning: challenges and solutions'"
+       }
+      },
+      {
+       "topic": "Data management lecture",
+       "resource": {
+        "resourceId": "fsdl-2022",
+        "title": "Full Stack Deep Learning 2022",
+        "url": "https://fullstackdeeplearning.com/course/2022/lecture-4-data-management/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 4 'Data Management'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "One features.py to rule them all",
+      "brief": "No-card path: local. Move feature code into `features.py` used by both the training flow and the API (U07).",
+      "done_when": "A pytest test feeds the same raw row through the training path and the serving path and asserts identical feature vectors; RETRAINING.md lists 3 triggers (schedule, drift threshold, new-label volume) with numbers."
+     },
+     "quiz": [
+      {
+       "id": "M16.U06.Q1",
+       "kind": "mcq",
+       "prompt": "A feature store's core promise is:",
+       "options": [
+        "Faster GPUs",
+        "The same feature definitions offline (training) and online (serving)",
+        "Cheaper storage",
+        "A model registry"
+       ],
+       "answer": 1,
+       "explain": "Plus point-in-time correct training sets and low-latency online lookup."
+      },
+      {
+       "id": "M16.U06.Q2",
+       "kind": "mcq",
+       "prompt": "A junior team usually needs a feature store:",
+       "options": [
+        "On day one",
+        "Only when many models share features or real-time features are needed",
+        "Always for RAG",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "Otherwise a shared module/library is enough."
+      },
+      {
+       "id": "M16.U06.Q3",
+       "kind": "mcq",
+       "prompt": "A sensible retraining trigger is:",
+       "options": [
+        "Every commit",
+        "A schedule, a drift threshold, or a volume of new labelled data",
+        "Random",
+        "Manual only"
+       ],
+       "answer": 1,
+       "explain": "Triggers should be tied to evidence or cadence."
+      },
+      {
+       "id": "M16.U06.Q4",
+       "kind": "short",
+       "prompt": "Describe the cheapest way to prevent skew without a feature store.",
+       "rubric": [
+        "One shared, versioned feature function/package imported by training and serving.",
+        "Unit test asserting parity; log served features and compare to training distribution."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M16.S3",
+   "title": "ML delivery",
+   "units": [
+    {
+     "id": "M16.U07",
+     "title": "Deploying models: web service, batch scoring, streaming",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U02",
+      "M16.U06",
+      "M21.U05"
+     ],
+     "outcomes": [
+      "You can serve a registered model behind an HTTP API in a container.",
+      "You can write a batch-scoring job.",
+      "You can explain streaming scoring and run it against LocalStack.",
+      "You can choose baking-in vs loading-from-registry."
+     ],
+     "topics": [
+      {
+       "id": "M16.03.07",
+       "title": "Batch and online serving"
+      },
+      {
+       "id": "M16.03.10",
+       "title": "Loading models from the registry in a service"
+      },
+      {
+       "id": "M16.03.11",
+       "title": "Streaming scoring (LocalStack)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C16",
+      "title": "DataTalksClub MLOps Zoomcamp",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/04-deployment",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 4 'Model Deployment': 4.1 Three Ways of Deploying a Model; 4.2 Web Services: Flask and Docker; 4.3 Web Services: Getting Models from the Model Registry; 4.4 Streaming: Kinesis and Lambda (run against LocalStack or read only); 4.5 Batch: Preparing a Scoring Script (4.6 Mage optional)"
+     },
+     "covers": [
+      "Batch vs web-service vs streaming deployment modes",
+      "Flask + Docker web service with pipenv",
+      "Loading a model from the MLflow registry/S3 in the service",
+      "Kinesis + Lambda streaming (AWS)",
+      "Batch scoring script writing Parquet"
+     ],
+     "gaps": [
+      {
+       "topic": "Streaming without an AWS card",
+       "resource": {
+        "resourceId": "localstack",
+        "title": "LocalStack documentation",
+        "url": "https://docs.localstack.cloud/aws/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started; then Zoomcamp 6.3 'Testing Cloud Services with LocalStack'"
+       }
+      },
+      {
+       "topic": "FastAPI instead of Flask (matches M03)",
+       "resource": {
+        "resourceId": "B11",
+        "title": "Made With ML (MLOps course, online reference)",
+        "url": "https://madewithml.com/courses/mlops/serving/",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Lesson 'Model Serving'"
+       }
+      },
+      {
+       "topic": "Deployment principles",
+       "resource": {
+        "resourceId": "fsdl-2022",
+        "title": "Full Stack Deep Learning 2022",
+        "url": "https://fullstackdeeplearning.com/course/2022/lecture-5-deployment/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 5 'Deployment'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Online + batch from one registry",
+      "brief": "No-card path: MLflow (local) + MinIO or LocalStack S3 for artifacts; skip real Kinesis. Ship (a) a FastAPI container that loads `@champion` at startup and (b) a monthly batch-scoring Prefect flow writing Parquet. Both import `features.py`.",
+      "done_when": "`curl /predict` returns a prediction and the model version; batch output Parquet has one row per input with model version column; switching the alias + restarting the API changes the version without rebuilding the image."
+     },
+     "quiz": [
+      {
+       "id": "M16.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Batch scoring is preferable when:",
+       "options": [
+        "Users need instant predictions",
+        "Predictions for known entities can be refreshed periodically",
+        "Inputs arrive per request",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "Cheaper and simpler when staleness is acceptable."
+      },
+      {
+       "id": "M16.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Baking the model into the image vs loading it from the registry at startup trades:",
+       "options": [
+        "Nothing",
+        "Immutability/simplicity vs model swaps without rebuilds",
+        "GPU vs CPU",
+        "Cost only"
+       ],
+       "answer": 1,
+       "explain": "Baked images are fully reproducible; registry loading decouples model and code releases."
+      },
+      {
+       "id": "M16.U07.Q3",
+       "kind": "mcq",
+       "prompt": "LocalStack lets you:",
+       "options": [
+        "Run real AWS for free",
+        "Emulate AWS APIs locally for development and tests",
+        "Deploy to production",
+        "Train models"
+       ],
+       "answer": 1,
+       "explain": "It is an emulator, not AWS."
+      },
+      {
+       "id": "M16.U07.Q4",
+       "kind": "short",
+       "prompt": "What is your rollback path for each choice in the previous question?",
+       "rubric": [
+        "Baked: redeploy previous image tag/SHA.",
+        "Registry: move alias back to previous version and restart/reload.",
+        "Mentions logging the loaded version to confirm."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U08",
+     "title": "Testing ML systems and CI/CD/CT",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U07",
+      "M21.U07"
+     ],
+     "outcomes": [
+      "You can write unit, data and model tests including behavioural (invariance/directional) tests.",
+      "You can run integration tests with Docker Compose.",
+      "You can set up CI and a CT job with a champion/challenger promotion gate."
+     ],
+     "topics": [
+      {
+       "id": "M16.03.03",
+       "title": "CI/CD/CT for ML"
+      },
+      {
+       "id": "M16.03.04",
+       "title": "Model, service and data tests"
+      },
+      {
+       "id": "M16.03.12",
+       "title": "Behavioural model tests (invariance, directional)"
+      },
+      {
+       "id": "M16.03.13",
+       "title": "Integration tests with Compose"
+      }
+     ],
+     "learn": {
+      "resourceId": "C16",
+      "title": "DataTalksClub MLOps Zoomcamp",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/06-best-practices",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 6 'Best Practices': 6.1 Testing Python Code with pytest; 6.2 Integration Tests with docker-compose; 6.3 Testing Cloud Services with LocalStack; 6.4 Linting and Formatting; 6.5 Git Pre-commit Hooks; 6.6 Makefiles; 6.11 CI/CD: Introduction; 6.12 Continuous Integration; 6.13 Continuous Delivery (6.7-6.10 Terraform: optional, see M21.U11)"
+     },
+     "covers": [
+      "pytest unit tests for the streaming model code",
+      "docker-compose integration tests",
+      "LocalStack for Kinesis/S3 tests",
+      "ruff/black, pre-commit, Makefile",
+      "GitHub Actions CI and CD workflows (CD targets AWS)"
+     ],
+     "gaps": [
+      {
+       "topic": "ML test taxonomy and behavioural tests",
+       "resource": {
+        "resourceId": "B11",
+        "title": "Made With ML (MLOps course, online reference)",
+        "url": "https://madewithml.com/courses/mlops/testing/",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Lesson 'Testing ML Systems: Code, Data and Models'"
+       }
+      },
+      {
+       "topic": "Testing/troubleshooting principles",
+       "resource": {
+        "resourceId": "fsdl-2022",
+        "title": "Full Stack Deep Learning 2022",
+        "url": "https://fullstackdeeplearning.com/course/2022/lecture-3-troubleshooting-and-testing/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 3 'Troubleshooting & Testing'"
+       }
+      },
+      {
+       "topic": "Continuous training and promotion gates",
+       "resource": {
+        "resourceId": "google-mlops",
+        "title": "MLOps: Continuous delivery and automation pipelines in machine learning",
+        "url": "https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 'MLOps level 1: ML pipeline automation' (CT, model validation)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "CI + CT with a champion/challenger gate",
+      "brief": "No-card path: GitHub Actions (free for public repos) + LocalStack/MinIO; CD deploys to k3d or a Hugging Face Space instead of AWS. CI runs unit + data + model tests (metric threshold + one invariance test) and a Compose integration test. A scheduled workflow retrains and promotes only if the challenger beats the champion on the agreed metric.",
+      "done_when": "Actions history shows one CT run that promoted and one that refused promotion (logged reason); invariance test fails if you deliberately leak a name feature; `make test` runs everything locally."
+     },
+     "quiz": [
+      {
+       "id": "M16.U08.Q1",
+       "kind": "mcq",
+       "prompt": "An invariance test checks that:",
+       "options": [
+        "Accuracy exceeds X",
+        "Irrelevant input changes (e.g. names) do not change predictions",
+        "The API returns 200",
+        "Data has no nulls"
+       ],
+       "answer": 1,
+       "explain": "Behavioural tests from CheckList-style testing."
+      },
+      {
+       "id": "M16.U08.Q2",
+       "kind": "mcq",
+       "prompt": "A champion/challenger gate promotes when:",
+       "options": [
+        "The new model is newer",
+        "The challenger beats the champion on agreed metrics and slices",
+        "CI lint passes",
+        "Always"
+       ],
+       "answer": 1,
+       "explain": "Promotion must be evidence-based and logged."
+      },
+      {
+       "id": "M16.U08.Q3",
+       "kind": "mcq",
+       "prompt": "In ML, CT stands for:",
+       "options": [
+        "Continuous testing",
+        "Continuous training",
+        "Container tagging",
+        "Cloud tenancy"
+       ],
+       "answer": 1,
+       "explain": "Automated retraining in production on new data."
+      },
+      {
+       "id": "M16.U08.Q4",
+       "kind": "short",
+       "prompt": "Why might a model pass its tests in CI but still fail in production?",
+       "rubric": [
+        "Test data not representative / production distribution drift.",
+        "Train/serve skew or upstream data changes.",
+        "Load/latency/integration issues not covered; slices not tested."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U09",
+     "title": "Rollout strategies and rollback (classic + LLM)",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U07",
+      "M21.U13"
+     ],
+     "outcomes": [
+      "You can run shadow, canary and blue/green rollouts and say what each protects.",
+      "You can define canary metrics for classic models and for LLM features.",
+      "You can roll back by configuration in seconds."
+     ],
+     "topics": [
+      {
+       "id": "M16.03.05",
+       "title": "Staged rollout"
+      },
+      {
+       "id": "M16.03.06",
+       "title": "Rollback"
+      },
+      {
+       "id": "M16.03.08",
+       "title": "Shadow and canary deployments"
+      },
+      {
+       "id": "M16.03.14",
+       "title": "Blue/green"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch (rohitg00)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/20-shadow-canary-progressive",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 17 lesson 20 'Shadow Traffic, Canary Rollout, and Progressive Deployment for LLMs'"
+     },
+     "covers": [
+      "Shadow vs canary vs A/B and when each applies",
+      "Five LLM-specific canary metrics (latency, cost/request, error/refusal, output-length distribution, user feedback)",
+      "Non-determinism and what 'stable' means for LLM rollouts",
+      "Rollback as a policy flip, not a redeploy"
+     ],
+     "gaps": [
+      {
+       "topic": "Canary release fundamentals",
+       "resource": {
+        "resourceId": "fowler-bliki",
+        "title": "Martin Fowler bliki: CanaryRelease / BlueGreenDeployment",
+        "url": "https://martinfowler.com/bliki/CanaryRelease.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'CanaryRelease'"
+       }
+      },
+      {
+       "topic": "Blue/green deployment",
+       "resource": {
+        "resourceId": "fowler-bliki",
+        "title": "Martin Fowler bliki: CanaryRelease / BlueGreenDeployment",
+        "url": "https://martinfowler.com/bliki/BlueGreenDeployment.html",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'BlueGreenDeployment'"
+       }
+      },
+      {
+       "topic": "Traffic splitting on Kubernetes",
+       "resource": {
+        "resourceId": "yt-nana-ingress",
+        "title": "Kubernetes Ingress Tutorial for Beginners",
+        "url": "https://www.youtube.com/watch?v=80Ew_fsV4rM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video (Ingress basics needed for weighted routing)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "90/10 canary with shadow logging (real-tool lab for rohitg00 17/20)",
+      "brief": "No-card path: k3d + Traefik/nginx Ingress. Run model v1 and v2 as two Deployments with a 90/10 weighted split; additionally mirror 100% of traffic to v2 in shadow mode and log both predictions. Roll back by changing weights only.",
+      "done_when": "Prometheus/Grafana panel shows per-version request rate ~90/10 and error rate; shadow log has paired predictions with a disagreement rate; rollback is one `kubectl apply`/helm value change completed in < 60 s."
+     },
+     "quiz": [
+      {
+       "id": "M16.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Shadow deployment:",
+       "options": [
+        "Serves users from the new model",
+        "Runs the new model on live traffic without affecting responses",
+        "Is the same as a canary",
+        "Is A/B testing"
+       ],
+       "answer": 1,
+       "explain": "Zero user impact; compare outputs offline."
+      },
+      {
+       "id": "M16.U09.Q2",
+       "kind": "mcq",
+       "prompt": "A canary is judged on:",
+       "options": [
+        "Build time",
+        "Error rate, latency and quality/business metrics vs the control",
+        "Image size",
+        "Code coverage"
+       ],
+       "answer": 1,
+       "explain": "Compare against the stable version under the same traffic."
+      },
+      {
+       "id": "M16.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Blue/green enables:",
+       "options": [
+        "Gradual traffic shift only",
+        "An instant switch and instant rollback between two full environments",
+        "Cheaper infrastructure",
+        "Training"
+       ],
+       "answer": 1,
+       "explain": "Two complete environments; the router flips."
+      },
+      {
+       "id": "M16.U09.Q4",
+       "kind": "short",
+       "prompt": "Why is shadow testing harder for LLM chat than for a classifier?",
+       "rubric": [
+        "No single correct output; comparison needs evals/LLM-judge or human review.",
+        "Non-determinism means differences are expected; stateful multi-turn conversations diverge.",
+        "Shadow calls double cost; side-effecting tool calls must be disabled."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M16.S4",
+   "title": "Monitoring and continual learning",
+   "units": [
+    {
+     "id": "M16.U10",
+     "title": "ML monitoring: drift, label delay, slices, alerts",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U07",
+      "M21.U14"
+     ],
+     "outcomes": [
+      "You can compute data and prediction drift with Evidently.",
+      "You can expose ML metrics to Prometheus and alert in Grafana.",
+      "You can monitor performance by slice and handle label delay."
+     ],
+     "topics": [
+      {
+       "id": "M16.04.01",
+       "title": "Latency/availability (links M21.07)"
+      },
+      {
+       "id": "M16.04.02",
+       "title": "Data/concept drift"
+      },
+      {
+       "id": "M16.04.03",
+       "title": "Label delay"
+      },
+      {
+       "id": "M16.04.04",
+       "title": "Calibration as a monitored metric"
+      },
+      {
+       "id": "M16.04.05",
+       "title": "Performance by slice"
+      },
+      {
+       "id": "M16.04.06",
+       "title": "Alert thresholds"
+      }
+     ],
+     "learn": {
+      "resourceId": "C16",
+      "title": "DataTalksClub MLOps Zoomcamp",
+      "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/05-monitoring",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Module 5 'Model Monitoring': 5.1 Intro to ML Monitoring; 5.2 Environment Setup; 5.3 Prepare Reference and Model; 5.4 Evidently Metrics Calculation; 5.5 Evidently Monitoring Dashboard; 5.6 Dummy Monitoring; 5.7 Data Quality Monitoring; 5.8 Save Grafana Dashboard; 5.9 Debugging with Test Suites and Reports; 5.10 Monitoring Example"
+     },
+     "covers": [
+      "What to monitor: service health, model quality, data drift",
+      "Docker Compose stack with Postgres, Adminer and Grafana",
+      "Reference data and baseline model",
+      "Evidently metrics (drift, missing values) written to Postgres on a schedule",
+      "Grafana dashboards and saving them as code",
+      "Evidently test suites/reports for debugging"
+     ],
+     "gaps": [
+      {
+       "topic": "Label delay, slices and calibration as monitoring signals",
+       "resource": {
+        "resourceId": "evidently",
+        "title": "Evidently AI docs + open-source ML observability course",
+        "url": "https://www.evidentlyai.com/ml-observability-course",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Open-source ML observability course (modules on model quality and data drift)"
+       }
+      },
+      {
+       "topic": "Drift concepts with a quiz",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/20-model-monitoring-and-drift",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 02 lesson 20 'Model Monitoring and Drift'"
+       }
+      },
+      {
+       "topic": "Alert rules in Grafana",
+       "resource": {
+        "resourceId": "grafana-docs",
+        "title": "Grafana documentation",
+        "url": "https://grafana.com/docs/grafana/latest/alerting/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Grafana Alerting"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Catch injected drift (original M16 gate)",
+      "brief": "No-card path: the module's Docker Compose stack runs fully locally. Generate an Evidently drift report (reference vs current), push drift share and per-slice error to Prometheus (or the module's Postgres), alert in Grafana. Inject drift (shift a feature by +2 sd) and catch it.",
+      "done_when": "Grafana alert screenshot fires within one evaluation window of the injected batch; the clean batch did not fire; README states thresholds and why; a slice panel shows the subgroup most affected."
+     },
+     "quiz": [
+      {
+       "id": "M16.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Concept drift means:",
+       "options": [
+        "Inputs change distribution",
+        "The input -> label relationship changes",
+        "The schema changes",
+        "Latency rises"
+       ],
+       "answer": 1,
+       "explain": "P(y|x) changes; data drift is P(x)."
+      },
+      {
+       "id": "M16.U10.Q2",
+       "kind": "mcq",
+       "prompt": "With delayed labels, the earliest signal is usually:",
+       "options": [
+        "Accuracy",
+        "Input/prediction distribution drift",
+        "Cost",
+        "CPU"
+       ],
+       "answer": 1,
+       "explain": "You can measure inputs/outputs immediately; accuracy waits for labels."
+      },
+      {
+       "id": "M16.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Slice metrics matter because:",
+       "options": [
+        "They are faster",
+        "Aggregate metrics can hide failures on subgroups",
+        "They replace drift detection",
+        "Regulators ban aggregates"
+       ],
+       "answer": 1,
+       "explain": "A stable average can mask a collapsing segment."
+      },
+      {
+       "id": "M16.U10.Q4",
+       "kind": "short",
+       "prompt": "Data drift is detected but accuracy is unchanged. What do you do?",
+       "rubric": [
+        "Check whether drifted features matter (importance) and whether labels have matured.",
+        "Investigate the cause (upstream change, seasonality, new segment) and slices.",
+        "Adjust thresholds or schedule retraining; don't retrain blindly; document the decision."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U11",
+     "title": "Continual learning, retraining governance and ML incident review",
+     "hours": 4,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U10"
+     ],
+     "outcomes": [
+      "You can write a retraining policy with triggers, approvals, eval gates and rollback.",
+      "You can run an ML-specific postmortem (bad model, bad data).",
+      "You can add OpenTelemetry spans to an ML service."
+     ],
+     "topics": [
+      {
+       "id": "M16.04.07",
+       "title": "Retraining governance"
+      },
+      {
+       "id": "M16.04.09",
+       "title": "Incident review (ML-specific)"
+      },
+      {
+       "id": "M16.04.08",
+       "title": "OpenTelemetry for ML services"
+      }
+     ],
+     "learn": {
+      "resourceId": "fsdl-2022",
+      "title": "Full Stack Deep Learning 2022",
+      "url": "https://fullstackdeeplearning.com/course/2022/lecture-6-continual-learning/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 6 'Continual Learning'"
+     },
+     "covers": [
+      "Continual learning loop: logging, curation, retraining triggers, dataset formation, offline testing, online testing",
+      "Monitoring what matters and how to pick retraining strategies"
+     ],
+     "gaps": [
+      {
+       "topic": "Postmortem practice",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/workbook/postmortem-culture/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Workbook 'Postmortem Culture: Learning from Failure'"
+       }
+      },
+      {
+       "topic": "ML service spans",
+       "resource": {
+        "resourceId": "otel-docs",
+        "title": "OpenTelemetry documentation (Python)",
+        "url": "https://opentelemetry.io/docs/languages/python/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Python 'Getting Started' (add a span around predict())"
+       }
+      },
+      {
+       "topic": "Monitoring and continual learning notes",
+       "resource": {
+        "resourceId": "cs329s",
+        "title": "Stanford CS329S: Machine Learning Systems Design (2022)",
+        "url": "https://stanford-cs329s.github.io/syllabus.html",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture notes on data distribution shifts/monitoring and continual learning (syllabus)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Retraining policy + 'bad data shipped' postmortem",
+      "brief": "Write RETRAINING_POLICY.md (triggers, who approves, eval gate thresholds incl. slices, rollback). Stage an incident: ship a model trained on a corrupted batch through your U08 pipeline, detect it, roll back, write the postmortem.",
+      "done_when": "Postmortem has timeline, detection gap (why the CT gate missed it), customer impact, root cause and 3 action items, at least one improving detection; predict() spans visible in Jaeger with model version attribute."
+     },
+     "quiz": [
+      {
+       "id": "M16.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Fully automatic retrain-and-deploy with no gates risks:",
+       "options": [
+        "Only cost",
+        "Shipping regressions learned from corrupted data",
+        "Nothing",
+        "Slower releases"
+       ],
+       "answer": 1,
+       "explain": "Bad data becomes a bad model automatically."
+      },
+      {
+       "id": "M16.U11.Q2",
+       "kind": "mcq",
+       "prompt": "An ML incident review should include:",
+       "options": [
+        "Blame",
+        "Timeline, root cause, detection gap and an action item for detection",
+        "Only metrics",
+        "Only code diffs"
+       ],
+       "answer": 1,
+       "explain": "Blameless and focused on systemic fixes."
+      },
+      {
+       "id": "M16.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Stateful retraining (fine-tune on new data) vs stateless (from scratch) trades:",
+       "options": [
+        "Nothing",
+        "Compute cost vs risk of drift/forgetting",
+        "Accuracy only",
+        "Privacy"
+       ],
+       "answer": 1,
+       "explain": "Warm-starting is cheaper but can accumulate bias or forget."
+      },
+      {
+       "id": "M16.U11.Q4",
+       "kind": "short",
+       "prompt": "Who should approve promotion of a retrained model, and on what evidence?",
+       "rubric": [
+        "Named owner(s) (ML engineer + product/risk for high-impact models) or an automated gate with audit.",
+        "Evidence: offline metrics vs champion incl. slices, data validation passed, shadow/canary results.",
+        "Rollback plan ready."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M16.S5",
+   "title": "LLMOps and agent operations",
+   "units": [
+    {
+     "id": "M16.U12",
+     "title": "Tracing and observability for LLM apps and agents (Langfuse)",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U10"
+     ],
+     "outcomes": [
+      "You can trace an LLM app across retrieval, prompts, model calls and tools.",
+      "You can attribute traces to prompt/model/tool versions.",
+      "You can apply sampling, PII redaction, retention and access control.",
+      "You can go from a user report to a reproducible trace."
+     ],
+     "topics": [
+      {
+       "id": "M16.05.01",
+       "title": "LLM request tracing across model, retrieval and tool calls"
+      },
+      {
+       "id": "M16.05.02",
+       "title": "Prompt/model/tool version attribution in traces"
+      },
+      {
+       "id": "M16.05.06",
+       "title": "Trace sampling, PII redaction, retention and access controls"
+      },
+      {
+       "id": "M16.05.07",
+       "title": "Failure triage from user report to reproducible trace"
+      }
+     ],
+     "learn": {
+      "resourceId": "langfuse",
+      "title": "Langfuse documentation (OSS LLM observability)",
+      "url": "https://langfuse.com/docs",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Docs: Observability overview + Get Started (Python SDK/decorator), Sessions, Prompt Management; Self-hosting with Docker Compose"
+     },
+     "covers": [
+      "Traces, observations/spans and generations with token usage and cost",
+      "Python SDK decorators and integrations (OpenAI, LangChain, LlamaIndex)",
+      "Sessions and user IDs",
+      "Prompt management with versions linked to traces",
+      "Self-hosting via Docker Compose"
+     ],
+     "gaps": [
+      {
+       "topic": "Choosing an observability stack (concepts; real-tool lab = Langfuse here)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/13-llm-observability",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 13 'LLM Observability Stack Selection'"
+       }
+      },
+      {
+       "topic": "PII redaction before export",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/25-security-secrets-audit",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 25 'Security - Secrets, API Key Rotation, Audit Logs, Guardrails' (PII scrubber section)"
+       }
+      },
+      {
+       "topic": "OTel GenAI conventions",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/20-opentelemetry-genai",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 lesson 20 'OpenTelemetry GenAI'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Instrument your RAG/agent (real-tool lab for rohitg00 17/13)",
+      "brief": "No-card path: self-host Langfuse with Docker Compose locally; model calls via a free-tier API or local llama.cpp. Instrument your M11 RAG or M12 agent: retrieval span, generation with prompt version + model, tool spans; redact emails before export; sample 20% but keep 100% of errors.",
+      "done_when": "Langfuse UI shows a full trace tree for one request with prompt version and cost; a test proves an email in input never appears in the stored trace; you reproduce a 'bad answer' report from its trace ID alone (README walkthrough)."
+     },
+     "quiz": [
+      {
+       "id": "M16.U12.Q1",
+       "kind": "mcq",
+       "prompt": "A useful LLM trace links:",
+       "options": [
+        "Only the final answer",
+        "Retrieval, prompt version, model, tool calls, tokens, latency and cost in one tree",
+        "Only errors",
+        "Only the user ID"
+       ],
+       "answer": 1,
+       "explain": "You need the whole causal chain to debug."
+      },
+      {
+       "id": "M16.U12.Q2",
+       "kind": "mcq",
+       "prompt": "PII redaction should happen:",
+       "options": [
+        "After export",
+        "Before traces leave the app/collector",
+        "Never",
+        "In dashboards"
+       ],
+       "answer": 1,
+       "explain": "Once exported, the data is already stored elsewhere."
+      },
+      {
+       "id": "M16.U12.Q3",
+       "kind": "mcq",
+       "prompt": "Sampling traces at 10% is risky for:",
+       "options": [
+        "Cost",
+        "Investigating rare failures, unless errors are always kept",
+        "Latency",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Use tail/error-based sampling."
+      },
+      {
+       "id": "M16.U12.Q4",
+       "kind": "short",
+       "prompt": "Which fields do you need to reproduce an agent failure deterministically?",
+       "rubric": [
+        "Exact inputs + conversation history, prompt template version, model name/version and parameters (temperature, seed).",
+        "Retrieved documents/IDs and tool calls with their outputs.",
+        "Code/config version and timestamps; notes provider non-determinism."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M16.U13",
+     "title": "LLM eval gates, versioning, A/B tests and budgets",
+     "hours": 7,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U12"
+     ],
+     "outcomes": [
+      "You can add an offline eval suite to CI that blocks regressions.",
+      "You can measure agent outcomes, steps, retries and approvals.",
+      "You can attribute token, latency and cost budgets per task.",
+      "You can design an A/B test for an LLM feature."
+     ],
+     "topics": [
+      {
+       "id": "M16.05.03",
+       "title": "Agent outcome, step count, retries, handoffs and approval metrics"
+      },
+      {
+       "id": "M16.05.04",
+       "title": "Offline eval suites in CI and online quality review"
+      },
+      {
+       "id": "M16.05.05",
+       "title": "Token, latency and cost budgets with per-task attribution"
+      },
+      {
+       "id": "M16.05.08",
+       "title": "A/B testing LLM features"
+      }
+     ],
+     "learn": {
+      "resourceId": "C10",
+      "title": "Full Stack LLM Bootcamp (Spring 2023)",
+      "url": "https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/llmops/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 'LLMOps' (Spring 2023)"
+     },
+     "covers": [
+      "Choosing base models (proprietary vs open) and prompt management",
+      "Testing LLMs: building eval sets, metrics, LLM-as-judge",
+      "Monitoring and feedback loops; test-driven LLM development"
+     ],
+     "gaps": [
+      {
+       "topic": "A/B testing LLM features (evals vs A/B, CUPED, sequential tests)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/21-ab-testing-llm-features",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 21 'A/B Testing LLM Features - GrowthBook, Statsig, and the Vibes Problem'"
+       }
+      },
+      {
+       "topic": "Unit economics and per-task cost attribution",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/27-finops-llms",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 27 'FinOps for LLMs - Unit Economics and Multi-Tenant Attribution'"
+       }
+      },
+      {
+       "topic": "Eval patterns",
+       "resource": {
+        "resourceId": "eugeneyan-llm-patterns",
+        "title": "Patterns for Building LLM-based Systems & Products",
+        "url": "https://eugeneyan.com/writing/llm-patterns/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 'Evals'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Eval gate in CI + per-task cost table (real-tool lab for rohitg00 17/21, 17/27)",
+      "brief": "No-card path: GitHub Actions + a free-tier model or local llama.cpp in CI. 50-case eval suite runs on every prompt change; block the PR if pass rate drops > 3 points or cost per task rises > 20%. Publish a per-task cost table from Langfuse data. Write an A/B test plan (metric, MDE, duration) for one change.",
+      "done_when": "A PR with a worse prompt is red with the eval diff in the job summary; COSTS.md lists cost per successful task by task type; AB_PLAN.md states hypothesis, primary metric, guardrail metrics and sample size."
+     },
+     "quiz": [
+      {
+       "id": "M16.U13.Q1",
+       "kind": "mcq",
+       "prompt": "An eval gate in CI compares:",
+       "options": [
+        "Code style",
+        "A candidate prompt/model vs baseline on a fixed eval set with thresholds",
+        "Image sizes",
+        "Latency only"
+       ],
+       "answer": 1,
+       "explain": "Like a test suite for model behaviour."
+      },
+      {
+       "id": "M16.U13.Q2",
+       "kind": "mcq",
+       "prompt": "Cost per successful task requires:",
+       "options": [
+        "Token price only",
+        "Tokens x price across all retries/steps, divided by successes",
+        "GPU hours",
+        "User count"
+       ],
+       "answer": 1,
+       "explain": "Failures and retries cost money but deliver nothing."
+      },
+      {
+       "id": "M16.U13.Q3",
+       "kind": "mcq",
+       "prompt": "An online 'vibes' check alone is insufficient because:",
+       "options": [
+        "It is slow",
+        "It is unsystematic and cannot detect small regressions",
+        "It is expensive",
+        "It is illegal"
+       ],
+       "answer": 1,
+       "explain": "You need fixed eval sets plus statistically designed online tests."
+      },
+      {
+       "id": "M16.U13.Q4",
+       "kind": "short",
+       "prompt": "How do you keep an LLM eval set from going stale?",
+       "rubric": [
+        "Continuously add real failures/user reports from traces.",
+        "Version the set; stratify by task/slice; retire saturated items.",
+        "Periodic human review/relabel; guard against train/eval contamination."
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "End-to-end versioned ML pipeline (superset of the Zoomcamp final project)",
+  "brief": "Prefect flow: ingest -> validate (Pandera) -> features -> train -> MLflow registry; champion/challenger gate in CI; containerised service plus batch scoring; canary on k3d; Evidently + Prometheus/Grafana drift alert caught on injected drift; retraining policy and postmortem. LLMOps extension (required for AI-engineer track): Langfuse traces + CI eval gate on an LLM feature. No-card path: everything runs locally (MLflow, MinIO/LocalStack, Prefect server, k3d, Grafana) with GitHub Actions; public demo on a Hugging Face Docker Space. Reference: https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/07-project",
+  "rubric": [
+   {
+    "criterion": "Reproducibility",
+    "levels": [
+     "Manual steps",
+     "Mostly scripted",
+     "Fresh clone + `make all` rebuilds data, model and service; data/model version traceable from any prediction"
+    ]
+   },
+   {
+    "criterion": "Automation",
+    "levels": [
+     "Manual runs",
+     "Scheduled flow, partial tests",
+     "Scheduled/backfillable flow; CI tests code/data/model; automatic logged promotion gate"
+    ]
+   },
+   {
+    "criterion": "Deployment safety",
+    "levels": [
+     "Direct replace",
+     "Rollback possible but slow",
+     "Canary or shadow rollout plus one-command rollback demonstrated on video"
+    ]
+   },
+   {
+    "criterion": "Monitoring",
+    "levels": [
+     "None",
+     "Dashboard only",
+     "Injected drift triggers an alert; dashboard shows service and model metrics; runbook exists"
+    ]
+   },
+   {
+    "criterion": "Judgement",
+    "levels": [
+     "No rationale",
+     "Some rationale",
+     "README explains tool choices, what was skipped (e.g. feature store) and why, cost and known failure modes"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

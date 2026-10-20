@@ -1,0 +1,2061 @@
+[
+ {
+  "id": "C09",
+  "type": "course",
+  "title": "Hugging Face LLM Course",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/learn/llm-course/en/chapter1/1",
+  "free": true,
+  "language": "English",
+  "notes": "Re-scoped: library fluency in M09 (ch. 1.8, 2, 3, 5, 6.5) and the M13 spine (ch. 10–12: Argilla curation, chat templates, SFT, LoRA, evaluation, GRPO).",
+  "modules": [
+   "M09",
+   "M13"
+  ]
+ },
+ {
+  "id": "C11",
+  "type": "course",
+  "title": "LangChain RAG From Scratch (videos + notebooks)",
+  "author": "Lance Martin, LangChain",
+  "url": "https://github.com/langchain-ai/rag-from-scratch",
+  "free": true,
+  "language": "English",
+  "notes": "Demoted from M11 primary to the query-transformation unit (M11.U10). Watch for concepts; APIs in the notebooks are 2024-era LangChain. Playlist: https://www.youtube.com/playlist?list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "C14",
+  "type": "course",
+  "title": "Stanford CS336 Language Modeling from Scratch (Spring 2026)",
+  "author": "Percy Liang, Tatsunori Hashimoto et al.",
+  "url": "https://cs336.stanford.edu/",
+  "free": true,
+  "language": "English",
+  "notes": "Summit of M14. Public video playlist https://www.youtube.com/playlist?list=PLoROMvodv4rMqXOcazWaTUHhq-yembLCV, lecture traces/slides https://github.com/stanford-cs336/lectures, five public assignments. Honour policy forbids AI autocomplete on assignments.",
+  "modules": [
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "C17",
+  "type": "course",
+  "title": "Hugging Face Deep Reinforcement Learning Course",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/learn/deep-rl-course/en/unit0/introduction",
+  "free": true,
+  "language": "English",
+  "notes": "Units 1, 2, 4 and 8 used in M13.U08.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "B08",
+  "type": "book",
+  "title": "Speech and Language Processing (3rd ed. draft)",
+  "author": "Dan Jurafsky, James H. Martin",
+  "url": "https://web.stanford.edu/~jurafsky/slp3/",
+  "free": true,
+  "language": "English",
+  "notes": "Free PDF chapters. Ch. 2, 3, 5, 7, 11, 14 used in M09/M11.",
+  "modules": [
+   "M09",
+   "M11"
+  ]
+ },
+ {
+  "id": "P03",
+  "type": "paper",
+  "title": "Attention Is All You Need",
+  "author": "Vaswani et al. 2017",
+  "url": "https://arxiv.org/abs/1706.03762",
+  "free": true,
+  "language": "English",
+  "notes": "Read during M09.U06 (not after the module).",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "P06",
+  "type": "paper",
+  "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+  "author": "Karpukhin et al. 2020",
+  "url": "https://arxiv.org/abs/2004.04906",
+  "free": true,
+  "language": "English",
+  "notes": "Read in M11.U08.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "P09",
+  "type": "paper",
+  "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE)",
+  "author": "Gao et al. 2022",
+  "url": "https://arxiv.org/abs/2212.10496",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U10.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "P12",
+  "type": "paper",
+  "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+  "author": "Edge et al. 2024",
+  "url": "https://arxiv.org/abs/2404.16130",
+  "free": true,
+  "language": "English",
+  "notes": "Awareness in M11.U10.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "P15",
+  "type": "paper",
+  "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+  "author": "Hu et al. 2021",
+  "url": "https://arxiv.org/abs/2106.09685",
+  "free": true,
+  "language": "English",
+  "notes": "Read in M13.U03.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "P16",
+  "type": "paper",
+  "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+  "author": "Dettmers et al. 2023",
+  "url": "https://arxiv.org/abs/2305.14314",
+  "free": true,
+  "language": "English",
+  "notes": "Read in M13.U03.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "P17",
+  "type": "paper",
+  "title": "Training language models to follow instructions with human feedback (InstructGPT)",
+  "author": "Ouyang et al. 2022",
+  "url": "https://arxiv.org/abs/2203.02155",
+  "free": true,
+  "language": "English",
+  "notes": "Read in M13.U06.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "P18",
+  "type": "paper",
+  "title": "Direct Preference Optimization",
+  "author": "Rafailov et al. 2023",
+  "url": "https://arxiv.org/abs/2305.18290",
+  "free": true,
+  "language": "English",
+  "notes": "Read in M13.U07.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "P19",
+  "type": "paper",
+  "title": "Training Compute-Optimal Large Language Models (Chinchilla)",
+  "author": "Hoffmann et al. 2022",
+  "url": "https://arxiv.org/abs/2203.15556",
+  "free": true,
+  "language": "English",
+  "notes": "M09.U08 (intuition), M14.U04 (quantitative).",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "P23",
+  "type": "paper",
+  "title": "Datasheets for Datasets",
+  "author": "Gebru et al. 2018",
+  "url": "https://arxiv.org/abs/1803.09010",
+  "free": true,
+  "language": "English",
+  "notes": "Template for M13.U02 dataset datasheet.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "P24",
+  "type": "paper",
+  "title": "Model Cards for Model Reporting",
+  "author": "Mitchell et al. 2018",
+  "url": "https://arxiv.org/abs/1810.03993",
+  "free": true,
+  "language": "English",
+  "notes": "Template for M13.U10 and M14.U10.",
+  "modules": [
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "P28",
+  "type": "paper",
+  "title": "Don't Do RAG: When Cache-Augmented Generation is All You Need",
+  "author": "Chan et al. 2024",
+  "url": "https://arxiv.org/abs/2412.15605",
+  "free": true,
+  "language": "English",
+  "notes": "Long-context vs RAG vs CAG decision, M11.U11.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-lost-in-the-middle",
+  "type": "paper",
+  "title": "Lost in the Middle: How Language Models Use Long Contexts",
+  "author": "Liu et al. 2023",
+  "url": "https://arxiv.org/abs/2307.03172",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P29. M10.U05, M11.U11.",
+  "modules": [
+   "M10",
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-llm-as-judge-mtbench",
+  "type": "paper",
+  "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+  "author": "Zheng et al. 2023",
+  "url": "https://arxiv.org/abs/2306.05685",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P30. M10.U09.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "paper-who-validates-validators",
+  "type": "paper",
+  "title": "Who Validates the Validators? Aligning LLM-Assisted Evaluation with Human Preferences",
+  "author": "Shankar et al. 2024",
+  "url": "https://arxiv.org/abs/2404.12272",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P31. M10.U09.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "paper-ragas",
+  "type": "paper",
+  "title": "Ragas: Automated Evaluation of Retrieval Augmented Generation",
+  "author": "Es et al. 2023",
+  "url": "https://arxiv.org/abs/2309.15217",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P32. M11.U12.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-beir",
+  "type": "paper",
+  "title": "BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of IR Models",
+  "author": "Thakur et al. 2021",
+  "url": "https://arxiv.org/abs/2104.08663",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P33. M11.U02.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-deepseekmath-grpo",
+  "type": "paper",
+  "title": "DeepSeekMath (introduces GRPO)",
+  "author": "Shao et al. 2024",
+  "url": "https://arxiv.org/abs/2402.03300",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P35. M13.U09.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "paper-deepseek-r1",
+  "type": "paper",
+  "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via RL",
+  "author": "DeepSeek-AI 2025",
+  "url": "https://arxiv.org/abs/2501.12948",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P36. M13.U09.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "paper-kaplan-scaling",
+  "type": "paper",
+  "title": "Scaling Laws for Neural Language Models",
+  "author": "Kaplan et al. 2020",
+  "url": "https://arxiv.org/abs/2001.08361",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P37. M14.U04.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-roformer",
+  "type": "paper",
+  "title": "RoFormer: Enhanced Transformer with Rotary Position Embedding",
+  "author": "Su et al. 2021",
+  "url": "https://arxiv.org/abs/2104.09864",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P38. M09.U07, M14.U06.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "paper-gqa",
+  "type": "paper",
+  "title": "GQA: Training Generalized Multi-Query Transformer Models",
+  "author": "Ainslie et al. 2023",
+  "url": "https://arxiv.org/abs/2305.13245",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P39. M14.U06.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-mamba",
+  "type": "paper",
+  "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+  "author": "Gu & Dao 2023",
+  "url": "https://arxiv.org/abs/2312.00752",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P41. M14.U07.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-switch",
+  "type": "paper",
+  "title": "Switch Transformers",
+  "author": "Fedus, Zoph, Shazeer 2021",
+  "url": "https://arxiv.org/abs/2101.03961",
+  "free": true,
+  "language": "English",
+  "notes": "Audit proposal P42. M14.U06.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-yarn",
+  "type": "paper",
+  "title": "YaRN: Efficient Context Window Extension of LLMs",
+  "author": "Peng et al. 2023",
+  "url": "https://arxiv.org/abs/2309.00071",
+  "free": true,
+  "language": "English",
+  "notes": "RoPE scaling for long context, M14.U06.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-deepseek-v2-mla",
+  "type": "paper",
+  "title": "DeepSeek-V2 (introduces Multi-head Latent Attention)",
+  "author": "DeepSeek-AI 2024",
+  "url": "https://arxiv.org/abs/2405.04434",
+  "free": true,
+  "language": "English",
+  "notes": "MLA, M14.U06.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-retro",
+  "type": "paper",
+  "title": "Improving language models by retrieving from trillions of tokens (RETRO)",
+  "author": "Borgeaud et al. 2021",
+  "url": "https://arxiv.org/abs/2112.04426",
+  "free": true,
+  "language": "English",
+  "notes": "Retrieval-augmented pretraining awareness, M14.U07.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-search-r1",
+  "type": "paper",
+  "title": "Search-R1: Training LLMs to Reason and Leverage Search Engines with RL",
+  "author": "Jin et al. 2025",
+  "url": "https://arxiv.org/abs/2503.09516",
+  "free": true,
+  "language": "English",
+  "notes": "Retrieval + reasoning RL awareness, M14.U07.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-hinton-distillation",
+  "type": "paper",
+  "title": "Distilling the Knowledge in a Neural Network",
+  "author": "Hinton, Vinyals, Dean 2015",
+  "url": "https://arxiv.org/abs/1503.02531",
+  "free": true,
+  "language": "English",
+  "notes": "M13.U05.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "paper-offline-rl-tutorial",
+  "type": "paper",
+  "title": "Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems",
+  "author": "Levine et al. 2020",
+  "url": "https://arxiv.org/abs/2005.01643",
+  "free": true,
+  "language": "English",
+  "notes": "Offline RL limits awareness, M13.U08.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "paper-xstest",
+  "type": "paper",
+  "title": "XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in LLMs",
+  "author": "Röttger et al. 2023",
+  "url": "https://arxiv.org/abs/2308.01263",
+  "free": true,
+  "language": "English",
+  "notes": "Over-refusal set, M13.U10.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "paper-error-bars-evals",
+  "type": "paper",
+  "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+  "author": "Miller 2024 (Anthropic)",
+  "url": "https://arxiv.org/abs/2411.00640",
+  "free": true,
+  "language": "English",
+  "notes": "Confidence intervals for eval suites, M10.U10, M14.U09.",
+  "modules": [
+   "M10",
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-routellm",
+  "type": "paper",
+  "title": "RouteLLM: Learning to Route LLMs with Preference Data",
+  "author": "Ong et al. 2024",
+  "url": "https://arxiv.org/abs/2406.18665",
+  "free": true,
+  "language": "English",
+  "notes": "Model routing, M10.U06.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "paper-bertscore",
+  "type": "paper",
+  "title": "BERTScore: Evaluating Text Generation with BERT",
+  "author": "Zhang et al. 2019",
+  "url": "https://arxiv.org/abs/1904.09675",
+  "free": true,
+  "language": "English",
+  "notes": "Semantic similarity metrics, M10.U08.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "paper-clasheval",
+  "type": "paper",
+  "title": "ClashEval: Quantifying the tug-of-war between an LLM's internal prior and external evidence",
+  "author": "Wu et al. 2024",
+  "url": "https://arxiv.org/abs/2404.10198",
+  "free": true,
+  "language": "English",
+  "notes": "Contradiction handling in RAG, M11.U11.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-mmr-1998",
+  "type": "paper",
+  "title": "The Use of MMR, Diversity-Based Reranking for Reordering Documents and Producing Summaries",
+  "author": "Carbonell & Goldstein 1998",
+  "url": "https://www.cs.cmu.edu/~jgc/publication/The_Use_MMR_Diversity_Based_LTMIR_1998.pdf",
+  "free": true,
+  "language": "English",
+  "notes": "Original MMR formulation, M11.U09.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-ml-reproducibility",
+  "type": "paper",
+  "title": "Improving Reproducibility in Machine Learning Research (NeurIPS 2019 program report)",
+  "author": "Pineau et al. 2020",
+  "url": "https://arxiv.org/abs/2003.12206",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U10.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "paper-tinystories",
+  "type": "paper",
+  "title": "TinyStories: How Small Can Language Models Be and Still Speak Coherent English?",
+  "author": "Eldan & Li 2023",
+  "url": "https://arxiv.org/abs/2305.07759",
+  "free": true,
+  "language": "English",
+  "notes": "Dataset choice for reduced-scale M14 runs.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "karpathy-z2h",
+  "type": "course",
+  "title": "Neural Networks: Zero to Hero",
+  "author": "Andrej Karpathy",
+  "url": "https://karpathy.ai/zero-to-hero.html",
+  "free": true,
+  "language": "English",
+  "notes": "Primary spine for M09 internals (makemore 1–2, Let's build GPT, GPT tokenizer) and M14.U01 (Let's reproduce GPT-2 124M).",
+  "modules": [
+   "M09",
+   "M14"
+  ]
+ },
+ {
+  "id": "karpathy-deep-dive",
+  "type": "video",
+  "title": "Deep Dive into LLMs like ChatGPT (3h31m, Feb 2025)",
+  "author": "Andrej Karpathy",
+  "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI",
+  "free": true,
+  "language": "English",
+  "notes": "Lifecycle mental model, M09.U01.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "karpathy-intro-llms",
+  "type": "video",
+  "title": "[1hr Talk] Intro to Large Language Models",
+  "author": "Andrej Karpathy",
+  "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
+  "free": true,
+  "language": "English",
+  "notes": "Short alternative to the Deep Dive.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "3b1b-dl",
+  "type": "course",
+  "title": "3Blue1Brown — Neural Networks / Deep Learning series (chapters 5–6 on transformers)",
+  "author": "Grant Sanderson",
+  "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+  "free": true,
+  "language": "English",
+  "notes": "Visual intuition fill-ins for attention and transformers.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "raschka-llms-from-scratch",
+  "type": "repo",
+  "title": "Build a Large Language Model (From Scratch) — code repo + free 7-video course",
+  "author": "Sebastian Raschka",
+  "url": "https://github.com/rasbt/LLMs-from-scratch",
+  "free": true,
+  "language": "English",
+  "notes": "Code and the YouTube course (https://www.youtube.com/playlist?list=PLTKMiZHVd_2IIEsoJrWACkIxLRdfMlw11) are free; the printed book is paid. Chapters 2–7 + appendices D/E used in M09/M13/M14.",
+  "modules": [
+   "M09",
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "raschka-reasoning-from-scratch",
+  "type": "repo",
+  "title": "Build a Reasoning Model (From Scratch) — code repo",
+  "author": "Sebastian Raschka",
+  "url": "https://github.com/rasbt/reasoning-from-scratch",
+  "free": true,
+  "language": "English",
+  "notes": "Ch. 6 GRPO notebook, M13.U09.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "cs224n",
+  "type": "course",
+  "title": "Stanford CS224N NLP with Deep Learning (Spring 2024 public videos + Winter 2026 slides)",
+  "author": "Christopher Manning et al.",
+  "url": "https://web.stanford.edu/class/cs224n/",
+  "free": true,
+  "language": "English",
+  "notes": "Public videos are the Spring 2024 playlist https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D (a few 2023 lectures are mixed in); 2026 videos are Canvas-only, 2026 slides are public.",
+  "modules": [
+   "M09",
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "llm-zoomcamp",
+  "type": "course",
+  "title": "DataTalksClub LLM Zoomcamp (2026)",
+  "author": "Alexey Grigorev, DataTalksClub",
+  "url": "https://github.com/DataTalksClub/llm-zoomcamp",
+  "free": true,
+  "language": "English",
+  "notes": "M11 primary (modules 1, 2, 4, 6) and M10.U11 monitoring (module 5). Free; cohort or self-paced.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "dlai-rag",
+  "type": "course",
+  "title": "DeepLearning.AI — Retrieval Augmented Generation (RAG) course",
+  "author": "Zain Hasan, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/courses/retrieval-augmented-generation",
+  "free": "audit",
+  "language": "English",
+  "notes": "26h; audit free, certificate needs PRO. Modules 2–5 used in M11.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "dlai-context-engineering",
+  "type": "course",
+  "title": "DeepLearning.AI — Context Engineering",
+  "author": "Chroma, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/courses/context-engineering",
+  "free": "audit",
+  "language": "English",
+  "notes": "20h; audit free, certificate PRO. Optional depth for M10.U05.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "dlai-pydantic",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Pydantic for LLM Workflows",
+  "author": "DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/",
+  "free": true,
+  "language": "English",
+  "notes": "Free short course, M10.U03.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "dlai-prompt-eng-devs",
+  "type": "course",
+  "title": "DeepLearning.AI short course — ChatGPT Prompt Engineering for Developers",
+  "author": "Isa Fulford, Andrew Ng",
+  "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/",
+  "free": true,
+  "language": "English",
+  "notes": "2023 API style; principles still hold. Backup for M10.U04.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "dlai-guardrails",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Safe and Reliable AI via Guardrails",
+  "author": "GuardrailsAI, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/safe-and-reliable-ai-via-guardrails/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U13.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "dlai-evaluating-agents",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Evaluating AI Agents",
+  "author": "Arize, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/evaluating-ai-agents/",
+  "free": true,
+  "language": "English",
+  "notes": "Backup for M10.U10.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "dlai-document-ai",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Document AI: From OCR to Agentic Doc Extraction",
+  "author": "LandingAI, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/document-ai-from-ocr-to-agentic-doc-extraction/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U03 primary.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "dlai-embedding-models",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Embedding Models: from Architecture to Implementation",
+  "author": "Vectara, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/embedding-models-from-architecture-to-implementation/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U05.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "dlai-retrieval-optimization",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Retrieval Optimization: Tokenization to Vector Quantization",
+  "author": "Qdrant, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/retrieval-optimization-from-tokenization-to-vector-quantization/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U06 backup.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "dlai-multivector-image",
+  "type": "course",
+  "title": "DeepLearning.AI — Multi-vector Image Retrieval",
+  "author": "Qdrant, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/courses/multi-vector-image-retrieval",
+  "free": true,
+  "language": "English",
+  "notes": "Multimodal retrieval awareness, M11.U10.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "dlai-attention-pytorch",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Attention in Transformers: Concepts and Code in PyTorch",
+  "author": "Josh Starmer (StatQuest)",
+  "url": "https://www.deeplearning.ai/short-courses/attention-in-transformers-concepts-and-code-in-pytorch/",
+  "free": true,
+  "language": "English",
+  "notes": "Backup for M09.U06.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "dlai-post-training",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Post-training of LLMs",
+  "author": "Banghua Zhu, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/post-training-of-llms/",
+  "free": true,
+  "language": "English",
+  "notes": "Free short course (SFT, DPO, online RL). M13.U01, M13.U07.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "dlai-grpo",
+  "type": "course",
+  "title": "DeepLearning.AI short course — Reinforcement Fine-Tuning LLMs with GRPO",
+  "author": "Predibase, DeepLearning.AI",
+  "url": "https://www.deeplearning.ai/short-courses/reinforcement-fine-tuning-llms-grpo/",
+  "free": true,
+  "language": "English",
+  "notes": "Backup for M13.U09.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "qdrant-essentials",
+  "type": "course",
+  "title": "Qdrant Essentials course",
+  "author": "Qdrant",
+  "url": "https://qdrant.tech/course/essentials/",
+  "free": true,
+  "language": "English",
+  "notes": "Backup for M11.U07.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "smol-course",
+  "type": "course",
+  "title": "Hugging Face smol course",
+  "author": "Hugging Face",
+  "url": "https://github.com/huggingface/smol-course",
+  "free": true,
+  "language": "English",
+  "notes": "Backup for M13.U04.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "deeplearning-ms-research-writing",
+  "type": "video",
+  "title": "How to Write a Great Research Paper",
+  "author": "Simon Peyton Jones (Microsoft Research)",
+  "url": "https://www.youtube.com/watch?v=VK51E3gHENc",
+  "free": true,
+  "language": "English",
+  "notes": "Technical-writing fill-in, M14.U10.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "ir-book",
+  "type": "book",
+  "title": "Introduction to Information Retrieval",
+  "author": "Manning, Raghavan, Schütze",
+  "url": "https://nlp.stanford.edu/IR-book/",
+  "free": true,
+  "language": "English",
+  "notes": "Free HTML edition. §6.2–6.3 tf-idf, §8.4 ranked evaluation, §11.4.3 BM25.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "rlhf-book",
+  "type": "book",
+  "title": "RLHF Book",
+  "author": "Nathan Lambert",
+  "url": "https://rlhfbook.com/",
+  "free": true,
+  "language": "English",
+  "notes": "Free online. M13.U06, M13.U10.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "sutton-barto",
+  "type": "book",
+  "title": "Reinforcement Learning: An Introduction (2nd ed.)",
+  "author": "Sutton & Barto",
+  "url": "http://incompleteideas.net/book/the-book-2nd.html",
+  "free": true,
+  "language": "English",
+  "notes": "Free PDF. Ch. 2 bandits, ch. 3–4 Bellman, M13.U08.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "mmds-book",
+  "type": "book",
+  "title": "Mining of Massive Datasets — ch. 3 Finding Similar Items (MinHash/LSH)",
+  "author": "Leskovec, Rajaraman, Ullman",
+  "url": "http://infolab.stanford.edu/~ullman/mmds/ch3n.pdf",
+  "free": true,
+  "language": "English",
+  "notes": "Near-duplicate detection, M13.U02, M14.U03.",
+  "modules": [
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "aie-book-summaries",
+  "type": "doc",
+  "title": "AI Engineering (book) — free chapter summaries repo",
+  "author": "Chip Huyen",
+  "url": "https://github.com/chiphuyen/aie-book/blob/main/chapter-summaries.md",
+  "free": true,
+  "language": "English",
+  "notes": "The O'Reilly book is PAID; only the repo summaries/notes are free. Optional purchase.",
+  "modules": [
+   "M10",
+   "M13"
+  ]
+ },
+ {
+  "id": "rohitg00-aefs",
+  "type": "repo",
+  "title": "AI Engineering from Scratch (lessons, phases 0/5/7/9/10/11/17)",
+  "author": "Rohit Ghumare (rohitg00)",
+  "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+  "free": true,
+  "language": "English",
+  "notes": "Concept→build→use→ship lessons. Primary only where its from-scratch build is the best free option (structured outputs, caching/routing/batch, guardrails, chunking, API keys). Several lessons simulate the model/judge; treat its numeric claims as claims to verify.",
+  "modules": [
+   "M09",
+   "M10",
+   "M11",
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "minbpe",
+  "type": "repo",
+  "title": "minbpe",
+  "author": "Andrej Karpathy",
+  "url": "https://github.com/karpathy/minbpe",
+  "free": true,
+  "language": "English",
+  "notes": "M09.U03, M14.U02.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "build-nanogpt",
+  "type": "repo",
+  "title": "build-nanogpt",
+  "author": "Andrej Karpathy",
+  "url": "https://github.com/karpathy/build-nanogpt",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U01.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "nanochat",
+  "type": "repo",
+  "title": "nanochat — the best ChatGPT that $100 can buy",
+  "author": "Andrej Karpathy",
+  "url": "https://github.com/karpathy/nanochat",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U08 (optional). Pipeline: tok_train → base_train → base_eval → chat_sft → chat_rl → chat_eval → chat_cli. runs/speedrun.sh targets a rented 8×H100 node (~2h, ≈$48 per README, Oct 2026); runs/runcpu.sh is a CPU/MPS smoke test; on T4 use fp32/fp16 and lower --device-batch-size.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "cs336-a1",
+  "type": "repo",
+  "title": "CS336 Assignment 1 (Basics)",
+  "author": "Stanford CS336",
+  "url": "https://github.com/stanford-cs336/assignment1-basics",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U02.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "cs336-a4",
+  "type": "repo",
+  "title": "CS336 Assignment 4 (Data)",
+  "author": "Stanford CS336",
+  "url": "https://github.com/stanford-cs336/assignment4-data",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U03.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "cs336-a5",
+  "type": "repo",
+  "title": "CS336 Assignment 5 (Alignment & reasoning RL)",
+  "author": "Stanford CS336",
+  "url": "https://github.com/stanford-cs336/assignment5-alignment",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U08 backup.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "lm-eval-harness",
+  "type": "repo",
+  "title": "EleutherAI lm-evaluation-harness",
+  "author": "EleutherAI",
+  "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+  "free": true,
+  "language": "English",
+  "notes": "M13.U05, M14.U05.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "beir-repo",
+  "type": "repo",
+  "title": "BEIR benchmark code",
+  "author": "beir-cellar",
+  "url": "https://github.com/beir-cellar/beir",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U02.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "rank-bm25",
+  "type": "repo",
+  "title": "rank_bm25",
+  "author": "Dorian Brown",
+  "url": "https://github.com/dorianbrown/rank_bm25",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U01 reference implementation.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "docling",
+  "type": "repo",
+  "title": "Docling",
+  "author": "Docling project (IBM)",
+  "url": "https://github.com/docling-project/docling",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U03.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "markitdown",
+  "type": "repo",
+  "title": "MarkItDown",
+  "author": "Microsoft",
+  "url": "https://github.com/microsoft/markitdown",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U03.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "pgvector",
+  "type": "repo",
+  "title": "pgvector",
+  "author": "pgvector",
+  "url": "https://github.com/pgvector/pgvector",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U07 (HNSW/IVFFlat, filtering, iterative scans).",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "llmlingua",
+  "type": "repo",
+  "title": "LLMLingua prompt compression",
+  "author": "Microsoft",
+  "url": "https://github.com/microsoft/LLMLingua",
+  "free": true,
+  "language": "English",
+  "notes": "Context compression, M11.U10.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "tiktoken",
+  "type": "repo",
+  "title": "tiktoken",
+  "author": "OpenAI",
+  "url": "https://github.com/openai/tiktoken",
+  "free": true,
+  "language": "English",
+  "notes": "Token counting, M09.U03.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "ollama",
+  "type": "repo",
+  "title": "Ollama",
+  "author": "Ollama",
+  "url": "https://github.com/ollama/ollama",
+  "free": true,
+  "language": "English",
+  "notes": "Free local models (docs https://docs.ollama.com/). M10.U01, M13.U05.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "llama-cpp",
+  "type": "repo",
+  "title": "llama.cpp (GGUF)",
+  "author": "ggml-org",
+  "url": "https://github.com/ggml-org/llama.cpp",
+  "free": true,
+  "language": "English",
+  "notes": "GGUF export/serving, M13.U05.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "datatrove",
+  "type": "repo",
+  "title": "datatrove (data processing at scale)",
+  "author": "Hugging Face",
+  "url": "https://github.com/huggingface/datatrove",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U03.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "tuning-playbook",
+  "type": "repo",
+  "title": "Deep Learning Tuning Playbook",
+  "author": "Google Research",
+  "url": "https://github.com/google-research/tuning_playbook",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U09–U10.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "hf-eval-guidebook",
+  "type": "doc",
+  "title": "LLM Evaluation Guidebook",
+  "author": "Hugging Face (Clémentine Fourrier)",
+  "url": "https://huggingface.co/spaces/OpenEvals/evaluation-guidebook",
+  "free": true,
+  "language": "English",
+  "notes": "Repo https://github.com/huggingface/evaluation-guidebook. M10.U08, M14.U05.",
+  "modules": [
+   "M10",
+   "M14"
+  ]
+ },
+ {
+  "id": "hf-transformers-docs",
+  "type": "doc",
+  "title": "Hugging Face Transformers documentation",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/docs/transformers/en/index",
+  "free": true,
+  "language": "English",
+  "notes": "Pages: tokenizer_summary, pad_truncation, llm_tutorial, generation_strategies, kv_cache, perplexity, chat_templating, Trainer.",
+  "modules": [
+   "M09",
+   "M13"
+  ]
+ },
+ {
+  "id": "hf-trl-docs",
+  "type": "doc",
+  "title": "TRL documentation",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/docs/trl/en/index",
+  "free": true,
+  "language": "English",
+  "notes": "SFT, Reward, DPO, GRPO, GKD trainers. M13.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "hf-peft-docs",
+  "type": "doc",
+  "title": "PEFT documentation",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/docs/peft/en/index",
+  "free": true,
+  "language": "English",
+  "notes": "LoRA developer guide incl. merging. M13.U03/U05.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "unsloth-docs",
+  "type": "doc",
+  "title": "Unsloth documentation",
+  "author": "Unsloth",
+  "url": "https://docs.unsloth.ai/",
+  "free": true,
+  "language": "English",
+  "notes": "Free-T4 QLoRA, GGUF export, RL guide. M13.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "hf-cookbook",
+  "type": "doc",
+  "title": "Hugging Face Open-Source AI Cookbook",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/learn/cookbook/en/index",
+  "free": true,
+  "language": "English",
+  "notes": "llm_judge and rag_evaluation notebooks.",
+  "modules": [
+   "M10",
+   "M11"
+  ]
+ },
+ {
+  "id": "hf-blog",
+  "type": "doc",
+  "title": "Hugging Face blog (individual posts)",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/blog",
+  "free": true,
+  "language": "English",
+  "notes": "Posts used: how-to-generate, rlhf, moe, matryoshka, embedding-quantization, 4bit-transformers-bitsandbytes, modernbert, packing-with-FA2, cosmopedia, mteb, the_n_implementation_details_of_rlhf_with_ppo.",
+  "modules": [
+   "M09",
+   "M11",
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "sbert-docs",
+  "type": "doc",
+  "title": "Sentence Transformers documentation",
+  "author": "UKP Lab / Hugging Face",
+  "url": "https://www.sbert.net/",
+  "free": true,
+  "language": "English",
+  "notes": "Usage, pretrained models, training overview, retrieve & re-rank, CrossEncoder.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "pinecone-faiss-manual",
+  "type": "doc",
+  "title": "Faiss: The Missing Manual",
+  "author": "Pinecone (James Briggs)",
+  "url": "https://www.pinecone.io/learn/series/faiss/",
+  "free": true,
+  "language": "English",
+  "notes": "Index chapters, HNSW, PQ. M11.U06.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "pinecone-rag-series",
+  "type": "doc",
+  "title": "Pinecone Learn — Rerankers and Two-Stage Retrieval",
+  "author": "Pinecone",
+  "url": "https://www.pinecone.io/learn/series/rag/rerankers/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U09.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "faiss-docs",
+  "type": "doc",
+  "title": "FAISS documentation & wiki",
+  "author": "Meta AI",
+  "url": "https://github.com/facebookresearch/faiss/wiki/Getting-started",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U06 backup.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "qdrant-docs",
+  "type": "doc",
+  "title": "Qdrant documentation",
+  "author": "Qdrant",
+  "url": "https://qdrant.tech/documentation/concepts/hybrid-queries/",
+  "free": true,
+  "language": "English",
+  "notes": "Hybrid queries (prefetch, RRF/DBSF), filtering.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "weaviate-hybrid",
+  "type": "doc",
+  "title": "Hybrid Search Explained",
+  "author": "Weaviate",
+  "url": "https://weaviate.io/blog/hybrid-search-explained",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U08 backup.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "jina-blog",
+  "type": "doc",
+  "title": "Jina AI blog — late chunking; ColBERT and late interaction",
+  "author": "Jina AI",
+  "url": "https://jina.ai/news/late-chunking-in-long-context-embedding-models/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U04, M11.U09.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "mteb-leaderboard",
+  "type": "doc",
+  "title": "MTEB leaderboard",
+  "author": "MTEB / Hugging Face",
+  "url": "https://huggingface.co/spaces/mteb/leaderboard",
+  "free": true,
+  "language": "English",
+  "notes": "Read the caveats; M11.U05.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "ragas-docs",
+  "type": "doc",
+  "title": "Ragas documentation — available metrics",
+  "author": "Ragas / Exploding Gradients",
+  "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U12.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "graphrag-docs",
+  "type": "doc",
+  "title": "Microsoft GraphRAG documentation",
+  "author": "Microsoft Research",
+  "url": "https://microsoft.github.io/graphrag/",
+  "free": true,
+  "language": "English",
+  "notes": "Awareness, M11.U10.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "langchain-indexing",
+  "type": "doc",
+  "title": "LangChain how-to: Indexing API (record manager, incremental cleanup)",
+  "author": "LangChain",
+  "url": "https://python.langchain.com/docs/how_to/indexing/",
+  "free": true,
+  "language": "English",
+  "notes": "Incremental ingest/dedup pattern, M11.U03.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "pymupdf-docs",
+  "type": "doc",
+  "title": "PyMuPDF documentation",
+  "author": "Artifex",
+  "url": "https://pymupdf.readthedocs.io/en/latest/",
+  "free": true,
+  "language": "English",
+  "notes": "M11.U03.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "anthropic-docs",
+  "type": "doc",
+  "title": "Claude Developer Platform documentation",
+  "author": "Anthropic",
+  "url": "https://platform.claude.com/docs/en/api/messages",
+  "free": true,
+  "language": "English",
+  "notes": "Messages API, models overview, stop reasons, token counting, prompt engineering, structured outputs, extended thinking, prompt caching, batch processing, citations, reduce hallucinations.",
+  "modules": [
+   "M10",
+   "M11"
+  ]
+ },
+ {
+  "id": "openai-docs",
+  "type": "doc",
+  "title": "OpenAI API documentation",
+  "author": "OpenAI",
+  "url": "https://platform.openai.com/docs/models",
+  "free": true,
+  "language": "English",
+  "notes": "Models, text generation, streaming, structured outputs, function calling, reasoning, prompt caching, batch. Pages render client-side.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "openai-cookbook",
+  "type": "doc",
+  "title": "OpenAI Cookbook — How to handle rate limits",
+  "author": "OpenAI",
+  "url": "https://cookbook.openai.com/examples/how_to_handle_rate_limits",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U02.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "litellm-docs",
+  "type": "doc",
+  "title": "LiteLLM documentation",
+  "author": "BerriAI",
+  "url": "https://docs.litellm.ai/docs/",
+  "free": true,
+  "language": "English",
+  "notes": "One interface for 100+ providers incl. Ollama; reliability/fallbacks. M10.U01–U02.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "instructor-docs",
+  "type": "doc",
+  "title": "Instructor documentation",
+  "author": "Jason Liu",
+  "url": "https://python.useinstructor.com/",
+  "free": true,
+  "language": "English",
+  "notes": "Provider-agnostic Pydantic extraction with retries, M10.U03.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "pydantic-docs",
+  "type": "doc",
+  "title": "Pydantic documentation — models & validators",
+  "author": "Pydantic",
+  "url": "https://docs.pydantic.dev/latest/concepts/models/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U03.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "python-docs",
+  "type": "doc",
+  "title": "Python standard library docs (unicodedata, asyncio sync primitives)",
+  "author": "Python Software Foundation",
+  "url": "https://docs.python.org/3/library/asyncio-sync.html",
+  "free": true,
+  "language": "English",
+  "notes": "M09.U02, M10.U02.",
+  "modules": [
+   "M09",
+   "M10"
+  ]
+ },
+ {
+  "id": "fastapi-docs",
+  "type": "doc",
+  "title": "FastAPI docs — Custom Response / StreamingResponse",
+  "author": "FastAPI",
+  "url": "https://fastapi.tiangolo.com/advanced/custom-response/",
+  "free": true,
+  "language": "English",
+  "notes": "SSE streaming, M10.U02.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "pytorch-docs",
+  "type": "doc",
+  "title": "PyTorch documentation (SDPA, AMP, saving & loading)",
+  "author": "PyTorch",
+  "url": "https://docs.pytorch.org/docs/stable/amp.html",
+  "free": true,
+  "language": "English",
+  "notes": "M09.U06, M14.U01.",
+  "modules": [
+   "M09",
+   "M14"
+  ]
+ },
+ {
+  "id": "sklearn-metrics",
+  "type": "doc",
+  "title": "scikit-learn — Metrics and scoring: classification metrics",
+  "author": "scikit-learn",
+  "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+  "free": true,
+  "language": "English",
+  "notes": "Macro-F1, confusion matrix, M09.U11.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "promptingguide",
+  "type": "doc",
+  "title": "Prompt Engineering Guide",
+  "author": "DAIR.AI",
+  "url": "https://www.promptingguide.ai/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U04 backup.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "langfuse-docs",
+  "type": "doc",
+  "title": "Langfuse documentation (observability, prompt management)",
+  "author": "Langfuse",
+  "url": "https://langfuse.com/docs/observability/overview",
+  "free": true,
+  "language": "English",
+  "notes": "Open source, self-hostable. M10.U06, M10.U11.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "phoenix-docs",
+  "type": "doc",
+  "title": "Arize Phoenix documentation",
+  "author": "Arize AI",
+  "url": "https://arize.com/docs/phoenix",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U11 backup.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "otel-genai",
+  "type": "doc",
+  "title": "OpenTelemetry semantic conventions for Generative AI",
+  "author": "OpenTelemetry",
+  "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U11.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "promptfoo-docs",
+  "type": "doc",
+  "title": "promptfoo documentation",
+  "author": "promptfoo",
+  "url": "https://www.promptfoo.dev/docs/intro/",
+  "free": true,
+  "language": "English",
+  "notes": "Eval configs + GitHub Action. M10.U10.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "inspect-ai",
+  "type": "doc",
+  "title": "Inspect (UK AISI evaluation framework)",
+  "author": "UK AI Security Institute",
+  "url": "https://inspect.aisi.org.uk/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U10 backup.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "gh-actions-docs",
+  "type": "doc",
+  "title": "GitHub Actions — workflow syntax",
+  "author": "GitHub",
+  "url": "https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U10.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "presidio",
+  "type": "doc",
+  "title": "Microsoft Presidio (PII detection & anonymization)",
+  "author": "Microsoft",
+  "url": "https://microsoft.github.io/presidio/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U13.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "owasp-llm-top10",
+  "type": "doc",
+  "title": "OWASP Top 10 for LLM Applications",
+  "author": "OWASP GenAI Security Project",
+  "url": "https://genai.owasp.org/llm-top-10/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U13.",
+  "modules": [
+   "M10",
+   "M11"
+  ]
+ },
+ {
+  "id": "bentoml-handbook",
+  "type": "doc",
+  "title": "LLM Inference Handbook",
+  "author": "BentoML",
+  "url": "https://bentoml.com/llm/",
+  "free": true,
+  "language": "English",
+  "notes": "Metrics chapters (TTFT, TPOT, throughput, goodput). M10.U12.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "vllm-docs",
+  "type": "doc",
+  "title": "vLLM documentation — LoRA adapters",
+  "author": "vLLM",
+  "url": "https://docs.vllm.ai/en/latest/features/lora.html",
+  "free": true,
+  "language": "English",
+  "notes": "Multi-LoRA serving awareness, M13.U05.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "mlflow-docs",
+  "type": "doc",
+  "title": "MLflow Tracking documentation",
+  "author": "MLflow",
+  "url": "https://mlflow.org/docs/latest/ml/tracking/",
+  "free": true,
+  "language": "English",
+  "notes": "Free experiment tracking, M13.U04.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "smol-training-playbook",
+  "type": "doc",
+  "title": "The Smol Training Playbook",
+  "author": "Hugging Face (SmolLM team)",
+  "url": "https://huggingface.co/spaces/HuggingFaceTB/smol-training-playbook",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U03.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "ultrascale-playbook",
+  "type": "doc",
+  "title": "The Ultra-Scale Playbook",
+  "author": "Hugging Face (nanotron)",
+  "url": "https://huggingface.co/spaces/nanotron/ultrascale-playbook",
+  "free": true,
+  "language": "English",
+  "notes": "Memory/compute accounting, M14.U04.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "fineweb-blog",
+  "type": "doc",
+  "title": "FineWeb: decanting the web for the finest text data at scale",
+  "author": "Hugging Face",
+  "url": "https://huggingface.co/spaces/HuggingFaceFW/blogpost-fineweb-v1",
+  "free": true,
+  "language": "English",
+  "notes": "Pretraining data pipeline, M09.U08.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "hf-ttc-blog",
+  "type": "doc",
+  "title": "Scaling test-time compute with open models",
+  "author": "Hugging Face H4",
+  "url": "https://huggingface.co/spaces/HuggingFaceH4/blogpost-scaling-test-time-compute",
+  "free": true,
+  "language": "English",
+  "notes": "M13.U09.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "neurips-reviewer-guidelines",
+  "type": "doc",
+  "title": "NeurIPS Reviewer Guidelines",
+  "author": "NeurIPS",
+  "url": "https://neurips.cc/Conferences/2024/ReviewerGuidelines",
+  "free": true,
+  "language": "English",
+  "notes": "Peer review, M14.U10.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "pineau-checklist",
+  "type": "doc",
+  "title": "ML Reproducibility Checklist",
+  "author": "Joelle Pineau",
+  "url": "https://www.cs.mcgill.ca/~jpineau/ReproducibilityChecklist.pdf",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U10.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "cs224n-report",
+  "type": "doc",
+  "title": "CS224N Project Report Instructions",
+  "author": "Stanford CS224N",
+  "url": "https://web.stanford.edu/class/cs224n/project/Project_Report_Instructions.pdf",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U10.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "hamel-evals",
+  "type": "doc",
+  "title": "Hamel Husain & Shreya Shankar — eval writing (Field Guide, Your AI Product Needs Evals, Evals FAQ, LLM-as-Judge guide)",
+  "author": "Hamel Husain, Shreya Shankar",
+  "url": "https://hamel.dev/blog/posts/field-guide/",
+  "free": true,
+  "language": "English",
+  "notes": "Free blog posts; their Maven course is paid and not listed. Primary for M10.U07–U09.",
+  "modules": [
+   "M10",
+   "M11"
+  ]
+ },
+ {
+  "id": "eugeneyan",
+  "type": "doc",
+  "title": "Eugene Yan — Evaluating the Effectiveness of LLM-Evaluators; Patterns for Building LLM-based Systems",
+  "author": "Eugene Yan",
+  "url": "https://eugeneyan.com/writing/llm-evaluators/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U09 backup.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "applied-llms",
+  "type": "doc",
+  "title": "What We've Learned From A Year of Building with LLMs",
+  "author": "Yan, Bischof, Frye, Husain, Liu, Shankar",
+  "url": "https://applied-llms.org/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U08 backup.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "anthropic-eng",
+  "type": "doc",
+  "title": "Anthropic Engineering — Effective context engineering for AI agents; Contextual Retrieval; Writing tools for agents",
+  "author": "Anthropic",
+  "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U05, M11.U04.",
+  "modules": [
+   "M10",
+   "M11"
+  ]
+ },
+ {
+  "id": "chroma-context-rot",
+  "type": "doc",
+  "title": "Context Rot: How Increasing Input Tokens Impacts LLM Performance",
+  "author": "Chroma Research",
+  "url": "https://research.trychroma.com/context-rot",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U05.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "huyen-genai-platform",
+  "type": "doc",
+  "title": "Building A Generative AI Platform",
+  "author": "Chip Huyen",
+  "url": "https://huyenchip.com/2024/07/25/genai-platform.html",
+  "free": true,
+  "language": "English",
+  "notes": "Free essay. M10.U12.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "willison",
+  "type": "doc",
+  "title": "Simon Willison — The lethal trifecta for AI agents; Prompt injection: what's the worst that can happen?",
+  "author": "Simon Willison",
+  "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+  "free": true,
+  "language": "English",
+  "notes": "M10.U13.",
+  "modules": [
+   "M10"
+  ]
+ },
+ {
+  "id": "raschka-magazine",
+  "type": "doc",
+  "title": "Ahead of AI — The Big LLM Architecture Comparison; Understanding Reasoning LLMs",
+  "author": "Sebastian Raschka",
+  "url": "https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison",
+  "free": true,
+  "language": "English",
+  "notes": "M09.U07, M14.U06–U07.",
+  "modules": [
+   "M09",
+   "M14"
+  ]
+ },
+ {
+  "id": "weng-blog",
+  "type": "doc",
+  "title": "Lilian Weng — Reward Hacking in RL; The Transformer Family v2",
+  "author": "Lilian Weng",
+  "url": "https://lilianweng.github.io/posts/2024-11-28-reward-hacking/",
+  "free": true,
+  "language": "English",
+  "notes": "M13.U10, M14.U06.",
+  "modules": [
+   "M13",
+   "M14"
+  ]
+ },
+ {
+  "id": "grootendorst-mamba",
+  "type": "doc",
+  "title": "A Visual Guide to Mamba and State Space Models",
+  "author": "Maarten Grootendorst",
+  "url": "https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-mamba-and-state",
+  "free": true,
+  "language": "English",
+  "notes": "M14.U07.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "karpathy-blog",
+  "type": "doc",
+  "title": "Andrej Karpathy blog — A Recipe for Training Neural Networks; Deep RL: Pong from Pixels",
+  "author": "Andrej Karpathy",
+  "url": "https://karpathy.github.io/2019/04/25/recipe/",
+  "free": true,
+  "language": "English",
+  "notes": "M13.U08, M14.U09.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "spinningup",
+  "type": "doc",
+  "title": "OpenAI Spinning Up in Deep RL",
+  "author": "OpenAI (Josh Achiam)",
+  "url": "https://spinningup.openai.com/en/latest/",
+  "free": true,
+  "language": "English",
+  "notes": "M13.U08 backup.",
+  "modules": [
+   "M13"
+  ]
+ },
+ {
+  "id": "thinkingmachines-nondeterminism",
+  "type": "doc",
+  "title": "Defeating Nondeterminism in LLM Inference",
+  "author": "Thinking Machines Lab (Horace He)",
+  "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+  "free": true,
+  "language": "English",
+  "notes": "Why temperature 0 is not deterministic, M09.U09.",
+  "modules": [
+   "M09"
+  ]
+ },
+ {
+  "id": "ann-benchmarks",
+  "type": "doc",
+  "title": "ANN-Benchmarks",
+  "author": "Erik Bernhardsson, Martin Aumüller, Alexander Faithfull",
+  "url": "https://ann-benchmarks.com/",
+  "free": true,
+  "language": "English",
+  "notes": "Recall-vs-QPS conventions, M11.U06.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-rrf-cormack",
+  "type": "paper",
+  "title": "Reciprocal Rank Fusion outperforms Condorcet and individual Rank Learning Methods",
+  "author": "Cormack, Clarke, Büttcher 2009",
+  "url": "https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf",
+  "free": true,
+  "language": "English",
+  "notes": "Original RRF, M11.U08.",
+  "modules": [
+   "M11"
+  ]
+ },
+ {
+  "id": "paper-keshav-read",
+  "type": "paper",
+  "title": "How to Read a Paper",
+  "author": "S. Keshav 2007",
+  "url": "http://ccr.sigcomm.org/online/files/p83-keshavA.pdf",
+  "free": true,
+  "language": "English",
+  "notes": "Three-pass reading method, M14.U09.",
+  "modules": [
+   "M14"
+  ]
+ },
+ {
+  "id": "g2m-rag-deep-map",
+  "type": "doc",
+  "title": "Grain to Mountain — 07 RAG and agents deep map",
+  "author": "Grain to Mountain repo",
+  "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/07-rag-and-agents-deep-map.md",
+  "free": true,
+  "language": "English",
+  "notes": "Repo's own M11 reference sheet (chunking table, remerge section). Audit: absorb 21-retrieval doc into it.",
+  "modules": [
+   "M11"
+  ]
+ }
+]

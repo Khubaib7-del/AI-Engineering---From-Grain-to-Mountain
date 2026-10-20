@@ -1,0 +1,1692 @@
+[
+ {
+  "week": 1,
+  "title": "Start: study system, how computers work, CS50P Lecture 0 (first half)",
+  "units": [
+   "M00.U06",
+   "M00.U01",
+   "M01.U01",
+   "M00.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M00.U06": 3,
+   "M00.U01": 4,
+   "M01.U01": 4,
+   "M00.U07": 1
+  },
+  "detail": [
+   "Day 1: M00.U06 — set up learning-log.md + mistakes.md, install Anki, write AI-use policy (5 rules).",
+   "Day 2: M00.U01 — Crash Course CS #7 CPU + #8 Instructions & Programs; start how-my-computer-works.md.",
+   "Day 3: M00.U01 — Crash Course CS #18 Operating Systems + #19 Memory & Storage; Task Manager/htop exercise; 7B×2 bytes calc.",
+   "Day 4: M01.U01 — sign in to cs50.dev with GitHub; CS50P Lecture 0 from 0:00 to ~30:00 (print, input, variables, comments); `indoor` → check50 green.",
+   "Day 5: M01.U01 — Lecture 0 ~30:00–1:00:00 (f-strings, strip/title, split); `playback`, `faces` → check50 green.",
+   "Day 6: M00.U07 — Khan Algebra basics: negative numbers + fractions (1h).",
+   "Day 7 (review): 15 Anki cards from the week; quiz M00.U01 + M00.U06."
+  ]
+ },
+ {
+  "week": 2,
+  "title": "CS50P Lecture 0 (finish) + workstation setup + paths",
+  "units": [
+   "M01.U01",
+   "M00.U05",
+   "M00.U02"
+  ],
+  "hours": 13,
+  "allocation": {
+   "M01.U01": 6,
+   "M00.U05": 4,
+   "M00.U02": 3
+  },
+  "detail": [
+   "Day 1: M01.U01 — Lecture 0 1:00:00–1:28:33 (int, float, round, {x:.2f}); `einstein`.",
+   "Day 2: M01.U01 — Lecture 0 1:28:33–end (def, return); `tip`; check50 green on all 5 of Problem Set 0.",
+   "Day 3: M00.U02 — Software Carpentry shell ep. 02; working-directory experiment (paths.md).",
+   "Day 4: M00.U05 — Microsoft 'Install WSL', VS Code 'Developing in WSL', install Git + create GitHub account.",
+   "Day 5: M00.U05 — uv install + `uv python install 3.12`; rohitg00 01-dev-environment steps 1, 2, 7; run verify.py --route beginner until exit 0.",
+   "Day 6: M01.U01 — redo `tip` locally in WSL from a blank file; install check50 locally (`uv tool install check50`; fall back to cs50.dev if it fails).",
+   "Day 7 (review): quiz M01.U01 + M00.U02 + M00.U05 (≥80%); Anki."
+  ]
+ },
+ {
+  "week": 3,
+  "title": "Shell + Git basics + data representation",
+  "units": [
+   "M02.U01",
+   "M02.U05",
+   "M00.U03",
+   "M00.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M02.U01": 3,
+   "M02.U05": 4,
+   "M00.U03": 3,
+   "M00.U07": 2
+  },
+  "detail": [
+   "Day 1: M02.U01 — Software Carpentry shell ep. 01–03; Bandit levels 0→3.",
+   "Day 2: M02.U01 — Bandit 4→5; create ~/code/cs50p and copy your Problem Set 0 in.",
+   "Day 3: M02.U05 — Software Carpentry Git episodes through 'Exploring History'; `git init` cs50p.",
+   "Day 4: M02.U05 — 'Ignoring Things'; Python .gitignore; one commit per problem; README.",
+   "Day 5: M00.U03 — CS50x Lecture 0 notes §binary/ASCII/Unicode; Crash Course #4; data-rep.md exercise.",
+   "Day 6: M00.U07 — Khan: percentages + linear equations (2h).",
+   "Day 7 (review): quiz M02.U01, M02.U05, M00.U03."
+  ]
+ },
+ {
+  "week": 4,
+  "title": "CS50P Lecture 1 — Conditionals + problem solving",
+  "units": [
+   "M01.U02",
+   "M00.U04",
+   "M00.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U02": 7,
+   "M00.U04": 4,
+   "M00.U07": 1
+  },
+  "detail": [
+   "Day 1: M01.U02 — Lecture 1 0:00–~34:00 (if, elif/else, or, and); `deep`, `bank` in WSL.",
+   "Day 2: M01.U02 — Lecture 1 34:57–end (modulo, parity function, Pythonic bools, match at 48:17); `extensions`.",
+   "Day 3: M01.U02 — `interpreter`, `meal`; Truth Value Testing docs (truthiness gap); check50 green on all 5.",
+   "Day 4: M00.U04 — CS50x L0 notes §Algorithms/§Pseudocode; Think Python ch. 1; pseudocode + trace table.",
+   "Day 5: M00.U04 — Python Tutor traceback exercise (trace.md).",
+   "Day 6: M00.U07 — Khan: graphing lines (1h); commit & push all Problem Set 1 work.",
+   "Day 7 (review): quiz M01.U02 + M00.U04; Anki."
+  ]
+ },
+ {
+  "week": 5,
+  "title": "CS50P Lecture 2 — Loops, lists, dicts + shell pipes",
+  "units": [
+   "M01.U03",
+   "M02.U02"
+  ],
+  "hours": 13,
+  "allocation": {
+   "M01.U03": 9,
+   "M02.U02": 4
+  },
+  "detail": [
+   "Day 1: M01.U03 — Lecture 2 0:00–~16:40 (while, for, range, while True/break/continue); `camel`.",
+   "Day 2: M01.U03 — Lecture 2 16:40–45:53 (lists, len); `coke`, `twttr`.",
+   "Day 3: M01.U03 — Lecture 2 45:53–end (dicts, Mario nested loops); `plates`.",
+   "Day 4: M01.U03 — `nutrition`; Think Python ch. 11 tuples + ch. 9 §slices (gaps); check50 green on all 5.",
+   "Day 5: M02.U02 — Software Carpentry shell ep. 04 Pipes and Filters + ep. 07 Finding Things.",
+   "Day 6: M02.U02 — log-forensics pipelines; curl + jq on the GitHub API; Bandit 6→12.",
+   "Day 7 (review): quiz M01.U03 + M02.U02; Anki."
+  ]
+ },
+ {
+  "week": 6,
+  "title": "CS50P Lecture 3 — Exceptions + Git branching",
+  "units": [
+   "M01.U04",
+   "M02.U06",
+   "M00.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U04": 6,
+   "M02.U06": 5,
+   "M00.U07": 1
+  },
+  "detail": [
+   "Day 1: M01.U04 — Lecture 3 (whole, 44:33) + Python Tutorial §8.4/§8.6/§8.7 (raise, custom exceptions, finally); Corey try/except video.",
+   "Day 2: M01.U04 — `fuel`, `taqueria`.",
+   "Day 3: M01.U04 — `grocery`, `outdated`; InvalidFractionError + finally; check50 green on all 4.",
+   "Day 4: M02.U06 — Learn Git Branching 'Introduction Sequence'; Software Carpentry 'Conflicts'.",
+   "Day 5: M02.U06 — 'Ramping Up'; conflict + undo drill (undo.md); from now on one branch per problem.",
+   "Day 6: M00.U07 — Khan: exponents + scientific notation (1h).",
+   "Day 7 (review): quiz M01.U04 + M02.U06; rebuild `fuel` from blank in 30 min without notes."
+  ]
+ },
+ {
+  "week": 7,
+  "title": "Python memory model + GitHub flow",
+  "units": [
+   "M01.U05",
+   "M02.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U05": 8,
+   "M02.U07": 4
+  },
+  "detail": [
+   "Day 1: M01.U05 — Ned Batchelder 'Facts and Myths about Python names and values' (25 min) + text version.",
+   "Day 2: M01.U05 — Think Python ch. 9 §Objects and values/§Aliasing/§List arguments, ch. 10 §Lists and dictionaries (in Python Tutor).",
+   "Day 3: M01.U05 — Think Python ch. 16 §Equivalence and identity/§Deep copy, ch. 14 §Pure functions; copy module; Corey LEGB video.",
+   "Day 4: M01.U05 — six predict-the-output snippets (memory-model.md).",
+   "Day 5: M02.U07 — Software Carpentry 'Remotes in GitHub'; GitHub SSH docs; push cs50p over SSH.",
+   "Day 6: M02.U07 — GitHub flow + About pull requests; first issue → branch → PR → merge; external docs-typo PR.",
+   "Day 7 (review): quiz M01.U05 + M02.U07."
+  ]
+ },
+ {
+  "week": 8,
+  "title": "CS50P Lecture 4 — Libraries/APIs with venv, uv and secrets",
+  "units": [
+   "M02.U08",
+   "M01.U06",
+   "M02.U10"
+  ],
+  "hours": 13,
+  "allocation": {
+   "M02.U08": 3,
+   "M01.U06": 8,
+   "M02.U10": 2
+  },
+  "detail": [
+   "Day 1: M02.U08 — Python Tutorial ch. 12 (venv); Corey venv video; which-python before/after; rohitg00 lesson 06 + quiz.json.",
+   "Day 2: M01.U06 — Lecture 4 0:00–46:18 (random, statistics, sys.argv 21:21, slice); `uv init`; `emojize`, `figlet` with `uv add`.",
+   "Day 3: M01.U06 — Lecture 4 46:18–end (packages, requests/JSON 54:10, own libraries + __name__ 1:15:09); `adieu`, `game`.",
+   "Day 4: M02.U10 — 12-factor Config; rohitg00 04 Step 1; create CoinCap account + key in git-ignored .env; .env.example.",
+   "Day 5: M01.U06 — `professor`, `bitcoin` (CoinCap v3 key from env); check50 green on all 6.",
+   "Day 6: M01.U06 — CS50P L9 notes §argparse + Python argparse tutorial (gap); leaked-key runbook.",
+   "Day 7 (review): quiz M02.U08, M01.U06, M02.U10; confirm `git log -p` has no key."
+  ]
+ },
+ {
+  "week": 9,
+  "title": "CS50P Lecture 5 — Unit tests + shell scripting",
+  "units": [
+   "M01.U07",
+   "M02.U03",
+   "M00.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U07": 5,
+   "M02.U03": 5,
+   "M00.U07": 2
+  },
+  "detail": [
+   "Day 1: M01.U07 — Lecture 5 (whole, 50:52) + pytest 'Get Started'.",
+   "Day 2: M01.U07 — `test_twttr`, `test_bank`.",
+   "Day 3: M01.U07 — `test_plates`, `test_fuel`; check50 green on all 4; parametrize one test (preview).",
+   "Day 4: M02.U03 — Software Carpentry ep. 05 Loops + ep. 06 Shell Scripts; backup.sh with set -euo pipefail + shellcheck.",
+   "Day 5: M02.U03 — Missing Semester 2026 'Command-line Environment' (signals, env vars, tmux); background/kill drill; Bandit 13→16.",
+   "Day 6: M00.U07 — Khan: functions + logarithm intro (2h).",
+   "Day 7 (review): quiz M01.U07 + M02.U03; Bandit 17→20 if time."
+  ]
+ },
+ {
+  "week": 10,
+  "title": "CS50P Lecture 6 — File I/O (+ pathlib/JSON/Unicode) + uv packaging",
+  "units": [
+   "M01.U08",
+   "M02.U09"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U08": 7,
+   "M02.U09": 5
+  },
+  "detail": [
+   "Day 1: M01.U08 — Lecture 6 0:00–~30:00 (open, with, sorting lines); `lines`.",
+   "Day 2: M01.U08 — Lecture 6 ~30:00–1:23:50 (CSV, csv.reader, DictReader/DictWriter); `pizza`, `scourgify`.",
+   "Day 3: M01.U08 — Lecture 6 1:23:50–end (PIL); `shirt`; check50 green on all 4.",
+   "Day 4: M01.U08 — Corey Pathlib + Corey JSON videos; Unicode HOWTO 'Reading and Writing Unicode Data'; scan.py JSONL walker.",
+   "Day 5: M02.U09 — uv 'Working on projects', 'Managing dependencies', 'Locking and syncing'; convert cs50p to a uv project.",
+   "Day 6: M02.U09 — PyPA 'Packaging Python Projects'; build g2m-utils (src layout, entry point); publish to TestPyPI; `uvx` it.",
+   "Day 7 (review): quiz M01.U08 + M02.U09."
+  ]
+ },
+ {
+  "week": 11,
+  "title": "CS50P Lecture 7 — Regex + editor/AI hygiene + start OOP",
+  "units": [
+   "M01.U09",
+   "M02.U11",
+   "M00.U07",
+   "M01.U10"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U09": 5,
+   "M02.U11": 3,
+   "M00.U07": 2,
+   "M01.U10": 2
+  },
+  "detail": [
+   "Day 1: M01.U09 — Lecture 7 0:00–~1:12:00 (re.search, patterns, groups at 52:46); `numb3rs`, `watch`.",
+   "Day 2: M01.U09 — Lecture 7 1:12:38–end (fullmatch, walrus, re.sub); `working`, `um`, `response`; check50 green on all 5.",
+   "Day 3: M02.U11 — VS Code Python tutorial (interpreter, debug, format-on-save); Missing Semester 2026 'Agentic Coding'.",
+   "Day 4: M02.U11 — AI-agent-on-a-branch PR review exercise; rohitg00 lesson 05 Jupyter.",
+   "Day 5: M00.U07 — Khan unit tests to 'Proficient' (2h).",
+   "Day 6: M01.U10 — Lecture 8 0:00–54:54 (tuples/dicts as data, classes from 28:14).",
+   "Day 7 (review): quiz M01.U09 + M02.U11."
+  ]
+ },
+ {
+  "week": 12,
+  "title": "CS50P Lecture 8 — OOP (+ dataclasses/enums/Protocols) + M00 capstone",
+  "units": [
+   "M01.U10",
+   "M00.U07"
+  ],
+  "hours": 12,
+  "allocation": {
+   "M01.U10": 7,
+   "M00.U07": 2,
+   "M00-capstone": 3
+  },
+  "detail": [
+   "Day 1: M01.U10 — Lecture 8 54:54–1:48:32 (raise, __str__, @property at ~1:19:46); `seasons`.",
+   "Day 2: M01.U10 — Lecture 8 1:48:32–end (class methods, inheritance 2:18:11, __add__ 2:39:59); `jar`.",
+   "Day 3: M01.U10 — `shirtificate`; check50 green on all 3; ArjanCodes dataclasses video + Corey dunder methods.",
+   "Day 4: M01.U10 — ArjanCodes Protocol vs ABC + Enum HOWTO; start Task/Priority/Storage model (continues into week 13).",
+   "Day 5: M00.U07 — finish Khan unit tests; Σ and log₂ exercise (math.md).",
+   "Day 6: M00 capstone 'My machine, explained' — assemble the foundations repo; self-score with the rubric.",
+   "Day 7 (review): cumulative 20-MCQ quiz across M00 + M01.U01–U09 + M02.U01–U11 (≥80%); plan weeks 13–16."
+  ]
+ },
+ {
+  "week": 13,
+  "title": "Python from zero",
+  "units": [
+   "M01.U11"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 14,
+  "title": "Python from zero",
+  "units": [
+   "M01.U12",
+   "M01.U13"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 15,
+  "title": "Python from zero + Engineering tools & environments",
+  "units": [
+   "M01.U14",
+   "M02.U04"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 16,
+  "title": "Engineering tools & environments",
+  "units": [
+   "M02.U12",
+   "M02.U13"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 17,
+  "title": "Engineering tools & environments",
+  "units": [
+   "M02.U14",
+   "M02.U15"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 18,
+  "title": "Engineering tools & environments + CS, algorithms & backend foundations",
+  "units": [
+   "M02.U16",
+   "M03.U01",
+   "M03.U02"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 19,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U03",
+   "M03.U04"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 20,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U05"
+  ],
+  "hours": 5,
+  "provisional": true
+ },
+ {
+  "week": 21,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U06"
+  ],
+  "hours": 15,
+  "provisional": true
+ },
+ {
+  "week": 22,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U07"
+  ],
+  "hours": 7,
+  "provisional": true
+ },
+ {
+  "week": 23,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U08",
+   "M03.U09"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 24,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U10",
+   "M03.U11"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 25,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U12",
+   "M03.U13"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 26,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U14",
+   "M03.U15"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 27,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U16",
+   "M03.U17"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 28,
+  "title": "CS, algorithms & backend foundations",
+  "units": [
+   "M03.U18"
+  ],
+  "hours": 6,
+  "provisional": true
+ },
+ {
+  "week": 29,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U01"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 30,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U02"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 31,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U03"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 32,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U04"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 33,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U05"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 34,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U06"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 35,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U07"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 36,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U08"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 37,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U09"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 38,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U10"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 39,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U11"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 40,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U12"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 41,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U13"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 42,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U14"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 43,
+  "title": "DevOps and Cloud Foundations",
+  "units": [
+   "M21.U15"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 44,
+  "title": "Data analysis & SQL",
+  "units": [
+   "M04.U01",
+   "M04.U02"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 45,
+  "title": "Data analysis & SQL",
+  "units": [
+   "M04.U03",
+   "M04.U04"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 46,
+  "title": "Data analysis & SQL",
+  "units": [
+   "M04.U05",
+   "M04.U06"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 47,
+  "title": "Data analysis & SQL",
+  "units": [
+   "M04.U07",
+   "M04.U08"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 48,
+  "title": "Data analysis & SQL",
+  "units": [
+   "M04.U09",
+   "M04.U10"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 49,
+  "title": "Data analysis & SQL",
+  "units": [
+   "M04.U11",
+   "M04.U12",
+   "M04.U13"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 50,
+  "title": "Math for ML: vectors, matrices, gradients, numerics",
+  "units": [
+   "M05.U01",
+   "M05.U02"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 51,
+  "title": "Math for ML: vectors, matrices, gradients, numerics",
+  "units": [
+   "M05.U03",
+   "M05.U04"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 52,
+  "title": "Math for ML: vectors, matrices, gradients, numerics",
+  "units": [
+   "M05.U05",
+   "M05.U06"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 53,
+  "title": "Math for ML: vectors, matrices, gradients, numerics + Probability, statistics and evaluation",
+  "units": [
+   "M05.U07",
+   "M05.U08",
+   "M06.U01"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 54,
+  "title": "Probability, statistics and evaluation",
+  "units": [
+   "M06.U02",
+   "M06.U03"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 55,
+  "title": "Probability, statistics and evaluation",
+  "units": [
+   "M06.U04",
+   "M06.U05"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 56,
+  "title": "Probability, statistics and evaluation",
+  "units": [
+   "M06.U06",
+   "M06.U07"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 57,
+  "title": "Probability, statistics and evaluation + Classical machine learning",
+  "units": [
+   "M06.U08",
+   "M07.U01"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 58,
+  "title": "Classical machine learning",
+  "units": [
+   "M07.U02",
+   "M07.U03"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 59,
+  "title": "Classical machine learning",
+  "units": [
+   "M07.U04"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 60,
+  "title": "Classical machine learning",
+  "units": [
+   "M07.U05"
+  ],
+  "hours": 7,
+  "provisional": true
+ },
+ {
+  "week": 61,
+  "title": "Classical machine learning",
+  "units": [
+   "M07.U06"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 62,
+  "title": "Classical machine learning",
+  "units": [
+   "M07.U07"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 63,
+  "title": "Classical machine learning + Deep learning and PyTorch",
+  "units": [
+   "M07.U08",
+   "M08.U01"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 64,
+  "title": "Deep learning and PyTorch",
+  "units": [
+   "M08.U02"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 65,
+  "title": "Deep learning and PyTorch",
+  "units": [
+   "M08.U03"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 66,
+  "title": "Deep learning and PyTorch",
+  "units": [
+   "M08.U04",
+   "M08.U05"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 67,
+  "title": "Deep learning and PyTorch",
+  "units": [
+   "M08.U06",
+   "M08.U07"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 68,
+  "title": "Deep learning and PyTorch",
+  "units": [
+   "M08.U08",
+   "M08.U09"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 69,
+  "title": "Deep learning and PyTorch + NLP, transformers and language models",
+  "units": [
+   "M08.U10",
+   "M09.U01"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 70,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U02"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 71,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U03",
+   "M09.U04"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 72,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U05"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 73,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U06"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 74,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U07"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 75,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U08",
+   "M09.U09"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 76,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U10"
+  ],
+  "hours": 5,
+  "provisional": true
+ },
+ {
+  "week": 77,
+  "title": "NLP, transformers and language models",
+  "units": [
+   "M09.U11"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 78,
+  "title": "LLM application engineering: APIs, context, evals, production",
+  "units": [
+   "M10.U01",
+   "M10.U02"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 79,
+  "title": "LLM application engineering: APIs, context, evals, production",
+  "units": [
+   "M10.U03",
+   "M10.U04"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 80,
+  "title": "LLM application engineering: APIs, context, evals, production",
+  "units": [
+   "M10.U05",
+   "M10.U06"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 81,
+  "title": "LLM application engineering: APIs, context, evals, production",
+  "units": [
+   "M10.U07",
+   "M10.U08"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 82,
+  "title": "LLM application engineering: APIs, context, evals, production",
+  "units": [
+   "M10.U09",
+   "M10.U10"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 83,
+  "title": "LLM application engineering: APIs, context, evals, production",
+  "units": [
+   "M10.U11",
+   "M10.U12"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 84,
+  "title": "LLM application engineering: APIs, context, evals, production + Search, embeddings and RAG",
+  "units": [
+   "M10.U13",
+   "M11.U01"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 85,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U02",
+   "M11.U03"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 86,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U04"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 87,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U05"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 88,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U06"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 89,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U07",
+   "M11.U08"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 90,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U09",
+   "M11.U10"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 91,
+  "title": "Search, embeddings and RAG",
+  "units": [
+   "M11.U11",
+   "M11.U12"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 92,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U01",
+   "M12.U02"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 93,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U03",
+   "M12.U04"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 94,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U05",
+   "M12.U06",
+   "M12.U07"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 95,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U08",
+   "M12.U09"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 96,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U10",
+   "M12.U11"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 97,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U12",
+   "M12.U13",
+   "M12.U14"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 98,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U15"
+  ],
+  "hours": 5,
+  "provisional": true
+ },
+ {
+  "week": 99,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U16"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 100,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U17"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 101,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U18",
+   "M12.U19"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 102,
+  "title": "Agents, tools and protocols",
+  "units": [
+   "M12.U21",
+   "M12.U22"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 103,
+  "title": "Agents, tools and protocols + Vision, audio and multimodal",
+  "units": [
+   "M12.U23",
+   "M15.U01"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 104,
+  "title": "Vision, audio and multimodal",
+  "units": [
+   "M15.U02",
+   "M15.U03"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 105,
+  "title": "Vision, audio and multimodal",
+  "units": [
+   "M15.U04",
+   "M15.U05"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 106,
+  "title": "Vision, audio and multimodal + MLOps and data pipelines",
+  "units": [
+   "M15.U06",
+   "M16.U01"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 107,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U02"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 108,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U03"
+  ],
+  "hours": 6,
+  "provisional": true
+ },
+ {
+  "week": 109,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U04"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 110,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U05",
+   "M16.U06"
+  ],
+  "hours": 9,
+  "provisional": true
+ },
+ {
+  "week": 111,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U07"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 112,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U08"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 113,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U09"
+  ],
+  "hours": 5,
+  "provisional": true
+ },
+ {
+  "week": 114,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U10",
+   "M16.U11"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 115,
+  "title": "MLOps and data pipelines",
+  "units": [
+   "M16.U12",
+   "M16.U13"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 116,
+  "title": "Serving, inference and production LLM systems",
+  "units": [
+   "M17.U01",
+   "M17.U02"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 117,
+  "title": "Serving, inference and production LLM systems",
+  "units": [
+   "M17.U03",
+   "M17.U04"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 118,
+  "title": "Serving, inference and production LLM systems",
+  "units": [
+   "M17.U05",
+   "M17.U06"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 119,
+  "title": "Serving, inference and production LLM systems",
+  "units": [
+   "M17.U07",
+   "M17.U08"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 120,
+  "title": "Serving, inference and production LLM systems",
+  "units": [
+   "M17.U09",
+   "M17.U10"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 121,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U01",
+   "M22.U02"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 122,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U03"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 123,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U04",
+   "M22.U05"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 124,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U06",
+   "M22.U07"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 125,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U08",
+   "M22.U09"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 126,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U10"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 127,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U11"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 128,
+  "title": "System Design: classic and ML/LLM",
+  "units": [
+   "M22.U12"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 129,
+  "title": "Safety, privacy and responsible engineering",
+  "units": [
+   "M18.U01",
+   "M18.U02",
+   "M18.U03"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 130,
+  "title": "Safety, privacy and responsible engineering",
+  "units": [
+   "M18.U04",
+   "M18.U05"
+  ],
+  "hours": 11,
+  "provisional": true
+ },
+ {
+  "week": 131,
+  "title": "Safety, privacy and responsible engineering",
+  "units": [
+   "M18.U06",
+   "M18.U07",
+   "M18.U08"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 132,
+  "title": "Safety, privacy and responsible engineering + Adaptation, post-training and RL",
+  "units": [
+   "M18.U09",
+   "M18.U10",
+   "M13.U01"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 133,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U02"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 134,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U03"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 135,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U04"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 136,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U05",
+   "M13.U06"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 137,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U07"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 138,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U08"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 139,
+  "title": "Adaptation, post-training and RL",
+  "units": [
+   "M13.U09",
+   "M13.U10"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 140,
+  "title": "LLMs from scratch and research methods",
+  "units": [
+   "M14.U01"
+  ],
+  "hours": 16,
+  "provisional": true
+ },
+ {
+  "week": 141,
+  "title": "LLMs from scratch and research methods",
+  "units": [
+   "M14.U02"
+  ],
+  "hours": 30,
+  "provisional": true
+ },
+ {
+  "week": 142,
+  "title": "LLMs from scratch and research methods",
+  "units": [
+   "M14.U03"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 143,
+  "title": "LLMs from scratch and research methods",
+  "units": [
+   "M14.U04",
+   "M14.U05"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 144,
+  "title": "LLMs from scratch and research methods",
+  "units": [
+   "M14.U06",
+   "M14.U09"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 145,
+  "title": "LLMs from scratch and research methods + Role tracks, FDE practice and breadth electives",
+  "units": [
+   "M14.U10",
+   "M19.U01"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 146,
+  "title": "Role tracks, FDE practice and breadth electives",
+  "units": [
+   "M19.U02",
+   "M19.U03"
+  ],
+  "hours": 12,
+  "provisional": true
+ },
+ {
+  "week": 147,
+  "title": "Role tracks, FDE practice and breadth electives",
+  "units": [
+   "M19.U04"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 148,
+  "title": "Role tracks, FDE practice and breadth electives",
+  "units": [
+   "M19.U05",
+   "M19.U06"
+  ],
+  "hours": 13,
+  "provisional": true
+ },
+ {
+  "week": 149,
+  "title": "Role tracks, FDE practice and breadth electives + Portfolio, final-year project and job readiness",
+  "units": [
+   "M19.U07",
+   "M20.U01",
+   "M20.U02"
+  ],
+  "hours": 14,
+  "provisional": true
+ },
+ {
+  "week": 150,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U03"
+  ],
+  "hours": 5,
+  "provisional": true
+ },
+ {
+  "week": 151,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U04"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 152,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U05"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 153,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U06"
+  ],
+  "hours": 40,
+  "provisional": true
+ },
+ {
+  "week": 154,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U07"
+  ],
+  "hours": 10,
+  "provisional": true
+ },
+ {
+  "week": 155,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U08"
+  ],
+  "hours": 15,
+  "provisional": true
+ },
+ {
+  "week": 156,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U09"
+  ],
+  "hours": 8,
+  "provisional": true
+ },
+ {
+  "week": 157,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U10"
+  ],
+  "hours": 15,
+  "provisional": true
+ },
+ {
+  "week": 158,
+  "title": "Portfolio, final-year project and job readiness",
+  "units": [
+   "M20.U11"
+  ],
+  "hours": 8,
+  "provisional": true
+ }
+]

@@ -1,0 +1,1881 @@
+{
+ "id": "M22",
+ "phase": "P5 Ship and operate",
+ "title": "System Design: classic and ML/LLM",
+ "summary": "Two halves with different entry points. S1 (classic: estimation, networking, databases, caching, queues, rate limits) needs only M03 + M21 and runs alongside M09-M10. S2 (ML/LLM: framing, batch vs online, vector stores at scale, LLM gateway/caching/routing, full design reviews) comes after M11, M12, M16 and M17, right before the capstone and interviews.",
+ "hours": 86,
+ "prerequisites": [
+  "M03",
+  "M21"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M22.S1",
+   "title": "Classic system design",
+   "units": [
+    {
+     "id": "M22.U01",
+     "title": "Method: requirements, estimation, API, high-level design",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [],
+     "outcomes": [
+      "You can separate functional from non-functional requirements and pin down scale.",
+      "You can do back-of-envelope estimates for QPS, storage and bandwidth.",
+      "You can define the API and data model before choosing infrastructure.",
+      "You can run a 45-minute design interview using a delivery framework."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.01",
+       "title": "Functional vs non-functional requirements"
+      },
+      {
+       "id": "M22.01.02",
+       "title": "Back-of-envelope estimation (QPS, storage, bandwidth)"
+      },
+      {
+       "id": "M22.01.03",
+       "title": "API and data model first"
+      },
+      {
+       "id": "M22.01.04",
+       "title": "Interview delivery framework"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "System Design in a Hurry: 'Introduction' + 'Delivery Framework' pages"
+     },
+     "covers": [
+      "What interviewers assess at each level",
+      "Delivery framework: requirements -> core entities -> API -> high-level design -> deep dives",
+      "When (and when not) to do estimation; prioritising non-functional requirements"
+     ],
+     "gaps": [
+      {
+       "topic": "Worked estimation numbers (latency/powers-of-two tables)",
+       "resource": {
+        "resourceId": "sd-primer",
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer#appendix",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Appendix: 'Powers of two table' and 'Latency numbers every programmer should know'"
+       }
+      },
+      {
+       "topic": "Step-by-step method in video",
+       "resource": {
+        "resourceId": "yt-bbg-sdi",
+        "title": "System Design Interview: A Step-By-Step Guide",
+        "url": "https://www.youtube.com/watch?v=i7twT3x5yv8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "How to approach a question (alternative framing)",
+       "resource": {
+        "resourceId": "sd-primer",
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer#how-to-approach-a-system-design-interview-question",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 'How to approach a system design interview question'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Estimate a chat app",
+      "brief": "Paper/markdown only. Estimate peak QPS, daily storage and 1-year storage for a chat app with 1M DAU, 20 messages/user/day, 200-byte messages, 3x peak factor, messages kept 1 year. Then write its API (3-5 endpoints) and core entities.",
+      "done_when": "ESTIMATE.md shows every multiplication with units, arrives at ~230 avg / ~700 peak write QPS and ~1.5 TB/yr raw (or justifies different assumptions), and lists the API before any database is named."
+     },
+     "quiz": [
+      {
+       "id": "M22.U01.Q1",
+       "kind": "mcq",
+       "prompt": "1M DAU x 20 requests/day is roughly what average QPS?",
+       "options": [
+        "23",
+        "2,300",
+        "~230 (20M / 86,400)",
+        "20M"
+       ],
+       "answer": 2,
+       "explain": "20,000,000 / 86,400 s ~= 231 requests per second on average; peak is a multiple of that."
+      },
+      {
+       "id": "M22.U01.Q2",
+       "kind": "mcq",
+       "prompt": "'p99 latency < 200 ms' is a:",
+       "options": [
+        "Functional requirement",
+        "Non-functional requirement",
+        "API endpoint",
+        "Database schema"
+       ],
+       "answer": 1,
+       "explain": "It constrains how well the system performs, not what it does."
+      },
+      {
+       "id": "M22.U01.Q3",
+       "kind": "mcq",
+       "prompt": "The first step in a design interview is to:",
+       "options": [
+        "Pick a database",
+        "Clarify requirements and scale",
+        "Draw microservices",
+        "Choose Kubernetes"
+       ],
+       "answer": 1,
+       "explain": "Every later choice depends on requirements and numbers."
+      },
+      {
+       "id": "M22.U01.Q4",
+       "kind": "short",
+       "prompt": "Why design the API and core entities before choosing storage?",
+       "rubric": [
+        "Access patterns (reads/writes, queries) come from the API and drive storage choice.",
+        "Avoids premature technology choices; keeps the design requirement-driven.",
+        "The API is the contract; storage can change behind it."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U02",
+     "title": "Networking, load balancing, proxies, CDNs",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U01",
+      "M21.U05"
+     ],
+     "outcomes": [
+      "You can explain L4 vs L7 load balancing and where a reverse proxy/API gateway sits.",
+      "You can decide when a CDN or edge cache helps.",
+      "You can pick HTTP/1.1, HTTP/2, WebSockets or SSE for a use case (including LLM token streaming).",
+      "You can explain why stateless services scale horizontally."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.05",
+       "title": "L4 vs L7 load balancing"
+      },
+      {
+       "id": "M22.01.06",
+       "title": "Reverse proxy / API gateway"
+      },
+      {
+       "id": "M22.01.07",
+       "title": "CDNs and edge caching"
+      },
+      {
+       "id": "M22.01.08",
+       "title": "HTTP/1.1 vs HTTP/2 vs WebSockets vs SSE"
+      },
+      {
+       "id": "M22.01.09",
+       "title": "Horizontal vs vertical scaling, statelessness"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/core-concepts/networking-essentials",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Core Concepts: 'Networking Essentials'"
+     },
+     "covers": [
+      "OSI layers that matter (L4 TCP/UDP vs L7 HTTP)",
+      "HTTP, REST/gRPC, WebSockets, SSE and when each fits",
+      "Load balancing (client-side vs dedicated, L4 vs L7, algorithms)",
+      "Timeouts, retries and regional latency basics"
+     ],
+     "gaps": [
+      {
+       "topic": "CDN and reverse proxy",
+       "resource": {
+        "resourceId": "sd-primer",
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer#content-delivery-network",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 'Content delivery network' and 'Reverse proxy (web server)'"
+       }
+      },
+      {
+       "topic": "Load balancer basics in video",
+       "resource": {
+        "resourceId": "yt-ibm-lb",
+        "title": "What is a Load Balancer?",
+        "url": "https://www.youtube.com/watch?v=sCR3SAVdyCc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Horizontal scaling and statelessness",
+       "resource": {
+        "resourceId": "sd-primer",
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer#horizontal-scaling",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 'Horizontal scaling' under Load balancer"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Two replicas behind nginx",
+      "brief": "No-card path: local Docker Compose. Run 2 API replicas behind nginx (round robin) with passive health checks (`max_fails`, `fail_timeout`). Kill one replica during a 60-second curl loop.",
+      "done_when": "A log of the curl loop shows responses from both replica IDs, then only the survivor after the kill, with at most a few failed requests during detection; README explains why session data is in Redis, not process memory."
+     },
+     "quiz": [
+      {
+       "id": "M22.U02.Q1",
+       "kind": "mcq",
+       "prompt": "An L7 load balancer can route by:",
+       "options": [
+        "IP only",
+        "HTTP path and headers",
+        "MAC address",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "L7 understands HTTP; L4 only sees IPs/ports."
+      },
+      {
+       "id": "M22.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Horizontal scaling is easiest when servers are:",
+       "options": [
+        "Stateful",
+        "Stateless",
+        "On one VM",
+        "GPU-based"
+       ],
+       "answer": 1,
+       "explain": "Any replica can serve any request when state lives in shared stores."
+      },
+      {
+       "id": "M22.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Streaming LLM tokens to a browser most simply uses:",
+       "options": [
+        "SMTP",
+        "Server-Sent Events (SSE)",
+        "FTP",
+        "UDP multicast"
+       ],
+       "answer": 1,
+       "explain": "SSE is one-way server->client over plain HTTP, ideal for token streams."
+      },
+      {
+       "id": "M22.U02.Q4",
+       "kind": "short",
+       "prompt": "Where should session state live if API servers are stateless, and what is the trade-off?",
+       "rubric": [
+        "In a shared store: Redis/DB, or client-side signed tokens (JWT/cookies).",
+        "Trade-off: extra network hop/latency and a dependency vs freedom to scale/replace servers.",
+        "Mentions sticky sessions as a weaker alternative."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U03",
+     "title": "Databases: modelling, indexing, replication, sharding, CAP",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U01"
+     ],
+     "outcomes": [
+      "You can choose SQL vs NoSQL from access patterns.",
+      "You can read a query plan and add the right index.",
+      "You can explain leader/follower replication, read replicas and replication lag.",
+      "You can explain sharding, consistent hashing and the CAP trade-off."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.10",
+       "title": "SQL vs NoSQL selection"
+      },
+      {
+       "id": "M22.01.11",
+       "title": "Indexes (B-tree) and query plans"
+      },
+      {
+       "id": "M22.01.12",
+       "title": "Replication and read replicas"
+      },
+      {
+       "id": "M22.01.13",
+       "title": "Sharding/partitioning and consistent hashing"
+      },
+      {
+       "id": "M22.01.14",
+       "title": "CAP and consistency models"
+      },
+      {
+       "id": "M22.01.15",
+       "title": "Transactions and isolation (awareness)"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/core-concepts/db-indexing",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Core Concepts: 'Database Indexing', then 'Consistent Hashing', then 'CAP Theorem'"
+     },
+     "covers": [
+      "B-tree, hash, geospatial and inverted indexes; composite index ordering",
+      "Consistent hashing ring and virtual nodes for sharding/caches",
+      "CAP: choosing consistency vs availability per feature during partitions"
+     ],
+     "gaps": [
+      {
+       "topic": "Running EXPLAIN ANALYZE in Postgres",
+       "resource": {
+        "resourceId": "postgres-docs",
+        "title": "PostgreSQL documentation: Using EXPLAIN",
+        "url": "https://www.postgresql.org/docs/current/using-explain.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Using EXPLAIN (14.1)"
+       }
+      },
+      {
+       "topic": "Replication and read replicas",
+       "resource": {
+        "resourceId": "sd-primer",
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer#database",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Section 'Database' -> 'Relational database management system (RDBMS)' -> Master-slave/Master-master replication"
+       }
+      },
+      {
+       "topic": "SQL vs NoSQL paradigms",
+       "resource": {
+        "resourceId": "yt-fireship-db",
+        "title": "7 Database Paradigms",
+        "url": "https://www.youtube.com/watch?v=W2Z7fbCLSTw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Consistent hashing visual",
+       "resource": {
+        "resourceId": "yt-bbg-ch",
+        "title": "Consistent Hashing | Algorithms You Should Know #1",
+        "url": "https://www.youtube.com/watch?v=UF9Iqmg94tk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "CAP lecture",
+       "resource": {
+        "resourceId": "yt-cap",
+        "title": "L16: The CAP Theorem",
+        "url": "https://www.youtube.com/watch?v=k-Yaq8AHlFA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full lecture"
+       }
+      },
+      {
+       "topic": "Read-scaling pattern",
+       "resource": {
+        "resourceId": "hellointerview",
+        "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+        "url": "https://www.hellointerview.com/learn/system-design/patterns/scaling-reads",
+        "type": "course",
+        "free": "partial",
+        "verified": "2026-10-20",
+        "slice": "Patterns: 'Scaling Reads'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Index a slow query",
+      "brief": "No-card path: Postgres in Docker. Generate 1M rows (generate_series), run a filtered + sorted query, capture `EXPLAIN ANALYZE` before and after adding a composite index. Then write half a page: read replicas or sharding for a 95%-read workload at 5k QPS?",
+      "done_when": "QUERY.md shows both plans (Seq Scan -> Index Scan/Bitmap) with execution times, and the decision note names replication lag and read-your-writes as the main risk."
+     },
+     "quiz": [
+      {
+       "id": "M22.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Read replicas mainly help:",
+       "options": [
+        "Write throughput",
+        "Read throughput, at the cost of replication lag",
+        "Storage size",
+        "Schema changes"
+       ],
+       "answer": 1,
+       "explain": "Writes still go to the leader; followers serve reads that may be slightly stale."
+      },
+      {
+       "id": "M22.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Consistent hashing minimises:",
+       "options": [
+        "Latency",
+        "Keys remapped when nodes join or leave",
+        "Disk use",
+        "Index size"
+       ],
+       "answer": 1,
+       "explain": "Only ~K/N keys move instead of nearly all with mod-N hashing."
+      },
+      {
+       "id": "M22.U03.Q3",
+       "kind": "mcq",
+       "prompt": "During a network partition, CAP forces a choice between:",
+       "options": [
+        "Cost and speed",
+        "Consistency and availability",
+        "SQL and NoSQL",
+        "Caching and indexing"
+       ],
+       "answer": 1,
+       "explain": "Partition tolerance is not optional in distributed systems."
+      },
+      {
+       "id": "M22.U03.Q4",
+       "kind": "short",
+       "prompt": "Why is 'read-your-own-writes' hard with asynchronous replicas, and how do you get it?",
+       "rubric": [
+        "The write lands on the leader; the next read may hit a follower that has not applied it.",
+        "Fixes: read from leader for a window after a write, session stickiness, or wait for replica LSN/version.",
+        "Mentions the cost (leader load) of the fix."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U04",
+     "title": "Caching",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U03"
+     ],
+     "outcomes": [
+      "You can choose cache-aside, write-through or write-back for a workload.",
+      "You can set TTLs and eviction, and handle invalidation.",
+      "You can prevent a cache stampede.",
+      "You can implement Redis caching in a FastAPI service."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.16",
+       "title": "Cache-aside / write-through / write-back"
+      },
+      {
+       "id": "M22.01.17",
+       "title": "TTLs, eviction (LRU) and invalidation"
+      },
+      {
+       "id": "M22.01.18",
+       "title": "Thundering herd / stampede"
+      },
+      {
+       "id": "M22.01.19",
+       "title": "Redis basics"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/core-concepts/caching",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Core Concepts: 'Caching'"
+     },
+     "covers": [
+      "Where caches live (client, CDN, in-process, distributed)",
+      "Cache-aside, write-through, write-behind, read-through",
+      "Eviction policies and TTLs; invalidation strategies",
+      "Hot keys and stampede mitigation"
+     ],
+     "gaps": [
+      {
+       "topic": "Cache layers overview",
+       "resource": {
+        "resourceId": "yt-bbg-cache",
+        "title": "Cache Systems Every Developer Should Know",
+        "url": "https://www.youtube.com/watch?v=dGAgxozNWFE",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Redis hands-on",
+       "resource": {
+        "resourceId": "redis-docs",
+        "title": "Redis documentation",
+        "url": "https://redis.io/docs/latest/develop/get-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Get started (data types + Python client)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Cache-aside with stampede protection",
+      "brief": "No-card path: Redis in Docker. Add cache-aside to an expensive endpoint (sleep 300 ms) with a 60 s TTL. Add a lock (SET NX PX) so only one request recomputes on a miss. Load it with `hey -c 50`.",
+      "done_when": "README table of p50/p95 before vs after caching, plus a test showing 50 concurrent misses produce exactly 1 recompute (counter in logs)."
+     },
+     "quiz": [
+      {
+       "id": "M22.U04.Q1",
+       "kind": "mcq",
+       "prompt": "In cache-aside, on a cache miss the application:",
+       "options": [
+        "Returns an error",
+        "Reads the DB, then populates the cache",
+        "Writes the DB",
+        "Flushes the cache"
+       ],
+       "answer": 1,
+       "explain": "The app owns both lookups; the cache is populated lazily."
+      },
+      {
+       "id": "M22.U04.Q2",
+       "kind": "mcq",
+       "prompt": "A TTL alone guarantees:",
+       "options": [
+        "Strong consistency",
+        "Bounded staleness",
+        "No misses",
+        "No memory use"
+       ],
+       "answer": 1,
+       "explain": "Data can be stale for at most the TTL."
+      },
+      {
+       "id": "M22.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A cache stampede happens when:",
+       "options": [
+        "The cache is full",
+        "Many requests miss the same hot key at once and all hit the DB",
+        "Redis restarts",
+        "Keys are long"
+       ],
+       "answer": 1,
+       "explain": "Mitigate with locks/single-flight, early refresh or jittered TTLs."
+      },
+      {
+       "id": "M22.U04.Q4",
+       "kind": "short",
+       "prompt": "What should you NOT cache in an LLM application, and why?",
+       "rubric": [
+        "Personalised/tenant-specific answers under a shared key (data leakage).",
+        "Responses from non-deterministic or tool-calling/side-effecting requests.",
+        "Answers depending on fast-changing data unless TTL matches freshness."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U05",
+     "title": "Asynchronous processing: queues, streams, backpressure, long-running jobs",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U04",
+      "M21.U05"
+     ],
+     "outcomes": [
+      "You can choose a queue, pub/sub or log (Kafka) for a workload.",
+      "You can design idempotent consumers for at-least-once delivery.",
+      "You can apply retries with exponential backoff + jitter and dead-letter queues.",
+      "You can implement submit -> poll/webhook for long-running work."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.20",
+       "title": "Queue vs pub/sub vs log (Kafka)"
+      },
+      {
+       "id": "M22.01.21",
+       "title": "At-least-once delivery and idempotent consumers"
+      },
+      {
+       "id": "M22.01.22",
+       "title": "Retries, backoff, dead-letter queues"
+      },
+      {
+       "id": "M22.01.23",
+       "title": "Backpressure and load shedding"
+      },
+      {
+       "id": "M22.01.24",
+       "title": "Long-running job pattern (submit -> poll/webhook)"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/patterns/long-running-tasks",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Patterns: 'Managing Long Running Tasks'"
+     },
+     "covers": [
+      "Why synchronous requests fail for slow work",
+      "Async worker pattern: queue, workers, job status store",
+      "Polling vs webhooks/push for completion; failure handling and retries"
+     ],
+     "gaps": [
+      {
+       "topic": "Kafka and log-based messaging",
+       "resource": {
+        "resourceId": "hellointerview",
+        "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+        "url": "https://www.hellointerview.com/learn/system-design/deep-dives/kafka",
+        "type": "course",
+        "free": "partial",
+        "verified": "2026-10-20",
+        "slice": "Deep Dives: 'Kafka'"
+       }
+      },
+      {
+       "topic": "Load shedding and overload",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/sre-book/handling-overload/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Book Ch21 'Handling Overload'"
+       }
+      },
+      {
+       "topic": "Retries, backoff and cascading failures",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Book Ch22 'Addressing Cascading Failures'"
+       }
+      },
+      {
+       "topic": "A concrete Python queue",
+       "resource": {
+        "resourceId": "rq",
+        "title": "RQ (Redis Queue) documentation",
+        "url": "https://python-rq.org/docs/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "RQ docs: Jobs, Workers, Retries"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Document-processing jobs that survive crashes",
+      "brief": "No-card path: Redis + RQ (or arq/Celery) in Compose. POST /jobs returns 202 + job_id; a worker processes it with retries (3, exponential backoff + jitter) and a DLQ; an Idempotency-Key header deduplicates submissions. Kill the worker mid-job.",
+      "done_when": "Test script submits the same request twice with one key -> one job; after `docker kill worker` + restart the job completes exactly once (one output row); a poisoned job lands in the DLQ after 3 tries."
+     },
+     "quiz": [
+      {
+       "id": "M22.U05.Q1",
+       "kind": "mcq",
+       "prompt": "With at-least-once delivery, consumers must be:",
+       "options": [
+        "Fast",
+        "Idempotent",
+        "Stateful",
+        "Single-threaded"
+       ],
+       "answer": 1,
+       "explain": "Duplicates will happen; processing twice must have the same effect as once."
+      },
+      {
+       "id": "M22.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Exponential backoff with jitter prevents:",
+       "options": [
+        "Data loss",
+        "Synchronised retry storms",
+        "Timeouts",
+        "Auth errors"
+       ],
+       "answer": 1,
+       "explain": "Randomising delays spreads retries out instead of hammering together."
+      },
+      {
+       "id": "M22.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Kafka differs from a classic work queue because messages:",
+       "options": [
+        "Vanish when read",
+        "Persist in an ordered, partitioned log that consumers replay by offset",
+        "Cannot be partitioned",
+        "Are synchronous"
+       ],
+       "answer": 1,
+       "explain": "Retention + offsets let many consumer groups read independently and replay."
+      },
+      {
+       "id": "M22.U05.Q4",
+       "kind": "short",
+       "prompt": "When should an API return 202 Accepted instead of 200 OK? Describe what the client does next.",
+       "rubric": [
+        "When work is accepted but not completed (async/long-running).",
+        "Response includes a job id/status URL; client polls or receives a webhook.",
+        "Mentions idempotency for retries of the submission."
+       ]
+      }
+     ],
+     "backup": {
+      "resourceId": "kafka-quickstart",
+      "title": "Apache Kafka quickstart",
+      "url": "https://kafka.apache.org/quickstart",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Quickstart steps 1-5 (run Kafka in Docker, create topic, produce, consume)"
+     }
+    },
+    {
+     "id": "M22.U06",
+     "title": "Rate limiting and reliability patterns",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U05"
+     ],
+     "outcomes": [
+      "You can compare token bucket, leaky bucket and sliding-window limiters.",
+      "You can build a distributed limiter with atomic Redis operations.",
+      "You can apply timeouts, circuit breakers, bulkheads and graceful degradation."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.25",
+       "title": "Token bucket, leaky bucket, sliding window"
+      },
+      {
+       "id": "M22.01.26",
+       "title": "Distributed rate limiting with Redis"
+      },
+      {
+       "id": "M22.01.27",
+       "title": "Timeouts, circuit breakers, bulkheads"
+      },
+      {
+       "id": "M22.01.28",
+       "title": "Graceful degradation"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/distributed-rate-limiter",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Problem Breakdowns: 'Design a Distributed Rate Limiter'"
+     },
+     "covers": [
+      "Requirements for a limiter (per user/IP/key, rules, low latency)",
+      "Algorithms: fixed window, sliding log/window, token bucket, leaky bucket",
+      "Redis-backed distributed counters, atomicity and Lua",
+      "Failure modes: limiter down (fail open/closed), hot keys, multi-region"
+     ],
+     "gaps": [
+      {
+       "topic": "Algorithms explained in video",
+       "resource": {
+        "resourceId": "yt-sdi-ratelimit",
+        "title": "System Design Interview - Rate Limiting (local and distributed)",
+        "url": "https://www.youtube.com/watch?v=FU4WlwfS3G0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full video"
+       }
+      },
+      {
+       "topic": "Circuit breakers, timeouts and degradation",
+       "resource": {
+        "resourceId": "sre-book",
+        "title": "Site Reliability Engineering (Google SRE Book) + SRE Workbook",
+        "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "SRE Book Ch22 'Addressing Cascading Failures'"
+       }
+      },
+      {
+       "topic": "Redis rate-limiting recipes",
+       "resource": {
+        "resourceId": "redis-docs",
+        "title": "Redis documentation",
+        "url": "https://redis.io/glossary/rate-limiting/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Glossary: Rate limiting"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Token-bucket middleware",
+      "brief": "No-card path: local Redis. FastAPI middleware implementing a token bucket per API key in a Lua script (atomic). Return 429 with Retry-After. Add a 2 s timeout + simple circuit breaker on a downstream call.",
+      "done_when": "A burst test (e.g. 30 requests in 1 s at 10 rps, bucket 20) yields 20 x 200 then 429s with Retry-After; two app replicas share limits (proven by alternating requests); circuit opens after N downstream failures and returns a fallback."
+     },
+     "quiz": [
+      {
+       "id": "M22.U06.Q1",
+       "kind": "mcq",
+       "prompt": "A token bucket allows:",
+       "options": [
+        "No bursts",
+        "Bursts up to the bucket size, then a steady refill rate",
+        "Unlimited requests",
+        "One request at a time"
+       ],
+       "answer": 1,
+       "explain": "Capacity sets the burst; refill rate sets sustained throughput."
+      },
+      {
+       "id": "M22.U06.Q2",
+       "kind": "mcq",
+       "prompt": "The right HTTP status for 'rate limited' is:",
+       "options": [
+        "403",
+        "429",
+        "500",
+        "Always 503"
+       ],
+       "answer": 1,
+       "explain": "429 Too Many Requests, ideally with Retry-After."
+      },
+      {
+       "id": "M22.U06.Q3",
+       "kind": "mcq",
+       "prompt": "A circuit breaker:",
+       "options": [
+        "Retries forever",
+        "Fails fast after repeated downstream failures, then probes for recovery",
+        "Caches responses",
+        "Load-balances"
+       ],
+       "answer": 1,
+       "explain": "Closed -> open -> half-open states protect the caller and the dependency."
+      },
+      {
+       "id": "M22.U06.Q4",
+       "kind": "short",
+       "prompt": "Why must a distributed limiter use atomic operations (Lua script or INCR), not read-then-write?",
+       "rubric": [
+        "Concurrent replicas can read the same count and both allow (race condition).",
+        "Atomic script makes check-and-decrement one operation in Redis.",
+        "Mentions clock/TTL handling inside the same atomic step."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U07",
+     "title": "Practice designs (classic) and the written design doc",
+     "hours": 6,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U06"
+     ],
+     "outcomes": [
+      "You can produce a timed design for a classic problem and compare it against a reference.",
+      "You can write a design doc with requirements, estimates, diagram, data model, trade-offs and failure modes."
+     ],
+     "topics": [
+      {
+       "id": "M22.01.29",
+       "title": "URL shortener"
+      },
+      {
+       "id": "M22.01.30",
+       "title": "Notification / webhook system"
+      },
+      {
+       "id": "M22.01.31",
+       "title": "Written design doc template"
+      }
+     ],
+     "learn": {
+      "resourceId": "hellointerview",
+      "title": "Hello Interview: System Design in a Hurry + Core Concepts + Breakdowns",
+      "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/bitly",
+      "type": "course",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Problem Breakdowns: 'Design a URL Shortener Like Bitly'"
+     },
+     "covers": [
+      "Requirements and entities for a shortener",
+      "Short-code generation: counter + base62 vs hashing; collisions",
+      "Read-heavy scaling: caching, CDN, redirects (301 vs 302)",
+      "Deep dives: uniqueness, scaling to billions of URLs"
+     ],
+     "gaps": [
+      {
+       "topic": "Notification/webhook system design",
+       "resource": {
+        "resourceId": "sd-primer",
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer#asynchronism",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'System design interview questions with solutions' list (pick one with fan-out) + 'Asynchronism' section"
+       }
+      },
+      {
+       "topic": "Visual refreshers for interview prep",
+       "resource": {
+        "resourceId": "bbg-101",
+        "title": "System Design 101 (ByteByteGo)",
+        "url": "https://github.com/ByteByteGoHq/system-design-101",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README index"
+       }
+      },
+      {
+       "topic": "Long-form concepts course",
+       "resource": {
+        "resourceId": "yt-fcc-sd",
+        "title": "System Design Concepts Course and Interview Prep",
+        "url": "https://www.youtube.com/watch?v=F2FmTdLtb_4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full course"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Two timed design docs",
+      "brief": "45 minutes each, on a timer, written (Excalidraw + markdown): (1) URL shortener, (2) webhook delivery system with retries. Then compare each with a reference (Hello Interview breakdown; system-design-primer) and list three misses.",
+      "done_when": "Two docs (<=3 pages each) with requirements, numbers, diagram, data model, 3 trade-offs and failure modes; a MISSES.md with 3 concrete gaps per doc and what you would change."
+     },
+     "quiz": [
+      {
+       "id": "M22.U07.Q1",
+       "kind": "mcq",
+       "prompt": "For short-code generation, a base62 counter vs a random hash trades:",
+       "options": [
+        "Nothing",
+        "Predictability/coordination vs collision handling",
+        "Cost only",
+        "TLS support"
+       ],
+       "answer": 1,
+       "explain": "Counters need a coordinated sequence and are guessable; hashes need collision checks."
+      },
+      {
+       "id": "M22.U07.Q2",
+       "kind": "mcq",
+       "prompt": "A redirect service is:",
+       "options": [
+        "Write-heavy",
+        "Read-heavy, so caching dominates",
+        "CPU-bound",
+        "GPU-bound"
+       ],
+       "answer": 1,
+       "explain": "Each link is created once and read many times."
+      },
+      {
+       "id": "M22.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Choosing 301 vs 302 redirects mainly affects:",
+       "options": [
+        "Security",
+        "Browser caching and therefore click analytics",
+        "Database choice",
+        "TLS"
+       ],
+       "answer": 1,
+       "explain": "301 is cached by browsers, so later clicks may never reach you."
+      },
+      {
+       "id": "M22.U07.Q4",
+       "kind": "short",
+       "prompt": "Name the single biggest bottleneck in your shortener design and how it fails under 10x traffic.",
+       "rubric": [
+        "Identifies a specific component (DB reads, ID generator, cache hot keys).",
+        "Describes the failure mode (latency, errors, cascading).",
+        "Proposes a mitigation with its cost."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M22.S2",
+   "title": "ML and LLM system design",
+   "units": [
+    {
+     "id": "M22.U08",
+     "title": "ML system design method",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M16.U03"
+     ],
+     "outcomes": [
+      "You can turn a business goal into an ML objective with offline and online metrics.",
+      "You can plan data, labels, features and feedback loops.",
+      "You can propose a baseline first and list failure modes."
+     ],
+     "topics": [
+      {
+       "id": "M22.02.01",
+       "title": "Framing: business metric -> ML objective"
+      },
+      {
+       "id": "M22.02.02",
+       "title": "Data sources, labels, feedback loops"
+      },
+      {
+       "id": "M22.02.03",
+       "title": "Features and training/serving consistency"
+      },
+      {
+       "id": "M22.02.04",
+       "title": "Offline vs online evaluation, A/B"
+      },
+      {
+       "id": "M22.02.05",
+       "title": "Interview framework for ML design"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs329s",
+      "title": "Stanford CS329S: Machine Learning Systems Design (2022)",
+      "url": "https://stanford-cs329s.github.io/syllabus.html",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture notes 'ML and Data Systems Fundamentals' + 'Deployment' (linked from the syllabus page)"
+     },
+     "covers": [
+      "ML in research vs production; requirements of ML systems",
+      "Data engineering fundamentals, sources and formats",
+      "Batch vs online prediction and deployment myths"
+     ],
+     "gaps": [
+      {
+       "topic": "Interview-style ML design walkthrough",
+       "resource": {
+        "resourceId": "hellointerview-ml",
+        "title": "Hello Interview: ML System Design in a Hurry",
+        "url": "https://www.hellointerview.com/learn/ml-system-design/in-a-hurry/introduction",
+        "type": "course",
+        "free": "partial",
+        "verified": "2026-10-20",
+        "slice": "'ML System Design in a Hurry' introduction + framework pages"
+       }
+      },
+      {
+       "topic": "Free structured notes on the same method",
+       "resource": {
+        "resourceId": "huyen-mlsd-booklet",
+        "title": "Machine Learning Systems Design (free booklet)",
+        "url": "https://huyenchip.com/machine-learning-systems-design/toc.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Table of contents: Design a machine learning system; Case studies"
+       }
+      },
+      {
+       "topic": "Systems design checklist",
+       "resource": {
+        "resourceId": "B11",
+        "title": "Made With ML (MLOps course, online reference)",
+        "url": "https://madewithml.com/courses/mlops/systems-design/",
+        "type": "book",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Lesson 'Machine Learning Systems Design'"
+       }
+      },
+      {
+       "topic": "Concise lesson with quiz",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/19-ml-system-design",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 02 lesson 19 'ML System Design'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Design doc: flag risky support tickets",
+      "brief": "Written design doc for 'flag risky customer-support tickets': business metric, ML objective, label source and delay, features, a heuristic baseline, offline metric, online metric/A-B plan, feedback-loop risk, failure modes.",
+      "done_when": "Doc names a baseline that could ship in a week, separates offline (e.g. PR-AUC) and online (e.g. escalations caught, agent time) metrics, and has a section on label delay and feedback loops."
+     },
+     "quiz": [
+      {
+       "id": "M22.U08.Q1",
+       "kind": "mcq",
+       "prompt": "A model improves offline AUC but lowers revenue. This most likely shows:",
+       "options": [
+        "Overfitting only",
+        "Proxy-metric misalignment",
+        "A data leak only",
+        "A deployment bug"
+       ],
+       "answer": 1,
+       "explain": "The offline proxy does not capture what the business values."
+      },
+      {
+       "id": "M22.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Feedback loops are dangerous because:",
+       "options": [
+        "They are slow",
+        "Model outputs bias the future training labels",
+        "They need GPUs",
+        "They are illegal"
+       ],
+       "answer": 1,
+       "explain": "E.g. you only observe outcomes for items the model chose to show."
+      },
+      {
+       "id": "M22.U08.Q3",
+       "kind": "mcq",
+       "prompt": "The first thing to build is usually:",
+       "options": [
+        "A deep model",
+        "A simple baseline/heuristic with metrics",
+        "A feature store",
+        "A Kubernetes cluster"
+       ],
+       "answer": 1,
+       "explain": "A baseline sets the bar and tests the pipeline end-to-end."
+      },
+      {
+       "id": "M22.U08.Q4",
+       "kind": "short",
+       "prompt": "How do you get training labels when ground truth arrives 30 days late?",
+       "rubric": [
+        "Use proxy/early labels (user actions, human review samples) with known bias.",
+        "Join delayed labels when available; evaluate on matured cohorts.",
+        "Monitor input/prediction drift meanwhile; mentions weak supervision or active labelling."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U09",
+     "title": "Batch vs online vs streaming inference (incl. LLM batch APIs)",
+     "hours": 5,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U08"
+     ],
+     "outcomes": [
+      "You can choose batch precompute, online or streaming inference from freshness and latency needs.",
+      "You can cost a provider batch API against synchronous calls and self-hosted batch."
+     ],
+     "topics": [
+      {
+       "id": "M22.02.06",
+       "title": "Batch precompute vs online vs streaming features"
+      },
+      {
+       "id": "M22.02.07",
+       "title": "Freshness and latency budgets"
+      },
+      {
+       "id": "M22.02.08",
+       "title": "Provider batch APIs for LLMs (cost vs latency)"
+      },
+      {
+       "id": "M22.02.09",
+       "title": "Async inference queues for GPU work"
+      }
+     ],
+     "learn": {
+      "resourceId": "huyen-blog",
+      "title": "Chip Huyen blog",
+      "url": "https://huyenchip.com/2022/01/02/real-time-machine-learning-challenges-and-solutions.html",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Article 'Real-time machine learning: challenges and solutions' (2022)"
+     },
+     "covers": [
+      "Online prediction vs batch prediction stages",
+      "Streaming features and the stream/batch processing divide",
+      "Continual learning motivations and challenges"
+     ],
+     "gaps": [
+      {
+       "topic": "LLM batch APIs",
+       "resource": {
+        "resourceId": "openai-batch",
+        "title": "OpenAI Batch API guide",
+        "url": "https://platform.openai.com/docs/guides/batch",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Batch API guide (JSONL input, 24 h window, pricing)"
+       }
+      },
+      {
+       "topic": "Batch-API economics and triage",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/15-batch-apis",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 15 'Batch APIs - the 50% Discount as Industry Standard'"
+       }
+      },
+      {
+       "topic": "Three deployment modes",
+       "resource": {
+        "resourceId": "C16",
+        "title": "DataTalksClub MLOps Zoomcamp",
+        "url": "https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/04-deployment",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Module 4.1 'Three Ways of Deploying a Model'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Summarise 100k docs/day: pick a lane",
+      "brief": "Spreadsheet/markdown. For 100k docs/day (avg 1,500 input + 200 output tokens) compute cost and latency for (a) synchronous API calls, (b) a provider Batch API, (c) self-hosted vLLM nightly on a rented GPU. State prices with source + date.",
+      "done_when": "A table with three rows, cost/day, worst-case latency, ops burden, and a recommendation that names the business latency requirement it depends on."
+     },
+     "quiz": [
+      {
+       "id": "M22.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Batch inference fits when:",
+       "options": [
+        "A user waits on the response",
+        "Predictions can be computed ahead and tolerate staleness",
+        "Features change per request",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "Precompute for known entities on a schedule."
+      },
+      {
+       "id": "M22.U09.Q2",
+       "kind": "mcq",
+       "prompt": "A provider batch API typically trades:",
+       "options": [
+        "Accuracy for speed",
+        "Latency (up to ~24 h) for a lower price",
+        "Privacy for cost",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Discount (often ~50%) in exchange for asynchronous completion."
+      },
+      {
+       "id": "M22.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Streaming features matter most for:",
+       "options": [
+        "Yearly churn prediction",
+        "Fraud detection on the current session",
+        "Static image tagging",
+        "Offline translation"
+       ],
+       "answer": 1,
+       "explain": "Signals from the last minutes decide the outcome."
+      },
+      {
+       "id": "M22.U09.Q4",
+       "kind": "short",
+       "prompt": "Give one design where a hybrid of precomputed and online scoring beats both pure options.",
+       "rubric": [
+        "Example: precompute candidate recommendations nightly, re-rank online with session features.",
+        "Explains latency/cost win of precompute plus freshness win of online.",
+        "Mentions consistency of features between the two paths."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U10",
+     "title": "Vector stores at scale",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U03"
+     ],
+     "outcomes": [
+      "You can explain HNSW/IVF/PQ and the recall-latency-memory trade-off.",
+      "You can avoid metadata-filtering pitfalls and choose quantization for vectors.",
+      "You can decide between pgvector and a dedicated vector DB and plan a re-embedding migration."
+     ],
+     "topics": [
+      {
+       "id": "M22.02.10",
+       "title": "ANN index families (HNSW, IVF, PQ) and trade-offs"
+      },
+      {
+       "id": "M22.02.11",
+       "title": "Metadata filtering and pre/post-filter pitfalls"
+      },
+      {
+       "id": "M22.02.12",
+       "title": "Quantization for vectors"
+      },
+      {
+       "id": "M22.02.13",
+       "title": "Sharding/replication of vector DBs"
+      },
+      {
+       "id": "M22.02.14",
+       "title": "pgvector vs dedicated DB decision"
+      },
+      {
+       "id": "M22.02.15",
+       "title": "Re-embedding/migration when the model changes"
+      }
+     ],
+     "learn": {
+      "resourceId": "pinecone-hnsw",
+      "title": "Hierarchical Navigable Small Worlds (HNSW) - Faiss: The Missing Manual",
+      "url": "https://www.pinecone.io/learn/series/faiss/hnsw/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full article (Faiss: The Missing Manual, chapter 'HNSW')"
+     },
+     "covers": [
+      "Probability skip lists and navigable small-world graphs",
+      "HNSW layers, M, efConstruction, efSearch",
+      "Faiss implementation and recall/latency/memory measurements"
+     ],
+     "gaps": [
+      {
+       "topic": "Filtering and payload indexes",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant documentation",
+        "url": "https://qdrant.tech/documentation/concepts/indexing/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts: Indexing (payload + vector index, filtrable HNSW)"
+       }
+      },
+      {
+       "topic": "Vector quantization",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant documentation",
+        "url": "https://qdrant.tech/documentation/guides/quantization/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Guides: Quantization (scalar, binary, product)"
+       }
+      },
+      {
+       "topic": "Sharding and replication",
+       "resource": {
+        "resourceId": "qdrant-docs",
+        "title": "Qdrant documentation",
+        "url": "https://qdrant.tech/documentation/scaling/distributed_deployment/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Distributed deployment"
+       }
+      },
+      {
+       "topic": "pgvector HNSW/IVFFlat tuning",
+       "resource": {
+        "resourceId": "pgvector",
+        "title": "pgvector",
+        "url": "https://github.com/pgvector/pgvector",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README sections 'Indexing' (HNSW, IVFFlat) and 'Filtering'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Recall/latency curve",
+      "brief": "No-card path: Qdrant in Docker on a laptop (use 200k-1M vectors; drop to 200k if RAM < 16 GB). Measure recall@10 against brute force and p95 latency at hnsw_ef = 16/64/256, with scalar quantization off and on.",
+      "done_when": "A plot (recall vs p95) with 6 points, memory per configuration, and a one-paragraph recommendation for a 99% recall target."
+     },
+     "quiz": [
+      {
+       "id": "M22.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Raising HNSW `ef` at query time:",
+       "options": [
+        "Lowers recall",
+        "Raises recall and latency",
+        "Shrinks memory",
+        "Rebuilds the index"
+       ],
+       "answer": 1,
+       "explain": "A wider candidate list explores more of the graph."
+      },
+      {
+       "id": "M22.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Product quantization mainly reduces:",
+       "options": [
+        "Recall",
+        "Memory per vector",
+        "Write speed",
+        "Model dimensions"
+       ],
+       "answer": 1,
+       "explain": "Vectors are stored as short codes; some recall is lost."
+      },
+      {
+       "id": "M22.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Switching to a new embedding model requires:",
+       "options": [
+        "Nothing",
+        "Re-embedding the corpus, because vectors are not comparable across models",
+        "Only a metadata reindex",
+        "Only a new distance metric"
+       ],
+       "answer": 1,
+       "explain": "Different models define different vector spaces."
+      },
+      {
+       "id": "M22.U10.Q4",
+       "kind": "short",
+       "prompt": "When is Postgres + pgvector the right call over a dedicated vector DB?",
+       "rubric": [
+        "Moderate scale (up to a few million vectors) with existing Postgres ops skills.",
+        "Need transactional joins/filters with relational data; one fewer system.",
+        "States when to switch (very large scale, heavy filtering at scale, multi-tenant isolation needs)."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U11",
+     "title": "LLM platform architecture: gateway, quotas, caching, routing, guardrails, cost",
+     "hours": 8,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U06"
+     ],
+     "outcomes": [
+      "You can design an LLM gateway: auth, routing, fallback, retries, quotas, logging.",
+      "You can plan exact, prefix and semantic caching and their risks.",
+      "You can design model routing/cascades and a per-request cost model."
+     ],
+     "topics": [
+      {
+       "id": "M22.02.16",
+       "title": "LLM gateway responsibilities"
+      },
+      {
+       "id": "M22.02.17",
+       "title": "Provider rate limits (RPM/TPM) and per-tenant quotas"
+      },
+      {
+       "id": "M22.02.18",
+       "title": "Exact, prompt-prefix and semantic caching"
+      },
+      {
+       "id": "M22.02.19",
+       "title": "Model routing/cascades for cost"
+      },
+      {
+       "id": "M22.02.20",
+       "title": "Guardrail placement (input/output)"
+      },
+      {
+       "id": "M22.02.21",
+       "title": "Cost model per request and per success"
+      }
+     ],
+     "learn": {
+      "resourceId": "huyen-blog",
+      "title": "Chip Huyen blog",
+      "url": "https://huyenchip.com/2024/07/25/genai-platform.html",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Article 'Building A Generative AI Platform' (2024) - steps 1-5: context, guardrails, router + gateway, cache, agent patterns; plus observability and orchestration"
+     },
+     "covers": [
+      "Enhancing context (RAG), input and output guardrails",
+      "Model router and gateway",
+      "Prompt, exact and semantic caching",
+      "Complex logic and write actions; observability; orchestration"
+     ],
+     "gaps": [
+      {
+       "topic": "Gateway feature checklist and selection (treat vendor benchmarks as claims)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/19-ai-gateways",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 19 'AI Gateways - LiteLLM, Portkey, Kong AI Gateway, Bifrost'"
+       }
+      },
+      {
+       "topic": "Prompt vs semantic caching economics",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/14-prompt-semantic-caching",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 14 'Prompt Caching and Semantic Caching Economics'"
+       }
+      },
+      {
+       "topic": "Routing/cascades math",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/17-infrastructure-and-production/16-model-routing",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 17 lesson 16 'Model Routing as a Cost-Reduction Primitive'"
+       }
+      },
+      {
+       "topic": "Patterns incl. guardrails and caching",
+       "resource": {
+        "resourceId": "eugeneyan-llm-patterns",
+        "title": "Patterns for Building LLM-based Systems & Products",
+        "url": "https://eugeneyan.com/writing/llm-patterns/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections 'Caching' and 'Guardrails'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Paper design of a 50-tenant LLM gateway",
+      "brief": "Design doc (to be built in M17.U08): per-tenant TPM quotas, fallback provider on 429/5xx, semantic cache with a similarity threshold and tenant-scoped keys, input/output guardrails, cost attribution per tenant per request.",
+      "done_when": "Doc has a request-path diagram marking where auth, quota, cache, guardrails, routing and logging happen; a cost formula; and a table of 4 failure modes with mitigations."
+     },
+     "quiz": [
+      {
+       "id": "M22.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A semantic cache risks:",
+       "options": [
+        "Higher cost",
+        "Returning a cached answer to a subtly different question",
+        "Slower hits",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Similarity thresholds trade hit rate against wrong answers."
+      },
+      {
+       "id": "M22.U11.Q2",
+       "kind": "mcq",
+       "prompt": "On a provider 429, the gateway should:",
+       "options": [
+        "Retry immediately in a tight loop",
+        "Back off and/or fall back to another provider/model within the tenant's policy",
+        "Return 500",
+        "Drop the tenant"
+       ],
+       "answer": 1,
+       "explain": "Respect Retry-After, back off with jitter, and fall back if policy allows."
+      },
+      {
+       "id": "M22.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Model cascades save cost by:",
+       "options": [
+        "Always using the largest model",
+        "Sending easy requests to cheap models and escalating on low confidence",
+        "Caching only",
+        "Batching only"
+       ],
+       "answer": 1,
+       "explain": "Most traffic is handled cheaply; hard cases escalate."
+      },
+      {
+       "id": "M22.U11.Q4",
+       "kind": "short",
+       "prompt": "Where in the request path do you enforce per-tenant quotas, and why there?",
+       "rubric": [
+        "At the gateway edge, after authentication identifies the tenant and before any model/cache cost is incurred.",
+        "Central place sees all providers/models; consistent counters (Redis) across replicas.",
+        "Counts tokens (estimate in, reconcile actual out)."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M22.U12",
+     "title": "Design reviews: full LLM systems",
+     "hours": 10,
+     "depth": "core",
+     "prerequisites": [
+      "M22.U08",
+      "M22.U09",
+      "M22.U10",
+      "M22.U11"
+     ],
+     "outcomes": [
+      "You can run a 60-minute LLM system design end-to-end with numbers.",
+      "You can design an agent platform with least-privilege tools and approvals.",
+      "You can present trade-offs and limitations to a reviewer."
+     ],
+     "topics": [
+      {
+       "id": "M22.02.22",
+       "title": "RAG assistant for 10k users (latency/cost/eval budget)"
+      },
+      {
+       "id": "M22.02.23",
+       "title": "Agent platform with tools and approvals"
+      },
+      {
+       "id": "M22.02.24",
+       "title": "Nightly document-extraction pipeline"
+      },
+      {
+       "id": "M22.02.25",
+       "title": "Presenting trade-offs and limitations"
+      }
+     ],
+     "learn": {
+      "resourceId": "eugeneyan-llm-patterns",
+      "title": "Patterns for Building LLM-based Systems & Products",
+      "url": "https://eugeneyan.com/writing/llm-patterns/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full article: Evals, RAG, Fine-tuning, Caching, Guardrails, Defensive UX, Collect user feedback"
+     },
+     "covers": [
+      "Seven patterns for LLM products and when to use each",
+      "Evaluation methods and metrics",
+      "RAG and caching design choices; guardrails; defensive UX; feedback collection"
+     ],
+     "gaps": [
+      {
+       "topic": "ML/LLM interview breakdown format",
+       "resource": {
+        "resourceId": "hellointerview-ml",
+        "title": "Hello Interview: ML System Design in a Hurry",
+        "url": "https://www.hellointerview.com/learn/ml-system-design/in-a-hurry/introduction",
+        "type": "course",
+        "free": "partial",
+        "verified": "2026-10-20",
+        "slice": "Introduction + any free problem breakdown"
+       }
+      },
+      {
+       "topic": "Interview prep checklist for ML design",
+       "resource": {
+        "resourceId": "ml-interviews",
+        "title": "Machine Learning Interviews guide",
+        "url": "https://github.com/alirezadir/Machine-Learning-Interviews",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README section 'ML System Design'"
+       }
+      },
+      {
+       "topic": "Production RAG chatbot brief (design input)",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch (rohitg00)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 lesson 08 'production-rag-chatbot'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Three recorded mock designs",
+      "brief": "Three 60-minute mock sessions (record yourself or pair with a classmate): RAG assistant for 10k users; agent platform with write tools + approvals; nightly extraction of 50k PDFs. Each must produce a diagram, estimates, an eval plan, failure modes and a cost estimate.",
+      "done_when": "Three recordings (or written transcripts) + three diagrams; each has a latency budget broken into retrieval/rerank/TTFT/generation and a cost-per-successful-task estimate."
+     },
+     "quiz": [
+      {
+       "id": "M22.U12.Q1",
+       "kind": "mcq",
+       "prompt": "For a RAG assistant, the first latency budget to measure is:",
+       "options": [
+        "Disk IOPS",
+        "Retrieval + rerank + TTFT breakdown",
+        "DNS resolution",
+        "Build time"
+       ],
+       "answer": 1,
+       "explain": "These dominate user-perceived latency."
+      },
+      {
+       "id": "M22.U12.Q2",
+       "kind": "mcq",
+       "prompt": "An agent with write tools needs:",
+       "options": [
+        "A bigger model",
+        "Least-privilege tools, approvals for destructive actions, and audit logs",
+        "No evals",
+        "Streaming only"
+       ],
+       "answer": 1,
+       "explain": "Control the blast radius and keep a record."
+      },
+      {
+       "id": "M22.U12.Q3",
+       "kind": "mcq",
+       "prompt": "Cost per successful task beats cost per token because it:",
+       "options": [
+        "Is cheaper",
+        "Accounts for retries and failed attempts that deliver nothing",
+        "Is how providers bill",
+        "Is simpler"
+       ],
+       "answer": 1,
+       "explain": "It measures value delivered per dollar."
+      },
+      {
+       "id": "M22.U12.Q4",
+       "kind": "short",
+       "prompt": "Name two signals that would make you replace an agent with a deterministic workflow.",
+       "rubric": [
+        "Task path is stable/known (same steps every time).",
+        "Agent variance causes failures/cost spikes; evals show workflow matches quality.",
+        "Compliance/auditability needs predictable steps."
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Design, then prove one slice",
+  "brief": "Write two design docs: one classic (e.g. a notification service) and one LLM (multi-tenant RAG assistant). Each needs requirements, estimates, a diagram, data model, scaling plan, failure modes and costs. Then implement one critical slice of the LLM design: a gateway with quotas + cache + fallback, OR a vector-search tier with a measured recall/latency curve. Load-test it and record a 10-minute walkthrough. No-card path: everything runs in Docker locally; hosted models only via free tiers.",
+  "rubric": [
+   {
+    "criterion": "Requirements and estimates",
+    "levels": [
+     "Missing numbers",
+     "Numbers present but unused",
+     "Numbers drive choices; assumptions stated; 10x-wrong sensitivity noted"
+    ]
+   },
+   {
+    "criterion": "Trade-offs",
+    "levels": [
+     "One option presented",
+     "Alternatives named",
+     ">=3 explicit alternatives rejected with reasons (e.g. pgvector vs Qdrant, sync vs batch)"
+    ]
+   },
+   {
+    "criterion": "Reliability and abuse",
+    "levels": [
+     "Not covered",
+     "Partially covered",
+     "Rate limits, retries/idempotency, failure modes and a degradation plan covered"
+    ]
+   },
+   {
+    "criterion": "Evidence",
+    "levels": [
+     "No implementation",
+     "Implemented, unmeasured",
+     "Slice measured (p50/p95, recall, cache hit rate, cost) and numbers match the doc"
+    ]
+   },
+   {
+    "criterion": "Communication",
+    "levels": [
+     "Reviewer confused",
+     "Reviewer follows with help",
+     "A reviewer unfamiliar with the project can explain the design back after the walkthrough"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

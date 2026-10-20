@@ -1,0 +1,2949 @@
+{
+ "id": "M03",
+ "phase": "P1 Foundations",
+ "title": "CS, algorithms & backend foundations",
+ "summary": "DSA with pythonds3 + NeetCode (auto-judged), OS (OSTEP), networking (Beej), HTTP (MDN), reliability patterns, then FastAPI, Pydantic, auth/OWASP, deep async, streaming/webhooks, Postgres-backed tests, deployment and system-design vocabulary. CS50x is only a backup.",
+ "hours": 129,
+ "deepHours": 10,
+ "prerequisites": [
+  "M01",
+  "M02"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M03.S1",
+   "title": "Data structures & algorithms",
+   "units": [
+    {
+     "id": "M03.U01",
+     "title": "Algorithm analysis and the cost of Python built-ins",
+     "hours": 4,
+     "depth": "core",
+     "week": 19,
+     "prerequisites": [
+      "M01.U14"
+     ],
+     "outcomes": [
+      "You can state Big-O time/space for code you write and know the cost of list/dict operations.",
+      "You can explain amortised O(1) append."
+     ],
+     "topics": [
+      {
+       "id": "M03.01.08",
+       "title": "Big-O time/space"
+      },
+      {
+       "id": "M03.01.09",
+       "title": "amortized intuition"
+      },
+      {
+       "id": "M03.01.10",
+       "title": "cost of Python built-ins"
+      }
+     ],
+     "learn": {
+      "resourceId": "pythonds3",
+      "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+      "url": "https://runestone.academy/ns/books/published/pythonds3/AlgorithmAnalysis/toctree.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 2 'Analysis' — §2.2 What Is Algorithm Analysis?, §2.3 Big O Notation, §2.4 Anagram Detection, §2.5 Performance of Python Data Structures (lists, dictionaries)"
+     },
+     "covers": [
+      "Benchmarking vs analysis",
+      "Big-O families",
+      "Four anagram solutions with different complexities",
+      "Measured cost of list and dict operations"
+     ],
+     "gaps": [
+      {
+       "topic": "Big-O in 100 s",
+       "resource": {
+        "resourceId": "fireship-bigo",
+        "title": "Big-O Notation in 100 Seconds",
+        "url": "https://www.youtube.com/watch?v=g2o22C3CRfU",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "lecture treatment",
+       "resource": {
+        "resourceId": "mit6006",
+        "title": "MIT 6.006 Introduction to Algorithms (Spring 2020)",
+        "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lectures 1–2 (Algorithms and Computation; Data Structures and Dynamic Arrays)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fcc-dsa",
+      "title": "Algorithms and Data Structures Tutorial - Full Course for Beginners",
+      "url": "https://www.youtube.com/watch?v=8hly31xKli0",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Opening section on algorithmic complexity"
+     },
+     "practice": {
+      "title": "Measure it",
+      "brief": "Time `x in list` vs `x in set` for n = 10³…10⁶ and plot. Implement the chapter's 4 anagram solutions and state each Big-O.",
+      "done_when": "Plot committed; table of the 4 solutions with Big-O matching the chapter."
+     },
+     "quiz": [
+      {
+       "id": "M03.U01.Q1",
+       "kind": "mcq",
+       "prompt": "`list.insert(0, x)` is:",
+       "options": [
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "O(n²)"
+       ],
+       "answer": 1,
+       "explain": "All elements shift right."
+      },
+      {
+       "id": "M03.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Big-O describes:",
+       "options": [
+        "Exact runtime",
+        "Growth rate as n grows",
+        "Memory only",
+        "Best case only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Appending to a Python list is amortised:",
+       "options": [
+        "O(n)",
+        "O(1)",
+        "O(log n)",
+        "O(n log n)"
+       ],
+       "answer": 1,
+       "explain": "Occasional resizes are spread across many appends."
+      },
+      {
+       "id": "M03.U01.Q4",
+       "kind": "short",
+       "prompt": "Why can an O(n) algorithm beat an O(log n) one for small n?",
+       "rubric": [
+        "Big-O hides constants",
+        "Cache/locality and overheads dominate at small n",
+        "Example (linear scan vs tree)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U02",
+     "title": "Linear structures: stacks, queues, deques, linked lists",
+     "hours": 5,
+     "depth": "core",
+     "week": 20,
+     "prerequisites": [
+      "M03.U01"
+     ],
+     "outcomes": [
+      "You can implement and use stacks, queues, deques and linked lists, and pick between them."
+     ],
+     "topics": [
+      {
+       "id": "M03.01.02",
+       "title": "stack/queue"
+      },
+      {
+       "id": "M03.01.11",
+       "title": "linked lists"
+      }
+     ],
+     "learn": {
+      "resourceId": "pythonds3",
+      "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+      "url": "https://runestone.academy/ns/books/published/pythonds3/BasicDS/toctree.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 3 'Basic Data Structures' — stacks (balanced parentheses, base conversion, infix/postfix), queues (hot potato), deques (palindrome), unordered/ordered linked lists"
+     },
+     "covers": [
+      "Stack ADT + implementations and applications",
+      "Queue ADT + simulation",
+      "Deque",
+      "Unordered and ordered lists as linked lists"
+     ],
+     "gaps": [
+      {
+       "topic": "visualise operations",
+       "resource": {
+        "resourceId": "visualgo",
+        "title": "VisuAlgo",
+        "url": "https://visualgo.net/en",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Linked List and Stack/Queue modules"
+       }
+      },
+      {
+       "topic": "data structures (lecture)",
+       "resource": {
+        "resourceId": "cs50x",
+        "title": "CS50x: Introduction to Computer Science",
+        "url": "https://cs50.harvard.edu/x/notes/5/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "CS50x Lecture 5 notes §Stacks, §Queues, §Linked Lists"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fcc-ds-adv",
+      "title": "Data Structures Easy to Advanced Course - Full Tutorial from a Google Engineer",
+      "url": "https://www.youtube.com/watch?v=RBSGKlAvoiM",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Stack, queue and linked list segments"
+     },
+     "practice": {
+      "title": "LRU twice + NeetCode",
+      "brief": "Do the balanced-parentheses and postfix-evaluation exercises. Implement an LRU cache with OrderedDict and again with dict + doubly linked list. Solve the NeetCode 'Stack' and 'Linked List' easy problems.",
+      "done_when": "Both LRU versions pass the same tests; LeetCode accepted for each NeetCode easy in those two sections.",
+      "autograder": "LeetCode judge"
+     },
+     "quiz": [
+      {
+       "id": "M03.U02.Q1",
+       "kind": "mcq",
+       "prompt": "A stack is:",
+       "options": [
+        "FIFO",
+        "LIFO",
+        "Sorted",
+        "Random"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U02.Q2",
+       "kind": "mcq",
+       "prompt": "`collections.deque.popleft()` is:",
+       "options": [
+        "O(n)",
+        "O(1)",
+        "O(log n)",
+        "Unsupported"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Linked lists beat arrays at:",
+       "options": [
+        "Random access",
+        "O(1) insert/delete at a known node",
+        "Cache locality",
+        "Binary search"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U02.Q4",
+       "kind": "short",
+       "prompt": "Where does a queue show up in an LLM serving system?",
+       "rubric": [
+        "Request queue before batching/GPU",
+        "Back-pressure/rate limiting",
+        "Async job queues for ingestion",
+        "FIFO fairness"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U03",
+     "title": "Recursion, searching, sorting and hashing",
+     "hours": 6,
+     "depth": "core",
+     "week": 21,
+     "prerequisites": [
+      "M03.U02"
+     ],
+     "outcomes": [
+      "You can write recursive functions with clear base cases.",
+      "You can implement binary search, merge sort and explain hash tables."
+     ],
+     "topics": [
+      {
+       "id": "M03.01.01",
+       "title": "arrays/hash tables"
+      },
+      {
+       "id": "M03.01.04",
+       "title": "recursion"
+      },
+      {
+       "id": "M03.01.05",
+       "title": "sorting"
+      },
+      {
+       "id": "M03.01.06",
+       "title": "binary search"
+      },
+      {
+       "id": "M01.04.08",
+       "title": "recursion/base case"
+      }
+     ],
+     "learn": {
+      "resourceId": "pythonds3",
+      "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+      "url": "https://runestone.academy/ns/books/published/pythonds3/Recursion/toctree.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 4 'Recursion' (three laws, visualising recursion) and Chapter 5 'Searching and Sorting' (sequential/binary search, hashing, bubble/selection/insertion/shell/merge/quick sort)"
+     },
+     "covers": [
+      "Three laws of recursion; recursion visualisations",
+      "Sequential and binary search",
+      "Hashing: hash functions, collision resolution",
+      "Bubble, selection, insertion, shell, merge, quick sort"
+     ],
+     "gaps": [
+      {
+       "topic": "searching/sorting lecture",
+       "resource": {
+        "resourceId": "cs50x",
+        "title": "CS50x: Introduction to Computer Science",
+        "url": "https://cs50.harvard.edu/x/notes/3/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "CS50x Lecture 3 notes §Binary Search, §Recursion, §Merge Sort"
+       }
+      },
+      {
+       "topic": "pattern list",
+       "resource": {
+        "resourceId": "neetcode",
+        "title": "NeetCode Roadmap",
+        "url": "https://neetcode.io/roadmap",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Arrays & Hashing' and 'Binary Search' sections"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Search + sort from scratch",
+      "brief": "Binary search (iterative + recursive) with off-by-one tests; merge sort; NeetCode 'Binary Search' + 'Arrays & Hashing' (8 problems).",
+      "done_when": "Tests pass for empty/one-element/duplicates; 8 LeetCode problems accepted.",
+      "autograder": "LeetCode judge"
+     },
+     "quiz": [
+      {
+       "id": "M03.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Binary search requires:",
+       "options": [
+        "A linked list",
+        "Sorted data",
+        "Hashing",
+        "Recursion"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Merge sort worst case:",
+       "options": [
+        "O(n²)",
+        "O(n log n)",
+        "O(n)",
+        "O(log n)"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Hash collisions are resolved by:",
+       "options": [
+        "Chaining or open addressing",
+        "Sorting",
+        "Recursion",
+        "Ignoring them"
+       ],
+       "answer": 0,
+       "explain": ""
+      },
+      {
+       "id": "M03.U03.Q4",
+       "kind": "short",
+       "prompt": "What makes a recursive function terminate, and what does Python's recursion limit imply?",
+       "rubric": [
+        "Base case reached by progress toward it",
+        "Default limit ~1000 frames → RecursionError",
+        "Prefer iteration for deep recursion",
+        "No tail-call optimisation in Python"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U04",
+     "title": "Trees and heaps",
+     "hours": 5,
+     "depth": "core",
+     "week": 22,
+     "prerequisites": [
+      "M03.U03"
+     ],
+     "outcomes": [
+      "You can traverse trees, use BSTs and use heapq for top-k and priority queues."
+     ],
+     "topics": [
+      {
+       "id": "M03.01.03",
+       "title": "trees/graphs (trees)"
+      },
+      {
+       "id": "M03.01.12",
+       "title": "heaps and priority queues (heapq)"
+      }
+     ],
+     "learn": {
+      "resourceId": "pythonds3",
+      "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+      "url": "https://runestone.academy/ns/books/published/pythonds3/Trees/toctree.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 6 'Trees and Tree Algorithms' — tree representations, parse trees, traversals, priority queues with binary heaps, binary search trees"
+     },
+     "covers": [
+      "Tree vocabulary and representations",
+      "Parse trees",
+      "Pre/in/post-order traversals",
+      "Binary heap implementation",
+      "BST operations"
+     ],
+     "gaps": [
+      {
+       "topic": "heaps and trees lecture",
+       "resource": {
+        "resourceId": "mit6006",
+        "title": "MIT 6.006 Introduction to Algorithms (Spring 2020)",
+        "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lectures on binary trees and binary heaps"
+       }
+      },
+      {
+       "topic": "heapq reference",
+       "resource": {
+        "resourceId": "pythonds3",
+        "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+        "url": "https://runestone.academy/ns/books/published/pythonds3/Trees/toctree.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "§Priority Queues with Binary Heaps"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Top-k and traversals",
+      "brief": "Top-k on a stream with heapq; recursive + iterative traversals; NeetCode 'Trees' + 'Heap' (8 problems).",
+      "done_when": "Top-k matches sorted()[:k] on random tests; 8 LeetCode problems accepted.",
+      "autograder": "LeetCode judge"
+     },
+     "quiz": [
+      {
+       "id": "M03.U04.Q1",
+       "kind": "mcq",
+       "prompt": "A min-heap's root is:",
+       "options": [
+        "The max",
+        "The min",
+        "The median",
+        "Random"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U04.Q2",
+       "kind": "mcq",
+       "prompt": "In-order traversal of a BST yields:",
+       "options": [
+        "Random order",
+        "Sorted order",
+        "Reverse insertion order",
+        "Level order"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U04.Q3",
+       "kind": "mcq",
+       "prompt": "`heapq.nsmallest(k, xs)` is about:",
+       "options": [
+        "O(n²)",
+        "O(n log k)",
+        "O(1)",
+        "O(k²)"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U04.Q4",
+       "kind": "short",
+       "prompt": "How would you keep the 10 highest-scoring retrieved chunks from 1M candidates?",
+       "rubric": [
+        "Min-heap of size 10",
+        "Push and pop when larger than root",
+        "O(n log k) time, O(k) memory",
+        "vs full sort O(n log n)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U05",
+     "title": "Graphs: BFS, DFS, topological sort, Dijkstra",
+     "hours": 5,
+     "depth": "core",
+     "week": 23,
+     "prerequisites": [
+      "M03.U04"
+     ],
+     "outcomes": [
+      "You can model problems as graphs and apply BFS, DFS, topological sort and Dijkstra."
+     ],
+     "topics": [
+      {
+       "id": "M03.01.07",
+       "title": "BFS/DFS"
+      },
+      {
+       "id": "M03.01.13",
+       "title": "topological sort"
+      },
+      {
+       "id": "M03.01.14",
+       "title": "Dijkstra's shortest path"
+      }
+     ],
+     "learn": {
+      "resourceId": "pythonds3",
+      "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+      "url": "https://runestone.academy/ns/books/published/pythonds3/Graphs/toctree.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 7 'Graphs and Graph Algorithms' — representations, BFS (word ladder), DFS (knight's tour), topological sorting, Dijkstra, Prim"
+     },
+     "covers": [
+      "Adjacency matrix/list",
+      "BFS",
+      "DFS and general DFS",
+      "Topological sort",
+      "Dijkstra's algorithm",
+      "Prim's spanning tree"
+     ],
+     "gaps": [
+      {
+       "topic": "routing project",
+       "resource": {
+        "resourceId": "beej-net",
+        "title": "Beej's Guide to Network Concepts",
+        "url": "https://beej.us/guide/bgnet0/html/split/project-6-routing-with-dijkstras.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Project 'Routing with Dijkstra's'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Scheduler + grid",
+      "brief": "Topologically sort a task-dependency DAG (how pipeline/agent schedulers work). BFS shortest path on a grid. NeetCode 'Graphs' (6 problems).",
+      "done_when": "Cycle detection raises an error; 6 LeetCode problems accepted.",
+      "autograder": "LeetCode judge"
+     },
+     "quiz": [
+      {
+       "id": "M03.U05.Q1",
+       "kind": "mcq",
+       "prompt": "BFS finds shortest paths in:",
+       "options": [
+        "Weighted graphs",
+        "Unweighted graphs",
+        "DAGs only",
+        "Trees only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U05.Q2",
+       "kind": "mcq",
+       "prompt": "A topological order exists only if the graph is:",
+       "options": [
+        "Complete",
+        "Directed and acyclic",
+        "Undirected",
+        "Weighted"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Dijkstra fails with:",
+       "options": [
+        "Zero weights",
+        "Negative edge weights",
+        "Cycles",
+        "Directed edges"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U05.Q4",
+       "kind": "short",
+       "prompt": "Model an Airflow-style pipeline as a graph. Which algorithm decides the run order?",
+       "rubric": [
+        "Tasks = nodes, dependencies = directed edges",
+        "DAG required",
+        "Topological sort (Kahn/DFS)",
+        "Parallelism among nodes with no pending deps"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U06",
+     "title": "Interview patterns and sustained practice",
+     "hours": 15,
+     "depth": "core",
+     "week": 24,
+     "prerequisites": [
+      "M03.U05"
+     ],
+     "outcomes": [
+      "You can recognise two pointers, sliding window, 1-D DP and backtracking problems and explain solutions aloud."
+     ],
+     "topics": [
+      {
+       "id": "M03.01.15",
+       "title": "two pointers / sliding window"
+      },
+      {
+       "id": "M03.01.16",
+       "title": "1-D dynamic programming"
+      },
+      {
+       "id": "M03.01.17",
+       "title": "backtracking intro"
+      }
+     ],
+     "learn": {
+      "resourceId": "neetcode",
+      "title": "NeetCode Roadmap",
+      "url": "https://neetcode.io/roadmap",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Roadmap videos + problems for Arrays & Hashing, Two Pointers, Sliding Window, Stack, Binary Search, Linked List, Trees, Heap, Graphs, 1-D DP, Backtracking"
+     },
+     "covers": [
+      "One explanation video per problem",
+      "Pattern-ordered roadmap",
+      "Links to LeetCode problems"
+     ],
+     "gaps": [
+      {
+       "topic": "dynamic programming",
+       "resource": {
+        "resourceId": "pythonds3",
+        "title": "Problem Solving with Algorithms and Data Structures using Python, 3rd ed.",
+        "url": "https://runestone.academy/ns/books/published/pythonds3/Recursion/DynamicProgramming.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "§4.12 Dynamic Programming"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fcc-ds-adv",
+      "title": "Data Structures Easy to Advanced Course - Full Tutorial from a Google Engineer",
+      "url": "https://www.youtube.com/watch?v=RBSGKlAvoiM",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Reference for any structure you're shaky on"
+     },
+     "practice": {
+      "title": "75 problems",
+      "brief": "Target 75 mostly easy/medium problems by the end of M04, then 3/week. Keep `patterns.md`: problem → pattern → mistake.",
+      "done_when": "LeetCode profile shows ≥75 accepted; patterns.md has ≥75 rows.",
+      "autograder": "LeetCode judge"
+     },
+     "quiz": [
+      {
+       "id": "M03.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Sliding window suits:",
+       "options": [
+        "Contiguous subarray/substring constraints",
+        "Graph cycles",
+        "Sorting",
+        "Password hashing"
+       ],
+       "answer": 0,
+       "explain": ""
+      },
+      {
+       "id": "M03.U06.Q2",
+       "kind": "mcq",
+       "prompt": "DP applies when a problem has:",
+       "options": [
+        "Randomness",
+        "Overlapping subproblems and optimal substructure",
+        "No recursion",
+        "Graphs only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Two-pointer pair-sum on a sorted array is:",
+       "options": [
+        "O(n²)",
+        "O(n)",
+        "O(log n)",
+        "O(n log² n)"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U06.Q4",
+       "kind": "short",
+       "prompt": "Explain one problem you solved this week aloud in 3 minutes: brute force → optimisation → complexity.",
+       "rubric": [
+        "States brute force + complexity",
+        "Identifies the pattern",
+        "Optimised approach + complexity",
+        "Edge cases"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M03.S2",
+   "title": "Systems: OS, networking, HTTP, reliability",
+   "units": [
+    {
+     "id": "M03.U07",
+     "title": "Operating-system concepts for engineers",
+     "hours": 7,
+     "depth": "core",
+     "week": 25,
+     "prerequisites": [
+      "M01.U14"
+     ],
+     "outcomes": [
+      "You can explain processes, threads, address spaces, locks, file descriptors and the GIL, and demonstrate a race condition."
+     ],
+     "topics": [
+      {
+       "id": "M03.02.01",
+       "title": "process/thread"
+      },
+      {
+       "id": "M03.02.02",
+       "title": "concurrency/parallelism"
+      },
+      {
+       "id": "M03.02.03",
+       "title": "GIL concept"
+      },
+      {
+       "id": "M03.02.04",
+       "title": "memory hierarchy"
+      },
+      {
+       "id": "M03.02.15",
+       "title": "virtual memory / address space"
+      },
+      {
+       "id": "M03.02.16",
+       "title": "file descriptors and I/O"
+      }
+     ],
+     "learn": {
+      "resourceId": "ostep",
+      "title": "Operating Systems: Three Easy Pieces",
+      "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapters 'The Abstraction: The Process' (cpu-intro.pdf), 'Process API' (cpu-api.pdf), 'Address Spaces' (vm-intro.pdf), 'Concurrency: An Introduction' (threads-intro.pdf), 'Locks' (threads-locks.pdf)"
+     },
+     "covers": [
+      "Process abstraction and states",
+      "fork/exec/wait",
+      "Address spaces and virtualisation of memory",
+      "Threads, shared data, race conditions",
+      "Locks"
+     ],
+     "gaps": [
+      {
+       "topic": "Process API",
+       "resource": {
+        "resourceId": "ostep",
+        "title": "Operating Systems: Three Easy Pieces",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Process API chapter"
+       }
+      },
+      {
+       "topic": "Address spaces",
+       "resource": {
+        "resourceId": "ostep",
+        "title": "Operating Systems: Three Easy Pieces",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Address Spaces chapter"
+       }
+      },
+      {
+       "topic": "Threads intro",
+       "resource": {
+        "resourceId": "ostep",
+        "title": "Operating Systems: Three Easy Pieces",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concurrency: An Introduction"
+       }
+      },
+      {
+       "topic": "Locks",
+       "resource": {
+        "resourceId": "ostep",
+        "title": "Operating Systems: Three Easy Pieces",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Locks chapter"
+       }
+      },
+      {
+       "topic": "GIL",
+       "resource": {
+        "resourceId": "py-glossary-gil",
+        "title": "Python glossary — global interpreter lock",
+        "url": "https://docs.python.org/3/glossary.html#term-global-interpreter-lock",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Glossary entry"
+       }
+      },
+      {
+       "topic": "memory hierarchy (video)",
+       "resource": {
+        "resourceId": "cc-cs-19",
+        "title": "Memory & Storage: Crash Course Computer Science #19",
+        "url": "https://www.youtube.com/watch?v=TQCr9RV7twk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole episode"
+       }
+      },
+      {
+       "topic": "file descriptors (video)",
+       "resource": {
+        "resourceId": "ms-2020-cmdenv",
+        "title": "Lecture 5: Command-line Environment (2020)",
+        "url": "https://www.youtube.com/watch?v=e8BO_dYxk5c",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Job control + streams segments"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "py-mp",
+      "title": "multiprocessing — Process-based parallelism",
+      "url": "https://docs.python.org/3/library/multiprocessing.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Introduction' + 'Contexts and start methods'"
+     },
+     "backup": {
+      "resourceId": "py-threading",
+      "title": "threading — Thread-based parallelism",
+      "url": "https://docs.python.org/3/library/threading.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lock objects section"
+     },
+     "practice": {
+      "title": "Race and GIL lab",
+      "brief": "Show a race with two threads incrementing a counter, then fix with Lock. Compare ThreadPool vs ProcessPool on CPU-bound work and explain via the GIL.",
+      "done_when": "Race reproduced (wrong total) and fixed; timing table + explanation committed."
+     },
+     "quiz": [
+      {
+       "id": "M03.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Threads in one process share:",
+       "options": [
+        "Nothing",
+        "The address space (memory)",
+        "PIDs",
+        "Separate heaps always"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U07.Q2",
+       "kind": "mcq",
+       "prompt": "The GIL in default CPython limits:",
+       "options": [
+        "I/O",
+        "Parallel execution of Python bytecode across threads",
+        "Processes",
+        "async"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U07.Q3",
+       "kind": "mcq",
+       "prompt": "`fork()` creates:",
+       "options": [
+        "A thread",
+        "A child process",
+        "A file",
+        "A socket"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U07.Q4",
+       "kind": "short",
+       "prompt": "Why do model-serving frameworks often use multiple worker processes?",
+       "rubric": [
+        "Bypass the GIL for CPU work",
+        "Isolation/fault tolerance",
+        "Use multiple cores/GPUs",
+        "Each process has its own event loop"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U08",
+     "title": "Networking from packets to sockets",
+     "hours": 8,
+     "depth": "core",
+     "week": 26,
+     "prerequisites": [
+      "M03.U07"
+     ],
+     "outcomes": [
+      "You can explain IP, TCP vs UDP, ports, DNS, NAT, firewalls and TLS, and write a socket client/server."
+     ],
+     "topics": [
+      {
+       "id": "M03.02.05",
+       "title": "network/DNS"
+      },
+      {
+       "id": "M03.02.07",
+       "title": "TLS"
+      },
+      {
+       "id": "M03.02.17",
+       "title": "TCP/UDP and ports"
+      },
+      {
+       "id": "M03.02.18",
+       "title": "IP, subnets, NAT, firewalls"
+      },
+      {
+       "id": "M03.02.19",
+       "title": "sockets"
+      }
+     ],
+     "learn": {
+      "resourceId": "beej-net",
+      "title": "Beej's Guide to Network Concepts",
+      "url": "https://beej.us/guide/bgnet0/html/split/index.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapters: Networking Overview, Introducing the Sockets API, The Layered Network Model, The Internet Protocol, TCP, UDP, DNS, NAT, Firewalls (see contents)"
+     },
+     "covers": [
+      "Layered model",
+      "Sockets API",
+      "IPv4/IPv6 addressing and subnets",
+      "TCP reliability and ports",
+      "UDP",
+      "DNS resolution",
+      "NAT",
+      "Firewalls"
+     ],
+     "gaps": [
+      {
+       "topic": "HTTP client/server project",
+       "resource": {
+        "resourceId": "beej-net",
+        "title": "Beej's Guide to Network Concepts",
+        "url": "https://beej.us/guide/bgnet0/html/split/project-http-client-and-server.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Project: HTTP Client and Server"
+       }
+      },
+      {
+       "topic": "TLS",
+       "resource": {
+        "resourceId": "mdn-tls",
+        "title": "MDN — Transport Layer Security",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "networks (video)",
+       "resource": {
+        "resourceId": "cc-cs-28",
+        "title": "Computer Networks: Crash Course Computer Science #28",
+        "url": "https://www.youtube.com/watch?v=3QhU9jd03a0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole episode; then #29 'The Internet' and #30 'The World Wide Web'"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cc-cs-30",
+      "title": "The World Wide Web: Crash Course Computer Science #30",
+      "url": "https://www.youtube.com/watch?v=guvsH5OFizE",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "The World Wide Web — whole episode"
+     },
+     "backup": {
+      "resourceId": "cc-cs-29",
+      "title": "The Internet: Crash Course Computer Science #29",
+      "url": "https://www.youtube.com/watch?v=AEaKrq3SpW8",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole episode"
+     },
+     "practice": {
+      "title": "Raw-socket HTTP",
+      "brief": "Beej project 'HTTP Client and Server' with raw sockets; use dig for DNS info; annotate `curl -v https://example.com` line by line.",
+      "done_when": "Client fetches a page from your server; `curl-v.md` explains DNS, TCP connect, TLS handshake, request, response lines."
+     },
+     "quiz": [
+      {
+       "id": "M03.U08.Q1",
+       "kind": "mcq",
+       "prompt": "DNS maps:",
+       "options": [
+        "MAC → IP",
+        "Names → IP addresses",
+        "Ports → apps",
+        "HTTP → TLS"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U08.Q2",
+       "kind": "mcq",
+       "prompt": "TCP gives:",
+       "options": [
+        "No ordering",
+        "Reliable, ordered byte streams",
+        "Broadcast only",
+        "Always lower latency"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U08.Q3",
+       "kind": "mcq",
+       "prompt": "TLS provides:",
+       "options": [
+        "Compression",
+        "Encryption, integrity and server authentication",
+        "Routing",
+        "Caching"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U08.Q4",
+       "kind": "short",
+       "prompt": "Walk through everything that happens when your code calls an LLM API at https://api…",
+       "rubric": [
+        "DNS lookup",
+        "TCP connection (handshake)",
+        "TLS handshake + cert check",
+        "HTTP request/response (+ streaming)",
+        "Connection reuse/timeouts"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U09",
+     "title": "HTTP and REST in depth",
+     "hours": 5,
+     "depth": "core",
+     "week": 27,
+     "prerequisites": [
+      "M03.U08"
+     ],
+     "outcomes": [
+      "You can design a REST API with correct methods, status codes, headers, caching, cookies and CORS."
+     ],
+     "topics": [
+      {
+       "id": "M03.02.06",
+       "title": "HTTP methods/status"
+      },
+      {
+       "id": "M03.02.09",
+       "title": "REST"
+      },
+      {
+       "id": "M03.02.11",
+       "title": "caching"
+      },
+      {
+       "id": "M03.02.20",
+       "title": "headers and content types"
+      },
+      {
+       "id": "M03.02.21",
+       "title": "cookies and sessions"
+      },
+      {
+       "id": "M03.02.22",
+       "title": "CORS"
+      }
+     ],
+     "learn": {
+      "resourceId": "mdn-http",
+      "title": "MDN — HTTP",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Overview of HTTP' guide, then reference pages 'Request methods' and 'Status codes'"
+     },
+     "covers": [
+      "Clients, servers, proxies",
+      "HTTP messages",
+      "Statelessness and cookies",
+      "Methods and safety/idempotence",
+      "Status code classes"
+     ],
+     "gaps": [
+      {
+       "topic": "methods",
+       "resource": {
+        "resourceId": "mdn-http",
+        "title": "MDN — HTTP",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Request methods"
+       }
+      },
+      {
+       "topic": "status codes",
+       "resource": {
+        "resourceId": "mdn-http",
+        "title": "MDN — HTTP",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Status codes"
+       }
+      },
+      {
+       "topic": "caching",
+       "resource": {
+        "resourceId": "mdn-http",
+        "title": "MDN — HTTP",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "HTTP caching guide"
+       }
+      },
+      {
+       "topic": "CORS",
+       "resource": {
+        "resourceId": "mdn-http",
+        "title": "MDN — HTTP",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "CORS guide"
+       }
+      },
+      {
+       "topic": "cookies",
+       "resource": {
+        "resourceId": "mdn-http",
+        "title": "MDN — HTTP",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Using HTTP cookies"
+       }
+      },
+      {
+       "topic": "REST design",
+       "resource": {
+        "resourceId": "restfulapi",
+        "title": "REST API Tutorial",
+        "url": "https://restfulapi.net/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Pages 'What is REST' and 'Resource naming'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Design + inspect",
+      "brief": "Design on paper a REST API for the study tracker (resources, methods, status codes, pagination, error body). Hit the GitHub API with curl and explain caching (ETag) and rate-limit headers.",
+      "done_when": "`api-design.md` + annotated curl output committed."
+     },
+     "quiz": [
+      {
+       "id": "M03.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Idempotent methods include:",
+       "options": [
+        "POST",
+        "PUT and DELETE",
+        "PATCH always",
+        "CONNECT"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U09.Q2",
+       "kind": "mcq",
+       "prompt": "401 vs 403:",
+       "options": [
+        "Same",
+        "401 not authenticated, 403 authenticated but not allowed",
+        "Reversed",
+        "Both server errors"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U09.Q3",
+       "kind": "mcq",
+       "prompt": "CORS is enforced by:",
+       "options": [
+        "The server firewall",
+        "The browser",
+        "DNS",
+        "TLS"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U09.Q4",
+       "kind": "short",
+       "prompt": "When should an API return 422 vs 400?",
+       "rubric": [
+        "400 malformed/unparseable request",
+        "422 well-formed but semantically invalid (validation)",
+        "FastAPI returns 422 for validation errors"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U10",
+     "title": "Reliability patterns for calling services",
+     "hours": 4,
+     "depth": "core",
+     "week": 27,
+     "prerequisites": [
+      "M03.U09"
+     ],
+     "outcomes": [
+      "You can wrap remote calls with timeouts, retries with exponential backoff + jitter, Retry-After handling, idempotency keys and rate limiting."
+     ],
+     "topics": [
+      {
+       "id": "M03.02.12",
+       "title": "queues"
+      },
+      {
+       "id": "M03.02.13",
+       "title": "retries/backoff"
+      },
+      {
+       "id": "M03.02.14",
+       "title": "idempotency"
+      },
+      {
+       "id": "M03.02.23",
+       "title": "rate limiting"
+      },
+      {
+       "id": "M03.02.24",
+       "title": "timeouts and deadlines"
+      }
+     ],
+     "learn": {
+      "resourceId": "aws-backoff",
+      "title": "Timeouts, retries and backoff with jitter",
+      "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole article"
+     },
+     "covers": [
+      "Timeouts and choosing values",
+      "Retries and their danger (amplification)",
+      "Exponential backoff",
+      "Jitter"
+     ],
+     "gaps": [
+      {
+       "topic": "idempotency keys",
+       "resource": {
+        "resourceId": "stripe-idem",
+        "title": "Designing robust and predictable APIs with idempotency",
+        "url": "https://stripe.com/blog/idempotency",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole article"
+       }
+      },
+      {
+       "topic": "cascading failures, queues, load shedding",
+       "resource": {
+        "resourceId": "sre-cascade",
+        "title": "Google SRE book — Addressing Cascading Failures",
+        "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections on causes and preventing server overload"
+       }
+      },
+      {
+       "topic": "retry library",
+       "resource": {
+        "resourceId": "tenacity",
+        "title": "Tenacity documentation",
+        "url": "https://tenacity.readthedocs.io/en/latest/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Quickstart: stop, wait_exponential, wait_random"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Tame a flaky API",
+      "brief": "Wrap a fake API that randomly returns 500/429 with latency: timeout, retries with backoff+jitter, honour Retry-After, idempotency key. Report before/after success rate.",
+      "done_when": "Before/after success-rate table; tests prove no retry on non-idempotent call without key."
+     },
+     "quiz": [
+      {
+       "id": "M03.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Jitter in backoff prevents:",
+       "options": [
+        "Timeouts",
+        "Synchronised retry storms",
+        "Auth errors",
+        "Caching"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Safe to retry blindly:",
+       "options": [
+        "A POST that charges a card",
+        "A GET, or a POST with an idempotency key",
+        "Any request",
+        "None"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U10.Q3",
+       "kind": "mcq",
+       "prompt": "On a 429 the client should:",
+       "options": [
+        "Retry immediately",
+        "Back off, respecting Retry-After",
+        "Switch API key",
+        "Ignore it"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U10.Q4",
+       "kind": "short",
+       "prompt": "Why do retries without timeouts make outages worse?",
+       "rubric": [
+        "Requests pile up holding resources",
+        "Retry amplification overloads a struggling service",
+        "Cascading failure",
+        "Need budgets/deadlines"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M03.S3",
+   "title": "Backend with FastAPI",
+   "units": [
+    {
+     "id": "M03.U11",
+     "title": "FastAPI core",
+     "hours": 8,
+     "depth": "core",
+     "week": 29,
+     "prerequisites": [
+      "M03.U09",
+      "M01.U13"
+     ],
+     "outcomes": [
+      "You can build a FastAPI app with path/query/body params, response models, errors, pagination and routers, and read its OpenAPI docs."
+     ],
+     "topics": [
+      {
+       "id": "M03.03.01",
+       "title": "FastAPI routes"
+      },
+      {
+       "id": "M03.03.06",
+       "title": "pagination"
+      },
+      {
+       "id": "M03.03.07",
+       "title": "error responses"
+      },
+      {
+       "id": "M03.03.12",
+       "title": "OpenAPI/docs"
+      },
+      {
+       "id": "M03.03.13",
+       "title": "routers and project structure"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-tutorial",
+      "title": "FastAPI — Tutorial – User Guide",
+      "url": "https://fastapi.tiangolo.com/tutorial/first-steps/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Tutorial – User Guide from 'First Steps' through 'Path Parameters', 'Query Parameters', 'Request Body', 'Response Model', 'Handling Errors' and 'Bigger Applications – Multiple Files'"
+     },
+     "covers": [
+      "First app, /docs and OpenAPI",
+      "Path and query parameters with types",
+      "Request bodies with Pydantic",
+      "response_model filtering",
+      "HTTPException and handlers",
+      "APIRouter and multi-file apps"
+     ],
+     "gaps": [
+      {
+       "topic": "response model",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/response-model/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Response Model – Return Type'"
+       }
+      },
+      {
+       "topic": "errors",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/handling-errors/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Handling Errors'"
+       }
+      },
+      {
+       "topic": "routers",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/bigger-applications/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Bigger Applications – Multiple Files'"
+       }
+      },
+      {
+       "topic": "FastAPI course in video",
+       "resource": {
+        "resourceId": "fcc-fastapi",
+        "title": "Python API Development - Comprehensive Course for Beginners",
+        "url": "https://www.youtube.com/watch?v=0sOvCWFmrtA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "First ~3 h (path operations, schemas, CRUD)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Tracker REST API",
+      "brief": "Implement your M03.U09 design with an in-memory store: CRUD, offset or cursor pagination, consistent error bodies, routers.",
+      "done_when": "All endpoints visible in /docs; TestClient tests for each status code you designed."
+     },
+     "quiz": [
+      {
+       "id": "M03.U11.Q1",
+       "kind": "mcq",
+       "prompt": "FastAPI generates interactive docs from:",
+       "options": [
+        "Comments",
+        "Type hints and models (OpenAPI)",
+        "Tests",
+        "README"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U11.Q2",
+       "kind": "mcq",
+       "prompt": "`/tasks/{task_id}` with `task_id: int`, request `/tasks/abc` returns:",
+       "options": [
+        "500",
+        "422",
+        "404",
+        "200"
+       ],
+       "answer": 1,
+       "explain": "Validation error."
+      },
+      {
+       "id": "M03.U11.Q3",
+       "kind": "mcq",
+       "prompt": "`response_model` is used to:",
+       "options": [
+        "Validate the request only",
+        "Shape and filter the response",
+        "Set the status",
+        "Cache"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U11.Q4",
+       "kind": "short",
+       "prompt": "Why is returning the DB object directly (no response model) risky?",
+       "rubric": [
+        "May leak fields (password hash, internal ids)",
+        "Couples API to schema",
+        "Unvalidated/unserialisable data"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U12",
+     "title": "Pydantic, validation and settings",
+     "hours": 5,
+     "depth": "core",
+     "week": 29,
+     "prerequisites": [
+      "M03.U11"
+     ],
+     "outcomes": [
+      "You can write strict Pydantic models with field/model validators, export JSON Schema and load settings from env."
+     ],
+     "topics": [
+      {
+       "id": "M03.03.02",
+       "title": "Pydantic validation"
+      },
+      {
+       "id": "M03.02.08",
+       "title": "JSON schemas"
+      },
+      {
+       "id": "M03.03.14",
+       "title": "pydantic-settings"
+      }
+     ],
+     "learn": {
+      "resourceId": "pydantic",
+      "title": "Pydantic documentation",
+      "url": "https://docs.pydantic.dev/latest/concepts/models/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Concepts → 'Models' (basic usage, validation, nested models, model_validate, model_dump)"
+     },
+     "covers": [
+      "BaseModel definition and validation",
+      "model_validate / model_dump",
+      "Nested models",
+      "Strict vs lax mode"
+     ],
+     "gaps": [
+      {
+       "topic": "validators",
+       "resource": {
+        "resourceId": "pydantic",
+        "title": "Pydantic documentation",
+        "url": "https://docs.pydantic.dev/latest/concepts/validators/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts → 'Validators'"
+       }
+      },
+      {
+       "topic": "JSON Schema",
+       "resource": {
+        "resourceId": "pydantic",
+        "title": "Pydantic documentation",
+        "url": "https://docs.pydantic.dev/latest/concepts/json_schema/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts → 'JSON Schema'"
+       }
+      },
+      {
+       "topic": "settings",
+       "resource": {
+        "resourceId": "pydantic",
+        "title": "Pydantic documentation",
+        "url": "https://docs.pydantic.dev/latest/concepts/pydantic_settings/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts → 'Settings Management'"
+       }
+      },
+      {
+       "topic": "settings in FastAPI",
+       "resource": {
+        "resourceId": "fastapi-docs",
+        "title": "FastAPI documentation",
+        "url": "https://fastapi.tiangolo.com/advanced/settings/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Advanced → 'Settings and Environment Variables'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Contracts",
+      "brief": "Strict models with field and model validators; export JSON Schema (same mechanism as LLM structured output later); load config with pydantic-settings from env vars.",
+      "done_when": "Tests show invalid payloads rejected with clear errors; schema.json committed; settings fail fast when a required var is missing."
+     },
+     "quiz": [
+      {
+       "id": "M03.U12.Q1",
+       "kind": "mcq",
+       "prompt": "`Model.model_validate(data)`:",
+       "options": [
+        "Serialises",
+        "Parses and validates input into a model",
+        "Saves to DB",
+        "Prints"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Pydantic's JSON Schema export is useful for:",
+       "options": [
+        "CSS",
+        "Contracts with other systems and LLM tool/structured-output definitions",
+        "Git",
+        "Docker"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U12.Q3",
+       "kind": "mcq",
+       "prompt": "pydantic-settings reads by default from:",
+       "options": [
+        "Git",
+        "Environment variables (and optionally .env)",
+        "The DB",
+        "YAML only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U12.Q4",
+       "kind": "short",
+       "prompt": "Dataclass vs Pydantic model: when do you use each?",
+       "rubric": [
+        "Dataclass for internal typed data, no validation",
+        "Pydantic at trust boundaries (API, config, LLM output)",
+        "Performance/overhead note"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U13",
+     "title": "Dependencies, auth and API security",
+     "hours": 6,
+     "depth": "core",
+     "week": 30,
+     "prerequisites": [
+      "M03.U12"
+     ],
+     "outcomes": [
+      "You can use FastAPI dependencies, JWT auth, API keys and object-level authorisation, and explain the OWASP API Top 10."
+     ],
+     "topics": [
+      {
+       "id": "M03.03.03",
+       "title": "dependency injection"
+      },
+      {
+       "id": "M03.02.10",
+       "title": "authentication/authorization"
+      },
+      {
+       "id": "M03.03.15",
+       "title": "API keys"
+      },
+      {
+       "id": "M03.03.16",
+       "title": "OWASP API Security Top 10"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-tutorial",
+      "title": "FastAPI — Tutorial – User Guide",
+      "url": "https://fastapi.tiangolo.com/tutorial/dependencies/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Dependencies' section, then 'Security – First Steps' and 'OAuth2 with Password (and hashing), Bearer with JWT tokens'"
+     },
+     "covers": [
+      "Depends and sub-dependencies",
+      "OAuth2PasswordBearer",
+      "Password hashing",
+      "JWT creation and verification"
+     ],
+     "gaps": [
+      {
+       "topic": "JWT flow",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'OAuth2 with Password, Bearer with JWT'"
+       }
+      },
+      {
+       "topic": "CORS in FastAPI",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/cors/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'CORS (Cross-Origin Resource Sharing)'"
+       }
+      },
+      {
+       "topic": "OWASP API Top 10",
+       "resource": {
+        "resourceId": "owasp-api",
+        "title": "OWASP API Security Top 10 (2023)",
+        "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "The 10 risk pages"
+       }
+      },
+      {
+       "topic": "JWT structure",
+       "resource": {
+        "resourceId": "jwt-intro",
+        "title": "Introduction to JSON Web Tokens",
+        "url": "https://jwt.io/introduction",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Lock it down",
+      "brief": "Add JWT login, per-user ownership checks (fix BOLA) and an API-key dependency for service clients. Test that user A cannot read user B's task.",
+      "done_when": "BOLA test passes; secrets come from settings; OWASP checklist for your API committed."
+     },
+     "quiz": [
+      {
+       "id": "M03.U13.Q1",
+       "kind": "mcq",
+       "prompt": "Authentication vs authorisation:",
+       "options": [
+        "Same",
+        "Who you are vs what you may do",
+        "Reversed",
+        "Both encryption"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U13.Q2",
+       "kind": "mcq",
+       "prompt": "A JWT payload is:",
+       "options": [
+        "Encrypted by default",
+        "Base64-encoded and signed — readable by anyone",
+        "Hashed",
+        "Secret"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U13.Q3",
+       "kind": "mcq",
+       "prompt": "The #1 OWASP API risk (2023) is:",
+       "options": [
+        "Broken object-level authorisation",
+        "XSS",
+        "Slow APIs",
+        "Missing docs"
+       ],
+       "answer": 0,
+       "explain": ""
+      },
+      {
+       "id": "M03.U13.Q4",
+       "kind": "short",
+       "prompt": "Why must ownership checks live on the server even if the UI hides other users' data?",
+       "rubric": [
+        "Clients can call the API directly",
+        "IDs are guessable",
+        "UI is not a security boundary"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M03.S4",
+   "title": "Async & integration",
+   "units": [
+    {
+     "id": "M03.U14",
+     "title": "Async Python in depth + HTTP clients",
+     "hours": 8,
+     "depth": "core",
+     "week": 31,
+     "prerequisites": [
+      "M01.U14",
+      "M03.U10",
+      "M03.U11"
+     ],
+     "outcomes": [
+      "You can use TaskGroup, timeouts, cancellation, semaphores and httpx.AsyncClient, keep blocking code off the event loop and write async tests."
+     ],
+     "topics": [
+      {
+       "id": "M03.03.05",
+       "title": "async I/O"
+      },
+      {
+       "id": "M03.04.01",
+       "title": "event loop"
+      },
+      {
+       "id": "M03.04.02",
+       "title": "gather vs TaskGroup"
+      },
+      {
+       "id": "M03.04.03",
+       "title": "timeouts and cancellation"
+      },
+      {
+       "id": "M03.04.04",
+       "title": "semaphores (concurrency limits)"
+      },
+      {
+       "id": "M03.04.05",
+       "title": "httpx.AsyncClient and connection reuse"
+      },
+      {
+       "id": "M03.04.06",
+       "title": "retries with tenacity"
+      },
+      {
+       "id": "M03.04.07",
+       "title": "blocking code in async (to_thread, sync def endpoints)"
+      },
+      {
+       "id": "M03.04.08",
+       "title": "async tests"
+      }
+     ],
+     "learn": {
+      "resourceId": "py-asyncio-task",
+      "title": "asyncio — Coroutines and Tasks",
+      "url": "https://docs.python.org/3/library/asyncio-task.html#task-groups",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Sections 'Task Groups', 'Timeouts', 'Task Cancellation', 'Running in Threads' (to_thread)"
+     },
+     "covers": [
+      "TaskGroup semantics",
+      "asyncio.timeout",
+      "Cancellation",
+      "asyncio.to_thread"
+     ],
+     "gaps": [
+      {
+       "topic": "semaphores",
+       "resource": {
+        "resourceId": "py-asyncio-sync",
+        "title": "asyncio — Synchronization Primitives",
+        "url": "https://docs.python.org/3/library/asyncio-sync.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Semaphore section"
+       }
+      },
+      {
+       "topic": "queues",
+       "resource": {
+        "resourceId": "py-asyncio-queue",
+        "title": "asyncio — Queues",
+        "url": "https://docs.python.org/3/library/asyncio-queue.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "FastAPI async rules",
+       "resource": {
+        "resourceId": "fastapi-async",
+        "title": "FastAPI — Concurrency and async / await",
+        "url": "https://fastapi.tiangolo.com/async/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "httpx async + timeouts",
+       "resource": {
+        "resourceId": "httpx",
+        "title": "HTTPX documentation",
+        "url": "https://www.python-httpx.org/advanced/timeouts/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Async Support' and 'Timeouts'"
+       }
+      },
+      {
+       "topic": "async tests",
+       "resource": {
+        "resourceId": "fastapi-docs",
+        "title": "FastAPI documentation",
+        "url": "https://fastapi.tiangolo.com/advanced/async-tests/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Advanced → 'Async Tests'"
+       }
+      },
+      {
+       "topic": "pytest-asyncio",
+       "resource": {
+        "resourceId": "pytest-asyncio",
+        "title": "pytest-asyncio documentation",
+        "url": "https://pytest-asyncio.readthedocs.io/en/stable/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started"
+       }
+      },
+      {
+       "topic": "asyncio in video",
+       "resource": {
+        "resourceId": "twt-asyncio",
+        "title": "Asyncio in Python - Full Tutorial",
+        "url": "https://www.youtube.com/watch?v=Qb9s3UiMSTA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "TaskGroup, semaphores, to_thread segments"
+       }
+      }
+     ],
+     "practice": {
+      "title": "/enrich fan-out",
+      "brief": "Endpoint `/enrich` calls 3 public APIs concurrently: global Semaphore(5), per-call timeout, retries with backoff, partial results when one fails, cancellation on client disconnect. Async tests with mocked transports.",
+      "done_when": "Async tests cover success, one-source failure and timeout; load of 50 concurrent requests never exceeds 5 in-flight upstream calls (logged)."
+     },
+     "quiz": [
+      {
+       "id": "M03.U14.Q1",
+       "kind": "mcq",
+       "prompt": "In TaskGroup, if one task raises:",
+       "options": [
+        "Others continue unaffected",
+        "Remaining tasks are cancelled and errors raised together",
+        "It's ignored",
+        "The loop stops forever"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U14.Q2",
+       "kind": "mcq",
+       "prompt": "`asyncio.Semaphore(5)` ensures:",
+       "options": [
+        "5 retries",
+        "At most 5 concurrent holders",
+        "5 s timeout",
+        "5 threads"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U14.Q3",
+       "kind": "mcq",
+       "prompt": "Calling a blocking SDK inside an `async def` endpoint without to_thread:",
+       "options": [
+        "Is fine",
+        "Stalls every request on that worker",
+        "Is faster",
+        "Raises"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U14.Q4",
+       "kind": "short",
+       "prompt": "You must call an LLM API 1,000 times under a 50 requests/minute limit. Sketch the async design.",
+       "rubric": [
+        "Rate limiter/token bucket + semaphore",
+        "Shared AsyncClient",
+        "Retries honouring 429/Retry-After",
+        "Timeouts + progress/persistence of results"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U15",
+     "title": "Streaming, background work and webhooks",
+     "hours": 5,
+     "depth": "core",
+     "week": 31,
+     "prerequisites": [
+      "M03.U14"
+     ],
+     "outcomes": [
+      "You can stream SSE responses, consume them, run background tasks and verify idempotent webhooks."
+     ],
+     "topics": [
+      {
+       "id": "M03.03.04",
+       "title": "streaming/SSE"
+      },
+      {
+       "id": "M03.04.09",
+       "title": "background tasks vs job queues"
+      },
+      {
+       "id": "M03.04.10",
+       "title": "receiving and verifying webhooks"
+      },
+      {
+       "id": "M03.04.11",
+       "title": "WebSockets awareness"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-tutorial",
+      "title": "FastAPI — Tutorial – User Guide",
+      "url": "https://fastapi.tiangolo.com/tutorial/server-sent-events/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Server-Sent Events (SSE)' and 'Background Tasks'"
+     },
+     "covers": [
+      "Streaming events from a generator",
+      "Event format",
+      "BackgroundTasks usage and limits"
+     ],
+     "gaps": [
+      {
+       "topic": "background tasks",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/background-tasks/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Background Tasks'"
+       }
+      },
+      {
+       "topic": "WebSockets",
+       "resource": {
+        "resourceId": "fastapi-docs",
+        "title": "FastAPI documentation",
+        "url": "https://fastapi.tiangolo.com/advanced/websockets/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Advanced → 'WebSockets'"
+       }
+      },
+      {
+       "topic": "SSE client side",
+       "resource": {
+        "resourceId": "mdn-sse",
+        "title": "MDN — Using server-sent events",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "StreamingResponse",
+       "resource": {
+        "resourceId": "fastapi-docs",
+        "title": "FastAPI documentation",
+        "url": "https://fastapi.tiangolo.com/advanced/custom-response/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Advanced → 'Custom Response' → StreamingResponse"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Token stream + webhook",
+      "brief": "Stream fake tokens from a generator over SSE and consume them with httpx streaming. Add a webhook endpoint that verifies an HMAC signature and is idempotent on redelivery.",
+      "done_when": "Tests: tampered signature → 401; duplicate delivery processed once; consumer prints tokens incrementally."
+     },
+     "quiz": [
+      {
+       "id": "M03.U15.Q1",
+       "kind": "mcq",
+       "prompt": "SSE is:",
+       "options": [
+        "Bidirectional",
+        "A server → client text event stream over HTTP",
+        "UDP",
+        "gRPC"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U15.Q2",
+       "kind": "mcq",
+       "prompt": "FastAPI BackgroundTasks suit:",
+       "options": [
+        "Hour-long jobs",
+        "Small post-response work in the same process",
+        "Cross-server jobs",
+        "GPU training"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U15.Q3",
+       "kind": "mcq",
+       "prompt": "Verifying a webhook signature protects against:",
+       "options": [
+        "Slow clients",
+        "Forged requests",
+        "CORS",
+        "404s"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U15.Q4",
+       "kind": "short",
+       "prompt": "Why do LLM chat UIs stream, and what breaks if a proxy buffers responses?",
+       "rubric": [
+        "Perceived latency / first token fast",
+        "Buffering delays all output until done",
+        "Timeouts on long responses",
+        "Disable buffering (headers/config)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M03.S5",
+   "title": "Persistence, testing & shipping",
+   "units": [
+    {
+     "id": "M03.U16",
+     "title": "Database-backed API with tests",
+     "hours": 7,
+     "depth": "core",
+     "week": 32,
+     "prerequisites": [
+      "M04.U06",
+      "M03.U13"
+     ],
+     "outcomes": [
+      "You can connect FastAPI to Postgres with per-request sessions, test with dependency overrides and log with request IDs."
+     ],
+     "topics": [
+      {
+       "id": "M03.05.01",
+       "title": "DB session per request"
+      },
+      {
+       "id": "M03.05.02",
+       "title": "TestClient tests"
+      },
+      {
+       "id": "M03.05.03",
+       "title": "dependency overrides and test DB"
+      },
+      {
+       "id": "M03.05.04",
+       "title": "structured logging and request IDs"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-tutorial",
+      "title": "FastAPI — Tutorial – User Guide",
+      "url": "https://fastapi.tiangolo.com/tutorial/sql-databases/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'SQL (Relational) Databases' (SQLModel engine, session dependency, CRUD)"
+     },
+     "covers": [
+      "Engine and session dependency",
+      "Create tables",
+      "CRUD path operations",
+      "Response models with DB data"
+     ],
+     "gaps": [
+      {
+       "topic": "testing",
+       "resource": {
+        "resourceId": "fastapi-tutorial",
+        "title": "FastAPI — Tutorial – User Guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/testing/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Testing' (TestClient)"
+       }
+      },
+      {
+       "topic": "dependency overrides",
+       "resource": {
+        "resourceId": "fastapi-docs",
+        "title": "FastAPI documentation",
+        "url": "https://fastapi.tiangolo.com/advanced/testing-dependencies/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Advanced → 'Testing Dependencies with Overrides'"
+       }
+      },
+      {
+       "topic": "logging",
+       "resource": {
+        "resourceId": "py-logging",
+        "title": "logging — Logging facility for Python",
+        "url": "https://docs.python.org/3/library/logging.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "LoggerAdapter / Filter for contextual info"
+       }
+      },
+      {
+       "topic": "SQLAlchemy",
+       "resource": {
+        "resourceId": "sqlalchemy",
+        "title": "SQLAlchemy 2.0 Unified Tutorial",
+        "url": "https://docs.sqlalchemy.org/en/20/tutorial/index.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "ORM quick start"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Tracker on Postgres",
+      "brief": "Move the tracker API to Postgres with Alembic migrations. Tests use a throwaway DB via dependency override. Every log line carries a request ID.",
+      "done_when": "CI runs tests against a Postgres service container; logs show request_id on every line."
+     },
+     "quiz": [
+      {
+       "id": "M03.U16.Q1",
+       "kind": "mcq",
+       "prompt": "A dependency override in tests lets you:",
+       "options": [
+        "Skip tests",
+        "Swap the real DB/session for a test one",
+        "Mock HTTP status",
+        "Change routes"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U16.Q2",
+       "kind": "mcq",
+       "prompt": "A per-request DB session should be:",
+       "options": [
+        "Global",
+        "Opened and closed (commit/rollback) per request",
+        "Never closed",
+        "One per app"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U16.Q3",
+       "kind": "mcq",
+       "prompt": "A request ID in logs helps:",
+       "options": [
+        "Speed",
+        "Correlate all log lines of one request across services",
+        "Auth",
+        "Caching"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U16.Q4",
+       "kind": "short",
+       "prompt": "Which bugs does an integration test with real Postgres catch that SQLite-in-memory misses?",
+       "rubric": [
+        "Type differences (timestamptz, JSONB)",
+        "Constraint/locking behaviour",
+        "SQL dialect features",
+        "Migration correctness"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M03.U17",
+     "title": "Ship it: container, deploy, health checks, load test",
+     "hours": 5,
+     "depth": "core",
+     "week": 33,
+     "prerequisites": [
+      "M03.U16",
+      "M02.U16"
+     ],
+     "outcomes": [
+      "You can containerise and deploy the API with health/readiness endpoints and report p50/p95 latency."
+     ],
+     "topics": [
+      {
+       "id": "M03.05.05",
+       "title": "containerise the API"
+      },
+      {
+       "id": "M03.05.06",
+       "title": "deploy to a free tier"
+      },
+      {
+       "id": "M03.05.07",
+       "title": "health/readiness endpoints"
+      },
+      {
+       "id": "M03.05.08",
+       "title": "basic load test"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastapi-docs",
+      "title": "FastAPI documentation",
+      "url": "https://fastapi.tiangolo.com/deployment/docker/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Deployment → 'FastAPI in Containers – Docker'"
+     },
+     "covers": [
+      "Dockerfile for FastAPI",
+      "Workers/processes in containers",
+      "Behind a proxy (TLS termination)"
+     ],
+     "gaps": [
+      {
+       "topic": "uv in Docker",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/guides/integration/docker/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Guides → Integrations → Docker"
+       }
+      },
+      {
+       "topic": "services and orchestration",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/shipping-code/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Packaging and Shipping Code' — VMs & containers, configuration, services & orchestration"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Live URL",
+      "brief": "Deploy to any free PaaS tier (verify current free tier; never enter a card). Add /healthz and /readyz (checks DB). Run a 1-minute load test and report p50/p95.",
+      "done_when": "Public URL responds; readiness fails when DB is down; load-test report committed."
+     },
+     "quiz": [
+      {
+       "id": "M03.U17.Q1",
+       "kind": "mcq",
+       "prompt": "A readiness probe should check:",
+       "options": [
+        "Nothing",
+        "Dependencies needed to serve (DB, etc.)",
+        "CPU temperature",
+        "Git"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U17.Q2",
+       "kind": "mcq",
+       "prompt": "p95 latency means:",
+       "options": [
+        "The average",
+        "95% of requests were at least this fast",
+        "The slowest",
+        "95 ms"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U17.Q3",
+       "kind": "mcq",
+       "prompt": "`uvicorn --workers 4` gives:",
+       "options": [
+        "4 threads",
+        "4 processes",
+        "4 event loops in one thread",
+        "4 containers"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U17.Q4",
+       "kind": "short",
+       "prompt": "Your API is fine locally but times out in the cloud. List 4 things to check.",
+       "rubric": [
+        "Binding host 0.0.0.0/port",
+        "DB connectivity/network rules",
+        "Env vars/secrets",
+        "Cold starts/resource limits",
+        "Upstream timeouts/DNS"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M03.S6",
+   "title": "System design basics",
+   "units": [
+    {
+     "id": "M03.U18",
+     "title": "System design basics",
+     "hours": 6,
+     "depth": "core",
+     "week": 34,
+     "prerequisites": [
+      "M03.U10",
+      "M03.U17"
+     ],
+     "outcomes": [
+      "You can use scaling vocabulary (load balancers, caches, replication, sharding, queues, CAP) and do back-of-envelope estimates."
+     ],
+     "topics": [
+      {
+       "id": "M03.06.01",
+       "title": "vertical vs horizontal scaling and load balancers"
+      },
+      {
+       "id": "M03.06.02",
+       "title": "caching layers"
+      },
+      {
+       "id": "M03.06.03",
+       "title": "replication and sharding"
+      },
+      {
+       "id": "M03.06.04",
+       "title": "queues and async processing"
+      },
+      {
+       "id": "M03.06.05",
+       "title": "CAP and consistency"
+      },
+      {
+       "id": "M03.06.06",
+       "title": "back-of-envelope estimates"
+      },
+      {
+       "id": "M03.06.07",
+       "title": "failure-mode analysis"
+      }
+     ],
+     "learn": {
+      "resourceId": "sdprimer",
+      "title": "The System Design Primer",
+      "url": "https://github.com/donnemartin/system-design-primer#index-of-system-design-topics",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Index of system design topics' from 'Performance vs scalability' through 'Asynchronism' (CAP, consistency/availability patterns, DNS, CDN, load balancer, reverse proxy, database, cache, asynchronism)"
+     },
+     "covers": [
+      "Performance vs scalability, latency vs throughput",
+      "CAP theorem, consistency patterns",
+      "Load balancers, reverse proxies",
+      "Replication, federation, sharding, denormalisation",
+      "Caching strategies",
+      "Message/task queues, back pressure"
+     ],
+     "gaps": [
+      {
+       "topic": "scaling a database",
+       "resource": {
+        "resourceId": "cs50sql",
+        "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+        "url": "https://cs50.harvard.edu/sql/notes/6/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "CS50 SQL Lecture 6 notes 'Scaling' §Scaling with MySQL (replication, sharding)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Design doc",
+      "brief": "1-page design for 'RAG chat for 10k daily users': components, where to cache, ingestion queue, failure-mode table, estimates.",
+      "done_when": "Doc includes RPS estimate (avg + peak), storage estimate and ≥5 failure modes with mitigations."
+     },
+     "quiz": [
+      {
+       "id": "M03.U18.Q1",
+       "kind": "mcq",
+       "prompt": "A read replica helps:",
+       "options": [
+        "Write throughput",
+        "Read-heavy load",
+        "Schema design",
+        "Auth"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U18.Q2",
+       "kind": "mcq",
+       "prompt": "Cache invalidation is hard because:",
+       "options": [
+        "Caches are slow",
+        "Stale data must be detected or expired correctly",
+        "RAM is small",
+        "TLS"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U18.Q3",
+       "kind": "mcq",
+       "prompt": "Putting work on a queue mainly provides:",
+       "options": [
+        "Consistency",
+        "Decoupling and load smoothing",
+        "Encryption",
+        "Lower storage"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U18.Q4",
+       "kind": "short",
+       "prompt": "Estimate requests/second for 10k users × 20 messages/day with a 10× peak factor.",
+       "rubric": [
+        "200k/day ÷ 86,400 ≈ 2.3 RPS average",
+        "×10 ≈ 23 RPS peak",
+        "States assumptions"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M03.S7",
+   "title": "Web UI for demos (optional)",
+   "units": [
+    {
+     "id": "M03.U19",
+     "title": "Just enough frontend for demos (optional)",
+     "hours": 10,
+     "depth": "deep",
+     "prerequisites": [
+      "M03.U11"
+     ],
+     "outcomes": [
+      "You can build a small HTML/JS (or TypeScript) client with loading, empty, error and streaming states; you know Gradio exists for quick ML demos."
+     ],
+     "topics": [
+      {
+       "id": "M03.03.08",
+       "title": "HTML/CSS/JavaScript basics"
+      },
+      {
+       "id": "M03.03.09",
+       "title": "TypeScript types"
+      },
+      {
+       "id": "M03.03.10",
+       "title": "accessible loading/error/source states"
+      },
+      {
+       "id": "M03.03.11",
+       "title": "Gradio prototype (taught fully in M10)"
+      }
+     ],
+     "learn": {
+      "resourceId": "mdn-learn",
+      "title": "MDN: Learn web development – Core modules",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Core modules: Structuring content with HTML, CSS styling basics, Dynamic scripting with JavaScript (incl. fetch/Promises)"
+     },
+     "covers": [
+      "HTML structure and semantics",
+      "CSS basics",
+      "JavaScript fundamentals, DOM, events",
+      "Making network requests with fetch",
+      "Accessibility basics"
+     ],
+     "gaps": [
+      {
+       "topic": "TypeScript",
+       "resource": {
+        "resourceId": "ts-5min",
+        "title": "TypeScript for JavaScript Programmers",
+        "url": "https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "web lecture",
+       "resource": {
+        "resourceId": "cs50x",
+        "title": "CS50x: Introduction to Computer Science",
+        "url": "https://cs50.harvard.edu/x/notes/8/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "CS50x Lecture 8 notes (HTML, CSS, JavaScript)"
+       }
+      }
+     ],
+     "practice": {
+      "title": "API client page",
+      "brief": "Single-page HTML+JS client for your API with loading, empty, error and streaming states.",
+      "done_when": "Page works against the deployed API; Lighthouse accessibility ≥90."
+     },
+     "quiz": [
+      {
+       "id": "M03.U19.Q1",
+       "kind": "mcq",
+       "prompt": "`fetch()` returns:",
+       "options": [
+        "Data",
+        "A Promise",
+        "JSON always",
+        "A socket"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U19.Q2",
+       "kind": "mcq",
+       "prompt": "TypeScript types exist:",
+       "options": [
+        "At runtime",
+        "At compile time only",
+        "In the DOM",
+        "In HTTP"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U19.Q3",
+       "kind": "mcq",
+       "prompt": "An accessible error state should:",
+       "options": [
+        "Be colour-only",
+        "Have text conveyed to assistive tech",
+        "Be a console log",
+        "Be hidden"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M03.U19.Q4",
+       "kind": "short",
+       "prompt": "What should a UI show while an LLM answer is streaming, and when it fails mid-stream?",
+       "rubric": [
+        "Progressive text + stop button",
+        "Clear error with partial output kept",
+        "Retry option",
+        "Accessible status announcements"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Integration gateway",
+  "brief": "(15h, FDE-style) FastAPI service for a fictional client: ingests records via HMAC-verified idempotent webhook; enriches each concurrently from two public APIs (timeouts, retries, semaphore); stores in Postgres (Alembic); JWT-protected paginated REST API; SSE job progress; Docker Compose, CI, deploy URL, /healthz, load-test report, 1-page design doc; demo to a 'client' with a handover note. Pass ≥8/10 with no zero in Security.",
+  "rubric": [
+   {
+    "criterion": "Functional correctness & API design (status codes, pagination, errors)",
+    "levels": [
+     "0 – broken",
+     "1 – mostly",
+     "2 – clean, consistent"
+    ]
+   },
+   {
+    "criterion": "Reliability (timeouts, retries + jitter, idempotency, partial failure)",
+    "levels": [
+     "0 – none",
+     "1 – some",
+     "2 – all, with tests proving them"
+    ]
+   },
+   {
+    "criterion": "Security (authN/authZ, BOLA test, secrets, signature check)",
+    "levels": [
+     "0 – holes",
+     "1 – partial",
+     "2 – complete"
+    ]
+   },
+   {
+    "criterion": "Engineering quality (≥80% coverage, typed, CI, compose, deployed)",
+    "levels": [
+     "0 – missing",
+     "1 – partial",
+     "2 – complete"
+    ]
+   },
+   {
+    "criterion": "Communication (design doc, handover note, live demo Q&A)",
+    "levels": [
+     "0 – none",
+     "1 – thin",
+     "2 – clear, honest about limits"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

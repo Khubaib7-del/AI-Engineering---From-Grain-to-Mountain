@@ -1,0 +1,2987 @@
+{
+ "id": "M02",
+ "phase": "P1 Foundations",
+ "title": "Engineering tools & environments",
+ "summary": "Daily tools run in parallel with Python from week 3: bash (Software Carpentry + Bandit), Git/GitHub (Software Carpentry, Learn Git Branching, GitHub flow), venv/uv/packaging, config and secrets, editor + AI-agent hygiene; then quality (pytest fixtures/mocks/coverage, debugger, logging, profiling, Ruff/mypy/pre-commit/CI) and Docker/Compose.",
+ "hours": 75,
+ "prerequisites": [
+  "M00"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M02.S1",
+   "title": "Shell & Linux",
+   "units": [
+    {
+     "id": "M02.U01",
+     "title": "Shell 1 — Navigating and manipulating files (bash in WSL)",
+     "hours": 3,
+     "depth": "core",
+     "week": 3,
+     "prerequisites": [
+      "M00.U05"
+     ],
+     "outcomes": [
+      "You can move around the filesystem and create, copy, move and delete files safely from bash.",
+      "You know bash is the shell to learn first and what PowerShell is for."
+     ],
+     "topics": [
+      {
+       "id": "M02.02.01",
+       "title": "PowerShell basics (awareness only)"
+      },
+      {
+       "id": "M02.02.02",
+       "title": "bash and WSL concepts"
+      },
+      {
+       "id": "M02.02.03",
+       "title": "cd/pwd/ls"
+      },
+      {
+       "id": "M02.02.13",
+       "title": "mkdir/cp/mv/rm and globs"
+      }
+     ],
+     "learn": {
+      "resourceId": "swc-shell",
+      "title": "The Unix Shell (Software Carpentry)",
+      "url": "https://swcarpentry.github.io/shell-novice/01-intro.html",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Episodes 01 'Introducing the Shell', 02 'Navigating Files and Directories', 03 'Working With Files and Directories' (with exercises)"
+     },
+     "covers": [
+      "What a shell is; prompt; commands and flags; man/--help (ep. 01)",
+      "pwd, ls -F/-a, cd, absolute/relative paths (ep. 02)",
+      "mkdir -p, nano, touch, mv, cp, rm -r -i, wildcards * and ? (ep. 03)"
+     ],
+     "gaps": [
+      {
+       "topic": "same skills in video",
+       "resource": {
+        "resourceId": "ms-2020-shell",
+        "title": "Lecture 1: Course Overview + The Shell (2020)",
+        "url": "https://www.youtube.com/watch?v=Z56Jmr9Z34Q",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 1 'Course Overview + The Shell' (whole, ~48 min)"
+       }
+      },
+      {
+       "topic": "navigation video",
+       "resource": {
+        "resourceId": "cy-term-nav",
+        "title": "Linux/Mac Terminal Tutorial: Navigating your Filesystem",
+        "url": "https://www.youtube.com/watch?v=j6vKLJxAKfw",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "PowerShell awareness",
+       "resource": {
+        "resourceId": "ms-wsl",
+        "title": "Microsoft Learn — Install WSL",
+        "url": "https://learn.microsoft.com/en-us/windows/wsl/install",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Read only: when you use Windows vs WSL commands"
+       }
+      },
+      {
+       "topic": "AI-flavoured shell tips",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 10 Terminal & Shell",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/10-terminal-and-shell",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 10 'Terminal & Shell' Step 1"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "bandit",
+      "title": "OverTheWire: Bandit",
+      "url": "https://overthewire.org/wargames/bandit/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Level 0 → Level 5 pages"
+     },
+     "backup": {
+      "resourceId": "missing-sem-2026",
+      "title": "The Missing Semester of Your CS Education (2026)",
+      "url": "https://missing.csail.mit.edu/2026/course-shell/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Course overview + the shell' (2026) — navigating section"
+     },
+     "practice": {
+      "title": "Bandit 0→5",
+      "brief": "Play OverTheWire Bandit levels 0→5 over SSH. Record each level's command in `bandit.md` (never the passwords).",
+      "done_when": "You can log in as bandit5; `bandit.md` lists the command used for each of levels 0–5.",
+      "autograder": "OverTheWire Bandit (level password = proof)"
+     },
+     "quiz": [
+      {
+       "id": "M02.U01.Q1",
+       "kind": "mcq",
+       "prompt": "`rm -r dir`:",
+       "options": [
+        "Moves to trash",
+        "Deletes recursively with no undo",
+        "Renames",
+        "Lists"
+       ],
+       "answer": 1,
+       "explain": "The shell has no recycle bin (SWC ep. 03)."
+      },
+      {
+       "id": "M02.U01.Q2",
+       "kind": "mcq",
+       "prompt": "`*.py` is expanded by:",
+       "options": [
+        "Python",
+        "The shell (globbing)",
+        "The kernel",
+        "Git"
+       ],
+       "answer": 1,
+       "explain": "The shell expands wildcards before the command runs."
+      },
+      {
+       "id": "M02.U01.Q3",
+       "kind": "mcq",
+       "prompt": "`cd -` goes to:",
+       "options": [
+        "Root",
+        "The previous directory",
+        "Home",
+        "Parent"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U01.Q4",
+       "kind": "mcq",
+       "prompt": "On a Windows laptop for this path you should primarily learn:",
+       "options": [
+        "PowerShell",
+        "bash inside WSL",
+        "cmd.exe",
+        "Both equally"
+       ],
+       "answer": 1,
+       "explain": "Servers, Docker and CI are Linux; PowerShell is awareness only."
+      },
+      {
+       "id": "M02.U01.Q5",
+       "kind": "short",
+       "prompt": "Why is `rm -rf $DIR/` dangerous when $DIR is empty?",
+       "rubric": [
+        "Expands to rm -rf /",
+        "Deletes from root",
+        "Mitigate: quote variables, ${DIR:?} guard, set -u"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U02",
+     "title": "Shell 2 — Pipes, redirection and text processing",
+     "hours": 4,
+     "depth": "core",
+     "week": 5,
+     "prerequisites": [
+      "M02.U01"
+     ],
+     "outcomes": [
+      "You can chain commands with pipes and redirect stdout/stderr.",
+      "You can answer data questions with grep, sort, uniq, wc, cut, sed/awk and jq, and fetch data with curl."
+     ],
+     "topics": [
+      {
+       "id": "M02.02.04",
+       "title": "quoting and pipes"
+      },
+      {
+       "id": "M02.02.06",
+       "title": "stdout/stderr"
+      },
+      {
+       "id": "M02.02.10",
+       "title": "grep/rg"
+      },
+      {
+       "id": "M02.02.11",
+       "title": "curl"
+      },
+      {
+       "id": "M02.02.14",
+       "title": "sort/uniq/wc/cut/sed/awk/jq"
+      }
+     ],
+     "learn": {
+      "resourceId": "swc-shell",
+      "title": "The Unix Shell (Software Carpentry)",
+      "url": "https://swcarpentry.github.io/shell-novice/04-pipefilter.html",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Episodes 04 'Pipes and Filters' and 07 'Finding Things'"
+     },
+     "covers": [
+      "wc, sort -n, head/tail, > and >> redirection, | pipes, cut, uniq (ep. 04)",
+      "grep flags -w -n -i -v -r, find, $(…) command substitution (ep. 07)"
+     ],
+     "gaps": [
+      {
+       "topic": "sed/awk/sort/uniq data wrangling (dropped from Missing Semester 2026)",
+       "resource": {
+        "resourceId": "missing-sem-2020",
+        "title": "The Missing Semester of Your CS Education (2020)",
+        "url": "https://missing.csail.mit.edu/2020/data-wrangling/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "2020 lecture 'Data Wrangling' notes"
+       }
+      },
+      {
+       "topic": "data wrangling video",
+       "resource": {
+        "resourceId": "ms-2020-wrangling",
+        "title": "Lecture 4: Data Wrangling (2020)",
+        "url": "https://www.youtube.com/watch?v=sz_dsktIjt4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole lecture (~50 min)"
+       }
+      },
+      {
+       "topic": "grep video",
+       "resource": {
+        "resourceId": "cy-grep",
+        "title": "Linux/Mac Terminal Tutorial: The Grep Command - Search Files and Directories for Patterns of Text",
+        "url": "https://www.youtube.com/watch?v=VGgTmxXp7xQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "jq + curl JSON",
+       "resource": {
+        "resourceId": "artcmd",
+        "title": "The Art of Command Line",
+        "url": "https://github.com/jlevy/the-art-of-command-line",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Processing files and data' section (jq, sort, uniq, cut)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 10 Terminal & Shell",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/10-terminal-and-shell",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 10 Step 2 (piping and filtering logs)"
+     },
+     "practice": {
+      "title": "Log forensics",
+      "brief": "From a web-server log, use one pipeline each to find the top 5 IPs and the count of 5xx responses. With curl + jq extract `.[].name` from `https://api.github.com/users/<you>/repos`. Then Bandit 6→12.",
+      "done_when": "Both pipelines and the jq command in `pipes.md` with outputs; you can log in as bandit12.",
+      "autograder": "OverTheWire Bandit"
+     },
+     "quiz": [
+      {
+       "id": "M02.U02.Q1",
+       "kind": "mcq",
+       "prompt": "`cmd 2> err.txt` redirects:",
+       "options": [
+        "stdout",
+        "stderr",
+        "Both",
+        "stdin"
+       ],
+       "answer": 1,
+       "explain": "File descriptor 2 is stderr."
+      },
+      {
+       "id": "M02.U02.Q2",
+       "kind": "mcq",
+       "prompt": "`sort | uniq -c` needs sort first because uniq:",
+       "options": [
+        "Is slow",
+        "Only collapses adjacent duplicates",
+        "Needs numbers",
+        "Reverses"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U02.Q3",
+       "kind": "mcq",
+       "prompt": "`grep -v pattern` prints:",
+       "options": [
+        "The version",
+        "Non-matching lines",
+        "Counts",
+        "File names"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U02.Q4",
+       "kind": "mcq",
+       "prompt": "`curl -s url | jq '.[0].name'` — jq here:",
+       "options": [
+        "Downloads the page",
+        "Parses JSON from stdin and selects a field",
+        "Formats CSV",
+        "Is a shell builtin"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U02.Q5",
+       "kind": "short",
+       "prompt": "Explain stdout vs stderr and why a script should print errors to stderr.",
+       "rubric": [
+        "Two separate streams (fd 1 and 2)",
+        "Pipes carry stdout only",
+        "Errors stay visible/separable when output is redirected",
+        "Exit code also signals failure"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U03",
+     "title": "Shell 3 — Scripts, environment, permissions, processes",
+     "hours": 5,
+     "depth": "core",
+     "week": 9,
+     "prerequisites": [
+      "M02.U02"
+     ],
+     "outcomes": [
+      "You can write safe bash scripts that loop, take arguments and fail loudly.",
+      "You can manage environment variables, permissions, exit codes, background processes, signals and tmux."
+     ],
+     "topics": [
+      {
+       "id": "M02.02.05",
+       "title": "exit codes"
+      },
+      {
+       "id": "M02.02.07",
+       "title": "permissions"
+      },
+      {
+       "id": "M02.02.08",
+       "title": "environment variables"
+      },
+      {
+       "id": "M02.02.12",
+       "title": "background processes"
+      },
+      {
+       "id": "M02.02.15",
+       "title": "safe bash (set -euo pipefail, quoting, shellcheck)"
+      },
+      {
+       "id": "M02.02.16",
+       "title": "ps/kill/signals/jobs"
+      },
+      {
+       "id": "M02.02.17",
+       "title": "tmux"
+      }
+     ],
+     "learn": {
+      "resourceId": "swc-shell",
+      "title": "The Unix Shell (Software Carpentry)",
+      "url": "https://swcarpentry.github.io/shell-novice/05-loop.html",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Episodes 05 'Loops' and 06 'Shell Scripts'"
+     },
+     "covers": [
+      "for loops, variables, $name vs ${name}, quoting filenames with spaces (ep. 05)",
+      "Scripts, $1 $@ arguments, bash script.sh, comments (ep. 06)"
+     ],
+     "gaps": [
+      {
+       "topic": "exit codes, env vars, signals, job control, tmux",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/command-line-environment/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Command-line Environment' — arguments, streams, environment variables, return codes, signals, terminal multiplexers"
+       }
+      },
+      {
+       "topic": "command-line environment video",
+       "resource": {
+        "resourceId": "ms-2020-cmdenv",
+        "title": "Lecture 5: Command-line Environment (2020)",
+        "url": "https://www.youtube.com/watch?v=e8BO_dYxk5c",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole lecture (job control, tmux, dotfiles, ssh)"
+       }
+      },
+      {
+       "topic": "safe bash",
+       "resource": {
+        "resourceId": "shellcheck",
+        "title": "ShellCheck",
+        "url": "https://www.shellcheck.net/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Paste your script; fix every warning"
+       }
+      },
+      {
+       "topic": "bash scripting video",
+       "resource": {
+        "resourceId": "fcc-bash",
+        "title": "Bash Scripting Tutorial for Beginners",
+        "url": "https://www.youtube.com/watch?v=tK9Oc6AEnR4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "First hour (variables, args, conditionals, loops)"
+       }
+      },
+      {
+       "topic": "permissions",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 11 Linux for AI",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/11-linux-for-ai",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 11 'Linux for AI' — permissions section"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "bashguide",
+      "title": "Greg's BashGuide",
+      "url": "https://mywiki.wooledge.org/BashGuide",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Quotes, Parameters, Tests and Conditionals pages"
+     },
+     "practice": {
+      "title": "backup.sh + process control",
+      "brief": "Write `backup.sh` that tars a folder into a dated archive, uses `set -euo pipefail`, exits non-zero on failure and passes shellcheck. Start `python -m http.server &`, find its PID with ps, send SIGTERM. Then Bandit 13→20.",
+      "done_when": "shellcheck reports nothing; `./backup.sh missing_dir; echo $?` prints non-zero; process notes in `processes.md`; bandit20 login works.",
+      "autograder": "shellcheck + OverTheWire Bandit"
+     },
+     "quiz": [
+      {
+       "id": "M02.U03.Q1",
+       "kind": "mcq",
+       "prompt": "`chmod +x run.sh`:",
+       "options": [
+        "Makes it executable",
+        "Deletes it",
+        "Hides it",
+        "Encrypts it"
+       ],
+       "answer": 0,
+       "explain": ""
+      },
+      {
+       "id": "M02.U03.Q2",
+       "kind": "mcq",
+       "prompt": "`export VAR=1` makes VAR:",
+       "options": [
+        "Permanent forever",
+        "Visible to child processes of this shell",
+        "Global for all users",
+        "A file"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Ctrl+C sends:",
+       "options": [
+        "SIGKILL",
+        "SIGINT",
+        "SIGHUP",
+        "SIGSTOP"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U03.Q4",
+       "kind": "mcq",
+       "prompt": "`set -u` makes bash:",
+       "options": [
+        "Run as user",
+        "Error on unset variables",
+        "Ignore errors",
+        "Print each line"
+       ],
+       "answer": 1,
+       "explain": "-e exit on error, -u unset vars, -o pipefail fail if any pipe stage fails."
+      },
+      {
+       "id": "M02.U03.Q5",
+       "kind": "short",
+       "prompt": "What does `set -euo pipefail` protect against? Give one bug for each flag.",
+       "rubric": [
+        "-e: continuing after a failed command",
+        "-u: typo'd/unset variable expanding to empty (rm -rf $DIR/)",
+        "pipefail: failure hidden in the middle of a pipe",
+        "Notes caveats (e.g. -e in conditionals)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U04",
+     "title": "Shell 4 — Remote machines and Linux admin basics",
+     "hours": 3,
+     "depth": "core",
+     "week": 17,
+     "prerequisites": [
+      "M02.U03"
+     ],
+     "outcomes": [
+      "You can SSH with keys, copy files with scp/rsync, install packages with apt and check disk/RAM.",
+      "You know what systemd services are and how to keep jobs alive after logout."
+     ],
+     "topics": [
+      {
+       "id": "M02.02.09",
+       "title": "SSH"
+      },
+      {
+       "id": "M02.02.18",
+       "title": "apt, sudo and users"
+      },
+      {
+       "id": "M02.02.19",
+       "title": "systemd/services awareness"
+      },
+      {
+       "id": "M02.02.20",
+       "title": "disk and resources (df, du, free)"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 11 Linux for AI",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/11-linux-for-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 11 'Linux for AI' — whole lesson: permissions, apt, users & sudo, processes & systemd, disk space, networking"
+     },
+     "covers": [
+      "File permissions",
+      "apt package management",
+      "users and sudo",
+      "processes and systemd",
+      "df/du disk space",
+      "basic networking commands"
+     ],
+     "gaps": [
+      {
+       "topic": "SSH and remote machines",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/command-line-environment/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Command-line Environment' — section on remote machines (SSH)"
+       }
+      },
+      {
+       "topic": "Linux in 100 s",
+       "resource": {
+        "resourceId": "fireship-linux",
+        "title": "Linux in 100 Seconds",
+        "url": "https://www.youtube.com/watch?v=rrB13utjYV4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "tlcl",
+      "title": "The Linux Command Line",
+      "url": "https://linuxcommand.org/tlcl.php",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Part 1 chapters on permissions and processes"
+     },
+     "practice": {
+      "title": "Remote round-trip",
+      "brief": "SSH between WSL and a free cloud shell (or a friend's machine) with a key, rsync a folder both ways, check df/du/free, and start a long job inside tmux that survives disconnect.",
+      "done_when": "`remote.md` with the exact commands and output; tmux session still running after you reconnect."
+     },
+     "quiz": [
+      {
+       "id": "M02.U04.Q1",
+       "kind": "mcq",
+       "prompt": "`sudo` runs a command:",
+       "options": [
+        "Faster",
+        "As another user (default root)",
+        "In the background",
+        "Remotely"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U04.Q2",
+       "kind": "mcq",
+       "prompt": "`ssh-keygen` produces:",
+       "options": [
+        "A password",
+        "A public/private key pair",
+        "A certificate authority",
+        "A token"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U04.Q3",
+       "kind": "mcq",
+       "prompt": "`du -sh *` shows:",
+       "options": [
+        "Free RAM",
+        "Size of each item in the current directory",
+        "CPU",
+        "Network"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U04.Q4",
+       "kind": "short",
+       "prompt": "Your training job died when you closed the laptop. Give two fixes.",
+       "rubric": [
+        "Run inside tmux/screen",
+        "nohup/systemd service",
+        "Run on a remote machine not the laptop",
+        "Checkpointing so restarts resume"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M02.S2",
+   "title": "Git & GitHub",
+   "units": [
+    {
+     "id": "M02.U05",
+     "title": "Git 1 — Solo workflow",
+     "hours": 4,
+     "depth": "core",
+     "week": 3,
+     "prerequisites": [
+      "M02.U01"
+     ],
+     "outcomes": [
+      "You can init a repo, stage, commit, diff, read history and ignore files.",
+      "You write meaningful commit messages and a README."
+     ],
+     "topics": [
+      {
+       "id": "M02.03.01",
+       "title": "working tree/stage/commit"
+      },
+      {
+       "id": "M02.03.03",
+       "title": "diff/log"
+      },
+      {
+       "id": "M02.03.07",
+       "title": ".gitignore"
+      },
+      {
+       "id": "M02.03.08",
+       "title": "README"
+      },
+      {
+       "id": "M02.03.11",
+       "title": "commit messages (conventional commits)"
+      }
+     ],
+     "learn": {
+      "resourceId": "swc-git",
+      "title": "Version Control with Git (Software Carpentry)",
+      "url": "https://swcarpentry.github.io/git-novice/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Episodes 'Automated Version Control' through 'Ignoring Things' (setup, create, tracking changes, exploring history, ignoring)"
+     },
+     "covers": [
+      "git config identity",
+      "git init, status, add, commit, staging area",
+      "git diff, diff --staged, log, show, checkout/restore old versions",
+      ".gitignore patterns"
+     ],
+     "gaps": [
+      {
+       "topic": "Git in video",
+       "resource": {
+        "resourceId": "cy-git",
+        "title": "Git Tutorial for Beginners: Command-Line Fundamentals",
+        "url": "https://www.youtube.com/watch?v=HVsySz-h9r4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (~30 min)"
+       }
+      },
+      {
+       "topic": "commit message conventions",
+       "resource": {
+        "resourceId": "conv-commits",
+        "title": "Conventional Commits 1.0.0",
+        "url": "https://www.conventionalcommits.org/en/v1.0.0/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Summary section"
+       }
+      },
+      {
+       "topic": "recording changes reference",
+       "resource": {
+        "resourceId": "progit",
+        "title": "Pro Git, 2nd edition",
+        "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Ch. 2.2 'Recording Changes to the Repository'"
+       }
+      },
+      {
+       "topic": ".gitignore template",
+       "resource": {
+        "resourceId": "gitignore-templates",
+        "title": "github/gitignore (Python.gitignore)",
+        "url": "https://github.com/github/gitignore/blob/main/Python.gitignore",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Copy Python.gitignore"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 02 Git & Collaboration",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/02-git-and-collaboration",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 02 'Git & Collaboration' (short; no PRs/conflicts)"
+     },
+     "practice": {
+      "title": "Put CS50P under version control",
+      "brief": "Create repo `cs50p` with one commit per problem solved so far and a Python .gitignore excluding .venv/ and __pycache__/. Write a README explaining how to run a problem.",
+      "done_when": "`git log --oneline` shows ≥10 commits with descriptive messages; .gitignore committed; README renders on GitHub."
+     },
+     "quiz": [
+      {
+       "id": "M02.U05.Q1",
+       "kind": "mcq",
+       "prompt": "`git add` moves changes to:",
+       "options": [
+        "The remote",
+        "The staging area",
+        "A branch",
+        "The stash"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U05.Q2",
+       "kind": "mcq",
+       "prompt": "`git diff --staged` shows:",
+       "options": [
+        "Unstaged changes",
+        "Staged changes vs the last commit",
+        "Remote changes",
+        "History"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U05.Q3",
+       "kind": "mcq",
+       "prompt": "`.gitignore` affects:",
+       "options": [
+        "Already-tracked files",
+        "Only untracked files",
+        "Remotes",
+        "Branches"
+       ],
+       "answer": 1,
+       "explain": "Use git rm --cached to stop tracking a file."
+      },
+      {
+       "id": "M02.U05.Q4",
+       "kind": "short",
+       "prompt": "Rewrite the commit message 'fixed bug' well and explain why yours is better.",
+       "rubric": [
+        "Imperative summary ≤50 chars naming what changed",
+        "Body says why",
+        "Optional type prefix (fix:, feat:)",
+        "Explains it helps reviewers/history search"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U06",
+     "title": "Git 2 — Branching, merging, conflicts, undo",
+     "hours": 5,
+     "depth": "core",
+     "week": 6,
+     "prerequisites": [
+      "M02.U05"
+     ],
+     "outcomes": [
+      "You can branch, merge, resolve conflicts, rebase locally and stash.",
+      "You can undo safely with revert/reset/restore and explain Git's data model."
+     ],
+     "topics": [
+      {
+       "id": "M02.03.02",
+       "title": "branches"
+      },
+      {
+       "id": "M02.03.05",
+       "title": "merge conflicts"
+      },
+      {
+       "id": "M02.03.06",
+       "title": "revert versus reset"
+      },
+      {
+       "id": "M02.03.12",
+       "title": "rebase vs merge"
+      },
+      {
+       "id": "M02.03.13",
+       "title": "stash"
+      },
+      {
+       "id": "M02.03.14",
+       "title": "Git data model (commits, trees, refs)"
+      }
+     ],
+     "learn": {
+      "resourceId": "lgb",
+      "title": "Learn Git Branching",
+      "url": "https://learngitbranching.js.org/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Main tab → 'Introduction Sequence' (4 levels) and 'Ramping Up' (4 levels)"
+     },
+     "covers": [
+      "Commits, branches, merge, rebase (Introduction Sequence)",
+      "HEAD, relative refs ^ and ~, reset vs revert (Ramping Up)"
+     ],
+     "gaps": [
+      {
+       "topic": "resolving conflicts",
+       "resource": {
+        "resourceId": "swc-git",
+        "title": "Version Control with Git (Software Carpentry)",
+        "url": "https://swcarpentry.github.io/git-novice/09-conflict.html",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Episode 'Conflicts'"
+       }
+      },
+      {
+       "topic": "branching and merging reference",
+       "resource": {
+        "resourceId": "progit",
+        "title": "Pro Git, 2nd edition",
+        "url": "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Ch. 3.2 'Basic Branching and Merging'"
+       }
+      },
+      {
+       "topic": "reset/revert/restore",
+       "resource": {
+        "resourceId": "cy-git-undo",
+        "title": "Git Tutorial: Fixing Common Mistakes and Undoing Bad Commits",
+        "url": "https://www.youtube.com/watch?v=FdZecVxzJbk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "stash",
+       "resource": {
+        "resourceId": "cy-git-stash",
+        "title": "Git Tutorial: Using the Stash Command",
+        "url": "https://www.youtube.com/watch?v=KLEDKgMmbBI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "Git data model",
+       "resource": {
+        "resourceId": "ms-2020-git",
+        "title": "Lecture 6: Version Control (git) (2020)",
+        "url": "https://www.youtube.com/watch?v=2sjqTHE0zok",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 6 'Version Control (git)' — first ~35 min (snapshots, trees, commits, refs)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "missing-sem-2026",
+      "title": "The Missing Semester of Your CS Education (2026)",
+      "url": "https://missing.csail.mit.edu/2026/version-control/",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Version Control and Git' (2026)"
+     },
+     "practice": {
+      "title": "Conflict and undo drill",
+      "brief": "Create a deliberate conflict on two branches and resolve it. Undo a bad commit three ways (revert, reset --soft, restore) and write when each is safe. From now on every CS50P problem goes on its own branch and is merged into main.",
+      "done_when": "Learn Git Branching shows Introduction Sequence + Ramping Up complete (screenshot); `undo.md` committed; `git log --graph` shows merged branches.",
+      "autograder": "Learn Git Branching level checks"
+     },
+     "quiz": [
+      {
+       "id": "M02.U06.Q1",
+       "kind": "mcq",
+       "prompt": "`git revert` vs `git reset --hard` on a pushed commit:",
+       "options": [
+        "Same",
+        "revert adds a new undoing commit, safe for shared history",
+        "reset is safer",
+        "revert deletes history"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U06.Q2",
+       "kind": "mcq",
+       "prompt": "A merge conflict happens when:",
+       "options": [
+        "Two branches change the same lines differently",
+        "Any two branches exist",
+        "You push",
+        "Files are large"
+       ],
+       "answer": 0,
+       "explain": ""
+      },
+      {
+       "id": "M02.U06.Q3",
+       "kind": "mcq",
+       "prompt": "A branch in Git is:",
+       "options": [
+        "A copy of all files",
+        "A movable pointer to a commit",
+        "A remote",
+        "A tag that never moves"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U06.Q4",
+       "kind": "mcq",
+       "prompt": "`git stash` is for:",
+       "options": [
+        "Deleting work",
+        "Temporarily shelving uncommitted changes",
+        "Pushing",
+        "Tagging"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U06.Q5",
+       "kind": "short",
+       "prompt": "When would you rebase instead of merge, and when must you never rebase?",
+       "rubric": [
+        "Rebase to keep a linear history of local/feature work",
+        "Never rebase commits others already pulled (shared/public)",
+        "Explains rewriting hashes"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U07",
+     "title": "Git 3 — GitHub flow and collaboration",
+     "hours": 4,
+     "depth": "core",
+     "week": 7,
+     "prerequisites": [
+      "M02.U06"
+     ],
+     "outcomes": [
+      "You can push over SSH, work through issue → branch → PR → review → merge, and contribute to someone else's repo via a fork."
+     ],
+     "topics": [
+      {
+       "id": "M02.03.04",
+       "title": "remote/push/pull"
+      },
+      {
+       "id": "M02.03.09",
+       "title": "pull requests"
+      },
+      {
+       "id": "M02.03.10",
+       "title": "code review"
+      },
+      {
+       "id": "M02.03.15",
+       "title": "SSH keys for GitHub"
+      },
+      {
+       "id": "M02.03.16",
+       "title": "issues and project boards"
+      },
+      {
+       "id": "M02.03.17",
+       "title": "fork and contribute"
+      }
+     ],
+     "learn": {
+      "resourceId": "gh-docs",
+      "title": "GitHub Docs",
+      "url": "https://docs.github.com/en/get-started/using-github/github-flow",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'GitHub flow' (whole page)"
+     },
+     "covers": [
+      "Create a branch",
+      "Make changes and commit",
+      "Open a pull request",
+      "Address review comments",
+      "Merge and delete the branch"
+     ],
+     "gaps": [
+      {
+       "topic": "remotes in practice",
+       "resource": {
+        "resourceId": "swc-git",
+        "title": "Version Control with Git (Software Carpentry)",
+        "url": "https://swcarpentry.github.io/git-novice/07-github.html",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Episode 'Remotes in GitHub'"
+       }
+      },
+      {
+       "topic": "SSH keys",
+       "resource": {
+        "resourceId": "gh-docs",
+        "title": "GitHub Docs",
+        "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Connecting to GitHub with SSH' (generate key, add to agent, add to account, test)"
+       }
+      },
+      {
+       "topic": "pull requests",
+       "resource": {
+        "resourceId": "gh-docs",
+        "title": "GitHub Docs",
+        "url": "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'About pull requests'"
+       }
+      },
+      {
+       "topic": "forks and contributing",
+       "resource": {
+        "resourceId": "progit",
+        "title": "Pro Git, 2nd edition",
+        "url": "https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Ch. 6.2 'Contributing to a Project'"
+       }
+      },
+      {
+       "topic": "whole flow in video",
+       "resource": {
+        "resourceId": "fcc-git",
+        "title": "Git and GitHub for Beginners - Crash Course",
+        "url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole crash course (~1 h)"
+       }
+      },
+      {
+       "topic": "reviewing and collaboration norms",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/beyond-code/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Beyond the Code' — collaboration, contributing, reviewing"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "gh-skills-intro",
+      "title": "GitHub Skills: Introduction to GitHub",
+      "url": "https://github.com/skills/introduction-to-github",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Complete the exercise"
+     },
+     "practice": {
+      "title": "Real PRs",
+      "brief": "Push your cs50p repo over SSH. For every feature from now on: issue → branch → PR with a self-review checklist → squash-merge. Fix a docs typo in any open-source repo and open a real PR from a fork.",
+      "done_when": "Public repo URL; ≥3 merged PRs linked to issues; one PR opened on an external repo (URL).",
+      "autograder": "GitHub Skills 'Introduction to GitHub' (auto-checked) as warm-up"
+     },
+     "quiz": [
+      {
+       "id": "M02.U07.Q1",
+       "kind": "mcq",
+       "prompt": "In GitHub flow, main should always be:",
+       "options": [
+        "Experimental",
+        "Deployable",
+        "Empty",
+        "Locked from all merges"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U07.Q2",
+       "kind": "mcq",
+       "prompt": "A fork is:",
+       "options": [
+        "A branch",
+        "Your own server-side copy of someone's repo",
+        "A tag",
+        "A clone on disk"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U07.Q3",
+       "kind": "mcq",
+       "prompt": "SSH keys replace:",
+       "options": [
+        "Commits",
+        "Password/token auth for push and pull",
+        "Branches",
+        "PR reviews"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U07.Q4",
+       "kind": "short",
+       "prompt": "What makes a pull request easy to review? List four things.",
+       "rubric": [
+        "Small, single-purpose",
+        "Clear title/description with why",
+        "Tests/CI green",
+        "Screenshots or how to verify",
+        "Self-reviewed diff"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M02.S3",
+   "title": "Dependencies & environments",
+   "units": [
+    {
+     "id": "M02.U08",
+     "title": "Environments 1 — Interpreters, PATH, virtual environments",
+     "hours": 3,
+     "depth": "core",
+     "week": 8,
+     "prerequisites": [
+      "M02.U01"
+     ],
+     "outcomes": [
+      "You can tell which Python and pip run, create/activate a venv and explain PATH.",
+      "You can diagnose 'installed but cannot import'."
+     ],
+     "topics": [
+      {
+       "id": "M02.01.01",
+       "title": "interpreter/version"
+      },
+      {
+       "id": "M02.01.03",
+       "title": "venv versus conda"
+      },
+      {
+       "id": "M02.01.10",
+       "title": ".venv"
+      },
+      {
+       "id": "M02.01.12",
+       "title": "environment activation"
+      },
+      {
+       "id": "M02.01.13",
+       "title": "PATH"
+      }
+     ],
+     "learn": {
+      "resourceId": "py-tut-venv",
+      "title": "Python Tutorial ch. 12 – Virtual Environments and Packages",
+      "url": "https://docs.python.org/3/tutorial/venv.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole chapter 12 (§12.1 Introduction, §12.2 Creating Virtual Environments, §12.3 Managing Packages with pip)"
+     },
+     "covers": [
+      "Why per-project environments",
+      "python -m venv .venv, activation scripts",
+      "pip install/uninstall/freeze, requirements.txt"
+     ],
+     "gaps": [
+      {
+       "topic": "venv in video",
+       "resource": {
+        "resourceId": "cy-venv",
+        "title": "Python Tutorial: VENV (Mac & Linux) - How to Use Virtual Environments with the Built-In venv Module",
+        "url": "https://www.youtube.com/watch?v=Kg1Yvry_Ydk",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "pip in depth",
+       "resource": {
+        "resourceId": "cy-pip",
+        "title": "Python Tutorial: pip - An in-depth look at the package management system",
+        "url": "https://www.youtube.com/watch?v=U2ZN104hIcc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "AI-flavoured environments lesson with quiz",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 06 Python Environments",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/06-python-environments",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 06 'Python Environments' + its quiz.json"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "uv",
+      "title": "uv documentation",
+      "url": "https://docs.astral.sh/uv/pip/environments/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Using Python environments' concept page"
+     },
+     "practice": {
+      "title": "Break it, fix it",
+      "brief": "Show `which python` and `python -c 'import sys; print(sys.prefix)'` before and after activating a venv. Install a package into the wrong interpreter on purpose, observe the ImportError, fix it. Answer rohitg00 lesson 06 quiz.json.",
+      "done_when": "`envs.md` with before/after outputs and the fix; quiz.json post-quiz ≥80%."
+     },
+     "quiz": [
+      {
+       "id": "M02.U08.Q1",
+       "kind": "mcq",
+       "prompt": "A venv isolates:",
+       "options": [
+        "The OS",
+        "Installed packages per project",
+        "Git",
+        "The CPU"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U08.Q2",
+       "kind": "mcq",
+       "prompt": "PATH decides:",
+       "options": [
+        "File permissions",
+        "Which executable runs for a command name",
+        "Python version in code",
+        "The cwd"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Should you commit `.venv/`?",
+       "options": [
+        "Yes",
+        "No — commit pyproject.toml + the lockfile",
+        "Only on Windows",
+        "Only for libraries"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U08.Q4",
+       "kind": "mcq",
+       "prompt": "conda vs venv:",
+       "options": [
+        "Same tool",
+        "conda also manages non-Python binaries and its own Python builds; venv only isolates packages for an existing Python",
+        "venv is faster always",
+        "conda is deprecated"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U08.Q5",
+       "kind": "short",
+       "prompt": "You `pip install x` and then `import x` fails. Give three likely causes.",
+       "rubric": [
+        "pip belongs to a different interpreter than python",
+        "venv not activated / IDE uses another interpreter",
+        "Package import name differs from distribution name",
+        "Shadowing by a local file named x.py"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U09",
+     "title": "Environments 2 — uv projects, pyproject, lockfiles, packaging",
+     "hours": 5,
+     "depth": "core",
+     "week": 10,
+     "prerequisites": [
+      "M02.U08"
+     ],
+     "outcomes": [
+      "You can manage a project with uv (init/add/lock/sync/run), run tools with uvx and scripts with inline metadata.",
+      "You can build a wheel with a src layout and console entry point and publish to TestPyPI."
+     ],
+     "topics": [
+      {
+       "id": "M02.01.02",
+       "title": "pip versus uv"
+      },
+      {
+       "id": "M02.01.04",
+       "title": "pyproject.toml"
+      },
+      {
+       "id": "M02.01.05",
+       "title": "requirements files"
+      },
+      {
+       "id": "M02.01.06",
+       "title": "transitive dependencies"
+      },
+      {
+       "id": "M02.01.07",
+       "title": "lockfiles"
+      },
+      {
+       "id": "M02.01.08",
+       "title": "editable installs"
+      },
+      {
+       "id": "M02.01.09",
+       "title": "wheels"
+      },
+      {
+       "id": "M02.01.11",
+       "title": "__pycache__ versus package cache"
+      },
+      {
+       "id": "M02.01.15",
+       "title": "uv tool / uvx"
+      },
+      {
+       "id": "M02.01.16",
+       "title": "uv run scripts with inline metadata"
+      },
+      {
+       "id": "M02.01.17",
+       "title": "build and publish to TestPyPI"
+      },
+      {
+       "id": "M02.01.18",
+       "title": "src layout and entry points"
+      }
+     ],
+     "learn": {
+      "resourceId": "uv",
+      "title": "uv documentation",
+      "url": "https://docs.astral.sh/uv/guides/projects/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Guides → 'Working on projects' (uv init, project structure, uv add/remove, uv run, uv lock, uv sync, uv build)"
+     },
+     "covers": [
+      "uv init and project files (pyproject.toml, .python-version, uv.lock, .venv)",
+      "uv add / remove / upgrade",
+      "uv run",
+      "uv lock and uv sync",
+      "uv build"
+     ],
+     "gaps": [
+      {
+       "topic": "dependencies, sources, groups",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/concepts/projects/dependencies/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts → 'Managing dependencies'"
+       }
+      },
+      {
+       "topic": "locking and syncing",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts → 'Locking and syncing'"
+       }
+      },
+      {
+       "topic": "uv tool / uvx",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/guides/tools/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Guides → 'Using tools'"
+       }
+      },
+      {
+       "topic": "scripts with inline metadata",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/guides/scripts/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Guides → 'Running scripts' (§Declaring script dependencies)"
+       }
+      },
+      {
+       "topic": "pyproject.toml fields, entry points",
+       "resource": {
+        "resourceId": "pypa-guide",
+        "title": "Python Packaging User Guide",
+        "url": "https://packaging.python.org/en/latest/guides/writing-pyproject-toml/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Writing your pyproject.toml'"
+       }
+      },
+      {
+       "topic": "build + upload to TestPyPI, wheels",
+       "resource": {
+        "resourceId": "pypa-guide",
+        "title": "Python Packaging User Guide",
+        "url": "https://packaging.python.org/en/latest/tutorials/packaging-projects/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tutorial 'Packaging Python Projects'"
+       }
+      },
+      {
+       "topic": "uv in video",
+       "resource": {
+        "resourceId": "arjan-uv",
+        "title": "This Tool Replaces pip, Poetry, pyenv, and More (It's Fast)",
+        "url": "https://www.youtube.com/watch?v=qh98qOND6MI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "artifacts, releases, versioning",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/shipping-code/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Packaging and Shipping Code' — dependencies & environments, artifacts & packaging, releases & versioning"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cy-uv",
+      "title": "Python Tutorial: UV - A Faster, All-in-One Package Manager to Replace Pip and Venv",
+      "url": "https://www.youtube.com/watch?v=AMdG7IjgSPM",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole video"
+     },
+     "practice": {
+      "title": "Ship a tiny package",
+      "brief": "Convert your cs50p repo to a uv project. Create `g2m-utils` (src layout) from your L4 'own library' code with a `[project.scripts]` entry point, build it and publish to TestPyPI; install it elsewhere with `uvx --index-url https://test.pypi.org/simple/ g2m-utils`.",
+      "done_when": "TestPyPI project URL; `uvx` run output pasted; uv.lock committed."
+     },
+     "quiz": [
+      {
+       "id": "M02.U09.Q1",
+       "kind": "mcq",
+       "prompt": "uv.lock records:",
+       "options": [
+        "Wished-for ranges",
+        "Exact resolved versions for reproducibility",
+        "Secrets",
+        "Git commits"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U09.Q2",
+       "kind": "mcq",
+       "prompt": "`uv add httpx` changes:",
+       "options": [
+        "Only the venv",
+        "pyproject.toml, uv.lock and the venv",
+        "Global Python",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U09.Q3",
+       "kind": "mcq",
+       "prompt": "A wheel is:",
+       "options": [
+        "A source tarball",
+        "A built, installable distribution",
+        "A lockfile",
+        "A venv"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U09.Q4",
+       "kind": "mcq",
+       "prompt": "`uvx ruff check .`:",
+       "options": [
+        "Adds ruff to your project",
+        "Runs ruff in a temporary isolated tool environment",
+        "Installs ruff globally with pip",
+        "Fails without a venv"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U09.Q5",
+       "kind": "short",
+       "prompt": "Explain direct vs transitive dependencies and why lockfiles exist.",
+       "rubric": [
+        "Direct = what you declare; transitive = what they need",
+        "Ranges resolve differently over time",
+        "Lockfile pins the whole graph for identical installs",
+        "Enables reproducible CI/deploys"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U10",
+     "title": "Environments 3 — Config and secrets",
+     "hours": 2,
+     "depth": "core",
+     "week": 8,
+     "prerequisites": [
+      "M02.U08"
+     ],
+     "outcomes": [
+      "You keep config in environment variables / git-ignored .env files and ship a .env.example.",
+      "You know the leaked-key runbook: revoke first."
+     ],
+     "topics": [
+      {
+       "id": "M02.01.14",
+       "title": "secrets in environment variables"
+      },
+      {
+       "id": "M02.01.19",
+       "title": ".env files and ignore rules"
+      },
+      {
+       "id": "M02.01.20",
+       "title": "leaked-key response"
+      }
+     ],
+     "learn": {
+      "resourceId": "twelve-factor",
+      "title": "The Twelve-Factor App — III. Config",
+      "url": "https://12factor.net/config",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole page 'III. Config'"
+     },
+     "covers": [
+      "Config = everything that varies between deploys",
+      "Store config in environment variables",
+      "Don't group config into named environments in code"
+     ],
+     "gaps": [
+      {
+       "topic": "safe API-key storage for AI APIs",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 04 APIs & Keys",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/04-apis-and-keys",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 04 'APIs & Keys' Step 1 'Store API keys safely'"
+       }
+      },
+      {
+       "topic": "ignoring files",
+       "resource": {
+        "resourceId": "gh-docs",
+        "title": "GitHub Docs",
+        "url": "https://docs.github.com/en/get-started/git-basics/ignoring-files",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Ignoring files'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Key hygiene",
+      "brief": "Load the CoinCap key (bitcoin problem) from a git-ignored `.env` via os.environ, failing loudly with a clear message if missing; commit `.env.example`. Write a 5-step runbook 'I pushed a key to GitHub'.",
+      "done_when": "`git log -p | grep -i <key prefix>` is empty; running without the env var prints a clear error and exits non-zero; runbook committed."
+     },
+     "quiz": [
+      {
+       "id": "M02.U10.Q1",
+       "kind": "mcq",
+       "prompt": "12-factor config lives in:",
+       "options": [
+        "Code constants",
+        "Environment variables",
+        "The README",
+        "Git history"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U10.Q2",
+       "kind": "mcq",
+       "prompt": "After leaking a key, the FIRST step is:",
+       "options": [
+        "Delete the commit",
+        "Revoke/rotate the key",
+        "Make the repo private",
+        "Email support"
+       ],
+       "answer": 1,
+       "explain": "Bots scrape GitHub within minutes; history rewrites don't un-leak."
+      },
+      {
+       "id": "M02.U10.Q3",
+       "kind": "mcq",
+       "prompt": "`.env.example` should contain:",
+       "options": [
+        "Real secrets",
+        "Variable names with dummy values",
+        "Nothing",
+        "The lockfile"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U10.Q4",
+       "kind": "short",
+       "prompt": "Why is deleting the commit not enough after a leaked key?",
+       "rubric": [
+        "Key already copied by scrapers/forks/clones",
+        "History/caches persist",
+        "Only revocation makes it useless",
+        "Then audit usage"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M02.S4",
+   "title": "Editor & AI-assisted development",
+   "units": [
+    {
+     "id": "M02.U11",
+     "title": "Editor, language server, notebooks and AI coding agents",
+     "hours": 3,
+     "depth": "core",
+     "week": 11,
+     "prerequisites": [
+      "M00.U05"
+     ],
+     "outcomes": [
+      "You have VS Code configured with Pylance, format-on-save and the debugger, connected to WSL.",
+      "You can run Jupyter without hidden-state traps and review AI-generated diffs critically."
+     ],
+     "topics": [
+      {
+       "id": "M02.06.01",
+       "title": "VS Code + WSL workflow"
+      },
+      {
+       "id": "M02.06.02",
+       "title": "language server / Pylance"
+      },
+      {
+       "id": "M02.06.03",
+       "title": "Jupyter basics"
+      },
+      {
+       "id": "M02.06.04",
+       "title": "AI coding assistants/agents and their risks"
+      }
+     ],
+     "learn": {
+      "resourceId": "vscode-docs",
+      "title": "Visual Studio Code documentation",
+      "url": "https://code.visualstudio.com/docs/python/python-tutorial",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Getting Started with Python in VS Code' (install extension, select interpreter, run, debug, format)"
+     },
+     "covers": [
+      "Python extension + Pylance",
+      "Selecting the interpreter/venv",
+      "Run and debug a file",
+      "Linting/formatting setup"
+     ],
+     "gaps": [
+      {
+       "topic": "code intelligence and AI-powered development",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/development-environment/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Development Environment and Tools' — code intelligence, AI-powered development"
+       }
+      },
+      {
+       "topic": "agentic coding risks",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/agentic-coding/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Agentic Coding' (whole)"
+       }
+      },
+      {
+       "topic": "Jupyter basics",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 05 Jupyter Notebooks",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/05-jupyter-notebooks",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 05 'Jupyter Notebooks'"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 08 Editor Setup",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/08-editor-setup",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 08 'Editor Setup'"
+     },
+     "practice": {
+      "title": "Agent on a leash",
+      "brief": "Configure format-on-save and a debug launch config. Let an AI agent implement one small feature on a branch; review its diff line by line in a PR and reject or repair at least one part, explaining why.",
+      "done_when": "PR URL with your review comments and at least one requested change; settings.json committed (or described)."
+     },
+     "quiz": [
+      {
+       "id": "M02.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A language server provides:",
+       "options": [
+        "Git hosting",
+        "Completions, go-to-definition and diagnostics",
+        "A Python interpreter",
+        "A database"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U11.Q2",
+       "kind": "mcq",
+       "prompt": "The main risk of notebooks for production code is:",
+       "options": [
+        "Speed",
+        "Hidden state from out-of-order cell execution",
+        "Colours",
+        "File size"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U11.Q3",
+       "kind": "mcq",
+       "prompt": "The safest way to accept AI-generated code is:",
+       "options": [
+        "Commit directly to main",
+        "Review the diff and run tests on a branch",
+        "Trust it if it runs",
+        "Never use it"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U11.Q4",
+       "kind": "short",
+       "prompt": "State your rule for when you may ask an agent to write code during this path.",
+       "rubric": [
+        "Only after attempting yourself / for non-learning-target chores",
+        "Must be able to explain every line",
+        "Always via branch + review + tests",
+        "Log AI use"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M02.S5",
+   "title": "Quality: tests, debugging, CI",
+   "units": [
+    {
+     "id": "M02.U12",
+     "title": "Quality 1 — pytest properly",
+     "hours": 6,
+     "depth": "core",
+     "week": 16,
+     "prerequisites": [
+      "M01.U07"
+     ],
+     "outcomes": [
+      "You can use fixtures, parametrize, tmp_path, monkeypatch and unittest.mock at I/O boundaries.",
+      "You can measure branch coverage and explain the test pyramid / TDD loop."
+     ],
+     "topics": [
+      {
+       "id": "M02.04.01",
+       "title": "pytest"
+      },
+      {
+       "id": "M02.04.02",
+       "title": "fixtures/parametrization"
+      },
+      {
+       "id": "M02.04.03",
+       "title": "unit/integration tests"
+      },
+      {
+       "id": "M02.04.04",
+       "title": "mocks at network boundaries"
+      },
+      {
+       "id": "M02.04.12",
+       "title": "coverage"
+      },
+      {
+       "id": "M02.04.13",
+       "title": "TDD loop and test pyramid"
+      }
+     ],
+     "learn": {
+      "resourceId": "pytest-howto",
+      "title": "pytest — How-to guides",
+      "url": "https://docs.pytest.org/en/stable/how-to/fixtures.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "How-to guides: 'How to use fixtures', 'How to parametrize', 'How to use temporary directories and files' (tmp_path), 'How to monkeypatch'"
+     },
+     "covers": [
+      "Requesting fixtures, scope, yield teardown, conftest.py",
+      "@pytest.mark.parametrize",
+      "tmp_path / tmp_path_factory",
+      "monkeypatch.setattr / setenv"
+     ],
+     "gaps": [
+      {
+       "topic": "fixtures explained",
+       "resource": {
+        "resourceId": "anthony-fixtures",
+        "title": "pytest: everything you need to know about fixtures (anthony explains #487)",
+        "url": "https://www.youtube.com/watch?v=ScEQRKwUePI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "pytest end-to-end video",
+       "resource": {
+        "resourceId": "fcc-pytest",
+        "title": "Pytest Tutorial – How to Test Python Code",
+        "url": "https://www.youtube.com/watch?v=cHYq1MRoyI0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Fixtures + parametrize + mocking segments"
+       }
+      },
+      {
+       "topic": "mocking",
+       "resource": {
+        "resourceId": "py-mock",
+        "title": "unittest.mock — mock object library",
+        "url": "https://docs.python.org/3/library/unittest.mock.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Quick Guide' and patch() sections"
+       }
+      },
+      {
+       "topic": "coverage",
+       "resource": {
+        "resourceId": "coveragepy",
+        "title": "Coverage.py",
+        "url": "https://coverage.readthedocs.io/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Quick start' + branch coverage"
+       }
+      },
+      {
+       "topic": "testing philosophy and CI",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/code-quality/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Code Quality' — testing and code coverage"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Harden the tracker's tests",
+      "brief": "Refactor the M01 capstone tests to use fixtures and tmp_path, parametrize validators, mock the quote API (success, timeout, 500) and reach ≥85% branch coverage.",
+      "done_when": "`pytest --cov --cov-branch` (pytest-cov) or `coverage run --branch -m pytest && coverage report` shows ≥85%; mocks cover 3 API outcomes."
+     },
+     "quiz": [
+      {
+       "id": "M02.U12.Q1",
+       "kind": "mcq",
+       "prompt": "A fixture is:",
+       "options": [
+        "A test case",
+        "Reusable setup/teardown injected by name",
+        "A mock library",
+        "A CI job"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Mock at:",
+       "options": [
+        "Every function",
+        "The network/I/O boundary you don't control",
+        "Never",
+        "Your own pure logic"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U12.Q3",
+       "kind": "mcq",
+       "prompt": "100% coverage proves:",
+       "options": [
+        "No bugs",
+        "Every line ran — not that behaviour is right",
+        "Security",
+        "Performance"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U12.Q4",
+       "kind": "mcq",
+       "prompt": "`@pytest.mark.parametrize(\"x,ok\", [(1, True), (-1, False)])` runs the test:",
+       "options": [
+        "Once",
+        "Twice, once per tuple",
+        "Only if x is True",
+        "In parallel"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U12.Q5",
+       "kind": "short",
+       "prompt": "What's the difference between a unit test and an integration test for your tracker?",
+       "rubric": [
+        "Unit: one function/class in isolation, fakes for I/O",
+        "Integration: real file/DB/HTTP pieces together",
+        "Trade-off speed vs realism",
+        "Example of each"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U13",
+     "title": "Quality 2 — Debugging, logging, profiling",
+     "hours": 5,
+     "depth": "core",
+     "week": 17,
+     "prerequisites": [
+      "M02.U12"
+     ],
+     "outcomes": [
+      "You can find bugs with breakpoints, watch expressions and pdb.",
+      "You can replace prints with module-level loggers configured by the app, and profile to find hot spots."
+     ],
+     "topics": [
+      {
+       "id": "M02.04.05",
+       "title": "logging"
+      },
+      {
+       "id": "M02.04.06",
+       "title": "debugger/breakpoints"
+      },
+      {
+       "id": "M02.04.09",
+       "title": "profiling"
+      }
+     ],
+     "learn": {
+      "resourceId": "vscode-docs",
+      "title": "Visual Studio Code documentation",
+      "url": "https://code.visualstudio.com/docs/python/debugging",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Python debugging in VS Code' (launch configs, breakpoints, watch, call stack, debug console)"
+     },
+     "covers": [
+      "launch.json configurations",
+      "Breakpoints, conditional breakpoints, logpoints",
+      "Stepping, watch, call stack, debug console"
+     ],
+     "gaps": [
+      {
+       "topic": "pdb",
+       "resource": {
+        "resourceId": "py-pdb",
+        "title": "pdb — The Python Debugger",
+        "url": "https://docs.python.org/3/library/pdb.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Debugger commands table (n, s, c, p, l, b)"
+       }
+      },
+      {
+       "topic": "logging basics (not in CS50P)",
+       "resource": {
+        "resourceId": "cy-logging1",
+        "title": "Python Tutorial: Logging Basics - Logging to Files, Setting Levels, and Formatting",
+        "url": "https://www.youtube.com/watch?v=-ARI4Cz-awo",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "loggers, handlers, formatters",
+       "resource": {
+        "resourceId": "cy-logging2",
+        "title": "Python Tutorial: Logging Advanced - Loggers, Handlers, and Formatters",
+        "url": "https://www.youtube.com/watch?v=jxmzY9soFXg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "modern logging setup",
+       "resource": {
+        "resourceId": "mcoding-logging",
+        "title": "Modern Python logging",
+        "url": "https://www.youtube.com/watch?v=9L77QExPmI0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (dictConfig, JSON logs, queue handler)"
+       }
+      },
+      {
+       "topic": "logging reference",
+       "resource": {
+        "resourceId": "py-logging-howto",
+        "title": "Logging HOWTO",
+        "url": "https://docs.python.org/3/howto/logging.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Basic Logging Tutorial' + 'Advanced Logging Tutorial'"
+       }
+      },
+      {
+       "topic": "profiling",
+       "resource": {
+        "resourceId": "py-profile",
+        "title": "The Python Profilers",
+        "url": "https://docs.python.org/3/library/profile.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Instant User's Manual' (cProfile, pstats)"
+       }
+      },
+      {
+       "topic": "debugging and profiling lecture",
+       "resource": {
+        "resourceId": "ms-2020-debug",
+        "title": "Lecture 7: Debugging and Profiling (2020)",
+        "url": "https://www.youtube.com/watch?v=l812pUnKxME",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole lecture"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 12 Debugging and Profiling",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/12-debugging-and-profiling",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 12 'Debugging and Profiling'"
+     },
+     "practice": {
+      "title": "Planted-bug hunt",
+      "brief": "Find a planted bug in a provided loop using only breakpoints/watch (write how you found it). Replace prints with `logging.getLogger(__name__)`, configured once in main. Profile the CSV export with cProfile and speed up its hottest function.",
+      "done_when": "`debug.md` with steps + before/after profile output showing the improved function; no print() left in library code."
+     },
+     "quiz": [
+      {
+       "id": "M02.U13.Q1",
+       "kind": "mcq",
+       "prompt": "`breakpoint()`:",
+       "options": [
+        "Stops the program permanently",
+        "Drops into the debugger at that line",
+        "Logs",
+        "Raises"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U13.Q2",
+       "kind": "mcq",
+       "prompt": "Libraries should:",
+       "options": [
+        "Call logging.basicConfig",
+        "Use getLogger(__name__) and let the app configure handlers",
+        "print",
+        "Write files"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U13.Q3",
+       "kind": "mcq",
+       "prompt": "A profiler tells you:",
+       "options": [
+        "Correctness",
+        "Where time is spent",
+        "Memory leaks always",
+        "Test coverage"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U13.Q4",
+       "kind": "short",
+       "prompt": "Why is 'add prints until it works' worse than a debugger for a loop bug?",
+       "rubric": [
+        "Debugger shows all state at a point without editing code",
+        "Conditional breakpoints target the failing iteration",
+        "Prints get left behind / noisy",
+        "Faster iteration"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U14",
+     "title": "Quality 3 — Lint, format, type-check, pre-commit, CI, task runner",
+     "hours": 5,
+     "depth": "core",
+     "week": 17,
+     "prerequisites": [
+      "M02.U12",
+      "M02.U07"
+     ],
+     "outcomes": [
+      "You can run Ruff (lint + format), mypy and pytest locally via pre-commit and a Makefile, and in GitHub Actions with uv on a version matrix.",
+      "You protect main with required checks."
+     ],
+     "topics": [
+      {
+       "id": "M02.04.07",
+       "title": "Ruff"
+      },
+      {
+       "id": "M02.04.08",
+       "title": "type checking"
+      },
+      {
+       "id": "M02.04.10",
+       "title": "dependency pinning"
+      },
+      {
+       "id": "M02.04.11",
+       "title": "CI basics"
+      },
+      {
+       "id": "M02.04.14",
+       "title": "pre-commit hooks"
+      },
+      {
+       "id": "M02.04.15",
+       "title": "uv in GitHub Actions"
+      },
+      {
+       "id": "M02.04.16",
+       "title": "task runner (Makefile / justfile)"
+      }
+     ],
+     "learn": {
+      "resourceId": "ruff",
+      "title": "Ruff — Tutorial",
+      "url": "https://docs.astral.sh/ruff/tutorial/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Whole tutorial (getting started, configuration, rule selection, editor + pre-commit integration)"
+     },
+     "covers": [
+      "ruff check / ruff format",
+      "Configuring rules in pyproject.toml",
+      "Fixes and noqa",
+      "Integrations (pre-commit, editors)"
+     ],
+     "gaps": [
+      {
+       "topic": "mypy setup",
+       "resource": {
+        "resourceId": "mypy-start",
+        "title": "mypy — Getting started",
+        "url": "https://mypy.readthedocs.io/en/stable/getting_started.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "pre-commit",
+       "resource": {
+        "resourceId": "precommit",
+        "title": "pre-commit",
+        "url": "https://pre-commit.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Quick start'"
+       }
+      },
+      {
+       "topic": "GitHub Actions for Python",
+       "resource": {
+        "resourceId": "gh-actions-python",
+        "title": "GitHub Actions — Building and testing Python",
+        "url": "https://docs.github.com/en/actions/tutorials/build-and-test-code/python",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "uv in GitHub Actions",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/guides/integration/github/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Guides → Integrations → 'GitHub Actions'"
+       }
+      },
+      {
+       "topic": "Makefiles",
+       "resource": {
+        "resourceId": "makefiletutorial",
+        "title": "Makefile Tutorial by Example",
+        "url": "https://makefiletutorial.com/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Getting Started' → 'Makefile Syntax' → 'Targets' (phony)"
+       }
+      },
+      {
+       "topic": "formatting, linting, CI theory",
+       "resource": {
+        "resourceId": "missing-sem-2026",
+        "title": "The Missing Semester of Your CS Education (2026)",
+        "url": "https://missing.csail.mit.edu/2026/code-quality/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Code Quality' — formatting, linting, pre-commit, CI"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Green-gated main",
+      "brief": "Add a workflow running `ruff check`, `ruff format --check`, `mypy`, `pytest` with uv on Python 3.12 and 3.13 for every PR; add pre-commit hooks and a Makefile with setup/test/lint/run; protect main to require CI.",
+      "done_when": "PR shows green matrix checks; branch protection screenshot; `make test` works on a fresh clone."
+     },
+     "quiz": [
+      {
+       "id": "M02.U14.Q1",
+       "kind": "mcq",
+       "prompt": "A linter differs from a formatter in that it:",
+       "options": [
+        "Only changes whitespace",
+        "Finds likely bugs and style issues",
+        "Runs tests",
+        "Installs packages"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U14.Q2",
+       "kind": "mcq",
+       "prompt": "pre-commit hooks run:",
+       "options": [
+        "On the server only",
+        "Locally before each commit",
+        "At deploy",
+        "Never in CI"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U14.Q3",
+       "kind": "mcq",
+       "prompt": "A CI matrix lets you:",
+       "options": [
+        "Run the same job across several versions/OSes",
+        "Encrypt secrets",
+        "Merge faster",
+        "Skip tests"
+       ],
+       "answer": 0,
+       "explain": ""
+      },
+      {
+       "id": "M02.U14.Q4",
+       "kind": "short",
+       "prompt": "What should CI block a merge on, and what should be just a warning?",
+       "rubric": [
+        "Block: failing tests, type errors, lint errors, formatting",
+        "Warn: coverage dips, slow tests, TODOs",
+        "Justifies with cost of false positives"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M02.S6",
+   "title": "Containers",
+   "units": [
+    {
+     "id": "M02.U15",
+     "title": "Containers 1 — Docker fundamentals",
+     "hours": 6,
+     "depth": "core",
+     "week": 18,
+     "prerequisites": [
+      "M02.U03",
+      "M02.U09"
+     ],
+     "outcomes": [
+      "You can explain images vs containers, write a Dockerfile, use the layer cache, volumes, ports and env vars."
+     ],
+     "topics": [
+      {
+       "id": "M02.05.01",
+       "title": "images vs containers"
+      },
+      {
+       "id": "M02.05.02",
+       "title": "Dockerfile"
+      },
+      {
+       "id": "M02.05.03",
+       "title": "layers and build cache"
+      },
+      {
+       "id": "M02.05.04",
+       "title": "volumes and bind mounts"
+      },
+      {
+       "id": "M02.05.05",
+       "title": "ports and container networking"
+      },
+      {
+       "id": "M02.05.06",
+       "title": "env vars and secrets in containers"
+      }
+     ],
+     "learn": {
+      "resourceId": "docker-docs",
+      "title": "Docker documentation",
+      "url": "https://docs.docker.com/get-started/docker-overview/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Get started → 'What is Docker?', then Docker concepts: 'What is a container?', 'Writing a Dockerfile', 'Persisting container data'"
+     },
+     "covers": [
+      "Docker architecture (client, daemon, registry)",
+      "Containers vs VMs",
+      "Dockerfile instructions",
+      "Volumes for persistence"
+     ],
+     "gaps": [
+      {
+       "topic": "what a container is",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'What is a container?'"
+       }
+      },
+      {
+       "topic": "Dockerfile",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Writing a Dockerfile'"
+       }
+      },
+      {
+       "topic": "volumes",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/get-started/docker-concepts/running-containers/persisting-container-data/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Persisting container data'"
+       }
+      },
+      {
+       "topic": "hands-on workshop",
+       "resource": {
+        "resourceId": "docker-workshop",
+        "title": "Docker Get Started workshop",
+        "url": "https://docs.docker.com/get-started/workshop/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Parts 1–6"
+       }
+      },
+      {
+       "topic": "Docker in video",
+       "resource": {
+        "resourceId": "nana-docker",
+        "title": "Docker Tutorial for Beginners [FULL COURSE in 3 Hours]",
+        "url": "https://www.youtube.com/watch?v=3c-iBn73dDE",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "First ~1.5 h (images, containers, ports, Dockerfile, volumes)"
+       }
+      },
+      {
+       "topic": "100-second overview",
+       "resource": {
+        "resourceId": "fireship-docker",
+        "title": "Docker in 100 Seconds",
+        "url": "https://www.youtube.com/watch?v=Gjnup-PuquQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 07 Docker for AI",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/07-docker-for-ai",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 07 'Docker for AI' (skip NVIDIA steps unless you have a GPU)"
+     },
+     "practice": {
+      "title": "Containerise the tracker",
+      "brief": "Write a Dockerfile for the M01 tracker CLI (deps copied before code). Persist its JSON via a named volume and prove data survives `docker rm`.",
+      "done_when": "`docker run` lists tasks created by a previous, removed container; Dockerfile committed with a comment explaining layer order."
+     },
+     "quiz": [
+      {
+       "id": "M02.U15.Q1",
+       "kind": "mcq",
+       "prompt": "Container vs VM:",
+       "options": [
+        "Same",
+        "A container shares the host kernel",
+        "A VM is lighter",
+        "Containers need a hypervisor"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U15.Q2",
+       "kind": "mcq",
+       "prompt": "Putting `COPY pyproject.toml uv.lock` before `COPY . .`:",
+       "options": [
+        "Saves disk",
+        "Reuses the cached dependency layer when only code changes",
+        "Is for security",
+        "Is required"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U15.Q3",
+       "kind": "mcq",
+       "prompt": "`-p 8000:80` maps:",
+       "options": [
+        "Container 8000 → host 80",
+        "Host 8000 → container 80",
+        "Both 80",
+        "UDP only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U15.Q4",
+       "kind": "short",
+       "prompt": "Why shouldn't you bake API keys into an image?",
+       "rubric": [
+        "Image layers are readable by anyone with the image",
+        "Pushed to registries/caches",
+        "Rotate = rebuild",
+        "Use env vars/secrets at runtime"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M02.U16",
+     "title": "Containers 2 — Compose and production-shaped Python images",
+     "hours": 4,
+     "depth": "core",
+     "week": 18,
+     "prerequisites": [
+      "M02.U15"
+     ],
+     "outcomes": [
+      "You can run multi-service apps with docker compose (app + Postgres with healthcheck).",
+      "You can build small, non-root, multi-stage uv-based images with a .dockerignore."
+     ],
+     "topics": [
+      {
+       "id": "M02.05.07",
+       "title": "docker compose multi-service"
+      },
+      {
+       "id": "M02.05.08",
+       "title": "multi-stage and slim images"
+      },
+      {
+       "id": "M02.05.09",
+       "title": ".dockerignore and non-root user"
+      }
+     ],
+     "learn": {
+      "resourceId": "docker-docs",
+      "title": "Docker documentation",
+      "url": "https://docs.docker.com/guides/python/containerize/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Guides → Python → 'Containerize a Python application'"
+     },
+     "covers": [
+      "docker init for Python",
+      "Generated Dockerfile (non-root user, cache mounts), compose.yaml, .dockerignore",
+      "docker compose up --build"
+     ],
+     "gaps": [
+      {
+       "topic": "uv inside Docker",
+       "resource": {
+        "resourceId": "uv",
+        "title": "uv documentation",
+        "url": "https://docs.astral.sh/uv/guides/integration/docker/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Guides → Integrations → 'Docker'"
+       }
+      },
+      {
+       "topic": "compose",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/compose/gettingstarted/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Docker Compose quickstart"
+       }
+      },
+      {
+       "topic": "multi-stage builds",
+       "resource": {
+        "resourceId": "docker-docs",
+        "title": "Docker documentation",
+        "url": "https://docs.docker.com/build/building/multi-stage/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Multi-stage builds'"
+       }
+      },
+      {
+       "topic": "compose in video",
+       "resource": {
+        "resourceId": "nana-compose",
+        "title": "Docker Compose Tutorial - Docker in Practice || Docker Tutorial 9",
+        "url": "https://www.youtube.com/watch?v=MVIcrmeV_6c",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      },
+      {
+       "topic": "Postgres image settings",
+       "resource": {
+        "resourceId": "pg-image",
+        "title": "postgres — Docker Official Image",
+        "url": "https://hub.docker.com/_/postgres",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Environment variables + healthcheck usage"
+       }
+      }
+     ],
+     "practice": {
+      "title": "App + Postgres",
+      "brief": "Compose file with `app` (uv-based, multi-stage, non-root) and `postgres` (named volume, healthcheck); app waits for DB healthy. Report image size before/after multi-stage.",
+      "done_when": "`docker compose up` brings both healthy; README shows image sizes before/after."
+     },
+     "quiz": [
+      {
+       "id": "M02.U16.Q1",
+       "kind": "mcq",
+       "prompt": "Services in one compose project reach each other by:",
+       "options": [
+        "localhost",
+        "Service name via the compose network",
+        "Public IP",
+        "They can't"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U16.Q2",
+       "kind": "mcq",
+       "prompt": "A multi-stage build mainly reduces:",
+       "options": [
+        "Build time always",
+        "Final image size and attack surface",
+        "RAM",
+        "Layers to 1"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U16.Q3",
+       "kind": "mcq",
+       "prompt": "`.dockerignore` prevents:",
+       "options": [
+        "Running",
+        "Sending files like .venv and .git into the build context",
+        "Pulling",
+        "Logs"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M02.U16.Q4",
+       "kind": "short",
+       "prompt": "`depends_on` vs a healthcheck condition: what's the difference?",
+       "rubric": [
+        "depends_on alone = start order only",
+        "service_healthy waits for healthcheck to pass",
+        "DB may be started but not accepting connections"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Reproducible project kit",
+  "brief": "(8h) A GitHub template repo every later project starts from: uv project (src layout, lockfile); Ruff, mypy, pytest + coverage; pre-commit; GitHub Actions matrix; .env.example + 12-factor settings loader; multi-stage non-root Dockerfile + compose with Postgres; Makefile setup/test/lint/run; issue/PR templates; README 'recreate from zero in 5 commands'. Reviewer clones on a fresh machine. Also required: Learn Git Branching Introduction + Ramping Up and Bandit level 20. Pass ≥8/10.",
+  "rubric": [
+   {
+    "criterion": "Reproducibility (fresh clone → tests pass in ≤5 commands)",
+    "levels": [
+     "0 – fails",
+     "1 – needs fixes",
+     "2 – works first time"
+    ]
+   },
+   {
+    "criterion": "CI gates (lint, type, test; main protected)",
+    "levels": [
+     "0 – none",
+     "1 – partial",
+     "2 – full + green badge"
+    ]
+   },
+   {
+    "criterion": "Container quality (multi-stage, non-root, .dockerignore, healthcheck)",
+    "levels": [
+     "0 – none",
+     "1 – runs",
+     "2 – all four"
+    ]
+   },
+   {
+    "criterion": "Git hygiene (issues → PRs → reviews; meaningful history; one resolved conflict)",
+    "levels": [
+     "0 – messy",
+     "1 – partial",
+     "2 – exemplary"
+    ]
+   },
+   {
+    "criterion": "Secrets & config (none in history; .env.example; fails loudly)",
+    "levels": [
+     "0 – leaked",
+     "1 – partial",
+     "2 – correct"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

@@ -1,0 +1,2044 @@
+{
+ "id": "M04",
+ "phase": "P1 Foundations",
+ "title": "Data analysis & SQL",
+ "summary": "SQL first with CS50 SQL (check50) and PostgreSQL docs/pgexercises (windows, JSONB, timestamptz, roles, injection, backups), SQL from Python (psycopg, SQLAlchemy, Alembic); then NumPy, pandas 3 (copy-on-write aware) with Python for Data Analysis 3e chapter-mapped, EDA, DuckDB/Polars, and data contracts.",
+ "hours": 86,
+ "prerequisites": [
+  "M01"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M04.S1",
+   "title": "SQL & PostgreSQL",
+   "units": [
+    {
+     "id": "M04.U01",
+     "title": "SQL 1 — Querying and relating (CS50 SQL Lectures 0–1)",
+     "hours": 7,
+     "depth": "core",
+     "week": 19,
+     "prerequisites": [
+      "M01.U08"
+     ],
+     "outcomes": [
+      "You can filter, sort, aggregate, group and join tables, and reason about NULL."
+     ],
+     "topics": [
+      {
+       "id": "M04.03.01",
+       "title": "SELECT/WHERE/ORDER BY"
+      },
+      {
+       "id": "M04.03.02",
+       "title": "GROUP BY/HAVING"
+      },
+      {
+       "id": "M04.03.03",
+       "title": "joins"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50sql-l0",
+      "title": "CS50 SQL - Lecture 0 - Querying",
+      "url": "https://www.youtube.com/watch?v=vHYeChEf2lA",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 0 'Querying' (whole), then Lecture 1 'Relating' (_2t18Hy9Z0Y, whole). Notes: cs50.harvard.edu/sql/notes/0/ and /1/"
+     },
+     "covers": [
+      "SQLite, SELECT, LIMIT, WHERE, NULL, LIKE, ranges, ORDER BY, aggregate functions (L0 notes)",
+      "ER diagrams, primary/foreign keys, subqueries, IN, JOIN, set operations, GROUP BY/HAVING (L1 notes §Groups)"
+     ],
+     "gaps": [
+      {
+       "topic": "Lecture 1 'Relating' video (second half of the learn slice)",
+       "resource": {
+        "resourceId": "cs50sql-l1",
+        "title": "CS50 SQL - Lecture 1 - Relating",
+        "url": "https://www.youtube.com/watch?v=_2t18Hy9Z0Y",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole lecture"
+       }
+      },
+      {
+       "topic": "interactive drill",
+       "resource": {
+        "resourceId": "sqlbolt",
+        "title": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lessons 1–12"
+       }
+      },
+      {
+       "topic": "SQL in 100 s",
+       "resource": {
+        "resourceId": "fireship-sql",
+        "title": "SQL Explained in 100 Seconds",
+        "url": "https://www.youtube.com/watch?v=zsjvFFKOm3c",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50sql",
+      "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+      "url": "https://cs50.harvard.edu/sql/notes/0/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 0 and 1 notes"
+     },
+     "backup": {
+      "resourceId": "fcc-sql",
+      "title": "SQL Tutorial - Full Database Course for Beginners",
+      "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "SELECT/WHERE/JOIN segments"
+     },
+     "practice": {
+      "title": "CS50 SQL Problem Sets 0–1",
+      "brief": "cyberchase, views, normals, players (PS0); packages, dese, moneyball (PS1) — https://cs50.harvard.edu/sql/psets/",
+      "done_when": "check50 green for all 7.",
+      "autograder": "check50 cs50/problems/2024/sql/{cyberchase,views,normals,players,packages,dese,moneyball}"
+     },
+     "quiz": [
+      {
+       "id": "M04.U01.Q1",
+       "kind": "mcq",
+       "prompt": "WHERE vs HAVING:",
+       "options": [
+        "Same",
+        "WHERE filters rows before grouping; HAVING filters groups",
+        "Reversed",
+        "HAVING is for joins"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U01.Q2",
+       "kind": "mcq",
+       "prompt": "A LEFT JOIN keeps:",
+       "options": [
+        "Only matches",
+        "All left rows, with NULLs where there's no match",
+        "All right rows",
+        "A cross product"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U01.Q3",
+       "kind": "mcq",
+       "prompt": "`NULL = NULL` evaluates to:",
+       "options": [
+        "TRUE",
+        "FALSE",
+        "NULL (unknown)",
+        "Error"
+       ],
+       "answer": 2,
+       "explain": "Use IS NULL."
+      },
+      {
+       "id": "M04.U01.Q4",
+       "kind": "short",
+       "prompt": "Explain why COUNT(*) and COUNT(col) can differ.",
+       "rubric": [
+        "COUNT(*) counts rows",
+        "COUNT(col) skips NULLs",
+        "Example"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U02",
+     "title": "SQL 2 — Designing schemas (CS50 SQL Lecture 2)",
+     "hours": 6,
+     "depth": "core",
+     "week": 20,
+     "prerequisites": [
+      "M04.U01"
+     ],
+     "outcomes": [
+      "You can design a normalised schema with keys, types and constraints and draw its ER diagram."
+     ],
+     "topics": [
+      {
+       "id": "M04.03.04",
+       "title": "primary/foreign keys"
+      },
+      {
+       "id": "M04.03.05",
+       "title": "constraints"
+      },
+      {
+       "id": "M04.03.06",
+       "title": "normalization"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50sql-l2",
+      "title": "CS50 SQL - Lecture 2 - Designing",
+      "url": "https://www.youtube.com/watch?v=QzRW6bfv3Fo",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 2 'Designing' (whole). Notes §Creating a Database Schema … §Altering Tables"
+     },
+     "covers": [
+      "Normalising a schema",
+      "CREATE TABLE",
+      "Data types, storage classes, type affinities",
+      "Table and column constraints (PRIMARY KEY, FOREIGN KEY, CHECK, NOT NULL, UNIQUE)",
+      "ALTER TABLE"
+     ],
+     "gaps": [
+      {
+       "topic": "Postgres constraints",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "5.5 'Constraints'"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50sql",
+      "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+      "url": "https://cs50.harvard.edu/sql/notes/2/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 2 notes"
+     },
+     "practice": {
+      "title": "PS2 + Grain schema",
+      "brief": "atl, connect, donuts (PS2). Then design a 3NF schema for users, courses, units, attempts, quiz answers (this app's own domain): ER diagram + DDL.",
+      "done_when": "check50 green for atl, connect, donuts; ER diagram + DDL committed.",
+      "autograder": "check50 cs50/problems/2024/sql/{atl,connect,donuts}"
+     },
+     "quiz": [
+      {
+       "id": "M04.U02.Q1",
+       "kind": "mcq",
+       "prompt": "A foreign key enforces:",
+       "options": [
+        "Uniqueness",
+        "Referential integrity between tables",
+        "Indexing always",
+        "Encryption"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Normalisation primarily reduces:",
+       "options": [
+        "Speed",
+        "Redundancy and update anomalies",
+        "Rows",
+        "Joins"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U02.Q3",
+       "kind": "mcq",
+       "prompt": "A natural primary key is risky when:",
+       "options": [
+        "It's an integer",
+        "The real-world value can change",
+        "It's short",
+        "It's indexed"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U02.Q4",
+       "kind": "short",
+       "prompt": "When would you deliberately denormalise?",
+       "rubric": [
+        "Read-heavy analytics/reporting",
+        "Avoid expensive joins on hot paths",
+        "Accept update complexity; keep a source of truth"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U03",
+     "title": "SQL 3 — Writing data, views, CTEs, upserts (Lectures 3–4)",
+     "hours": 5,
+     "depth": "core",
+     "week": 21,
+     "prerequisites": [
+      "M04.U02"
+     ],
+     "outcomes": [
+      "You can insert/update/delete safely, use triggers, views and CTEs, and write idempotent upserts."
+     ],
+     "topics": [
+      {
+       "id": "M04.03.14",
+       "title": "views and CTEs"
+      },
+      {
+       "id": "M04.03.15",
+       "title": "upsert / ON CONFLICT"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50sql-l3",
+      "title": "CS50 SQL - Lecture 3 - Writing",
+      "url": "https://www.youtube.com/watch?v=BD08USRd2M8",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 3 'Writing' (whole) then Lecture 4 'Viewing' (jZwGVuA8PMI, whole)"
+     },
+     "covers": [
+      "INSERT (single/multiple rows, from CSV), DELETE, UPDATE, triggers, soft deletions (L3 notes)",
+      "Views for simplifying, aggregating, partitioning, securing; CTEs; soft deletions with views (L4 notes)"
+     ],
+     "gaps": [
+      {
+       "topic": "Lecture 4 'Viewing' video (second half of the learn slice)",
+       "resource": {
+        "resourceId": "cs50sql-l4",
+        "title": "CS50 SQL - Lecture 4 - Viewing",
+        "url": "https://www.youtube.com/watch?v=jZwGVuA8PMI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole lecture"
+       }
+      },
+      {
+       "topic": "ON CONFLICT (not in CS50 SQL)",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/sql-insert.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "INSERT reference §ON CONFLICT Clause"
+       }
+      },
+      {
+       "topic": "extra practice",
+       "resource": {
+        "resourceId": "selectstar",
+        "title": "Select Star SQL",
+        "url": "https://selectstarsql.com/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapters 1–3"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50sql",
+      "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+      "url": "https://cs50.harvard.edu/sql/notes/3/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 3 + 4 notes"
+     },
+     "practice": {
+      "title": "PS3–4 + idempotent loader",
+      "brief": "meteorites (PS3); census, private, bnb (PS4). Then a loader that upserts records on a natural key and can run twice safely.",
+      "done_when": "check50 green for all 4; running the loader twice leaves identical row counts.",
+      "autograder": "check50 cs50/problems/2024/sql/{meteorites,census,private,bnb}"
+     },
+     "quiz": [
+      {
+       "id": "M04.U03.Q1",
+       "kind": "mcq",
+       "prompt": "A CTE (WITH …) is mainly for:",
+       "options": [
+        "Indexing",
+        "Naming a subquery for readability and reuse",
+        "Permissions",
+        "Transactions"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U03.Q2",
+       "kind": "mcq",
+       "prompt": "A (non-materialised) view stores:",
+       "options": [
+        "A copy of the data",
+        "A saved query",
+        "An index",
+        "A trigger"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U03.Q3",
+       "kind": "mcq",
+       "prompt": "An upsert:",
+       "options": [
+        "Deletes then inserts always",
+        "Inserts, or updates on conflict",
+        "Only updates",
+        "Is MySQL-only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U03.Q4",
+       "kind": "short",
+       "prompt": "Why is an idempotent loader important for pipelines that may be retried?",
+       "rubric": [
+        "Retries/duplicates won't double-insert",
+        "Safe re-runs after partial failure",
+        "Deterministic end state"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U04",
+     "title": "SQL 4 — Indexes, transactions and EXPLAIN (Lecture 5)",
+     "hours": 5,
+     "depth": "core",
+     "week": 22,
+     "prerequisites": [
+      "M04.U03"
+     ],
+     "outcomes": [
+      "You can add indexes with their trade-offs, read query plans and use transactions to avoid race conditions."
+     ],
+     "topics": [
+      {
+       "id": "M04.03.07",
+       "title": "transactions"
+      },
+      {
+       "id": "M04.03.08",
+       "title": "indexes"
+      },
+      {
+       "id": "M04.03.09",
+       "title": "EXPLAIN"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs50sql-l5",
+      "title": "CS50 SQL - Lecture 5 - Optimizing",
+      "url": "https://www.youtube.com/watch?v=qa5-mKVSQHQ",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 5 'Optimizing' (whole). Notes §Index … §Concurrency"
+     },
+     "covers": [
+      "CREATE INDEX, covering and multi-table indexes, EXPLAIN QUERY PLAN",
+      "Space and time trade-offs, partial indexes, VACUUM",
+      "Concurrency: transactions, race conditions, locks"
+     ],
+     "gaps": [
+      {
+       "topic": "EXPLAIN in Postgres (CS50 SQL uses SQLite's EXPLAIN QUERY PLAN)",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/using-explain.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "14.1 'Using EXPLAIN'"
+       }
+      },
+      {
+       "topic": "index types",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/indexes.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 11 'Indexes'"
+       }
+      },
+      {
+       "topic": "transactions",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tutorial 3.4 'Transactions'"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50sql",
+      "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+      "url": "https://cs50.harvard.edu/sql/notes/5/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 5 notes"
+     },
+     "practice": {
+      "title": "PS5 + Postgres plans",
+      "brief": "snap (PS5). On a 1M-row Postgres table run EXPLAIN ANALYZE before/after an index; show a lost-update race and fix it with a transaction or SELECT … FOR UPDATE.",
+      "done_when": "check50 green for snap; before/after plans + race demo committed.",
+      "autograder": "check50 cs50/problems/2024/sql/snap"
+     },
+     "quiz": [
+      {
+       "id": "M04.U04.Q1",
+       "kind": "mcq",
+       "prompt": "An index speeds reads but costs:",
+       "options": [
+        "Nothing",
+        "Write speed and storage",
+        "Correctness",
+        "Security"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U04.Q2",
+       "kind": "mcq",
+       "prompt": "ACID 'I' stands for:",
+       "options": [
+        "Indexing",
+        "Isolation",
+        "Integrity",
+        "Idempotency"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U04.Q3",
+       "kind": "mcq",
+       "prompt": "'Seq Scan' in EXPLAIN means:",
+       "options": [
+        "Index used",
+        "Full table scan",
+        "Join",
+        "Cached"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U04.Q4",
+       "kind": "short",
+       "prompt": "Why might Postgres ignore your index?",
+       "rubric": [
+        "Low selectivity — seq scan cheaper",
+        "Stale statistics (ANALYZE)",
+        "Function/cast on the column",
+        "Small table"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U05",
+     "title": "PostgreSQL in practice (windows, JSONB, timestamptz, roles, injection, backups)",
+     "hours": 7,
+     "depth": "core",
+     "week": 23,
+     "prerequisites": [
+      "M04.U04",
+      "M02.U15"
+     ],
+     "outcomes": [
+      "You can run Postgres in Docker, use psql, window functions, JSONB and timestamptz, set up roles, prevent SQL injection and back up/restore."
+     ],
+     "topics": [
+      {
+       "id": "M04.03.10",
+       "title": "window functions"
+      },
+      {
+       "id": "M04.03.13",
+       "title": "SQLite then PostgreSQL"
+      },
+      {
+       "id": "M04.03.16",
+       "title": "JSONB"
+      },
+      {
+       "id": "M04.03.17",
+       "title": "timestamptz"
+      },
+      {
+       "id": "M04.03.18",
+       "title": "roles, access control and SQL injection"
+      },
+      {
+       "id": "M04.03.19",
+       "title": "pg_dump / restore"
+      }
+     ],
+     "learn": {
+      "resourceId": "pg-docs",
+      "title": "PostgreSQL documentation (current)",
+      "url": "https://www.postgresql.org/docs/current/tutorial.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Tutorial Part I (Ch. 1–3) incl. §3.5 'Window Functions'"
+     },
+     "covers": [
+      "Creating a database, psql",
+      "SQL language basics in Postgres",
+      "Advanced features: views, foreign keys, transactions, window functions, inheritance"
+     ],
+     "gaps": [
+      {
+       "topic": "window functions (video)",
+       "resource": {
+        "resourceId": "techtfq-window",
+        "title": "SQL Window Function | How to write SQL Query using RANK, DENSE RANK, LEAD/LAG",
+        "url": "https://www.youtube.com/watch?v=Ww71knvhQ-s",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (RANK, DENSE_RANK, ROW_NUMBER, LEAD/LAG)"
+       }
+      },
+      {
+       "topic": "window functions (docs)",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/tutorial-window.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tutorial §3.5 Window Functions"
+       }
+      },
+      {
+       "topic": "JSON types",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/datatype-json.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "8.14 JSON Types"
+       }
+      },
+      {
+       "topic": "access controls + SQL injection",
+       "resource": {
+        "resourceId": "cs50sql",
+        "title": "CS50's Introduction to Databases with SQL (CS50 SQL)",
+        "url": "https://cs50.harvard.edu/sql/notes/6/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lecture 6 notes §PostgreSQL, §Access Controls, §SQL Injection Attacks"
+       }
+      },
+      {
+       "topic": "Postgres course (video)",
+       "resource": {
+        "resourceId": "fcc-postgres",
+        "title": "Learn PostgreSQL Tutorial - Full Course for Beginners",
+        "url": "https://www.youtube.com/watch?v=qw--VYLpxG4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Setup, psql and data types segments"
+       }
+      },
+      {
+       "topic": "backups",
+       "resource": {
+        "resourceId": "pg-docs",
+        "title": "PostgreSQL documentation (current)",
+        "url": "https://www.postgresql.org/docs/current/backup-dump.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 25 'Backup and Restore' → SQL Dump"
+       }
+      },
+      {
+       "topic": "Postgres in Docker",
+       "resource": {
+        "resourceId": "pg-image",
+        "title": "postgres — Docker Official Image",
+        "url": "https://hub.docker.com/_/postgres",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "How to use this image"
+       }
+      },
+      {
+       "topic": "self-checking practice",
+       "resource": {
+        "resourceId": "pgexercises",
+        "title": "PostgreSQL Exercises",
+        "url": "https://pgexercises.com/",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Sections Basic, Joins and Subqueries, Aggregation"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "cs50sql-l6",
+      "title": "CS50 SQL - Lecture 6 - Scaling",
+      "url": "https://www.youtube.com/watch?v=jXbXGkgT2Xg",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lecture 6 'Scaling' — PostgreSQL, access controls and SQL injection parts"
+     },
+     "practice": {
+      "title": "pgexercises + JSONB",
+      "brief": "Run Postgres in Docker; use psql. Complete pgexercises 'Basic', 'Joins and Subqueries', 'Aggregation' (incl. window-function exercises). Write a running total and rank-per-group. Store raw API payloads as JSONB and index one key. pg_dump and restore into a fresh container.",
+      "done_when": "pgexercises sections complete (self-checked); queries + restore log committed.",
+      "autograder": "pgexercises.com built-in answer check"
+     },
+     "quiz": [
+      {
+       "id": "M04.U05.Q1",
+       "kind": "mcq",
+       "prompt": "A window function differs from GROUP BY in that it:",
+       "options": [
+        "Reduces rows",
+        "Computes over related rows while keeping every row",
+        "Is always faster",
+        "Needs joins"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Store event times as:",
+       "options": [
+        "timestamp without time zone",
+        "timestamptz",
+        "text",
+        "int seconds always"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U05.Q3",
+       "kind": "mcq",
+       "prompt": "JSONB vs JSON:",
+       "options": [
+        "Same",
+        "JSONB stores parsed binary that can be indexed",
+        "JSON is faster to query",
+        "JSONB keeps whitespace"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U05.Q4",
+       "kind": "short",
+       "prompt": "When is JSONB the wrong choice vs proper columns?",
+       "rubric": [
+        "Fields queried/joined/constrained often",
+        "Need types/foreign keys",
+        "Schema is stable",
+        "Analytics performance"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U06",
+     "title": "SQL from Python: parameters, SQLAlchemy, Alembic, pooling",
+     "hours": 6,
+     "depth": "core",
+     "week": 25,
+     "prerequisites": [
+      "M04.U05"
+     ],
+     "outcomes": [
+      "You can query safely from Python with psycopg and SQLAlchemy (Core + ORM), and evolve schemas with Alembic migrations."
+     ],
+     "topics": [
+      {
+       "id": "M04.03.11",
+       "title": "migrations"
+      },
+      {
+       "id": "M04.03.12",
+       "title": "parameterized queries"
+      },
+      {
+       "id": "M04.03.20",
+       "title": "SQLAlchemy Core/ORM basics"
+      },
+      {
+       "id": "M04.03.21",
+       "title": "connection pooling awareness"
+      }
+     ],
+     "learn": {
+      "resourceId": "psycopg",
+      "title": "psycopg 3 documentation",
+      "url": "https://www.psycopg.org/psycopg3/docs/basic/params.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'Passing parameters to SQL queries' (whole page)"
+     },
+     "covers": [
+      "%s and named placeholders",
+      "Why never to use f-strings/concatenation",
+      "Binding types",
+      "Literal % handling"
+     ],
+     "gaps": [
+      {
+       "topic": "sqlite3 placeholders",
+       "resource": {
+        "resourceId": "py-sqlite3",
+        "title": "sqlite3 — DB-API 2.0 interface for SQLite (placeholders)",
+        "url": "https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "§How to use placeholders to bind values"
+       }
+      },
+      {
+       "topic": "SQLAlchemy Core + ORM",
+       "resource": {
+        "resourceId": "sqlalchemy",
+        "title": "SQLAlchemy 2.0 Unified Tutorial",
+        "url": "https://docs.sqlalchemy.org/en/20/tutorial/dbapi_transactions.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Working with Transactions and the DBAPI' onward"
+       }
+      },
+      {
+       "topic": "Alembic",
+       "resource": {
+        "resourceId": "alembic",
+        "title": "Alembic tutorial",
+        "url": "https://alembic.sqlalchemy.org/en/latest/tutorial.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole tutorial"
+       }
+      },
+      {
+       "topic": "psycopg basics",
+       "resource": {
+        "resourceId": "psycopg",
+        "title": "psycopg 3 documentation",
+        "url": "https://www.psycopg.org/psycopg3/docs/basic/usage.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Basic module usage'"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Same query three ways",
+      "brief": "Build a 'top courses' query with raw psycopg, SQLAlchemy Core and ORM. Write 3 Alembic migrations (create, add column, backfill). Demonstrate an injection attack on an f-string query and fix it.",
+      "done_when": "Three implementations return identical results (test); `alembic upgrade head` and `downgrade -1` both work; injection demo committed."
+     },
+     "quiz": [
+      {
+       "id": "M04.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Safe query:",
+       "options": [
+        "f\"... WHERE id = {uid}\"",
+        "cur.execute(\"... WHERE id = %s\", (uid,))",
+        ".format()",
+        "String concatenation"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U06.Q2",
+       "kind": "mcq",
+       "prompt": "A migration tool tracks:",
+       "options": [
+        "Data rows",
+        "The ordered schema changes applied to each DB",
+        "Git branches",
+        "Backups"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U06.Q3",
+       "kind": "mcq",
+       "prompt": "A connection pool avoids:",
+       "options": [
+        "SQL errors",
+        "The cost of opening a new connection per request",
+        "Transactions",
+        "Indexes"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U06.Q4",
+       "kind": "short",
+       "prompt": "Why must schema changes be migrations rather than manual ALTERs on prod?",
+       "rubric": [
+        "Reproducible across envs",
+        "Versioned/reviewed in Git",
+        "Ordered and reversible",
+        "CI can test them"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M04.S2",
+   "title": "Array computing",
+   "units": [
+    {
+     "id": "M04.U07",
+     "title": "NumPy arrays",
+     "hours": 7,
+     "depth": "core",
+     "week": 27,
+     "prerequisites": [
+      "M01.U11"
+     ],
+     "outcomes": [
+      "You can reason about shape/dtype, index, broadcast, vectorise, reduce, seed RNGs and tell views from copies."
+     ],
+     "topics": [
+      {
+       "id": "M04.01.01",
+       "title": "NumPy shape/dtype"
+      },
+      {
+       "id": "M04.01.02",
+       "title": "indexing"
+      },
+      {
+       "id": "M04.01.03",
+       "title": "broadcasting"
+      },
+      {
+       "id": "M04.01.04",
+       "title": "vectorization"
+      },
+      {
+       "id": "M04.01.05",
+       "title": "reductions"
+      },
+      {
+       "id": "M04.01.06",
+       "title": "random seeds"
+      },
+      {
+       "id": "M04.01.07",
+       "title": "numerical precision"
+      },
+      {
+       "id": "M04.01.08",
+       "title": "copy/view"
+      }
+     ],
+     "learn": {
+      "resourceId": "numpy-docs",
+      "title": "NumPy user guide",
+      "url": "https://numpy.org/doc/stable/user/absolute_beginners.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'NumPy: the absolute basics for beginners' (whole)"
+     },
+     "covers": [
+      "ndarray, shape, dtype, creating arrays",
+      "Indexing and slicing",
+      "Reshaping, axes",
+      "Basic operations and aggregations",
+      "Broadcasting intro",
+      "Random number generation"
+     ],
+     "gaps": [
+      {
+       "topic": "broadcasting",
+       "resource": {
+        "resourceId": "numpy-docs",
+        "title": "NumPy user guide",
+        "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Broadcasting'"
+       }
+      },
+      {
+       "topic": "copies and views",
+       "resource": {
+        "resourceId": "numpy-docs",
+        "title": "NumPy user guide",
+        "url": "https://numpy.org/doc/stable/user/basics.copies.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Copies and views'"
+       }
+      },
+      {
+       "topic": "NumPy chapter",
+       "resource": {
+        "resourceId": "pda3",
+        "title": "Python for Data Analysis, 3rd edition",
+        "url": "https://wesmckinney.com/book/numpy-basics.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 4 'NumPy Basics'"
+       }
+      },
+      {
+       "topic": "NumPy in video",
+       "resource": {
+        "resourceId": "fcc-numpy",
+        "title": "Python NumPy Tutorial for Beginners",
+        "url": "https://www.youtube.com/watch?v=QUT1VHiLmmI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (~1 h)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-p0",
+      "title": "rohitg00 Phase 0 · 13 Python for AI Engineering",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/13-python-for-ai-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lesson 13 'Use It' — compiled arrays, broadcasting, why loops are slow"
+     },
+     "practice": {
+      "title": "Vectorised similarity",
+      "brief": "Vectorise a Python-loop cosine similarity over 10k × 384 embeddings and report the speed-up; trigger and explain a broadcasting error; seed with np.random.default_rng(42).",
+      "done_when": "Speed-up table; results match the loop version within 1e-6; broadcasting error explained."
+     },
+     "quiz": [
+      {
+       "id": "M04.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Shape (3,1) + shape (4,) broadcasts to:",
+       "options": [
+        "Error",
+        "(3,4)",
+        "(4,3)",
+        "(3,)"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Basic slicing `a[1:3]` returns:",
+       "options": [
+        "A copy",
+        "A view",
+        "A list",
+        "A scalar"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U07.Q3",
+       "kind": "mcq",
+       "prompt": "`a.sum(axis=0)` on shape (5,3) gives shape:",
+       "options": [
+        "(5,)",
+        "(3,)",
+        "()",
+        "(5,3)"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U07.Q4",
+       "kind": "short",
+       "prompt": "Why is float32 vs float64 a real decision for embeddings?",
+       "rubric": [
+        "Half the memory/bandwidth",
+        "GPU throughput",
+        "Precision rarely matters for similarity",
+        "Accumulation error caveats"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M04.S3",
+   "title": "Tabular data",
+   "units": [
+    {
+     "id": "M04.U08",
+     "title": "Jupyter + pandas basics",
+     "hours": 6,
+     "depth": "core",
+     "week": 28,
+     "prerequisites": [
+      "M04.U07"
+     ],
+     "outcomes": [
+      "You can create/select from DataFrames and Series with loc/iloc in a notebook that survives restart-and-run-all."
+     ],
+     "topics": [
+      {
+       "id": "M04.02.01",
+       "title": "pandas DataFrame/Series"
+      },
+      {
+       "id": "M04.02.02",
+       "title": "selection"
+      },
+      {
+       "id": "M04.02.13",
+       "title": "notebook hygiene"
+      }
+     ],
+     "learn": {
+      "resourceId": "pandas-docs",
+      "title": "pandas user guide",
+      "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "'10 minutes to pandas' (whole)"
+     },
+     "covers": [
+      "Object creation",
+      "Viewing data",
+      "Selection (loc, iloc, boolean)",
+      "Missing data",
+      "Operations, merge, grouping, reshaping, time series, categoricals, plotting, I/O (overview)"
+     ],
+     "gaps": [
+      {
+       "topic": "Jupyter",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 05 Jupyter Notebooks",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/05-jupyter-notebooks",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 05 'Jupyter Notebooks'"
+       }
+      },
+      {
+       "topic": "pandas chapter",
+       "resource": {
+        "resourceId": "pda3",
+        "title": "Python for Data Analysis, 3rd edition",
+        "url": "https://wesmckinney.com/book/pandas-basics.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 5 'Getting Started with pandas'"
+       }
+      },
+      {
+       "topic": "pandas in video",
+       "resource": {
+        "resourceId": "cy-pandas1",
+        "title": "Python Pandas Tutorial (Part 1): Getting Started with Data Analysis - Installation and Loading Data",
+        "url": "https://www.youtube.com/watch?v=ZyhVh-qRZPA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole video (then continue the series as needed)"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "kaggle-pandas",
+      "title": "Kaggle Learn: Pandas",
+      "url": "https://www.kaggle.com/learn/pandas",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "All 6 lessons + exercises"
+     },
+     "backup": {
+      "resourceId": "galli-pandas",
+      "title": "Complete Python Pandas Data Science Tutorial! (2025 Updated Edition)",
+      "url": "https://www.youtube.com/watch?v=2uvysYbKdjM",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "First hour"
+     },
+     "practice": {
+      "title": "Kaggle Pandas",
+      "brief": "Complete Kaggle Learn 'Pandas' exercises. Restart-and-run-all must pass before every notebook commit.",
+      "done_when": "Kaggle course completion certificate; notebooks in repo run top-to-bottom.",
+      "autograder": "Kaggle Learn exercise checker"
+     },
+     "quiz": [
+      {
+       "id": "M04.U08.Q1",
+       "kind": "mcq",
+       "prompt": "df.loc vs df.iloc:",
+       "options": [
+        "Same",
+        "Label-based vs position-based",
+        "Reversed",
+        "loc is for columns only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U08.Q2",
+       "kind": "mcq",
+       "prompt": "'Restart & run all' catches:",
+       "options": [
+        "Typos only",
+        "Hidden state from out-of-order execution",
+        "Slow cells",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U08.Q3",
+       "kind": "mcq",
+       "prompt": "A Series is:",
+       "options": [
+        "A 2-D table",
+        "A 1-D labelled array",
+        "A list of dicts",
+        "A CSV"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U08.Q4",
+       "kind": "short",
+       "prompt": "When does analysis belong in a notebook vs a .py module?",
+       "rubric": [
+        "Notebook: exploration/narrative",
+        "Module: reusable/tested logic",
+        "Import module code into notebooks"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U09",
+     "title": "Loading and cleaning messy data (pandas 3 aware)",
+     "hours": 7,
+     "depth": "core",
+     "week": 30,
+     "prerequisites": [
+      "M04.U08"
+     ],
+     "outcomes": [
+      "You can load CSV/JSON/JSONL/Parquet, handle missing values, duplicates and categoricals, and avoid chained-assignment bugs under copy-on-write."
+     ],
+     "topics": [
+      {
+       "id": "M04.02.04",
+       "title": "missing values"
+      },
+      {
+       "id": "M04.02.05",
+       "title": "duplicates"
+      },
+      {
+       "id": "M04.02.06",
+       "title": "categorical values"
+      },
+      {
+       "id": "M04.02.08",
+       "title": "CSV/JSON/Parquet"
+      },
+      {
+       "id": "M04.02.14",
+       "title": "JSONL and Parquet"
+      },
+      {
+       "id": "M04.02.15",
+       "title": "pandas 3 copy-on-write"
+      }
+     ],
+     "learn": {
+      "resourceId": "pda3",
+      "title": "Python for Data Analysis, 3rd edition",
+      "url": "https://wesmckinney.com/book/accessing-data.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 6 'Data Loading, Storage, and File Formats' and Chapter 7 'Data Cleaning and Preparation' (written for pandas 2.0 — see CoW gap)"
+     },
+     "covers": [
+      "read_csv options, JSON, binary formats (Parquet), web APIs",
+      "Handling missing data (isna, dropna, fillna)",
+      "Duplicates, mapping, replace, discretisation, outliers",
+      "Extension types, string manipulation, categoricals"
+     ],
+     "gaps": [
+      {
+       "topic": "copy-on-write",
+       "resource": {
+        "resourceId": "pandas-docs",
+        "title": "pandas user guide",
+        "url": "https://pandas.pydata.org/docs/user_guide/copy_on_write.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Copy-on-Write (CoW)'"
+       }
+      },
+      {
+       "topic": "missing data",
+       "resource": {
+        "resourceId": "pandas-docs",
+        "title": "pandas user guide",
+        "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Working with missing data'"
+       }
+      },
+      {
+       "topic": "data cleaning exercises",
+       "resource": {
+        "resourceId": "kaggle-cleaning",
+        "title": "Kaggle Learn: Data Cleaning",
+        "url": "https://www.kaggle.com/learn/data-cleaning",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "All lessons"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Clean a messy CSV",
+      "brief": "Clean a messy public CSV: mixed date formats, duplicates, category typos, sentinel −999. Write a cleaning log, save as Parquet. Show that a chained assignment no longer modifies the frame under pandas 3.",
+      "done_when": "Parquet file + cleaning log; a test asserts dtype/nulls after cleaning; CoW demo committed."
+     },
+     "quiz": [
+      {
+       "id": "M04.U09.Q1",
+       "kind": "mcq",
+       "prompt": "`df.dropna()` by default drops:",
+       "options": [
+        "Columns",
+        "Rows with any NaN",
+        "Nothing",
+        "Duplicates"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Parquet vs CSV:",
+       "options": [
+        "Parquet is text",
+        "Parquet is columnar, typed and compressed",
+        "CSV keeps dtypes",
+        "Same"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Under copy-on-write, `df[df.a > 0][\"b\"] = 1`:",
+       "options": [
+        "Updates df",
+        "Does not update df",
+        "Always raises",
+        "Deletes column b"
+       ],
+       "answer": 1,
+       "explain": "Use df.loc[df.a > 0, 'b'] = 1."
+      },
+      {
+       "id": "M04.U09.Q4",
+       "kind": "short",
+       "prompt": "Impute or drop? Give one case for each.",
+       "rubric": [
+        "Drop: few rows, missing at random",
+        "Impute: many rows, simple/robust value or model",
+        "Note bias risk / flag column"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U10",
+     "title": "Joining, grouping and time series",
+     "hours": 6,
+     "depth": "core",
+     "week": 32,
+     "prerequisites": [
+      "M04.U09",
+      "M04.U01"
+     ],
+     "outcomes": [
+      "You can merge, group/aggregate and resample time series, and mirror each operation in SQL."
+     ],
+     "topics": [
+      {
+       "id": "M04.02.03",
+       "title": "joins/groupby"
+      },
+      {
+       "id": "M04.02.07",
+       "title": "time zones"
+      }
+     ],
+     "learn": {
+      "resourceId": "pda3",
+      "title": "Python for Data Analysis, 3rd edition",
+      "url": "https://wesmckinney.com/book/data-wrangling.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 8 'Data Wrangling: Join, Combine, and Reshape', Chapter 10 'Data Aggregation and Group Operations', Chapter 11 'Time Series'"
+     },
+     "covers": [
+      "Hierarchical indexing, merge/join, concat, reshape/pivot",
+      "GroupBy mechanics, agg, apply, pivot tables",
+      "Date/time types, ranges, time-zone handling, resampling"
+     ],
+     "gaps": [
+      {
+       "topic": "aggregation chapter",
+       "resource": {
+        "resourceId": "pda3",
+        "title": "Python for Data Analysis, 3rd edition",
+        "url": "https://wesmckinney.com/book/data-aggregation.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 10"
+       }
+      },
+      {
+       "topic": "time series chapter",
+       "resource": {
+        "resourceId": "pda3",
+        "title": "Python for Data Analysis, 3rd edition",
+        "url": "https://wesmckinney.com/book/time-series.html",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Chapter 11"
+       }
+      },
+      {
+       "topic": "merge reference",
+       "resource": {
+        "resourceId": "pandas-docs",
+        "title": "pandas user guide",
+        "url": "https://pandas.pydata.org/docs/user_guide/merging.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Merge, join, concatenate and compare'"
+       }
+      },
+      {
+       "topic": "group by reference",
+       "resource": {
+        "resourceId": "pandas-docs",
+        "title": "pandas user guide",
+        "url": "https://pandas.pydata.org/docs/user_guide/groupby.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "'Group by: split-apply-combine'"
+       }
+      },
+      {
+       "topic": "SQL mirror practice",
+       "resource": {
+        "resourceId": "kaggle-advsql",
+        "title": "Kaggle Learn: Advanced SQL",
+        "url": "https://www.kaggle.com/learn/advanced-sql",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lessons on JOINs and analytic functions"
+       }
+      }
+     ],
+     "practice": {
+      "title": "SQL ↔ pandas mirror",
+      "brief": "Answer 5 analytic questions twice — SQL and pandas — and assert equal results. Convert UTC timestamps to Asia/Karachi and resample daily.",
+      "done_when": "pytest asserts equality for all 5; timezone conversion verified on a known timestamp."
+     },
+     "quiz": [
+      {
+       "id": "M04.U10.Q1",
+       "kind": "mcq",
+       "prompt": "`pd.merge(how=\"left\")` is like SQL:",
+       "options": [
+        "INNER JOIN",
+        "LEFT JOIN",
+        "UNION",
+        "CROSS JOIN"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U10.Q2",
+       "kind": "mcq",
+       "prompt": "`groupby().agg()` corresponds to:",
+       "options": [
+        "WHERE",
+        "GROUP BY with aggregates",
+        "ORDER BY",
+        "JOIN"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A naive datetime has:",
+       "options": [
+        "UTC",
+        "No timezone attached",
+        "Local zone",
+        "Offset +00"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U10.Q4",
+       "kind": "short",
+       "prompt": "Why do many-to-many joins silently inflate totals, and how do you detect it?",
+       "rubric": [
+        "Rows duplicate per match",
+        "Check row counts before/after",
+        "validate='one_to_many' in merge",
+        "Aggregate before joining"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U11",
+     "title": "Visualisation and EDA",
+     "hours": 5,
+     "depth": "core",
+     "week": 33,
+     "prerequisites": [
+      "M04.U10"
+     ],
+     "outcomes": [
+      "You can produce honest exploratory analyses: distributions, outliers, correlations, each chart with a takeaway."
+     ],
+     "topics": [
+      {
+       "id": "M04.02.09",
+       "title": "plotting"
+      },
+      {
+       "id": "M04.02.10",
+       "title": "outliers"
+      },
+      {
+       "id": "M04.02.11",
+       "title": "EDA"
+      }
+     ],
+     "learn": {
+      "resourceId": "pda3",
+      "title": "Python for Data Analysis, 3rd edition",
+      "url": "https://wesmckinney.com/book/plotting-and-visualization.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapter 9 'Plotting and Visualization' (matplotlib primer, pandas/seaborn plotting)"
+     },
+     "covers": [
+      "Figures, subplots, styling, saving",
+      "Line/bar/histogram/density/scatter plots with pandas and seaborn",
+      "Facet grids and categorical data"
+     ],
+     "gaps": [
+      {
+       "topic": "matplotlib quick start",
+       "resource": {
+        "resourceId": "matplotlib",
+        "title": "Matplotlib — Quick start guide",
+        "url": "https://matplotlib.org/stable/users/explain/quick_start.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Whole page"
+       }
+      },
+      {
+       "topic": "viz exercises",
+       "resource": {
+        "resourceId": "kaggle-viz",
+        "title": "Kaggle Learn: Data Visualization",
+        "url": "https://www.kaggle.com/learn/data-visualization",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "All lessons"
+       }
+      }
+     ],
+     "practice": {
+      "title": "EDA notebook",
+      "brief": "Distributions, IQR outliers, correlations, 5 charts each with a one-sentence takeaway, and a 'what I couldn't conclude' section.",
+      "done_when": "Notebook restart-and-run-all clean; every chart has a takeaway; limitations section present."
+     },
+     "quiz": [
+      {
+       "id": "M04.U11.Q1",
+       "kind": "mcq",
+       "prompt": "To compare distributions across groups, prefer:",
+       "options": [
+        "A pie chart",
+        "Box/violin plots or histograms",
+        "3-D bars",
+        "A table only"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Correlation is not:",
+       "options": [
+        "Association",
+        "Causation",
+        "Covariance-based",
+        "A number"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U11.Q3",
+       "kind": "mcq",
+       "prompt": "The IQR outlier rule flags points beyond:",
+       "options": [
+        "mean ± 1σ",
+        "Q1 − 1.5·IQR or Q3 + 1.5·IQR",
+        "The max",
+        "The median"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U11.Q4",
+       "kind": "short",
+       "prompt": "One chart from your EDA is misleading. Explain why and fix it.",
+       "rubric": [
+        "Names the distortion (axis truncation, binning, overplotting)",
+        "Shows corrected chart/approach"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M04.U12",
+     "title": "DuckDB and Polars awareness",
+     "hours": 3,
+     "depth": "core",
+     "week": 34,
+     "prerequisites": [
+      "M04.U10"
+     ],
+     "outcomes": [
+      "You can query Parquet with DuckDB SQL and port a pandas pipeline to Polars' lazy API."
+     ],
+     "topics": [
+      {
+       "id": "M04.02.12",
+       "title": "Polars/DuckDB awareness"
+      }
+     ],
+     "learn": {
+      "resourceId": "duckdb",
+      "title": "DuckDB Python API overview",
+      "url": "https://duckdb.org/docs/stable/clients/python/overview.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Python API overview (connect, sql(), querying Parquet/pandas DataFrames)"
+     },
+     "covers": [
+      "In-process DuckDB",
+      "Querying DataFrames and files directly",
+      "Result conversion to pandas/Arrow"
+     ],
+     "gaps": [
+      {
+       "topic": "Polars",
+       "resource": {
+        "resourceId": "polars",
+        "title": "Polars user guide — Getting started",
+        "url": "https://docs.pola.rs/user-guide/getting-started/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Getting started (whole)"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dez",
+      "title": "Data Engineering Zoomcamp",
+      "url": "https://github.com/DataTalksClub/data-engineering-zoomcamp",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Later depth for data engineering"
+     },
+     "practice": {
+      "title": "Three engines",
+      "brief": "Query your Parquet with DuckDB SQL, redo one pandas pipeline in Polars (lazy), and time all three.",
+      "done_when": "Timing table; identical results asserted."
+     },
+     "quiz": [
+      {
+       "id": "M04.U12.Q1",
+       "kind": "mcq",
+       "prompt": "DuckDB is:",
+       "options": [
+        "A server DB",
+        "An in-process analytical (OLAP) database",
+        "A NoSQL store",
+        "A cache"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Polars' lazy API:",
+       "options": [
+        "Runs instantly",
+        "Builds a query plan optimised on .collect()",
+        "Is slower",
+        "Needs GPUs"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U12.Q3",
+       "kind": "mcq",
+       "prompt": "OLTP vs OLAP: Postgres is primarily:",
+       "options": [
+        "OLAP",
+        "OLTP",
+        "Neither",
+        "A file"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U12.Q4",
+       "kind": "short",
+       "prompt": "When would you pick DuckDB over Postgres for an analysis?",
+       "rubric": [
+        "Local/ad-hoc analytics on files",
+        "No server to run",
+        "Columnar speed on scans/aggregations",
+        "Not for concurrent transactional writes"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M04.S4",
+   "title": "Data integrity",
+   "units": [
+    {
+     "id": "M04.U13",
+     "title": "Data integrity: contracts, provenance, licensing, snapshots",
+     "hours": 4,
+     "depth": "core",
+     "week": 34,
+     "prerequisites": [
+      "M04.U09"
+     ],
+     "outcomes": [
+      "You can enforce data contracts in CI and document provenance, licence and snapshot hashes in a data card.",
+      "You can name the evaluation risks (splits, leakage, labels, sampling bias) that M07 covers in depth."
+     ],
+     "topics": [
+      {
+       "id": "M04.04.01",
+       "title": "schema contracts"
+      },
+      {
+       "id": "M04.04.02",
+       "title": "provenance"
+      },
+      {
+       "id": "M04.04.03",
+       "title": "licensing/consent"
+      },
+      {
+       "id": "M04.04.06",
+       "title": "reproducible snapshots"
+      },
+      {
+       "id": "M04.04.04",
+       "title": "splits by person/time (preview; depth in M07)"
+      },
+      {
+       "id": "M04.04.05",
+       "title": "leakage (preview; depth in M07)"
+      },
+      {
+       "id": "M04.04.07",
+       "title": "labels (preview; depth in M07)"
+      },
+      {
+       "id": "M04.04.08",
+       "title": "sampling bias (preview; depth in M07)"
+      }
+     ],
+     "learn": {
+      "resourceId": "pandera",
+      "title": "pandera documentation",
+      "url": "https://pandera.readthedocs.io/en/stable/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Docs home → 'Quick start' and 'DataFrame Models'"
+     },
+     "covers": [
+      "DataFrameSchema / DataFrameModel",
+      "Column checks (types, ranges, nullability)",
+      "Lazy validation and error reports"
+     ],
+     "gaps": [
+      {
+       "topic": "data management for AI (formats, splits, storage)",
+       "resource": {
+        "resourceId": "rohitg00-p0",
+        "title": "rohitg00 Phase 0 · 09 Data Management",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/09-data-management",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Lesson 09 'Data Management'"
+       }
+      },
+      {
+       "topic": "pydantic models refresher",
+       "resource": {
+        "resourceId": "pydantic",
+        "title": "Pydantic documentation",
+        "url": "https://docs.pydantic.dev/latest/concepts/models/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Concepts → Models"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Contract + data card",
+      "brief": "A pandera schema that fails CI on bad data, plus DATA_CARD.md: source, licence, collection date, snapshot hash, known issues, and a paragraph on split/leakage risks for this data.",
+      "done_when": "CI fails on a deliberately corrupted row; DATA_CARD.md complete with SHA-256 of the snapshot."
+     },
+     "quiz": [
+      {
+       "id": "M04.U13.Q1",
+       "kind": "mcq",
+       "prompt": "A schema contract catches:",
+       "options": [
+        "Model bugs",
+        "Unexpected types, ranges and nulls before they reach consumers",
+        "Slow queries",
+        "Git conflicts"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U13.Q2",
+       "kind": "mcq",
+       "prompt": "Provenance records:",
+       "options": [
+        "Speed",
+        "Where data came from and how it changed",
+        "The model",
+        "Cost"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U13.Q3",
+       "kind": "mcq",
+       "prompt": "'Publicly downloadable' means the data is:",
+       "options": [
+        "Free to use for anything",
+        "Not necessarily licensed for your use",
+        "Public domain",
+        "GDPR-exempt"
+       ],
+       "answer": 1,
+       "explain": ""
+      },
+      {
+       "id": "M04.U13.Q4",
+       "kind": "short",
+       "prompt": "What would you put in a data card for a scraped dataset?",
+       "rubric": [
+        "Source + scrape date/method",
+        "Licence/ToS and consent status",
+        "Known biases/gaps",
+        "Snapshot hash and version",
+        "PII handling"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Messy data to trustworthy answers",
+  "brief": "(12h) Take a messy public dataset (two related files, one with timestamps): Postgres schema via Alembic; idempotent Python loader with parameterised queries + upserts; 10 analytic SQL queries (≥3 with window functions or CTEs, EXPLAIN on one slow query + index); the same 3 answers in pandas or DuckDB with an equality test; EDA notebook (restart-and-run-all clean); pandera contract in CI; DATA_CARD.md + 1-page data-quality report. Pass ≥8/10.",
+  "rubric": [
+   {
+    "criterion": "Schema & integrity (normalised, constraints, migrations)",
+    "levels": [
+     "0 – none",
+     "1 – partial",
+     "2 – sound and justified"
+    ]
+   },
+   {
+    "criterion": "Loader (idempotent, parameterised, handles bad rows)",
+    "levels": [
+     "0 – unsafe",
+     "1 – works once",
+     "2 – rerunnable and logged"
+    ]
+   },
+   {
+    "criterion": "SQL depth (joins, CTEs, windows, EXPLAIN + index)",
+    "levels": [
+     "0 – basic",
+     "1 – some",
+     "2 – all, with an index improvement shown"
+    ]
+   },
+   {
+    "criterion": "Analysis honesty (cleaning log, missing-data decisions, limits)",
+    "levels": [
+     "0 – none",
+     "1 – thin",
+     "2 – explicit and reproducible"
+    ]
+   },
+   {
+    "criterion": "Reproducibility (compose up → load → notebook reproduces)",
+    "levels": [
+     "0 – fails",
+     "1 – manual steps",
+     "2 – one command"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}
