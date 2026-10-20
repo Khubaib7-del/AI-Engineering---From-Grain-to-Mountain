@@ -67,7 +67,9 @@ export function MoteHost() {
   const steps = useNextSteps();
   const chat = useChatUi();
   const [dismissed, setDismissed] = useState<string>();
-  const [collapsed, setCollapsed] = useState(false);
+  // Tips are folded for one specific step+page key; a new step or page shows them again.
+  const [foldedFor, setFoldedFor] = useState<string | null>(null);
+  const [unfoldFor, setUnfoldFor] = useState<string | null>(null);
   const [look, setLook] = useState({ x: 0 as -1 | 0 | 1, y: 0 as -1 | 0 | 1 });
   const [mood, setMood] = useState<MoteMood>('idle');
   const lastActive = useRef(0);
@@ -82,7 +84,7 @@ export function MoteHost() {
     if (prevPassed.current !== null && passedCount > prevPassed.current) {
       celebrateUntil.current = Date.now() + 2600;
       setMood('celebrate');
-      setCollapsed(false);
+      setFoldedFor(null);
       const t = setTimeout(() => setMood('idle'), 2700);
       prevPassed.current = passedCount;
       return () => clearTimeout(t);
@@ -94,10 +96,16 @@ export function MoteHost() {
   const onboarded = !!state.profile?.onboarded;
   const stepKey = onboarded ? steps.now.id : 'setup';
   useEffect(() => {
-    setCollapsed(false);
-    const t = setTimeout(() => setCollapsed(true), 20_000);
+    const key = `${stepKey}|${pathname}`;
+    const t = setTimeout(() => setFoldedFor(f => (f === key ? f : key)), 20_000);
     return () => clearTimeout(t);
   }, [stepKey, pathname]);
+  const viewKey = `${stepKey}|${pathname}`;
+  const collapsed = foldedFor === viewKey && unfoldFor !== viewKey;
+  const setCollapsed = (v: boolean) => {
+    setFoldedFor(v ? viewKey : null);
+    setUnfoldFor(v ? null : viewKey);
+  };
 
   const onTabs = TAB_ROUTES.some(r => pathname.startsWith(r));
   const bottom = insets.bottom + (!wide && onTabs ? 84 : 20);
