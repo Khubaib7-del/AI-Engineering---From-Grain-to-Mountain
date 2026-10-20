@@ -1,3 +1,17 @@
+# Rebuild validation · 2026-10-20 (branch rebuild/app)
+
+Checked in a Linux sandbox (Debian chromium, headless, isolated profiles; no personal progress).
+
+- `npm run typecheck` and `npm run lint` (Expo ESLint incl. React Compiler rules): clean.
+- `npm test`: 33 tests pass — quiz grading (80% pass mark, rubric 2-of-3), unit status, placement, legacy-ID migration via `legacy-map.json` (rename / archive / idempotent / old-backup import), activity log cap, 52-week heatmap, streaks, backfill, guest→account union merge, v2 content contract, Books normalisation, path planner, plus the earlier planner/sync/secure-session tests.
+- `npx expo export --platform web`: succeeds.
+- `node scripts/flow-check.mjs` against the served export: landing → onboarding (role/level/hours) → Today shows the profile; unit M00.U01 passes only after evidence + 3/3 quiz + rubric self-check, with activity events logged; Map/Progress reflect it; Books tab lists 12+ books.
+- `node scripts/capture-rebuild.mjs`: 10 screens at 1440 and 390 px in `design/shots/rebuild/`, no runtime errors, no horizontal overflow.
+
+Not verified here: real Supabase sign-up/confirm/merge round trip (no keys in the sandbox; the Check-your-inbox and You're-confirmed screens were not captured), Android device rendering of the SVG map and PanResponder pinch, `/welcome` being on the Supabase redirect allow-list (a fallback redirects confirmation links that land on `/` to `/welcome`).
+
+Known compatibility note: the cloud payload keeps `version: 1` and adds `profile`, `units`, `capstones`, `activity`, `archivedTopics`, `idVersion` as extra keys, which the existing table check allows (no migration). The published Android 1.2 build ignores those keys; if it pushes after a newer client, the newer keys can be dropped from the cloud copy. Ship the next APK before relying on cross-device unit progress.
+
 # Prototype validation · 2026-10-07
 
 This is a working local prototype, not a signed or store-distributed release.
