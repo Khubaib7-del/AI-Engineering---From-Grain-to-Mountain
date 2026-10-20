@@ -1,0 +1,2285 @@
+{
+ "id": "M08",
+ "phase": "P2 Math and models",
+ "title": "Deep learning and PyTorch",
+ "summary": "Neural networks from the inside (Karpathy Zero to Hero #1–#4: micrograd, makemore bigram/MLP, BatchNorm) and PyTorch engineering from the official tutorials: training loops, checkpoints and reproducibility, CNN transfer learning on your own data, debugging (Karpathy's Recipe, Google Tuning Playbook), AMP, profiling, torch.compile and ONNX export on free Kaggle/Colab GPUs. fast.ai Part 1 becomes a backup (L1/L8 here, L6 in M07). Deep track: Backprop Ninja/WaveNet, Understanding Deep Learning, fast.ai Part 2, mini-framework + JAX.",
+ "hours": 64,
+ "deepHours": 150,
+ "prerequisites": [
+  "M05",
+  "M06"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M08.S1",
+   "title": "Neural networks from the inside",
+   "units": [
+    {
+     "id": "M08.U01",
+     "title": "Neurons, MLPs, activations and the classification head",
+     "hours": 5,
+     "depth": "core",
+     "week": 63,
+     "prerequisites": [
+      "M05.U06",
+      "M06.U04"
+     ],
+     "outcomes": [
+      "You can explain a neuron, a layer and an MLP forward pass with shapes.",
+      "You can explain why nonlinear activations are needed (XOR) and compare ReLU, tanh, sigmoid, GELU.",
+      "You can implement softmax + cross-entropy on logits and match F.cross_entropy."
+     ],
+     "topics": [
+      {
+       "id": "M08.01.01",
+       "title": "perceptron/MLP"
+      },
+      {
+       "id": "M08.01.02",
+       "title": "activations"
+      },
+      {
+       "id": "M08.04.01",
+       "title": "softmax + cross-entropy classification head (logits vs probabilities)"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-neural-networks",
+      "title": "3Blue1Brown Deep Learning ch.1 · But what is a neural network?",
+      "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+      "slice": "Full video (~18 min)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Neurons as numbers ('activations'); layers for MNIST digit recognition",
+      "Weights, biases, weighted sums and the sigmoid squashing function",
+      "The layer as a matrix–vector product plus bias; why layered structure might detect edges → patterns",
+      "Brief note that ReLU replaced sigmoid in modern nets"
+     ],
+     "gaps": [
+      {
+       "topic": "Softmax regression, logits and cross-entropy",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §4.1 Softmax Regression",
+        "url": "https://d2l.ai/chapter_linear-classification/softmax-regression.html",
+        "slice": "§4.1 Softmax Regression",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Softmax vs argmax",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Neural Networks Part 5: ArgMax and SoftMax",
+        "url": "https://www.youtube.com/watch?v=KpKog-L9veg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Hidden layers, activation functions (ReLU, sigmoid, tanh) and why one linear layer can't solve XOR",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §5.1 Multilayer Perceptrons",
+        "url": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html",
+        "slice": "§5.1 Multilayer Perceptrons",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Activation zoo incl. GELU/SiLU from scratch",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 04-activation-functions",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/04-activation-functions",
+        "slice": "Phase 03 · lesson 04-activation-functions (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "CrossEntropyLoss expects raw logits (and label smoothing option)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.nn.CrossEntropyLoss",
+        "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 02-multi-layer-networks",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/02-multi-layer-networks",
+      "slice": "Phase 03 · lesson 02-multi-layer-networks (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "XOR and a correct classification head",
+      "brief": "In NumPy build a 2-layer MLP forward pass that solves XOR with hand-set weights; write two sentences on why a single linear layer cannot. Implement softmax and cross-entropy on logits (stable, via log-sum-exp) and confirm torch.nn.functional.cross_entropy gives the same value for random logits and labels. Reference build: rohitg00 Phase 03 lessons 01, 02, 04, 05.",
+      "done_when": "XOR truth table printed correctly; your cross-entropy equals F.cross_entropy to 1e-6 on 100 random batches, including logits of magnitude 1000."
+     },
+     "quiz": [
+      {
+       "id": "M08.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Without nonlinear activations, a deep MLP is equivalent to:",
+       "options": [
+        "A deeper MLP",
+        "A single linear layer",
+        "A CNN",
+        "A decision tree"
+       ],
+       "answer": 1,
+       "explain": "Composition of affine maps is affine."
+      },
+      {
+       "id": "M08.U01.Q2",
+       "kind": "mcq",
+       "prompt": "nn.CrossEntropyLoss in PyTorch expects:",
+       "options": [
+        "Probabilities",
+        "Raw logits",
+        "One-hot probabilities after softmax",
+        "Log-probabilities only"
+       ],
+       "answer": 1,
+       "explain": "It applies log-softmax internally; feeding softmax outputs is a classic bug."
+      },
+      {
+       "id": "M08.U01.Q3",
+       "kind": "mcq",
+       "prompt": "ReLU's gradient for negative inputs is:",
+       "options": [
+        "1",
+        "0",
+        "−1",
+        "Undefined everywhere"
+       ],
+       "answer": 1,
+       "explain": "Flat region → zero gradient ('dead' units)."
+      },
+      {
+       "id": "M08.U01.Q4",
+       "kind": "mcq",
+       "prompt": "What happens if you use MSE loss for binary classification?",
+       "options": [
+        "Gradients explode",
+        "Training diverges immediately",
+        "The model trains normally",
+        "The model can minimize loss by predicting 0.5 for everything, achieving MSE=0.25 without learning"
+       ],
+       "answer": 3,
+       "explain": "With MSE on a balanced binary dataset, predicting 0.5 for every input gives MSE=0.25 -- the minimum achievable without discrimination. The model satisfies the loss without learning any useful patterns. (Adapted from rohitg00/ai-engineering-from-scratch Phase 03 lesson 05-loss-functions quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U01.Q5",
+       "kind": "short",
+       "prompt": "Why do frameworks combine softmax and log into one 'cross-entropy on logits' function?",
+       "rubric": [
+        "Numerical stability via log-sum-exp (no overflow/log(0))",
+        "Simpler, cheaper gradient (softmax − one-hot)",
+        "Avoids the double-softmax bug",
+        "Mentions label smoothing/weights options as bonus"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U02",
+     "title": "Backpropagation and autograd from scratch",
+     "hours": 9,
+     "depth": "core",
+     "week": 64,
+     "prerequisites": [
+      "M08.U01"
+     ],
+     "outcomes": [
+      "You can build a scalar autograd engine (micrograd) and explain each line.",
+      "You can backpropagate by hand through a small computational graph.",
+      "You can explain gradient accumulation and why zero_grad is needed."
+     ],
+     "topics": [
+      {
+       "id": "M08.01.03",
+       "title": "computational graph"
+      },
+      {
+       "id": "M08.01.04",
+       "title": "backpropagation"
+      },
+      {
+       "id": "M08.01.05",
+       "title": "autograd"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-zero-to-hero",
+      "title": "Karpathy Zero to Hero #1 · The spelled-out intro to neural networks and backpropagation: building micrograd",
+      "url": "https://www.youtube.com/watch?v=VMj-3S1tku0",
+      "slice": "Full lecture (~2h25m) + repo github.com/karpathy/micrograd",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Derivative intuition numerically; the Value object and expression graph",
+      "Manual backprop through + and *, then tanh; chain rule as local gradient × upstream",
+      "Topological sort and automatic backward(); the += fix for variables used more than once",
+      "Neuron, Layer, MLP classes; training loop with loss, backward, update; the forgotten zero_grad bug",
+      "Same computation in PyTorch for comparison"
+     ],
+     "gaps": [
+      {
+       "topic": "Backprop visual intuition",
+       "resource": {
+        "resourceId": "3b1b-neural-networks",
+        "title": "3Blue1Brown Deep Learning ch.3 · Backpropagation, intuitively",
+        "url": "https://www.youtube.com/watch?v=Ilg3gGewQ5U",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Backprop calculus with indices",
+       "resource": {
+        "resourceId": "3b1b-neural-networks",
+        "title": "3Blue1Brown Deep Learning ch.4 · Backpropagation calculus",
+        "url": "https://www.youtube.com/watch?v=tIeHLnjs5U8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Forward/backward computational graphs for an MLP with matrices",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §5.3 Forward Propagation, Backward Propagation, and Computational Graphs",
+        "url": "https://d2l.ai/chapter_multilayer-perceptrons/backprop.html",
+        "slice": "§5.3 Forward Propagation, Backward Propagation, and Computational Graphs",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "How PyTorch autograd works (grad modes, in-place ops)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Autograd mechanics (notes)",
+        "url": "https://docs.pytorch.org/docs/stable/notes/autograd.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "3b1b-neural-networks",
+      "title": "3Blue1Brown Deep Learning ch.3 · Backpropagation, intuitively",
+      "url": "https://www.youtube.com/watch?v=Ilg3gGewQ5U",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "micrograd without peeking",
+      "brief": "Re-implement micrograd's Value class without re-watching the code; add tanh, exp, pow and relu; train a tiny MLP on sklearn make_moons; verify every gradient against PyTorch autograd on the same graph. Reference build: rohitg00 Phase 03 lesson 03.",
+      "done_when": "Decision boundary plot separates the moons (≥ 95% train accuracy), and an assertion loop shows all gradients match torch to 1e-6."
+     },
+     "quiz": [
+      {
+       "id": "M08.U02.Q1",
+       "kind": "mcq",
+       "prompt": "Backprop computes all parameter gradients in:",
+       "options": [
+        "One forward pass per parameter",
+        "One forward + one backward pass",
+        "Only the last layer",
+        "Finite differences"
+       ],
+       "answer": 1,
+       "explain": "Reverse-mode autodiff is O(cost of forward)."
+      },
+      {
+       "id": "M08.U02.Q2",
+       "kind": "mcq",
+       "prompt": "When a node feeds two downstream nodes, its gradient is:",
+       "options": [
+        "The max",
+        "The sum of contributions",
+        "The product",
+        "The average"
+       ],
+       "answer": 1,
+       "explain": "Multivariate chain rule sums over paths."
+      },
+      {
+       "id": "M08.U02.Q3",
+       "kind": "mcq",
+       "prompt": "In PyTorch, gradients accumulate in .grad unless you:",
+       "options": [
+        "Call .backward() again",
+        "Zero them (optimizer.zero_grad())",
+        "Use eval()",
+        "Move to GPU"
+       ],
+       "answer": 1,
+       "explain": "Accumulation is deliberate (gradient accumulation across micro-batches)."
+      },
+      {
+       "id": "M08.U02.Q4",
+       "kind": "mcq",
+       "prompt": "In the backward pass, why do we use '+=' instead of '=' when accumulating gradients?",
+       "options": [
+        "It's a Python convention",
+        "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths",
+        "It makes the code run faster",
+        "It prevents overflow"
+       ],
+       "answer": 1,
+       "explain": "When a Value is used as input to multiple operations (e.g., x used in both x*w1 and x*w2), its total gradient is the sum of the gradients flowing back from each operation. Using += accumulates these correctly. (Adapted from rohitg00/ai-engineering-from-scratch Phase 03 lesson 03-backpropagation quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U02.Q5",
+       "kind": "short",
+       "prompt": "Explain why a variable used twice in a graph needs += and not = in its backward function.",
+       "rubric": [
+        "Each use contributes a gradient path",
+        "= overwrites the first contribution",
+        "Multivariate chain rule sums contributions",
+        "Concrete example like a + a or b used in two products"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U03",
+     "title": "Tensors, embeddings and your first neural language model",
+     "hours": 9,
+     "depth": "core",
+     "week": 65,
+     "prerequisites": [
+      "M08.U02",
+      "M06.U07"
+     ],
+     "outcomes": [
+      "You can manipulate PyTorch tensors (indexing, broadcasting, device, dtype) and debug shapes.",
+      "You can build a bigram and an MLP character-level language model with an embedding table.",
+      "You can evaluate with train/dev/test negative log-likelihood and sample from the model."
+     ],
+     "topics": [
+      {
+       "id": "M08.02.01",
+       "title": "tensors/device/dtype"
+      },
+      {
+       "id": "M08.02.11",
+       "title": "tensor shape debugging"
+      },
+      {
+       "id": "M08.04.02",
+       "title": "embeddings (nn.Embedding) as learned lookup tables"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-zero-to-hero",
+      "title": "Karpathy Zero to Hero #2 makemore (bigram) + #3 makemore Part 2: MLP",
+      "url": "https://www.youtube.com/watch?v=PaCmpygFfXo",
+      "slice": "#2 'Building makemore' (PaCmpygFfXo, ~1h57m) then #3 'makemore Part 2: MLP' (TCH_1BHY58I, ~1h15m)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "#2: bigram counts as a tensor, normalising rows (broadcasting pitfalls), sampling with torch.multinomial, average negative log-likelihood, smoothing",
+      "#2: the same bigram as a one-layer neural net with one-hot inputs, softmax and gradient descent",
+      "#3: Bengio et al. 2003 MLP; embedding lookup table C; hidden tanh layer; F.cross_entropy",
+      "#3: minibatches, finding a learning rate, train/dev/test splits, under/overfitting, visualising embeddings, sampling"
+     ],
+     "gaps": [
+      {
+       "topic": "Tensor creation, device and dtype",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Learn the Basics · Tensors",
+        "url": "https://docs.pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Broadcasting rules in PyTorch",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Broadcasting semantics",
+        "url": "https://docs.pytorch.org/docs/stable/notes/broadcasting.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "nn.Embedding API",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.nn.Embedding",
+        "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Word embeddings concept (bridge to M09/M11)",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Word Embedding and Word2Vec, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=viZrOnJclY0",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "learnpytorch",
+      "title": "learnpytorch.io · 00 PyTorch Fundamentals",
+      "url": "https://www.learnpytorch.io/00_pytorch_fundamentals/",
+      "slice": "Whole chapter",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "makemore on your own names",
+      "brief": "Build the makemore MLP on a list of Pakistani/Urdu names (or any name list): embedding table, train/dev/test split, sampling. Keep a 'shape log' listing every tensor's shape in the forward pass.",
+      "done_when": "Dev NLL below the bigram baseline, 20 sampled names shown, and the shape log matches what the code asserts."
+     },
+     "quiz": [
+      {
+       "id": "M08.U03.Q1",
+       "kind": "mcq",
+       "prompt": "nn.Embedding(V, d) applied to an index tensor of shape (B, T) returns:",
+       "options": [
+        "(B, T)",
+        "(B, T, d)",
+        "(V, d)",
+        "(B, d)"
+       ],
+       "answer": 1,
+       "explain": "Each index becomes a d-vector."
+      },
+      {
+       "id": "M08.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Broadcasting (B,1) + (1,C) yields:",
+       "options": [
+        "Error",
+        "(B,C)",
+        "(1,1)",
+        "(B,1)"
+       ],
+       "answer": 1,
+       "explain": "Size-1 dims stretch to match."
+      },
+      {
+       "id": "M08.U03.Q3",
+       "kind": "mcq",
+       "prompt": "An embedding lookup is mathematically equivalent to:",
+       "options": [
+        "Convolution",
+        "One-hot vector × weight matrix",
+        "Softmax",
+        "Attention"
+       ],
+       "answer": 1,
+       "explain": "Karpathy shows this explicitly in makemore."
+      },
+      {
+       "id": "M08.U03.Q4",
+       "kind": "mcq",
+       "prompt": "Normalising a (27,27) count matrix with N / N.sum(0) instead of N.sum(1, keepdim=True):",
+       "options": [
+        "Is equivalent",
+        "Silently normalises columns instead of rows",
+        "Raises an error",
+        "Only changes dtype"
+       ],
+       "answer": 1,
+       "explain": "The broadcasting pitfall from makemore #2."
+      },
+      {
+       "id": "M08.U03.Q5",
+       "kind": "short",
+       "prompt": "What does the negative log-likelihood of the dev set tell you that accuracy would not?",
+       "rubric": [
+        "NLL measures probability assigned to the right answer, not just top-1",
+        "Sensitive to confidence/calibration",
+        "Directly comparable to the training loss and to perplexity",
+        "Accuracy is coarse for many-class next-character prediction"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U04",
+     "title": "Training dynamics: initialisation, normalisation, residuals",
+     "hours": 6,
+     "depth": "core",
+     "week": 66,
+     "prerequisites": [
+      "M08.U03"
+     ],
+     "outcomes": [
+      "You can diagnose saturated activations and vanishing/exploding gradients from histograms.",
+      "You can apply Kaiming init, BatchNorm/LayerNorm and residual connections and explain each.",
+      "You can read learning curves to decide what to change next."
+     ],
+     "topics": [
+      {
+       "id": "M08.01.06",
+       "title": "initialization"
+      },
+      {
+       "id": "M08.01.10",
+       "title": "batch/layer norm"
+      },
+      {
+       "id": "M08.01.11",
+       "title": "residual connections"
+      },
+      {
+       "id": "M08.03.02",
+       "title": "learning curves"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-zero-to-hero",
+      "title": "Karpathy Zero to Hero #4 · Building makemore Part 3: Activations & Gradients, BatchNorm",
+      "url": "https://www.youtube.com/watch?v=P6sfmUTpUmc",
+      "slice": "Full lecture (~1h55m)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Fixing an over-confident initial loss; tanh saturation and dead neurons",
+      "Kaiming initialisation and gain",
+      "Batch normalisation: train-time batch statistics, running statistics at eval",
+      "Diagnostic plots: activation, gradient and update:data-ratio histograms",
+      "PyTorch-ifying the code into layers"
+     ],
+     "gaps": [
+      {
+       "topic": "Residual connections",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §8.6 Residual Networks (ResNet)",
+        "url": "https://d2l.ai/chapter_convolutional-modern/resnet.html",
+        "slice": "§8.6 Residual Networks (ResNet)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Why residual connections work",
+       "resource": {
+        "resourceId": "deeplearningai-youtube",
+        "title": "DeepLearning.AI · C4W2L04 Why ResNets Work",
+        "url": "https://www.youtube.com/watch?v=RYth6EbBUqM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "LayerNorm API and why transformers use it",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.nn.LayerNorm",
+        "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Vanishing/exploding gradients",
+       "resource": {
+        "resourceId": "deeplearningai-youtube",
+        "title": "DeepLearning.AI · Vanishing/Exploding Gradients (C2W1L10)",
+        "url": "https://www.youtube.com/watch?v=qhXZsFVxGKo",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Initialisation theory",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §5.4 Numerical Stability and Initialization",
+        "url": "https://d2l.ai/chapter_multilayer-perceptrons/numerical-stability-and-init.html",
+        "slice": "§5.4 Numerical Stability and Initialization",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Learning curves as a diagnostic",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 10-bias-variance",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/10-bias-variance",
+        "slice": "Phase 02 lesson 10 · 'Learning Curves', 'How to Generate Learning Curves', 'Diagnosing Your Model'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §8.5 Batch Normalization",
+      "url": "https://d2l.ai/chapter_convolutional-modern/batch-norm.html",
+      "slice": "§8.5 Batch Normalization",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Four ways to train a deep MLP",
+      "brief": "Make your M08.U03 model 6 layers deep. Train four variants: naive init (saturating tanh), Kaiming init, Kaiming + LayerNorm, + residual connections. Show activation and gradient histograms per layer and the four training curves on one chart. Reference build: rohitg00 Phase 03 lesson 08.",
+      "done_when": "Histograms show saturation in the naive run and healthy spread in the others; the residual+norm run reaches the lowest dev loss or you explain why not."
+     },
+     "quiz": [
+      {
+       "id": "M08.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Kaiming/He init scales weights so that:",
+       "options": [
+        "All are zero",
+        "Activation variance stays roughly constant across ReLU layers",
+        "Gradients explode",
+        "Biases are large"
+       ],
+       "answer": 1,
+       "explain": "Variance 2/fan_in compensates for ReLU halving."
+      },
+      {
+       "id": "M08.U04.Q2",
+       "kind": "mcq",
+       "prompt": "BatchNorm behaves differently in train vs eval because it uses:",
+       "options": [
+        "Dropout",
+        "Batch statistics in train, running statistics in eval",
+        "Different weights",
+        "No difference"
+       ],
+       "answer": 1,
+       "explain": "Forgetting model.eval() changes predictions."
+      },
+      {
+       "id": "M08.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Residual connections mainly help by:",
+       "options": [
+        "Reducing parameters",
+        "Giving gradients a short path through deep networks",
+        "Normalising inputs",
+        "Replacing activations"
+       ],
+       "answer": 1,
+       "explain": "Identity paths keep gradient flow."
+      },
+      {
+       "id": "M08.U04.Q4",
+       "kind": "mcq",
+       "prompt": "What is the formula for Kaiming/He initialization variance?",
+       "options": [
+        "Var(w) = 1/fan_in",
+        "Var(w) = 2/fan_in",
+        "Var(w) = 1/(fan_in + fan_out)",
+        "Var(w) = 2/(fan_in + fan_out)"
+       ],
+       "answer": 1,
+       "explain": "Kaiming init uses Var(w) = 2/fan_in. The factor of 2 compensates for ReLU zeroing half the activations (negative values become 0), which effectively halves the fan_in. (Adapted from rohitg00/ai-engineering-from-scratch Phase 03 lesson 08-weight-initialization quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U04.Q5",
+       "kind": "short",
+       "prompt": "Why do transformers use LayerNorm rather than BatchNorm?",
+       "rubric": [
+        "LayerNorm normalises per example, independent of batch size",
+        "Works with variable sequence lengths/padding and batch size 1 at inference",
+        "No train/eval discrepancy from running stats",
+        "Mentions RMSNorm as a modern variant"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U05",
+     "title": "Optimisers, regularisation and schedules",
+     "hours": 6,
+     "depth": "core",
+     "week": 66,
+     "prerequisites": [
+      "M08.U04",
+      "M05.U07"
+     ],
+     "outcomes": [
+      "You can explain momentum, Adam and AdamW and choose between them.",
+      "You can apply weight decay, dropout and early stopping correctly.",
+      "You can set up warmup + cosine schedules."
+     ],
+     "topics": [
+      {
+       "id": "M08.01.07",
+       "title": "momentum/Adam/AdamW (plain GD/SGD in M05.U07)"
+      },
+      {
+       "id": "M08.01.08",
+       "title": "weight decay"
+      },
+      {
+       "id": "M08.01.09",
+       "title": "dropout"
+      },
+      {
+       "id": "M08.03.05",
+       "title": "schedules"
+      },
+      {
+       "id": "M08.03.06",
+       "title": "early stopping"
+      }
+     ],
+     "learn": {
+      "resourceId": "d2l",
+      "title": "D2L §12.6 Momentum, §12.10 Adam, §12.11 Learning Rate Scheduling",
+      "url": "https://d2l.ai/chapter_optimization/momentum.html",
+      "slice": "§12.6 Momentum → §12.10 Adam (incl. Yogi) → §12.11 Learning Rate Scheduling (factor, multi-factor, cosine, warmup)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Momentum: leaky averages, effective sample weight, ill-conditioned problems",
+      "Adam: first/second moment estimates, bias correction; Yogi variant",
+      "LR scheduling: toy problem, schedulers, policies incl. cosine and warmup"
+     ],
+     "gaps": [
+      {
+       "topic": "AdamW (decoupled weight decay)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.optim.AdamW",
+        "url": "https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Weight decay",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §3.7 Weight Decay",
+        "url": "https://d2l.ai/chapter_linear-regression/weight-decay.html",
+        "slice": "§3.7 Weight Decay",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Dropout",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §5.6 Dropout",
+        "url": "https://d2l.ai/chapter_multilayer-perceptrons/dropout.html",
+        "slice": "§5.6 Dropout",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Early stopping and other regularisers in code",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 07-regularization",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/07-regularization",
+        "slice": "Phase 03 lesson 07 · 'Dropout', 'Weight Decay', 'Early Stopping', 'When to Apply What'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "PyTorch schedulers (LinearLR warmup, CosineAnnealingLR, SequentialLR)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.optim · How to adjust learning rate",
+        "url": "https://docs.pytorch.org/docs/stable/optim.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Adam explained (second voice)",
+       "resource": {
+        "resourceId": "deeplearningai-youtube",
+        "title": "DeepLearning.AI · Adam Optimization Algorithm (C2W2L08)",
+        "url": "https://www.youtube.com/watch?v=JXQT_vxqwIs",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 09-learning-rate-schedules",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/09-learning-rate-schedules",
+      "slice": "Phase 03 · lesson 09-learning-rate-schedules (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Optimiser bake-off on Fashion-MNIST",
+      "brief": "Compare SGD, SGD+momentum, Adam and AdamW under the same budget; then add warmup + cosine schedule, dropout and early stopping. Results table: best val accuracy, epoch of best, wall-clock. Reference build: rohitg00 Phase 03 lessons 06, 07, 09.",
+      "done_when": "Table with all variants over 3 seeds (mean ± std) and a 5-sentence recommendation."
+     },
+     "quiz": [
+      {
+       "id": "M08.U05.Q1",
+       "kind": "mcq",
+       "prompt": "AdamW differs from Adam + L2 by:",
+       "options": [
+        "No momentum",
+        "Decoupling weight decay from the gradient update",
+        "A fixed LR",
+        "Using SGD"
+       ],
+       "answer": 1,
+       "explain": "With Adam, L2 in the loss is rescaled by the adaptive denominator; AdamW applies decay directly."
+      },
+      {
+       "id": "M08.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Dropout at inference time is:",
+       "options": [
+        "Still active",
+        "Disabled (model.eval())",
+        "Doubled",
+        "Random"
+       ],
+       "answer": 1,
+       "explain": "Inverted dropout scales at train time so eval needs no change."
+      },
+      {
+       "id": "M08.U05.Q3",
+       "kind": "mcq",
+       "prompt": "LR warmup is mainly used to:",
+       "options": [
+        "Speed up evaluation",
+        "Avoid unstable early updates",
+        "Reduce memory",
+        "Replace schedules"
+       ],
+       "answer": 1,
+       "explain": "Adam's early moment estimates are noisy and large steps can diverge."
+      },
+      {
+       "id": "M08.U05.Q4",
+       "kind": "mcq",
+       "prompt": "Why does Adam use bias correction in early training steps?",
+       "options": [
+        "To prevent overfitting",
+        "The moment estimates are initialized to zero, so early values are biased toward zero; correction compensates for this cold start",
+        "To clip large gradients",
+        "To speed up convergence"
+       ],
+       "answer": 1,
+       "explain": "At step 1 with beta1=0.9, m_1 = 0.1 * gradient (10x too small). Dividing by (1 - 0.9^1) = 0.1 corrects this to the actual gradient. The correction becomes negligible after ~50 steps. (Adapted from rohitg00/ai-engineering-from-scratch Phase 03 lesson 06-optimizers quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U05.Q5",
+       "kind": "short",
+       "prompt": "How do you decide when to stop training if validation loss is noisy?",
+       "rubric": [
+        "Patience over several evals / smoothing",
+        "Keep the best checkpoint by validation metric",
+        "Evaluate on enough data to reduce noise",
+        "Watch the target metric, not only loss"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M08.S2",
+   "title": "PyTorch engineering",
+   "units": [
+    {
+     "id": "M08.U06",
+     "title": "The PyTorch training workflow",
+     "hours": 6,
+     "depth": "core",
+     "week": 67,
+     "prerequisites": [
+      "M08.U03"
+     ],
+     "outcomes": [
+      "You can write a Dataset/DataLoader, an nn.Module and a train/evaluate loop in a script.",
+      "You can use model.train()/eval() and torch.inference_mode() correctly.",
+      "You can pick the right loss function for a task."
+     ],
+     "topics": [
+      {
+       "id": "M08.02.02",
+       "title": "Dataset/DataLoader"
+      },
+      {
+       "id": "M08.02.03",
+       "title": "nn.Module"
+      },
+      {
+       "id": "M08.02.04",
+       "title": "train/eval modes"
+      },
+      {
+       "id": "M08.02.05",
+       "title": "zero_grad/backward/step"
+      },
+      {
+       "id": "M08.02.06",
+       "title": "no_grad/inference_mode"
+      },
+      {
+       "id": "M08.02.09",
+       "title": "loss functions"
+      }
+     ],
+     "learn": {
+      "resourceId": "pytorch-tutorials",
+      "title": "PyTorch: Learn the Basics",
+      "url": "https://docs.pytorch.org/tutorials/beginner/basics/intro.html",
+      "slice": "All pages: Quickstart, Tensors, Datasets & DataLoaders, Transforms, Build the Neural Network, Automatic Differentiation, Optimizing Model Parameters, Save & Load",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Dataset and DataLoader (built-in and custom datasets)",
+      "Transforms",
+      "nn.Module, nn.Sequential, layers",
+      "torch.autograd and disabling gradient tracking",
+      "Hyperparameters, loss functions, optimizer loop: zero_grad → backward → step; full train/test loop",
+      "Saving and loading weights"
+     ],
+     "gaps": [
+      {
+       "topic": "Turning notebooks into scripts with CLI args",
+       "resource": {
+        "resourceId": "learnpytorch",
+        "title": "learnpytorch.io · 05 Going Modular",
+        "url": "https://www.learnpytorch.io/05_pytorch_going_modular/",
+        "slice": "Whole chapter",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Custom image/CSV datasets",
+       "resource": {
+        "resourceId": "learnpytorch",
+        "title": "learnpytorch.io · 04 Custom Datasets",
+        "url": "https://www.learnpytorch.io/04_pytorch_custom_datasets/",
+        "slice": "Whole chapter",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "inference_mode vs no_grad vs eval()",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Autograd mechanics · Locally disabling gradient computation (grad modes, inference mode, evaluation mode)",
+        "url": "https://docs.pytorch.org/docs/stable/notes/autograd.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "DataLoader workers, pin_memory, samplers",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.utils.data",
+        "url": "https://docs.pytorch.org/docs/stable/data.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "learnpytorch",
+      "title": "learnpytorch.io · 01 PyTorch Workflow",
+      "url": "https://www.learnpytorch.io/01_pytorch_workflow/",
+      "slice": "Whole chapter",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "train.py, not a notebook",
+      "brief": "Write train.py with a custom Dataset (CSV or image folder), a DataLoader with workers, train_one_epoch/evaluate functions (model.train()/model.eval() + torch.inference_mode()), and argparse CLI. Port your makemore MLP into an nn.Module and match its loss. Reference build: rohitg00 Phase 03 lesson 11.",
+      "done_when": "`python train.py --epochs 3 --lr 1e-3` runs end to end and the nn.Module version reaches the same dev loss as the hand-written one (±0.01)."
+     },
+     "quiz": [
+      {
+       "id": "M08.U06.Q1",
+       "kind": "mcq",
+       "prompt": "The correct order inside a training step is:",
+       "options": [
+        "step → backward → zero_grad",
+        "zero_grad → forward → loss → backward → step",
+        "backward → forward → step",
+        "forward → step → backward"
+       ],
+       "answer": 1,
+       "explain": "zero_grad can also come right after step; it must precede the next backward."
+      },
+      {
+       "id": "M08.U06.Q2",
+       "kind": "mcq",
+       "prompt": "torch.inference_mode() primarily:",
+       "options": [
+        "Enables dropout",
+        "Disables autograd tracking for speed and memory",
+        "Switches BatchNorm to train",
+        "Saves the model"
+       ],
+       "answer": 1,
+       "explain": "It is a stricter, faster no_grad."
+      },
+      {
+       "id": "M08.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Forgetting model.eval() during validation affects layers like:",
+       "options": [
+        "Linear",
+        "Dropout and BatchNorm",
+        "Embedding",
+        "ReLU"
+       ],
+       "answer": 1,
+       "explain": "Only layers with train/eval behaviour."
+      },
+      {
+       "id": "M08.U06.Q4",
+       "kind": "mcq",
+       "prompt": "What does nn.Linear(784, 256) create in PyTorch?",
+       "options": [
+        "A batch normalization layer",
+        "A ReLU activation layer",
+        "A dropout layer with p=784/256",
+        "A fully connected layer with a (256, 784) weight matrix and a (256,) bias vector"
+       ],
+       "answer": 3,
+       "explain": "nn.Linear(in_features, out_features) creates a layer that computes y = x @ W^T + b, with W of shape (256, 784) and b of shape (256,). This is the PyTorch equivalent of the Layer class you built from scratch. (Adapted from rohitg00/ai-engineering-from-scratch Phase 03 lesson 11-intro-to-pytorch quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U06.Q5",
+       "kind": "short",
+       "prompt": "Why is model.eval() not the same thing as torch.no_grad()?",
+       "rubric": [
+        "eval() changes layer behaviour (dropout off, BN uses running stats)",
+        "no_grad/inference_mode stops gradient tracking",
+        "They are orthogonal; validation needs both",
+        "Example bug from using only one"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U07",
+     "title": "Checkpoints, reproducibility and experiment logging",
+     "hours": 4,
+     "depth": "core",
+     "week": 67,
+     "prerequisites": [
+      "M08.U06"
+     ],
+     "outcomes": [
+      "You can save and resume training exactly.",
+      "You can make runs reproducible and report multi-seed results.",
+      "You can log metrics to TensorBoard."
+     ],
+     "topics": [
+      {
+       "id": "M08.02.07",
+       "title": "checkpointing"
+      },
+      {
+       "id": "M08.02.08",
+       "title": "reproducible seeds"
+      },
+      {
+       "id": "M08.04.03",
+       "title": "experiment logging (TensorBoard; W&B/MLflow hand-off to M16)"
+      }
+     ],
+     "learn": {
+      "resourceId": "pytorch-tutorials",
+      "title": "PyTorch: Saving and Loading Models",
+      "url": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html",
+      "slice": "Whole tutorial: state_dict, save/load for inference, general checkpoint for resuming, multiple models, warmstarting, across devices",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "What a state_dict is (model and optimizer)",
+      "Saving/loading for inference vs whole model",
+      "General checkpoint with model, optimizer, epoch, loss for resuming",
+      "Warm-starting and saving across devices (map_location)"
+     ],
+     "gaps": [
+      {
+       "topic": "Reproducibility (seeds, deterministic algorithms, DataLoader workers)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Reproducibility (notes)",
+        "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "TensorBoard logging",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: PyTorch TensorBoard Support",
+        "url": "https://docs.pytorch.org/tutorials/beginner/introyt/tensorboardyt_tutorial.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Experiment tracking workflow",
+       "resource": {
+        "resourceId": "learnpytorch",
+        "title": "learnpytorch.io · 07 Experiment Tracking",
+        "url": "https://www.learnpytorch.io/07_pytorch_experiment_tracking/",
+        "slice": "Whole chapter",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "learnpytorch",
+      "title": "learnpytorch.io · 07 Experiment Tracking",
+      "url": "https://www.learnpytorch.io/07_pytorch_experiment_tracking/",
+      "slice": "Whole chapter",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Kill and resume",
+      "brief": "Add to train.py: seeding (Python/NumPy/torch + DataLoader worker_init_fn/generator), checkpoints with model + optimizer + scheduler + epoch + config, --resume, and TensorBoard logging. Kill training mid-run, resume, and show the curves continue seamlessly. Run 3 seeds and report mean ± std.",
+      "done_when": "TensorBoard screenshot shows a continuous curve across the resume point; two runs with the same seed give identical first-epoch losses on CPU."
+     },
+     "quiz": [
+      {
+       "id": "M08.U07.Q1",
+       "kind": "mcq",
+       "prompt": "To resume training exactly, a checkpoint must include at least:",
+       "options": [
+        "Model weights only",
+        "Model + optimizer (+ scheduler, epoch) state",
+        "The dataset",
+        "The loss value"
+       ],
+       "answer": 1,
+       "explain": "Optimizer moments (Adam) and the schedule matter."
+      },
+      {
+       "id": "M08.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Saving model.state_dict() rather than the whole model object is preferred because:",
+       "options": [
+        "It's smaller and doesn't depend on pickled class code paths",
+        "It includes the optimizer",
+        "It trains faster",
+        "ONNX requires it"
+       ],
+       "answer": 0,
+       "explain": "Whole-model pickles break when code moves."
+      },
+      {
+       "id": "M08.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Full bitwise determinism on GPU may require:",
+       "options": [
+        "Nothing",
+        "Deterministic algorithm flags, at some speed cost",
+        "More epochs",
+        "fp16"
+       ],
+       "answer": 1,
+       "explain": "torch.use_deterministic_algorithms(True) and cuDNN settings."
+      },
+      {
+       "id": "M08.U07.Q4",
+       "kind": "short",
+       "prompt": "Why report results over several seeds?",
+       "rubric": [
+        "Seed variance can be as large as the effect claimed",
+        "Mean ± std (or CI) shows reliability",
+        "Prevents cherry-picking",
+        "Links to M06 statistical thinking"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U08",
+     "title": "CNNs, transfer learning and augmentation (applied)",
+     "hours": 8,
+     "depth": "core",
+     "week": 68,
+     "prerequisites": [
+      "M08.U06",
+      "M08.U07"
+     ],
+     "outcomes": [
+      "You can explain convolution, channels, pooling and receptive field and count conv parameters.",
+      "You can fine-tune a pretrained ResNet: frozen backbone, then unfrozen with lower LR.",
+      "You can apply data augmentation to training data only and evaluate with a confusion matrix."
+     ],
+     "topics": [
+      {
+       "id": "M08.04.04",
+       "title": "convolution basics (conv/pool/channels, receptive field)"
+      },
+      {
+       "id": "M08.04.05",
+       "title": "transfer learning & fine-tuning pretrained models (freeze/unfreeze, discriminative LR)"
+      },
+      {
+       "id": "M08.04.06",
+       "title": "data augmentation"
+      }
+     ],
+     "learn": {
+      "resourceId": "pytorch-tutorials",
+      "title": "PyTorch: Transfer Learning for Computer Vision Tutorial",
+      "url": "https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html",
+      "slice": "Whole tutorial: load data (ImageFolder + transforms), training function, visualising predictions, fine-tuning the ConvNet, ConvNet as fixed feature extractor",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "ImageFolder datasets with train-only augmentation transforms",
+      "A train_model function with best-model checkpointing",
+      "Fine-tuning a pretrained ResNet-18 (replace fc, train all layers)",
+      "Using the ConvNet as a fixed feature extractor (freeze backbone)"
+     ],
+     "gaps": [
+      {
+       "topic": "What a convolution is",
+       "resource": {
+        "resourceId": "3b1b-lessons",
+        "title": "3Blue1Brown · But what is a convolution?",
+        "url": "https://www.youtube.com/watch?v=KuXjwB4LzSA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Convolutions for images, padding/stride, channels, pooling",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L ch.7 Convolutional Neural Networks",
+        "url": "https://d2l.ai/chapter_convolutional-neural-networks/index.html",
+        "slice": "§7.1–7.5 (conv layer, padding & stride, multiple channels, pooling, LeNet)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Receptive field and CNN architecture patterns",
+       "resource": {
+        "resourceId": "cs231n-notes",
+        "title": "CS231n notes: Convolutional Networks",
+        "url": "https://cs231n.github.io/convolutional-networks/",
+        "slice": "Convolutional Networks (ConvNet layers, spatial arrangement, case studies)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Augmentation with torchvision transforms v2",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torchvision Transforming and augmenting images",
+        "url": "https://docs.pytorch.org/vision/stable/transforms.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Fine-tuning strategy",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §14.2 Fine-Tuning",
+        "url": "https://d2l.ai/chapter_computer-vision/fine-tuning.html",
+        "slice": "§14.2 Fine-Tuning",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Pretrained model weights and their transforms",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torchvision Models and pre-trained weights",
+        "url": "https://docs.pytorch.org/vision/stable/models.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fastai-part1",
+      "title": "fast.ai Practical Deep Learning Lesson 8 · Convolutions (CNNs)",
+      "url": "https://course.fast.ai/Lessons/lesson8.html",
+      "slice": "Lesson 1 'Getting started' and Lesson 8 'Convolutions (CNNs)'",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Fine-tune on your own images",
+      "brief": "Collect a small dataset of your own (≥3 classes, ~100 images each; e.g. local foods or street signs). Fine-tune a pretrained ResNet-18 in plain PyTorch: frozen backbone first, then unfrozen with a lower LR, with and without augmentation. Report a confusion matrix and 10 misclassified images with a hypothesis for each.",
+      "done_when": "A 2×2 results table (frozen/unfrozen × aug/no-aug) on a held-out test set, the confusion matrix, and the 10-image error gallery."
+     },
+     "quiz": [
+      {
+       "id": "M08.U08.Q1",
+       "kind": "mcq",
+       "prompt": "A 3×3 conv with 64 input and 128 output channels (no bias) has how many weights?",
+       "options": [
+        "576",
+        "73,728",
+        "8,192",
+        "1,152"
+       ],
+       "answer": 1,
+       "explain": "3·3·64·128."
+      },
+      {
+       "id": "M08.U08.Q2",
+       "kind": "mcq",
+       "prompt": "In transfer learning with little data you typically first:",
+       "options": [
+        "Train from scratch",
+        "Freeze the backbone and train the new head",
+        "Remove all layers",
+        "Set LR to 1.0"
+       ],
+       "answer": 1,
+       "explain": "Protects pretrained features while the head learns."
+      },
+      {
+       "id": "M08.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Data augmentation should be applied to:",
+       "options": [
+        "Train and test equally",
+        "Training data only (test uses deterministic preprocessing)",
+        "Test only",
+        "Labels"
+       ],
+       "answer": 1,
+       "explain": "Test-time augmentation is a separate, deliberate technique."
+      },
+      {
+       "id": "M08.U08.Q4",
+       "kind": "mcq",
+       "prompt": "Two stacked 3×3 convs (stride 1) have a receptive field of:",
+       "options": [
+        "3×3",
+        "5×5",
+        "6×6",
+        "9×9"
+       ],
+       "answer": 1,
+       "explain": "Each adds 2 pixels: 3 → 5."
+      },
+      {
+       "id": "M08.U08.Q5",
+       "kind": "short",
+       "prompt": "A customer has 300 labelled images. Explain why fine-tuning beats training from scratch.",
+       "rubric": [
+        "Pretrained features (edges, textures, parts) transfer",
+        "Far fewer parameters must be learned from scratch → less overfitting",
+        "Faster and cheaper training",
+        "Caveat: domain shift (medical, satellite) may need more unfreezing/data"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M08.S3",
+   "title": "Diagnosis, performance and export",
+   "units": [
+    {
+     "id": "M08.U09",
+     "title": "Debugging neural network training",
+     "hours": 5,
+     "depth": "core",
+     "week": 68,
+     "prerequisites": [
+      "M08.U05",
+      "M08.U06"
+     ],
+     "outcomes": [
+      "You can run the standard sanity checks: loss at init, overfit one batch, gradient norms.",
+      "You can find NaN sources and apply gradient clipping.",
+      "You can design an ablation and a batching/tuning experiment."
+     ],
+     "topics": [
+      {
+       "id": "M08.03.01",
+       "title": "overfit one batch"
+      },
+      {
+       "id": "M08.03.03",
+       "title": "NaN detection"
+      },
+      {
+       "id": "M08.03.04",
+       "title": "gradient clipping"
+      },
+      {
+       "id": "M08.03.07",
+       "title": "batching"
+      },
+      {
+       "id": "M08.03.10",
+       "title": "ablations"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-recipe",
+      "title": "A Recipe for Training Neural Networks",
+      "url": "https://karpathy.github.io/2019/04/25/recipe/",
+      "slice": "Whole post: 1) become one with the data, 2) set up end-to-end skeleton + dumb baselines, 3) overfit, 4) regularise, 5) tune, 6) squeeze out the juice",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Neural net training fails silently; inspect the data first",
+      "Fix seeds, verify loss @ init, init final layer well, human baseline, input-independent baseline, overfit one batch, visualise just before the net",
+      "Overfit then regularise; tune with random search; ensembles and longer training"
+     ],
+     "gaps": [
+      {
+       "topic": "Systematic tuning, batch size and incremental ablations",
+       "resource": {
+        "resourceId": "tuning-playbook",
+        "title": "Deep Learning Tuning Playbook",
+        "url": "https://github.com/google-research/tuning_playbook",
+        "slice": "Sections 'Choosing the batch size', 'A scientific approach to improving model performance' (incremental tuning, exploration vs exploitation)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "NaN/Inf hunting with anomaly detection",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.autograd · Anomaly detection (detect_anomaly, set_detect_anomaly)",
+        "url": "https://docs.pytorch.org/docs/stable/autograd.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Gradient clipping API",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: torch.nn.utils.clip_grad_norm_",
+        "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "A debugging table + deliberately broken networks",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 13-debugging-neural-networks",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/13-debugging-neural-networks",
+        "slice": "Phase 03 lesson 13 · 'The Master Debugging Table', Build It step 5 'Deliberately Broken Networks'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 13-debugging-neural-networks",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/13-debugging-neural-networks",
+      "slice": "Phase 03 · lesson 13-debugging-neural-networks (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Bug hunt",
+      "brief": "Ask a friend or an LLM to inject up to 5 bugs into your working train.py from this list without telling you which: shuffled labels, missing zero_grad, eval() never called, LR ×1000, softmax before CrossEntropyLoss. Diagnose with overfit-one-batch, loss-at-init (≈ ln C), gradient norms and torch.autograd.set_detect_anomaly. Write a symptom → cause table.",
+      "done_when": "All injected bugs identified with the evidence that revealed each, in a one-line-per-bug table."
+     },
+     "quiz": [
+      {
+       "id": "M08.U09.Q1",
+       "kind": "mcq",
+       "prompt": "At initialisation, cross-entropy for C balanced classes should be about:",
+       "options": [
+        "0",
+        "ln(C)",
+        "C",
+        "1"
+       ],
+       "answer": 1,
+       "explain": "A uniform prediction gives −ln(1/C)."
+      },
+      {
+       "id": "M08.U09.Q2",
+       "kind": "mcq",
+       "prompt": "If a model cannot overfit a single batch, the likely problem is:",
+       "options": [
+        "Too much data",
+        "A bug or capacity/optimisation issue",
+        "Overfitting",
+        "A test-set issue"
+       ],
+       "answer": 1,
+       "explain": "Any working net should memorise a handful of examples."
+      },
+      {
+       "id": "M08.U09.Q3",
+       "kind": "mcq",
+       "prompt": "Gradient clipping primarily prevents:",
+       "options": [
+        "Underfitting",
+        "Exploding updates",
+        "Overfitting",
+        "Data leakage"
+       ],
+       "answer": 1,
+       "explain": "Caps the update norm."
+      },
+      {
+       "id": "M08.U09.Q4",
+       "kind": "mcq",
+       "prompt": "What should you check first when your loss curve is completely flat (loss doesn't decrease at all)?",
+       "options": [
+        "Try a different architecture",
+        "Switch to a different optimizer",
+        "Verify gradients are nonzero, the learning rate is high enough, and the loss function actually depends on the model's predictions",
+        "Add more training data"
+       ],
+       "answer": 2,
+       "explain": "A flat loss means the model isn't updating. Common causes: zero gradients (dead neurons, detached tensors), learning rate too small, or a loss function that doesn't flow gradients to the model (e.g., using .item() before .backward()). (Adapted from rohitg00/ai-engineering-from-scratch Phase 03 lesson 13-debugging-neural-networks quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U09.Q5",
+       "kind": "short",
+       "prompt": "Describe your first three debugging steps when loss becomes NaN at step 500.",
+       "rubric": [
+        "Reproduce with the same seed/data order and find the batch",
+        "Check for inf/NaN in inputs, logits, grads (anomaly mode, hooks)",
+        "Lower LR / add clipping / check fp16 overflow and log(0)",
+        "Check data for bad values"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U10",
+     "title": "GPU memory, mixed precision, speed and export",
+     "hours": 6,
+     "depth": "core",
+     "week": 69,
+     "prerequisites": [
+      "M08.U08",
+      "M05.U08"
+     ],
+     "outcomes": [
+      "You can train with AMP (bf16/fp16) and measure throughput and peak memory.",
+      "You can profile a training step and fix a data-loading bottleneck.",
+      "You can export a model to ONNX, verify parity with onnxruntime, and report CPU latency."
+     ],
+     "topics": [
+      {
+       "id": "M08.02.10",
+       "title": "mixed precision"
+      },
+      {
+       "id": "M08.03.08",
+       "title": "GPU memory"
+      },
+      {
+       "id": "M08.03.09",
+       "title": "throughput profiling"
+      },
+      {
+       "id": "M08.04.07",
+       "title": "model export & compilation (torch.compile, ONNX + onnxruntime)"
+      },
+      {
+       "id": "M08.04.08",
+       "title": "free GPU environments & device management (Kaggle/Colab, .to(device), OOM)"
+      }
+     ],
+     "learn": {
+      "resourceId": "pytorch-tutorials",
+      "title": "PyTorch: Automatic Mixed Precision recipe",
+      "url": "https://docs.pytorch.org/tutorials/recipes/recipes/amp_recipe.html",
+      "slice": "Whole recipe: default precision baseline, autocast, GradScaler, all together, inspecting/modifying gradients, saving/resuming, inference/evaluation",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Baseline timing in default precision",
+      "torch.autocast for the forward pass and loss",
+      "GradScaler for fp16 gradient underflow; unscaling for clipping",
+      "Saving/resuming scaler state; troubleshooting"
+     ],
+     "gaps": [
+      {
+       "topic": "GPU memory management, caching allocator and OOM",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: CUDA semantics · Memory management",
+        "url": "https://docs.pytorch.org/docs/stable/notes/cuda.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Performance tuning (DataLoader workers, pin_memory, channels_last, etc.)",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Performance Tuning Guide",
+        "url": "https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Profiling a step",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: PyTorch Profiler recipe",
+        "url": "https://docs.pytorch.org/tutorials/recipes/recipes/profiler_recipe.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "torch.compile",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Introduction to torch.compile",
+        "url": "https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "ONNX export",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch: Export a PyTorch model to ONNX",
+        "url": "https://docs.pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Running the exported model",
+       "resource": {
+        "resourceId": "onnxruntime-docs",
+        "title": "ONNX Runtime: Get started with Python",
+        "url": "https://onnxruntime.ai/docs/get-started/with-python.html",
+        "slice": "Get started with Python",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Free GPU environment and quotas",
+       "resource": {
+        "resourceId": "kaggle-notebooks-docs",
+        "title": "Kaggle Notebooks documentation (free GPU)",
+        "url": "https://www.kaggle.com/docs/notebooks",
+        "slice": "Notebooks docs (accelerators, quotas)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "onnxruntime-docs",
+      "title": "ONNX Runtime: Get started with Python",
+      "url": "https://onnxruntime.ai/docs/get-started/with-python.html",
+      "slice": "Get started with Python",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Benchmark and export",
+      "brief": "On a free Kaggle/Colab GPU benchmark your M08.U08 model: fp32 vs AMP (bf16 or fp16), batch-size sweep until OOM, torch.compile on/off. Report throughput (img/s), peak memory (torch.cuda.max_memory_allocated) and accuracy. Export to ONNX and verify onnxruntime outputs match PyTorch within 1e-4 on 100 inputs; report CPU latency p50/p95.",
+      "done_when": "A benchmark table, the largest batch before OOM, an ONNX parity test that passes, and p50/p95 CPU latency over ≥ 200 runs.",
+      "autograder": "pytest: assert np.allclose(torch_out, ort_out, atol=1e-4) for 100 inputs"
+     },
+     "quiz": [
+      {
+       "id": "M08.U10.Q1",
+       "kind": "mcq",
+       "prompt": "AMP's GradScaler is needed mainly for:",
+       "options": [
+        "bf16",
+        "fp16, to avoid gradient underflow",
+        "fp32",
+        "int8"
+       ],
+       "answer": 1,
+       "explain": "bf16 has fp32's exponent range, so scaling is usually unnecessary."
+      },
+      {
+       "id": "M08.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Doubling batch size roughly doubles:",
+       "options": [
+        "Parameter memory",
+        "Activation memory",
+        "Optimizer state",
+        "Nothing"
+       ],
+       "answer": 1,
+       "explain": "Activations scale with batch; weights and optimizer state do not."
+      },
+      {
+       "id": "M08.U10.Q3",
+       "kind": "mcq",
+       "prompt": "ONNX export is useful because:",
+       "options": [
+        "It trains faster",
+        "It serves the model in non-PyTorch runtimes (onnxruntime, other languages/hardware)",
+        "It increases accuracy",
+        "GPUs require it"
+       ],
+       "answer": 1,
+       "explain": "Portable inference graph."
+      },
+      {
+       "id": "M08.U10.Q4",
+       "kind": "mcq",
+       "prompt": "Why is bfloat16 generally preferred over float16 for neural network training?",
+       "options": [
+        "bfloat16 uses less memory than float16",
+        "bfloat16 has the same exponent range as float32, avoiding overflow on large activations without loss scaling",
+        "bfloat16 is supported by more GPU architectures than float16",
+        "bfloat16 has more mantissa bits, giving better precision"
+       ],
+       "answer": 1,
+       "explain": "bfloat16 has 8 exponent bits (same as float32, range up to 3.4e38) while float16 has only 5 exponent bits (max ~65,504). During training, activations and gradients can exceed 65,504, causing float16 overflow. bfloat16 handles this without loss scaling. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 13-numerical-stability quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M08.U10.Q5",
+       "kind": "short",
+       "prompt": "Your GPU is only 30% utilised during training. Name three likely causes and how you'd check each.",
+       "rubric": [
+        "Data loading bottleneck → profiler / num_workers / pin_memory",
+        "Small batch or tiny model → batch sweep",
+        "CPU-side Python overhead or sync points (.item(), logging) → profiler trace",
+        "Optionally host↔device copies, I/O"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M08.S4",
+   "title": "Deep track: internals and theory",
+   "units": [
+    {
+     "id": "M08.U11",
+     "title": "Deep: manual backprop through a network, and WaveNet",
+     "hours": 15,
+     "depth": "deep",
+     "prerequisites": [
+      "M08.U04"
+     ],
+     "outcomes": [
+      "You can backprop manually through cross-entropy, linear, tanh, BatchNorm and embedding layers.",
+      "You can build a hierarchical (WaveNet-style) model with torch.nn containers."
+     ],
+     "topics": [
+      {
+       "id": "M08.05.01",
+       "title": "manual tensor-level backprop (Backprop Ninja) and WaveNet-style hierarchy"
+      }
+     ],
+     "learn": {
+      "resourceId": "karpathy-zero-to-hero",
+      "title": "Karpathy Zero to Hero #5 'Becoming a Backprop Ninja' + #6 'Building a WaveNet'",
+      "url": "https://www.youtube.com/watch?v=q8SA3rM6ckI",
+      "slice": "#5 (q8SA3rM6ckI, ~1h55m) then #6 (t3YJ5hKiMQ0, ~56m)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "#5: manual backward pass for every tensor in the makemore MLP incl. cross-entropy and BatchNorm in one formula",
+      "#6: deeper hierarchical model, PyTorch-like containers, BatchNorm bug with 3-D inputs, dilated convolution analogy"
+     ],
+     "gaps": [
+      {
+       "topic": "Next step: GPT from scratch (opens M09)",
+       "resource": {
+        "resourceId": "karpathy-zero-to-hero",
+        "title": "Karpathy · Let's build GPT: from scratch, in code, spelled out.",
+        "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Backprop Ninja exercises",
+      "brief": "Complete all four exercises from the Backprop Ninja notebook (makemore repo) without looking at solutions; then build the WaveNet model and beat your MLP dev loss.",
+      "done_when": "Your manual gradients match autograd (max diff < 1e-8 in float64) for every tensor; WaveNet dev loss below your M08.U03 MLP."
+     },
+     "quiz": [
+      {
+       "id": "M08.U11.Q1",
+       "kind": "mcq",
+       "prompt": "The gradient of mean cross-entropy w.r.t. logits for one example is:",
+       "options": [
+        "softmax − one_hot",
+        "one_hot − softmax",
+        "softmax",
+        "log softmax"
+       ],
+       "answer": 0,
+       "explain": "Divided by batch size for the mean."
+      },
+      {
+       "id": "M08.U11.Q2",
+       "kind": "mcq",
+       "prompt": "In BatchNorm backward, gradients flow through:",
+       "options": [
+        "Only γ and β",
+        "The normalised input, the batch mean and the batch variance",
+        "Only the input",
+        "Nothing at eval"
+       ],
+       "answer": 1,
+       "explain": "Mean and variance depend on every example."
+      },
+      {
+       "id": "M08.U11.Q3",
+       "kind": "mcq",
+       "prompt": "WaveNet-style hierarchical fusion mainly lets the model:",
+       "options": [
+        "Use fewer epochs",
+        "Combine context progressively instead of crushing it in one layer",
+        "Avoid embeddings",
+        "Skip normalisation"
+       ],
+       "answer": 1,
+       "explain": "Tree-like grouping of consecutive characters."
+      },
+      {
+       "id": "M08.U11.Q4",
+       "kind": "short",
+       "prompt": "What did writing backprop by hand teach you that autograd hides?",
+       "rubric": [
+        "Shapes of gradients equal shapes of parameters; broadcasting → sum in backward",
+        "Where numerical issues arise",
+        "Why some layers are expensive",
+        "Debugging intuition for custom ops"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U12",
+     "title": "Deep: deep learning theory (Understanding Deep Learning)",
+     "hours": 60,
+     "depth": "deep",
+     "prerequisites": [
+      "M08.U05"
+     ],
+     "outcomes": [
+      "You can explain universal approximation, depth efficiency and loss functions from likelihood.",
+      "You can explain initialisation, generalisation and double descent.",
+      "You can read DL theory papers' notation."
+     ],
+     "topics": [
+      {
+       "id": "M08.05.02",
+       "title": "DL theory: shallow/deep nets, loss from likelihood, fitting, initialisation, generalisation, regularisation, CNNs, residual nets"
+      }
+     ],
+     "learn": {
+      "resourceId": "udl-book",
+      "title": "Understanding Deep Learning",
+      "url": "https://udlbook.github.io/udlbook/",
+      "slice": "Chapters 3–11 (Shallow NNs, Deep NNs, Loss functions, Fitting models, Gradients and initialization, Measuring performance, Regularization, Convolutional networks, Residual networks) + companion notebooks",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Shallow and deep networks; universal approximation and depth efficiency",
+      "Loss functions derived from maximum likelihood",
+      "Gradient descent, SGD, momentum, Adam",
+      "Backprop and initialisation",
+      "Measuring performance: bias, variance, double descent",
+      "Regularisation; CNNs; residual networks and normalisation"
+     ],
+     "gaps": [
+      {
+       "topic": "Classic reference chapters",
+       "resource": {
+        "resourceId": "goodfellow-dl-book",
+        "title": "Deep Learning",
+        "url": "https://www.deeplearningbook.org/",
+        "slice": "Ch.6 Deep Feedforward Networks, ch.7 Regularization, ch.8 Optimization",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Lecture-note companion",
+       "resource": {
+        "resourceId": "cs231n-notes",
+        "title": "CS231n: Deep Learning for Computer Vision — course notes",
+        "url": "https://cs231n.github.io/",
+        "slice": "Neural Networks Parts 1–3",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Annual overview lectures",
+       "resource": {
+        "resourceId": "mit-6s191",
+        "title": "MIT 6.S191 Introduction to Deep Learning",
+        "url": "https://introtodeeplearning.com/",
+        "slice": "Lecture 1 Intro to Deep Learning",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Notebook track",
+      "brief": "Complete the UDL companion notebooks for chapters 3–11 and write a one-page summary per chapter in your own words.",
+      "done_when": "Nine completed notebooks plus nine summaries; each summary includes one figure you reproduced."
+     },
+     "quiz": [
+      {
+       "id": "M08.U12.Q1",
+       "kind": "mcq",
+       "prompt": "Double descent describes test error that:",
+       "options": [
+        "Always decreases with size",
+        "Rises near the interpolation threshold then falls again",
+        "Is constant",
+        "Only applies to trees"
+       ],
+       "answer": 1,
+       "explain": "Over-parameterised models can generalise again past the threshold."
+      },
+      {
+       "id": "M08.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Using MSE for regression corresponds to maximum likelihood under:",
+       "options": [
+        "Bernoulli noise",
+        "Gaussian noise",
+        "Poisson noise",
+        "No assumption"
+       ],
+       "answer": 1,
+       "explain": "Gaussian log-likelihood ∝ −squared error."
+      },
+      {
+       "id": "M08.U12.Q3",
+       "kind": "mcq",
+       "prompt": "Universal approximation says a single hidden layer can:",
+       "options": [
+        "Learn any function from little data",
+        "Approximate any continuous function on a compact set given enough units",
+        "Replace depth in practice",
+        "Guarantee generalisation"
+       ],
+       "answer": 1,
+       "explain": "Existence result; says nothing about learnability or efficiency."
+      },
+      {
+       "id": "M08.U12.Q4",
+       "kind": "short",
+       "prompt": "Why does depth help even though one hidden layer is a universal approximator?",
+       "rubric": [
+        "Depth can represent some functions exponentially more efficiently",
+        "Compositional/hierarchical features",
+        "Practical evidence from CNNs/transformers",
+        "Notes optimisation needs tricks (residuals, norms)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M08.U13",
+     "title": "Deep: build your own framework (fast.ai Part 2 + mini-framework + JAX)",
+     "hours": 75,
+     "depth": "deep",
+     "prerequisites": [
+      "M08.U06"
+     ],
+     "outcomes": [
+      "You can implement a mini deep-learning library from matrix multiply upwards.",
+      "You can implement callbacks, learners and modern training loops.",
+      "You can compare PyTorch and JAX programming models."
+     ],
+     "topics": [
+      {
+       "id": "M08.05.03",
+       "title": "framework internals: matmul → autograd → learner/callbacks; JAX functional transforms"
+      }
+     ],
+     "learn": {
+      "resourceId": "fastai-part2",
+      "title": "Practical Deep Learning Part 2: Deep Learning Foundations to Stable Diffusion",
+      "url": "https://course.fast.ai/Lessons/part2.html",
+      "slice": "Lessons 9–25 'Deep Learning Foundations to Stable Diffusion' (foundations from matmul, then diffusion models)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Rebuilding matmul, broadcasting, backprop and a Learner with callbacks from scratch",
+      "Initialisation, normalisation, optimisers and schedules implemented by hand",
+      "Diffusion models and attention built from foundations"
+     ],
+     "gaps": [
+      {
+       "topic": "Mini neural-network library from scratch",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 10-mini-framework",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/10-mini-framework",
+        "slice": "Phase 03 · lesson 10-mini-framework (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "JAX functional style (grad, jit, vmap)",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 03 lesson 12-intro-to-jax",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/03-deep-learning-core/12-intro-to-jax",
+        "slice": "Phase 03 · lesson 12-intro-to-jax (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Your own learner",
+      "brief": "Build a mini-framework (Module, Parameter, Linear, ReLU, Sequential, SGD/Adam, DataLoader, Learner with callbacks) and train Fashion-MNIST to ≥ 85% accuracy; port the same model to JAX.",
+      "done_when": "Mini-framework reaches ≥ 85% test accuracy; JAX version matches within 1 point."
+     },
+     "quiz": [
+      {
+       "id": "M08.U13.Q1",
+       "kind": "mcq",
+       "prompt": "A callback system in a Learner is mainly for:",
+       "options": [
+        "Speeding up matmul",
+        "Injecting behaviour (logging, schedules, early stopping) without editing the loop",
+        "Saving memory",
+        "Autograd"
+       ],
+       "answer": 1,
+       "explain": "Keeps the core loop small."
+      },
+      {
+       "id": "M08.U13.Q2",
+       "kind": "mcq",
+       "prompt": "jax.vmap:",
+       "options": [
+        "Compiles a function",
+        "Vectorises a function over a batch dimension",
+        "Computes gradients",
+        "Moves data to GPU"
+       ],
+       "answer": 1,
+       "explain": "jit compiles; grad differentiates."
+      },
+      {
+       "id": "M08.U13.Q3",
+       "kind": "mcq",
+       "prompt": "JAX requires functions to be:",
+       "options": [
+        "Object-oriented",
+        "Pure (no side effects) for transforms to be safe",
+        "Written in C",
+        "Recursive"
+       ],
+       "answer": 1,
+       "explain": "Transformations assume purity."
+      },
+      {
+       "id": "M08.U13.Q4",
+       "kind": "short",
+       "prompt": "What did you learn about PyTorch by rebuilding pieces of it?",
+       "rubric": [
+        "Names concrete internals (parameters registry, autograd graph, optimizer state)",
+        "Explains a bug/perf issue now understood",
+        "Compares to the real API",
+        "Shows judgement on when to use high-level APIs"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "From micrograd to a shipped fine-tuned model",
+  "brief": "Part A (internals): your NumPy/micrograd MLP and a PyTorch MLP with identical init produce matching losses (±1e-5) and gradients over 20 steps. Part B (applied): fine-tune a pretrained model (ResNet for vision, or a small pretrained text encoder as a bridge to M09) on your own collected dataset with train.py + config, seeds, checkpoints/resume, TensorBoard logs, AMP, clean train/val/test, error analysis, ONNX export + onnxruntime parity test, CPU latency report and a short model card. If the data are tabular, compare against your M07 GBM. Pass: ≥ 7/10, no 0 in training correctness.",
+  "rubric": [
+   {
+    "criterion": "Internals parity (Part A)",
+    "levels": [
+     "0: doesn't match",
+     "1: loss matches",
+     "2: loss + gradients match; tolerance explained"
+    ]
+   },
+   {
+    "criterion": "Training correctness",
+    "levels": [
+     "0: leaks or test-set tuning",
+     "1: clean splits",
+     "2: clean splits + baseline comparison + multi-seed results"
+    ]
+   },
+   {
+    "criterion": "Engineering hygiene",
+    "levels": [
+     "0: notebook only",
+     "1: script + checkpoints",
+     "2: script, config, resume, logging, seeds, README"
+    ]
+   },
+   {
+    "criterion": "Diagnosis and error analysis",
+    "levels": [
+     "0: none",
+     "1: curves only",
+     "2: curves + misclassification analysis + one ablation"
+    ]
+   },
+   {
+    "criterion": "Deployability",
+    "levels": [
+     "0: no export",
+     "1: ONNX export",
+     "2: ONNX parity test + latency p50/p95 + memory numbers"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

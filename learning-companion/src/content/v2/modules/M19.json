@@ -1,0 +1,2020 @@
+{
+ "id": "M19",
+ "phase": "P7 Career",
+ "title": "Role tracks, FDE practice and breadth electives",
+ "summary": "Choose your track (AI Engineer, FDE, MLOps) from real job evidence, then practise the FDE engagement loop end to end with a real user: discovery, scoping and metrics, enterprise integration, offline/on-prem deployment, co-built evals with a feedback ratchet, and communication. FDE practice is core for the FDE track, strongly recommended for AI Engineers, optional for MLOps. Pick one breadth elective (deep). Primary spine for FDE: rohitg00 phase 14 lessons 43–54.",
+ "hours": 43,
+ "prerequisites": [
+  "M10",
+  "M11",
+  "M12",
+  "M16",
+  "M18"
+ ],
+ "tracks": [
+  "fde",
+  "ai-engineer"
+ ],
+ "optionalFor": [
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M19.S1",
+   "title": "Choose your track",
+   "units": [
+    {
+     "id": "M19.U01",
+     "title": "Role landscape and your track decision (AI Engineer / FDE / MLOps)",
+     "hours": 4,
+     "depth": "core",
+     "week": 145,
+     "prerequisites": [],
+     "outcomes": [
+      "You can describe what AI Engineers, Forward Deployed Engineers and MLOps engineers do and how they are interviewed.",
+      "You can tag real job posts against this curriculum and produce a personal gap list and track choice."
+     ],
+     "topics": [
+      {
+       "id": "M19.02.01",
+       "title": "AI application engineering"
+      },
+      {
+       "id": "M19.02.02",
+       "title": "ML engineering"
+      },
+      {
+       "id": "M19.02.03",
+       "title": "Data science/experimentation"
+      },
+      {
+       "id": "M19.02.04",
+       "title": "Research engineering"
+      },
+      {
+       "id": "M19.02.05",
+       "title": "Inference/ML systems"
+      },
+      {
+       "id": "M19.02.06",
+       "title": "Platform/MLOps"
+      }
+     ],
+     "learn": {
+      "resourceId": "pragmatic-fde",
+      "title": "What are Forward Deployed Engineers, and why are they so in demand?",
+      "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers",
+      "type": "article",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Free portion: what FDEs do, origins at Palantir, OpenAI's FDE phases (scoping, validation with evals, delivery)"
+     },
+     "covers": [
+      "FDE vs solutions architect vs product engineer",
+      "Palantir 'Delta/Echo' origins: one customer, many capabilities",
+      "OpenAI FDE engagement phases: scoping → validation with evals → delivery, and feeding learnings back to product"
+     ],
+     "gaps": [
+      {
+       "topic": "AI Engineer skill map for coverage checks",
+       "resource": {
+        "resourceId": "roadmap-ai-engineer",
+        "title": "roadmap.sh — AI Engineer",
+        "url": "https://roadmap.sh/ai-engineer",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "MLOps skill map",
+       "resource": {
+        "resourceId": "roadmap-mlops",
+        "title": "roadmap.sh — MLOps",
+        "url": "https://roadmap.sh/mlops",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Why startups hire FDEs (services-led growth)",
+       "resource": {
+        "resourceId": "a16z-fde",
+        "title": "Trading Margin for Moat: Why the Forward Deployed Engineer Is the Hottest Job in Startups",
+        "url": "https://a16z.com/services-led-growth/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Role descriptions in this repo",
+       "resource": {
+        "resourceId": "grain-doc08",
+        "title": "Grain to Mountain doc 08 — Role paths and priorities",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/08-role-paths-and-priorities.md",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "a16z-fde",
+      "title": "Trading Margin for Moat: Why the Forward Deployed Engineer Is the Hottest Job in Startups",
+      "url": "https://a16z.com/services-led-growth/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "15 job posts → gap list",
+      "brief": "Collect 15 current job posts (5 per track; include remote roles open to Pakistan). Tag each required skill with this curriculum's module/unit ids, count frequency, and produce a personal gap list. Choose a primary and a secondary track.",
+      "done_when": "jobs.csv (15 rows with tagged skills) and TRACK.md naming primary/secondary track and top-5 gaps with the units that close them."
+     },
+     "quiz": [
+      {
+       "id": "M19.U01.Q1",
+       "kind": "mcq",
+       "prompt": "FDE vs solutions architect (per OpenAI's description):",
+       "options": [
+        "they are identical",
+        "FDEs write code directly on customer infrastructure and work with more ambiguity",
+        "FDEs only sell",
+        "SAs deploy to production more"
+       ],
+       "answer": 1,
+       "explain": "FDEs own delivery, not just design."
+      },
+      {
+       "id": "M19.U01.Q2",
+       "kind": "mcq",
+       "prompt": "'One customer, many capabilities' describes…",
+       "options": [
+        "Palantir's forward-deployed (Delta) model",
+        "a product developer",
+        "MLOps",
+        "research"
+       ],
+       "answer": 0,
+       "explain": "Contrast: product engineers build one capability for many customers."
+      },
+      {
+       "id": "M19.U01.Q3",
+       "kind": "mcq",
+       "prompt": "MLOps primarily owns…",
+       "options": [
+        "UI design",
+        "sales",
+        "the reproducible lifecycle: versioning, CI/CD, serving, monitoring",
+        "papers"
+       ],
+       "answer": 2,
+       "explain": "Platform reliability for ML."
+      },
+      {
+       "id": "M19.U01.Q4",
+       "kind": "short",
+       "prompt": "Which track did you choose, and what is your single biggest gap?",
+       "rubric": [
+        "Names a track with evidence from the job-post tally",
+        "Names one specific gap tied to unit ids",
+        "Gives a dated plan to close it"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M19.S2",
+   "title": "FDE practice",
+   "units": [
+    {
+     "id": "M19.U02",
+     "title": "Client discovery: outcomes, the real workflow, assumptions and risk",
+     "hours": 6,
+     "depth": "core",
+     "week": 146,
+     "prerequisites": [
+      "M19.U01"
+     ],
+     "outcomes": [
+      "You can separate the customer's desired outcome from the requested output.",
+      "You can reconstruct the workflow people actually perform with evidence levels, and rank assumptions by risk."
+     ],
+     "topics": [
+      {
+       "id": "M19.02.07",
+       "title": "FDE requirements discovery"
+      },
+      {
+       "id": "M19.03.01",
+       "title": "Requirements interviews"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Outcomes Before Output (+2 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 14 · Lesson 47 outcomes before output; Lesson 48 discover the real workflow; Lesson 49 map assumptions and risk"
+     },
+     "covers": [
+      "14/47 Outcomes before output: output ≠ outcome, the six-part frame, solution leakage, constraints and non-goals",
+      "14/48 Discover the real workflow: start with the current system, evidence strength ladder, search for friction/hidden state/authority/exceptions, don't average away disagreement",
+      "14/49 Map assumptions and risk: assumption classes, multi-dimensional risk, experiments not confirmation rituals, reversibility changes order"
+     ],
+     "gaps": [
+      {
+       "topic": "How to interview without leading (talk)",
+       "resource": {
+        "resourceId": "yt-yc-talk-to-users",
+        "title": "How To Talk To Users — Eric Migicovsky (YC Startup School)",
+        "url": "https://www.youtube.com/watch?v=z1iF1c8w5Lg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Full talk"
+       }
+      },
+      {
+       "topic": "Observing users in context",
+       "resource": {
+        "resourceId": "nngroup-contextual-inquiry",
+        "title": "Contextual Inquiry: Inspire Design by Observing and Interviewing Users in Their Context",
+        "url": "https://www.nngroup.com/articles/contextual-inquiry/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Mapping front-stage/back-stage process",
+       "resource": {
+        "resourceId": "nngroup-service-blueprints",
+        "title": "Service Blueprints: Definition",
+        "url": "https://www.nngroup.com/articles/service-blueprints-definition/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Frame the task before building",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Frame The Task Before Code",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/43-frame-the-task-before-code",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 14 · Lesson 43 frame the task before code"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "pragmatic-fde",
+      "title": "What are Forward Deployed Engineers, and why are they so in demand?",
+      "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers",
+      "type": "article",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Scoping phase section"
+     },
+     "practice": {
+      "title": "Discovery with a real local user",
+      "brief": "Find a real local user (university office, clinic, shop billing desk, family business). Run 3 interviews and 1 observation session. Produce a workflow table (actor, trigger, action, input, output, friction, authority, evidence level), an outcome frame, and a ranked assumption list with the riskiest one's test.",
+      "done_when": "DISCOVERY.md contains interview notes (anonymised), the workflow table with evidence levels, the outcome frame and ranked assumptions; the user confirms the workflow table is accurate."
+     },
+     "quiz": [
+      {
+       "id": "M19.U02.Q1",
+       "kind": "mcq",
+       "prompt": "The strongest evidence of current behaviour is…",
+       "options": [
+        "what a manager says happens",
+        "your own inference",
+        "a survey of wishes",
+        "direct observation or system logs"
+       ],
+       "answer": 3,
+       "explain": "Evidence ladder: observed > reported > inferred."
+      },
+      {
+       "id": "M19.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Start discovery by…",
+       "options": [
+        "reconstructing what happens now",
+        "asking which features users want",
+        "demoing your model",
+        "picking a framework"
+       ],
+       "answer": 0,
+       "explain": "Wishes are weak evidence; current behaviour is strong."
+      },
+      {
+       "id": "M19.U02.Q3",
+       "kind": "mcq",
+       "prompt": "AI features often fail at…",
+       "options": [
+        "the happy path",
+        "logins only",
+        "fonts",
+        "handoffs and exceptions"
+       ],
+       "answer": 3,
+       "explain": "Hidden state and exceptions break automation."
+      },
+      {
+       "id": "M19.U02.Q4",
+       "kind": "short",
+       "prompt": "Name one hidden-state item you found that would have broken an automation.",
+       "rubric": [
+        "Concrete item from the observation (an unwritten rule, a side spreadsheet, a phone call)",
+        "Explains how automation would have failed",
+        "Says how the design now handles it"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U03",
+     "title": "Scoping: smallest testable slice, specs, success metrics, pilot vs production",
+     "hours": 6,
+     "depth": "core",
+     "week": 146,
+     "prerequisites": [
+      "M19.U02"
+     ],
+     "outcomes": [
+      "You can choose the smallest end-to-end slice that can change a decision and add a stop rule.",
+      "You can write a spec/SOW with examples, success/guardrail/counter metrics, cost estimate and acceptance criteria."
+     ],
+     "topics": [
+      {
+       "id": "M19.03.02",
+       "title": "Product metrics"
+      },
+      {
+       "id": "M19.03.05",
+       "title": "Cost estimates"
+      },
+      {
+       "id": "M19.02.10",
+       "title": "Spec writing / SOW"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Choose The Smallest Testable Slice (+3 more)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 14 · Lesson 50 choose the smallest testable slice; Lesson 51 write specifications that preserve judgment; Lesson 52 design success metrics; Lesson 53 prototype pilot or production"
+     },
+     "covers": [
+      "14/50 Smallest testable slice: vertical = evidence end to end, define required proof first, false minimums, stop rules",
+      "14/51 Specifications that preserve judgment: two bad extremes, three decision modes, behaviour through examples, proof matches claim, preserve unknowns",
+      "14/52 Success metrics: goal-question-metric, metric contracts, outcome/guardrail/counter-metric, offline vs online evidence, decide before measuring",
+      "14/53 Prototype vs pilot vs production: three different questions and stage drift"
+     ],
+     "gaps": [
+      {
+       "topic": "Appetite, shaping and fixed-time scoping",
+       "resource": {
+        "resourceId": "shape-up",
+        "title": "Shape Up: Stop Running in Circles and Ship Work that Matters",
+        "url": "https://basecamp.com/shapeup",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Part 1 Shaping (ch. 2–6)"
+       }
+      },
+      {
+       "topic": "Practical lessons on LLM product scoping and evals",
+       "resource": {
+        "resourceId": "applied-llms",
+        "title": "What We've Learned From A Year of Building with LLMs",
+        "url": "https://applied-llms.org/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Tactical + Operational sections"
+       }
+      },
+      {
+       "topic": "Evidence-backed planning",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Plan From Evidence",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/44-plan-from-evidence",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 14 · Lesson 44 plan from evidence"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "applied-llms",
+      "title": "What We've Learned From A Year of Building with LLMs",
+      "url": "https://applied-llms.org/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Two-page scope signed by the user",
+      "brief": "Write a 2-page scope/SOW: problem, success metric with baseline, guardrail and counter-metric, out-of-scope items, data access needed, risks, a 3-week pilot plan, a cost estimate (tokens + hosting + your hours) and acceptance criteria. Get the user to sign off.",
+      "done_when": "SCOPE.md exists with every section filled, a numeric baseline, a cost estimate table, and a recorded sign-off (message/email screenshot, anonymised)."
+     },
+     "quiz": [
+      {
+       "id": "M19.U03.Q1",
+       "kind": "mcq",
+       "prompt": "A good success metric is…",
+       "options": [
+        "'users like it'",
+        "model accuracy only",
+        "lines of code",
+        "tied to the user's outcome and measurable against a baseline"
+       ],
+       "answer": 3,
+       "explain": "Outcome + baseline + contract."
+      },
+      {
+       "id": "M19.U03.Q2",
+       "kind": "mcq",
+       "prompt": "The smallest testable slice is…",
+       "options": [
+        "the thinnest end-to-end path that delivers measurable value",
+        "the UI only",
+        "the model only",
+        "the full product"
+       ],
+       "answer": 0,
+       "explain": "Vertical, not horizontal."
+      },
+      {
+       "id": "M19.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Pilot vs production differ mainly in…",
+       "options": [
+        "the model name",
+        "the font",
+        "nothing",
+        "scale, reliability, support and security requirements"
+       ],
+       "answer": 3,
+       "explain": "Different questions, different bars."
+      },
+      {
+       "id": "M19.U03.Q4",
+       "kind": "short",
+       "prompt": "What did you explicitly put out of scope, and why?",
+       "rubric": [
+        "Lists ≥ 2 concrete exclusions",
+        "Justifies by risk, value or evidence",
+        "Notes when they would be revisited"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U04",
+     "title": "Enterprise integration: OAuth APIs, webhooks, data sync",
+     "hours": 8,
+     "depth": "core",
+     "week": 147,
+     "prerequisites": [
+      "M19.U03",
+      "M12.U11"
+     ],
+     "outcomes": [
+      "You can integrate with a customer system via OAuth (auth code + PKCE or client credentials).",
+      "You can build signed, idempotent webhook receivers and incremental syncs that survive rate limits."
+     ],
+     "topics": [
+      {
+       "id": "M19.02.08",
+       "title": "Customer integration"
+      },
+      {
+       "id": "M19.02.11",
+       "title": "SSO/OAuth integration"
+      },
+      {
+       "id": "M19.02.12",
+       "title": "ETL from customer systems"
+      }
+     ],
+     "learn": {
+      "resourceId": "oauth-com",
+      "title": "OAuth 2.0 Simplified",
+      "url": "https://www.oauth.com/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "OAuth 2.0 Simplified chapters: Authorization Code, PKCE, Client Credentials, Access/Refresh tokens, Scopes"
+     },
+     "covers": [
+      "Roles, client registration, redirect URIs",
+      "Authorization code flow with PKCE; client credentials for server-to-server",
+      "Access vs refresh tokens, expiry and refresh",
+      "Scopes and least privilege"
+     ],
+     "gaps": [
+      {
+       "topic": "PKCE specifically",
+       "resource": {
+        "resourceId": "oauth-pkce",
+        "title": "OAuth 2.0 Simplified — PKCE",
+        "url": "https://www.oauth.com/oauth2-servers/pkce/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Webhook signature validation (worked example)",
+       "resource": {
+        "resourceId": "github-webhook-validate",
+        "title": "GitHub Docs — Validating webhook deliveries",
+        "url": "https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "A real OAuth API quickstart",
+       "resource": {
+        "resourceId": "google-sheets-python-quickstart",
+        "title": "Google Sheets API — Python quickstart",
+        "url": "https://developers.google.com/workspace/sheets/api/quickstart/python",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Incremental sync with dedupe",
+       "resource": {
+        "resourceId": "airbyte-incremental",
+        "title": "Airbyte — Incremental Sync: Append + Deduped",
+        "url": "https://docs.airbyte.com/using-airbyte/core-concepts/sync-modes/incremental-append-deduped",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "OAuth 2.1 in production MCP",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Mcp Security Oauth 2 1 (+1 more)",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 13 · Lesson 16 mcp security oauth 2 1; Lesson 18 mcp auth production"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "owasp-api-top10",
+      "title": "OWASP API Security Top 10 (2023)",
+      "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Integrate with an existing system",
+      "brief": "Integrate your assistant with an existing system: OAuth into a real API (Google Sheets/Drive or GitHub), a webhook receiver with signature verification and idempotent processing, and a nightly incremental sync from a SQL DB with an updated_at cursor. Handle rate limits (429/Retry-After) and retries.",
+      "done_when": "Tests: forged webhook signature → rejected; duplicate delivery processed once; sync resumes from cursor after a simulated 429 mid-run with no duplicates."
+     },
+     "quiz": [
+      {
+       "id": "M19.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Webhook signature verification prevents…",
+       "options": [
+        "spoofed events",
+        "latency",
+        "duplicates",
+        "cost"
+       ],
+       "answer": 0,
+       "explain": "HMAC over the payload with a shared secret."
+      },
+      {
+       "id": "M19.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Webhook handlers should be idempotent because…",
+       "options": [
+        "providers retry deliveries",
+        "of style",
+        "of speed",
+        "HTTP requires it"
+       ],
+       "answer": 0,
+       "explain": "At-least-once delivery means duplicates."
+      },
+      {
+       "id": "M19.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Incremental sync uses…",
+       "options": [
+        "a full reload each time",
+        "screenshots",
+        "nothing",
+        "cursors/updated_at/change data capture to fetch only changes"
+       ],
+       "answer": 3,
+       "explain": "Cheaper and faster, needs dedupe."
+      },
+      {
+       "id": "M19.U04.Q4",
+       "kind": "short",
+       "prompt": "What happens to your sync if the customer's API rate-limits you mid-run?",
+       "rubric": [
+        "Honour Retry-After / backoff with jitter",
+        "Persist cursor so the run resumes without duplication",
+        "Alerting if the window is missed"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U05",
+     "title": "Deploying in the customer's environment: offline, on-prem, data residency",
+     "hours": 8,
+     "depth": "core",
+     "week": 148,
+     "prerequisites": [
+      "M19.U04"
+     ],
+     "outcomes": [
+      "You can package an assistant (app, vector DB, model server) with docker compose to run fully offline on one machine.",
+      "You can write an install runbook and sizing table a customer IT person could follow."
+     ],
+     "topics": [
+      {
+       "id": "M19.02.09",
+       "title": "Deployment constraints"
+      },
+      {
+       "id": "M19.02.13",
+       "title": "Air-gapped/on-prem/open-weights deployment"
+      },
+      {
+       "id": "M19.02.14",
+       "title": "Data residency"
+      }
+     ],
+     "learn": {
+      "resourceId": "docker-get-started",
+      "title": "Docker — Get started",
+      "url": "https://docs.docker.com/get-started/",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Get started: concepts, building images, multi-container apps with Compose, persisting data"
+     },
+     "covers": [
+      "Images vs containers, Dockerfile builds",
+      "Multi-container applications with Compose",
+      "Volumes and bind mounts for persistent data",
+      "Publishing and sharing images"
+     ],
+     "gaps": [
+      {
+       "topic": "Moving images without a registry",
+       "resource": {
+        "resourceId": "docker-image-save",
+        "title": "docker image save (offline image transfer)",
+        "url": "https://docs.docker.com/reference/cli/docker/image/save/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Running Hugging Face models offline",
+       "resource": {
+        "resourceId": "hf-offline-mode",
+        "title": "Transformers installation — Offline mode",
+        "url": "https://huggingface.co/docs/transformers/installation#offline-mode",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Serving open weights",
+       "resource": {
+        "resourceId": "vllm-docs",
+        "title": "vLLM documentation",
+        "url": "https://docs.vllm.ai/",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Quickstart"
+       }
+      },
+      {
+       "topic": "Choosing a local model",
+       "resource": {
+        "resourceId": "ollama-library",
+        "title": "Ollama model library",
+        "url": "https://ollama.com/library",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "vllm-docs",
+      "title": "vLLM documentation",
+      "url": "https://docs.vllm.ai/",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified"
+     },
+     "practice": {
+      "title": "Offline compose bundle",
+      "brief": "Package your assistant as docker compose (app + vector DB + open-weight model server such as Ollama or vLLM) that runs with networking disabled after install. Export images with docker save, pre-download model weights, and set HF offline mode. Write an install runbook and a resource-sizing table.",
+      "done_when": "A fresh machine (or VM) with no internet installs from the bundle using only RUNBOOK.md and passes a health check; sizing table lists RAM/VRAM/CPU per component."
+     },
+     "quiz": [
+      {
+       "id": "M19.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Air-gapped deployment requires…",
+       "options": [
+        "a faster GPU",
+        "all images, models and dependencies pre-packaged with no internet calls at runtime",
+        "a cloud API",
+        "nothing special"
+       ],
+       "answer": 1,
+       "explain": "Telemetry and model downloads must be disabled too."
+      },
+      {
+       "id": "M19.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Data residency means…",
+       "options": [
+        "cached data",
+        "data must stay in a specified jurisdiction/location",
+        "backups only",
+        "encryption only"
+       ],
+       "answer": 1,
+       "explain": "Affects where models and logs run."
+      },
+      {
+       "id": "M19.U05.Q3",
+       "kind": "mcq",
+       "prompt": "A deployment runbook should include…",
+       "options": [
+        "only a git link",
+        "marketing copy",
+        "the source code",
+        "prerequisites, install steps, config, health checks, rollback and contacts"
+       ],
+       "answer": 3,
+       "explain": "Written for the operator, not the author."
+      },
+      {
+       "id": "M19.U05.Q4",
+       "kind": "short",
+       "prompt": "What changes in your architecture if the customer forbids external LLM APIs?",
+       "rubric": [
+        "Open-weight model served locally with sizing",
+        "Quality/eval re-check against the hosted baseline",
+        "Ops changes: GPU, updates, monitoring all on-prem"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U06",
+     "title": "Customer evals and the feedback ratchet",
+     "hours": 5,
+     "depth": "core",
+     "week": 148,
+     "prerequisites": [
+      "M19.U03",
+      "M12.U21"
+     ],
+     "outcomes": [
+      "You can co-build a labelled eval set with users and run error analysis into a failure taxonomy.",
+      "You can turn each correction into an owned, retire-able control (the feedback ratchet)."
+     ],
+     "topics": [
+      {
+       "id": "M19.02.15",
+       "title": "Customer evals and feedback ratchet"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Build The Feedback Ratchet",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/54-build-the-feedback-ratchet",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Phase 14 · Lesson 54 build the feedback ratchet"
+     },
+     "covers": [
+      "Feedback as infrastructure; routing feedback to the owning layer",
+      "Ownership as part of the control; retiring stale controls",
+      "Connecting build feedback and coding-agent feedback",
+      "Practice lab: own a decision after a setback — establish what happened, act within authority, brief the decision owner, run a bounded experiment, compare outcomes and economics"
+     ],
+     "gaps": [
+      {
+       "topic": "Error analysis and labelling in practice",
+       "resource": {
+        "resourceId": "hamel-evals-faq",
+        "title": "LLM Evals: Everything You Need to Know (FAQ)",
+        "url": "https://hamel.dev/blog/posts/evals-faq/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Error analysis section"
+       }
+      },
+      {
+       "topic": "Turn corrections into system improvements",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Turn Feedback Into System",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/46-turn-feedback-into-system",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "Phase 14 · Lesson 46 turn feedback into system"
+       }
+      },
+      {
+       "topic": "OpenAI FDE validation phase",
+       "resource": {
+        "resourceId": "pragmatic-fde",
+        "title": "What are Forward Deployed Engineers, and why are they so in demand?",
+        "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers",
+        "type": "article",
+        "free": "partial",
+        "verified": "2026-10-20",
+        "slice": "Validation-with-evals section"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hamel-evals-faq",
+      "title": "LLM Evals: Everything You Need to Know (FAQ)",
+      "url": "https://hamel.dev/blog/posts/evals-faq/",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "50 labelled cases, top-2 fixes",
+      "brief": "With your user, label 50 real cases. Run error analysis to build a failure taxonomy, fix the top 2 failure types, and show the eval movement in a 1-page readout. Record each fix in a ratchet log (cause, layer, owner, retirement condition).",
+      "done_when": "evals/customer.jsonl (50 labelled cases), TAXONOMY.md with counts, a before/after table on a held-out subset, and RATCHET.md with ≥ 2 entries."
+     },
+     "quiz": [
+      {
+       "id": "M19.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Error analysis means…",
+       "options": [
+        "adding metrics blindly",
+        "using a bigger model",
+        "running a survey",
+        "reading real failures and categorising them before choosing fixes"
+       ],
+       "answer": 3,
+       "explain": "Look at data first."
+      },
+      {
+       "id": "M19.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Users should label eval data because…",
+       "options": [
+        "it is cheaper",
+        "the law requires it",
+        "models can't",
+        "they define what 'correct' means in their workflow"
+       ],
+       "answer": 3,
+       "explain": "Domain judgement lives with them."
+      },
+      {
+       "id": "M19.U06.Q3",
+       "kind": "mcq",
+       "prompt": "Hill-climbing on evals risks…",
+       "options": [
+        "nothing",
+        "overfitting to the eval set; keep a held-out set",
+        "cost only",
+        "latency only"
+       ],
+       "answer": 1,
+       "explain": "Goodhart's law."
+      },
+      {
+       "id": "M19.U06.Q4",
+       "kind": "short",
+       "prompt": "What was your top failure category, and what fixed it?",
+       "rubric": [
+        "Names the category with its count",
+        "Describes the fix and the layer it lives in",
+        "Shows the metric movement on held-out cases"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U07",
+     "title": "Communication: ADRs, demos, limitations, status updates",
+     "hours": 6,
+     "depth": "core",
+     "week": 149,
+     "prerequisites": [
+      "M19.U03"
+     ],
+     "outcomes": [
+      "You can write ADRs, weekly status updates and a limitations section for non-technical readers.",
+      "You can run an honest 5-minute demo that includes a failure case."
+     ],
+     "topics": [
+      {
+       "id": "M19.03.03",
+       "title": "Architecture decisions"
+      },
+      {
+       "id": "M19.03.04",
+       "title": "Technical demos"
+      },
+      {
+       "id": "M19.03.06",
+       "title": "Explaining limitations"
+      },
+      {
+       "id": "M19.03.07",
+       "title": "Writing reproducible case studies"
+      }
+     ],
+     "learn": {
+      "resourceId": "google-tech-writing-one",
+      "title": "Google Technical Writing One",
+      "url": "https://developers.google.com/tech-writing/one",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "All units (words, active voice, short sentences, lists, paragraphs, audience, documents)"
+     },
+     "covers": [
+      "Define terms, use terms consistently, avoid ambiguous pronouns",
+      "Active voice, clear and short sentences, lists and tables",
+      "Paragraph structure, knowing your audience, organising documents"
+     ],
+     "gaps": [
+      {
+       "topic": "ADR templates and tooling",
+       "resource": {
+        "resourceId": "adr-github",
+        "title": "Architectural Decision Records (adr.github.io)",
+        "url": "https://adr.github.io/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Longer documents and editing",
+       "resource": {
+        "resourceId": "google-tech-writing-two",
+        "title": "Google Technical Writing Two",
+        "url": "https://developers.google.com/tech-writing/two",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Bottom-line-up-front writing",
+       "resource": {
+        "resourceId": "hbr-bluf",
+        "title": "How to Write Email with Military Precision (BLUF)",
+        "url": "https://hbr.org/2016/11/how-to-write-email-with-military-precision",
+        "type": "article",
+        "free": "partial",
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "pragmatic-fde",
+      "title": "What are Forward Deployed Engineers, and why are they so in demand?",
+      "url": "https://newsletter.pragmaticengineer.com/p/forward-deployed-engineers",
+      "type": "article",
+      "free": "partial",
+      "verified": "2026-10-20",
+      "slice": "Field notes and internal readouts"
+     },
+     "practice": {
+      "title": "Communication pack",
+      "brief": "Produce 3 ADRs for your project, a weekly status update (done / next / risks / asks), a 5-minute demo script that shows a failure case honestly, and a 'known limitations' section for a non-technical manager. Present to a non-CS person and record their questions.",
+      "done_when": "docs/adr/0001–0003, STATUS.md, DEMO.md and LIMITATIONS.md committed, plus a list of the listener's questions and how you changed the docs."
+     },
+     "quiz": [
+      {
+       "id": "M19.U07.Q1",
+       "kind": "mcq",
+       "prompt": "An ADR records…",
+       "options": [
+        "meeting minutes",
+        "code",
+        "a decision, its context, the alternatives and the consequences",
+        "a changelog only"
+       ],
+       "answer": 2,
+       "explain": "Michael Nygard's format."
+      },
+      {
+       "id": "M19.U07.Q2",
+       "kind": "mcq",
+       "prompt": "A good demo…",
+       "options": [
+        "hides failures",
+        "shows code only",
+        "shows the user's real task end-to-end, including a limitation",
+        "lasts 30 minutes"
+       ],
+       "answer": 2,
+       "explain": "Credibility comes from honesty."
+      },
+      {
+       "id": "M19.U07.Q3",
+       "kind": "mcq",
+       "prompt": "A good status update leads with…",
+       "options": [
+        "hours worked",
+        "jargon",
+        "apologies",
+        "outcomes, risks and asks"
+       ],
+       "answer": 3,
+       "explain": "Bottom line up front."
+      },
+      {
+       "id": "M19.U07.Q4",
+       "kind": "short",
+       "prompt": "Rewrite for a manager: 'Recall@5 is 0.62 because chunking breaks tables.'",
+       "rubric": [
+        "Plain language, no metric jargon (or explained)",
+        "States user impact (e.g. ~4 in 10 table questions miss the right page)",
+        "States the fix and when"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M19.S3",
+   "title": "Breadth electives (pick one)",
+   "units": [
+    {
+     "id": "M19.U08",
+     "title": "Elective: Time series and forecasting",
+     "hours": 22,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply time series and forecasting to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.01",
+       "title": "Time series/forecasting"
+      }
+     ],
+     "learn": {
+      "resourceId": "fpppy",
+      "title": "Forecasting: Principles and Practice, the Pythonic Way",
+      "url": "https://otexts.com/fpppy/",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Chapters 1–9"
+     },
+     "covers": [
+      "Time series graphics and decomposition",
+      "Benchmark methods (naive, seasonal naive, drift) and accuracy (MASE, RMSSE)",
+      "Time-series cross-validation (rolling origin)",
+      "Exponential smoothing (ETS) and ARIMA with the Nixtla stack"
+     ],
+     "gaps": [
+      {
+       "topic": "Time-series CV in scikit-learn",
+       "resource": {
+        "resourceId": "sklearn-cv",
+        "title": "scikit-learn — Cross-validation (GroupKFold etc.)",
+        "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "TimeSeriesSplit section"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Forecast a Pakistani series",
+      "brief": "Forecast a real Pakistani series (e.g. electricity load or PSX volume, open data) with rolling-origin CV against seasonal naive, ETS and ARIMA; report MASE.",
+      "done_when": "A CV table with MASE for ≥ 3 methods and a plot of the best forecast with intervals."
+     },
+     "quiz": [
+      {
+       "id": "M19.U08.Q1",
+       "kind": "mcq",
+       "prompt": "The right cross-validation for time series is…",
+       "options": [
+        "rolling origin / time-ordered splits",
+        "random k-fold",
+        "random leave-one-out",
+        "none"
+       ],
+       "answer": 0,
+       "explain": "No peeking into the future."
+      },
+      {
+       "id": "M19.U08.Q2",
+       "kind": "mcq",
+       "prompt": "A seasonal naive forecast predicts…",
+       "options": [
+        "the mean",
+        "the value from the same season last cycle",
+        "zero",
+        "a random value"
+       ],
+       "answer": 1,
+       "explain": "Strong baseline for seasonal data."
+      },
+      {
+       "id": "M19.U08.Q3",
+       "kind": "mcq",
+       "prompt": "MASE < 1 means the method is…",
+       "options": [
+        "worse",
+        "perfect",
+        "undefined",
+        "better than the naive baseline"
+       ],
+       "answer": 3,
+       "explain": "Scaled by in-sample naive error."
+      },
+      {
+       "id": "M19.U08.Q4",
+       "kind": "short",
+       "prompt": "Why is a strong naive baseline essential before ML forecasting?",
+       "rubric": [
+        "Many ML models fail to beat seasonal naive",
+        "Baseline gives scale for errors (MASE)",
+        "Prevents complexity without value"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U09",
+     "title": "Elective: Recommendation and ranking",
+     "hours": 20,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply recommendation and ranking to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.02",
+       "title": "Recommendation/ranking"
+      }
+     ],
+     "learn": {
+      "resourceId": "google-recsys-course",
+      "title": "Google — Recommendation Systems course",
+      "url": "https://developers.google.com/machine-learning/recommendation",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Full course: overview, candidate generation, retrieval, scoring, re-ranking, deep neural network models"
+     },
+     "covers": [
+      "Candidate generation (content-based and collaborative filtering)",
+      "Matrix factorisation and embeddings",
+      "Retrieval, scoring and re-ranking stages",
+      "Softmax DNN models"
+     ],
+     "gaps": [
+      {
+       "topic": "Production system design for discovery",
+       "resource": {
+        "resourceId": "eugeneyan-discovery",
+        "title": "System Design for Recommendations and Search",
+        "url": "https://eugeneyan.com/writing/system-design-for-discovery/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cross-encoder reranker lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Reranker Cross Encoder",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/19-capstone-projects/66-reranker-cross-encoder",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 19 · Lesson 66 reranker cross encoder"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Two-stage recommender on MovieLens",
+      "brief": "Build candidate generation (matrix factorisation or embeddings) plus a re-ranker on MovieLens. Report recall@k and NDCG@k against a popularity baseline.",
+      "done_when": "A table of recall@10/NDCG@10 for popularity, candidate-only and candidate+re-ranker."
+     },
+     "quiz": [
+      {
+       "id": "M19.U09.Q1",
+       "kind": "mcq",
+       "prompt": "A two-stage recommender means…",
+       "options": [
+        "two models voting",
+        "candidate generation, then ranking",
+        "train then test",
+        "none"
+       ],
+       "answer": 1,
+       "explain": "Cheap recall, expensive precision."
+      },
+      {
+       "id": "M19.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Cold start affects…",
+       "options": [
+        "GPUs",
+        "new users/items with no interactions",
+        "old items",
+        "nothing"
+       ],
+       "answer": 1,
+       "explain": "Use content features or popularity."
+      },
+      {
+       "id": "M19.U09.Q3",
+       "kind": "mcq",
+       "prompt": "NDCG rewards…",
+       "options": [
+        "more items",
+        "relevant items ranked higher",
+        "speed",
+        "diversity only"
+       ],
+       "answer": 1,
+       "explain": "Position-discounted gain."
+      },
+      {
+       "id": "M19.U09.Q4",
+       "kind": "short",
+       "prompt": "How does recsys ranking connect to RAG reranking?",
+       "rubric": [
+        "Both are retrieve-then-rerank",
+        "Cross-encoders/rankers on a candidate set",
+        "Same metrics (recall@k, NDCG)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U10",
+     "title": "Elective: Anomaly detection",
+     "hours": 15,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply anomaly detection to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.04",
+       "title": "Anomaly detection"
+      }
+     ],
+     "learn": {
+      "resourceId": "sklearn-outlier",
+      "title": "scikit-learn User Guide 2.7 — Novelty and Outlier Detection",
+      "url": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Section 2.7 Novelty and Outlier Detection"
+     },
+     "covers": [
+      "Novelty vs outlier detection",
+      "One-class SVM, Elliptic Envelope",
+      "Isolation Forest and Local Outlier Factor",
+      "Comparison on toy datasets"
+     ],
+     "gaps": [
+      {
+       "topic": "More detectors and benchmarks",
+       "resource": {
+        "resourceId": "pyod",
+        "title": "PyOD",
+        "url": "https://github.com/yzhao062/pyod",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20",
+        "slice": "README"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Anomalies in logs or transactions",
+      "brief": "Detect anomalies in server logs or transactions with Isolation Forest vs LOF vs a z-score baseline; evaluate with precision@k on injected anomalies.",
+      "done_when": "A precision@k table for 3 methods and a proposed alert threshold with expected alerts/day."
+     },
+     "quiz": [
+      {
+       "id": "M19.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Novelty vs outlier detection:",
+       "options": [
+        "they are identical",
+        "novelty is supervised",
+        "novelty trains on clean data and scores new points; outlier detection works on contaminated data",
+        "none"
+       ],
+       "answer": 2,
+       "explain": "Training-data assumption differs."
+      },
+      {
+       "id": "M19.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Isolation Forest flags points that…",
+       "options": [
+        "are isolated with few random splits",
+        "are frequent",
+        "are near the mean",
+        "are labelled"
+       ],
+       "answer": 0,
+       "explain": "Short path length = anomalous."
+      },
+      {
+       "id": "M19.U10.Q3",
+       "kind": "mcq",
+       "prompt": "Accuracy is a poor metric here because…",
+       "options": [
+        "it is slow",
+        "it is illegal",
+        "anomalies are rare (class imbalance)",
+        "none"
+       ],
+       "answer": 2,
+       "explain": "Predicting 'normal' always scores high."
+      },
+      {
+       "id": "M19.U10.Q4",
+       "kind": "short",
+       "prompt": "How would you set an alert threshold that ops will trust?",
+       "rubric": [
+        "Tie to alert budget/precision@k",
+        "Validate on labelled incidents",
+        "Review and tune with ops feedback"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U11",
+     "title": "Elective: Causal inference",
+     "hours": 22,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply causal inference to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.05",
+       "title": "Causal inference"
+      }
+     ],
+     "learn": {
+      "resourceId": "causal-brave-true",
+      "title": "Causal Inference for the Brave and True",
+      "url": "https://matheusfacure.github.io/python-causality-handbook/landing-page.html",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Part I chapters 1–12"
+     },
+     "covers": [
+      "Potential outcomes, randomised experiments",
+      "Graphical causal models, confounders and colliders",
+      "Regression adjustment, matching, propensity scores",
+      "Instrumental variables, panel/diff-in-diff, synthetic control"
+     ],
+     "gaps": [
+      {
+       "topic": "Lecture course",
+       "resource": {
+        "resourceId": "brady-neal-causal",
+        "title": "Introduction to Causal Inference",
+        "url": "https://www.bradyneal.com/causal-inference-course",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Library",
+       "resource": {
+        "resourceId": "dowhy",
+        "title": "DoWhy (PyWhy)",
+        "url": "https://www.pywhy.org/dowhy/",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Treatment effect on observational data",
+      "brief": "Estimate a treatment effect on an observational dataset with regression adjustment and a propensity-score method, then run a sensitivity check.",
+      "done_when": "A notebook with both estimates, a DAG, and a sensitivity analysis paragraph."
+     },
+     "quiz": [
+      {
+       "id": "M19.U11.Q1",
+       "kind": "mcq",
+       "prompt": "A confounder…",
+       "options": [
+        "affects only the outcome",
+        "affects both treatment and outcome",
+        "is a collider",
+        "is noise"
+       ],
+       "answer": 1,
+       "explain": "Must be adjusted for."
+      },
+      {
+       "id": "M19.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Randomisation solves confounding because…",
+       "options": [
+        "treatment becomes independent of potential outcomes",
+        "it adds data",
+        "it is cheaper",
+        "none"
+       ],
+       "answer": 0,
+       "explain": "Balances observed and unobserved factors."
+      },
+      {
+       "id": "M19.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Conditioning on a collider…",
+       "options": [
+        "removes bias always",
+        "is required",
+        "can create spurious association",
+        "does nothing"
+       ],
+       "answer": 2,
+       "explain": "Selection bias."
+      },
+      {
+       "id": "M19.U11.Q4",
+       "kind": "short",
+       "prompt": "Why can't an A/B test always be run, and what do you do instead?",
+       "rubric": [
+        "Ethical/practical/cost constraints",
+        "Observational methods with stated assumptions",
+        "Sensitivity analysis"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U12",
+     "title": "Elective: Graph ML",
+     "hours": 22,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply graph ml to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.03",
+       "title": "Graph ML"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs224w",
+      "title": "Stanford CS224W: Machine Learning with Graphs",
+      "url": "https://web.stanford.edu/class/cs224w/",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Lectures on node embeddings, GNNs (GCN, GraphSAGE, GAT) and GNN training"
+     },
+     "covers": [
+      "Graph representations and node embeddings",
+      "Message passing GNNs: GCN, GraphSAGE, GAT",
+      "Training GNNs; over-smoothing; knowledge graphs"
+     ],
+     "gaps": [
+      {
+       "topic": "Visual intro to GNNs",
+       "resource": {
+        "resourceId": "distill-gnn-intro",
+        "title": "A Gentle Introduction to Graph Neural Networks",
+        "url": "https://distill.pub/2021/gnn-intro/",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Cora node classification",
+      "brief": "Node classification on Cora with GCN vs an MLP baseline, then ablate the number of layers (over-smoothing).",
+      "done_when": "A table: MLP vs GCN accuracy and accuracy vs depth (1–8 layers)."
+     },
+     "quiz": [
+      {
+       "id": "M19.U12.Q1",
+       "kind": "mcq",
+       "prompt": "Message passing aggregates…",
+       "options": [
+        "images",
+        "tokens",
+        "neighbour features to update a node's representation",
+        "gradients only"
+       ],
+       "answer": 2,
+       "explain": "Core GNN operation."
+      },
+      {
+       "id": "M19.U12.Q2",
+       "kind": "mcq",
+       "prompt": "Over-smoothing means…",
+       "options": [
+        "faster training",
+        "node representations become indistinguishable with many layers",
+        "better accuracy always",
+        "none"
+       ],
+       "answer": 1,
+       "explain": "Depth limits in GNNs."
+      },
+      {
+       "id": "M19.U12.Q3",
+       "kind": "mcq",
+       "prompt": "A GraphRAG index adds…",
+       "options": [
+        "nothing",
+        "entity/relation structure for global questions",
+        "images",
+        "audio"
+       ],
+       "answer": 1,
+       "explain": "Graph links connect retrieval to global context."
+      },
+      {
+       "id": "M19.U12.Q4",
+       "kind": "short",
+       "prompt": "When is a graph model justified over tabular features?",
+       "rubric": [
+        "Relational signal matters (neighbours predict labels)",
+        "Baseline comparison shows gain",
+        "Cost/complexity acceptable"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U13",
+     "title": "Elective: Edge AI and efficient deep learning",
+     "hours": 22,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply edge ai and efficient deep learning to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.10",
+       "title": "Edge/TinyML"
+      }
+     ],
+     "learn": {
+      "resourceId": "mit-65940",
+      "title": "MIT 6.5940 TinyML and Efficient Deep Learning Computing (Fall 2024)",
+      "url": "https://hanlab.mit.edu/courses/2024-fall-65940",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Lectures on pruning, quantization and knowledge distillation"
+     },
+     "covers": [
+      "Pruning and sparsity (structured vs unstructured)",
+      "Quantization (PTQ, QAT, int8/int4)",
+      "Knowledge distillation",
+      "Efficient inference on edge devices"
+     ],
+     "gaps": [
+      {
+       "topic": "Hands-on quantization tooling",
+       "resource": {
+        "resourceId": "ort-quantization",
+        "title": "ONNX Runtime — Quantize ONNX models",
+        "url": "https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Real-time edge vision lesson",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Real Time Edge",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/04-computer-vision/15-real-time-edge",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Phase 4 · Lesson 15 real time edge"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Quantize and prune your M15 model",
+      "brief": "Quantize (int8) and prune your M15 model; report accuracy, size and CPU/phone latency.",
+      "done_when": "A table of accuracy, MB and latency for fp32, int8 and pruned variants."
+     },
+     "quiz": [
+      {
+       "id": "M19.U13.Q1",
+       "kind": "mcq",
+       "prompt": "Post-training int8 quantization mainly reduces…",
+       "options": [
+        "the data needed",
+        "labels",
+        "model size and often latency",
+        "accuracy to zero"
+       ],
+       "answer": 2,
+       "explain": "4× smaller weights."
+      },
+      {
+       "id": "M19.U13.Q2",
+       "kind": "mcq",
+       "prompt": "Knowledge distillation trains…",
+       "options": [
+        "a small student to mimic a large teacher",
+        "a larger model",
+        "a tokenizer",
+        "none"
+       ],
+       "answer": 0,
+       "explain": "Soft targets transfer knowledge."
+      },
+      {
+       "id": "M19.U13.Q3",
+       "kind": "mcq",
+       "prompt": "Unstructured pruning often fails to speed up dense hardware because…",
+       "options": [
+        "it adds parameters",
+        "it's illegal",
+        "sparse ops aren't accelerated without support",
+        "none"
+       ],
+       "answer": 2,
+       "explain": "Structured pruning maps to dense kernels."
+      },
+      {
+       "id": "M19.U13.Q4",
+       "kind": "short",
+       "prompt": "Which matters more for your use case: latency, size or energy?",
+       "rubric": [
+        "Picks one with deployment reasoning",
+        "Gives a numeric target",
+        "Names the technique that best serves it"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U14",
+     "title": "Elective: Federated learning (awareness)",
+     "hours": 8,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can apply federated learning (awareness) to a real dataset against a strong baseline.",
+      "You can explain where this domain connects to AI Engineer/FDE/MLOps work."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.11",
+       "title": "Federated learning"
+      }
+     ],
+     "learn": {
+      "resourceId": "flower-what-is-fl",
+      "title": "Flower — What is Federated Learning? (tutorial series)",
+      "url": "https://flower.ai/docs/framework/tutorial-series-what-is-federated-learning.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20",
+      "slice": "Tutorial series part 0–1"
+     },
+     "covers": [
+      "Why federated learning; centralised vs federated",
+      "FedAvg rounds with Flower clients/server",
+      "Simulation of many clients"
+     ],
+     "gaps": [
+      {
+       "topic": "Original FedAvg paper",
+       "resource": {
+        "resourceId": "fedavg-paper",
+        "title": "Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg)",
+        "url": "https://arxiv.org/abs/1602.05629",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Simulate FedAvg",
+      "brief": "Simulate 5 clients with non-IID splits using FedAvg in Flower and compare against centralised training.",
+      "done_when": "A plot of accuracy per round for FL vs centralised with a note on non-IID effects."
+     },
+     "quiz": [
+      {
+       "id": "M19.U14.Q1",
+       "kind": "mcq",
+       "prompt": "FedAvg averages…",
+       "options": [
+        "raw data",
+        "labels",
+        "client model updates",
+        "test-set gradients"
+       ],
+       "answer": 2,
+       "explain": "Data stays on clients."
+      },
+      {
+       "id": "M19.U14.Q2",
+       "kind": "mcq",
+       "prompt": "Non-IID client data causes…",
+       "options": [
+        "nothing",
+        "better accuracy",
+        "none",
+        "slower/unstable convergence"
+       ],
+       "answer": 3,
+       "explain": "Client drift."
+      },
+      {
+       "id": "M19.U14.Q3",
+       "kind": "mcq",
+       "prompt": "Federated learning alone guarantees privacy:",
+       "options": [
+        "True",
+        "Only on mobile",
+        "False — updates can leak information without DP/secure aggregation",
+        "N/A"
+       ],
+       "answer": 2,
+       "explain": "Gradient inversion attacks exist."
+      },
+      {
+       "id": "M19.U14.Q4",
+       "kind": "short",
+       "prompt": "Give a Pakistani context where FL would make sense.",
+       "rubric": [
+        "Concrete multi-party setting (hospitals, banks, telcos)",
+        "Explains why data can't be centralised",
+        "Notes practical blockers"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M19.U15",
+     "title": "Optional pointers: Bayesian ML, search/optimisation, symbolic reasoning, robotics",
+     "hours": 2,
+     "depth": "deep",
+     "prerequisites": [],
+     "outcomes": [
+      "You can say what each of these fields is and where to start if a project needs it."
+     ],
+     "topics": [
+      {
+       "id": "M19.01.06",
+       "title": "Bayesian ML (awareness)"
+      },
+      {
+       "id": "M19.01.07",
+       "title": "Optimization/search (awareness)"
+      },
+      {
+       "id": "M19.01.08",
+       "title": "Symbolic reasoning (awareness)"
+      },
+      {
+       "id": "M19.01.09",
+       "title": "Robotics/control (awareness)"
+      }
+     ],
+     "learn": {
+      "resourceId": "berkeley-cs188",
+      "title": "UC Berkeley CS188 Introduction to Artificial Intelligence",
+      "url": "https://inst.eecs.berkeley.edu/~cs188/",
+      "type": "course",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Course page: search, CSPs, MDPs, Bayes nets (pick lectures as needed)"
+     },
+     "covers": [
+      "Uninformed/informed search, CSPs, game search",
+      "MDPs and reinforcement learning basics",
+      "Bayes nets and probabilistic inference"
+     ],
+     "gaps": [
+      {
+       "topic": "Bayesian methods hands-on",
+       "resource": {
+        "resourceId": "bayesian-hackers",
+        "title": "Probabilistic Programming and Bayesian Methods for Hackers",
+        "url": "https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Robotics (awareness)",
+       "resource": {
+        "resourceId": "hf-robotics-course",
+        "title": "Hugging Face Robotics Course",
+        "url": "https://huggingface.co/learn/robotics-course",
+        "type": "course",
+        "free": true,
+        "verified": "unverified"
+       }
+      }
+     ],
+     "practice": {
+      "title": "One-page field map",
+      "brief": "Write a one-page map: for each of the 4 fields, one problem it solves, one free resource, and whether your chosen track needs it.",
+      "done_when": "FIELDS.md with 4 entries."
+     },
+     "quiz": [
+      {
+       "id": "M19.U15.Q1",
+       "kind": "mcq",
+       "prompt": "A* search uses…",
+       "options": [
+        "random moves",
+        "only the heuristic",
+        "path cost so far plus an admissible heuristic",
+        "gradient descent"
+       ],
+       "answer": 2,
+       "explain": "f = g + h."
+      },
+      {
+       "id": "M19.U15.Q2",
+       "kind": "mcq",
+       "prompt": "A Bayesian approach outputs…",
+       "options": [
+        "a single point estimate only",
+        "no uncertainty",
+        "a decision tree",
+        "a posterior distribution over parameters/predictions"
+       ],
+       "answer": 3,
+       "explain": "Uncertainty is explicit."
+      },
+      {
+       "id": "M19.U15.Q3",
+       "kind": "mcq",
+       "prompt": "For AI Engineer/FDE/MLOps tracks, robotics/control is…",
+       "options": [
+        "optional unless a project needs it",
+        "mandatory",
+        "a prerequisite for agents",
+        "the same as MLOps"
+       ],
+       "answer": 0,
+       "explain": "Out of scope for target roles."
+      },
+      {
+       "id": "M19.U15.Q4",
+       "kind": "short",
+       "prompt": "Which of these four would most help a project you care about, and why?",
+       "rubric": [
+        "Names one field and a concrete project",
+        "Explains the fit",
+        "Names the first resource"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "FDE engagement case study",
+  "brief": "Run the full FDE arc with one real user over 4–6 weeks: discovery → signed scope → integration with a real system → offline-capable deployment → co-built eval set → readout and handover. Required for the FDE track, recommended for AI Engineers.",
+  "rubric": [
+   {
+    "criterion": "Discovery",
+    "levels": [
+     "0: none",
+     "1: requirements copied from the ask",
+     "2: workflow map from interviews",
+     "3: evidence-labelled workflow map; the real problem refines the initial ask"
+    ]
+   },
+   {
+    "criterion": "Scope and metrics",
+    "levels": [
+     "0: none",
+     "1: feature list",
+     "2: scope with metric",
+     "3: signed scope with baseline metric, out-of-scope items, cost estimate"
+    ]
+   },
+   {
+    "criterion": "Integration and deployment",
+    "levels": [
+     "0: demo on laptop only",
+     "1: mocked integration",
+     "2: real integration (OAuth/webhook/DB)",
+     "3: real integration running in a constrained environment with a runbook"
+    ]
+   },
+   {
+    "criterion": "Impact evidence",
+    "levels": [
+     "0: none",
+     "1: anecdotes",
+     "2: user-labelled eval with before/after",
+     "3: user-labelled eval, before/after numbers, adoption/usage data, honest limits"
+    ]
+   },
+   {
+    "criterion": "Communication",
+    "levels": [
+     "0: none",
+     "1: README",
+     "2: ADRs + demo",
+     "3: ADRs, weekly updates, 5-minute demo, handover doc a stranger could operate"
+    ]
+   }
+  ],
+  "evidence": "github"
+ },
+ "deepHours": 133
+}

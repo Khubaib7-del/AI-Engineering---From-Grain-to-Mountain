@@ -1,0 +1,849 @@
+[
+  {
+    "id": "3b1b-essence-linear-algebra",
+    "type": "video",
+    "title": "Essence of Linear Algebra (3Blue1Brown)",
+    "author": "Grant Sanderson (3Blue1Brown)",
+    "url": "https://www.3blue1brown.com/topics/linear-algebra",
+    "free": true,
+    "language": "en",
+    "notes": "16 visual chapters; intuition only, no exercises. Lesson pages at 3blue1brown.com/lessons/<slug>; YouTube playlist PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "3b1b-essence-calculus",
+    "type": "video",
+    "title": "Essence of Calculus (3Blue1Brown)",
+    "author": "Grant Sanderson (3Blue1Brown)",
+    "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr",
+    "free": true,
+    "language": "en",
+    "notes": "12 chapters; derivative, chain rule, limits, integrals. Intuition first; pair with exercises.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "3b1b-neural-networks",
+    "type": "video",
+    "title": "Neural Networks series (3Blue1Brown)",
+    "author": "Grant Sanderson (3Blue1Brown)",
+    "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",
+    "free": true,
+    "language": "en",
+    "notes": "Ch.1 neural network, ch.2 gradient descent, ch.3 backprop, ch.4 backprop calculus (later chapters cover transformers for M09).",
+    "modules": [
+      "M05",
+      "M08"
+    ]
+  },
+  {
+    "id": "3b1b-lessons",
+    "type": "video",
+    "title": "3Blue1Brown standalone lessons (Bayes, CLT, convolution)",
+    "author": "Grant Sanderson (3Blue1Brown)",
+    "url": "https://www.3blue1brown.com/",
+    "free": true,
+    "language": "en",
+    "notes": "Standalone videos used: Bayes theorem, Central Limit Theorem, 'But what is a convolution?'.",
+    "modules": [
+      "M06",
+      "M08"
+    ]
+  },
+  {
+    "id": "mit-1806sc",
+    "type": "course",
+    "title": "MIT 18.06SC Linear Algebra (Fall 2011, OCW Scholar)",
+    "author": "Gilbert Strang / MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/",
+    "free": true,
+    "language": "en",
+    "notes": "Self-study edition: Strang lecture + recitation + problem sets with solutions per session. Use single sessions in core; full course is Deep track.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "mit-1806-2010",
+    "type": "course",
+    "title": "MIT 18.06 Linear Algebra (Spring 2010) video lectures",
+    "author": "Gilbert Strang / MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/video_galleries/video-lectures/",
+    "free": true,
+    "language": "en",
+    "notes": "FIXED LINK: old /pages/video-lectures/ URL returns 404; the video gallery URL is correct. Recordings date from 1999. Deep track.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "mit-18065",
+    "type": "course",
+    "title": "MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning (Spring 2018)",
+    "author": "Gilbert Strang / MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/",
+    "free": true,
+    "language": "en",
+    "notes": "Deep track.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "mit-18s096",
+    "type": "course",
+    "title": "MIT 18.S096 Matrix Calculus for Machine Learning and Beyond (IAP 2023)",
+    "author": "Alan Edelman, Steven G. Johnson / MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/courses/18-s096-matrix-calculus-for-machine-learning-and-beyond-january-iap-2023/",
+    "free": true,
+    "language": "en",
+    "notes": "Derivatives as linear operators, Jacobians, matrix differentials. Deep track.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "mml-book",
+    "type": "book",
+    "title": "Mathematics for Machine Learning",
+    "author": "Deisenroth, Faisal, Ong",
+    "url": "https://mml-book.github.io/book/mml-book.pdf",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF (Cambridge UP). Dense; reference + Deep-track exercises ch. 2–7.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "boyd-cvxbook",
+    "type": "book",
+    "title": "Convex Optimization",
+    "author": "Stephen Boyd, Lieven Vandenberghe",
+    "url": "https://web.stanford.edu/~boyd/cvxbook/",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF. Deep track only.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "explained-matrix-calculus",
+    "type": "doc",
+    "title": "The Matrix Calculus You Need For Deep Learning",
+    "author": "Terence Parr, Jeremy Howard",
+    "url": "https://explained.ai/matrix-calculus/",
+    "free": true,
+    "language": "en",
+    "notes": "Sections 1.2–1.7: scalar rules, partials, Jacobians, gradient of a neuron and of a NN loss.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "rockt-einsum",
+    "type": "doc",
+    "title": "Einsum is All you Need – Einstein Summation in Deep Learning",
+    "author": "Tim Rocktäschel",
+    "url": "https://rockt.github.io/2018/04/30/einsum",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "aladdin-einsum-video",
+    "type": "video",
+    "title": "Einsum Is All You Need: NumPy, PyTorch and TensorFlow",
+    "author": "Aladdin Persson",
+    "url": "https://www.youtube.com/watch?v=pkVwUVEHmfI",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "brunton-svd",
+    "type": "video",
+    "title": "Singular Value Decomposition series (Steve Brunton, Data-Driven Science and Engineering)",
+    "author": "Steve Brunton",
+    "url": "https://www.youtube.com/watch?v=gXbThCXjZFM",
+    "free": true,
+    "language": "en",
+    "notes": "Used: SVD Overview (gXbThCXjZFM), SVD Mathematical Overview (nbBvuuNVfco), SVD Image Compression [Python] (H7qMMudo3e8), PCA (fkf4IBRSeEc).",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "hf-peft-lora",
+    "type": "doc",
+    "title": "PEFT conceptual guide: LoRA",
+    "author": "Hugging Face",
+    "url": "https://huggingface.co/docs/peft/main/en/conceptual_guides/lora",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "numpy-docs",
+    "type": "doc",
+    "title": "NumPy documentation",
+    "author": "NumPy developers",
+    "url": "https://numpy.org/doc/stable/",
+    "free": true,
+    "language": "en",
+    "notes": "Pages used: broadcasting, numpy.einsum, numpy.linalg.lstsq.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "python-floating-point",
+    "type": "doc",
+    "title": "Python Tutorial §15 Floating-Point Arithmetic: Issues and Limitations",
+    "author": "Python Software Foundation",
+    "url": "https://docs.python.org/3/tutorial/floatingpoint.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "computerphile-float",
+    "type": "video",
+    "title": "Floating Point Numbers – Computerphile",
+    "author": "Computerphile",
+    "url": "https://www.youtube.com/watch?v=PZRI1IfStY0",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "cs231n-notes",
+    "type": "doc",
+    "title": "CS231n: Deep Learning for Computer Vision — course notes",
+    "author": "Stanford CS231n (Karpathy, Li, Johnson et al.)",
+    "url": "https://cs231n.github.io/",
+    "free": true,
+    "language": "en",
+    "notes": "Used: Optimization 1 (numerical vs analytic gradient), Neural Networks Part 3 (gradient checks, babysitting learning), Convolutional Networks.",
+    "modules": [
+      "M05",
+      "M08"
+    ]
+  },
+  {
+    "id": "d2l",
+    "type": "book",
+    "title": "Dive into Deep Learning (D2L)",
+    "author": "Zhang, Lipton, Li, Smola",
+    "url": "https://d2l.ai/",
+    "free": true,
+    "language": "en",
+    "notes": "Free online book with PyTorch code. Sections are cited individually.",
+    "modules": [
+      "M05",
+      "M06",
+      "M08"
+    ]
+  },
+  {
+    "id": "rohitg00-ai-eng-from-scratch",
+    "type": "repo",
+    "title": "AI Engineering from Scratch (phases 01–03 used here)",
+    "author": "Rohit Ghumare (rohitg00)",
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+    "free": true,
+    "language": "en",
+    "notes": "MIT licence. Each lesson: docs/en.md, code/, outputs/, quiz.json (pre/post MCQs). Phase 01 math (22 lessons), 02 ML (21), 03 DL core (13). Used as the build-from-scratch practice layer. P02-19..21 belong to M16 (MLOps).",
+    "modules": [
+      "M05",
+      "M06",
+      "M07",
+      "M08"
+    ]
+  },
+  {
+    "id": "statquest-youtube",
+    "type": "video",
+    "title": "StatQuest with Josh Starmer (YouTube)",
+    "author": "Josh Starmer",
+    "url": "https://www.youtube.com/@statquest",
+    "free": true,
+    "language": "en",
+    "notes": "Single videos cited by exact URL. Playlists: Statistics Fundamentals PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9; Machine Learning PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF.",
+    "modules": [
+      "M05",
+      "M06",
+      "M07",
+      "M08"
+    ]
+  },
+  {
+    "id": "deeplearningai-youtube",
+    "type": "video",
+    "title": "DeepLearning.AI YouTube lectures (Deep Learning Specialization videos, free)",
+    "author": "Andrew Ng / DeepLearning.AI",
+    "url": "https://www.youtube.com/@Deeplearningai",
+    "free": true,
+    "language": "en",
+    "notes": "The specialization's lecture videos are free on YouTube (e.g. C2W2L08 Adam). The Coursera graded specialization itself is not reliably free and uses TensorFlow. Cite single videos only.",
+    "modules": [
+      "M05",
+      "M08"
+    ]
+  },
+  {
+    "id": "seeing-theory",
+    "type": "course",
+    "title": "Seeing Theory",
+    "author": "Daniel Kunin et al., Brown University",
+    "url": "https://seeing-theory.brown.edu/",
+    "free": true,
+    "language": "en",
+    "notes": "Interactive visual probability/statistics chapters.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "think-stats-3e",
+    "type": "book",
+    "title": "Think Stats, 3rd edition",
+    "author": "Allen B. Downey",
+    "url": "https://allendowney.github.io/ThinkStats/index.html",
+    "free": true,
+    "language": "en",
+    "notes": "Free online, Python notebooks. Ch.1 EDA, 2 Distributions, 3 PMFs, 4 CDFs, 5 Modeling Distributions, 6 PDFs, 7 Relationships, 8 Estimation, 9 Hypothesis Testing.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "data8-inferential-thinking",
+    "type": "book",
+    "title": "Computational and Inferential Thinking (Data 8 textbook)",
+    "author": "Ani Adhikari, John DeNero, David Wagner",
+    "url": "https://inferentialthinking.com/",
+    "free": true,
+    "language": "en",
+    "notes": "UC Berkeley Data 8. Simulation-first inference: ch.2 causality, 10 sampling, 11 testing hypotheses, 12 A/B testing, 13 bootstrap/CIs, 14 why the mean matters.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "stat110-youtube",
+    "type": "video",
+    "title": "Harvard Statistics 110: Probability (lecture videos)",
+    "author": "Joe Blitzstein",
+    "url": "https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo",
+    "free": true,
+    "language": "en",
+    "notes": "FIXED LINK: replaces the deprecated goo.gl shortener. 34 lectures; researcher-grade probability; Deep track and targeted single lectures.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "blitzstein-probability-book",
+    "type": "book",
+    "title": "Introduction to Probability, 2nd ed.",
+    "author": "Joe Blitzstein, Jessica Hwang",
+    "url": "https://probabilitybook.net/",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF; companion to Stat 110. Deep track.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "evanmiller-ab",
+    "type": "doc",
+    "title": "Evan Miller A/B testing articles and tools",
+    "author": "Evan Miller",
+    "url": "https://www.evanmiller.org/",
+    "free": true,
+    "language": "en",
+    "notes": "Used: How Not To Run an A/B Test; Sample Size Calculator; Simple Sequential A/B Testing.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "miller-2024-error-bars",
+    "type": "paper",
+    "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+    "author": "Evan Miller (Anthropic)",
+    "url": "https://arxiv.org/abs/2411.00640",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "scipy-stats",
+    "type": "doc",
+    "title": "SciPy stats: bootstrap and permutation_test",
+    "author": "SciPy developers",
+    "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "statsmodels-docs",
+    "type": "doc",
+    "title": "statsmodels: proportion_confint and multipletests",
+    "author": "statsmodels developers",
+    "url": "https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "islp",
+    "type": "book",
+    "title": "An Introduction to Statistical Learning, with Applications in Python (ISLP)",
+    "author": "James, Witten, Hastie, Tibshirani, Taylor",
+    "url": "https://www.statlearning.com/",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF. Core uses ch.2–6, 8, 12; ch.9, 11, 13 are Deep track.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "islp-lectures",
+    "type": "video",
+    "title": "Statistical Learning with Python (Stanford, YouTube)",
+    "author": "Trevor Hastie, Rob Tibshirani, Jonathan Taylor",
+    "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rPP6braWoRt5UCXYZ71GZIQ",
+    "free": true,
+    "language": "en",
+    "notes": "Lecture videos numbered by ISLP section (e.g. 8.4 Bagging) plus 2023 '.Py' lab videos (lab playlist PLoROMvodv4rNHU1-iPeDRH-J0cL-CrIda).",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "sklearn-user-guide",
+    "type": "doc",
+    "title": "scikit-learn User Guide",
+    "author": "scikit-learn developers",
+    "url": "https://scikit-learn.org/stable/user_guide.html",
+    "free": true,
+    "language": "en",
+    "notes": "Engineering primary for M07: pipelines, CV, metrics, thresholds, calibration, persistence. Pages cited individually.",
+    "modules": [
+      "M06",
+      "M07"
+    ]
+  },
+  {
+    "id": "google-rules-of-ml",
+    "type": "doc",
+    "title": "Rules of Machine Learning",
+    "author": "Martin Zinkevich (Google)",
+    "url": "https://developers.google.com/machine-learning/guides/rules-of-ml",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "mlu-explain",
+    "type": "doc",
+    "title": "MLU-Explain (visual ML essays)",
+    "author": "Amazon Machine Learning University",
+    "url": "https://mlu-explain.github.io/",
+    "free": true,
+    "language": "en",
+    "notes": "Interactive essays: bias–variance, train/test/validation, cross-validation, precision–recall, ROC/AUC, decision trees, random forest, linear & logistic regression.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "xgboost-docs",
+    "type": "doc",
+    "title": "XGBoost: Introduction to Boosted Trees",
+    "author": "XGBoost developers",
+    "url": "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "lightgbm-docs",
+    "type": "doc",
+    "title": "LightGBM documentation",
+    "author": "Microsoft",
+    "url": "https://lightgbm.readthedocs.io/en/stable/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "kaggle-intermediate-ml",
+    "type": "course",
+    "title": "Kaggle Learn: Intermediate Machine Learning",
+    "author": "Kaggle (Alexis Cook)",
+    "url": "https://www.kaggle.com/learn/intermediate-machine-learning",
+    "free": true,
+    "language": "en",
+    "notes": "Short lessons: missing values, categorical variables, pipelines, cross-validation, XGBoost, data leakage.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "skops",
+    "type": "doc",
+    "title": "skops (secure scikit-learn persistence)",
+    "author": "skops developers",
+    "url": "https://skops.readthedocs.io/en/stable/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "pinecone-ir-eval",
+    "type": "doc",
+    "title": "Evaluation Measures in Information Retrieval",
+    "author": "Pinecone (James Briggs)",
+    "url": "https://www.pinecone.io/learn/offline-evaluation/",
+    "free": true,
+    "language": "en",
+    "notes": "recall@K, precision@K, MRR, MAP@K, NDCG@K with worked examples.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "cs229-notes",
+    "type": "book",
+    "title": "Stanford CS229 Main Lecture Notes (PDF)",
+    "author": "Andrew Ng, Tengyu Ma et al.",
+    "url": "https://cs229.stanford.edu/main_notes.pdf",
+    "free": true,
+    "language": "en",
+    "notes": "FIXED LINK: cs229.stanford.edu course pages are Stanford-only now; this public PDF is not. Deep track.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "cs229-2018-youtube",
+    "type": "video",
+    "title": "Stanford CS229: Machine Learning (Autumn 2018, Andrew Ng)",
+    "author": "Andrew Ng / Stanford Online",
+    "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU",
+    "free": true,
+    "language": "en",
+    "notes": "FIXED: free public lectures. Spring 2022 alternative: PLoROMvodv4rNyWOpJg_Yh4NSqI4Z4vOYy. Deep track.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "murphy-pml1",
+    "type": "book",
+    "title": "Probabilistic Machine Learning: An Introduction (Book 1)",
+    "author": "Kevin P. Murphy",
+    "url": "https://probml.github.io/pml-book/book1.html",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF; reference only.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "campusx-100-days-ml",
+    "type": "video",
+    "title": "100 Days of Machine Learning (CampusX, Hindi/Urdu)",
+    "author": "Nitish Singh (CampusX)",
+    "url": "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH",
+    "free": true,
+    "language": "hi/ur",
+    "notes": "Optional Hindi/Urdu companion.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "andrew-ng-mls",
+    "type": "course",
+    "title": "Machine Learning Specialization (Coursera, Andrew Ng)",
+    "author": "DeepLearning.AI / Stanford",
+    "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+    "free": "partial",
+    "language": "en",
+    "notes": "NOT FREE-GUARANTEED: Coursera's own FAQ (checked 2026-10-20) says it cannot be taken for free (financial aid only) and the same page also mentions audit; contradictory. Teaches NNs in TensorFlow. Not used as primary or backup. Free alternative: CS229 public lectures.",
+    "modules": [
+      "M07"
+    ]
+  },
+  {
+    "id": "karpathy-zero-to-hero",
+    "type": "video",
+    "title": "Neural Networks: Zero to Hero",
+    "author": "Andrej Karpathy",
+    "url": "https://karpathy.ai/zero-to-hero.html",
+    "free": true,
+    "language": "en",
+    "notes": "L1 micrograd, L2 makemore bigram, L3 makemore MLP, L4 BatchNorm, L5 Backprop Ninja, L6 WaveNet, then GPT + tokenizer (M09).",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "karpathy-recipe",
+    "type": "doc",
+    "title": "A Recipe for Training Neural Networks",
+    "author": "Andrej Karpathy",
+    "url": "https://karpathy.github.io/2019/04/25/recipe/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "tuning-playbook",
+    "type": "doc",
+    "title": "Deep Learning Tuning Playbook",
+    "author": "Google Research (Godbole, Dahl, Gilmer, Shallue, Nado)",
+    "url": "https://github.com/google-research/tuning_playbook",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "pytorch-tutorials",
+    "type": "doc",
+    "title": "PyTorch Tutorials and Docs",
+    "author": "PyTorch Foundation",
+    "url": "https://docs.pytorch.org/tutorials/",
+    "free": true,
+    "language": "en",
+    "notes": "Learn the Basics, Saving/Loading, TensorBoard, Transfer Learning, AMP, Performance Tuning, Profiler, torch.compile, ONNX export; API docs cited individually.",
+    "modules": [
+      "M05",
+      "M08"
+    ]
+  },
+  {
+    "id": "learnpytorch",
+    "type": "course",
+    "title": "Zero to Mastery Learn PyTorch for Deep Learning (learnpytorch.io)",
+    "author": "Daniel Bourke",
+    "url": "https://www.learnpytorch.io/",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "fastai-part1",
+    "type": "course",
+    "title": "Practical Deep Learning for Coders, Part 1 (2022)",
+    "author": "Jeremy Howard / fast.ai",
+    "url": "https://course.fast.ai/",
+    "free": true,
+    "language": "en",
+    "notes": "Top-down, fastai API. Now a backup: L1/L8 for CNN motivation (M08), L6 random forests (M07). 2022 package pins may break.",
+    "modules": [
+      "M07",
+      "M08"
+    ]
+  },
+  {
+    "id": "fastai-part2",
+    "type": "course",
+    "title": "Practical Deep Learning Part 2: Deep Learning Foundations to Stable Diffusion",
+    "author": "Jeremy Howard / fast.ai",
+    "url": "https://course.fast.ai/Lessons/part2.html",
+    "free": true,
+    "language": "en",
+    "notes": "Deep track.",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "onnxruntime-docs",
+    "type": "doc",
+    "title": "ONNX Runtime: Get started with Python",
+    "author": "Microsoft",
+    "url": "https://onnxruntime.ai/docs/get-started/with-python.html",
+    "free": true,
+    "language": "en",
+    "notes": "",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "kaggle-notebooks-docs",
+    "type": "doc",
+    "title": "Kaggle Notebooks documentation (free GPU)",
+    "author": "Kaggle",
+    "url": "https://www.kaggle.com/docs/notebooks",
+    "free": true,
+    "language": "en",
+    "notes": "Check current weekly GPU quota.",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "udl-book",
+    "type": "book",
+    "title": "Understanding Deep Learning",
+    "author": "Simon J.D. Prince",
+    "url": "https://udlbook.github.io/udlbook/",
+    "free": true,
+    "language": "en",
+    "notes": "Free PDF + notebooks. Deep track.",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "goodfellow-dl-book",
+    "type": "book",
+    "title": "Deep Learning",
+    "author": "Goodfellow, Bengio, Courville",
+    "url": "https://www.deeplearningbook.org/",
+    "free": true,
+    "language": "en",
+    "notes": "Free HTML. Deep track ch.6–8.",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "mit-6s191",
+    "type": "course",
+    "title": "MIT 6.S191 Introduction to Deep Learning",
+    "author": "Alexander Amini, Ava Amini",
+    "url": "https://introtodeeplearning.com/",
+    "free": true,
+    "language": "en",
+    "notes": "Annual overview lectures; optional.",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "campusx-100-days-dl",
+    "type": "video",
+    "title": "100 Days of Deep Learning (CampusX, Hindi/Urdu)",
+    "author": "Nitish Singh (CampusX)",
+    "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn",
+    "free": true,
+    "language": "hi/ur",
+    "notes": "Optional Hindi/Urdu companion.",
+    "modules": [
+      "M08"
+    ]
+  },
+  {
+    "id": "hf-optimum-quantization",
+    "type": "doc",
+    "title": "Optimum concept guide: Quantization",
+    "author": "Hugging Face",
+    "url": "https://huggingface.co/docs/optimum/concept_guides/quantization",
+    "free": true,
+    "language": "en",
+    "notes": "Theory: float16/int8 quantization, symmetric vs affine schemes, per-tensor/per-channel, calibration.",
+    "modules": [
+      "M05"
+    ]
+  },
+  {
+    "id": "hamel-evals",
+    "type": "doc",
+    "title": "Your AI Product Needs Evals",
+    "author": "Hamel Husain",
+    "url": "https://hamel.dev/blog/posts/evals/",
+    "free": true,
+    "language": "en",
+    "notes": "Levels: unit tests, human & model eval (traces, LLM judge alignment), A/B testing.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "think-bayes-2",
+    "type": "book",
+    "title": "Think Bayes, 2nd edition",
+    "author": "Allen B. Downey",
+    "url": "https://allendowney.github.io/ThinkBayes2/",
+    "free": true,
+    "language": "en",
+    "notes": "Free online with notebooks. Deep track.",
+    "modules": [
+      "M06"
+    ]
+  },
+  {
+    "id": "molnar-iml",
+    "type": "book",
+    "title": "Interpretable Machine Learning",
+    "author": "Christoph Molnar",
+    "url": "https://christophm.github.io/interpretable-ml-book/shap.html",
+    "free": true,
+    "language": "en",
+    "notes": "Free online book; SHAP chapter incl. disadvantages/caveats.",
+    "modules": [
+      "M07"
+    ]
+  }
+]

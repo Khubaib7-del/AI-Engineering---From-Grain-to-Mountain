@@ -1,0 +1,1742 @@
+{
+ "id": "M13",
+ "phase": "P6 Go deeper",
+ "title": "Adaptation, post-training and RL",
+ "summary": "Decide first (prompt vs RAG vs fine-tune), then do it properly on free GPUs: SFT data with chat templates and masking, LoRA/QLoRA math, hands-on SFT with TRL/Unsloth on a T4, forgetting checks, merge→GGUF→Ollama export, reward models and RLHF, DPO, compact RL foundations, full RLVR/GRPO, and post-training safety evaluation. Spine: free HF LLM Course ch. 10–12 + TRL + Unsloth + free DLAI short courses (the paid DLAI 13h course is optional).",
+ "hours": 76,
+ "prerequisites": [
+  "M08",
+  "M09",
+  "M10",
+  "M11"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "mlops"
+ ],
+ "optionalFor": [
+  "fde"
+ ],
+ "submodules": [
+  {
+   "id": "M13.S1",
+   "title": "Decide and prepare",
+   "units": [
+    {
+     "id": "M13.U01",
+     "title": "When to fine-tune (vs prompt, RAG or a bigger model)",
+     "hours": 4,
+     "depth": "core",
+     "week": 132,
+     "prerequisites": [
+      "M10.U08",
+      "M11.U02"
+     ],
+     "outcomes": [
+      "You can decide between prompting, RAG, fine-tuning or a combination using data, cost, change-rate and eval evidence.",
+      "You can explain that inference, prompting and decoding change outputs without changing weights, while fine-tuning changes weights and RAG supplies runtime evidence.",
+      "You can name the three post-training families (SFT, DPO, online RL) and what each is for."
+     ],
+     "topics": [
+      {
+       "id": "M13.01.08",
+       "title": "Fine-tune decision framework (new)",
+       "legacyIds": [
+        "M13.05.06",
+        "M13.05.07",
+        "M13.05.08"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "dlai-post-training",
+      "title": "DeepLearning.AI — Post-training of LLMs (free short course)",
+      "url": "https://www.deeplearning.ai/short-courses/post-training-of-llms/",
+      "slice": "Intro lessons: 'Introduction to post-training' and the method overviews (SFT, DPO, online RL) before the labs",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "What post-training is and where it sits after pretraining",
+      "Supervised fine-tuning: imitating example responses; when to use it",
+      "Direct Preference Optimization: learning from chosen vs rejected responses; when to use it",
+      "Online RL (reward functions / reward models, PPO/GRPO-style): when to use it",
+      "Practical guidance on picking a method for a given goal"
+     ],
+     "gaps": [
+      {
+       "topic": "Prompt vs RAG vs fine-tuning decision and cost model",
+       "resource": {
+        "resourceId": "aie-book-summaries",
+        "title": "Chip Huyen — AI Engineering ch. 7 'Finetuning' summary",
+        "url": "https://github.com/chiphuyen/aie-book/blob/main/chapter-summaries.md",
+        "slice": "Chapter 7 summary (when to finetune, finetuning vs RAG)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Prompting/PEFT vs full adaptation (weights vs inputs)",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "CS224N Winter 2026 — Efficient Adaptation (Prompting + PEFT) slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture09-peft.pdf",
+        "slice": "Whole deck",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rlhf-book",
+      "title": "RLHF Book — Training overview",
+      "url": "https://rlhfbook.com/c/03-training-overview",
+      "slice": "Whole chapter",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Decision memo: prompt, RAG or fine-tune?",
+      "brief": "Write a 1-page memo for 3 scenarios: (a) Urdu legal-clause classifier with 5k labels, (b) a company FAQ bot whose policies change weekly, (c) forcing a strict JSON house style. For each, recommend prompt / RAG / FT / combination with expected cost, data needs, the eval you would run first, and what evidence would change your mind.",
+      "done_when": "Memo covers all 3 scenarios, each with a recommendation, a cost/data estimate and a named eval set; at least one scenario explains why fine-tuning is NOT the first step."
+     },
+     "quiz": [
+      {
+       "id": "M13.U01.Q1",
+       "kind": "mcq",
+       "prompt": "The best fit for knowledge that changes weekly is usually:",
+       "options": [
+        "RAG",
+        "Full fine-tuning",
+        "A larger tokenizer",
+        "RLHF"
+       ],
+       "answer": 0,
+       "explain": "Retrieval updates instantly; weights would need retraining every week."
+      },
+      {
+       "id": "M13.U01.Q2",
+       "kind": "mcq",
+       "prompt": "Fine-tuning is most justified when:",
+       "options": [
+        "You haven't built evals yet",
+        "Prompting/RAG plateau on a well-measured, stable task with enough quality data",
+        "The knowledge changes daily",
+        "You need citations"
+       ],
+       "answer": 1,
+       "explain": "FT is expensive to maintain; it needs evidence and a stable target."
+      },
+      {
+       "id": "M13.U01.Q3",
+       "kind": "mcq",
+       "prompt": "Changing temperature or the system prompt changes:",
+       "options": [
+        "Model weights",
+        "The LoRA rank",
+        "Only inference behaviour, not weights",
+        "The tokenizer"
+       ],
+       "answer": 2,
+       "explain": "This is the merged M13.05.06–.07 point: inference is execution, not a training stage."
+      },
+      {
+       "id": "M13.U01.Q4",
+       "kind": "short",
+       "prompt": "Why must you have an eval set before starting a fine-tune?",
+       "rubric": [
+        "Without it you cannot tell whether the fine-tune beat the prompt/RAG baseline",
+        "Needed to detect regressions/forgetting and to choose checkpoints/hyperparameters",
+        "Defines the task precisely, which also shapes the training data"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M13.U02",
+     "title": "Data for SFT: templates, masking, packing, curation",
+     "hours": 8,
+     "depth": "core",
+     "week": 133,
+     "prerequisites": [
+      "M13.U01",
+      "M09.U04"
+     ],
+     "outcomes": [
+      "You can apply a model's chat template and verify special tokens and EOS.",
+      "You can mask prompt tokens so loss is computed only on assistant responses, and pack examples correctly.",
+      "You can curate, dedup, decontaminate and document a 1,000-example instruction dataset."
+     ],
+     "topics": [
+      {
+       "id": "M13.01.01",
+       "title": "Instruction/chat templates"
+      },
+      {
+       "id": "M13.01.02",
+       "title": "Supervised labels"
+      },
+      {
+       "id": "M13.01.03",
+       "title": "Dataset curation/dedup"
+      },
+      {
+       "id": "M13.01.04",
+       "title": "Packing"
+      },
+      {
+       "id": "M13.01.05",
+       "title": "Masking labels / SFT target masks",
+       "legacyIds": [
+        "M13.05.02"
+       ]
+      },
+      {
+       "id": "M13.01.06",
+       "title": "Train/eval contamination"
+      },
+      {
+       "id": "M13.01.07",
+       "title": "Synthetic data quality"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course 11.2 — Chat Templates, then ch. 10 'Curate high-quality datasets' (Argilla)",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter11/2",
+      "slice": "11.2 Chat Templates (whole section) → 10.1–10.x Argilla: setup, loading a dataset, annotating, using the annotated dataset https://huggingface.co/learn/llm-course/en/chapter10/1",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Why chat templates exist; message roles (system/user/assistant) and model-specific formats",
+      "apply_chat_template, add_generation_prompt, special tokens and EOS handling",
+      "Templates for tool use and multi-turn conversations",
+      "Argilla: setting up an annotation workspace, loading a Hub dataset, defining questions, annotating, exporting to the Hub (ch. 10)"
+     ],
+     "gaps": [
+      {
+       "topic": "Assistant-only loss masking and packing settings",
+       "resource": {
+        "resourceId": "hf-trl-docs",
+        "title": "TRL — SFT Trainer: assistant_only_loss / completion_only_loss, packing",
+        "url": "https://huggingface.co/docs/trl/en/sft_trainer",
+        "slice": "Sections on dataset formats, loss on completions/assistant only, packing",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Packing without cross-contamination",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Improving Hugging Face Training Efficiency Through Packing with Flash Attention",
+        "url": "https://huggingface.co/blog/packing-with-FA2",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Near-duplicate detection (MinHash/LSH)",
+       "resource": {
+        "resourceId": "mmds-book",
+        "title": "Mining of Massive Datasets ch. 3 — Finding Similar Items",
+        "url": "http://infolab.stanford.edu/~ullman/mmds/ch3n.pdf",
+        "slice": "§3.3 MinHash, §3.4 LSH",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Synthetic data at scale and its quality pitfalls",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Cosmopedia: how to create large-scale synthetic data for pre-training",
+        "url": "https://huggingface.co/blog/cosmopedia",
+        "slice": "Whole post (prompt diversity, decontamination)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Datasheet template",
+       "resource": {
+        "resourceId": "P23",
+        "title": "Datasheets for Datasets",
+        "url": "https://arxiv.org/abs/1803.09010",
+        "slice": "§3 questions",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "raschka-llms-from-scratch",
+      "title": "LLMs-from-scratch ch. 7 — instruction data (incl. near-duplicate finder bonus)",
+      "url": "https://github.com/rasbt/LLMs-from-scratch/tree/main/ch07",
+      "slice": "ch07 main notebook §7.2–7.3 + 02_dataset-utilities",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "1,000-example instruction set with a datasheet",
+      "brief": "Build a 1,000-example instruction dataset for one narrow task, mixing your own labels with LLM-generated examples you filter (in Argilla or a spreadsheet). Apply the target model's chat template. Mask prompt tokens and verify labels == −100 on them. Near-dedup with MinHash or embedding similarity. Check no eval item leaks into training. Write a datasheet (P23 questions).",
+      "done_when": "A Hub/local dataset, a test showing masked positions are −100 for prompt tokens, a dedup report (removed count), a contamination check result, and a datasheet."
+     },
+     "quiz": [
+      {
+       "id": "M13.U02.Q1",
+       "kind": "mcq",
+       "prompt": "Masking prompt tokens in SFT labels means loss is computed on:",
+       "options": [
+        "All tokens",
+        "Only special tokens",
+        "Nothing",
+        "Only the assistant response tokens"
+       ],
+       "answer": 3,
+       "explain": "The model is not trained to reproduce the user's prompt."
+      },
+      {
+       "id": "M13.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Using the wrong chat template at inference after SFT commonly causes:",
+       "options": [
+        "Degraded or rambling outputs and missing stop behaviour",
+        "Faster decoding",
+        "Lower cost",
+        "Better accuracy"
+       ],
+       "answer": 0,
+       "explain": "The model learned to respond after specific tokens and to emit a specific EOS."
+      },
+      {
+       "id": "M13.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Packing multiple short examples into one sequence:",
+       "options": [
+        "Always improves quality",
+        "Changes the tokenizer",
+        "Replaces evaluation",
+        "Improves GPU utilization but needs correct attention boundaries/position handling"
+       ],
+       "answer": 3,
+       "explain": "Without boundary-aware attention, examples can attend across each other."
+      },
+      {
+       "id": "M13.U02.Q4",
+       "kind": "short",
+       "prompt": "Give two ways synthetic training data can quietly hurt your model.",
+       "rubric": [
+        "Errors/hallucinations in generated answers get learned as truth",
+        "Low diversity / style collapse or copying the teacher's quirks; distribution mismatch with real users",
+        "Possible contamination with eval items or licence/terms issues"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M13.S2",
+   "title": "Supervised fine-tuning and PEFT",
+   "units": [
+    {
+     "id": "M13.U03",
+     "title": "Full fine-tuning vs LoRA/QLoRA: math and hyperparameters",
+     "hours": 8,
+     "depth": "core",
+     "week": 134,
+     "prerequisites": [
+      "M13.U02"
+     ],
+     "outcomes": [
+      "You can implement a LoRA linear layer and show it equals the base layer at initialization.",
+      "You can compute trainable parameters for a given rank and target modules.",
+      "You can estimate VRAM for full FT vs LoRA vs QLoRA and pick learning rate, r and alpha."
+     ],
+     "topics": [
+      {
+       "id": "M13.02.01",
+       "title": "Full fine-tune"
+      },
+      {
+       "id": "M13.02.02",
+       "title": "LoRA rank/alpha/target modules"
+      },
+      {
+       "id": "M13.02.03",
+       "title": "QLoRA/4-bit storage"
+      },
+      {
+       "id": "M13.02.04",
+       "title": "Adapters"
+      },
+      {
+       "id": "M13.02.06",
+       "title": "Learning rates"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course 11.4 — LoRA (Low-Rank Adaptation), then Raschka Appendix E 'LoRA from scratch'",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter11/4",
+      "slice": "11.4 whole section → https://github.com/rasbt/LLMs-from-scratch/tree/main/appendix-E (LoRALayer, LinearWithLoRA, applying to the GPT classifier)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Why parameter-efficient fine-tuning: frozen base, small trainable low-rank matrices (11.4)",
+      "PEFT LoraConfig: r, lora_alpha, lora_dropout, target_modules (11.4)",
+      "Training with SFTTrainer + LoRA and merging adapters for inference (11.4)",
+      "LoRA from scratch: A/B matrices, B initialised to zero, scaling alpha/r, wrapping nn.Linear (Appendix E)"
+     ],
+     "gaps": [
+      {
+       "topic": "4-bit NF4 quantization and QLoRA in practice",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — Making LLMs even more accessible with bitsandbytes, 4-bit quantization and QLoRA",
+        "url": "https://huggingface.co/blog/4bit-transformers-bitsandbytes",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Learning rate, r, alpha, target modules — practical defaults",
+       "resource": {
+        "resourceId": "unsloth-docs",
+        "title": "Unsloth — LoRA Hyperparameters Guide",
+        "url": "https://docs.unsloth.ai/get-started/fine-tuning-llms-guide/lora-hyperparameters-guide",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Original method papers",
+       "resource": {
+        "resourceId": "P15",
+        "title": "LoRA: Low-Rank Adaptation of LLMs",
+        "url": "https://arxiv.org/abs/2106.09685",
+        "slice": "§4 (method), §7 (rank analysis); then QLoRA https://arxiv.org/abs/2305.14314 §3",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "hf-peft-docs",
+      "title": "PEFT documentation",
+      "url": "https://huggingface.co/docs/peft/en/index",
+      "slice": "Quicktour + LoRA conceptual guide",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "LoRA by hand + VRAM budget",
+      "brief": "Implement a LoRA linear layer from scratch and test that outputs equal the base layer at init (B=0). Compute trainable-parameter counts for r ∈ {4, 16, 64} on a 1B model's attention-only vs attention+MLP projections. Estimate VRAM for full FT (AdamW), LoRA and QLoRA (weights + grads + optimizer states + rough activations). Read P15 §4 and P16 §3.",
+      "done_when": "Unit test passes for init equality; a param-count table (3 ranks × 2 target sets) that matches PEFT's print_trainable_parameters(); a VRAM estimate table."
+     },
+     "quiz": [
+      {
+       "id": "M13.U03.Q1",
+       "kind": "mcq",
+       "prompt": "LoRA initializes B to zero so that:",
+       "options": [
+        "The adapted model starts identical to the base model",
+        "Training is faster",
+        "Rank is maximized",
+        "Quantization works"
+       ],
+       "answer": 0,
+       "explain": "ΔW = BA = 0 at step 0, so fine-tuning starts from the pretrained function."
+      },
+      {
+       "id": "M13.U03.Q2",
+       "kind": "mcq",
+       "prompt": "QLoRA stores base weights in 4-bit while computing in:",
+       "options": [
+        "4-bit",
+        "int8 only",
+        "Higher precision such as bf16",
+        "fp64"
+       ],
+       "answer": 2,
+       "explain": "Weights are dequantized on the fly for matmuls; adapters train in bf16."
+      },
+      {
+       "id": "M13.U03.Q3",
+       "kind": "mcq",
+       "prompt": "With AdamW, full fine-tuning memory is dominated by:",
+       "options": [
+        "Weights + gradients + two optimizer moments per parameter",
+        "Activations only",
+        "The tokenizer",
+        "The dataset"
+       ],
+       "answer": 0,
+       "explain": "Roughly 16 bytes/param in mixed precision before activations."
+      },
+      {
+       "id": "M13.U03.Q4",
+       "kind": "short",
+       "prompt": "What does the LoRA alpha/r ratio control, and what happens if you raise r but keep alpha fixed?",
+       "rubric": [
+        "alpha/r scales the adapter update ΔW",
+        "Raising r with fixed alpha shrinks the scale, so the effective update/LR drops",
+        "Mentions rsLoRA or re-tuning LR/alpha when changing r"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M13.U04",
+     "title": "Hands-on SFT with TRL and Unsloth on free GPUs",
+     "hours": 10,
+     "depth": "core",
+     "week": 135,
+     "prerequisites": [
+      "M13.U03"
+     ],
+     "outcomes": [
+      "You can QLoRA-fine-tune a 0.5–3B model on a free Colab/Kaggle T4 with TRL or Unsloth.",
+      "You can track runs, save and resume checkpoints, and report VRAM peak and throughput.",
+      "You can compare base vs fine-tuned on your M10 eval harness."
+     ],
+     "topics": [
+      {
+       "id": "M13.02.05",
+       "title": "PEFT/TRL"
+      },
+      {
+       "id": "M13.02.07",
+       "title": "Checkpoints"
+      },
+      {
+       "id": "M13.03.01",
+       "title": "SFT"
+      },
+      {
+       "id": "M13.02.11",
+       "title": "Free-GPU workflow: Colab/Kaggle T4, 4-bit, gradient checkpointing, small models (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course 11.3 — Supervised Fine-Tuning, then TRL 'SFT Trainer' docs",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter11/3",
+      "slice": "11.3 whole section → https://huggingface.co/docs/trl/en/sft_trainer (quickstart, dataset formats, SFTConfig, PEFT integration)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "The SFT process: choosing a base model, preparing a chat-formatted dataset (11.3)",
+      "SFTTrainer/SFTConfig: key hyperparameters (LR, epochs, batch size, max length) (11.3 + TRL)",
+      "Monitoring training: loss curves and spotting overfitting/instability (11.3)",
+      "Dataset formats TRL accepts (conversational, prompt-completion) and PEFT/LoRA integration (TRL docs)"
+     ],
+     "gaps": [
+      {
+       "topic": "Free-T4 workflow (4-bit loading, Colab/Kaggle notebooks, small models)",
+       "resource": {
+        "resourceId": "unsloth-docs",
+        "title": "Unsloth — Fine-tuning LLMs Guide",
+        "url": "https://docs.unsloth.ai/get-started/fine-tuning-llms-guide",
+        "slice": "Whole guide (model choice, Colab/Kaggle notebooks, training settings)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Saving and resuming checkpoints",
+       "resource": {
+        "resourceId": "hf-transformers-docs",
+        "title": "HF Transformers — Trainer (save_steps, resume_from_checkpoint)",
+        "url": "https://huggingface.co/docs/transformers/en/main_classes/trainer",
+        "slice": "Trainer.train(resume_from_checkpoint=...) and TrainingArguments save/eval options",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Experiment tracking for free",
+       "resource": {
+        "resourceId": "mlflow-docs",
+        "title": "MLflow Tracking",
+        "url": "https://mlflow.org/docs/latest/ml/tracking/",
+        "slice": "Quickstart + autologging",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "How gradient checkpointing works",
+       "resource": {
+        "resourceId": "rohitg00-aefs",
+        "title": "AI Engineering from Scratch — Gradient checkpointing",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/34-gradient-checkpointing",
+        "slice": "Lesson phases/10-llms-from-scratch/34-gradient-checkpointing (docs/en.md: concept → build → use → ship)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "smol-course",
+      "title": "Hugging Face smol course",
+      "url": "https://github.com/huggingface/smol-course",
+      "slice": "Instruction tuning + preference alignment units",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Your first real fine-tune",
+      "brief": "QLoRA-SFT a 0.5–3B instruct model on your U02 dataset on a free T4 (Unsloth or TRL+bitsandbytes, gradient checkpointing on). Track the run (MLflow or W&B free tier). Kill the run mid-way and resume from checkpoint. Compare base vs fine-tuned on your held-out eval with the M10 harness; report VRAM peak, tokens/sec and wall-clock.",
+      "done_when": "Linked run dashboard, a log showing a successful resume (loss continues smoothly), and a base-vs-FT table on the held-out split with VRAM/throughput numbers."
+     },
+     "quiz": [
+      {
+       "id": "M13.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Gradient checkpointing reduces memory by:",
+       "options": [
+        "Quantizing weights",
+        "Recomputing activations in the backward pass instead of storing them",
+        "Skipping layers",
+        "Shrinking the vocabulary"
+       ],
+       "answer": 1,
+       "explain": "It trades ~20–30% extra compute for much lower activation memory."
+      },
+      {
+       "id": "M13.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Training loss falling while held-out eval worsens indicates:",
+       "options": [
+        "Overfitting / memorization",
+        "Success",
+        "Only a tokenizer bug",
+        "Underfitting"
+       ],
+       "answer": 0,
+       "explain": "Stop earlier, add data, or regularize."
+      },
+      {
+       "id": "M13.U04.Q3",
+       "kind": "mcq",
+       "prompt": "For a free T4 (16 GB), the realistic setup is:",
+       "options": [
+        "Full FT of a 7B model",
+        "QLoRA on a ≤3–8B model with short sequences",
+        "Pretraining from scratch",
+        "PPO on a 70B model"
+       ],
+       "answer": 1,
+       "explain": "4-bit base + LoRA + gradient checkpointing fits small models."
+      },
+      {
+       "id": "M13.U04.Q4",
+       "kind": "short",
+       "prompt": "Which three hyperparameters would you sweep first if the fine-tune underperforms, and why?",
+       "rubric": [
+        "Learning rate (most sensitive)",
+        "Number of epochs/steps (under- vs over-fitting)",
+        "LoRA r/alpha or target modules, or effective batch size — with justification tied to eval curves"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M13.U05",
+     "title": "Evaluate, forget, merge, distill and export",
+     "hours": 6,
+     "depth": "core",
+     "week": 136,
+     "prerequisites": [
+      "M13.U04"
+     ],
+     "outcomes": [
+      "You can measure catastrophic forgetting with general benchmarks before and after fine-tuning.",
+      "You can merge an adapter, export to GGUF, run it in Ollama and call it from your M10 service.",
+      "You can explain distillation and multi-LoRA serving (awareness)."
+     ],
+     "topics": [
+      {
+       "id": "M13.02.08",
+       "title": "Catastrophic forgetting"
+      },
+      {
+       "id": "M13.02.09",
+       "title": "Distillation"
+      },
+      {
+       "id": "M13.02.10",
+       "title": "Merge/evaluate"
+      },
+      {
+       "id": "M13.02.12",
+       "title": "Adapter merge, GGUF export and multi-LoRA serving (awareness; depth M17) (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course 11.5 — Evaluation, then EleutherAI lm-evaluation-harness README",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter11/5",
+      "slice": "11.5 whole section → https://github.com/EleutherAI/lm-evaluation-harness (README: basic usage, HF models, tasks)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Automatic benchmarks for general capabilities (e.g. MMLU-style knowledge, reasoning) and their limits (11.5)",
+      "Domain-specific evaluation for your fine-tuned task (11.5)",
+      "Running evals with a harness (lighteval in the course; lm-eval-harness CLI for HF models)",
+      "Comparing base vs fine-tuned checkpoints on the same tasks"
+     ],
+     "gaps": [
+      {
+       "topic": "Merging LoRA weights into the base",
+       "resource": {
+        "resourceId": "hf-peft-docs",
+        "title": "PEFT — LoRA developer guide: merge adapters",
+        "url": "https://huggingface.co/docs/peft/en/developer_guides/lora",
+        "slice": "'Merge LoRA weights into the base model' (merge_and_unload) section",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "GGUF export for llama.cpp/Ollama",
+       "resource": {
+        "resourceId": "unsloth-docs",
+        "title": "Unsloth — Saving to GGUF",
+        "url": "https://docs.unsloth.ai/basics/running-and-saving-models/saving-to-gguf",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Serving the GGUF locally (Ollama Modelfile import / llama.cpp)",
+       "resource": {
+        "resourceId": "llama-cpp",
+        "title": "llama.cpp README (GGUF, llama-server)",
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "slice": "README: quick start, llama-server OpenAI-compatible endpoint",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Multi-LoRA serving (awareness)",
+       "resource": {
+        "resourceId": "vllm-docs",
+        "title": "vLLM — LoRA adapters",
+        "url": "https://docs.vllm.ai/en/latest/features/lora.html",
+        "slice": "Serving multiple LoRA adapters",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Distillation method",
+       "resource": {
+        "resourceId": "paper-hinton-distillation",
+        "title": "Distilling the Knowledge in a Neural Network",
+        "url": "https://arxiv.org/abs/1503.02531",
+        "slice": "§1–2 (soft targets, temperature)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Distillation for LLMs in TRL",
+       "resource": {
+        "resourceId": "hf-trl-docs",
+        "title": "TRL — GKD Trainer (generalized knowledge distillation)",
+        "url": "https://huggingface.co/docs/trl/en/gkd_trainer",
+        "slice": "Whole page",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Quantization (INT8/GPTQ/AWQ/GGUF)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/11-quantization",
+      "slice": "Lesson phases/10-llms-from-scratch/11-quantization (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Forgetting check + ship it locally",
+      "brief": "Run 2 general benchmarks (e.g. an MMLU subset and HellaSwag via lm-eval-harness) on base vs fine-tuned. Merge the adapter, export to GGUF, run it in Ollama and call it from your M10 service. Optional: distil a 7B teacher's outputs into a 0.5B student for your task and compare quality/cost.",
+      "done_when": "A before/after table for task metric + 2 general benchmarks, and a working call from your M10 service to the Ollama-served GGUF model (log line or demo)."
+     },
+     "quiz": [
+      {
+       "id": "M13.U05.Q1",
+       "kind": "mcq",
+       "prompt": "Catastrophic forgetting is detected by:",
+       "options": [
+        "Training loss",
+        "A higher LoRA rank",
+        "Longer context",
+        "Evaluating general capabilities before and after fine-tuning"
+       ],
+       "answer": 3,
+       "explain": "Training loss only measures the new task."
+      },
+      {
+       "id": "M13.U05.Q2",
+       "kind": "mcq",
+       "prompt": "Knowledge distillation trains a student on:",
+       "options": [
+        "A teacher model's outputs or output distributions",
+        "Random labels",
+        "The test set",
+        "Only human preferences"
+       ],
+       "answer": 0,
+       "explain": "Soft targets carry more information than hard labels."
+      },
+      {
+       "id": "M13.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Keeping LoRA adapters unmerged is useful when:",
+       "options": [
+        "You want to serve many task adapters over one base model",
+        "You serve exactly one model",
+        "You need GGUF",
+        "You never update"
+       ],
+       "answer": 0,
+       "explain": "Multi-LoRA servers swap small adapters per request."
+      },
+      {
+       "id": "M13.U05.Q4",
+       "kind": "short",
+       "prompt": "Your task metric rose 12 points but MMLU fell 6. Ship or not? What extra evidence do you need?",
+       "rubric": [
+        "Depends on whether general capability matters for this product's traffic",
+        "Needs evals on real user-like inputs outside the narrow task, safety/over-refusal checks, and CIs on both numbers",
+        "Mentions mitigations: lower LR/fewer epochs, mix general data, smaller rank, and re-measure"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M13.S3",
+   "title": "Preference optimization",
+   "units": [
+    {
+     "id": "M13.U06",
+     "title": "RLHF pipeline and reward models",
+     "hours": 6,
+     "depth": "core",
+     "week": 136,
+     "prerequisites": [
+      "M13.U04"
+     ],
+     "outcomes": [
+      "You can describe the SFT → reward model → RL (PPO) pipeline and the role of the KL penalty.",
+      "You can train a small pairwise reward model and report held-out pairwise accuracy.",
+      "You can find a reward-model exploit (e.g. length bias)."
+     ],
+     "topics": [
+      {
+       "id": "M13.03.02",
+       "title": "Preference datasets / preference collection",
+       "legacyIds": [
+        "M13.05.03"
+       ]
+      },
+      {
+       "id": "M13.03.03",
+       "title": "Reward models"
+      },
+      {
+       "id": "M13.03.04",
+       "title": "RLHF concepts and stages",
+       "legacyIds": [
+        "M13.05.04"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-blog",
+      "title": "HF blog — Illustrating Reinforcement Learning from Human Feedback (RLHF)",
+      "url": "https://huggingface.co/blog/rlhf",
+      "slice": "Whole post, then RLHF Book chapters 'Preference Data' https://rlhfbook.com/c/11-preference-data and 'Reward Models' https://rlhfbook.com/c/05-reward-models",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Three RLHF steps: pretrained LM, reward model from human comparisons, RL fine-tuning (blog)",
+      "PPO fine-tuning with a KL penalty to the initial model (blog)",
+      "Open-source RLHF tooling and open problems (blog)",
+      "How preference data is collected: pairwise comparisons, rating interfaces, sourcing and costs (RLHF Book)",
+      "Bradley–Terry reward-model loss, architecture, variants and evaluation (RLHF Book)"
+     ],
+     "gaps": [
+      {
+       "topic": "Training a reward model in code",
+       "resource": {
+        "resourceId": "hf-trl-docs",
+        "title": "TRL — Reward Trainer",
+        "url": "https://huggingface.co/docs/trl/en/reward_trainer",
+        "slice": "Whole page (dataset format, RewardConfig, centering rewards)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "PPO implementation details for RLHF",
+       "resource": {
+        "resourceId": "hf-blog",
+        "title": "HF blog — The N Implementation Details of RLHF with PPO",
+        "url": "https://huggingface.co/blog/the_n_implementation_details_of_rlhf_with_ppo",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "InstructGPT (read here)",
+       "resource": {
+        "resourceId": "P17",
+        "title": "Training language models to follow instructions with human feedback",
+        "url": "https://arxiv.org/abs/2203.02155",
+        "slice": "§3 Methods",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "cs224n",
+      "title": "Stanford CS224N Spring 2024 — Lecture 10: Post-training (Archit Sharma)",
+      "url": "https://www.youtube.com/watch?v=35X6zlhoCy4",
+      "slice": "Full lecture",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Reward model + one exploit",
+      "brief": "Train a small reward model (classification head on a 0.5B model, TRL RewardTrainer) on a subset of a public preference dataset. Report pairwise accuracy on held-out pairs. Then show one exploit: find outputs it scores highly that humans wouldn't prefer (e.g. longer but worse answers) and quantify the length–reward correlation. Read P17 §3.",
+      "done_when": "Held-out pairwise accuracy reported; a scatter/correlation of reward vs length; 3 concrete exploit examples."
+     },
+     "quiz": [
+      {
+       "id": "M13.U06.Q1",
+       "kind": "mcq",
+       "prompt": "A reward model in RLHF is typically trained on:",
+       "options": [
+        "Next-token loss",
+        "Pairwise human (or AI) preference comparisons",
+        "BLEU",
+        "Perplexity"
+       ],
+       "answer": 1,
+       "explain": "Bradley–Terry loss pushes chosen rewards above rejected ones."
+      },
+      {
+       "id": "M13.U06.Q2",
+       "kind": "mcq",
+       "prompt": "The KL penalty to a reference model in RLHF exists to:",
+       "options": [
+        "Speed training",
+        "Increase diversity",
+        "Reduce vocabulary",
+        "Keep the policy from drifting into reward-exploiting, degenerate text"
+       ],
+       "answer": 3,
+       "explain": "It regularizes the policy toward the SFT model."
+      },
+      {
+       "id": "M13.U06.Q3",
+       "kind": "mcq",
+       "prompt": "The classic InstructGPT pipeline order is:",
+       "options": [
+        "RL → SFT → RM",
+        "RM → SFT → RL",
+        "SFT → reward model → RL (PPO)",
+        "DPO → SFT"
+       ],
+       "answer": 2,
+       "explain": "This is the merged M13.05.04 'stages' point."
+      },
+      {
+       "id": "M13.U06.Q4",
+       "kind": "short",
+       "prompt": "Why might a reward model prefer longer answers, and how would you check?",
+       "rubric": [
+        "Labellers often prefer more detailed answers, so length correlates with 'chosen' in training data",
+        "Check: correlation of reward with length; length-controlled comparisons (same content, padded)",
+        "Mitigation: length-balanced data or length penalties"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M13.U07",
+     "title": "DPO in practice",
+     "hours": 8,
+     "depth": "core",
+     "week": 137,
+     "prerequisites": [
+      "M13.U06"
+     ],
+     "outcomes": [
+      "You can run DPO with TRL from your SFT checkpoint and tune β.",
+      "You can evaluate a preference-tuned model with a calibrated pairwise judge plus a regression check.",
+      "You can explain when online RL beats offline DPO."
+     ],
+     "topics": [
+      {
+       "id": "M13.03.05",
+       "title": "DPO objective; DPO vs reward-model RL",
+       "legacyIds": [
+        "M13.05.05"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "hf-trl-docs",
+      "title": "TRL — DPO Trainer",
+      "url": "https://huggingface.co/docs/trl/en/dpo_trainer",
+      "slice": "Whole page (expected dataset format, DPOConfig, β, loss types, reference model, logged metrics), plus DPO lessons + lab in DLAI 'Post-training of LLMs'",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Preference dataset format: prompt, chosen, rejected (conversational or standard)",
+      "DPOConfig and the β parameter; reference model handling (implicit copy, PEFT adapters)",
+      "Loss variants offered by TRL (sigmoid/DPO, IPO, etc.)",
+      "Logged metrics: rewards/chosen, rewards/rejected, accuracies, margins",
+      "DLAI: DPO concept and a hands-on DPO lab changing a model's identity/behaviour"
+     ],
+     "gaps": [
+      {
+       "topic": "DPO from scratch (the loss in ~20 lines)",
+       "resource": {
+        "resourceId": "raschka-llms-from-scratch",
+        "title": "LLMs-from-scratch — DPO from scratch notebook",
+        "url": "https://github.com/rasbt/LLMs-from-scratch/blob/main/ch07/04_preference-tuning-with-dpo/dpo-from-scratch.ipynb",
+        "slice": "Whole notebook",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "DPO derivation",
+       "resource": {
+        "resourceId": "P18",
+        "title": "Direct Preference Optimization",
+        "url": "https://arxiv.org/abs/2305.18290",
+        "slice": "§4 (deriving the DPO objective)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Online vs offline preference optimization",
+       "resource": {
+        "resourceId": "cs224n",
+        "title": "Stanford CS224N Spring 2024 — Lecture 15: After DPO (Nathan Lambert)",
+        "url": "https://www.youtube.com/watch?v=dnF463_Ar9I",
+        "slice": "Full lecture",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Direct alignment algorithms overview",
+       "resource": {
+        "resourceId": "rlhf-book",
+        "title": "RLHF Book — Direct Alignment Algorithms",
+        "url": "https://rlhfbook.com/c/08-direct-alignment",
+        "slice": "Whole chapter",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — DPO",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/10-llms-from-scratch/08-dpo",
+      "slice": "Lesson phases/10-llms-from-scratch/08-dpo (docs/en.md: concept → build → use → ship)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "DPO with two βs",
+      "brief": "Starting from your U04 SFT model, create 500 preference pairs for one behaviour (e.g. concise Urdu-English answers that cite policy) and run DPO with 2 β values. Evaluate with your calibrated pairwise judge (M10.U09) with position swapping, plus a regression check on the SFT eval set.",
+      "done_when": "A table: SFT vs DPO(β1) vs DPO(β2) on judge win-rate (with position-swap) and on the SFT eval; training metric plots (reward margins)."
+     },
+     "quiz": [
+      {
+       "id": "M13.U07.Q1",
+       "kind": "mcq",
+       "prompt": "DPO avoids:",
+       "options": [
+        "Preference data",
+        "A reference model",
+        "Training a separate reward model and running online RL",
+        "Any loss function"
+       ],
+       "answer": 2,
+       "explain": "It optimizes the policy directly on preference pairs with a closed-form objective."
+      },
+      {
+       "id": "M13.U07.Q2",
+       "kind": "mcq",
+       "prompt": "In DPO, β controls:",
+       "options": [
+        "The learning rate",
+        "How strongly the policy may deviate from the reference model",
+        "Batch size",
+        "LoRA rank"
+       ],
+       "answer": 1,
+       "explain": "β plays the role of the KL coefficient in the RLHF objective."
+      },
+      {
+       "id": "M13.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Each DPO training example contains:",
+       "options": [
+        "One answer",
+        "A numeric reward",
+        "A tool call",
+        "A prompt with a chosen and a rejected response"
+       ],
+       "answer": 3,
+       "explain": "Pairs, not scalar rewards."
+      },
+      {
+       "id": "M13.U07.Q4",
+       "kind": "short",
+       "prompt": "When would online RL (PPO/GRPO) be preferred over offline DPO?",
+       "rubric": [
+        "When you can compute rewards on fresh samples (verifiable rewards) and want the model to explore beyond the dataset",
+        "When off-policy preference data no longer matches the current model's outputs",
+        "Trade-off: more compute/complexity vs offline simplicity"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M13.S4",
+   "title": "RL for LLMs",
+   "units": [
+    {
+     "id": "M13.U08",
+     "title": "Minimum RL foundations for LLM post-training",
+     "hours": 12,
+     "depth": "core",
+     "week": 138,
+     "prerequisites": [],
+     "outcomes": [
+      "You can map state, action, reward and episode onto an LLM generating an answer.",
+      "You can implement REINFORCE with a baseline and show the variance reduction.",
+      "You can explain each term of PPO's clipped objective; bandits, Bellman equations and offline RL limits at awareness level."
+     ],
+     "topics": [
+      {
+       "id": "M13.04.01",
+       "title": "MDP/state/action/reward"
+      },
+      {
+       "id": "M13.04.02",
+       "title": "Return/discount"
+      },
+      {
+       "id": "M13.04.03",
+       "title": "Policy/value"
+      },
+      {
+       "id": "M13.04.04",
+       "title": "Exploration"
+      },
+      {
+       "id": "M13.04.05",
+       "title": "Bandits (awareness)"
+      },
+      {
+       "id": "M13.04.06",
+       "title": "Bellman equations (awareness)"
+      },
+      {
+       "id": "M13.04.07",
+       "title": "Policy gradient"
+      },
+      {
+       "id": "M13.04.08",
+       "title": "REINFORCE"
+      },
+      {
+       "id": "M13.04.09",
+       "title": "PPO"
+      },
+      {
+       "id": "M13.04.10",
+       "title": "Offline RL limits (awareness)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C17",
+      "title": "HF Deep RL Course — Unit 1 (Intro), Unit 4 (Policy Gradient), Unit 8 (PPO)",
+      "url": "https://huggingface.co/learn/deep-rl-course/unit1/introduction",
+      "slice": "Unit 1 all pages → Unit 4 https://huggingface.co/learn/deep-rl-course/unit4/introduction (theory + REINFORCE hands-on) → Unit 8 https://huggingface.co/learn/deep-rl-course/unit8/introduction (PPO theory + CleanRL implementation)",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "RL framework: agent, environment, state/observation, action, reward; the reward hypothesis (Unit 1)",
+      "Episodic vs continuing tasks, discounted return, exploration–exploitation trade-off (Unit 1)",
+      "Policy-based vs value-based methods (Unit 1)",
+      "Policy-gradient theorem, Monte-Carlo REINFORCE, implementing it in PyTorch (Unit 4)",
+      "PPO intuition, the clipped surrogate objective, implementing PPO from scratch with CleanRL (Unit 8)"
+     ],
+     "gaps": [
+      {
+       "topic": "Bellman equations (awareness)",
+       "resource": {
+        "resourceId": "C17",
+        "title": "HF Deep RL Course — Unit 2: The Bellman Equation",
+        "url": "https://huggingface.co/learn/deep-rl-course/unit2/bellman-equation",
+        "slice": "Unit 2 'The Bellman Equation: simplify our value estimation' page",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Multi-armed bandits (awareness)",
+       "resource": {
+        "resourceId": "sutton-barto",
+        "title": "Sutton & Barto — ch. 2 Multi-armed Bandits",
+        "url": "http://incompleteideas.net/book/the-book-2nd.html",
+        "slice": "Chapter 2 (§2.1–2.7)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Baselines and the policy-gradient derivation",
+       "resource": {
+        "resourceId": "spinningup",
+        "title": "Spinning Up — Part 3: Intro to Policy Optimization",
+        "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html",
+        "slice": "Whole page (incl. baselines in policy gradients)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Offline RL limits (awareness)",
+       "resource": {
+        "resourceId": "paper-offline-rl-tutorial",
+        "title": "Offline RL: Tutorial, Review, and Perspectives on Open Problems",
+        "url": "https://arxiv.org/abs/2005.01643",
+        "slice": "§1–2 (distribution shift)",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-aefs",
+      "title": "AI Engineering from Scratch — Policy gradients & REINFORCE",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/09-reinforcement-learning/06-policy-gradients-reinforce",
+      "slice": "Lessons 09/01 MDPs → 09/06 REINFORCE → 09/08 PPO",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "REINFORCE with and without a baseline",
+      "brief": "Implement REINFORCE on CartPole with and without a value baseline (5 seeds each) and plot mean ± std reward. Write notes explaining every term of PPO's clipped objective and the advantage. Map 'state, action, reward, episode' onto one LLM answer. Optional: HF Unit 8 PPO from scratch.",
+      "done_when": "A plot with 2 curves (mean ± std over 5 seeds), PPO objective notes, and a one-paragraph LLM mapping."
+     },
+     "quiz": [
+      {
+       "id": "M13.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Subtracting a baseline in REINFORCE:",
+       "options": [
+        "Reduces variance without changing the expected gradient",
+        "Biases the gradient",
+        "Removes exploration",
+        "Is required for convergence in all cases"
+       ],
+       "answer": 0,
+       "explain": "E[∇log π · b] = 0 for any baseline independent of the action."
+      },
+      {
+       "id": "M13.U08.Q2",
+       "kind": "mcq",
+       "prompt": "PPO's clipping limits:",
+       "options": [
+        "Reward size",
+        "The learning-rate schedule",
+        "How far the new policy's probability ratio can move per update",
+        "Episode length"
+       ],
+       "answer": 2,
+       "explain": "Clipping the ratio to [1−ε, 1+ε] keeps updates in a trust region."
+      },
+      {
+       "id": "M13.U08.Q3",
+       "kind": "mcq",
+       "prompt": "A discount factor γ close to 0 makes the agent:",
+       "options": [
+        "Far-sighted",
+        "Short-sighted",
+        "Random",
+        "Deterministic"
+       ],
+       "answer": 1,
+       "explain": "Future rewards are discounted away."
+      },
+      {
+       "id": "M13.U08.Q4",
+       "kind": "short",
+       "prompt": "Map 'state, action, reward, episode' onto an LLM generating one answer.",
+       "rubric": [
+        "State = prompt + tokens generated so far; action = next token",
+        "Episode = one full completion ending at EOS",
+        "Reward = usually one scalar at the end (RM score or verifier), possibly with per-token KL penalty"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M13.U09",
+     "title": "RLVR and GRPO: training reasoning behaviour",
+     "hours": 10,
+     "depth": "core",
+     "week": 139,
+     "prerequisites": [
+      "M13.U08",
+      "M13.U04"
+     ],
+     "outcomes": [
+      "You can GRPO-train a small model on a verifiable task with format and correctness rewards.",
+      "You can explain group-relative advantages and why GRPO needs no critic.",
+      "You can design reward functions, spot reward hacking, and explain test-time compute for reasoning models."
+     ],
+     "topics": [
+      {
+       "id": "M13.03.07",
+       "title": "Verifiable rewards"
+      },
+      {
+       "id": "M13.03.08",
+       "title": "GRPO (upgraded from awareness to full)"
+      },
+      {
+       "id": "M13.03.10",
+       "title": "Reasoning models and test-time compute (new)"
+      },
+      {
+       "id": "M13.03.11",
+       "title": "Reward-function design (new)"
+      }
+     ],
+     "learn": {
+      "resourceId": "C09",
+      "title": "HF LLM Course ch. 12 — Build Reasoning Models, sections 12.2–12.6",
+      "url": "https://huggingface.co/learn/llm-course/en/chapter12/1",
+      "slice": "12.2 RL and its role in LLMs → 12.3 Understanding the DeepSeek R1 paper → 12.4 Implementing GRPO in TRL (https://huggingface.co/learn/llm-course/en/chapter12/4) → 12.5 exercise: GRPO → 12.6 exercise: GRPO with Unsloth",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Why RL for LLMs; RL vocabulary applied to text generation (12.2)",
+      "DeepSeek-R1: the 'aha moment', R1-Zero, rule-based accuracy/format rewards, GRPO overview (12.3)",
+      "GRPO mechanics: sampling a group of completions, group-normalized advantages, KL term (12.3–12.4)",
+      "GRPOTrainer/GRPOConfig and writing reward functions in TRL (12.4)",
+      "Hands-on GRPO on a small model, then the same with Unsloth on a free GPU (12.5–12.6)"
+     ],
+     "gaps": [
+      {
+       "topic": "Test-time compute for reasoning (search, best-of-N, verifiers)",
+       "resource": {
+        "resourceId": "hf-ttc-blog",
+        "title": "HF — Scaling test-time compute with open models",
+        "url": "https://huggingface.co/spaces/HuggingFaceH4/blogpost-scaling-test-time-compute",
+        "slice": "Whole post",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reward-function design and common pitfalls",
+       "resource": {
+        "resourceId": "unsloth-docs",
+        "title": "Unsloth — Reinforcement Learning (RL) Guide",
+        "url": "https://docs.unsloth.ai/basics/reinforcement-learning-rl-guide",
+        "slice": "Sections on reward functions/verifiers and GRPO",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "GRPO from scratch",
+       "resource": {
+        "resourceId": "raschka-reasoning-from-scratch",
+        "title": "Reasoning from Scratch — ch. 6 GRPO notebook",
+        "url": "https://github.com/rasbt/reasoning-from-scratch/blob/main/ch06/01_main-chapter-code/ch06_main.ipynb",
+        "slice": "Whole notebook",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Primary papers",
+       "resource": {
+        "resourceId": "paper-deepseekmath-grpo",
+        "title": "DeepSeekMath (introduces GRPO)",
+        "url": "https://arxiv.org/abs/2402.03300",
+        "slice": "§4.1 GRPO; then DeepSeek-R1 https://arxiv.org/abs/2501.12948 §2",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "dlai-grpo",
+      "title": "DeepLearning.AI — Reinforcement Fine-Tuning LLMs With GRPO",
+      "url": "https://www.deeplearning.ai/short-courses/reinforcement-fine-tuning-llms-grpo/",
+      "slice": "All lessons",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "GRPO on a verifiable task",
+      "brief": "GRPO-train a 0.5–1.5B model on a verifiable task (GSM8K-style arithmetic, or a JSON-schema task where reward = valid + correct fields) with a format reward plus a correctness reward. Plot reward, completion length and held-out accuracy over steps. Document one reward-hacking attempt you observed and how you patched the reward.",
+      "done_when": "Plots of reward, length and held-out accuracy; held-out accuracy above the starting checkpoint; a written reward-hack incident with before/after reward code."
+     },
+     "quiz": [
+      {
+       "id": "M13.U09.Q1",
+       "kind": "mcq",
+       "prompt": "GRPO computes advantages by:",
+       "options": [
+        "Normalizing each completion's reward against the group of completions for the same prompt",
+        "A learned value network",
+        "Human ranking",
+        "BLEU"
+       ],
+       "answer": 0,
+       "explain": "Advantage = (r − mean_group) / std_group; no critic needed."
+      },
+      {
+       "id": "M13.U09.Q2",
+       "kind": "mcq",
+       "prompt": "A 'verifiable reward' is one that:",
+       "options": [
+        "A human must grade",
+        "Is always 1",
+        "Comes from a reward model",
+        "Can be checked programmatically (unit tests, exact answers, schema validation)"
+       ],
+       "answer": 3,
+       "explain": "Hence 'RL from verifiable rewards' (RLVR)."
+      },
+      {
+       "id": "M13.U09.Q3",
+       "kind": "mcq",
+       "prompt": "A common sign of reward hacking with format rewards is:",
+       "options": [
+        "The model emits the required tags with empty or nonsensical reasoning",
+        "Lower loss",
+        "Slower decoding",
+        "Higher perplexity on Wikipedia"
+       ],
+       "answer": 0,
+       "explain": "It satisfies the checker without doing the task."
+      },
+      {
+       "id": "M13.U09.Q4",
+       "kind": "short",
+       "prompt": "Why does GRPO avoid needing a separate critic/value model, and what does that save?",
+       "rubric": [
+        "The group mean of sampled rewards serves as the baseline instead of a learned value function",
+        "Saves memory and compute of a second large model (and its training instability)",
+        "Cost: needs several samples per prompt"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M13.U10",
+     "title": "Reward hacking, safety and post-training evaluation",
+     "hours": 4,
+     "depth": "core",
+     "week": 139,
+     "prerequisites": [
+      "M13.U07"
+     ],
+     "outcomes": [
+      "You can explain reward hacking and Goodhart's law with LLM examples and name mitigations.",
+      "You can run a post-training release checklist: task eval, capability regression, refusal/over-refusal, verbosity.",
+      "You can write a model card with limitations and unsuitable uses."
+     ],
+     "topics": [
+      {
+       "id": "M13.03.06",
+       "title": "Reward hacking"
+      },
+      {
+       "id": "M13.03.09",
+       "title": "Safety and post-training evaluation: capability, robustness, safety, regressions",
+       "legacyIds": [
+        "M13.05.09"
+       ]
+      }
+     ],
+     "learn": {
+      "resourceId": "weng-blog",
+      "title": "Lilian Weng — Reward Hacking in Reinforcement Learning",
+      "url": "https://lilianweng.github.io/posts/2024-11-28-reward-hacking/",
+      "slice": "Whole post",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Definition and why reward hacking exists (misspecified/proxy rewards, Goodhart's law)",
+      "Hacking RL environments vs hacking RLHF reward models in LLMs",
+      "Hacking the evaluator (LLM-as-judge biases) and in-context reward hacking",
+      "Generalization of hacking behaviours",
+      "Mitigations: better reward design, detection, data analysis of RLHF datasets"
+     ],
+     "gaps": [
+      {
+       "topic": "Over-refusal test set",
+       "resource": {
+        "resourceId": "paper-xstest",
+        "title": "XSTest",
+        "url": "https://arxiv.org/abs/2308.01263",
+        "slice": "§3 (prompt types) — use the released prompts",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Over-optimization in RLHF",
+       "resource": {
+        "resourceId": "rlhf-book",
+        "title": "RLHF Book — Over-optimization",
+        "url": "https://rlhfbook.com/c/14-over-optimization",
+        "slice": "Whole chapter",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "RLVR post-training in a current lecture",
+       "resource": {
+        "resourceId": "C14",
+        "title": "Stanford CS336 Spring 2026 — Lecture 16: Post-Training (RLVR)",
+        "url": "https://www.youtube.com/watch?v=dIFAi87Ws4E",
+        "slice": "Full lecture",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Model card template",
+       "resource": {
+        "resourceId": "P24",
+        "title": "Model Cards for Model Reporting",
+        "url": "https://arxiv.org/abs/1810.03993",
+        "slice": "§4 model card sections",
+        "type": "paper",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rlhf-book",
+      "title": "RLHF Book — Evaluation",
+      "url": "https://rlhfbook.com/c/16-evaluation",
+      "slice": "Whole chapter",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Release checklist + model card",
+      "brief": "Build a post-training release checklist and run it on your DPO or GRPO model: task eval, general-capability regression (lm-eval-harness subset), refusal and over-refusal set (50 harmful + 50 benign-but-edgy prompts, e.g. drawn from XSTest), and a length/verbosity check. Write a model card (P24 sections).",
+      "done_when": "A filled checklist with numbers for each check, an over-refusal rate on the benign set, and a published model card."
+     },
+     "quiz": [
+      {
+       "id": "M13.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Over-refusal means the model:",
+       "options": [
+        "Refuses benign requests that superficially resemble harmful ones",
+        "Refuses harmful requests",
+        "Never refuses",
+        "Hallucinates"
+       ],
+       "answer": 0,
+       "explain": "XSTest-style prompts like 'how do I kill a Python process' expose it."
+      },
+      {
+       "id": "M13.U10.Q2",
+       "kind": "mcq",
+       "prompt": "Goodhart's law in post-training says:",
+       "options": [
+        "More data is always better",
+        "RL is unstable",
+        "LoRA beats full fine-tuning",
+        "Optimizing a proxy reward too hard diverges from the true goal"
+       ],
+       "answer": 3,
+       "explain": "Reward-model over-optimization is the classic case."
+      },
+      {
+       "id": "M13.U10.Q3",
+       "kind": "mcq",
+       "prompt": "A model card should include:",
+       "options": [
+        "Only the best benchmark",
+        "Intended uses, evaluation results including limitations, and unsuitable uses",
+        "Only the training code",
+        "Marketing copy"
+       ],
+       "answer": 1,
+       "explain": "Mitchell et al. define these sections."
+      },
+      {
+       "id": "M13.U10.Q4",
+       "kind": "short",
+       "prompt": "Name one metric that would have caught the reward hack you saw in U09.",
+       "rubric": [
+        "Names a concrete metric (e.g. reasoning length distribution, held-out accuracy vs reward gap, % empty reasoning blocks)",
+        "Explains why it diverges from the proxy reward when hacking happens",
+        "Says when/how often it is checked during training"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Prompt vs RAG vs LoRA vs preference-tuned, on one task",
+  "brief": "Choose one narrow, stable task (e.g. Urdu/English customer complaint → structured ticket, or math word problems with verifiable answers). Compare (1) best prompt, (2) prompt + retrieved examples, (3) QLoRA SFT, (4) SFT + DPO or GRPO, all on one frozen held-out set, and serve the winner from your M10 service.",
+  "rubric": [
+   {
+    "criterion": "Experimental design (25%)",
+    "levels": [
+     "Excellent: same frozen test split, ≥2 seeds for trained variants, cost/latency per variant, decision memo citing evidence",
+     "Adequate: single runs, fair comparison",
+     "Fail: different test sets"
+    ]
+   },
+   {
+    "criterion": "Data quality (15%)",
+    "levels": [
+     "Excellent: datasheet, dedup, contamination check, masking verified",
+     "Adequate: clean data, no checks",
+     "Fail: unknown provenance"
+    ]
+   },
+   {
+    "criterion": "Training engineering (20%)",
+    "levels": [
+     "Excellent: reproducible free-GPU notebook, tracked runs, checkpoint/resume, VRAM report",
+     "Adequate: runs once",
+     "Fail: doesn't run"
+    ]
+   },
+   {
+    "criterion": "Evaluation (25%)",
+    "levels": [
+     "Excellent: task metric + calibrated judge + forgetting check + safety/over-refusal set",
+     "Adequate: task metric only",
+     "Fail: training loss only"
+    ]
+   },
+   {
+    "criterion": "Deployment (15%)",
+    "levels": [
+     "Excellent: merged/exported model served via Ollama/vLLM and called from the M10 service",
+     "Adequate: inference script",
+     "Fail: none"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

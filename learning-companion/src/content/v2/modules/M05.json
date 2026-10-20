@@ -1,0 +1,1990 @@
+{
+ "id": "M05",
+ "phase": "P2 Math and models",
+ "title": "Math for ML: vectors, matrices, gradients, numerics",
+ "summary": "The linear algebra, calculus and numerics an AI engineer actually uses: similarity search, shapes and einsum, least squares, SVD/low-rank (LoRA intuition), gradients you can check, gradient descent, and float formats (fp16/bf16/int8). Intuition from 3Blue1Brown, rigour from single MIT 18.06SC sessions, and build-it practice from rohitg00 Phase 01. Needs NumPy basics; can run alongside M04. Full 18.06SC, MML book, 18.S096 and Boyd are the optional Deep track.",
+ "hours": 47,
+ "deepHours": 120,
+ "prerequisites": [
+  "M00",
+  "M01"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M05.S1",
+   "title": "Vectors and matrices",
+   "units": [
+    {
+     "id": "M05.U01",
+     "title": "Vectors, dot product, similarity",
+     "hours": 6,
+     "depth": "core",
+     "week": 50,
+     "prerequisites": [],
+     "outcomes": [
+      "You can explain a vector both as an arrow and as a list of numbers, and name the shape of scalars, vectors, matrices and tensors.",
+      "You can compute L1/L2 norms, distances and cosine similarity in NumPy without library helpers.",
+      "You can explain why unit-normalised embeddings make dot product, cosine and L2 rankings agree."
+     ],
+     "topics": [
+      {
+       "id": "M05.01.01",
+       "title": "scalars/vectors/matrices/tensors"
+      },
+      {
+       "id": "M05.01.03",
+       "title": "dot product"
+      },
+      {
+       "id": "M05.01.04",
+       "title": "cosine and normalization"
+      },
+      {
+       "id": "M05.01.05",
+       "title": "norms/distances"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-essence-linear-algebra",
+      "title": "3Blue1Brown Essence of Linear Algebra ch.1 Vectors + ch.9 Dot products",
+      "url": "https://www.3blue1brown.com/lessons/vectors",
+      "slice": "Ch.1 'Vectors, what even are they?' (fNk_zzaMoSs, ~10 min) + Ch.9 'Dot products and duality' (LyGKycYT2v0, ~14 min)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.1: the physics (arrow), CS (list) and math views of a vector; vector addition; scalar multiplication",
+      "Ch.9: numerical dot product; geometric reading as projection length × length; sign of the dot product shows same/opposite/perpendicular direction",
+      "Ch.9: duality — a 1×n matrix (linear map to a number) and a vector are the same object"
+     ],
+     "gaps": [
+      {
+       "topic": "Norms (L1, L2, L∞) and distance functions",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 14-norms-and-distances",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/14-norms-and-distances",
+        "slice": "Phase 01 lesson 14 · 'Norms' through 'L-infinity Norm' + Build It step 1",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cosine similarity vs dot product and normalisation for embedding search",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 14-norms-and-distances",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/14-norms-and-distances",
+        "slice": "Phase 01 lesson 14 · 'Cosine Similarity and Cosine Distance', 'Dot Product Similarity vs Cosine Similarity', Build It step 3 'Embedding similarity search'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Scalar/vector/matrix/tensor vocabulary and shapes in code",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §2.3 Linear Algebra",
+        "url": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+        "slice": "§2.3 Linear Algebra (scalars, vectors, matrices, tensors, norms)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "d2l",
+      "title": "D2L §2.3 Linear Algebra",
+      "url": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "slice": "§2.3 Linear Algebra",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 01-linear-algebra-intuition",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/01-linear-algebra-intuition",
+      "slice": "Phase 01 · lesson 01-linear-algebra-intuition (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Similarity search from scratch",
+      "brief": "In NumPy (no np.linalg.norm, no sklearn in the implementation) write l1, l2, cosine and top_k(query, matrix, k). Build bag-of-words vectors for 1,000 sentences and search them. Verify against sklearn.metrics.pairwise.cosine_similarity, then normalise every row and show L2 ranking == cosine ranking. Reference build: rohitg00 Phase 01 lessons 01 and 14.",
+      "done_when": "Your functions match sklearn to 1e-9 on 100 random pairs, and a printed check shows identical top-10 lists for L2 and cosine on unit-normalised vectors.",
+      "autograder": "pytest: assert np.allclose(cosine(a,b), sklearn cosine_similarity) for 100 random pairs"
+     },
+     "quiz": [
+      {
+       "id": "M05.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Cosine similarity of a and 2a is:",
+       "options": [
+        "2",
+        "0.5",
+        "1",
+        "Depends on ‖a‖"
+       ],
+       "answer": 2,
+       "explain": "Cosine ignores length; a and 2a point the same way, so the angle is 0 and cos 0 = 1."
+      },
+      {
+       "id": "M05.U01.Q2",
+       "kind": "mcq",
+       "prompt": "For unit vectors a and b, ‖a−b‖² equals:",
+       "options": [
+        "2 − 2(a·b)",
+        "a·b",
+        "1 − a·b",
+        "2 + 2(a·b)"
+       ],
+       "answer": 0,
+       "explain": "‖a−b‖² = ‖a‖² + ‖b‖² − 2a·b = 2 − 2a·b, so smaller distance ⇔ larger dot product."
+      },
+      {
+       "id": "M05.U01.Q3",
+       "kind": "mcq",
+       "prompt": "The dot product of two orthogonal vectors is:",
+       "options": [
+        "1",
+        "−1",
+        "0",
+        "Undefined"
+       ],
+       "answer": 2,
+       "explain": "Perpendicular vectors have zero projection on each other."
+      },
+      {
+       "id": "M05.U01.Q4",
+       "kind": "mcq",
+       "prompt": "When would you use Mahalanobis distance instead of Euclidean distance?",
+       "options": [
+        "When features have different scales and are correlated with each other",
+        "When you need a faster computation than L2",
+        "When features are all binary (0 or 1)",
+        "When you are comparing strings instead of vectors"
+       ],
+       "answer": 0,
+       "explain": "Mahalanobis distance accounts for the covariance structure of the data, decorrelating and normalizing features before computing L2 distance. It correctly handles features at different scales and with correlations, whereas Euclidean distance treats all dimensions equally. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 14-norms-and-distances quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U01.Q5",
+       "kind": "short",
+       "prompt": "Why do most vector databases normalise embeddings and then use dot product instead of cosine?",
+       "rubric": [
+        "States that for unit vectors dot product equals cosine similarity",
+        "Mentions dot product is cheaper (no per-query norm division) and supported by fast inner-product indexes",
+        "Notes normalisation happens once at index time",
+        "Optional: notes ranking by L2 is then equivalent too"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U02",
+     "title": "Matrices as transformations; matmul, shapes and einsum",
+     "hours": 6,
+     "depth": "core",
+     "week": 50,
+     "prerequisites": [
+      "M05.U01"
+     ],
+     "outcomes": [
+      "You can read a matrix as a linear transformation (columns = where basis vectors land).",
+      "You can predict the output shape of any matmul/broadcast and write shape asserts.",
+      "You can express a dense layer and attention scores with np.einsum."
+     ],
+     "topics": [
+      {
+       "id": "M05.01.02",
+       "title": "shape conventions"
+      },
+      {
+       "id": "M05.01.06",
+       "title": "matrix multiplication"
+      },
+      {
+       "id": "M05.01.07",
+       "title": "transpose"
+      },
+      {
+       "id": "M05.01.08",
+       "title": "linear transformations"
+      },
+      {
+       "id": "M05.04.04",
+       "title": "einsum notation and batched matmul"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-essence-linear-algebra",
+      "title": "3Blue1Brown Essence of Linear Algebra ch.3, ch.4, ch.8",
+      "url": "https://www.3blue1brown.com/lessons/linear-transformations",
+      "slice": "Ch.3 'Linear transformations and matrices' (kYB8IZa5AuE) + Ch.4 'Matrix multiplication as composition' (XkY2DOUCWMU) + Ch.8 'Nonsquare matrices' (v8VSDg_WQlA)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.3: linear transformation keeps grid lines parallel and origin fixed; a matrix's columns are the images of the basis vectors; matrix–vector product",
+      "Ch.4: matrix product = applying one transformation after another; order matters (not commutative); associativity explained geometrically",
+      "Ch.8: non-square matrices map between dimensions (3×2 takes 2-D to 3-D)"
+     ],
+     "gaps": [
+      {
+       "topic": "Transpose and the identity (AB)ᵀ = BᵀAᵀ",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §2.3 Linear Algebra",
+        "url": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+        "slice": "§2.3.3 Matrices (transpose) and §2.3.9 Matrix–Matrix Multiplication",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Shape conventions and broadcasting (batch-first arrays)",
+       "resource": {
+        "resourceId": "numpy-docs",
+        "title": "NumPy: Broadcasting",
+        "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+        "slice": "Broadcasting — General broadcasting rules",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "einsum notation",
+       "resource": {
+        "resourceId": "rockt-einsum",
+        "title": "Einsum is All you Need – Einstein Summation in Deep Learning",
+        "url": "https://rockt.github.io/2018/04/30/einsum",
+        "slice": "Whole post (matrix product, batch matmul, attention-style examples)",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "einsum notation (video)",
+       "resource": {
+        "resourceId": "aladdin-einsum-video",
+        "title": "Einsum Is All You Need: NumPy, PyTorch and TensorFlow",
+        "url": "https://www.youtube.com/watch?v=pkVwUVEHmfI",
+        "slice": "Full video",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Batched matmul, reshape/transpose/permute and attention via einsum",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 12-tensor-operations",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/12-tensor-operations",
+        "slice": "Phase 01 lesson 12 · 'Tensor shapes in deep learning', 'Broadcasting rules', 'Einsum', Build It steps 5–7",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §2.1 Data Manipulation",
+      "url": "https://d2l.ai/chapter_preliminaries/ndarray.html",
+      "slice": "§2.1 Data Manipulation (indexing, broadcasting)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Batched dense layer and attention scores",
+      "brief": "Implement Y = X @ W + b for X:(B,d_in) with shape asserts; rewrite with np.einsum('bi,io->bo', ...). Then compute attention-style scores Q @ Kᵀ for Q,K:(B,T,d) with np.einsum('btd,bsd->bts', ...) and with @ + swapaxes. Reference build: rohitg00 Phase 01 lessons 03 and 12.",
+      "done_when": "Both einsum and @ versions agree (np.allclose) for random shapes, and every function raises a clear AssertionError on a wrong input shape."
+     },
+     "quiz": [
+      {
+       "id": "M05.U02.Q1",
+       "kind": "mcq",
+       "prompt": "A:(3,4) @ B:(4,5) has shape:",
+       "options": [
+        "(4,4)",
+        "(3,5)",
+        "(5,3)",
+        "Error"
+       ],
+       "answer": 1,
+       "explain": "Inner dimensions (4) cancel; the result takes the outer ones."
+      },
+      {
+       "id": "M05.U02.Q2",
+       "kind": "mcq",
+       "prompt": "(AB)ᵀ equals:",
+       "options": [
+        "AᵀBᵀ",
+        "BᵀAᵀ",
+        "BA",
+        "AB"
+       ],
+       "answer": 1,
+       "explain": "Transposing a product reverses the order."
+      },
+      {
+       "id": "M05.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Matrix multiplication is in general:",
+       "options": [
+        "Commutative",
+        "Associative but not commutative",
+        "Neither",
+        "Commutative only for square matrices"
+       ],
+       "answer": 1,
+       "explain": "Composition order matters (3B1B ch.4), but (AB)C = A(BC)."
+      },
+      {
+       "id": "M05.U02.Q4",
+       "kind": "mcq",
+       "prompt": "np.einsum('btd,bsd->bts', Q, K) with Q,K:(2,5,8) returns shape:",
+       "options": [
+        "(2,8,8)",
+        "(2,5,5)",
+        "(5,5)",
+        "(2,5,8)"
+       ],
+       "answer": 1,
+       "explain": "d is summed out; b, t and s stay."
+      },
+      {
+       "id": "M05.U02.Q5",
+       "kind": "mcq",
+       "prompt": "What is the result shape when broadcasting tensors of shape (8, 1, 6, 1) and (7, 1, 5)?",
+       "options": [
+        "(8, 7, 6, 5)",
+        "(8, 1, 6, 5)",
+        "(8, 7, 6, 1)",
+        "Broadcasting fails — shapes are incompatible"
+       ],
+       "answer": 0,
+       "explain": "Align shapes from the right: (8,1,6,1) and (1,7,1,5). Dimensions are compatible when equal or one is 1. The result takes the maximum along each axis: (8, 7, 6, 5). (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 12-tensor-operations quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U02.Q6",
+       "kind": "short",
+       "prompt": "Explain why a neural-network layer is 'a linear transformation followed by a nonlinearity', and what happens if you stack layers with no nonlinearity.",
+       "rubric": [
+        "Identifies Wx+b as a linear (affine) map",
+        "States that composing linear maps gives one linear map (product of matrices)",
+        "Concludes depth adds no expressive power without nonlinearity",
+        "Uses a concrete example or shapes"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U03",
+     "title": "Span, rank, inverses and least squares",
+     "hours": 6,
+     "depth": "core",
+     "week": 51,
+     "prerequisites": [
+      "M05.U02"
+     ],
+     "outcomes": [
+      "You can explain span, basis, rank, column space and null space in words and pictures.",
+      "You can explain least squares as projecting y onto the column space of X.",
+      "You can diagnose collinear features (rank-deficient XᵀX) and choose lstsq over an explicit inverse."
+     ],
+     "topics": [
+      {
+       "id": "M05.01.09",
+       "title": "span/basis/rank"
+      },
+      {
+       "id": "M05.01.10",
+       "title": "orthogonality/projection"
+      },
+      {
+       "id": "M05.01.11",
+       "title": "solving systems (applied, with lstsq)"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-essence-linear-algebra",
+      "title": "3Blue1Brown Essence of Linear Algebra ch.2 + ch.7",
+      "url": "https://www.3blue1brown.com/lessons/span",
+      "slice": "Ch.2 'Linear combinations, span, and basis vectors' (k7RM-ot2NWY) + Ch.7 'Inverse matrices, column space and null space' (uQhTuRlWMxw)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.2: linear combinations, span, linear dependence, basis",
+      "Ch.7: Ax = v as a transformation question; inverse as 'undo'; when det = 0 no inverse exists; rank = dimension of the output (column space); null space"
+     ],
+     "gaps": [
+      {
+       "topic": "Orthogonal projection onto a subspace (the geometry of least squares)",
+       "resource": {
+        "resourceId": "mit-1806sc",
+        "title": "MIT 18.06SC · Projections onto Subspaces",
+        "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/",
+        "slice": "Session 'Projections onto Subspaces' (Strang Lecture 15 + recitation + problems)",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Normal equations and least-squares fitting",
+       "resource": {
+        "resourceId": "mit-1806sc",
+        "title": "MIT 18.06SC · Projection Matrices and Least Squares",
+        "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/least-squares-determinants-and-eigenvalues/projection-matrices-and-least-squares/",
+        "slice": "Session 'Projection Matrices and Least Squares' (Strang Lecture 16)",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Solving systems numerically (lstsq, pseudoinverse, condition number)",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 17-linear-systems",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/17-linear-systems",
+        "slice": "Phase 01 lesson 17 · 'Least squares', 'Normal equations = linear regression', 'Pseudoinverse', 'Condition number'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "np.linalg.lstsq API",
+       "resource": {
+        "resourceId": "numpy-docs",
+        "title": "NumPy: numpy.linalg.lstsq",
+        "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
+        "slice": "numpy.linalg.lstsq reference",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 17-linear-systems",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/17-linear-systems",
+      "slice": "Phase 01 · lesson 17-linear-systems (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Three ways to fit a line, and break one",
+      "brief": "Fit linear regression three ways: normal equations with np.linalg.inv(XᵀX), np.linalg.lstsq, sklearn LinearRegression. Then duplicate one feature column and compare: inv becomes singular/unstable, lstsq still returns a minimum-norm solution. Print np.linalg.matrix_rank and np.linalg.cond before and after.",
+      "done_when": "All three agree to 1e-6 on clean data, and a short written note explains the duplicated-column result using the words rank and column space."
+     },
+     "quiz": [
+      {
+       "id": "M05.U03.Q1",
+       "kind": "mcq",
+       "prompt": "A 5×3 matrix has rank at most:",
+       "options": [
+        "5",
+        "3",
+        "15",
+        "8"
+       ],
+       "answer": 1,
+       "explain": "Rank ≤ min(rows, cols)."
+      },
+      {
+       "id": "M05.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Least squares finds the vector in col(X) closest to y, i.e. it:",
+       "options": [
+        "Inverts X",
+        "Projects y onto col(X)",
+        "Maximises ‖Xw‖",
+        "Finds eigenvectors"
+       ],
+       "answer": 1,
+       "explain": "The residual y − Xŵ is orthogonal to the column space."
+      },
+      {
+       "id": "M05.U03.Q3",
+       "kind": "mcq",
+       "prompt": "Duplicated features make XᵀX:",
+       "options": [
+        "Orthogonal",
+        "Singular",
+        "The identity",
+        "Higher rank"
+       ],
+       "answer": 1,
+       "explain": "Linearly dependent columns drop the rank, so XᵀX has no inverse."
+      },
+      {
+       "id": "M05.U03.Q4",
+       "kind": "mcq",
+       "prompt": "A matrix has condition number kappa = 10^8. You are using float64 (~15 digits of precision). How many digits of the solution can you trust?",
+       "options": [
+        "About 15 digits",
+        "About 7 digits (15 - log10(10^8) = 15 - 8)",
+        "Zero digits — the solution is meaningless",
+        "About 8 digits"
+       ],
+       "answer": 1,
+       "explain": "You lose approximately log10(kappa) digits of precision. With kappa = 10^8, you lose about 8 digits from float64's ~15 digits, leaving about 7 trustworthy digits. If kappa approaches 10^16, the solution becomes meaningless in float64. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 17-linear-systems quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U03.Q5",
+       "kind": "short",
+       "prompt": "Why is 'perfectly collinear features' a real data problem and not just a math curiosity?",
+       "rubric": [
+        "Coefficients become non-unique/unstable (infinitely many solutions)",
+        "Interpretation of individual coefficients breaks",
+        "Mentions a realistic cause (e.g. one-hot with all dummies + intercept, unit duplicates like km and miles)",
+        "Mentions a fix: drop a column, regularise (ridge), or use lstsq/pinv"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U04",
+     "title": "Eigenvectors, SVD, PCA and low-rank approximation",
+     "hours": 7,
+     "depth": "core",
+     "week": 51,
+     "prerequisites": [
+      "M05.U03"
+     ],
+     "outcomes": [
+      "You can explain eigenvectors as directions a matrix only scales.",
+      "You can compute and interpret a truncated SVD and use it for compression and PCA.",
+      "You can count parameters of a low-rank (LoRA-style) update and explain why it saves memory."
+     ],
+     "topics": [
+      {
+       "id": "M05.01.12",
+       "title": "eigenvalues/eigenvectors"
+      },
+      {
+       "id": "M05.01.13",
+       "title": "SVD"
+      },
+      {
+       "id": "M05.01.14",
+       "title": "PCA"
+      },
+      {
+       "id": "M05.04.01",
+       "title": "low-rank approximation (SVD truncation → LoRA/compression intuition)"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-essence-linear-algebra",
+      "title": "3Blue1Brown Essence of Linear Algebra ch.13 + ch.14",
+      "url": "https://www.3blue1brown.com/lessons/eigenvalues",
+      "slice": "Ch.13 'Change of basis' (P2LTAUO1TdA) + Ch.14 'Eigenvectors and eigenvalues' (PFDu9oVAE-g)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.13: expressing vectors in another basis; A⁻¹MA as 'the same transformation in another language'",
+      "Ch.14: eigenvectors stay on their span; eigenvalue = stretch factor; rotations without real eigenvectors; eigenbasis makes the matrix diagonal"
+     ],
+     "gaps": [
+      {
+       "topic": "Singular value decomposition (what U, Σ, Vᵀ mean)",
+       "resource": {
+        "resourceId": "mit-1806sc",
+        "title": "MIT 18.06SC · Singular Value Decomposition",
+        "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/singular-value-decomposition/",
+        "slice": "Session 'Singular Value Decomposition' (Strang Lecture 29 + recitation)",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "SVD intuition and truncation for data",
+       "resource": {
+        "resourceId": "brunton-svd",
+        "title": "Steve Brunton · Singular Value Decomposition (SVD): Overview",
+        "url": "https://www.youtube.com/watch?v=gXbThCXjZFM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "SVD image compression in Python (low-rank approximation)",
+       "resource": {
+        "resourceId": "brunton-svd",
+        "title": "Steve Brunton · SVD: Image Compression [Python]",
+        "url": "https://www.youtube.com/watch?v=H7qMMudo3e8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "PCA step by step",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Principal Component Analysis (PCA), Step-by-Step",
+        "url": "https://www.youtube.com/watch?v=FgakZw6K1QQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Low-rank updates in LLM fine-tuning (LoRA)",
+       "resource": {
+        "resourceId": "hf-peft-lora",
+        "title": "PEFT conceptual guide: LoRA",
+        "url": "https://huggingface.co/docs/peft/main/en/conceptual_guides/lora",
+        "slice": "Conceptual guide: LoRA (rank r, parameter savings, merging)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "PCA/SVD built from scratch in NumPy",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 11-singular-value-decomposition",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/11-singular-value-decomposition",
+        "slice": "Phase 01 · lesson 11-singular-value-decomposition (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "mit-1806sc",
+      "title": "MIT 18.06SC · Singular Value Decomposition",
+      "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/singular-value-decomposition/",
+      "slice": "Session 'Singular Value Decomposition'",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §22.2 Eigendecompositions",
+      "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/eigendecomposition.html",
+      "slice": "§22.2 Eigendecompositions",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Compress, project, count",
+      "brief": "(1) Compress a grayscale image with truncated SVD at ranks 5/20/50; plot reconstruction error vs storage. (2) PCA a set of sentence embeddings to 2-D via SVD of the centred matrix and plot. (3) In 5 lines, compute parameters of a full 4096×4096 update vs a rank-8 update W + BA. Reference build: rohitg00 Phase 01 lessons 10 and 11.",
+      "done_when": "Plot shows error falling with rank; your PCA matches sklearn PCA up to sign flips; parameter counts are 16,777,216 vs 65,536."
+     },
+     "quiz": [
+      {
+       "id": "M05.U04.Q1",
+       "kind": "mcq",
+       "prompt": "For Av = λv, v is:",
+       "options": [
+        "Any vector",
+        "A direction only scaled by A",
+        "Always unit length",
+        "The matrix inverse"
+       ],
+       "answer": 1,
+       "explain": "Eigenvectors keep their direction; λ is the scale factor."
+      },
+      {
+       "id": "M05.U04.Q2",
+       "kind": "mcq",
+       "prompt": "PCA's first component is the direction of:",
+       "options": [
+        "Smallest variance",
+        "Largest variance",
+        "The mean",
+        "The first feature"
+       ],
+       "answer": 1,
+       "explain": "PCA orders directions by explained variance (largest singular value first)."
+      },
+      {
+       "id": "M05.U04.Q3",
+       "kind": "mcq",
+       "prompt": "A rank-8 update to a 4096×4096 matrix as B(4096×8)·A(8×4096) has how many parameters?",
+       "options": [
+        "16.7M",
+        "65,536",
+        "32,768",
+        "4,096"
+       ],
+       "answer": 1,
+       "explain": "4096·8 + 8·4096 = 65,536."
+      },
+      {
+       "id": "M05.U04.Q4",
+       "kind": "mcq",
+       "prompt": "Why does sklearn implement PCA using SVD instead of eigendecomposition of the covariance matrix?",
+       "options": [
+        "SVD produces different results that are more accurate for ML",
+        "SVD is easier to parallelize on GPUs",
+        "SVD works directly on the data matrix without forming the covariance matrix, avoiding squaring the condition number and improving numerical stability",
+        "SVD does not require centering the data"
+       ],
+       "answer": 2,
+       "explain": "Forming A^T*A squares the singular values (and condition number). If A has singular values [1000, 0.001], A^T*A has eigenvalues [10^6, 10^-6] -- 6 digits of precision lost. SVD avoids this by working directly on A. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 11-singular-value-decomposition quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U04.Q5",
+       "kind": "short",
+       "prompt": "Explain what truncated SVD throws away, and why that is often acceptable.",
+       "rubric": [
+        "Drops the smallest singular values/directions",
+        "These carry little variance/energy (often noise)",
+        "Eckart–Young idea: best rank-k approximation in Frobenius norm (named or described)",
+        "Gives an ML example (compression, denoising, LoRA, embeddings)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M05.S2",
+   "title": "Calculus for gradients",
+   "units": [
+    {
+     "id": "M05.U05",
+     "title": "Derivatives and the chain rule",
+     "hours": 6,
+     "depth": "core",
+     "week": 52,
+     "prerequisites": [],
+     "outcomes": [
+      "You can explain a derivative as a local rate of change and compute derivatives of common ML functions (sigmoid, log, exp).",
+      "You can apply the chain rule to nested functions.",
+      "You can estimate a derivative numerically and explain the error trade-off in h."
+     ],
+     "topics": [
+      {
+       "id": "M05.02.01",
+       "title": "limits intuition"
+      },
+      {
+       "id": "M05.02.02",
+       "title": "derivative"
+      },
+      {
+       "id": "M05.02.04",
+       "title": "chain rule"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-essence-calculus",
+      "title": "3Blue1Brown Essence of Calculus ch.1–4 + ch.7",
+      "url": "https://www.youtube.com/watch?v=WUvTyaaNkzM",
+      "slice": "Ch.1 'The essence of calculus' (WUvTyaaNkzM) + Ch.2 'The paradox of the derivative' (9vKqVkMQHKk) + Ch.3 'Derivative formulas through geometry' (S0_qX4VJhMQ) + Ch.4 'Visualizing the chain rule and product rule' (YG15m2VwSjA) + Ch.7 'Limits' (kfF40MiS7zA)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.1–2: derivative as rate of change over a tiny step dt; why 'instantaneous rate' needs a limit",
+      "Ch.3: power rule, sin/cos derivatives from geometry",
+      "Ch.4: sum, product and chain rule visualised",
+      "Ch.7: formal limit and epsilon–delta definition; L'Hôpital's rule"
+     ],
+     "gaps": [
+      {
+       "topic": "Worked exercises on derivatives (calculus has no exercises in 3B1B)",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §2.4 Calculus",
+        "url": "https://d2l.ai/chapter_preliminaries/calculus.html",
+        "slice": "§2.4 Calculus (derivatives, partials, chain rule + exercises)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Derivatives of exp, log and sigmoid used in ML",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 04-calculus-for-ml",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/04-calculus-for-ml",
+        "slice": "Phase 01 · lesson 04-calculus-for-ml (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Numerical (finite-difference) derivative and choice of h",
+       "resource": {
+        "resourceId": "cs231n-notes",
+        "title": "CS231n notes: Optimization 1",
+        "url": "https://cs231n.github.io/optimization-1/",
+        "slice": "Optimization 1 · 'Computing the gradient numerically with finite differences'",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Chain rule in a second voice",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · The Chain Rule, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=wl1myxrtQHQ",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §2.4 Calculus",
+      "url": "https://d2l.ai/chapter_preliminaries/calculus.html",
+      "slice": "§2.4 Calculus",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Derivative checker",
+      "brief": "Write numerical_derivative(f, x, h) using central differences. Compare with your hand-derived derivatives of x³, sin(x²), log(1+eˣ) and sigmoid. Plot |error| vs h from 1e-1 to 1e-12 on log–log axes.",
+      "done_when": "All four hand derivatives match to <1e-8 at h≈1e-5, and your plot shows the V-shape with a one-paragraph explanation (truncation error vs round-off)."
+     },
+     "quiz": [
+      {
+       "id": "M05.U05.Q1",
+       "kind": "mcq",
+       "prompt": "d/dx of sigmoid σ(x) is:",
+       "options": [
+        "σ(x)²",
+        "σ(x)(1−σ(x))",
+        "1−σ(x)",
+        "eˣ"
+       ],
+       "answer": 1,
+       "explain": "Differentiate 1/(1+e⁻ˣ) and rewrite in terms of σ."
+      },
+      {
+       "id": "M05.U05.Q2",
+       "kind": "mcq",
+       "prompt": "If y = f(g(x)), dy/dx =",
+       "options": [
+        "f′(x)g′(x)",
+        "f′(g(x))·g′(x)",
+        "f(g′(x))",
+        "f′+g′"
+       ],
+       "answer": 1,
+       "explain": "Chain rule: outer derivative evaluated at the inner function, times inner derivative."
+      },
+      {
+       "id": "M05.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Central-difference error scales as:",
+       "options": [
+        "O(h)",
+        "O(h²)",
+        "O(1/h)",
+        "O(1)"
+       ],
+       "answer": 1,
+       "explain": "First-order terms cancel symmetrically; forward differences are O(h)."
+      },
+      {
+       "id": "M05.U05.Q4",
+       "kind": "mcq",
+       "prompt": "What is the numerical (central difference) approximation for f'(x)?",
+       "options": [
+        "(f(x+h) - f(x)) / h",
+        "f(x) * h",
+        "(f(x+h) - f(x-h)) / (2*h)",
+        "f(x+h) / h"
+       ],
+       "answer": 2,
+       "explain": "The central difference (f(x+h) - f(x-h)) / (2h) is more accurate than the forward difference because it averages the slope on both sides of x, canceling out the leading error term. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 04-calculus-for-ml quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U05.Q5",
+       "kind": "short",
+       "prompt": "Why does the finite-difference estimate get worse when h becomes extremely small?",
+       "rubric": [
+        "f(x+h) and f(x−h) become nearly equal so subtraction loses significant digits (catastrophic cancellation)",
+        "Round-off error grows like ε/h",
+        "Contrasts with truncation error that shrinks with h",
+        "Names a sensible h range (≈1e-5 to 1e-7 in float64)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U06",
+     "title": "Gradients, Jacobians, matrix-calculus shapes and gradient checking",
+     "hours": 7,
+     "depth": "core",
+     "week": 52,
+     "prerequisites": [
+      "M05.U05",
+      "M05.U02"
+     ],
+     "outcomes": [
+      "You can derive the gradient of MSE and binary cross-entropy with respect to a weight vector.",
+      "You can state the shape of a gradient or Jacobian before computing it.",
+      "You can write a gradient checker and pass it at relative error < 1e-6."
+     ],
+     "topics": [
+      {
+       "id": "M05.02.03",
+       "title": "partial derivative"
+      },
+      {
+       "id": "M05.02.05",
+       "title": "gradient/Jacobian"
+      },
+      {
+       "id": "M05.02.08",
+       "title": "finite differences"
+      },
+      {
+       "id": "M05.03.06",
+       "title": "gradient checking"
+      },
+      {
+       "id": "M05.04.03",
+       "title": "matrix calculus for shapes (gradient of a linear layer)"
+      }
+     ],
+     "learn": {
+      "resourceId": "explained-matrix-calculus",
+      "title": "The Matrix Calculus You Need For Deep Learning",
+      "url": "https://explained.ai/matrix-calculus/",
+      "slice": "§1.2 Scalar derivative rules → §1.6 'The gradient of the neural network loss function'",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "§1.3: partial derivatives and the gradient vector",
+      "§1.4: Jacobian matrix; element-wise binary operators; vector sum reduction; the vector chain rule",
+      "§1.5: gradient of a neuron activation max(0, w·x+b)",
+      "§1.6: gradient of a loss over a batch with respect to w and b"
+     ],
+     "gaps": [
+      {
+       "topic": "Gradient checking procedure (relative error, float64, kinks, few dimensions)",
+       "resource": {
+        "resourceId": "cs231n-notes",
+        "title": "CS231n notes: Neural Networks Part 3",
+        "url": "https://cs231n.github.io/neural-networks-3/",
+        "slice": "Neural Networks Part 3 · 'Gradient Checks'",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Derivatives as linear operators; matrix-shaped gradients (rigorous view)",
+       "resource": {
+        "resourceId": "mit-18s096",
+        "title": "MIT 18.S096 Matrix Calculus · Lecture 1",
+        "url": "https://ocw.mit.edu/courses/18-s096-matrix-calculus-for-machine-learning-and-beyond-january-iap-2023/pages/lecture-notes-and-readings/",
+        "slice": "Lecture 1 notes: Ch.1 'Overview' + Ch.2 'Derivatives as Linear Operators' (§2.1–2.3)",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "How autodiff applies these rules in code",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §2.5 Automatic Differentiation",
+        "url": "https://d2l.ai/chapter_preliminaries/autograd.html",
+        "slice": "§2.5 Automatic Differentiation",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Chain rule + autodiff built from scratch",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 05-chain-rule-and-autodiff",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/05-chain-rule-and-autodiff",
+        "slice": "Phase 01 · lesson 05-chain-rule-and-autodiff (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L §2.5 Automatic Differentiation",
+      "url": "https://d2l.ai/chapter_preliminaries/autograd.html",
+      "slice": "§2.5 Automatic Differentiation",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Hand gradients + grad_check",
+      "brief": "For L = mean((Xw − y)²) derive ∇w by hand, implement it, and write grad_check(f, grad_f, w) reporting max relative error. Repeat for binary cross-entropy with a sigmoid. Annotate every function with input/output shapes.",
+      "done_when": "Both gradients pass grad_check with relative error < 1e-6 in float64 on a (32, 5) batch.",
+      "autograder": "pytest: assert grad_check(mse, mse_grad, w) < 1e-6 and grad_check(bce, bce_grad, w) < 1e-6"
+     },
+     "quiz": [
+      {
+       "id": "M05.U06.Q1",
+       "kind": "mcq",
+       "prompt": "The gradient of a scalar loss w.r.t. W of shape (d,k) has shape:",
+       "options": [
+        "Scalar",
+        "(k,d)",
+        "(d,k)",
+        "(d·k, d·k)"
+       ],
+       "answer": 2,
+       "explain": "A gradient always has the shape of the parameter."
+      },
+      {
+       "id": "M05.U06.Q2",
+       "kind": "mcq",
+       "prompt": "∇w of ‖Xw − y‖² is:",
+       "options": [
+        "2Xᵀ(Xw−y)",
+        "2(Xw−y)",
+        "Xᵀy",
+        "2X(Xw−y)ᵀ"
+       ],
+       "answer": 0,
+       "explain": "Chain rule through the residual; shapes force Xᵀ on the left."
+      },
+      {
+       "id": "M05.U06.Q3",
+       "kind": "mcq",
+       "prompt": "A Jacobian is:",
+       "options": [
+        "A matrix of second derivatives",
+        "A matrix of first partial derivatives of a vector function",
+        "A scalar",
+        "The inverse of the Hessian"
+       ],
+       "answer": 1,
+       "explain": "Rows = outputs, columns = inputs; the Hessian holds second derivatives."
+      },
+      {
+       "id": "M05.U06.Q4",
+       "kind": "mcq",
+       "prompt": "Why does PyTorch use reverse-mode autodiff (backpropagation) instead of forward-mode?",
+       "options": [
+        "Forward mode cannot handle non-linear functions",
+        "Reverse mode computes all gradients in one backward pass, while forward mode needs one pass per input variable -- neural networks have millions of inputs but one loss output",
+        "Reverse mode is more numerically accurate",
+        "Reverse mode uses less memory"
+       ],
+       "answer": 1,
+       "explain": "Neural networks have millions of weight inputs but produce a single scalar loss. Reverse mode needs one backward pass total. Forward mode would need one pass per weight -- millions of passes -- making it impractical. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 05-chain-rule-and-autodiff quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U06.Q5",
+       "kind": "short",
+       "prompt": "Why do we gradient-check in float64 and on a tiny batch?",
+       "rubric": [
+        "float32 round-off swamps finite-difference precision",
+        "Tiny batch/few parameters keeps the O(#params) forward passes cheap",
+        "Mentions relative (not absolute) error",
+        "Mentions avoiding kinks/randomness (dropout off)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U07",
+     "title": "Gradient descent and optimisation basics",
+     "hours": 5,
+     "depth": "core",
+     "week": 53,
+     "prerequisites": [
+      "M05.U06"
+     ],
+     "outcomes": [
+      "You can implement full-batch, minibatch and stochastic gradient descent.",
+      "You can recognise a too-large or too-small learning rate from a loss curve.",
+      "You can explain convexity at the intuition level and why NN losses are non-convex."
+     ],
+     "topics": [
+      {
+       "id": "M05.02.09",
+       "title": "gradient descent"
+      },
+      {
+       "id": "M05.02.10",
+       "title": "stochastic/minibatch gradients"
+      },
+      {
+       "id": "M05.02.11",
+       "title": "learning rate"
+      },
+      {
+       "id": "M05.02.12",
+       "title": "convexity (intuition)"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-neural-networks",
+      "title": "3Blue1Brown Deep Learning ch.2 · Gradient descent, how neural networks learn",
+      "url": "https://www.youtube.com/watch?v=IHZwWFHWa-w",
+      "slice": "Full video (~20 min)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Cost function over all weights; gradient as direction of steepest increase; stepping along the negative gradient",
+      "Local minima; the magnitude of each gradient component as 'importance' of a weight",
+      "Notes that the network learns on MNIST with this procedure"
+     ],
+     "gaps": [
+      {
+       "topic": "Gradient descent worked numerically step by step",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Gradient Descent, Step-by-Step",
+        "url": "https://www.youtube.com/watch?v=sDv4f4s2SB8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Stochastic and minibatch gradients",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Stochastic Gradient Descent, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=vMh0zPT0tLI",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Minibatch size trade-offs",
+       "resource": {
+        "resourceId": "deeplearningai-youtube",
+        "title": "DeepLearning.AI · Mini Batch Gradient Descent (C2W2L01)",
+        "url": "https://www.youtube.com/watch?v=4qJaSmvhxi8",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Learning-rate effects and divergence",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §12.3 Gradient Descent",
+        "url": "https://d2l.ai/chapter_optimization/gd.html",
+        "slice": "§12.3 Gradient Descent (learning rate section) + §12.5 Minibatch SGD",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Convexity intuition",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §12.2 Convexity",
+        "url": "https://d2l.ai/chapter_optimization/convexity.html",
+        "slice": "§12.2 Convexity (§12.2.1 definitions, §12.2.2 properties: local minima are global)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "d2l",
+      "title": "D2L ch.12 Optimization Algorithms",
+      "url": "https://d2l.ai/chapter_optimization/index.html",
+      "slice": "Ch.12 Optimization Algorithms §12.1–12.5",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "LR sweep on linear regression",
+      "brief": "Train linear regression with full-batch GD, minibatch (32) and SGD (batch 1). Sweep LR ∈ {1e-4, 1e-3, 1e-2, 1e-1, 1}. Plot loss curves; mark divergent runs. Compare final weights with the closed-form lstsq solution from M05.U03. Reference build: rohitg00 Phase 01 lesson 08.",
+      "done_when": "A single figure shows converging and diverging runs; the best run's weights are within 1e-3 of lstsq."
+     },
+     "quiz": [
+      {
+       "id": "M05.U07.Q1",
+       "kind": "mcq",
+       "prompt": "Too large a learning rate typically causes:",
+       "options": [
+        "Slow convergence",
+        "Divergence/oscillation",
+        "Exact convergence",
+        "Underfitting only"
+       ],
+       "answer": 1,
+       "explain": "Steps overshoot the minimum and the loss grows."
+      },
+      {
+       "id": "M05.U07.Q2",
+       "kind": "mcq",
+       "prompt": "Minibatch gradients are:",
+       "options": [
+        "Exact",
+        "Noisy unbiased estimates of the full gradient",
+        "Always larger",
+        "Zero on average"
+       ],
+       "answer": 1,
+       "explain": "Sampling examples gives an unbiased but noisy estimate."
+      },
+      {
+       "id": "M05.U07.Q3",
+       "kind": "mcq",
+       "prompt": "For a convex function, any local minimum is:",
+       "options": [
+        "A saddle",
+        "Global",
+        "Unstable",
+        "A maximum"
+       ],
+       "answer": 1,
+       "explain": "Convexity rules out separate local basins."
+      },
+      {
+       "id": "M05.U07.Q4",
+       "kind": "mcq",
+       "prompt": "Why is the noise in mini-batch SGD considered beneficial rather than just a nuisance?",
+       "options": [
+        "Noise makes the loss function convex",
+        "Noise helps the optimizer escape shallow local minima and saddle points that a noiseless optimizer would get stuck in",
+        "Noise is not beneficial; it always slows convergence",
+        "Noise reduces memory usage during training"
+       ],
+       "answer": 1,
+       "explain": "The stochastic noise from random mini-batches provides random perturbations that can push the optimizer out of shallow local minima and saddle points, leading to better generalization. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 08-optimization quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U07.Q5",
+       "kind": "short",
+       "prompt": "Why are neural network losses not convex, and why does SGD still work in practice (intuition only)?",
+       "rubric": [
+        "Non-convex because of nonlinearities and symmetries (permuting hidden units)",
+        "Many minima are similarly good / saddles are escapable",
+        "SGD noise helps escape sharp regions/saddles",
+        "Honest that theory is incomplete"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M05.S3",
+   "title": "Numerics",
+   "units": [
+    {
+     "id": "M05.U08",
+     "title": "Floating point, stable softmax and number formats",
+     "hours": 4,
+     "depth": "core",
+     "week": 53,
+     "prerequisites": [
+      "M05.U05"
+     ],
+     "outcomes": [
+      "You can explain why floats are approximate and where overflow/underflow appear in ML code.",
+      "You can implement stable softmax, log-sum-exp and cross-entropy.",
+      "You can compare fp32/fp16/bf16/int8 in range, precision and memory, and explain why LLM serving uses low-bit formats."
+     ],
+     "topics": [
+      {
+       "id": "M05.03.01",
+       "title": "floating point"
+      },
+      {
+       "id": "M05.03.02",
+       "title": "overflow/underflow"
+      },
+      {
+       "id": "M05.03.03",
+       "title": "stable softmax/log-sum-exp"
+      },
+      {
+       "id": "M05.03.05",
+       "title": "vectorized implementation"
+      },
+      {
+       "id": "M05.04.02",
+       "title": "number formats: fp32/fp16/bf16/int8 and quantization error intuition"
+      }
+     ],
+     "learn": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 13-numerical-stability",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/13-numerical-stability",
+      "slice": "Phase 01 lesson 13 'Numerical Stability' · The Concept (IEEE 754 → Common ML Numerical Bugs) + Build It steps 1–5",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "IEEE 754 storage; why 0.1 + 0.2 != 0.3; catastrophic cancellation",
+      "Overflow and underflow; log-sum-exp trick; max-subtraction for softmax; stable cross-entropy",
+      "NaN/Inf detection; numerical gradient checking",
+      "Mixed precision training; bfloat16 vs float16; gradient clipping; normalisation layers as stabilisers"
+     ],
+     "gaps": [
+      {
+       "topic": "Floating point explained visually",
+       "resource": {
+        "resourceId": "computerphile-float",
+        "title": "Floating Point Numbers – Computerphile",
+        "url": "https://www.youtube.com/watch?v=PZRI1IfStY0",
+        "slice": "Full video",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Floating point limits in Python",
+       "resource": {
+        "resourceId": "python-floating-point",
+        "title": "Python Tutorial §15 Floating-Point Arithmetic: Issues and Limitations",
+        "url": "https://docs.python.org/3/tutorial/floatingpoint.html",
+        "slice": "Whole page (representation error)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "int8 quantization (scale/zero-point, quantization error)",
+       "resource": {
+        "resourceId": "hf-optimum-quantization",
+        "title": "Optimum concept guide: Quantization",
+        "url": "https://huggingface.co/docs/optimum/concept_guides/quantization",
+        "slice": "Concept guide: Quantization (theory, int8 affine scheme, calibration)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "fp16/bf16 autocast and GradScaler in practice",
+       "resource": {
+        "resourceId": "pytorch-tutorials",
+        "title": "PyTorch recipe: Automatic Mixed Precision",
+        "url": "https://docs.pytorch.org/tutorials/recipes/recipes/amp_recipe.html",
+        "slice": "Recipe: Automatic Mixed Precision",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Vectorised implementation vs Python loops",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 12-tensor-operations",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/12-tensor-operations",
+        "slice": "Phase 01 lesson 12 · Build It step 4 'Element-wise operations and reductions' + 'Scratch vs NumPy'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "pytorch-tutorials",
+      "title": "PyTorch recipe: Automatic Mixed Precision",
+      "url": "https://docs.pytorch.org/tutorials/recipes/recipes/amp_recipe.html",
+      "slice": "Recipe: Automatic Mixed Precision",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Break and fix softmax; shrink a matrix",
+      "brief": "Implement naive and stable softmax/log-softmax. Feed logits [1000, 1001, 1002] and show NaN vs the correct output. Cast a random 1024×1024 weight matrix to fp16, bf16 and simulated int8 (q = round(w/scale), scale = max|w|/127). Report max abs error and bytes per format.",
+      "done_when": "Stable versions match scipy.special.softmax/logsumexp on extreme inputs, and your table shows bytes 4/2/2/1 per weight and a sentence explaining the error ordering you observe (bf16 has fewer mantissa bits than fp16; int8 error depends on the scale).",
+      "autograder": "pytest: assert np.allclose(stable_softmax(x), scipy.special.softmax(x)) for x in [[1000,1001,1002], [-1000,0,1000]]"
+     },
+     "quiz": [
+      {
+       "id": "M05.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Stable softmax subtracts:",
+       "options": [
+        "The mean",
+        "The max logit",
+        "1",
+        "The min"
+       ],
+       "answer": 1,
+       "explain": "Makes the largest exponent exp(0)=1 so nothing overflows; probabilities are unchanged."
+      },
+      {
+       "id": "M05.U08.Q2",
+       "kind": "mcq",
+       "prompt": "bf16 vs fp16: bf16 has",
+       "options": [
+        "More exponent range, less precision",
+        "More precision, less range",
+        "Identical format",
+        "No sign bit"
+       ],
+       "answer": 0,
+       "explain": "bf16 keeps fp32's 8-bit exponent with a 7-bit mantissa; fp16 has 5 exponent bits and 10 mantissa bits."
+      },
+      {
+       "id": "M05.U08.Q3",
+       "kind": "mcq",
+       "prompt": "0.1 + 0.2 == 0.3 in float64 is:",
+       "options": [
+        "True",
+        "False",
+        "An error",
+        "CPU dependent"
+       ],
+       "answer": 1,
+       "explain": "0.1 and 0.2 are not exactly representable in binary."
+      },
+      {
+       "id": "M05.U08.Q4",
+       "kind": "mcq",
+       "prompt": "In the stable softmax implementation, why do you subtract max(logits) before exponentiating?",
+       "options": [
+        "It normalizes the logits to have zero mean",
+        "It converts logits from float16 to float32",
+        "It makes the output probabilities more uniform",
+        "It prevents exp() from overflowing by ensuring the largest exponent is 0"
+       ],
+       "answer": 3,
+       "explain": "After subtracting max(logits), the largest value is 0 and exp(0) = 1, which cannot overflow. All other values are negative, so their exponentials are less than 1. The probabilities are mathematically identical to the naive version. (Adapted from rohitg00/ai-engineering-from-scratch Phase 01 lesson 13-numerical-stability quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M05.U08.Q5",
+       "kind": "short",
+       "prompt": "Why do LLM inference servers care about int8/4-bit formats, and what is the cost?",
+       "rubric": [
+        "Memory: fewer bytes per weight fits bigger models / more KV cache on a GPU",
+        "Speed: decoding is memory-bandwidth bound so fewer bytes → faster",
+        "Cost: quantization error can reduce quality; needs evaluation",
+        "Mentions calibration or outliers as a practical issue"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M05.S4",
+   "title": "Deep track: rigorous math",
+   "units": [
+    {
+     "id": "M05.U09",
+     "title": "Deep: positive definiteness, Hessians and conditioning",
+     "hours": 15,
+     "depth": "deep",
+     "prerequisites": [
+      "M05.U04",
+      "M05.U06"
+     ],
+     "outcomes": [
+      "You can test a symmetric matrix for positive definiteness and connect it to minima.",
+      "You can compute a Hessian and use it to classify a stationary point.",
+      "You can explain the condition number and its effect on solvers and gradient descent."
+     ],
+     "topics": [
+      {
+       "id": "M05.01.15",
+       "title": "positive semidefinite matrices"
+      },
+      {
+       "id": "M05.02.06",
+       "title": "Hessian intuition"
+      },
+      {
+       "id": "M05.03.04",
+       "title": "conditioning"
+      }
+     ],
+     "learn": {
+      "resourceId": "mit-1806sc",
+      "title": "MIT 18.06SC · Positive Definite Matrices and Minima",
+      "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/positive-definite-matrices-and-minima/",
+      "slice": "Sessions 'Symmetric Matrices and Positive Definiteness' (Lecture 25) + 'Positive Definite Matrices and Minima' (Lecture 27), each with recitation and problem set",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Symmetric matrices have real eigenvalues and orthogonal eigenvectors",
+      "Tests for positive definiteness (eigenvalues, pivots, determinants, xᵀAx > 0)",
+      "Second-derivative matrix and minima; ellipsoid level sets"
+     ],
+     "gaps": [
+      {
+       "topic": "Hessian, Taylor expansion and second-order behaviour in ML",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §22.4 Multivariable Calculus",
+        "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/multivariable-calculus.html",
+        "slice": "§22.4 Multivariable Calculus (Hessians and second-order Taylor)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Condition number and numerical solvers",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 17-linear-systems",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/17-linear-systems",
+        "slice": "Phase 01 lesson 17 · 'Condition number' + Build It step 5",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "np.linalg.cond API",
+       "resource": {
+        "resourceId": "numpy-docs",
+        "title": "NumPy: numpy.linalg.cond",
+        "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.cond.html",
+        "slice": "numpy.linalg.cond reference",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Curvature lab",
+      "brief": "For f(w) = ½wᵀAw − bᵀw with A = diag(1, κ), run GD for κ ∈ {1, 10, 100, 1000} at the largest stable LR and plot iterations to converge. Compute the Hessian of logistic-regression loss on a small dataset and verify it is PSD.",
+      "done_when": "Plot shows iterations growing with κ, and a written note links it to the condition number; Hessian eigenvalues are all ≥ −1e-10."
+     },
+     "quiz": [
+      {
+       "id": "M05.U09.Q1",
+       "kind": "mcq",
+       "prompt": "A symmetric matrix is positive definite iff all eigenvalues are:",
+       "options": [
+        "Non-zero",
+        "> 0",
+        "≥ 0",
+        "Real"
+       ],
+       "answer": 1,
+       "explain": "≥ 0 gives semidefinite."
+      },
+      {
+       "id": "M05.U09.Q2",
+       "kind": "mcq",
+       "prompt": "At a stationary point with an indefinite Hessian you have:",
+       "options": [
+        "A minimum",
+        "A maximum",
+        "A saddle point",
+        "No information"
+       ],
+       "answer": 2,
+       "explain": "Mixed-sign curvature means up in some directions, down in others."
+      },
+      {
+       "id": "M05.U09.Q3",
+       "kind": "mcq",
+       "prompt": "A large condition number means:",
+       "options": [
+        "Fast GD",
+        "Small input changes can cause large solution changes",
+        "The matrix is orthogonal",
+        "The matrix is PSD"
+       ],
+       "answer": 1,
+       "explain": "Ill-conditioning amplifies errors and slows GD on elongated valleys."
+      },
+      {
+       "id": "M05.U09.Q4",
+       "kind": "short",
+       "prompt": "Why do adaptive optimisers like Adam help on badly conditioned problems?",
+       "rubric": [
+        "Per-parameter scaling approximates a diagonal preconditioner",
+        "Equalises step sizes across directions with very different curvature",
+        "Notes it is not a full second-order method",
+        "Mentions a cost or caveat (generalisation, memory for optimizer state)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U10",
+     "title": "Deep: integrals and constrained optimisation",
+     "hours": 15,
+     "depth": "deep",
+     "prerequisites": [
+      "M05.U07"
+     ],
+     "outcomes": [
+      "You can explain an integral as accumulated area and the fundamental theorem of calculus.",
+      "You can set up a Lagrangian for an equality-constrained problem.",
+      "You can recognise convex problems and duality at the level of Boyd ch.4–5 headings."
+     ],
+     "topics": [
+      {
+       "id": "M05.02.07",
+       "title": "integrals (area/accumulation intuition; expectations taught in M06.U02)"
+      },
+      {
+       "id": "M05.02.13",
+       "title": "constrained optimization intuition"
+      }
+     ],
+     "learn": {
+      "resourceId": "3b1b-essence-calculus",
+      "title": "3Blue1Brown Essence of Calculus ch.8 + ch.9",
+      "url": "https://www.3blue1brown.com/lessons/integration",
+      "slice": "Ch.8 'Integration and the fundamental theorem of calculus' (rfG8ce4nNh0) + Ch.9 'What does area have to do with slope?' (FnJqaIESC2s)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Ch.8: integral as the limit of sums of thin rectangles; antiderivatives; fundamental theorem",
+      "Ch.9: average value of a function; why area relates to slope"
+     ],
+     "gaps": [
+      {
+       "topic": "Constraints and the Lagrangian",
+       "resource": {
+        "resourceId": "d2l",
+        "title": "D2L §12.2 Convexity",
+        "url": "https://d2l.ai/chapter_optimization/convexity.html",
+        "slice": "§12.2.4 Constraints (Lagrangian, penalties, projections)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Convex sets, convex problems and duality",
+       "resource": {
+        "resourceId": "boyd-cvxbook",
+        "title": "Convex Optimization",
+        "url": "https://web.stanford.edu/~boyd/cvxbook/",
+        "slice": "Ch.2 Convex sets, ch.4 Convex optimization problems, ch.5 Duality (free PDF)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Convex optimisation from scratch",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 01 lesson 18-convex-optimization",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/18-convex-optimization",
+        "slice": "Phase 01 · lesson 18-convex-optimization (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Constrained least squares",
+      "brief": "Solve min ‖Xw − y‖² subject to Σw = 1 analytically with a Lagrange multiplier and numerically (projected GD). Integrate a Gaussian PDF numerically with a Riemann sum and compare with scipy.stats.norm.cdf.",
+      "done_when": "Analytic and numeric constrained solutions match to 1e-6; Riemann sum within 1e-4 of the CDF."
+     },
+     "quiz": [
+      {
+       "id": "M05.U10.Q1",
+       "kind": "mcq",
+       "prompt": "The fundamental theorem of calculus links integration to:",
+       "options": [
+        "Limits",
+        "Antiderivatives",
+        "Series",
+        "Matrices"
+       ],
+       "answer": 1,
+       "explain": "∫ₐᵇ f = F(b) − F(a) where F′ = f."
+      },
+      {
+       "id": "M05.U10.Q2",
+       "kind": "mcq",
+       "prompt": "At a constrained optimum with equality constraint g(x)=0, ∇f is:",
+       "options": [
+        "Zero",
+        "Parallel to ∇g",
+        "Orthogonal to ∇g",
+        "Equal to g"
+       ],
+       "answer": 1,
+       "explain": "∇f = λ∇g is the Lagrange condition."
+      },
+      {
+       "id": "M05.U10.Q3",
+       "kind": "mcq",
+       "prompt": "L2 regularisation can be viewed as:",
+       "options": [
+        "A hard constraint ‖w‖ ≤ c via its Lagrangian",
+        "A change of basis",
+        "A projection onto data",
+        "An integral"
+       ],
+       "answer": 0,
+       "explain": "The penalty form is the Lagrangian of a norm-ball constraint."
+      },
+      {
+       "id": "M05.U10.Q4",
+       "kind": "short",
+       "prompt": "Where does constrained optimisation appear in ML systems you will build?",
+       "rubric": [
+        "SVM margin problem or regularisation as constraint",
+        "Probability simplex constraints (softmax outputs, mixture weights)",
+        "Constraints like budgets/fairness in production objectives",
+        "Explains link to penalties/Lagrangians"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M05.U11",
+     "title": "Deep: full linear algebra rigour (18.06SC + MML book)",
+     "hours": 90,
+     "depth": "deep",
+     "prerequisites": [
+      "M05.U04"
+     ],
+     "outcomes": [
+      "You can solve 18.06SC problem sets unaided across all three units.",
+      "You can follow derivations in MML ch.2–7 and complete their exercises.",
+      "You can read research papers' linear-algebra and matrix-calculus notation fluently."
+     ],
+     "topics": [
+      {
+       "id": "M05.05.01",
+       "title": "full linear algebra course with problem sets"
+      },
+      {
+       "id": "M05.05.02",
+       "title": "MML book ch.2–7 exercises"
+      }
+     ],
+     "learn": {
+      "resourceId": "mit-1806sc",
+      "title": "MIT 18.06SC Linear Algebra (Fall 2011, OCW Scholar)",
+      "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/",
+      "slice": "All 3 units (Ax=b and the four subspaces; least squares, determinants, eigenvalues; positive definite matrices and applications) with recitations and problem sets",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Elimination, LU, vector spaces and the four fundamental subspaces",
+      "Orthogonality, projections, least squares, Gram–Schmidt, determinants, eigenvalues, diagonalisation, differential equations",
+      "Symmetric/positive-definite matrices, similar matrices, SVD, linear transformations, pseudoinverse"
+     ],
+     "gaps": [
+      {
+       "topic": "Same course as 1999 video lectures (fixed link)",
+       "resource": {
+        "resourceId": "mit-1806-2010",
+        "title": "MIT 18.06 Linear Algebra (Spring 2010) video lectures",
+        "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/video_galleries/video-lectures/",
+        "slice": "Video gallery (34 lectures)",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "ML-oriented derivations (analytic geometry, matrix decompositions, vector calculus, probability, optimisation)",
+       "resource": {
+        "resourceId": "mml-book",
+        "title": "Mathematics for Machine Learning",
+        "url": "https://mml-book.github.io/book/mml-book.pdf",
+        "slice": "Ch.2–7 + end-of-chapter exercises",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Matrix methods for data and deep learning",
+       "resource": {
+        "resourceId": "mit-18065",
+        "title": "MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning (Spring 2018)",
+        "url": "https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/",
+        "slice": "Lectures on SVD, low-rank, PCA, gradient descent, SGD",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Matrix calculus beyond the basics",
+       "resource": {
+        "resourceId": "mit-18s096",
+        "title": "MIT 18.S096 Matrix Calculus for Machine Learning and Beyond (IAP 2023)",
+        "url": "https://ocw.mit.edu/courses/18-s096-matrix-calculus-for-machine-learning-and-beyond-january-iap-2023/",
+        "slice": "Lectures 1–4 notes",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Problem-set marathon",
+      "brief": "Complete one 18.06SC problem set per session and the MML ch.2–7 exercises. Keep a notebook of solutions; implement each decomposition you meet (LU, QR, SVD) in NumPy and test against np.linalg.",
+      "done_when": "All 18.06SC exams (1–3) attempted under time with self-marking ≥ 70% using the posted solutions; NumPy decompositions pass np.allclose tests."
+     },
+     "quiz": [
+      {
+       "id": "M05.U11.Q1",
+       "kind": "mcq",
+       "prompt": "The four fundamental subspaces of A (m×n) are:",
+       "options": [
+        "Row, column, null, left null",
+        "Span, basis, rank, kernel",
+        "Eigen, singular, null, image",
+        "Domain, range, kernel, cokernel only for square A"
+       ],
+       "answer": 0,
+       "explain": "Strang's framing: C(A), C(Aᵀ), N(A), N(Aᵀ)."
+      },
+      {
+       "id": "M05.U11.Q2",
+       "kind": "mcq",
+       "prompt": "dim N(A) for a 5×7 matrix of rank 4 is:",
+       "options": [
+        "1",
+        "3",
+        "4",
+        "2"
+       ],
+       "answer": 1,
+       "explain": "Rank–nullity: n − r = 7 − 4."
+      },
+      {
+       "id": "M05.U11.Q3",
+       "kind": "mcq",
+       "prompt": "Gram–Schmidt produces:",
+       "options": [
+        "An LU factorisation",
+        "An orthonormal basis (QR)",
+        "Eigenvalues",
+        "The SVD"
+       ],
+       "answer": 1,
+       "explain": "It orthonormalises columns giving A = QR."
+      },
+      {
+       "id": "M05.U11.Q4",
+       "kind": "short",
+       "prompt": "Explain the SVD in terms of the four fundamental subspaces.",
+       "rubric": [
+        "V's first r columns span the row space, the rest the null space",
+        "U's first r columns span the column space, the rest the left null space",
+        "Σ holds the r positive singular values",
+        "A maps each vᵢ to σᵢuᵢ"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "NumPy regression engine (minireg)",
+  "brief": "Build a small tested package `minireg/` supporting linear and logistic regression: closed-form (lstsq) and GD/minibatch/SGD training, a numerically stable log-loss, a grad_check utility, shape-annotated docstrings, and an SVD-based PCA helper. Run it on one public dataset and write a one-page README with plots (loss curves, LR sweep, one SVD/PCA figure). Pass: ≥ 7/10 with no 0s.",
+  "rubric": [
+   {
+    "criterion": "Correctness",
+    "levels": [
+     "0: wrong results",
+     "1: matches sklearn on one model",
+     "2: linear + logistic match sklearn within 1e-4; grad_check < 1e-6"
+    ]
+   },
+   {
+    "criterion": "Numerical robustness",
+    "levels": [
+     "0: NaNs on large logits",
+     "1: stable softmax/log-loss",
+     "2: also handles collinear features via lstsq and documents dtype choice"
+    ]
+   },
+   {
+    "criterion": "Shapes and vectorisation",
+    "levels": [
+     "0: Python loops",
+     "1: vectorised",
+     "2: vectorised + every function has shape asserts/docstrings"
+    ]
+   },
+   {
+    "criterion": "Optimisation insight",
+    "levels": [
+     "0: no plots",
+     "1: loss curves",
+     "2: LR sweep with divergent case explained; GD vs closed-form compared"
+    ]
+   },
+   {
+    "criterion": "Communication",
+    "levels": [
+     "0: no README",
+     "1: README",
+     "2: README explains the math in your own words incl. an SVD/PCA figure"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}

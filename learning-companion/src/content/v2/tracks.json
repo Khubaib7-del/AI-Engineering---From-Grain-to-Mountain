@@ -2,37 +2,198 @@
   {
     "id": "ai-engineer",
     "title": "AI Engineer",
-    "summary": "Build LLM applications, retrieval systems and agents that work in production.",
+    "summary": "Build reliable LLM and agent products: retrieval, tools, evals, cost and safety. Deep on M10–M12, M16–M18; M13/M14 and the M15 deep branch are optional depth. System design (M22) follows serving (M17).",
     "outcomes": [
-      "Ship a RAG app with evaluations",
-      "Build and debug tool-using agents",
-      "Deploy and monitor an LLM service"
+      "Ship an LLM application with retrieval, structured output and an eval suite that gates changes.",
+      "Build a bounded agent from raw API calls with MCP tools, durable state, approvals, traces and cost-per-success reporting.",
+      "Design LLM systems (RAG, agents, serving) with capacity, latency, cost, evaluation and failure modes in a 45-minute interview.",
+      "Threat-model and red-team an LLM/agent system against the OWASP LLM and Agentic Top 10s.",
+      "Deploy and operate the app with CI/CD, containers, monitoring and a rollback path."
     ],
-    "moduleOrder": ["M00", "M01"],
-    "portfolio": ["RAG app with evals", "Agent with tools", "Deployed LLM API"]
+    "moduleOrder": [
+      "M00",
+      "M01",
+      "M02",
+      "M03",
+      "M21",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M15",
+      "M16",
+      "M17",
+      "M22",
+      "M18",
+      "M13",
+      "M14",
+      "M19",
+      "M20"
+    ],
+    "portfolio": [
+      {
+        "id": "aie-rag",
+        "title": "Evaluated RAG product with a retrieval ablation",
+        "evidence": "Repo with eval set, recall@k/answer-quality table across ≥ 2 retrieval variants, cost/latency table, failure gallery.",
+        "modules": [
+          "M10",
+          "M11"
+        ]
+      },
+      {
+        "id": "aie-agent",
+        "title": "Bounded, observable, interoperable agent (M12 capstone)",
+        "evidence": "Plain-Python core + framework port, MCP server, skill, subagents, checkpoint/resume, approvals, OTel traces, 40-task eval with pass^k, cost per success, threat model.",
+        "modules": [
+          "M12",
+          "M18"
+        ]
+      },
+      {
+        "id": "aie-shipped",
+        "title": "One shipped app with real users",
+        "evidence": "Public URL, usage/feedback numbers, deployment runbook, CI badge, monitoring screenshot.",
+        "modules": [
+          "M16",
+          "M17",
+          "M20"
+        ]
+      }
+    ]
   },
   {
     "id": "fde",
     "title": "Forward Deployed Engineer",
-    "summary": "Take AI systems into real customer environments: integrate, adapt and deliver.",
+    "summary": "Everything the AI Engineer needs plus customer-facing delivery: discovery, scoping, enterprise integration (OAuth, webhooks, data sync), deployment in constrained/offline environments, co-built evals and communication. M19 FDE practice is core; M03 backend/auth and M16 deployment go deep.",
     "outcomes": [
-      "Integrate AI into existing systems",
-      "Scope and demo solutions with customers",
-      "Debug in unfamiliar codebases"
+      "Run discovery with a real user and produce an evidence-labelled workflow map and outcome frame.",
+      "Write a signed scope with baseline metric, guardrails, out-of-scope items and a cost estimate.",
+      "Integrate an AI system with an existing customer system via OAuth APIs, signed idempotent webhooks and incremental sync.",
+      "Deploy an assistant offline/on-prem with open weights and a runbook a customer IT person can follow.",
+      "Co-build a user-labelled eval set, fix the top failure modes and present an honest readout and demo."
     ],
-    "moduleOrder": ["M00", "M01"],
-    "portfolio": ["Customer-style integration", "Solution demo with write-up"]
+    "moduleOrder": [
+      "M00",
+      "M01",
+      "M02",
+      "M03",
+      "M21",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M16",
+      "M17",
+      "M22",
+      "M18",
+      "M19",
+      "M15",
+      "M13",
+      "M14",
+      "M20"
+    ],
+    "portfolio": [
+      {
+        "id": "fde-engagement",
+        "title": "Client engagement case study (M19 capstone)",
+        "evidence": "Discovery notes → signed scope → integration with an existing system → deployment in a constrained environment → user-labelled eval → adoption/impact numbers.",
+        "modules": [
+          "M19"
+        ]
+      },
+      {
+        "id": "fde-handover",
+        "title": "Demo video and written handover/runbook",
+        "evidence": "5-minute demo including a failure case, ADRs, weekly status updates, a runbook a stranger can operate.",
+        "modules": [
+          "M19",
+          "M20"
+        ]
+      },
+      {
+        "id": "fde-agent",
+        "title": "Bounded agent (M12 capstone)",
+        "evidence": "Same evidence as the AI Engineer agent item.",
+        "modules": [
+          "M12",
+          "M18"
+        ]
+      }
+    ]
   },
   {
     "id": "mlops",
-    "title": "MLOps Engineer",
-    "summary": "Train, ship and operate models reliably: pipelines, deployment and monitoring.",
+    "title": "MLOps / ML Platform Engineer",
+    "summary": "Make training and serving reproducible, observable, cheap and safe. DevOps (M21) early, classic MLOps (M16) right after M07–M08, then LLM apps, serving (M17) and system design (M22). M12/M15 at awareness depth; M19 FDE practice optional.",
     "outcomes": [
-      "Build reproducible training pipelines",
-      "Serve models behind an API",
-      "Monitor drift and cost"
+      "Build a versioned data/model pipeline with CI/CD, experiment tracking, a registry and canary/rollback.",
+      "Benchmark and optimise model serving (p95 latency, throughput, cost) on CPU/GPU.",
+      "Operate monitoring, drift detection and alerting, and run an incident drill with a blameless postmortem.",
+      "Provision infrastructure as code on one cloud and run workloads on Kubernetes.",
+      "Design ML platform components (feature store, training, serving, gateway) in a system-design interview."
     ],
-    "moduleOrder": ["M00", "M01"],
-    "portfolio": ["Training pipeline", "Model service with monitoring"]
+    "moduleOrder": [
+      "M00",
+      "M01",
+      "M02",
+      "M03",
+      "M21",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M16",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M17",
+      "M22",
+      "M18",
+      "M15",
+      "M13",
+      "M14",
+      "M19",
+      "M20"
+    ],
+    "portfolio": [
+      {
+        "id": "mlops-pipeline",
+        "title": "Pipeline with data/model versioning, CI/CD, canary and rollback",
+        "evidence": "Repo with pipeline DAG, versioned data/model artifacts, CI/CD workflow, a recorded rollback.",
+        "modules": [
+          "M16",
+          "M21"
+        ]
+      },
+      {
+        "id": "mlops-serving",
+        "title": "Serving benchmark with an optimisation",
+        "evidence": "Load-test report (p50/p95, throughput, cost per 1k requests) before/after an optimisation (batching, quantisation, caching).",
+        "modules": [
+          "M17"
+        ]
+      },
+      {
+        "id": "mlops-monitoring",
+        "title": "Monitoring, drift and alerting with an incident drill",
+        "evidence": "Dashboards, drift report, alert rules, runbook and postmortem of a drill.",
+        "modules": [
+          "M16",
+          "M18"
+        ]
+      }
+    ]
   }
 ]

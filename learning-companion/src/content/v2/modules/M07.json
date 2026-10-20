@@ -1,0 +1,2063 @@
+{
+ "id": "M07",
+ "phase": "P2 Math and models",
+ "title": "Classical machine learning",
+ "summary": "Concepts from ISLP (Python edition, with the exact Stanford lecture videos per section) and engineering from the scikit-learn User Guide: framing and baselines, bias–variance and regularisation, linear/logistic models, trees and boosting, unsupervised methods and anomaly detection, leakage-safe pipelines and CV, cost-based thresholds, calibration, retrieval metrics for RAG, tuning, error analysis and shipping a model safely. CS229 public lectures/notes (free; replaces the Stanford-only site) and the rest of ISLP form the Deep track. Andrew Ng's Coursera specialization is not used (free access not guaranteed; TensorFlow).",
+ "hours": 56,
+ "deepHours": 120,
+ "prerequisites": [
+  "M04",
+  "M05",
+  "M06"
+ ],
+ "tracks": [
+  "ai-engineer",
+  "fde",
+  "mlops"
+ ],
+ "submodules": [
+  {
+   "id": "M07.S1",
+   "title": "Framing and generalisation",
+   "units": [
+    {
+     "id": "M07.U01",
+     "title": "The learning problem, splits and baselines",
+     "hours": 5,
+     "depth": "core",
+     "week": 57,
+     "prerequisites": [],
+     "outcomes": [
+      "You can frame a business problem as an ML task: label, problem type, error costs.",
+      "You can design a train/validation/test split and say when the test set may be touched.",
+      "You can build a dummy and a heuristic baseline and decide whether ML is needed at all."
+     ],
+     "topics": [
+      {
+       "id": "M07.01.01",
+       "title": "supervised/unsupervised/self-supervised"
+      },
+      {
+       "id": "M07.01.02",
+       "title": "regression/classification/ranking"
+      },
+      {
+       "id": "M07.01.03",
+       "title": "training/validation/test"
+      },
+      {
+       "id": "M07.01.04",
+       "title": "objective/loss"
+      },
+      {
+       "id": "M07.04.01",
+       "title": "baselines (DummyClassifier/Regressor, heuristic rules) & when to keep them"
+      },
+      {
+       "id": "M07.04.02",
+       "title": "problem framing: when not to use ML, defining the label and the cost of errors"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP ch.2 + lectures 2.1, 2.2, 2.4",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP ch.2 Statistical Learning §2.1–2.2 + Stanford lectures 2.1 Introduction to Regression Models (ox0cKk7h4o0), 2.2 Dimensionality and Structured Models (uFwbrdvrAJs), 2.4 Classification (BMJQ3LQ_QKU)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "What statistical learning is: f(X) + ε; prediction vs inference",
+      "Parametric vs non-parametric methods; flexibility vs interpretability",
+      "Supervised vs unsupervised; regression vs classification",
+      "Measuring fit (MSE), training vs test error; Bayes classifier and kNN"
+     ],
+     "gaps": [
+      {
+       "topic": "Self-supervised learning and when NOT to use ML",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 01-what-is-machine-learning",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/01-what-is-machine-learning",
+        "slice": "Phase 02 lesson 01 · 'The Three Types of Machine Learning', 'Beyond the Big Three', 'When NOT to Use Machine Learning', Build It step 3 'Compare Against a Baseline'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Ranking as a problem type and launching simple first",
+       "resource": {
+        "resourceId": "google-rules-of-ml",
+        "title": "Rules of Machine Learning",
+        "url": "https://developers.google.com/machine-learning/guides/rules-of-ml",
+        "slice": "Rules #1–#10 (before ML; first pipeline; heuristics; monitoring)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Train / validation / test split",
+       "resource": {
+        "resourceId": "mlu-explain",
+        "title": "MLU-Explain · The Importance of Data Splitting",
+        "url": "https://mlu-explain.github.io/train-test-validation/",
+        "slice": "Whole interactive essay",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Dummy baselines",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: DummyClassifier",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "google-rules-of-ml",
+      "title": "Rules of Machine Learning",
+      "url": "https://developers.google.com/machine-learning/guides/rules-of-ml",
+      "slice": "Rules #1–#10",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 01-what-is-machine-learning",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/01-what-is-machine-learning",
+      "slice": "Phase 02 · lesson 01-what-is-machine-learning (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Frame three problems",
+      "brief": "For ticket routing, invoice-fraud flagging and delivery-time estimation write: the label, the problem type, the cost of each error type, a non-ML heuristic baseline and the split strategy. Implement DummyClassifier/DummyRegressor on one public dataset as the number to beat.",
+      "done_when": "A one-page table for all three problems, plus a notebook cell printing the dummy baseline score on a held-out set."
+     },
+     "quiz": [
+      {
+       "id": "M07.U01.Q1",
+       "kind": "mcq",
+       "prompt": "Predicting delivery time in minutes is:",
+       "options": [
+        "Classification",
+        "Regression",
+        "Clustering",
+        "Ranking"
+       ],
+       "answer": 1,
+       "explain": "The target is a continuous quantity."
+      },
+      {
+       "id": "M07.U01.Q2",
+       "kind": "mcq",
+       "prompt": "The test set should be used:",
+       "options": [
+        "For every tuning step",
+        "Once, at the end",
+        "For feature selection",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "Using it repeatedly turns it into a validation set and biases the estimate."
+      },
+      {
+       "id": "M07.U01.Q3",
+       "kind": "mcq",
+       "prompt": "A majority-class baseline gets 97% accuracy on a 3%-positive fraud set. This means:",
+       "options": [
+        "The task is easy",
+        "Accuracy is the wrong metric here",
+        "The model is great",
+        "Leakage"
+       ],
+       "answer": 1,
+       "explain": "Imbalance makes accuracy uninformative; use PR-based metrics."
+      },
+      {
+       "id": "M07.U01.Q4",
+       "kind": "mcq",
+       "prompt": "Which scenario is NOT a good use case for machine learning?",
+       "options": [
+        "Detecting fraudulent transactions in a stream of millions of payments",
+        "Predicting customer churn from historical behavior data",
+        "Classifying images of skin lesions as benign or malignant",
+        "Converting temperatures from Celsius to Fahrenheit"
+       ],
+       "answer": 3,
+       "explain": "Celsius to Fahrenheit is a fixed formula (F = 9/5 * C + 32). Simple, well-defined rules do not need ML. ML adds complexity with no benefit. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 01-what-is-machine-learning quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U01.Q5",
+       "kind": "short",
+       "prompt": "Describe a case where you would ship the heuristic baseline instead of the ML model.",
+       "rubric": [
+        "Concrete scenario",
+        "Small or no measured gain over the baseline (with uncertainty)",
+        "Costs of ML: maintenance, latency, data dependence, explainability",
+        "Plan to revisit with more data"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U02",
+     "title": "Overfitting, bias–variance and regularisation",
+     "hours": 5,
+     "depth": "core",
+     "week": 58,
+     "prerequisites": [
+      "M07.U01"
+     ],
+     "outcomes": [
+      "You can diagnose under- and overfitting from train/validation curves.",
+      "You can explain the bias–variance trade-off and inductive bias.",
+      "You can apply and tune ridge and lasso with properly scaled features."
+     ],
+     "topics": [
+      {
+       "id": "M07.01.05",
+       "title": "inductive bias (lesson note)"
+      },
+      {
+       "id": "M07.01.06",
+       "title": "overfit/underfit"
+      },
+      {
+       "id": "M07.01.07",
+       "title": "bias/variance"
+      },
+      {
+       "id": "M07.01.08",
+       "title": "regularization"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP §2.2 + §6.2 with lectures 2.3, 6.6–6.8",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP §2.2.2 bias–variance trade-off + §6.2 Shrinkage Methods; lectures 2.3 Model Selection and Bias–Variance Tradeoff (pvcEQfcO3pk), 6.6 Ridge (lLlG5xkyqIA), 6.7 The Lasso (0tfPuddPhEY), 6.8 Tuning parameter selection (KV1Kt6I8rYs); lab 6.Py Ridge and Lasso (dI7xi5kRwwM)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Expected test MSE = variance + bias² + irreducible error; U-shaped test error",
+      "Ridge (L2) shrinkage and the need for standardisation",
+      "Lasso (L1) produces sparse models; ridge vs lasso comparison",
+      "Choosing λ by cross-validation; Python lab with sklearn"
+     ],
+     "gaps": [
+      {
+       "topic": "Bias–variance interactively",
+       "resource": {
+        "resourceId": "mlu-explain",
+        "title": "MLU-Explain · The Bias Variance Tradeoff",
+        "url": "https://mlu-explain.github.io/bias-variance/",
+        "slice": "Whole interactive essay",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Ridge regression intuition",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Regularization Part 1: Ridge (L2) Regression",
+        "url": "https://www.youtube.com/watch?v=Q81RR3yKn30",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Lasso intuition",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Regularization Part 2: Lasso (L1) Regression",
+        "url": "https://www.youtube.com/watch?v=NGf0voTMlcs",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Inductive bias / no free lunch",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 01-what-is-machine-learning",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/01-what-is-machine-learning",
+        "slice": "Phase 02 lesson 01 · 'No Free Lunch Theorem'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Learning curves and double descent",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 10-bias-variance",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/10-bias-variance",
+        "slice": "Phase 02 lesson 10 · 'Double Descent', 'Learning Curves', Build It steps 3–5",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 10-bias-variance",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/10-bias-variance",
+      "slice": "Phase 02 · lesson 10-bias-variance (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Polynomial U-curve",
+      "brief": "Fit polynomial regressions of degree 1–15 on noisy data from a known function; plot train vs validation error. Add Ridge with an α sweep (StandardScaler inside a Pipeline) and show the curve flattening. Reference build: rohitg00 Phase 02 lesson 10.",
+      "done_when": "Plot shows train error falling monotonically and validation error U-shaped; the best ridge α is picked by cross-validation, not by the test set."
+     },
+     "quiz": [
+      {
+       "id": "M07.U02.Q1",
+       "kind": "mcq",
+       "prompt": "High training accuracy with low validation accuracy indicates:",
+       "options": [
+        "Underfitting",
+        "Overfitting",
+        "Always leakage",
+        "A good fit"
+       ],
+       "answer": 1,
+       "explain": "The model memorises noise that does not generalise."
+      },
+      {
+       "id": "M07.U02.Q2",
+       "kind": "mcq",
+       "prompt": "Lasso (L1) tends to:",
+       "options": [
+        "Shrink all weights equally",
+        "Set some weights exactly to zero",
+        "Increase variance",
+        "Need no scaling"
+       ],
+       "answer": 1,
+       "explain": "The L1 corner geometry produces sparse solutions."
+      },
+      {
+       "id": "M07.U02.Q3",
+       "kind": "mcq",
+       "prompt": "Increasing regularisation strength generally:",
+       "options": [
+        "Raises variance",
+        "Raises bias, lowers variance",
+        "Has no effect",
+        "Lowers both"
+       ],
+       "answer": 1,
+       "explain": "A simpler, more constrained model."
+      },
+      {
+       "id": "M07.U02.Q4",
+       "kind": "mcq",
+       "prompt": "You train the same model architecture on 50 different random training subsets and observe that predictions vary wildly between them. What does this indicate?",
+       "options": [
+        "High irreducible noise: the target variable is random",
+        "High bias: the model consistently misses the true pattern",
+        "The learning rate is too high",
+        "High variance: the model is sensitive to which specific training data it sees"
+       ],
+       "answer": 3,
+       "explain": "Variance measures how much predictions change when trained on different data subsets. Wildly different predictions across subsets is the definition of high variance. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 10-bias-variance quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U02.Q5",
+       "kind": "short",
+       "prompt": "Why must features be scaled before ridge/lasso?",
+       "rubric": [
+        "Penalty acts on coefficient size, which depends on feature units",
+        "Unscaled features get penalised unequally",
+        "Scaler must be fit inside CV/pipeline to avoid leakage",
+        "Example with units (km vs m)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M07.S2",
+   "title": "Core algorithms",
+   "units": [
+    {
+     "id": "M07.U03",
+     "title": "Linear and logistic regression",
+     "hours": 8,
+     "depth": "core",
+     "week": 58,
+     "prerequisites": [
+      "M07.U02",
+      "M05.U07"
+     ],
+     "outcomes": [
+      "You can fit, evaluate and interpret linear and logistic regression in sklearn.",
+      "You can interpret logistic coefficients as log-odds and odds ratios.",
+      "You can match your own NumPy implementation (M05 capstone) to sklearn."
+     ],
+     "topics": [
+      {
+       "id": "M07.02.01",
+       "title": "linear/ridge/lasso regression"
+      },
+      {
+       "id": "M07.02.02",
+       "title": "logistic regression"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP ch.3–4 with lectures 3.1–3.5, 4.1–4.3 and Python labs",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP ch.3 Linear Regression + ch.4 §4.1–4.3 Logistic Regression; lectures 3.1 (vCHtY6Me5FI), 3.2 (3GiWpRfkSjc), 3.3 (o9hoLdylWKo), 3.4 (50sv4UTjE90), 3.5 (dEBQmiXv9fk), 4.1 (ju3J7iRy6xI), 4.2 (kr_Be9NVXOM), 4.3 (1uJVE8bkabc); labs 3.Py (mKalBNrxToU, pGOr3HZhUZQ, d0K2mDclyXM) and 4.Py Logistic Regression (wOGBlLLuc4I)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Simple and multiple linear regression, coefficient SEs, CIs and hypothesis tests",
+      "Qualitative predictors, interactions, non-linear terms, potential problems (collinearity, outliers)",
+      "Why not linear regression for classification; logistic model and maximum likelihood",
+      "Multivariate logistic regression; Python labs with statsmodels/sklearn"
+     ],
+     "gaps": [
+      {
+       "topic": "Log-odds",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Odds and Log(Odds), Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=ARfXDSkQf1Y",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Odds ratios for interpreting coefficients",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Odds Ratios and Log(Odds Ratios), Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=8nm0G-1uJzA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "sklearn API (LinearRegression, Ridge, Lasso, LogisticRegression, regularisation C)",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §1.1 Linear Models",
+        "url": "https://scikit-learn.org/stable/modules/linear_model.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Both models from scratch",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 03-logistic-regression",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/03-logistic-regression",
+        "slice": "Phase 02 · lesson 03-logistic-regression (docs/en.md + code/ + quiz.json)",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "campusx-100-days-ml",
+      "title": "100 Days of Machine Learning (CampusX, Hindi/Urdu)",
+      "url": "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH",
+      "slice": "Linear and logistic regression videos (Hindi/Urdu companion)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Your minireg vs sklearn",
+      "brief": "On a public classification dataset, compare your M05 minireg logistic regression with sklearn LogisticRegression (coefficients and log-loss, same regularisation). Interpret 3 coefficients as odds ratios on standardised features.",
+      "done_when": "Coefficients agree within 1e-3 and log-loss within 1e-4; three odds-ratio sentences are correct (exp(coef))."
+     },
+     "quiz": [
+      {
+       "id": "M07.U03.Q1",
+       "kind": "mcq",
+       "prompt": "Logistic regression outputs:",
+       "options": [
+        "Class labels only",
+        "Probabilities via a sigmoid of a linear score",
+        "Distances",
+        "Clusters"
+       ],
+       "answer": 1,
+       "explain": "Labels come from thresholding those probabilities."
+      },
+      {
+       "id": "M07.U03.Q2",
+       "kind": "mcq",
+       "prompt": "Its training loss is:",
+       "options": [
+        "MSE",
+        "Log-loss / cross-entropy",
+        "Hinge",
+        "MAE"
+       ],
+       "answer": 1,
+       "explain": "Maximum likelihood for a Bernoulli outcome."
+      },
+      {
+       "id": "M07.U03.Q3",
+       "kind": "mcq",
+       "prompt": "A coefficient of 0.69 on a standardised feature multiplies the odds by about:",
+       "options": [
+        "0.69",
+        "2",
+        "1.69",
+        "0.5"
+       ],
+       "answer": 1,
+       "explain": "exp(0.69) ≈ 2 per one-SD increase."
+      },
+      {
+       "id": "M07.U03.Q4",
+       "kind": "mcq",
+       "prompt": "The normal equation gives optimal weights directly. Why would you prefer gradient descent instead?",
+       "options": [
+        "Gradient descent requires less memory than storing the data",
+        "Gradient descent always gives more accurate results",
+        "The normal equation does not work for linear regression",
+        "Matrix inversion in the normal equation is O(n^3) in features, which is too slow for thousands of features"
+       ],
+       "answer": 3,
+       "explain": "The normal equation requires inverting X^T * X, which is O(n^3) in the number of features. For large feature counts, gradient descent is more efficient. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 02-linear-regression quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U03.Q5",
+       "kind": "short",
+       "prompt": "Why is logistic regression still a strong production baseline in 2026?",
+       "rubric": [
+        "Fast to train and serve, tiny latency",
+        "Calibrated-ish probabilities and interpretable coefficients",
+        "Robust with regularisation on sparse/high-dim features (e.g. TF-IDF)",
+        "Easy to monitor/debug; good baseline for LLM classifiers"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U04",
+     "title": "Trees, random forests and gradient boosting",
+     "hours": 8,
+     "depth": "core",
+     "week": 59,
+     "prerequisites": [
+      "M07.U02"
+     ],
+     "outcomes": [
+      "You can explain how a decision tree splits and why single trees overfit.",
+      "You can explain bagging/random forests vs boosting.",
+      "You can train and compare RF, HistGradientBoosting and LightGBM/XGBoost with early stopping."
+     ],
+     "topics": [
+      {
+       "id": "M07.02.05",
+       "title": "decision trees"
+      },
+      {
+       "id": "M07.02.06",
+       "title": "random forests"
+      },
+      {
+       "id": "M07.02.07",
+       "title": "gradient boosting"
+      },
+      {
+       "id": "M07.02.08",
+       "title": "XGBoost/LightGBM awareness"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP ch.8 with lectures 8.1–8.5 and lab",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP ch.8 Tree-Based Methods §8.1–8.2; lectures 8.1 (QNnayf--_yk), 8.2 (JaoTOfTNOVk), 8.3 Classification Trees (gLcfKSMKOb0), 8.4 Bagging (_cKAxjnInfA), 8.5 Boosting (cdl4C2eCOHk); lab 8.Py (AVTfC5WnDTo)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Regression and classification trees; recursive binary splitting; pruning",
+      "Gini/entropy; trees vs linear models",
+      "Bagging and out-of-bag error; random forests (feature subsampling); variable importance",
+      "Boosting with shrinkage and number of trees"
+     ],
+     "gaps": [
+      {
+       "topic": "Gradient boosting as fitting negative gradients",
+       "resource": {
+        "resourceId": "xgboost-docs",
+        "title": "XGBoost: Introduction to Boosted Trees",
+        "url": "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+        "slice": "Introduction to Boosted Trees (whole tutorial)",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Gradient boosting step by step (regression and classification)",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Gradient Boost Part 1 (of 4): Regression Main Ideas",
+        "url": "https://www.youtube.com/watch?v=3CC4N4z3GJc",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Gradient boosting for classification",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Gradient Boost Part 3 (of 4): Classification",
+        "url": "https://www.youtube.com/watch?v=jxuNLH5dXCs",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "HistGradientBoosting, early stopping and sklearn ensembles",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §1.11 Ensembles: Gradient boosting, random forests, bagging, voting, stacking",
+        "url": "https://scikit-learn.org/stable/modules/ensemble.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "LightGBM practical parameters",
+       "resource": {
+        "resourceId": "lightgbm-docs",
+        "title": "LightGBM documentation",
+        "url": "https://lightgbm.readthedocs.io/en/stable/",
+        "slice": "Parameters Tuning + Python Quick Start",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "fastai-part1",
+      "title": "fast.ai Practical Deep Learning Lesson 6 · Random forests",
+      "url": "https://course.fast.ai/Lessons/lesson6.html",
+      "slice": "Lesson 6 'Random forests'",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Tabular model bake-off",
+      "brief": "On one tabular dataset compare a single DecisionTree, RandomForest, HistGradientBoostingClassifier and LightGBM under the same CV. Report score, training time and inference latency per 1,000 rows. Plot validation score vs n_estimators for boosting with early stopping. Reference build: rohitg00 Phase 02 lessons 04 and 11.",
+      "done_when": "A results table with mean ± std CV score, train time and latency for all four models, plus the early-stopping plot."
+     },
+     "quiz": [
+      {
+       "id": "M07.U04.Q1",
+       "kind": "mcq",
+       "prompt": "Random forests reduce variance mainly by:",
+       "options": [
+        "Boosting residuals",
+        "Averaging decorrelated trees (bagging + feature subsampling)",
+        "Pruning",
+        "Scaling features"
+       ],
+       "answer": 1,
+       "explain": "Averaging many de-correlated high-variance trees."
+      },
+      {
+       "id": "M07.U04.Q2",
+       "kind": "mcq",
+       "prompt": "Gradient boosting fits each new tree to:",
+       "options": [
+        "The raw labels",
+        "The negative gradient (residuals) of the loss",
+        "Random noise",
+        "The test set"
+       ],
+       "answer": 1,
+       "explain": "Each tree corrects the current ensemble's errors."
+      },
+      {
+       "id": "M07.U04.Q3",
+       "kind": "mcq",
+       "prompt": "Tree models need feature scaling:",
+       "options": [
+        "Always",
+        "Not for split quality",
+        "Only for categoricals",
+        "Only for boosting"
+       ],
+       "answer": 1,
+       "explain": "Splits depend only on the order of values."
+      },
+      {
+       "id": "M07.U04.Q4",
+       "kind": "mcq",
+       "prompt": "A random forest with 100 trees has the same test accuracy as 200 trees. Adding more trees to 500 also shows no improvement. Why?",
+       "options": [
+        "After enough trees, variance reduction plateaus and adding more trees provides diminishing returns without increasing overfitting",
+        "500 trees is the maximum allowed",
+        "The trees are all identical so adding more has no effect",
+        "The random forest is underfitting and needs a different algorithm"
+       ],
+       "answer": 0,
+       "explain": "Random forests do not overfit with more trees (unlike boosting). However, variance reduction plateaus once enough diverse trees have been averaged. More trees just add compute cost without improving accuracy. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 11-ensemble-methods quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U04.Q5",
+       "kind": "short",
+       "prompt": "When would you choose a GBM over a neural network for a customer's problem?",
+       "rubric": [
+        "Tabular, heterogeneous features, modest data size",
+        "Strong out-of-the-box accuracy, fast CPU training/inference",
+        "Easier to explain/debug; fewer hyperparameters",
+        "Notes when NN wins (images, text, very large data)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U05",
+     "title": "Distance-based, probabilistic and unsupervised methods",
+     "hours": 7,
+     "depth": "core",
+     "week": 60,
+     "prerequisites": [
+      "M07.U03",
+      "M05.U04"
+     ],
+     "outcomes": [
+      "You can apply kNN and naive Bayes and say when each is a sensible baseline.",
+      "You can cluster text with TF-IDF → SVD → k-means and choose k with silhouette plus judgement.",
+      "You can run anomaly detection and know SVM/DBSCAN at awareness level."
+     ],
+     "topics": [
+      {
+       "id": "M07.02.03",
+       "title": "kNN"
+      },
+      {
+       "id": "M07.02.04",
+       "title": "naive Bayes"
+      },
+      {
+       "id": "M07.02.09",
+       "title": "SVM (awareness)"
+      },
+      {
+       "id": "M07.02.10",
+       "title": "k-means"
+      },
+      {
+       "id": "M07.02.11",
+       "title": "DBSCAN (awareness)"
+      },
+      {
+       "id": "M07.02.12",
+       "title": "PCA in pipelines (math in M05.01.14)"
+      },
+      {
+       "id": "M07.04.06",
+       "title": "anomaly detection basics (IsolationForest, robust z-scores)"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP ch.12 with lectures 12.1–12.4 and labs",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP ch.12 Unsupervised Learning §12.1–12.4; lectures 12.1 Principal Components (kpuQqOzQXfM), 12.2 (O30nHhyBiAs), 12.3 k-means Clustering (ded_NQqOe7I), 12.4 Hierarchical Clustering (yktzn-Mr2Nw); labs 12.Py (3zpISnhksqQ, xhLD4nEEVlE)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "PCA: loadings, scores, proportion of variance explained, scaling",
+      "k-means algorithm, local optima, choosing K",
+      "Hierarchical clustering, linkage, dendrograms",
+      "Practical issues: standardisation, validating clusters"
+     ],
+     "gaps": [
+      {
+       "topic": "kNN",
+       "resource": {
+        "resourceId": "islp-lectures",
+        "title": "Statistical Learning (Stanford) · 4.Py K-Nearest Neighbors (KNN) lab",
+        "url": "https://www.youtube.com/watch?v=yLEx1FnYyOo",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Naive Bayes",
+       "resource": {
+        "resourceId": "islp-lectures",
+        "title": "Statistical Learning (Stanford) · 4.9 Quadratic Discriminant Analysis and Naive Bayes",
+        "url": "https://www.youtube.com/watch?v=giCZkipHEmA",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Choosing k with silhouette analysis",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: Selecting the number of clusters with silhouette analysis on KMeans",
+        "url": "https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "DBSCAN (awareness)",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Clustering with DBSCAN, Clearly Explained!!!",
+        "url": "https://www.youtube.com/watch?v=RDZUdRSDOok",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "SVM (awareness; full treatment in M07.U09)",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Support Vector Machines Part 1 (of 3): Main Ideas!!!",
+        "url": "https://www.youtube.com/watch?v=efR1C6CvhmE",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Anomaly detection (IsolationForest, LOF)",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §2.7 Novelty and Outlier Detection",
+        "url": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Text → TF-IDF features",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §6.2.3 Text feature extraction (TF-IDF)",
+        "url": "https://scikit-learn.org/stable/modules/feature_extraction.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "rohitg00-ai-eng-from-scratch",
+      "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 07-unsupervised-learning",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/07-unsupervised-learning",
+      "slice": "Phase 02 · lesson 07-unsupervised-learning (docs/en.md + code/ + quiz.json)",
+      "type": "repo",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Cluster tickets, hunt anomalies",
+      "brief": "Cluster 2,000 support tickets (TfidfVectorizer → TruncatedSVD → KMeans); pick k with silhouette + human reading of top terms; name each cluster. Run IsolationForest on transaction-like data and review the top 20 anomalies by hand. Reference build: rohitg00 Phase 02 lessons 06, 07, 14, 16.",
+      "done_when": "Cluster names with top terms and 3 example tickets each, silhouette plot for k=2..12, and a table of 20 anomalies marked true/false with your reasoning."
+     },
+     "quiz": [
+      {
+       "id": "M07.U05.Q1",
+       "kind": "mcq",
+       "prompt": "k-means requires choosing:",
+       "options": [
+        "ε and min_samples",
+        "k",
+        "A kernel",
+        "Labels"
+       ],
+       "answer": 1,
+       "explain": "ε/min_samples are DBSCAN's parameters."
+      },
+      {
+       "id": "M07.U05.Q2",
+       "kind": "mcq",
+       "prompt": "kNN prediction cost grows with:",
+       "options": [
+        "Number of classes only",
+        "Training-set size",
+        "Nothing",
+        "Epochs"
+       ],
+       "answer": 1,
+       "explain": "It searches the stored training points at prediction time."
+      },
+      {
+       "id": "M07.U05.Q3",
+       "kind": "mcq",
+       "prompt": "Naive Bayes assumes features are:",
+       "options": [
+        "Always Gaussian",
+        "Conditionally independent given the class",
+        "Uncorrelated with the label",
+        "Scaled"
+       ],
+       "answer": 1,
+       "explain": "The 'naive' assumption."
+      },
+      {
+       "id": "M07.U05.Q4",
+       "kind": "mcq",
+       "prompt": "What is the silhouette score measuring?",
+       "options": [
+        "The total number of clusters found",
+        "How similar each point is to its own cluster compared to the nearest other cluster",
+        "The speed of the clustering algorithm",
+        "The percentage of outliers in the data"
+       ],
+       "answer": 1,
+       "explain": "Silhouette score = (b - a) / max(a, b), where a is mean intra-cluster distance and b is mean nearest-cluster distance. It ranges from -1 (wrong cluster) to +1 (well-clustered). (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 07-unsupervised-learning quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U05.Q5",
+       "kind": "short",
+       "prompt": "Why is unsupervised clustering output 'a hypothesis to inspect' and not ground truth?",
+       "rubric": [
+        "Algorithm always returns clusters even with no structure",
+        "Depends on features, scaling, k and seed",
+        "Needs human/domain validation and stability checks",
+        "Example of a misleading cluster"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M07.S3",
+   "title": "Engineering ML properly",
+   "units": [
+    {
+     "id": "M07.U06",
+     "title": "Pipelines, preprocessing and leakage-safe validation",
+     "hours": 8,
+     "depth": "core",
+     "week": 61,
+     "prerequisites": [
+      "M07.U03"
+     ],
+     "outcomes": [
+      "You can build a ColumnTransformer + Pipeline that is fit only on training folds.",
+      "You can pick KFold, StratifiedKFold, GroupKFold or TimeSeriesSplit for the data at hand.",
+      "You can engineer features (dates, interactions, target encoding) without leaking the future."
+     ],
+     "topics": [
+      {
+       "id": "M07.03.01",
+       "title": "scikit-learn Pipeline"
+      },
+      {
+       "id": "M07.03.02",
+       "title": "scaling/imputation/encoding"
+      },
+      {
+       "id": "M07.03.03",
+       "title": "cross validation"
+      },
+      {
+       "id": "M07.03.04",
+       "title": "stratification/group/time splits"
+      },
+      {
+       "id": "M07.04.03",
+       "title": "feature engineering (datetime, interactions, target-encoding leakage, TF-IDF hand-off)"
+      },
+      {
+       "id": "M07.04.07",
+       "title": "time-series forecasting awareness (naive/seasonal baselines, backtesting)"
+      }
+     ],
+     "learn": {
+      "resourceId": "sklearn-user-guide",
+      "title": "scikit-learn: Common pitfalls and recommended practices",
+      "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+      "slice": "§12.1 Inconsistent preprocessing, §12.2 Data leakage (incl. leakage during pre-processing), §12.3 Controlling randomness",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Preprocessing must be identical at train and inference time → use pipelines",
+      "Data leakage: fitting transformers/feature selection on all data before splitting",
+      "Controlling randomness with random_state for reproducible CV"
+     ],
+     "gaps": [
+      {
+       "topic": "Pipeline and ColumnTransformer API",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §6.1 Pipelines and composite estimators",
+        "url": "https://scikit-learn.org/stable/modules/compose.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cross-validation strategies (KFold, Stratified, Group, TimeSeriesSplit)",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §3.1 Cross-validation: evaluating estimator performance",
+        "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Visualising CV splitters",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: Visualizing cross-validation behavior",
+        "url": "https://scikit-learn.org/stable/auto_examples/model_selection/plot_cv_indices.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cross-validation done the wrong and right way",
+       "resource": {
+        "resourceId": "islp-lectures",
+        "title": "Statistical Learning (Stanford) · 5.3 Cross Validation: the wrong and right way",
+        "url": "https://www.youtube.com/watch?v=jgoa28FR__Y",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Leakage case studies (target leakage, train–test contamination)",
+       "resource": {
+        "resourceId": "kaggle-intermediate-ml",
+        "title": "Kaggle Learn · Data Leakage (Intermediate ML)",
+        "url": "https://www.kaggle.com/code/alexisbcook/data-leakage",
+        "slice": "Lesson 'Data Leakage'",
+        "type": "course",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Time-related feature engineering",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: Time-related feature engineering",
+        "url": "https://scikit-learn.org/stable/auto_examples/applications/plot_cyclical_feature_engineering.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Target encoding without leakage (cross-fitting)",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: TargetEncoder",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Forecasting baselines and walk-forward validation",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 15-time-series",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/15-time-series",
+        "slice": "Phase 02 lesson 15 · 'Walk-Forward Validation', 'Common Mistakes in Time Series', 'Baselines You Must Beat'",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "read": {
+      "resourceId": "sklearn-user-guide",
+      "title": "scikit-learn: §6.1 Pipelines and composite estimators",
+      "url": "https://scikit-learn.org/stable/modules/compose.html",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "backup": {
+      "resourceId": "kaggle-intermediate-ml",
+      "title": "Kaggle Learn: Intermediate Machine Learning",
+      "url": "https://www.kaggle.com/learn/intermediate-machine-learning",
+      "slice": "Lessons: Missing Values, Categorical Variables, Pipelines, Cross-Validation, Data Leakage",
+      "type": "course",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Leaky vs correct",
+      "brief": "Take a dataset with repeated customers and timestamps. (a) Build a leaky workflow (scale + impute on all data, random KFold) and a correct one (ColumnTransformer inside Pipeline, GroupKFold or TimeSeriesSplit); report the score gap. (b) Add 3 engineered features and prove each uses only past data. Reference build: rohitg00 Phase 02 lessons 08 and 13.",
+      "done_when": "The notebook shows both CV scores side by side with an explanation of the gap, and a unit test that fails if any feature uses rows with a later timestamp."
+     },
+     "quiz": [
+      {
+       "id": "M07.U06.Q1",
+       "kind": "mcq",
+       "prompt": "Fitting a StandardScaler on the full dataset before CV causes:",
+       "options": [
+        "Nothing",
+        "Information leakage from validation folds",
+        "Underfitting",
+        "Slower training"
+       ],
+       "answer": 1,
+       "explain": "Validation-fold statistics leak into training."
+      },
+      {
+       "id": "M07.U06.Q2",
+       "kind": "mcq",
+       "prompt": "Multiple rows per patient require:",
+       "options": [
+        "KFold with shuffle",
+        "GroupKFold by patient",
+        "StratifiedKFold only",
+        "LOOCV"
+       ],
+       "answer": 1,
+       "explain": "The same patient must not appear in both train and validation."
+      },
+      {
+       "id": "M07.U06.Q3",
+       "kind": "mcq",
+       "prompt": "For forecasting, the correct split is:",
+       "options": [
+        "Random",
+        "Time-ordered (train past, validate future)",
+        "Stratified",
+        "By group only"
+       ],
+       "answer": 1,
+       "explain": "Random splits let the model see the future."
+      },
+      {
+       "id": "M07.U06.Q4",
+       "kind": "mcq",
+       "prompt": "A production model receives a categorical value it never saw during training ('new_category'). What should the pipeline handle?",
+       "options": [
+        "Convert the unknown category to the number zero",
+        "Handle unknown categories gracefully, e.g., by using an 'unknown' bucket or the global mean in target encoding",
+        "Ignore the row entirely and return no prediction",
+        "Retrain the entire model from scratch"
+       ],
+       "answer": 1,
+       "explain": "Robust pipelines anticipate unseen categories in production. Solutions include an 'unknown' fallback for one-hot encoding, or defaulting to the global mean for target encoding. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 13-ml-pipelines quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U06.Q5",
+       "kind": "short",
+       "prompt": "Name two leakage sources you would look for first in a customer's churn dataset.",
+       "rubric": [
+        "Features recorded after the churn date (e.g. 'account_closed_reason', last-login after cutoff)",
+        "Same customer across train/validation",
+        "Preprocessing/target encoding fit on all data",
+        "Explains how to detect each (timestamps, feature importance too good to be true)"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U07",
+     "title": "Metrics, thresholds, calibration, imbalance and ranking",
+     "hours": 8,
+     "depth": "core",
+     "week": 62,
+     "prerequisites": [
+      "M07.U06",
+      "M06.U08"
+     ],
+     "outcomes": [
+      "You can choose a metric that matches the business cost, for classification, regression and ranking.",
+      "You can pick a decision threshold from a cost matrix and calibrate probabilities.",
+      "You can implement precision@k, recall@k, MRR and NDCG for retrieval evaluation."
+     ],
+     "topics": [
+      {
+       "id": "M07.03.06",
+       "title": "class imbalance"
+      },
+      {
+       "id": "M07.03.07",
+       "title": "MAE/RMSE"
+      },
+      {
+       "id": "M07.03.08",
+       "title": "precision/recall/F1"
+      },
+      {
+       "id": "M07.03.09",
+       "title": "ROC-AUC/PR-AUC"
+      },
+      {
+       "id": "M07.03.10",
+       "title": "calibration in sklearn (concept in M06.03.09)"
+      },
+      {
+       "id": "M07.03.11",
+       "title": "threshold selection"
+      },
+      {
+       "id": "M07.04.04",
+       "title": "ranking/retrieval metrics: precision@k, recall@k, MRR, NDCG"
+      }
+     ],
+     "learn": {
+      "resourceId": "sklearn-user-guide",
+      "title": "scikit-learn: Metrics and scoring",
+      "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+      "slice": "§3.4 Metrics and scoring: scoring API, classification metrics (confusion matrix, precision/recall/F, ROC, PR, log-loss), regression metrics (MAE, RMSE), ranking metrics (NDCG)",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "The scoring parameter and scorer objects",
+      "Classification metrics: accuracy, balanced accuracy, confusion matrix, precision/recall/F-measures, PR curve and average precision, ROC/AUC, log-loss",
+      "Regression metrics: MAE, MSE/RMSE, R²",
+      "Multilabel ranking metrics incl. NDCG"
+     ],
+     "gaps": [
+      {
+       "topic": "Decision-threshold tuning (TunedThresholdClassifierCV)",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §3.3 Tuning the decision threshold for class prediction",
+        "url": "https://scikit-learn.org/stable/modules/classification_threshold.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Cost-sensitive threshold from a business cost matrix",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: Post-tuning the decision threshold for cost-sensitive learning",
+        "url": "https://scikit-learn.org/stable/auto_examples/model_selection/plot_cost_sensitive_learning.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Calibration in practice (CalibratedClassifierCV)",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §1.16 Probability calibration",
+        "url": "https://scikit-learn.org/stable/modules/calibration.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Precision–recall visually",
+       "resource": {
+        "resourceId": "mlu-explain",
+        "title": "MLU-Explain · Precision & Recall",
+        "url": "https://mlu-explain.github.io/precision-recall/",
+        "slice": "Whole interactive essay",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "ROC and AUC",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · ROC and AUC, Clearly Explained!",
+        "url": "https://www.youtube.com/watch?v=4jRBRDbJemM",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Retrieval metrics: recall@K, precision@K, MRR, MAP@K, NDCG@K",
+       "resource": {
+        "resourceId": "pinecone-ir-eval",
+        "title": "Evaluation Measures in Information Retrieval",
+        "url": "https://www.pinecone.io/learn/offline-evaluation/",
+        "slice": "Whole article",
+        "type": "article",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Class imbalance (class weights, resampling, threshold)",
+       "resource": {
+        "resourceId": "rohitg00-ai-eng-from-scratch",
+        "title": "rohitg00 AI Engineering from Scratch · Phase 02 lesson 17-imbalanced-data",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/02-ml-fundamentals/17-imbalanced-data",
+        "slice": "Phase 02 lesson 17 · 'Why Accuracy Fails' → 'Cost-Sensitive Learning' + Build It steps 4–7",
+        "type": "repo",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "mlu-explain",
+      "title": "MLU-Explain · ROC & AUC",
+      "url": "https://mlu-explain.github.io/roc-auc/",
+      "slice": "Whole interactive essay",
+      "type": "article",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Cost-based threshold + retrieval metrics",
+      "brief": "(a) For an imbalanced classification problem plot PR and ROC curves, choose a threshold from a stated cost matrix (FN = 10× FP) with TunedThresholdClassifierCV, and calibrate with CalibratedClassifierCV. (b) Implement precision@k, recall@k, MRR and NDCG@k from scratch for a toy retrieval result list; verify NDCG against sklearn.metrics.ndcg_score.",
+      "done_when": "Your NDCG matches sklearn to 1e-9; the chosen threshold beats 0.5 on expected cost on a held-out set; calibration curve plotted before and after."
+     },
+     "quiz": [
+      {
+       "id": "M07.U07.Q1",
+       "kind": "mcq",
+       "prompt": "With 1% positives, which curve is usually more informative?",
+       "options": [
+        "ROC",
+        "Precision–Recall",
+        "Both identical",
+        "Neither"
+       ],
+       "answer": 1,
+       "explain": "ROC can look good because of the many easy negatives; PR focuses on the positive class."
+      },
+      {
+       "id": "M07.U07.Q2",
+       "kind": "mcq",
+       "prompt": "MRR rewards:",
+       "options": [
+        "All relevant items equally",
+        "The rank of the first relevant result",
+        "Recall only",
+        "Calibration"
+       ],
+       "answer": 1,
+       "explain": "Mean of 1/rank of the first relevant item."
+      },
+      {
+       "id": "M07.U07.Q3",
+       "kind": "mcq",
+       "prompt": "Changing the decision threshold changes:",
+       "options": [
+        "AUC",
+        "The precision/recall trade-off, not AUC",
+        "The model's weights",
+        "Calibration"
+       ],
+       "answer": 1,
+       "explain": "AUC summarises all thresholds."
+      },
+      {
+       "id": "M07.U07.Q4",
+       "kind": "mcq",
+       "prompt": "AUC-ROC = 0.5 for a binary classifier. What does this indicate?",
+       "options": [
+        "The model perfectly separates the two classes",
+        "The model performs no better than random guessing at ranking positives above negatives",
+        "The model has 50% accuracy",
+        "The model has equal precision and recall"
+       ],
+       "answer": 1,
+       "explain": "AUC-ROC = 0.5 means the model's ranking of positive and negative examples is no better than random. AUC = 1.0 would be perfect separation. The metric is threshold-independent. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 09-model-evaluation quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U07.Q5",
+       "kind": "short",
+       "prompt": "A RAG retriever has recall@20 = 0.9 but MRR = 0.2. What does that tell you, and what would you try?",
+       "rubric": [
+        "Relevant docs are usually retrieved but ranked low",
+        "LLM context may miss them if only top-k few are used",
+        "Add a reranker (cross-encoder) or hybrid search; tune chunking",
+        "Measure again with the same eval set and CIs"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U08",
+     "title": "Tuning, error analysis, interpretability and shipping the model",
+     "hours": 7,
+     "depth": "core",
+     "week": 63,
+     "prerequisites": [
+      "M07.U07"
+     ],
+     "outcomes": [
+      "You can run a budgeted hyperparameter search without touching the test set.",
+      "You can do structured error analysis and permutation importance (and know its caveats).",
+      "You can save a pipeline safely with pinned versions and expose a predict CLI with input validation."
+     ],
+     "topics": [
+      {
+       "id": "M07.03.05",
+       "title": "hyperparameter search"
+      },
+      {
+       "id": "M07.03.12",
+       "title": "error analysis"
+      },
+      {
+       "id": "M07.03.13",
+       "title": "interpretability and SHAP caveats"
+      },
+      {
+       "id": "M07.04.05",
+       "title": "model persistence & a predict interface (joblib/skops, version pinning, input schema)"
+      }
+     ],
+     "learn": {
+      "resourceId": "sklearn-user-guide",
+      "title": "scikit-learn: Tuning the hyper-parameters of an estimator",
+      "url": "https://scikit-learn.org/stable/modules/grid_search.html",
+      "slice": "§3.2 GridSearchCV, RandomizedSearchCV, successive halving (HalvingRandomSearchCV), tips for parameter search",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Exhaustive grid search and randomized search with distributions",
+      "Successive halving for budgeted search",
+      "Tips: specify an objective metric, composite estimators and parameter spaces, model selection: development and evaluation"
+     ],
+     "gaps": [
+      {
+       "topic": "Error analysis process",
+       "resource": {
+        "resourceId": "cs229-2018-youtube",
+        "title": "Stanford CS229 (Autumn 2018) Lecture 12 · Debugging ML Models and Error Analysis",
+        "url": "https://www.youtube.com/watch?v=ORrStCArmP4",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Permutation importance and its pitfalls with correlated features",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §4.2 Permutation feature importance",
+        "url": "https://scikit-learn.org/stable/modules/permutation_importance.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Worked example of the multicollinearity pitfall",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: Permutation Importance with Multicollinear or Correlated Features",
+        "url": "https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance_multicollinear.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "SHAP and its caveats",
+       "resource": {
+        "resourceId": "molnar-iml",
+        "title": "Interpretable Machine Learning",
+        "url": "https://christophm.github.io/interpretable-ml-book/shap.html",
+        "slice": "Chapter 'SHAP' (incl. disadvantages)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Model persistence and security of pickle",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §11 Model persistence (pickle/joblib security, skops, ONNX, version pinning)",
+        "url": "https://scikit-learn.org/stable/model_persistence.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Safer serialisation with skops",
+       "resource": {
+        "resourceId": "skops",
+        "title": "skops (secure scikit-learn persistence)",
+        "url": "https://skops.readthedocs.io/en/stable/",
+        "slice": "Persistence: skops.io dump/load",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "skops",
+      "title": "skops (secure scikit-learn persistence)",
+      "url": "https://skops.readthedocs.io/en/stable/",
+      "slice": "Persistence guide",
+      "type": "doc",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "practice": {
+      "title": "Ship the pipeline",
+      "brief": "Run RandomizedSearchCV (or HalvingRandomSearchCV) with a fixed time budget. Error-analyse the 50 worst validation predictions into ≥3 failure categories. Compute permutation importance and note one case where it misleads. Save the pipeline with skops (or joblib) + requirements.txt + an input-schema check and expose `python predict.py --input file.csv`. Reference build: rohitg00 Phase 02 lessons 12 and 18.",
+      "done_when": "`predict.py` runs in a fresh virtualenv from requirements.txt, rejects a CSV with a missing column with a clear error, and reproduces the validation predictions exactly."
+     },
+     "quiz": [
+      {
+       "id": "M07.U08.Q1",
+       "kind": "mcq",
+       "prompt": "Random search often beats grid search because:",
+       "options": [
+        "It is exhaustive",
+        "It explores more values of the important hyperparameters per budget",
+        "It uses gradients",
+        "It avoids CV"
+       ],
+       "answer": 1,
+       "explain": "Bergstra & Bengio: few hyperparameters matter; random search covers them better."
+      },
+      {
+       "id": "M07.U08.Q2",
+       "kind": "mcq",
+       "prompt": "Permutation importance can mislead when features are:",
+       "options": [
+        "Scaled",
+        "Strongly correlated",
+        "Categorical",
+        "Many"
+       ],
+       "answer": 1,
+       "explain": "Permuting one leaves its correlated twin carrying the signal."
+      },
+      {
+       "id": "M07.U08.Q3",
+       "kind": "mcq",
+       "prompt": "Loading a pickled model from an untrusted source is risky because:",
+       "options": [
+        "It is slow",
+        "Unpickling can execute arbitrary code",
+        "Versions don't matter",
+        "It loses accuracy"
+       ],
+       "answer": 1,
+       "explain": "Use skops or ONNX for untrusted artefacts."
+      },
+      {
+       "id": "M07.U08.Q4",
+       "kind": "mcq",
+       "prompt": "Why does random search often outperform grid search with the same evaluation budget?",
+       "options": [
+        "Random search always finds the global optimum",
+        "Most hyperparameters have low effective dimensionality, so random search covers the important ones more densely",
+        "Grid search cannot handle continuous hyperparameters",
+        "Random search uses a better optimization algorithm"
+       ],
+       "answer": 1,
+       "explain": "Usually only 1-2 hyperparameters matter for a given problem. Grid search wastes evaluations varying unimportant ones. Random search gives unique values for every parameter per trial, covering important dimensions more densely. (Adapted from rohitg00/ai-engineering-from-scratch Phase 02 lesson 12-hyperparameter-tuning quiz.json, MIT licence.)"
+      },
+      {
+       "id": "M07.U08.Q5",
+       "kind": "short",
+       "prompt": "What must be versioned together with a saved sklearn model so it reproduces in production?",
+       "rubric": [
+        "Library versions (sklearn, numpy, python)",
+        "Full preprocessing pipeline, not just the estimator",
+        "Training data snapshot/version and feature schema",
+        "Code commit, random seeds and metrics"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M07.S4",
+   "title": "Deep track: theory",
+   "units": [
+    {
+     "id": "M07.U09",
+     "title": "Deep: support vector machines and kernels",
+     "hours": 15,
+     "depth": "deep",
+     "prerequisites": [
+      "M07.U05",
+      "M05.U10"
+     ],
+     "outcomes": [
+      "You can derive the maximal-margin classifier and the role of support vectors.",
+      "You can explain the kernel trick.",
+      "You can tune C and γ for an RBF SVM."
+     ],
+     "topics": [
+      {
+       "id": "M07.05.01",
+       "title": "SVM math: margins, soft margin, kernels"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP ch.9 with lectures 9.1–9.4",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP ch.9 Support Vector Machines; lectures 9.1 Optimal Separating Hyperplane (Op0OyOuDjcQ), 9.2 Support Vector Classifier (pjvnCEfAswc), 9.3 Feature Expansion and the SVM (02icdqOJsH4), 9.4 Comparison with Logistic Regression (m5d7-URGnVY); labs 9.Py (94wKFGS4Zm4, 1fmHMmoa47g)",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Maximal margin classifier and support vectors",
+      "Soft-margin support vector classifier and C",
+      "Feature expansion, kernels and the SVM",
+      "SVM vs logistic regression (hinge vs log loss); ROC curves lab"
+     ],
+     "gaps": [
+      {
+       "topic": "Lagrangian/dual derivation",
+       "resource": {
+        "resourceId": "cs229-2018-youtube",
+        "title": "Stanford CS229 (Autumn 2018) Lecture 6 · Support Vector Machines",
+        "url": "https://www.youtube.com/watch?v=lDwow4aOrtg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Kernels in depth",
+       "resource": {
+        "resourceId": "cs229-2018-youtube",
+        "title": "Stanford CS229 (Autumn 2018) Lecture 7 · Kernels",
+        "url": "https://www.youtube.com/watch?v=8NYoQiRANpg",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "sklearn SVC/LinearSVC usage",
+       "resource": {
+        "resourceId": "sklearn-user-guide",
+        "title": "scikit-learn: §1.4 Support Vector Machines",
+        "url": "https://scikit-learn.org/stable/modules/svm.html",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "SVM on non-linear data",
+      "brief": "Train linear SVC, RBF SVC and logistic regression on make_moons/make_circles; grid-search C and γ; plot decision boundaries and support vectors.",
+      "done_when": "RBF SVM beats linear on circles; plot shows support vectors; a note explains how C and γ change the boundary."
+     },
+     "quiz": [
+      {
+       "id": "M07.U09.Q1",
+       "kind": "mcq",
+       "prompt": "Support vectors are:",
+       "options": [
+        "All training points",
+        "Points on or inside the margin that define the boundary",
+        "Outliers removed",
+        "Kernel centres"
+       ],
+       "answer": 1,
+       "explain": "Only they affect the solution."
+      },
+      {
+       "id": "M07.U09.Q2",
+       "kind": "mcq",
+       "prompt": "Larger C in a soft-margin SVM means:",
+       "options": [
+        "Wider margin, more violations",
+        "Narrower margin, fewer violations tolerated",
+        "No effect",
+        "Linear kernel"
+       ],
+       "answer": 1,
+       "explain": "C penalises margin violations."
+      },
+      {
+       "id": "M07.U09.Q3",
+       "kind": "mcq",
+       "prompt": "The kernel trick lets you:",
+       "options": [
+        "Compute inner products in a feature space without building it",
+        "Avoid optimisation",
+        "Remove support vectors",
+        "Get probabilities"
+       ],
+       "answer": 0,
+       "explain": "K(x,x') = φ(x)·φ(x')."
+      },
+      {
+       "id": "M07.U09.Q4",
+       "kind": "short",
+       "prompt": "Why are SVMs less common than GBMs or neural nets in production today?",
+       "rubric": [
+        "Kernel SVMs scale poorly (O(n²)–O(n³))",
+        "No native probabilities (need calibration)",
+        "GBMs/NNs match or beat them on most tasks",
+        "Still useful for small/high-dim data"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U10",
+     "title": "Deep: CS229 theory — GLMs, generative models, learning theory, EM",
+     "hours": 60,
+     "depth": "deep",
+     "prerequisites": [
+      "M07.U03",
+      "M06.U04"
+     ],
+     "outcomes": [
+      "You can derive linear/logistic regression as GLMs.",
+      "You can contrast GDA/naive Bayes with logistic regression.",
+      "You can explain bias–variance via learning theory and derive EM."
+     ],
+     "topics": [
+      {
+       "id": "M07.05.02",
+       "title": "CS229 theory: GLMs, GDA, learning theory, EM, PCA/ICA"
+      },
+      {
+       "id": "M07.05.03",
+       "title": "inductive bias theory"
+      }
+     ],
+     "learn": {
+      "resourceId": "cs229-2018-youtube",
+      "title": "Stanford CS229 (Autumn 2018, Ng) Lectures 2–5, 8, 9-discussion, 13–15",
+      "url": "https://www.youtube.com/watch?v=4b4MUYve_U8",
+      "slice": "L2 Linear Regression & GD (4b4MUYve_U8), L3 Locally Weighted & Logistic (het9HFqo1TQ), L4 Perceptron & GLM (iZTeva0WSTQ), L5 GDA & Naive Bayes (nt63k3bfXS0), L8 Data Splits & CV (rjbkWSTjHzM), Learning Theory section (iVOxMcumR4A), L13 EM (rVfZHWTwXSA), L14 EM & Factor Analysis (tw6cmL5STuY), L15 PCA & ICA (dyb_cFywuik)",
+      "type": "video",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Normal equations and LMS; locally weighted regression; Newton's method",
+      "Exponential family and GLMs; softmax regression",
+      "GDA and naive Bayes (Laplace smoothing)",
+      "Bias/variance, model selection; learning theory (uniform convergence)",
+      "EM algorithm, mixture of Gaussians, factor analysis; PCA and ICA"
+     ],
+     "gaps": [
+      {
+       "topic": "Written derivations (public PDF; fixes the Stanford-only cs229.stanford.edu link)",
+       "resource": {
+        "resourceId": "cs229-notes",
+        "title": "Stanford CS229 Main Lecture Notes (PDF)",
+        "url": "https://cs229.stanford.edu/main_notes.pdf",
+        "slice": "Main notes Parts I–III, VI, IX–XII",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Reference encyclopaedia",
+       "resource": {
+        "resourceId": "murphy-pml1",
+        "title": "Probabilistic Machine Learning: An Introduction (Book 1)",
+        "url": "https://probml.github.io/pml-book/book1.html",
+        "slice": "Ch.10 Logistic regression, ch.12 GLMs (reference only)",
+        "type": "book",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Derive and implement",
+      "brief": "Implement Newton's method for logistic regression, GDA, and EM for a 2-component Gaussian mixture in NumPy; compare GDA vs logistic regression as training size grows.",
+      "done_when": "Each implementation matches sklearn (LogisticRegression, QDA/LDA, GaussianMixture) on log-likelihood within 1e-3."
+     },
+     "quiz": [
+      {
+       "id": "M07.U10.Q1",
+       "kind": "mcq",
+       "prompt": "Logistic regression is the GLM for which response distribution?",
+       "options": [
+        "Gaussian",
+        "Bernoulli",
+        "Poisson",
+        "Gamma"
+       ],
+       "answer": 1,
+       "explain": "Canonical link = logit."
+      },
+      {
+       "id": "M07.U10.Q2",
+       "kind": "mcq",
+       "prompt": "GDA tends to beat logistic regression when:",
+       "options": [
+        "Data are huge",
+        "Its Gaussian class-conditional assumption roughly holds and data are small",
+        "Features are categorical",
+        "Never"
+       ],
+       "answer": 1,
+       "explain": "Stronger assumptions → more data-efficient if correct."
+      },
+      {
+       "id": "M07.U10.Q3",
+       "kind": "mcq",
+       "prompt": "EM alternates between:",
+       "options": [
+        "Gradient and Hessian",
+        "Computing posterior over latents and maximising expected complete log-likelihood",
+        "Train and test",
+        "Bagging and boosting"
+       ],
+       "answer": 1,
+       "explain": "E-step then M-step."
+      },
+      {
+       "id": "M07.U10.Q4",
+       "kind": "short",
+       "prompt": "Explain inductive bias with two models you know.",
+       "rubric": [
+        "Defines inductive bias as assumptions that let a learner generalise",
+        "Example: linear model assumes linearity; CNN assumes locality/translation equivariance; kNN assumes smoothness",
+        "Links to no-free-lunch",
+        "Practical consequence for model choice"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M07.U11",
+     "title": "Deep: ISLP beyond the core (resampling, non-linear, survival, multiple testing)",
+     "hours": 45,
+     "depth": "deep",
+     "prerequisites": [
+      "M07.U06"
+     ],
+     "outcomes": [
+      "You can use bootstrap/CV theory to estimate uncertainty of any estimator.",
+      "You can fit splines and GAMs.",
+      "You can handle censored data and control FDR."
+     ],
+     "topics": [
+      {
+       "id": "M07.05.04",
+       "title": "ISLP ch.5, 7, 11, 13: resampling, splines/GAMs, survival analysis, multiple testing"
+      }
+     ],
+     "learn": {
+      "resourceId": "islp",
+      "title": "ISLP ch.5, 7, 11, 13 with lectures",
+      "url": "https://www.statlearning.com/",
+      "slice": "ISLP ch.5 Resampling (lectures 5.1–5.5), ch.7 Moving Beyond Linearity (7.1–7.4), ch.11 Survival Analysis (11.1–11.4), ch.13 Multiple Testing (13.1–13.2) with matching .Py labs",
+      "type": "book",
+      "free": true,
+      "verified": "2026-10-20"
+     },
+     "covers": [
+      "Validation set, LOOCV, k-fold, bootstrap",
+      "Polynomials, step functions, splines, smoothing splines, local regression, GAMs",
+      "Censoring, Kaplan–Meier, Cox proportional hazards",
+      "FWER, Bonferroni/Holm, FDR and Benjamini–Hochberg, resampling-based tests"
+     ],
+     "gaps": [
+      {
+       "topic": "Applied multiple-testing correction API",
+       "resource": {
+        "resourceId": "statsmodels-docs",
+        "title": "statsmodels: multipletests",
+        "url": "https://www.statsmodels.org/stable/generated/statsmodels.stats.multitest.multipletests.html",
+        "slice": "statsmodels.stats.multitest.multipletests",
+        "type": "doc",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      },
+      {
+       "topic": "Concept refresher playlist",
+       "resource": {
+        "resourceId": "statquest-youtube",
+        "title": "StatQuest · Machine Learning playlist",
+        "url": "https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF",
+        "slice": "StatQuest Machine Learning playlist",
+        "type": "video",
+        "free": true,
+        "verified": "2026-10-20"
+       }
+      }
+     ],
+     "practice": {
+      "title": "Churn survival + FDR",
+      "brief": "Fit a Kaplan–Meier curve and a Cox model to a customer-churn dataset (time to churn with censoring); fit a GAM for one non-linear effect; run 50 feature-wise tests and apply Benjamini–Hochberg.",
+      "done_when": "Survival curves per segment with CIs, Cox hazard ratios interpreted, and a list of discoveries before/after BH correction."
+     },
+     "quiz": [
+      {
+       "id": "M07.U11.Q1",
+       "kind": "mcq",
+       "prompt": "Censoring in survival data means:",
+       "options": [
+        "Missing features",
+        "The event time is only known to exceed some value",
+        "Duplicates",
+        "Outliers"
+       ],
+       "answer": 1,
+       "explain": "e.g. a customer who has not churned yet."
+      },
+      {
+       "id": "M07.U11.Q2",
+       "kind": "mcq",
+       "prompt": "Benjamini–Hochberg controls:",
+       "options": [
+        "FWER",
+        "FDR",
+        "Power",
+        "Type II error"
+       ],
+       "answer": 1,
+       "explain": "Expected proportion of false discoveries."
+      },
+      {
+       "id": "M07.U11.Q3",
+       "kind": "mcq",
+       "prompt": "LOOCV is k-fold with k =",
+       "options": [
+        "2",
+        "5",
+        "n",
+        "10"
+       ],
+       "answer": 2,
+       "explain": "Each observation is held out once."
+      },
+      {
+       "id": "M07.U11.Q4",
+       "kind": "short",
+       "prompt": "Why model churn as survival rather than a yes/no classification?",
+       "rubric": [
+        "Uses timing information and handles censored customers correctly",
+        "Avoids arbitrary horizon choice",
+        "Gives hazard over time for interventions",
+        "Notes when classification is simpler and fine"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "capstone": {
+  "title": "Production-honest tabular model",
+  "brief": "Pick a public tabular dataset with groups or time (churn, credit default, ticket priority). Deliver a repo with a Pipeline, dummy + heuristic baselines, logistic regression vs GBM under group/time CV, a cost-based threshold, calibration, slice errors, permutation importance, a saved model + predict.py + tests, and a model card. Pass: ≥ 7/10, no 0 on leakage.",
+  "rubric": [
+   {
+    "criterion": "Leakage-safe evaluation",
+    "levels": [
+     "0: random split, preprocessing outside CV",
+     "1: pipeline but wrong split",
+     "2: pipeline + correct Group/Time split; leaky vs correct gap shown"
+    ]
+   },
+   {
+    "criterion": "Baselines and model choice",
+    "levels": [
+     "0: no baseline",
+     "1: dummy baseline",
+     "2: dummy + heuristic; explicit 'keep baseline?' decision"
+    ]
+   },
+   {
+    "criterion": "Metric and threshold",
+    "levels": [
+     "0: accuracy only",
+     "1: right metric",
+     "2: right metric + cost-based threshold + calibration plot"
+    ]
+   },
+   {
+    "criterion": "Error analysis",
+    "levels": [
+     "0: none",
+     "1: aggregate only",
+     "2: slices + worst-case categories + one fix tried"
+    ]
+   },
+   {
+    "criterion": "Shippability",
+    "levels": [
+     "0: notebook only",
+     "1: saved model",
+     "2: saved model + predict CLI + schema check + pinned deps + tests"
+    ]
+   }
+  ],
+  "evidence": "github"
+ }
+}
