@@ -27,8 +27,8 @@ function BubbleCloud({ b, onPress }: { b: Bubble; onPress: () => void }) {
       onPress={onPress}
       style={({ pressed, hovered }: { pressed: boolean; hovered?: boolean }) => ({
         alignSelf: 'flex-end',
-        maxWidth: 300,
-        paddingVertical: 12,
+        maxWidth: 280,
+        paddingVertical: 10,
         paddingHorizontal: 16,
         borderRadius: c.mode === 'terminal' ? 4 : 20,
         borderBottomRightRadius: now ? 6 : c.mode === 'terminal' ? 4 : 20,
@@ -90,6 +90,15 @@ export function MoteHost() {
     prevPassed.current = passedCount;
   }, [passedCount, loaded]);
 
+  // Tips fold away by themselves after a while; tapping Mote brings them back.
+  const onboarded = !!state.profile?.onboarded;
+  const stepKey = onboarded ? steps.now.id : 'setup';
+  useEffect(() => {
+    setCollapsed(false);
+    const t = setTimeout(() => setCollapsed(true), 20_000);
+    return () => clearTimeout(t);
+  }, [stepKey, pathname]);
+
   const onTabs = TAB_ROUTES.some(r => pathname.startsWith(r));
   const bottom = insets.bottom + (!wide && onTabs ? 84 : 20);
   const right = wide ? 28 : 16;
@@ -130,7 +139,6 @@ export function MoteHost() {
     };
   }, [centre.x, centre.y]);
 
-  const onboarded = !!state.profile?.onboarded;
   const bubbles: Bubble[] = useMemo(() => {
     if (!onboarded)
       return (
@@ -142,18 +150,20 @@ export function MoteHost() {
             href: '/start',
             id: 'setup',
           } as Bubble,
-          ...nextStepBubbles(steps)
-            .slice(0, 1)
-            .map(b => ({
-              ...b,
-              key: 'then' as const,
-              prefix: 'Then' as const,
-              text: `Your first unit: ${b.text.replace(/^Watch /, '')}`,
-            })),
+          ...(pathname === '/'
+            ? []
+            : nextStepBubbles(steps)
+                .slice(0, 1)
+                .map(b => ({
+                  ...b,
+                  key: 'then' as const,
+                  prefix: 'Then' as const,
+                  text: `Your first unit: ${b.text.replace(/^\w[\w ]*: /, '')}`,
+                }))),
         ] as Bubble[]
       ).filter(b => b.id !== dismissed);
     return nextStepBubbles(steps, dismissed);
-  }, [steps, dismissed, onboarded]);
+  }, [steps, dismissed, onboarded, pathname]);
 
   if (!loaded || HIDDEN.some(h => pathname.startsWith(h)) || chat.open) return null;
   if (pathname === '/' && Platform.OS !== 'web') return null;

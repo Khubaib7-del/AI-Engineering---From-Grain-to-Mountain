@@ -240,13 +240,13 @@ export function useNextSteps(): { now: NextStep; then: NextStep[]; tip?: string 
         then: [],
       };
     const step = !cur.progress ? 'learn' : cur.progress < 0.5 ? 'practice' : 'assess';
-    const verb = step === 'learn' ? 'Watch' : step === 'practice' ? 'Build' : 'Take the quiz for';
+    const verb = step === 'learn' ? 'Watch' : step === 'practice' ? 'Practise' : 'Quiz yourself on';
     const idx = path.units.findIndex(u => u.unit.id === cur.unit.id);
     const nxt = path.units.slice(idx + 1, idx + 3);
     return {
       now: {
         id: `${cur.unit.id}:${step}`,
-        label: `${verb} ${cur.unit.title}`,
+        label: `${verb}: ${cur.unit.title}`,
         detail: cur.unit.learn.slice ?? cur.unit.learn.title,
         href: `/unit/${cur.unit.id}`,
         kind: step,
