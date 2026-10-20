@@ -24,6 +24,7 @@
      "title": "Vectors, dot product, similarity",
      "hours": 6,
      "depth": "core",
+     "week": 50,
      "prerequisites": [],
      "outcomes": [
       "You can explain a vector both as an arrow and as a list of numbers, and name the shape of scalars, vectors, matrices and tensors.",
@@ -195,6 +196,7 @@
      "title": "Matrices as transformations; matmul, shapes and einsum",
      "hours": 6,
      "depth": "core",
+     "week": 50,
      "prerequisites": [
       "M05.U01"
      ],
@@ -399,6 +401,7 @@
      "title": "Span, rank, inverses and least squares",
      "hours": 6,
      "depth": "core",
+     "week": 51,
      "prerequisites": [
       "M05.U02"
      ],
@@ -569,6 +572,7 @@
      "title": "Eigenvectors, SVD, PCA and low-rank approximation",
      "hours": 7,
      "depth": "core",
+     "week": 51,
      "prerequisites": [
       "M05.U03"
      ],
@@ -779,6 +783,7 @@
      "title": "Derivatives and the chain rule",
      "hours": 6,
      "depth": "core",
+     "week": 52,
      "prerequisites": [],
      "outcomes": [
       "You can explain a derivative as a local rate of change and compute derivatives of common ML functions (sigmoid, log, exp).",
@@ -948,6 +953,7 @@
      "title": "Gradients, Jacobians, matrix-calculus shapes and gradient checking",
      "hours": 7,
      "depth": "core",
+     "week": 52,
      "prerequisites": [
       "M05.U05",
       "M05.U02"
@@ -1130,6 +1136,7 @@
      "title": "Gradient descent and optimisation basics",
      "hours": 5,
      "depth": "core",
+     "week": 53,
      "prerequisites": [
       "M05.U06"
      ],
@@ -1320,6 +1327,7 @@
      "title": "Floating point, stable softmax and number formats",
      "hours": 4,
      "depth": "core",
+     "week": 53,
      "prerequisites": [
       "M05.U05"
      ],

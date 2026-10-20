@@ -26,6 +26,7 @@
      "title": "MLOps lifecycle, maturity levels, notebook -> pipeline",
      "hours": 6,
      "depth": "core",
+     "week": 106,
      "prerequisites": [
       "M21.U07"
      ],
@@ -164,6 +165,7 @@
      "title": "Experiment tracking and model registry (MLflow)",
      "hours": 10,
      "depth": "core",
+     "week": 107,
      "prerequisites": [
       "M16.U01"
      ],
@@ -305,6 +307,7 @@
      "title": "Data and model versioning, config, determinism, lineage",
      "hours": 6,
      "depth": "core",
+     "week": 108,
      "prerequisites": [
       "M16.U02"
      ],
@@ -469,6 +472,7 @@
      "title": "Pipelines and orchestration (Prefect)",
      "hours": 12,
      "depth": "core",
+     "week": 109,
      "prerequisites": [
       "M16.U03",
       "M21.U05"
@@ -623,6 +627,7 @@
      "title": "Data quality and validation",
      "hours": 5,
      "depth": "core",
+     "week": 110,
      "prerequisites": [
       "M16.U04"
      ],
@@ -746,6 +751,7 @@
      "title": "Feature stores, training triggers and skew (awareness)",
      "hours": 4,
      "depth": "core",
+     "week": 110,
      "prerequisites": [
       "M16.U04"
      ],
@@ -875,6 +881,7 @@
      "title": "Deploying models: web service, batch scoring, streaming",
      "hours": 10,
      "depth": "core",
+     "week": 111,
      "prerequisites": [
       "M16.U02",
       "M16.U06",
@@ -1016,6 +1023,7 @@
      "title": "Testing ML systems and CI/CD/CT",
      "hours": 10,
      "depth": "core",
+     "week": 112,
      "prerequisites": [
       "M16.U07",
       "M21.U07"
@@ -1159,6 +1167,7 @@
      "title": "Rollout strategies and rollback (classic + LLM)",
      "hours": 5,
      "depth": "core",
+     "week": 113,
      "prerequisites": [
       "M16.U07",
       "M21.U13"
@@ -1307,6 +1316,7 @@
      "title": "ML monitoring: drift, label delay, slices, alerts",
      "hours": 10,
      "depth": "core",
+     "week": 114,
      "prerequisites": [
       "M16.U07",
       "M21.U14"
@@ -1459,6 +1469,7 @@
      "title": "Continual learning, retraining governance and ML incident review",
      "hours": 4,
      "depth": "core",
+     "week": 114,
      "prerequisites": [
       "M16.U10"
      ],
@@ -1600,6 +1611,7 @@
      "title": "Tracing and observability for LLM apps and agents (Langfuse)",
      "hours": 6,
      "depth": "core",
+     "week": 115,
      "prerequisites": [
       "M16.U10"
      ],
@@ -1743,6 +1755,7 @@
      "title": "LLM eval gates, versioning, A/B tests and budgets",
      "hours": 7,
      "depth": "core",
+     "week": 115,
      "prerequisites": [
       "M16.U12"
      ],

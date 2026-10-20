@@ -23,6 +23,7 @@
      "title": "Method: requirements, estimation, API, high-level design",
      "hours": 6,
      "depth": "core",
+     "week": 121,
      "prerequisites": [],
      "outcomes": [
       "You can separate functional from non-functional requirements and pin down scale.",
@@ -162,6 +163,7 @@
      "title": "Networking, load balancing, proxies, CDNs",
      "hours": 6,
      "depth": "core",
+     "week": 121,
      "prerequisites": [
       "M22.U01",
       "M21.U05"
@@ -309,6 +311,7 @@
      "title": "Databases: modelling, indexing, replication, sharding, CAP",
      "hours": 10,
      "depth": "core",
+     "week": 122,
      "prerequisites": [
       "M22.U01"
      ],
@@ -494,6 +497,7 @@
      "title": "Caching",
      "hours": 5,
      "depth": "core",
+     "week": 123,
      "prerequisites": [
       "M22.U03"
      ],
@@ -624,6 +628,7 @@
      "title": "Asynchronous processing: queues, streams, backpressure, long-running jobs",
      "hours": 8,
      "depth": "core",
+     "week": 123,
      "prerequisites": [
       "M22.U04",
       "M21.U05"
@@ -791,6 +796,7 @@
      "title": "Rate limiting and reliability patterns",
      "hours": 6,
      "depth": "core",
+     "week": 124,
      "prerequisites": [
       "M22.U05"
      ],
@@ -932,6 +938,7 @@
      "title": "Practice designs (classic) and the written design doc",
      "hours": 6,
      "depth": "core",
+     "week": 124,
      "prerequisites": [
       "M22.U06"
      ],
@@ -1074,6 +1081,7 @@
      "title": "ML system design method",
      "hours": 8,
      "depth": "core",
+     "week": 125,
      "prerequisites": [
       "M16.U03"
      ],
@@ -1230,6 +1238,7 @@
      "title": "Batch vs online vs streaming inference (incl. LLM batch APIs)",
      "hours": 5,
      "depth": "core",
+     "week": 125,
      "prerequisites": [
       "M22.U08"
      ],
@@ -1369,6 +1378,7 @@
      "title": "Vector stores at scale",
      "hours": 8,
      "depth": "core",
+     "week": 126,
      "prerequisites": [
       "M22.U03"
      ],
@@ -1529,6 +1539,7 @@
      "title": "LLM platform architecture: gateway, quotas, caching, routing, guardrails, cost",
      "hours": 8,
      "depth": "core",
+     "week": 127,
      "prerequisites": [
       "M22.U06"
      ],
@@ -1690,6 +1701,7 @@
      "title": "Design reviews: full LLM systems",
      "hours": 10,
      "depth": "core",
+     "week": 128,
      "prerequisites": [
       "M22.U08",
       "M22.U09",

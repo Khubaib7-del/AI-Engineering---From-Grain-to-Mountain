@@ -427,10 +427,9 @@
   "week": 27,
   "title": "CS, algorithms & backend foundations",
   "units": [
-   "M03.U16",
    "M03.U17"
   ],
-  "hours": 12,
+  "hours": 5,
   "provisional": true
  },
  {
@@ -592,17 +591,18 @@
   "title": "Data analysis & SQL",
   "units": [
    "M04.U03",
-   "M04.U04"
+   "M04.U04",
+   "M04.U05"
   ],
-  "hours": 10,
+  "hours": 17,
   "provisional": true
  },
  {
   "week": 46,
   "title": "Data analysis & SQL",
   "units": [
-   "M04.U05",
-   "M04.U06"
+   "M04.U06",
+   "M03.U16"
   ],
   "hours": 13,
   "provisional": true

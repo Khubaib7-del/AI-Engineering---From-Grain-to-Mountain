@@ -2735,7 +2735,7 @@
         "ints"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Literal types only accept the listed values, so a type checker flags any other string such as \"up\"."
       },
       {
        "id": "M01.U13.Q4",
@@ -2953,7 +2953,7 @@
         "Disk compression"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "asyncio overlaps waiting time on one thread; it does not make CPU-heavy maths run in parallel."
       },
       {
        "id": "M01.U14.Q3",

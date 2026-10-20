@@ -25,6 +25,7 @@
      "title": "Reproduce the GPT-2 (124M) training pipeline",
      "hours": 16,
      "depth": "core",
+     "week": 140,
      "prerequisites": [],
      "outcomes": [
       "You can write a GPT-2 training script with a token data loader, AdamW, warmup+cosine LR, gradient clipping and gradient accumulation.",
@@ -163,6 +164,7 @@
      "title": "CS336 Assignment 1 (Basics) at reduced scale",
      "hours": 30,
      "depth": "core",
+     "week": 141,
      "prerequisites": [
       "M14.U01"
      ],
@@ -308,6 +310,7 @@
      "title": "Pretraining data: filtering, deduplication, mixtures",
      "hours": 10,
      "depth": "core",
+     "week": 142,
      "prerequisites": [
       "M14.U01"
      ],
@@ -435,6 +438,7 @@
      "title": "Scaling laws and compute accounting",
      "hours": 8,
      "depth": "core",
+     "week": 143,
      "prerequisites": [
       "M14.U02"
      ],
@@ -578,6 +582,7 @@
      "title": "Evaluating base models and benchmark validity",
      "hours": 6,
      "depth": "core",
+     "week": 143,
      "prerequisites": [
       "M14.U01"
      ],
@@ -727,6 +732,7 @@
      "title": "Attention variants and mixture of experts",
      "hours": 8,
      "depth": "core",
+     "week": 144,
      "prerequisites": [
       "M14.U02"
      ],
@@ -1198,6 +1204,7 @@
      "title": "Reading papers and designing experiments",
      "hours": 6,
      "depth": "core",
+     "week": 144,
      "prerequisites": [],
      "outcomes": [
       "You can read a paper in passes and write a paper card (claim, method, evidence, limitations).",
@@ -1346,6 +1353,7 @@
      "title": "Reproduction, logging and technical writing",
      "hours": 6,
      "depth": "core",
+     "week": 145,
      "prerequisites": [
       "M14.U09"
      ],

@@ -27,6 +27,7 @@
      "title": "A repository as evidence",
      "hours": 6,
      "depth": "core",
+     "week": 149,
      "prerequisites": [],
      "outcomes": [
       "You can bring a repo to an evidence standard: problem, licence audit, one-command setup, architecture, baseline, evals, failures, demo, CI.",
@@ -209,6 +210,7 @@
      "title": "Track-specific portfolio sets",
      "hours": 2,
      "depth": "core",
+     "week": 149,
      "prerequisites": [
       "M20.U01",
       "M19.U01"
@@ -322,6 +324,7 @@
      "title": "Case studies and public technical writing",
      "hours": 5,
      "depth": "core",
+     "week": 150,
      "prerequisites": [
       "M20.U01"
      ],
@@ -449,6 +452,7 @@
      "title": "Choosing and scoping the final-year project",
      "hours": 10,
      "depth": "core",
+     "week": 151,
      "prerequisites": [
       "M19.U02"
      ],
@@ -617,6 +621,7 @@
      "title": "Research question, baselines, ablations and the report",
      "hours": 8,
      "depth": "core",
+     "week": 152,
      "prerequisites": [
       "M20.U04"
      ],
@@ -745,6 +750,7 @@
      "title": "DSA and coding interviews",
      "hours": 40,
      "depth": "core",
+     "week": 153,
      "prerequisites": [],
      "outcomes": [
       "You can solve NeetCode-150-pattern problems in timed conditions and explain complexity.",
@@ -856,6 +862,7 @@
      "title": "SQL interviews",
      "hours": 10,
      "depth": "core",
+     "week": 154,
      "prerequisites": [],
      "outcomes": [
       "You can solve joins, window functions, CTEs and GROUP BY/HAVING interview problems."
@@ -969,6 +976,7 @@
      "title": "System design interview practice (classic, ML and LLM)",
      "hours": 15,
      "depth": "core",
+     "week": 155,
      "prerequisites": [],
      "outcomes": [
       "You can run a 45-minute design under time pressure with capacity estimates, failure modes and an eval plan.",
@@ -1115,6 +1123,7 @@
      "title": "Debugging and paper-discussion interviews",
      "hours": 8,
      "depth": "core",
+     "week": 156,
      "prerequisites": [
       "M12.U23"
      ],
@@ -1232,6 +1241,7 @@
      "title": "Open-source contribution",
      "hours": 15,
      "depth": "core",
+     "week": 157,
      "prerequisites": [],
      "outcomes": [
       "You can land a merged PR in a project you use, following its contribution process."
@@ -1331,6 +1341,7 @@
      "title": "Resume, GitHub profile, behavioural interviews and job search",
      "hours": 8,
      "depth": "core",
+     "week": 158,
      "prerequisites": [
       "M20.U01"
      ],

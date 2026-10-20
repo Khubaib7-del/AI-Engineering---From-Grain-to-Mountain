@@ -25,6 +25,7 @@
      "title": "The learning problem, splits and baselines",
      "hours": 5,
      "depth": "core",
+     "week": 57,
      "prerequisites": [],
      "outcomes": [
       "You can frame a business problem as an ML task: label, problem type, error costs.",
@@ -215,6 +216,7 @@
      "title": "Overfitting, bias–variance and regularisation",
      "hours": 5,
      "depth": "core",
+     "week": 58,
      "prerequisites": [
       "M07.U01"
      ],
@@ -407,6 +409,7 @@
      "title": "Linear and logistic regression",
      "hours": 8,
      "depth": "core",
+     "week": 58,
      "prerequisites": [
       "M07.U02",
       "M05.U07"
@@ -573,6 +576,7 @@
      "title": "Trees, random forests and gradient boosting",
      "hours": 8,
      "depth": "core",
+     "week": 59,
      "prerequisites": [
       "M07.U02"
      ],
@@ -758,6 +762,7 @@
      "title": "Distance-based, probabilistic and unsupervised methods",
      "hours": 7,
      "depth": "core",
+     "week": 60,
      "prerequisites": [
       "M07.U03",
       "M05.U04"
@@ -982,6 +987,7 @@
      "title": "Pipelines, preprocessing and leakage-safe validation",
      "hours": 8,
      "depth": "core",
+     "week": 61,
      "prerequisites": [
       "M07.U03"
      ],
@@ -1215,6 +1221,7 @@
      "title": "Metrics, thresholds, calibration, imbalance and ranking",
      "hours": 8,
      "depth": "core",
+     "week": 62,
      "prerequisites": [
       "M07.U06",
       "M06.U08"
@@ -1436,6 +1443,7 @@
      "title": "Tuning, error analysis, interpretability and shipping the model",
      "hours": 7,
      "depth": "core",
+     "week": 63,
      "prerequisites": [
       "M07.U07"
      ],

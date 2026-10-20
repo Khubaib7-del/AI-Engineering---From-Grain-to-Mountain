@@ -174,7 +174,7 @@
         "Parent"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "`cd -` jumps back to $OLDPWD, the directory you were in before the last cd."
       },
       {
        "id": "M02.U01.Q4",
@@ -339,7 +339,7 @@
         "Reverses"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "uniq compares each line only with the one before it, so equal lines must be next to each other first."
       },
       {
        "id": "M02.U02.Q3",
@@ -352,7 +352,7 @@
         "File names"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "-v inverts the match: grep prints every line that does NOT contain the pattern."
       },
       {
        "id": "M02.U02.Q4",
@@ -365,7 +365,7 @@
         "Is a shell builtin"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "jq reads JSON on stdin; `.[0].name` takes the first array element and prints its name field."
       },
       {
        "id": "M02.U02.Q5",
@@ -525,7 +525,7 @@
         "Encrypts it"
        ],
        "answer": 0,
-       "explain": ""
+       "explain": "+x adds the execute permission bit, so ./run.sh can be run directly."
       },
       {
        "id": "M02.U03.Q2",
@@ -538,7 +538,7 @@
         "A file"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "export puts the variable in the environment that child processes inherit; it lasts only for this shell session."
       },
       {
        "id": "M02.U03.Q3",
@@ -551,7 +551,7 @@
         "SIGSTOP"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Ctrl+C sends SIGINT (interrupt), which programs can catch to clean up; SIGKILL cannot be caught."
       },
       {
        "id": "M02.U03.Q4",
@@ -584,7 +584,7 @@
      "title": "Shell 4 — Remote machines and Linux admin basics",
      "hours": 3,
      "depth": "core",
-     "week": 17,
+     "week": 15,
      "prerequisites": [
       "M02.U03"
      ],
@@ -679,7 +679,7 @@
         "Remotely"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "sudo runs one command with another user's privileges, root unless you pass -u."
       },
       {
        "id": "M02.U04.Q2",
@@ -692,7 +692,7 @@
         "A token"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "ssh-keygen writes a private key you keep secret and a .pub public key you give to servers."
       },
       {
        "id": "M02.U04.Q3",
@@ -705,7 +705,7 @@
         "Network"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "du -s summarises each argument and -h prints human-readable sizes, so you see the size of every item here."
       },
       {
        "id": "M02.U04.Q4",
@@ -852,7 +852,7 @@
         "The stash"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "git add copies the current change into the index (staging area); only staged changes go into the next commit."
       },
       {
        "id": "M02.U05.Q2",
@@ -865,7 +865,7 @@
         "History"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "--staged (or --cached) compares the index with HEAD, i.e. exactly what the next commit will contain."
       },
       {
        "id": "M02.U05.Q3",
@@ -1034,7 +1034,7 @@
         "revert deletes history"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "revert records a new commit that undoes the old one, so others' history stays intact; reset --hard rewrites history."
       },
       {
        "id": "M02.U06.Q2",
@@ -1047,7 +1047,7 @@
         "Files are large"
        ],
        "answer": 0,
-       "explain": ""
+       "explain": "Git merges automatically unless both sides edited the same lines (or one deleted what the other changed)."
       },
       {
        "id": "M02.U06.Q3",
@@ -1060,7 +1060,7 @@
         "A tag that never moves"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A branch is just a named reference to a commit that moves forward as you commit; no files are copied."
       },
       {
        "id": "M02.U06.Q4",
@@ -1073,7 +1073,7 @@
         "Tagging"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "stash saves uncommitted changes and cleans the working tree; `git stash pop` brings them back."
       },
       {
        "id": "M02.U06.Q5",
@@ -1242,7 +1242,7 @@
         "Locked from all merges"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "GitHub flow keeps main always deployable; work happens on short branches merged through reviewed PRs."
       },
       {
        "id": "M02.U07.Q2",
@@ -1255,7 +1255,7 @@
         "A clone on disk"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A fork is a copy of the repository under your own account on GitHub, from which you open PRs upstream."
       },
       {
        "id": "M02.U07.Q3",
@@ -1268,7 +1268,7 @@
         "PR reviews"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "With an SSH key registered on GitHub, push and pull authenticate with the key instead of a password or token."
       },
       {
        "id": "M02.U07.Q4",
@@ -1403,7 +1403,7 @@
         "The CPU"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A virtual environment has its own site-packages, so each project's installed packages stay separate."
       },
       {
        "id": "M02.U08.Q2",
@@ -1416,7 +1416,7 @@
         "The cwd"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "The shell searches PATH directories in order and runs the first executable with that name."
       },
       {
        "id": "M02.U08.Q3",
@@ -1429,7 +1429,7 @@
         "Only for libraries"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": ".venv is machine-specific and rebuildable; commit the manifest and lockfile so anyone can recreate it."
       },
       {
        "id": "M02.U08.Q4",
@@ -1442,7 +1442,7 @@
         "conda is deprecated"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "venv isolates packages on top of an existing Python; conda manages whole environments including Python and non-Python binaries."
       },
       {
        "id": "M02.U08.Q5",
@@ -1660,7 +1660,7 @@
         "Git commits"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "The lockfile pins the exact resolved version of every dependency so installs are reproducible."
       },
       {
        "id": "M02.U09.Q2",
@@ -1673,7 +1673,7 @@
         "Nothing"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "uv add records the dependency in pyproject.toml, re-resolves uv.lock and installs it into the project venv."
       },
       {
        "id": "M02.U09.Q3",
@@ -1686,7 +1686,7 @@
         "A venv"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A wheel (.whl) is a pre-built package that installs by unpacking, with no build step."
       },
       {
        "id": "M02.U09.Q4",
@@ -1699,7 +1699,7 @@
         "Fails without a venv"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "uvx (uv tool run) runs a tool in a cached, isolated environment without adding it to your project."
       },
       {
        "id": "M02.U09.Q5",
@@ -1798,7 +1798,7 @@
         "Git history"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "The Twelve-Factor App stores config that varies between deploys in environment variables, not in code."
       },
       {
        "id": "M02.U10.Q2",
@@ -1824,7 +1824,7 @@
         "The lockfile"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": ".env.example documents which variables are needed using placeholder values; real secrets stay in an ignored .env."
       },
       {
        "id": "M02.U10.Q4",
@@ -1955,7 +1955,7 @@
         "A database"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A language server analyses code for the editor: completions, go-to-definition, hover info and diagnostics."
       },
       {
        "id": "M02.U11.Q2",
@@ -1968,7 +1968,7 @@
         "File size"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Cells can run in any order, so a notebook can depend on state that a clean top-to-bottom run would not create."
       },
       {
        "id": "M02.U11.Q3",
@@ -1981,7 +1981,7 @@
         "Never use it"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Treat AI output like a colleague's PR: read the diff and let tests prove it on a branch before merging."
       },
       {
        "id": "M02.U11.Q4",
@@ -2135,7 +2135,7 @@
         "A CI job"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "pytest injects a fixture into any test that names it as a parameter, running its setup and teardown around the test."
       },
       {
        "id": "M02.U12.Q2",
@@ -2148,7 +2148,7 @@
         "Your own pure logic"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Mock the external boundary (network, clock, third-party API); mocking your own logic hides real bugs."
       },
       {
        "id": "M02.U12.Q3",
@@ -2161,7 +2161,7 @@
         "Performance"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Coverage only shows which lines executed; tests with weak assertions can cover everything and still miss bugs."
       },
       {
        "id": "M02.U12.Q4",
@@ -2174,7 +2174,7 @@
         "In parallel"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "parametrize generates one test case per tuple in the list, so this test runs twice."
       },
       {
        "id": "M02.U12.Q5",
@@ -2194,7 +2194,7 @@
      "title": "Quality 2 — Debugging, logging, profiling",
      "hours": 5,
      "depth": "core",
-     "week": 17,
+     "week": 16,
      "prerequisites": [
       "M02.U12"
      ],
@@ -2342,7 +2342,7 @@
         "Raises"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "breakpoint() calls the configured debugger (pdb by default) and pauses execution at that line."
       },
       {
        "id": "M02.U13.Q2",
@@ -2355,7 +2355,7 @@
         "Write files"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Libraries log to a module-level logger and leave handlers and levels to the application that uses them."
       },
       {
        "id": "M02.U13.Q3",
@@ -2368,7 +2368,7 @@
         "Test coverage"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A profiler measures how much time is spent in each function, so you optimise the real hotspot."
       },
       {
        "id": "M02.U13.Q4",
@@ -2533,7 +2533,7 @@
         "Installs packages"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A formatter only rewrites layout; a linter analyses code for likely bugs, unused names and rule violations."
       },
       {
        "id": "M02.U14.Q2",
@@ -2546,7 +2546,7 @@
         "Never in CI"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "pre-commit hooks run on your machine when you commit, catching problems before they reach CI."
       },
       {
        "id": "M02.U14.Q3",
@@ -2559,7 +2559,7 @@
         "Skip tests"
        ],
        "answer": 0,
-       "explain": ""
+       "explain": "A matrix expands one job into several runs, e.g. each Python version on each OS."
       },
       {
        "id": "M02.U14.Q4",
@@ -2584,7 +2584,7 @@
      "title": "Containers 1 — Docker fundamentals",
      "hours": 6,
      "depth": "core",
-     "week": 18,
+     "week": 17,
      "prerequisites": [
       "M02.U03",
       "M02.U09"
@@ -2733,7 +2733,7 @@
         "Containers need a hypervisor"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Containers isolate processes on the host's kernel; a VM boots its own guest kernel on virtual hardware."
       },
       {
        "id": "M02.U15.Q2",
@@ -2746,7 +2746,7 @@
         "Is required"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Docker caches layers; copying only the manifests first means dependency install is reused unless they change."
       },
       {
        "id": "M02.U15.Q3",
@@ -2759,7 +2759,7 @@
         "UDP only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "The -p format is HOST:CONTAINER, so port 8000 on your machine forwards to port 80 in the container."
       },
       {
        "id": "M02.U15.Q4",
@@ -2894,7 +2894,7 @@
         "They can't"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Compose puts services on a shared network with DNS, so `db` resolves to the db service's container."
       },
       {
        "id": "M02.U16.Q2",
@@ -2907,7 +2907,7 @@
         "Layers to 1"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Build tools stay in the builder stage; only the runtime artefacts are copied into a small final image."
       },
       {
        "id": "M02.U16.Q3",
@@ -2920,7 +2920,7 @@
         "Logs"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": ".dockerignore excludes files from the build context, keeping builds fast and secrets or junk out of the image."
       },
       {
        "id": "M02.U16.Q4",

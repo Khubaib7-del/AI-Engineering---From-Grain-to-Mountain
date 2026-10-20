@@ -22,6 +22,7 @@
      "title": "First API calls done properly",
      "hours": 6,
      "depth": "core",
+     "week": 78,
      "prerequisites": [
       "M09.U03"
      ],
@@ -216,6 +217,7 @@
      "title": "Reliability: streaming, timeouts, retries, rate limits, concurrency",
      "hours": 6,
      "depth": "core",
+     "week": 78,
      "prerequisites": [
       "M10.U01"
      ],
@@ -382,6 +384,7 @@
      "title": "Structured outputs and function calling",
      "hours": 8,
      "depth": "core",
+     "week": 79,
      "prerequisites": [
       "M10.U01"
      ],
@@ -563,6 +566,7 @@
      "title": "Prompting fundamentals and reasoning models",
      "hours": 6,
      "depth": "core",
+     "week": 79,
      "prerequisites": [
       "M10.U01"
      ],
@@ -712,6 +716,7 @@
      "title": "Context engineering",
      "hours": 6,
      "depth": "core",
+     "week": 80,
      "prerequisites": [
       "M10.U04"
      ],
@@ -851,6 +856,7 @@
      "title": "Prompt management, caching, routing and batch",
      "hours": 6,
      "depth": "core",
+     "week": 80,
      "prerequisites": [
       "M10.U04",
       "M10.U02"
@@ -1049,6 +1055,7 @@
      "title": "Error analysis first",
      "hours": 6,
      "depth": "core",
+     "week": 81,
      "prerequisites": [
       "M10.U03",
       "M10.U04"
@@ -1174,6 +1181,7 @@
      "title": "Golden datasets, code-based checks and synthetic cases",
      "hours": 6,
      "depth": "core",
+     "week": 81,
      "prerequisites": [
       "M10.U07"
      ],
@@ -1320,6 +1328,7 @@
      "title": "LLM-as-judge, calibrated",
      "hours": 6,
      "depth": "core",
+     "week": 82,
      "prerequisites": [
       "M10.U08"
      ],
@@ -1463,6 +1472,7 @@
      "title": "Regression suites and evals in CI",
      "hours": 5,
      "depth": "core",
+     "week": 82,
      "prerequisites": [
       "M10.U09"
      ],
@@ -1620,6 +1630,7 @@
      "title": "Tracing, observability and online evaluation",
      "hours": 6,
      "depth": "core",
+     "week": 83,
      "prerequisites": [
       "M10.U07"
      ],
@@ -1754,6 +1765,7 @@
      "title": "Cost and latency engineering",
      "hours": 5,
      "depth": "core",
+     "week": 83,
      "prerequisites": [
       "M09.U10",
       "M10.U06",
@@ -1882,6 +1894,7 @@
      "title": "Guardrails and app-level safety",
      "hours": 6,
      "depth": "core",
+     "week": 84,
      "prerequisites": [
       "M10.U03",
       "M10.U08"

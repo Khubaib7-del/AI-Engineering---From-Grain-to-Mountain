@@ -25,6 +25,7 @@
      "title": "Threat-modelling LLM applications with the OWASP LLM Top 10 (2025)",
      "hours": 5,
      "depth": "core",
+     "week": 129,
      "prerequisites": [
       "M12.U19"
      ],
@@ -173,6 +174,7 @@
      "title": "Web/API security for AI services (authZ, tenant isolation, secrets, SSRF)",
      "hours": 6,
      "depth": "core",
+     "week": 129,
      "prerequisites": [
       "M18.U01"
      ],
@@ -319,6 +321,7 @@
      "title": "Supply chain: dependencies, model files, MCP/skill registries",
      "hours": 3,
      "depth": "core",
+     "week": 129,
      "prerequisites": [
       "M18.U01"
      ],
@@ -483,6 +486,7 @@
      "title": "Prompt injection, indirect injection and exfiltration",
      "hours": 5,
      "depth": "core",
+     "week": 130,
      "prerequisites": [
       "M18.U01"
      ],
@@ -643,6 +647,7 @@
      "title": "Design patterns that actually reduce injection risk",
      "hours": 6,
      "depth": "core",
+     "week": 130,
      "prerequisites": [
       "M18.U04"
      ],
@@ -784,6 +789,7 @@
      "title": "Red teaming, guardrails and defense testing",
      "hours": 6,
      "depth": "core",
+     "week": 131,
      "prerequisites": [
       "M18.U05"
      ],
@@ -946,6 +952,7 @@
      "title": "Privacy and PII: minimisation, redaction, safe logging, retention",
      "hours": 4,
      "depth": "core",
+     "week": 131,
      "prerequisites": [
       "M12.U23"
      ],
@@ -1083,6 +1090,7 @@
      "title": "Fairness and harm evaluation",
      "hours": 4,
      "depth": "core",
+     "week": 131,
      "prerequisites": [],
      "outcomes": [
       "You can evaluate a model across subgroups with confidence intervals.",
@@ -1221,6 +1229,7 @@
      "title": "Documentation, licensing and governance",
      "hours": 4,
      "depth": "core",
+     "week": 132,
      "prerequisites": [],
      "outcomes": [
       "You can write model, system and dataset cards with intended/out-of-scope use and sliced results.",
@@ -1384,6 +1393,7 @@
      "title": "Uncertainty, escalation, accessibility, incident response",
      "hours": 4,
      "depth": "core",
+     "week": 132,
      "prerequisites": [
       "M18.U06"
      ],

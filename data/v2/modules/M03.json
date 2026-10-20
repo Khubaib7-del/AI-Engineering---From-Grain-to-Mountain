@@ -24,7 +24,7 @@
      "title": "Algorithm analysis and the cost of Python built-ins",
      "hours": 4,
      "depth": "core",
-     "week": 19,
+     "week": 18,
      "prerequisites": [
       "M01.U14"
      ],
@@ -126,7 +126,7 @@
         "Best case only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Big-O describes how cost grows with input size, ignoring constants; it is not an exact runtime."
       },
       {
        "id": "M03.U01.Q3",
@@ -158,7 +158,7 @@
      "title": "Linear structures: stacks, queues, deques, linked lists",
      "hours": 5,
      "depth": "core",
-     "week": 20,
+     "week": 18,
      "prerequisites": [
       "M03.U01"
      ],
@@ -243,7 +243,7 @@
         "Random"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A stack is last-in, first-out: you push and pop at the same end."
       },
       {
        "id": "M03.U02.Q2",
@@ -256,7 +256,7 @@
         "Unsupported"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "deque is a double-ended queue with O(1) appends and pops at both ends; list.pop(0) is O(n)."
       },
       {
        "id": "M03.U02.Q3",
@@ -269,7 +269,7 @@
         "Binary search"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Given a node, a linked list relinks pointers in O(1); an array must shift every later element."
       },
       {
        "id": "M03.U02.Q4",
@@ -289,7 +289,7 @@
      "title": "Recursion, searching, sorting and hashing",
      "hours": 6,
      "depth": "core",
-     "week": 21,
+     "week": 19,
      "prerequisites": [
       "M03.U02"
      ],
@@ -378,7 +378,7 @@
         "Recursion"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Binary search halves the range by comparing to the middle, which only works if the data is sorted."
       },
       {
        "id": "M03.U03.Q2",
@@ -391,7 +391,7 @@
         "O(log n)"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Merge sort always splits in half (log n levels) and merges each level in O(n), even in the worst case."
       },
       {
        "id": "M03.U03.Q3",
@@ -404,7 +404,7 @@
         "Ignoring them"
        ],
        "answer": 0,
-       "explain": ""
+       "explain": "Chaining stores colliding keys in a per-bucket list; open addressing probes for another free slot."
       },
       {
        "id": "M03.U03.Q4",
@@ -424,7 +424,7 @@
      "title": "Trees and heaps",
      "hours": 5,
      "depth": "core",
-     "week": 22,
+     "week": 19,
      "prerequisites": [
       "M03.U03"
      ],
@@ -501,7 +501,7 @@
         "Random"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "The heap property puts the smallest element at the root of a min-heap, readable in O(1)."
       },
       {
        "id": "M03.U04.Q2",
@@ -514,7 +514,7 @@
         "Level order"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "In-order visits left subtree, node, right subtree, which in a BST is ascending key order."
       },
       {
        "id": "M03.U04.Q3",
@@ -527,7 +527,7 @@
         "O(k²)"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "It keeps a heap of size k while scanning n items, so each step costs O(log k)."
       },
       {
        "id": "M03.U04.Q4",
@@ -547,7 +547,7 @@
      "title": "Graphs: BFS, DFS, topological sort, Dijkstra",
      "hours": 5,
      "depth": "core",
-     "week": 23,
+     "week": 20,
      "prerequisites": [
       "M03.U04"
      ],
@@ -617,7 +617,7 @@
         "Trees only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "BFS explores in order of edge count, which is the shortest path only when every edge has equal weight."
       },
       {
        "id": "M03.U05.Q2",
@@ -630,7 +630,7 @@
         "Weighted"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A cycle means some node must come before itself, so only a DAG has a topological order."
       },
       {
        "id": "M03.U05.Q3",
@@ -643,7 +643,7 @@
         "Directed edges"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Dijkstra finalises a node once popped; a later negative edge could still make it shorter, so results break."
       },
       {
        "id": "M03.U05.Q4",
@@ -663,7 +663,7 @@
      "title": "Interview patterns and sustained practice",
      "hours": 15,
      "depth": "core",
-     "week": 24,
+     "week": 21,
      "prerequisites": [
       "M03.U05"
      ],
@@ -739,7 +739,7 @@
         "Password hashing"
        ],
        "answer": 0,
-       "explain": ""
+       "explain": "A sliding window grows and shrinks a contiguous range, turning many subarray problems into O(n)."
       },
       {
        "id": "M03.U06.Q2",
@@ -752,7 +752,7 @@
         "Graphs only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "DP reuses solutions to repeated subproblems, and works when the best answer is built from best sub-answers."
       },
       {
        "id": "M03.U06.Q3",
@@ -765,7 +765,7 @@
         "O(n log² n)"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Each step moves one of the two pointers inward, so the whole array is scanned once."
       },
       {
        "id": "M03.U06.Q4",
@@ -791,7 +791,7 @@
      "title": "Operating-system concepts for engineers",
      "hours": 7,
      "depth": "core",
-     "week": 25,
+     "week": 22,
      "prerequisites": [
       "M01.U14"
      ],
@@ -961,7 +961,7 @@
         "Separate heaps always"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Threads of one process share its memory (heap, globals); each thread has only its own stack and registers."
       },
       {
        "id": "M03.U07.Q2",
@@ -974,7 +974,7 @@
         "async"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "The GIL lets only one thread execute Python bytecode at a time, so CPU-bound threads do not run in parallel."
       },
       {
        "id": "M03.U07.Q3",
@@ -987,7 +987,7 @@
         "A socket"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "fork() duplicates the calling process; the parent and the new child continue from the same point."
       },
       {
        "id": "M03.U07.Q4",
@@ -1007,7 +1007,7 @@
      "title": "Networking from packets to sockets",
      "hours": 8,
      "depth": "core",
-     "week": 26,
+     "week": 23,
      "prerequisites": [
       "M03.U07"
      ],
@@ -1128,7 +1128,7 @@
         "HTTP → TLS"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "DNS resolves human-readable names like example.com to IP addresses."
       },
       {
        "id": "M03.U08.Q2",
@@ -1141,7 +1141,7 @@
         "Always lower latency"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "TCP retransmits lost segments and orders bytes, giving applications a reliable ordered stream."
       },
       {
        "id": "M03.U08.Q3",
@@ -1154,7 +1154,7 @@
         "Caching"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "TLS encrypts traffic, detects tampering and uses certificates to prove the server's identity."
       },
       {
        "id": "M03.U08.Q4",
@@ -1175,7 +1175,7 @@
      "title": "HTTP and REST in depth",
      "hours": 5,
      "depth": "core",
-     "week": 27,
+     "week": 23,
      "prerequisites": [
       "M03.U08"
      ],
@@ -1315,7 +1315,7 @@
         "CONNECT"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Repeating PUT or DELETE leaves the server in the same state as doing it once; POST usually does not."
       },
       {
        "id": "M03.U09.Q2",
@@ -1328,7 +1328,7 @@
         "Both server errors"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "401 means credentials are missing or invalid; 403 means you are known but not permitted."
       },
       {
        "id": "M03.U09.Q3",
@@ -1341,7 +1341,7 @@
         "TLS"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "CORS is a browser policy: the server sends headers, but the browser decides whether a page may read the response."
       },
       {
        "id": "M03.U09.Q4",
@@ -1360,7 +1360,7 @@
      "title": "Reliability patterns for calling services",
      "hours": 4,
      "depth": "core",
-     "week": 27,
+     "week": 24,
      "prerequisites": [
       "M03.U09"
      ],
@@ -1459,7 +1459,7 @@
         "Caching"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Random jitter spreads retries out so many clients do not hit the server again at the same moment."
       },
       {
        "id": "M03.U10.Q2",
@@ -1472,7 +1472,7 @@
         "None"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "GETs are safe to repeat; an idempotency key lets the server de-duplicate a repeated POST."
       },
       {
        "id": "M03.U10.Q3",
@@ -1485,7 +1485,7 @@
         "Ignore it"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "429 means rate limited; wait (honouring Retry-After if sent) and back off before retrying."
       },
       {
        "id": "M03.U10.Q4",
@@ -1511,7 +1511,7 @@
      "title": "FastAPI core",
      "hours": 8,
      "depth": "core",
-     "week": 29,
+     "week": 24,
      "prerequisites": [
       "M03.U09",
       "M01.U13"
@@ -1625,7 +1625,7 @@
         "README"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "FastAPI builds an OpenAPI schema from your type hints and Pydantic models and serves it at /docs."
       },
       {
        "id": "M03.U11.Q2",
@@ -1651,7 +1651,7 @@
         "Cache"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "response_model validates and filters the output, e.g. dropping a password field from the response."
       },
       {
        "id": "M03.U11.Q4",
@@ -1670,7 +1670,7 @@
      "title": "Pydantic, validation and settings",
      "hours": 5,
      "depth": "core",
-     "week": 29,
+     "week": 25,
      "prerequisites": [
       "M03.U11"
      ],
@@ -1773,7 +1773,7 @@
         "Prints"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "model_validate parses input data, coerces types and raises ValidationError if it does not fit the model."
       },
       {
        "id": "M03.U12.Q2",
@@ -1786,7 +1786,7 @@
         "Docker"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "model_json_schema() gives a standard JSON Schema you can share as an API contract or pass as an LLM tool schema."
       },
       {
        "id": "M03.U12.Q3",
@@ -1799,7 +1799,7 @@
         "YAML only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "BaseSettings fills fields from environment variables, and from a .env file when you configure one."
       },
       {
        "id": "M03.U12.Q4",
@@ -1818,7 +1818,7 @@
      "title": "Dependencies, auth and API security",
      "hours": 6,
      "depth": "core",
-     "week": 30,
+     "week": 25,
      "prerequisites": [
       "M03.U12"
      ],
@@ -1925,7 +1925,7 @@
         "Both encryption"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Authentication establishes identity; authorisation decides what that identity is allowed to do."
       },
       {
        "id": "M03.U13.Q2",
@@ -1938,7 +1938,7 @@
         "Secret"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "JWT payloads are only base64url-encoded; the signature prevents tampering but not reading. Never put secrets in them."
       },
       {
        "id": "M03.U13.Q3",
@@ -1951,7 +1951,7 @@
         "Missing docs"
        ],
        "answer": 0,
-       "explain": ""
+       "explain": "OWASP API Security Top 10 2023 lists API1 Broken Object Level Authorization first."
       },
       {
        "id": "M03.U13.Q4",
@@ -1976,7 +1976,7 @@
      "title": "Async Python in depth + HTTP clients",
      "hours": 8,
      "depth": "core",
-     "week": 31,
+     "week": 26,
      "prerequisites": [
       "M01.U14",
       "M03.U10",
@@ -2141,7 +2141,7 @@
         "The loop stops forever"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "TaskGroup cancels the other tasks when one fails and raises the failures together as an ExceptionGroup."
       },
       {
        "id": "M03.U14.Q2",
@@ -2154,7 +2154,7 @@
         "5 threads"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A Semaphore(5) lets at most five coroutines inside `async with sem:` at once; others wait."
       },
       {
        "id": "M03.U14.Q3",
@@ -2167,7 +2167,7 @@
         "Raises"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A blocking call never yields to the event loop, so every other request on that worker waits."
       },
       {
        "id": "M03.U14.Q4",
@@ -2187,7 +2187,7 @@
      "title": "Streaming, background work and webhooks",
      "hours": 5,
      "depth": "core",
-     "week": 31,
+     "week": 26,
      "prerequisites": [
       "M03.U14"
      ],
@@ -2293,7 +2293,7 @@
         "gRPC"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Server-Sent Events is a one-way stream of text events from server to browser over a normal HTTP response."
       },
       {
        "id": "M03.U15.Q2",
@@ -2306,7 +2306,7 @@
         "GPU training"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "BackgroundTasks run in the same process after the response; long or critical jobs need a real queue."
       },
       {
        "id": "M03.U15.Q3",
@@ -2319,7 +2319,7 @@
         "404s"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Checking the HMAC signature proves the webhook came from the provider and was not forged or altered."
       },
       {
        "id": "M03.U15.Q4",
@@ -2345,7 +2345,7 @@
      "title": "Database-backed API with tests",
      "hours": 7,
      "depth": "core",
-     "week": 32,
+     "week": 46,
      "prerequisites": [
       "M04.U06",
       "M03.U13"
@@ -2453,7 +2453,7 @@
         "Change routes"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "app.dependency_overrides replaces a dependency such as get_session with a test version during tests."
       },
       {
        "id": "M03.U16.Q2",
@@ -2466,7 +2466,7 @@
         "One per app"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Each request gets its own session that commits or rolls back and closes when the request ends."
       },
       {
        "id": "M03.U16.Q3",
@@ -2479,7 +2479,7 @@
         "Caching"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A request ID attached to every log line lets you follow one request through all services."
       },
       {
        "id": "M03.U16.Q4",
@@ -2499,7 +2499,7 @@
      "title": "Ship it: container, deploy, health checks, load test",
      "hours": 5,
      "depth": "core",
-     "week": 33,
+     "week": 27,
      "prerequisites": [
       "M03.U16",
       "M02.U16"
@@ -2582,7 +2582,7 @@
         "Git"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Readiness says whether the app can serve traffic now, so it checks what serving needs, like the database."
       },
       {
        "id": "M03.U17.Q2",
@@ -2595,7 +2595,7 @@
         "95 ms"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "p95 is the 95th percentile: 95% of requests took this long or less, 5% were slower."
       },
       {
        "id": "M03.U17.Q3",
@@ -2608,7 +2608,7 @@
         "4 containers"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "--workers starts that many separate worker processes, each with its own event loop."
       },
       {
        "id": "M03.U17.Q4",
@@ -2635,7 +2635,7 @@
      "title": "System design basics",
      "hours": 6,
      "depth": "core",
-     "week": 34,
+     "week": 28,
      "prerequisites": [
       "M03.U10",
       "M03.U17"
@@ -2721,7 +2721,7 @@
         "Auth"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Replicas serve read queries from copies, taking read load off the primary; writes still go to the primary."
       },
       {
        "id": "M03.U18.Q2",
@@ -2734,7 +2734,7 @@
         "TLS"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Once data changes, every cached copy must be updated or expired, or users see stale results."
       },
       {
        "id": "M03.U18.Q3",
@@ -2747,7 +2747,7 @@
         "Lower storage"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A queue decouples producers from consumers and absorbs bursts so workers process at a steady rate."
       },
       {
        "id": "M03.U18.Q4",
@@ -2855,7 +2855,7 @@
         "A socket"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "fetch() returns a Promise that resolves to a Response; you then await response.json() for the data."
       },
       {
        "id": "M03.U19.Q2",
@@ -2868,7 +2868,7 @@
         "In HTTP"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "TypeScript types are erased when compiled to JavaScript; they check code before it runs, not at runtime."
       },
       {
        "id": "M03.U19.Q3",
@@ -2881,7 +2881,7 @@
         "Be hidden"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Errors must be available as text (e.g. linked to the field or announced via aria-live), not by colour alone."
       },
       {
        "id": "M03.U19.Q4",

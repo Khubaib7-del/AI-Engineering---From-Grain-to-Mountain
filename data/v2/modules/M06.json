@@ -24,6 +24,7 @@
      "title": "Events, conditional probability and Bayes",
      "hours": 5,
      "depth": "core",
+     "week": 53,
      "prerequisites": [],
      "outcomes": [
       "You can compute conditional probabilities and test independence.",
@@ -209,6 +210,7 @@
      "title": "Random variables, distributions, expectation and variance",
      "hours": 8,
      "depth": "core",
+     "week": 54,
      "prerequisites": [
       "M06.U01"
      ],
@@ -398,6 +400,7 @@
      "title": "Law of large numbers, CLT, simulation and sampling",
      "hours": 4,
      "depth": "core",
+     "week": 54,
      "prerequisites": [
       "M06.U02"
      ],
@@ -550,6 +553,7 @@
      "title": "Estimation and likelihood",
      "hours": 5,
      "depth": "core",
+     "week": 55,
      "prerequisites": [
       "M06.U02",
       "M05.U05"
@@ -719,6 +723,7 @@
      "title": "Bootstrap, confidence intervals, hypothesis tests and p-values",
      "hours": 8,
      "depth": "core",
+     "week": 55,
      "prerequisites": [
       "M06.U03"
      ],
@@ -891,6 +896,7 @@
      "title": "Effect size, power, multiple comparisons and causality",
      "hours": 5,
      "depth": "core",
+     "week": 56,
      "prerequisites": [
       "M06.U05"
      ],
@@ -1126,6 +1132,7 @@
      "title": "Entropy, cross-entropy, KL and perplexity",
      "hours": 4,
      "depth": "core",
+     "week": 56,
      "prerequisites": [
       "M06.U04"
      ],
@@ -1300,6 +1307,7 @@
      "title": "Evaluation statistics for ML and LLM systems",
      "hours": 6,
      "depth": "core",
+     "week": 57,
      "prerequisites": [
       "M06.U05",
       "M06.U06"

@@ -28,6 +28,7 @@
      "title": "Workflows vs agents: when not to build an agent",
      "hours": 3,
      "depth": "core",
+     "week": 92,
      "prerequisites": [],
      "outcomes": [
       "You can classify a task as single call, prompt chain, router, parallelization, orchestrator-workers, evaluator-optimizer or autonomous agent and justify the choice.",
@@ -160,6 +161,7 @@
      "title": "Tool calling on the wire: schemas, structured output, parallel and streaming calls",
      "hours": 6,
      "depth": "core",
+     "week": 92,
      "prerequisites": [
       "M12.U01"
      ],
@@ -344,6 +346,7 @@
      "title": "The agent loop from scratch",
      "hours": 8,
      "depth": "core",
+     "week": 93,
      "prerequisites": [
       "M12.U02"
      ],
@@ -503,6 +506,7 @@
      "title": "Tool design: the agent-computer interface",
      "hours": 4,
      "depth": "core",
+     "week": 93,
      "prerequisites": [
       "M12.U03"
      ],
@@ -633,6 +637,7 @@
      "title": "Planning and self-correction patterns",
      "hours": 6,
      "depth": "core",
+     "week": 94,
      "prerequisites": [
       "M12.U03"
      ],
@@ -789,6 +794,7 @@
      "title": "Code as action, and code-execution tools",
      "hours": 4,
      "depth": "core",
+     "week": 94,
      "prerequisites": [
       "M12.U03"
      ],
@@ -930,6 +936,7 @@
      "title": "Context engineering",
      "hours": 4,
      "depth": "core",
+     "week": 94,
      "prerequisites": [
       "M12.U03"
      ],
@@ -1066,6 +1073,7 @@
      "title": "Memory architecture",
      "hours": 5,
      "depth": "core",
+     "week": 95,
      "prerequisites": [
       "M12.U07"
      ],
@@ -1196,6 +1204,7 @@
      "title": "Durable execution, checkpoints, retries, human-in-the-loop",
      "hours": 7,
      "depth": "core",
+     "week": 95,
      "prerequisites": [
       "M12.U03"
      ],
@@ -1362,6 +1371,7 @@
      "title": "MCP (spec 2026-07-28): server and client",
      "hours": 8,
      "depth": "core",
+     "week": 96,
      "prerequisites": [
       "M12.U02"
      ],
@@ -1545,6 +1555,7 @@
      "title": "MCP auth and protocol security",
      "hours": 6,
      "depth": "core",
+     "week": 96,
      "prerequisites": [
       "M12.U10"
      ],
@@ -1685,6 +1696,7 @@
      "title": "Agent Skills: packaging procedures with progressive disclosure",
      "hours": 4,
      "depth": "core",
+     "week": 97,
      "prerequisites": [
       "M12.U07"
      ],
@@ -1840,6 +1852,7 @@
      "title": "A2A: agent-to-agent interoperability",
      "hours": 4,
      "depth": "core",
+     "week": 97,
      "prerequisites": [
       "M12.U10"
      ],
@@ -1970,6 +1983,7 @@
      "title": "Orchestration patterns: router, supervisor, handoff",
      "hours": 4,
      "depth": "core",
+     "week": 97,
      "prerequisites": [
       "M12.U01",
       "M12.U03"
@@ -2094,6 +2108,7 @@
      "title": "Subagents and multi-agent systems: context isolation, cost and failure",
      "hours": 5,
      "depth": "core",
+     "week": 98,
      "prerequisites": [
       "M12.U14"
      ],
@@ -2238,6 +2253,7 @@
      "title": "Frameworks and SDKs as examples: one graph framework plus one SDK",
      "hours": 12,
      "depth": "core",
+     "week": 99,
      "prerequisites": [
       "M12.U09",
       "M12.U10"
@@ -2458,6 +2474,7 @@
      "title": "Coding-agent harness anatomy",
      "hours": 10,
      "depth": "core",
+     "week": 100,
      "prerequisites": [
       "M12.U06"
      ],
@@ -2630,6 +2647,7 @@
      "title": "Computer-use and browser agents",
      "hours": 5,
      "depth": "core",
+     "week": 101,
      "prerequisites": [
       "M12.U17"
      ],
@@ -2767,6 +2785,7 @@
      "title": "Agent security essentials and runtime controls",
      "hours": 5,
      "depth": "core",
+     "week": 101,
      "prerequisites": [
       "M12.U17"
      ],
@@ -2914,129 +2933,6 @@
        ]
       }
      ]
-    },
-    {
-     "id": "M12.U20",
-     "title": "Optional: harness source study (Codex CLI, Prime Agent, DeepSeek harness)",
-     "hours": 10,
-     "depth": "deep",
-     "prerequisites": [
-      "M12.U17",
-      "M12.U21"
-     ],
-     "outcomes": [
-      "You can trace a request through a real agent client's entry point, event loop, context builder, tool executor, permissions and persistence.",
-      "You can port one design idea and measure it."
-     ],
-     "topics": [
-      {
-       "id": "M12.09.01",
-       "title": "Harness source study (pinned commit)"
-      }
-     ],
-     "learn": {
-      "resourceId": "grain-doc17",
-      "title": "Grain to Mountain doc 17 — Benchmarks, costs and harness study",
-      "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/17-benchmarks-costs-and-harness-study.md",
-      "type": "doc",
-      "free": true,
-      "verified": "unverified",
-      "slice": "Source-study section"
-     },
-     "covers": [
-      "Fair harness experiment design and cost-per-success ledger",
-      "What to trace in a harness source tree",
-      "Which repos to read and at which layers"
-     ],
-     "gaps": [
-      {
-       "topic": "Codex CLI source",
-       "resource": {
-        "resourceId": "codex-cli",
-        "title": "OpenAI Codex CLI",
-        "url": "https://github.com/openai/codex",
-        "type": "repo",
-        "free": true,
-        "verified": "unverified",
-        "slice": "Pinned commit; codex-rs core"
-       }
-      },
-      {
-       "topic": "Prime/DeepSeek harness notes in this repo",
-       "resource": {
-        "resourceId": "grain-doc20",
-        "title": "Grain to Mountain doc 20 — Prime and DeepSeek harness study",
-        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/20-prime-and-deepseek-harness-study.md",
-        "type": "doc",
-        "free": true,
-        "verified": "unverified"
-       }
-      }
-     ],
-     "backup": {
-      "resourceId": "codex-cli",
-      "title": "OpenAI Codex CLI",
-      "url": "https://github.com/openai/codex",
-      "type": "repo",
-      "free": true,
-      "verified": "unverified"
-     },
-     "practice": {
-      "title": "Trace two requests through a real harness",
-      "brief": "Pin a commit of one harness (e.g. Codex CLI). Trace one successful and one failing request through entry point, event loop, context builder, tool executor, permissions and persistence. Port one design idea into your own harness and measure it with your M12.U21 suite.",
-      "done_when": "A TRACE.md with file:line references for each layer, and a before/after eval run for the ported idea."
-     },
-     "quiz": [
-      {
-       "id": "M12.U20.Q1",
-       "kind": "mcq",
-       "prompt": "Reading a public agent client repo reveals…",
-       "options": [
-        "proprietary weights",
-        "training data",
-        "runtime/tool/permission logic but not the hosted model",
-        "nothing useful"
-       ],
-       "answer": 2,
-       "explain": "The harness is open; the model isn't."
-      },
-      {
-       "id": "M12.U20.Q2",
-       "kind": "mcq",
-       "prompt": "You pin a commit because…",
-       "options": [
-        "it is faster",
-        "the license requires it",
-        "architectures change quickly",
-        "style"
-       ],
-       "answer": 2,
-       "explain": "References must stay valid."
-      },
-      {
-       "id": "M12.U20.Q3",
-       "kind": "mcq",
-       "prompt": "A 'self-improving harness' (Prime Agent style) updates…",
-       "options": [
-        "model weights automatically",
-        "the GPU",
-        "supplemental prompts/skills/state, with rollback",
-        "nothing"
-       ],
-       "answer": 2,
-       "explain": "It changes the harness, not weights."
-      },
-      {
-       "id": "M12.U20.Q4",
-       "kind": "short",
-       "prompt": "Describe one design trade-off you found and the alternative you'd choose.",
-       "rubric": [
-        "Names a concrete trade-off with file reference",
-        "States the alternative and its cost",
-        "Says how you'd measure which is better"
-       ]
-      }
-     ]
     }
    ]
   },
@@ -3049,6 +2945,7 @@
      "title": "Evaluating agents: outcomes, tools, trajectories, graders",
      "hours": 8,
      "depth": "core",
+     "week": 102,
      "prerequisites": [
       "M12.U03",
       "M12.U09"
@@ -3225,6 +3122,7 @@
      "title": "Benchmarks, fair harness experiments, cost per success",
      "hours": 6,
      "depth": "core",
+     "week": 102,
      "prerequisites": [
       "M12.U21"
      ],
@@ -3376,6 +3274,7 @@
      "title": "Observability: OTel GenAI traces, redaction, audit logs, incident replay",
      "hours": 4,
      "depth": "core",
+     "week": 103,
      "prerequisites": [
       "M12.U21"
      ],
@@ -3536,6 +3435,129 @@
         "Tool call args for the send action (recipient)",
         "The retrieval/tool result that supplied the address (provenance)",
         "The approval record / policy decision for that call"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "M12.U20",
+     "title": "Optional: harness source study (Codex CLI, Prime Agent, DeepSeek harness)",
+     "hours": 10,
+     "depth": "deep",
+     "prerequisites": [
+      "M12.U17",
+      "M12.U21"
+     ],
+     "outcomes": [
+      "You can trace a request through a real agent client's entry point, event loop, context builder, tool executor, permissions and persistence.",
+      "You can port one design idea and measure it."
+     ],
+     "topics": [
+      {
+       "id": "M12.09.01",
+       "title": "Harness source study (pinned commit)"
+      }
+     ],
+     "learn": {
+      "resourceId": "grain-doc17",
+      "title": "Grain to Mountain doc 17 — Benchmarks, costs and harness study",
+      "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/17-benchmarks-costs-and-harness-study.md",
+      "type": "doc",
+      "free": true,
+      "verified": "unverified",
+      "slice": "Source-study section"
+     },
+     "covers": [
+      "Fair harness experiment design and cost-per-success ledger",
+      "What to trace in a harness source tree",
+      "Which repos to read and at which layers"
+     ],
+     "gaps": [
+      {
+       "topic": "Codex CLI source",
+       "resource": {
+        "resourceId": "codex-cli",
+        "title": "OpenAI Codex CLI",
+        "url": "https://github.com/openai/codex",
+        "type": "repo",
+        "free": true,
+        "verified": "unverified",
+        "slice": "Pinned commit; codex-rs core"
+       }
+      },
+      {
+       "topic": "Prime/DeepSeek harness notes in this repo",
+       "resource": {
+        "resourceId": "grain-doc20",
+        "title": "Grain to Mountain doc 20 — Prime and DeepSeek harness study",
+        "url": "https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/blob/main/20-prime-and-deepseek-harness-study.md",
+        "type": "doc",
+        "free": true,
+        "verified": "unverified"
+       }
+      }
+     ],
+     "backup": {
+      "resourceId": "codex-cli",
+      "title": "OpenAI Codex CLI",
+      "url": "https://github.com/openai/codex",
+      "type": "repo",
+      "free": true,
+      "verified": "unverified"
+     },
+     "practice": {
+      "title": "Trace two requests through a real harness",
+      "brief": "Pin a commit of one harness (e.g. Codex CLI). Trace one successful and one failing request through entry point, event loop, context builder, tool executor, permissions and persistence. Port one design idea into your own harness and measure it with your M12.U21 suite.",
+      "done_when": "A TRACE.md with file:line references for each layer, and a before/after eval run for the ported idea."
+     },
+     "quiz": [
+      {
+       "id": "M12.U20.Q1",
+       "kind": "mcq",
+       "prompt": "Reading a public agent client repo reveals…",
+       "options": [
+        "proprietary weights",
+        "training data",
+        "runtime/tool/permission logic but not the hosted model",
+        "nothing useful"
+       ],
+       "answer": 2,
+       "explain": "The harness is open; the model isn't."
+      },
+      {
+       "id": "M12.U20.Q2",
+       "kind": "mcq",
+       "prompt": "You pin a commit because…",
+       "options": [
+        "it is faster",
+        "the license requires it",
+        "architectures change quickly",
+        "style"
+       ],
+       "answer": 2,
+       "explain": "References must stay valid."
+      },
+      {
+       "id": "M12.U20.Q3",
+       "kind": "mcq",
+       "prompt": "A 'self-improving harness' (Prime Agent style) updates…",
+       "options": [
+        "model weights automatically",
+        "the GPU",
+        "supplemental prompts/skills/state, with rollback",
+        "nothing"
+       ],
+       "answer": 2,
+       "explain": "It changes the harness, not weights."
+      },
+      {
+       "id": "M12.U20.Q4",
+       "kind": "short",
+       "prompt": "Describe one design trade-off you found and the alternative you'd choose.",
+       "rubric": [
+        "Names a concrete trade-off with file reference",
+        "States the alternative and its cost",
+        "Says how you'd measure which is better"
        ]
       }
      ]

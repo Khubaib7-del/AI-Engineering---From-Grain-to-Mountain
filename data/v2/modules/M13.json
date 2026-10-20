@@ -27,6 +27,7 @@
      "title": "When to fine-tune (vs prompt, RAG or a bigger model)",
      "hours": 4,
      "depth": "core",
+     "week": 132,
      "prerequisites": [
       "M10.U08",
       "M11.U02"
@@ -160,6 +161,7 @@
      "title": "Data for SFT: templates, masking, packing, curation",
      "hours": 8,
      "depth": "core",
+     "week": 133,
      "prerequisites": [
       "M13.U01",
       "M09.U04"
@@ -356,6 +358,7 @@
      "title": "Full fine-tuning vs LoRA/QLoRA: math and hyperparameters",
      "hours": 8,
      "depth": "core",
+     "week": 134,
      "prerequisites": [
       "M13.U02"
      ],
@@ -510,6 +513,7 @@
      "title": "Hands-on SFT with TRL and Unsloth on free GPUs",
      "hours": 10,
      "depth": "core",
+     "week": 135,
      "prerequisites": [
       "M13.U03"
      ],
@@ -672,6 +676,7 @@
      "title": "Evaluate, forget, merge, distill and export",
      "hours": 6,
      "depth": "core",
+     "week": 136,
      "prerequisites": [
       "M13.U04"
      ],
@@ -864,6 +869,7 @@
      "title": "RLHF pipeline and reward models",
      "hours": 6,
      "depth": "core",
+     "week": 136,
      "prerequisites": [
       "M13.U04"
      ],
@@ -1017,6 +1023,7 @@
      "title": "DPO in practice",
      "hours": 8,
      "depth": "core",
+     "week": 137,
      "prerequisites": [
       "M13.U06"
      ],
@@ -1177,6 +1184,7 @@
      "title": "Minimum RL foundations for LLM post-training",
      "hours": 12,
      "depth": "core",
+     "week": 138,
      "prerequisites": [],
      "outcomes": [
       "You can map state, action, reward and episode onto an LLM generating an answer.",
@@ -1362,6 +1370,7 @@
      "title": "RLVR and GRPO: training reasoning behaviour",
      "hours": 10,
      "depth": "core",
+     "week": 139,
      "prerequisites": [
       "M13.U08",
       "M13.U04"
@@ -1526,6 +1535,7 @@
      "title": "Reward hacking, safety and post-training evaluation",
      "hours": 4,
      "depth": "core",
+     "week": 139,
      "prerequisites": [
       "M13.U07"
      ],

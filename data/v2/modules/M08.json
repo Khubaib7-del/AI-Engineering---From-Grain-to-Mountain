@@ -24,6 +24,7 @@
      "title": "Neurons, MLPs, activations and the classification head",
      "hours": 5,
      "depth": "core",
+     "week": 63,
      "prerequisites": [
       "M05.U06",
       "M06.U04"
@@ -207,6 +208,7 @@
      "title": "Backpropagation and autograd from scratch",
      "hours": 9,
      "depth": "core",
+     "week": 64,
      "prerequisites": [
       "M08.U01"
      ],
@@ -376,6 +378,7 @@
      "title": "Tensors, embeddings and your first neural language model",
      "hours": 9,
      "depth": "core",
+     "week": 65,
      "prerequisites": [
       "M08.U02",
       "M06.U07"
@@ -545,6 +548,7 @@
      "title": "Training dynamics: initialisation, normalisation, residuals",
      "hours": 6,
      "depth": "core",
+     "week": 66,
      "prerequisites": [
       "M08.U03"
      ],
@@ -743,6 +747,7 @@
      "title": "Optimisers, regularisation and schedules",
      "hours": 6,
      "depth": "core",
+     "week": 66,
      "prerequisites": [
       "M08.U04",
       "M05.U07"
@@ -950,6 +955,7 @@
      "title": "The PyTorch training workflow",
      "hours": 6,
      "depth": "core",
+     "week": 67,
      "prerequisites": [
       "M08.U03"
      ],
@@ -1134,6 +1140,7 @@
      "title": "Checkpoints, reproducibility and experiment logging",
      "hours": 4,
      "depth": "core",
+     "week": 67,
      "prerequisites": [
       "M08.U06"
      ],
@@ -1279,6 +1286,7 @@
      "title": "CNNs, transfer learning and augmentation (applied)",
      "hours": 8,
      "depth": "core",
+     "week": 68,
      "prerequisites": [
       "M08.U06",
       "M08.U07"
@@ -1479,6 +1487,7 @@
      "title": "Debugging neural network training",
      "hours": 5,
      "depth": "core",
+     "week": 68,
      "prerequisites": [
       "M08.U05",
       "M08.U06"
@@ -1657,6 +1666,7 @@
      "title": "GPU memory, mixed precision, speed and export",
      "hours": 6,
      "depth": "core",
+     "week": 69,
      "prerequisites": [
       "M08.U08",
       "M05.U08"

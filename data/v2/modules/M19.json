@@ -28,6 +28,7 @@
      "title": "Role landscape and your track decision (AI Engineer / FDE / MLOps)",
      "hours": 4,
      "depth": "core",
+     "week": 145,
      "prerequisites": [],
      "outcomes": [
       "You can describe what AI Engineers, Forward Deployed Engineers and MLOps engineers do and how they are interviewed.",
@@ -195,6 +196,7 @@
      "title": "Client discovery: outcomes, the real workflow, assumptions and risk",
      "hours": 6,
      "depth": "core",
+     "week": 146,
      "prerequisites": [
       "M19.U01"
      ],
@@ -345,6 +347,7 @@
      "title": "Scoping: smallest testable slice, specs, success metrics, pilot vs production",
      "hours": 6,
      "depth": "core",
+     "week": 146,
      "prerequisites": [
       "M19.U02"
      ],
@@ -489,6 +492,7 @@
      "title": "Enterprise integration: OAuth APIs, webhooks, data sync",
      "hours": 8,
      "depth": "core",
+     "week": 147,
      "prerequisites": [
       "M19.U03",
       "M12.U11"
@@ -654,6 +658,7 @@
      "title": "Deploying in the customer's environment: offline, on-prem, data residency",
      "hours": 8,
      "depth": "core",
+     "week": 148,
      "prerequisites": [
       "M19.U04"
      ],
@@ -807,6 +812,7 @@
      "title": "Customer evals and the feedback ratchet",
      "hours": 5,
      "depth": "core",
+     "week": 148,
      "prerequisites": [
       "M19.U03",
       "M12.U21"
@@ -944,6 +950,7 @@
      "title": "Communication: ADRs, demos, limitations, status updates",
      "hours": 6,
      "depth": "core",
+     "week": 149,
      "prerequisites": [
       "M19.U03"
      ],

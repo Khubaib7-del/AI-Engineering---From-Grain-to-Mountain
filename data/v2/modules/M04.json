@@ -22,7 +22,7 @@
      "title": "SQL 1 — Querying and relating (CS50 SQL Lectures 0–1)",
      "hours": 7,
      "depth": "core",
-     "week": 19,
+     "week": 44,
      "prerequisites": [
       "M01.U08"
      ],
@@ -130,7 +130,7 @@
         "HAVING is for joins"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "WHERE filters individual rows before GROUP BY; HAVING filters the grouped results, e.g. HAVING COUNT(*) > 5."
       },
       {
        "id": "M04.U01.Q2",
@@ -143,7 +143,7 @@
         "A cross product"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "LEFT JOIN returns every row from the left table and fills right-side columns with NULL when nothing matches."
       },
       {
        "id": "M04.U01.Q3",
@@ -175,7 +175,7 @@
      "title": "SQL 2 — Designing schemas (CS50 SQL Lecture 2)",
      "hours": 6,
      "depth": "core",
-     "week": 20,
+     "week": 44,
      "prerequisites": [
       "M04.U01"
      ],
@@ -253,7 +253,7 @@
         "Encryption"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A foreign key ensures each referenced value exists in the parent table, so no orphan rows."
       },
       {
        "id": "M04.U02.Q2",
@@ -266,7 +266,7 @@
         "Joins"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Normalising stores each fact once, so updates cannot leave contradictory copies behind."
       },
       {
        "id": "M04.U02.Q3",
@@ -279,7 +279,7 @@
         "It's indexed"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Keys get copied into other tables; if the real-world value (email, name) changes, every reference must change."
       },
       {
        "id": "M04.U02.Q4",
@@ -298,7 +298,7 @@
      "title": "SQL 3 — Writing data, views, CTEs, upserts (Lectures 3–4)",
      "hours": 5,
      "depth": "core",
-     "week": 21,
+     "week": 45,
      "prerequisites": [
       "M04.U02"
      ],
@@ -393,7 +393,7 @@
         "Transactions"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A CTE names an intermediate result so a complex query reads top to bottom and can reuse it."
       },
       {
        "id": "M04.U03.Q2",
@@ -406,7 +406,7 @@
         "A trigger"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A normal view stores only its query text; it runs against the base tables each time you select from it."
       },
       {
        "id": "M04.U03.Q3",
@@ -419,7 +419,7 @@
         "Is MySQL-only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "An upsert (INSERT … ON CONFLICT DO UPDATE in Postgres) inserts new rows and updates existing ones."
       },
       {
        "id": "M04.U03.Q4",
@@ -438,7 +438,7 @@
      "title": "SQL 4 — Indexes, transactions and EXPLAIN (Lecture 5)",
      "hours": 5,
      "depth": "core",
-     "week": 22,
+     "week": 45,
      "prerequisites": [
       "M04.U03"
      ],
@@ -538,7 +538,7 @@
         "Security"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Every insert or update must also maintain each index, and indexes take disk space."
       },
       {
        "id": "M04.U04.Q2",
@@ -551,7 +551,7 @@
         "Idempotency"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "ACID = Atomicity, Consistency, Isolation, Durability; isolation controls what concurrent transactions see."
       },
       {
        "id": "M04.U04.Q3",
@@ -564,7 +564,7 @@
         "Cached"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A sequential scan reads every row of the table; on a large table with a selective filter an index may help."
       },
       {
        "id": "M04.U04.Q4",
@@ -584,7 +584,7 @@
      "title": "PostgreSQL in practice (windows, JSONB, timestamptz, roles, injection, backups)",
      "hours": 7,
      "depth": "core",
-     "week": 23,
+     "week": 45,
      "prerequisites": [
       "M04.U04",
       "M02.U15"
@@ -757,7 +757,7 @@
         "Needs joins"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Window functions add a computed column (rank, running total) without collapsing rows like GROUP BY does."
       },
       {
        "id": "M04.U05.Q2",
@@ -770,7 +770,7 @@
         "int seconds always"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "timestamptz stores an absolute instant (normalised to UTC), avoiding timezone ambiguity."
       },
       {
        "id": "M04.U05.Q3",
@@ -783,7 +783,7 @@
         "JSONB keeps whitespace"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "JSONB is stored decomposed in binary, supports GIN indexes and fast operators; JSON keeps the raw text."
       },
       {
        "id": "M04.U05.Q4",
@@ -803,7 +803,7 @@
      "title": "SQL from Python: parameters, SQLAlchemy, Alembic, pooling",
      "hours": 6,
      "depth": "core",
-     "week": 25,
+     "week": 46,
      "prerequisites": [
       "M04.U05"
      ],
@@ -910,7 +910,7 @@
         "String concatenation"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Parameters are sent separately from the SQL text, so input cannot change the query (no SQL injection)."
       },
       {
        "id": "M04.U06.Q2",
@@ -923,7 +923,7 @@
         "Backups"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Tools like Alembic keep an ordered, versioned list of schema changes and record which are applied."
       },
       {
        "id": "M04.U06.Q3",
@@ -936,7 +936,7 @@
         "Indexes"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A pool reuses open connections instead of paying the connect and auth cost on every request."
       },
       {
        "id": "M04.U06.Q4",
@@ -962,7 +962,7 @@
      "title": "NumPy arrays",
      "hours": 7,
      "depth": "core",
-     "week": 27,
+     "week": 47,
      "prerequisites": [
       "M01.U11"
      ],
@@ -1096,7 +1096,7 @@
         "(3,)"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Broadcasting stretches size-1 dimensions: (3,1) with (1,4) gives (3,4)."
       },
       {
        "id": "M04.U07.Q2",
@@ -1109,7 +1109,7 @@
         "A scalar"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Basic slices share memory with the original array; modify the view and the original changes. Use .copy() if needed."
       },
       {
        "id": "M04.U07.Q3",
@@ -1122,7 +1122,7 @@
         "(5,3)"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "axis=0 sums down the rows, removing that axis and leaving one value per column: shape (3,)."
       },
       {
        "id": "M04.U07.Q4",
@@ -1148,7 +1148,7 @@
      "title": "Jupyter + pandas basics",
      "hours": 6,
      "depth": "core",
-     "week": 28,
+     "week": 47,
      "prerequisites": [
       "M04.U07"
      ],
@@ -1259,7 +1259,7 @@
         "loc is for columns only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "loc selects by index labels (inclusive slices); iloc selects by integer position (exclusive end)."
       },
       {
        "id": "M04.U08.Q2",
@@ -1272,7 +1272,7 @@
         "Nothing"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Restarting clears all state, so running every cell in order proves the notebook works from scratch."
       },
       {
        "id": "M04.U08.Q3",
@@ -1285,7 +1285,7 @@
         "A CSV"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A Series is a single labelled column: values plus an index. A DataFrame is a table of Series."
       },
       {
        "id": "M04.U08.Q4",
@@ -1304,7 +1304,7 @@
      "title": "Loading and cleaning messy data (pandas 3 aware)",
      "hours": 7,
      "depth": "core",
-     "week": 30,
+     "week": 48,
      "prerequisites": [
       "M04.U08"
      ],
@@ -1407,7 +1407,7 @@
         "Duplicates"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "dropna() defaults to axis=0, how='any': it removes every row with at least one missing value."
       },
       {
        "id": "M04.U09.Q2",
@@ -1420,7 +1420,7 @@
         "Same"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Parquet stores typed columns with compression, so it is smaller, faster to read and keeps dtypes."
       },
       {
        "id": "M04.U09.Q3",
@@ -1452,7 +1452,7 @@
      "title": "Joining, grouping and time series",
      "hours": 6,
      "depth": "core",
-     "week": 32,
+     "week": 48,
      "prerequisites": [
       "M04.U09",
       "M04.U01"
@@ -1563,7 +1563,7 @@
         "CROSS JOIN"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "how='left' keeps every row of the left frame, with NaN where the right frame has no match."
       },
       {
        "id": "M04.U10.Q2",
@@ -1576,7 +1576,7 @@
         "JOIN"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "groupby splits rows by key and agg computes summaries per group, like SQL GROUP BY with aggregates."
       },
       {
        "id": "M04.U10.Q3",
@@ -1589,7 +1589,7 @@
         "Offset +00"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "A naive datetime has no tzinfo, so the instant it means is ambiguous; use aware datetimes."
       },
       {
        "id": "M04.U10.Q4",
@@ -1609,7 +1609,7 @@
      "title": "Visualisation and EDA",
      "hours": 5,
      "depth": "core",
-     "week": 33,
+     "week": 49,
      "prerequisites": [
       "M04.U10"
      ],
@@ -1687,7 +1687,7 @@
         "A table only"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Box/violin plots and histograms show spread and shape per group, not just a single number."
       },
       {
        "id": "M04.U11.Q2",
@@ -1700,7 +1700,7 @@
         "A number"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Two variables can move together because of a confounder or chance; correlation alone does not show cause."
       },
       {
        "id": "M04.U11.Q3",
@@ -1713,7 +1713,7 @@
         "The median"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Tukey's rule flags values more than 1.5×IQR below Q1 or above Q3."
       },
       {
        "id": "M04.U11.Q4",
@@ -1731,7 +1731,7 @@
      "title": "DuckDB and Polars awareness",
      "hours": 3,
      "depth": "core",
-     "week": 34,
+     "week": 49,
      "prerequisites": [
       "M04.U10"
      ],
@@ -1798,7 +1798,7 @@
         "A cache"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "DuckDB runs inside your process (like SQLite) but is built for analytical, column-oriented queries."
       },
       {
        "id": "M04.U12.Q2",
@@ -1811,7 +1811,7 @@
         "Needs GPUs"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Lazy frames record operations, then optimise the whole plan (predicate pushdown etc.) when you call .collect()."
       },
       {
        "id": "M04.U12.Q3",
@@ -1824,7 +1824,7 @@
         "A file"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Postgres is row-oriented and built for many small transactional reads and writes (OLTP)."
       },
       {
        "id": "M04.U12.Q4",
@@ -1850,7 +1850,7 @@
      "title": "Data integrity: contracts, provenance, licensing, snapshots",
      "hours": 4,
      "depth": "core",
-     "week": 34,
+     "week": 49,
      "prerequisites": [
       "M04.U09"
      ],
@@ -1949,7 +1949,7 @@
         "Git conflicts"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Validating schema and ranges at the boundary stops bad data before it silently breaks downstream jobs."
       },
       {
        "id": "M04.U13.Q2",
@@ -1962,7 +1962,7 @@
         "Cost"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Provenance (lineage) records the source of data and every transformation applied to it."
       },
       {
        "id": "M04.U13.Q3",
@@ -1975,7 +1975,7 @@
         "GDPR-exempt"
        ],
        "answer": 1,
-       "explain": ""
+       "explain": "Being able to download data says nothing about its licence, terms or privacy; check before using it."
       },
       {
        "id": "M04.U13.Q4",

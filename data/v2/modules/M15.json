@@ -27,6 +27,7 @@
      "title": "Images as tensors, pretrained vision and transfer learning",
      "hours": 6,
      "depth": "core",
+     "week": 103,
      "prerequisites": [],
      "outcomes": [
       "You can load, augment and batch image data as N×C×H×W tensors in PyTorch.",
@@ -167,6 +168,7 @@
      "title": "Vision-language models in products: structured extraction from images",
      "hours": 5,
      "depth": "core",
+     "week": 104,
      "prerequisites": [
       "M15.U01"
      ],
@@ -319,6 +321,7 @@
      "title": "Document AI and multimodal RAG",
      "hours": 6,
      "depth": "core",
+     "week": 104,
      "prerequisites": [
       "M15.U02"
      ],
@@ -464,6 +467,7 @@
      "title": "Speech: waveforms, spectrograms, ASR, TTS",
      "hours": 7,
      "depth": "core",
+     "week": 105,
      "prerequisites": [
       "M15.U01"
      ],
@@ -616,6 +620,7 @@
      "title": "Realtime voice agents: VAD, turn-taking, latency",
      "hours": 5,
      "depth": "core",
+     "week": 105,
      "prerequisites": [
       "M15.U04",
       "M12.U03"
@@ -758,6 +763,7 @@
      "title": "Multimodal evaluation",
      "hours": 3,
      "depth": "core",
+     "week": 106,
      "prerequisites": [
       "M15.U02",
       "M15.U04"

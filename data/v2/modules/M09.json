@@ -22,6 +22,7 @@
      "title": "The LLM lifecycle in one sitting",
      "hours": 5,
      "depth": "core",
+     "week": 69,
      "prerequisites": [],
      "outcomes": [
       "You can draw the pipeline pretraining data → base model → SFT → RL → deployed assistant and say what each stage changes.",
@@ -158,6 +159,7 @@
      "title": "Text normalization, n-grams and word vectors",
      "hours": 8,
      "depth": "core",
+     "week": 70,
      "prerequisites": [
       "M09.U01"
      ],
@@ -308,6 +310,7 @@
      "title": "Subword tokenization (BPE) and tokenizer pitfalls",
      "hours": 8,
      "depth": "core",
+     "week": 71,
      "prerequisites": [
       "M09.U02"
      ],
@@ -440,6 +443,7 @@
      "title": "Batching text: padding, truncation, attention masks",
      "hours": 4,
      "depth": "core",
+     "week": 71,
      "prerequisites": [
       "M09.U03"
      ],
@@ -576,6 +580,7 @@
      "title": "Neural language modelling, loss and perplexity",
      "hours": 10,
      "depth": "core",
+     "week": 72,
      "prerequisites": [
       "M09.U02"
      ],
@@ -719,6 +724,7 @@
      "title": "Self-attention from scratch",
      "hours": 10,
      "depth": "core",
+     "week": 73,
      "prerequisites": [
       "M09.U05"
      ],
@@ -882,6 +888,7 @@
      "title": "The Transformer block and a GPT model",
      "hours": 14,
      "depth": "core",
+     "week": 74,
      "prerequisites": [
       "M09.U06"
      ],
@@ -1064,6 +1071,7 @@
      "title": "Pretraining a small LM and scaling intuition",
      "hours": 10,
      "depth": "core",
+     "week": 75,
      "prerequisites": [
       "M09.U07"
      ],
@@ -1227,6 +1235,7 @@
      "title": "Decoding and sampling controls",
      "hours": 4,
      "depth": "core",
+     "week": 75,
      "prerequisites": [
       "M09.U08"
      ],
@@ -1365,6 +1374,7 @@
      "title": "Inference mechanics: context window, prefill/decode, KV cache",
      "hours": 5,
      "depth": "core",
+     "week": 76,
      "prerequisites": [
       "M09.U07"
      ],
@@ -1511,6 +1521,7 @@
      "title": "HF ecosystem: datasets, Trainer and fine-tuning a classifier",
      "hours": 12,
      "depth": "core",
+     "week": 77,
      "prerequisites": [
       "M09.U04",
       "M09.U07"

@@ -25,6 +25,7 @@
      "title": "Information retrieval basics, BM25 and ranking metrics",
      "hours": 8,
      "depth": "core",
+     "week": 84,
      "prerequisites": [
       "M10.U01"
      ],
@@ -170,6 +171,7 @@
      "title": "Build a retrieval test set and evaluation harness",
      "hours": 6,
      "depth": "core",
+     "week": 85,
      "prerequisites": [
       "M11.U01",
       "M10.U08"
@@ -307,6 +309,7 @@
      "title": "Ingestion and parsing: HTML, PDF, OCR, tables, provenance",
      "hours": 8,
      "depth": "core",
+     "week": 85,
      "prerequisites": [],
      "outcomes": [
       "You can parse mixed documents (multi-column PDF, scanned notice, HTML, tables) and check extraction quality.",
@@ -476,6 +479,7 @@
      "title": "Chunking strategies and context reconstruction",
      "hours": 8,
      "depth": "core",
+     "week": 86,
      "prerequisites": [
       "M11.U03",
       "M11.U02"
@@ -682,6 +686,7 @@
      "title": "Embedding models: selection, asymmetry, efficiency",
      "hours": 8,
      "depth": "core",
+     "week": 87,
      "prerequisites": [
       "M09.U07",
       "M11.U02"
@@ -870,6 +875,7 @@
      "title": "Exact vs approximate search: HNSW, IVF, PQ, FAISS",
      "hours": 8,
      "depth": "core",
+     "week": 88,
      "prerequisites": [
       "M11.U05"
      ],
@@ -1006,6 +1012,7 @@
      "title": "Vector databases in practice: pgvector/Qdrant, filters, re-indexing",
      "hours": 8,
      "depth": "core",
+     "week": 89,
      "prerequisites": [
       "M11.U06"
      ],
@@ -1174,6 +1181,7 @@
      "title": "Dense, hybrid search and rank fusion",
      "hours": 5,
      "depth": "core",
+     "week": 89,
      "prerequisites": [
       "M11.U01",
       "M11.U05"
@@ -1305,6 +1313,7 @@
      "title": "Reranking, diversity and late interaction",
      "hours": 5,
      "depth": "core",
+     "week": 90,
      "prerequisites": [
       "M11.U08"
      ],
@@ -1447,6 +1456,7 @@
      "title": "Query transformation and advanced retrieval patterns",
      "hours": 8,
      "depth": "core",
+     "week": 90,
      "prerequisites": [
       "M11.U09",
       "M10.U03"
@@ -1658,6 +1668,7 @@
      "title": "Grounded answering: packing, citations, abstention, conflicts, freshness",
      "hours": 6,
      "depth": "core",
+     "week": 91,
      "prerequisites": [
       "M11.U09",
       "M10.U05"
@@ -1853,6 +1864,7 @@
      "title": "Evaluating RAG end to end",
      "hours": 6,
      "depth": "core",
+     "week": 91,
      "prerequisites": [
       "M11.U11",
       "M10.U09"

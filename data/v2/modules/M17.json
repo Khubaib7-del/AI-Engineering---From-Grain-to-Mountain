@@ -30,6 +30,7 @@
      "title": "Model serving patterns: REST, batching, ONNX, demos, cold starts",
      "hours": 8,
      "depth": "core",
+     "week": 116,
      "prerequisites": [
       "M16.U07"
      ],
@@ -219,6 +220,7 @@
      "title": "Managed vs self-hosted inference; economics; free deploy targets",
      "hours": 4,
      "depth": "core",
+     "week": 116,
      "prerequisites": [
       "M17.U01"
      ],
@@ -365,6 +367,7 @@
      "title": "Inference internals: KV cache, continuous batching, prefix caching, prefill vs decode",
      "hours": 8,
      "depth": "core",
+     "week": 117,
      "prerequisites": [
       "M17.U01"
      ],
@@ -555,6 +558,7 @@
      "title": "Quantization and local serving with llama.cpp",
      "hours": 6,
      "depth": "core",
+     "week": 117,
      "prerequisites": [
       "M17.U03"
      ],
@@ -688,6 +692,7 @@
      "title": "vLLM serving, speculative decoding and engine selection",
      "hours": 8,
      "depth": "core",
+     "week": 118,
      "prerequisites": [
       "M17.U03",
       "M17.U04",
@@ -869,6 +874,7 @@
      "title": "Inference metrics: TTFT, TPOT/ITL, goodput, percentiles",
      "hours": 4,
      "depth": "core",
+     "week": 118,
      "prerequisites": [
       "M17.U05"
      ],
@@ -997,6 +1003,7 @@
      "title": "Load testing LLM APIs and capacity planning",
      "hours": 6,
      "depth": "core",
+     "week": 119,
      "prerequisites": [
       "M17.U06"
      ],
@@ -1144,8 +1151,8 @@
      "title": "Gateway, quotas, caching, batch APIs and routing (implementation)",
      "hours": 8,
      "depth": "core",
+     "week": 119,
      "prerequisites": [
-      "M22.U11",
       "M16.U12",
       "M17.U05"
      ],
@@ -1315,6 +1322,7 @@
      "title": "Autoscaling and Kubernetes for inference",
      "hours": 6,
      "depth": "core",
+     "week": 120,
      "prerequisites": [
       "M21.U13",
       "M17.U07"
@@ -1462,6 +1470,7 @@
      "title": "Reliability, security and FinOps for LLM services",
      "hours": 6,
      "depth": "core",
+     "week": 120,
      "prerequisites": [
       "M17.U08"
      ],
