@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   Button,
-  Eyebrow,
+  Chip,
   Icon,
   Meter,
   Panel,
@@ -15,194 +14,236 @@ import {
   usePalette,
   useWide,
 } from '../../components/ui';
-import { MotionPress, Reveal } from '../../components/motion';
-import { LearningOrbit, PracticeMode } from '../../components/workshop';
-import { lessons, modules } from '../../lib/content';
-import { availableLesson } from '../../lib/planner';
+import { findUnit, lessons, unitIds, weeks } from '../../lib/content';
+import { isPassed, stepFraction, unitStatus } from '../../lib/assess';
+import { availableLesson, reviewDue } from '../../lib/planner';
+import { streaks } from '../../lib/activity';
 import { useLearning } from '../../lib/store';
-export default function Today() {
-  const { state } = useLearning(),
-    c = usePalette(),
-    wide = useWide(),
-    [mode, setMode] = useState(0),
-    lesson = availableLesson(lessons, state),
-    completed = lessons.filter(l => state.lessons[l.id]?.completedAt).length;
-  const descriptions = lesson?.tasks.map(t => t.description) ?? [
-    'Explore your next module.',
-    'Build something of your own.',
-    'Explain what you discovered.',
-  ];
+import { usePath } from '../../lib/use-path';
+import { TRACK_LABEL } from '../../lib/path';
+
+const STATUS_ICON: Record<string, string> = {
+  passed: 'checkmark-circle',
+  'in-progress': 'timer',
+  available: 'ellipse-outline',
+  locked: 'circle-dashed',
+};
+
+function SetupCard() {
+  const c = usePalette();
   return (
-    <Screen>
-      <View style={{ gap: 12 }}>
-        <Eyebrow>
-          THE LEARNING LAB /{' '}
-          {new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' }).toUpperCase()}
-        </Eyebrow>
-        <Txt
-          accessibilityRole="header"
-          size={wide ? 72 : 43}
-          weight="600"
-          style={{ maxWidth: 850, letterSpacing: wide ? -3 : -1.8 }}
-        >
-          {'Build a mind.\nThen build anything.'}
-        </Txt>
-        <Txt color={c.muted} size={17}>
-          Your private space to understand, experiment, and create.
+    <Panel style={{ borderColor: c.signal }}>
+      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <Icon name="route" color={c.signal} />
+        <Txt size={18} weight="700" style={{ flex: 1 }}>
+          Personalise your path
         </Txt>
       </View>
-      <View
-        style={{
-          backgroundColor: c.hero,
-          borderRadius: 24,
-          borderWidth: 1,
-          borderColor: c.line,
-          padding: wide ? 32 : 22,
-          gap: 24,
-        }}
-      >
-        <View
-          style={{ flexDirection: wide ? 'row' : 'column', alignItems: wide ? 'center' : 'stretch', gap: 24 }}
-        >
-          <View style={{ flex: wide ? 1 : undefined, gap: 20 }}>
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-              <View style={{ height: 8, width: 8, borderRadius: 4, backgroundColor: c.accent }} />
-              <Eyebrow>
-                {lesson ? `EXPERIMENT ${String(lesson.day).padStart(2, '0')} / 28` : 'FOUNDATIONS COMPLETE'}
-              </Eyebrow>
-            </View>
-            <Txt size={wide ? 38 : 28} weight="600">
-              {lesson?.title ?? 'Your next chapter starts here.'}
-            </Txt>
-            <Txt color={c.muted} size={15}>
-              {lesson
-                ? `${lesson.estimatedMinutes} minutes · Watch, build, recall`
-                : 'Explore the full curriculum and choose your next build.'}
-            </Txt>
-            <View style={{ alignSelf: 'flex-start' }}>
-              <Button
-                title={lesson ? 'Open lesson' : 'Continue your path'}
-                testID="open-lesson"
-                icon="arrow-forward"
-                onPress={() => (lesson ? router.push(`/session/${lesson.id}`) : router.push('/path'))}
-              />
-            </View>
-          </View>
-          {wide && <LearningOrbit active={mode} onChange={setMode} />}
-        </View>
-        <View style={{ borderTopWidth: 1, borderColor: c.line, paddingTop: 20 }}>
-          <PracticeMode active={mode} onChange={setMode} descriptions={descriptions} />
-        </View>
-      </View>
-      <Split>
-        <Panel style={{ flex: 1.35, gap: 20 }}>
-          <Section title="Your practice board" aside={`${completed} / 28 saved`} />
-          <Txt size={14} color={c.muted}>
-            Each tile is a small experiment. Fill it with something you made.
-          </Txt>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-            {lessons.map(l => {
-              const done = !!state.lessons[l.id]?.completedAt,
-                current = l.id === lesson?.id;
-              return (
-                <MotionPress
-                  key={l.id}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Day ${l.day}: ${l.title}${done ? ', complete' : ''}`}
-                  onPress={() => router.push(`/session/${l.id}`)}
-                  style={{
-                    width: wide ? 45 : 36,
-                    height: wide ? 45 : 40,
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: done ? c.accent : current ? c.hero : c.bg,
-                    borderWidth: 1,
-                    borderColor: current ? c.accent : c.line,
-                  }}
-                >
-                  {done ? (
-                    <Icon name="checkmark" size={18} color={c.onAccent} />
-                  ) : (
-                    <Txt size={12} weight={current ? '700' : '400'} color={current ? c.accent : c.muted}>
-                      {String(l.day).padStart(2, '0')}
-                    </Txt>
-                  )}
-                </MotionPress>
-              );
-            })}
-          </View>
-          <Meter value={completed / 28} label="Completed foundation lessons" />
-          <Eyebrow>YOUR LEARNING JOURNEY</Eyebrow>
-          <Txt size={13} color={c.muted}>
-            No streak to protect. Just a body of work to grow.
-          </Txt>
-        </Panel>
-        <Panel
-          style={{
-            flex: 1,
-            backgroundColor: c.soft,
-            borderColor: c.line,
-            justifyContent: 'space-between',
-            gap: 20,
-          }}
-        >
-          <View style={{ gap: 16 }}>
-            <Icon name="map-outline" size={32} />
-            <Eyebrow>ZOOM OUT</Eyebrow>
-            <Txt size={30} weight="600">
-              {'From “hello world”\nto your own AI.'}
-            </Txt>
-            <Txt size={14} color={c.muted}>
-              Four chapters. {modules.length} modules. A map of ideas that connect as you go.
-            </Txt>
-          </View>
-          <Button
-            title="Explore your path"
-            secondary
-            icon="arrow-forward"
-            onPress={() => router.push('/path')}
+      <Txt color={c.muted}>
+        Pick your role, your starting point and your weekly hours. It takes about a minute and you can change
+        it any time.
+      </Txt>
+      <Button title="Set up my path" icon="arrow-forward" onPress={() => router.push('/start')} />
+    </Panel>
+  );
+}
+
+function LegacyToday() {
+  const c = usePalette();
+  const { state } = useLearning();
+  const lesson = availableLesson(lessons, state);
+  const done = lessons.filter(l => state.lessons[l.id]?.completedAt).length;
+  const start = Math.min(done, lessons.length - 3);
+  return (
+    <>
+      <Panel>
+        <Txt size={13} weight="600" color={c.muted}>
+          {lesson ? `Guided day ${lesson.day} of ${lessons.length}` : 'Guided days complete'}
+        </Txt>
+        <Txt size={26} weight="700">
+          {lesson?.title ?? 'Continue on the map'}
+        </Txt>
+        {lesson && <Txt color={c.muted}>{lesson.estimatedMinutes} minutes · Watch, build, recall</Txt>}
+        <Button
+          title={lesson ? 'Open lesson' : 'Open the map'}
+          testID="open-lesson"
+          icon="arrow-forward"
+          onPress={() => (lesson ? router.push(`/session/${lesson.id}`) : router.navigate('/map'))}
+        />
+      </Panel>
+      <Panel>
+        <Section title="Up next" aside={`${done}/${lessons.length} done`} />
+        {lessons.slice(start, start + 3).map((l, i) => (
+          <Row
+            key={l.id}
+            title={l.title}
+            leading={`D${String(l.day).padStart(2, '0')}`}
+            subtitle={`${l.estimatedMinutes} min · ${state.lessons[l.id]?.completedAt ? 'Done' : 'Watch / Build / Recall'}`}
+            onPress={() => router.push(`/session/${l.id}`)}
+            last={i === 2}
           />
-        </Panel>
-      </Split>
-      <View style={{ gap: 12 }}>
-        <Section title="On your workbench" aside="Up next" />
-        {lessons.slice(Math.min(completed, 25), Math.min(completed, 25) + 3).map(l => (
-          <Reveal key={l.id}>
-            <Row
-              title={l.title}
-              leading={String(l.day).padStart(2, '0')}
-              subtitle={`${l.estimatedMinutes} min · ${state.lessons[l.id]?.completedAt ? 'Work saved' : 'Watch / Build / Recall'}`}
-              onPress={() => router.push(`/session/${l.id}`)}
-            />
-          </Reveal>
         ))}
-      </View>
-      <MotionPress
-        accessibilityRole="button"
-        accessibilityLabel="Choose your reminder times"
-        onPress={() => router.push('/settings')}
-        style={{
-          padding: 20,
-          borderRadius: 20,
-          borderWidth: 1,
-          borderColor: c.line,
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 14,
-        }}
-      >
-        <Icon name="notifications-outline" color={c.accent} />
-        <View style={{ flex: 1 }}>
-          <Txt size={15} weight="600">
-            Give your curiosity a time slot.
-          </Txt>
-          <Txt size={13} color={c.muted}>
-            Set a rhythm that fits your day.
-          </Txt>
-        </View>
-        <Icon name="arrow-forward" size={20} />
-      </MotionPress>
+      </Panel>
+    </>
+  );
+}
+
+export default function Today() {
+  const c = usePalette();
+  const wide = useWide();
+  const { state } = useLearning();
+  const path = usePath();
+  const onboarded = !!state.profile?.onboarded;
+  const current = path.current;
+  const week = path.week;
+  const sortedWeeks = [...weeks].sort((a, b) => a.week - b.week);
+  const upcoming = week ? sortedWeeks.filter(w => w.week > week.week).slice(0, 3) : [];
+  const due = lessons.filter(l => state.lessons[l.id]?.completedAt && reviewDue(state.lessons[l.id])).length;
+  const streak = streaks(state.activity).current;
+  const weekUnits = (week?.units ?? [])
+    .map(id => findUnit(id))
+    .filter((u): u is NonNullable<typeof u> => !!u);
+  const weekPassed = weekUnits.filter(u => isPassed(u.unit.id, state)).length;
+  const dateLabel = new Date().toLocaleDateString(undefined, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  return (
+    <Screen
+      title="Today"
+      eyebrow={dateLabel}
+      docTitle="Today"
+      subtitle={
+        onboarded
+          ? `${TRACK_LABEL[state.profile!.track]} · ${state.profile!.hoursPerWeek} h a week${streak ? ` · ${streak}-day streak` : ''}`
+          : undefined
+      }
+    >
+      {!onboarded && <SetupCard />}
+      {!path.hasV2 || !weeks.length ? (
+        <LegacyToday />
+      ) : (
+        <>
+          {current ? (
+            <Panel style={{ gap: 16 }}>
+              <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                <Chip text="Continue" tone="signal" icon="footprints" />
+                <Txt size={13} color={c.muted}>
+                  {current.module.id} · {current.module.title}
+                </Txt>
+              </View>
+              <Txt size={wide ? 32 : 26} weight="700">
+                {current.unit.title}
+              </Txt>
+              <Txt color={c.muted}>
+                {current.unit.learn.slice
+                  ? `${current.unit.learn.title} — ${current.unit.learn.slice}`
+                  : current.unit.learn.title}
+              </Txt>
+              <Meter value={current.progress} label="Steps done in this unit" />
+              <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+                <Button
+                  title={current.progress > 0 ? 'Continue unit' : 'Start unit'}
+                  testID="open-lesson"
+                  icon="arrow-forward"
+                  onPress={() => router.push(`/unit/${current.unit.id}`)}
+                />
+                <Txt size={13} color={c.muted}>
+                  {Math.round(current.progress * 100)}% · about {current.unit.hours} h
+                </Txt>
+              </View>
+            </Panel>
+          ) : (
+            <Panel>
+              <Txt size={24} weight="700">
+                Every unit on your path is passed.
+              </Txt>
+              <Txt color={c.muted}>
+                Finish any remaining capstones on the map, or switch role in Settings to explore another
+                branch.
+              </Txt>
+              <Button title="Open the map" icon="arrow-forward" onPress={() => router.navigate('/map')} />
+            </Panel>
+          )}
+          <Split>
+            <Panel style={{ flex: 1.4 }}>
+              <Section
+                title={week ? `Week ${week.week} · ${week.title}` : 'This week'}
+                aside={`${weekPassed}/${weekUnits.length} passed`}
+              />
+              <Txt size={13} color={c.muted}>
+                Planned {week?.hours ?? 0} h · your goal {path.hoursPerWeek} h/week
+                {week && week.hours > path.hoursPerWeek ? ' — this week may stretch over two' : ''}
+              </Txt>
+              {weekUnits.map(({ unit, module }, i) => {
+                const st = unitStatus(unit, state, unitIds);
+                return (
+                  <Row
+                    key={unit.id}
+                    title={unit.title}
+                    subtitle={`${module.id} · ${unit.hours} h · ${st === 'in-progress' ? `${Math.round(stepFraction(unit, state) * 100)}% done` : st.replace('-', ' ')}`}
+                    leading={
+                      <Icon name={STATUS_ICON[st]} size={20} color={st === 'locked' ? c.faint : c.ink} />
+                    }
+                    onPress={() => router.push(`/unit/${unit.id}`)}
+                    last={i === weekUnits.length - 1}
+                  />
+                );
+              })}
+            </Panel>
+            <Panel style={{ flex: 1 }}>
+              <Section title="Coming up" />
+              {upcoming.length ? (
+                upcoming.map((w, i) => (
+                  <View
+                    key={w.week}
+                    style={{
+                      paddingVertical: 10,
+                      borderBottomWidth: i === upcoming.length - 1 ? 0 : 1,
+                      borderColor: c.line,
+                      gap: 2,
+                    }}
+                  >
+                    <Txt size={12} weight="700" color={c.muted}>
+                      WEEK {w.week} · {w.hours} H
+                    </Txt>
+                    <Txt size={15} weight="500">
+                      {w.title}
+                    </Txt>
+                  </View>
+                ))
+              ) : (
+                <Txt size={14} color={c.muted}>
+                  This is the last planned week.
+                </Txt>
+              )}
+              <Txt size={13} color={c.muted}>
+                Projected finish at {path.hoursPerWeek} h/week:{' '}
+                {path.finish.date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}
+              </Txt>
+            </Panel>
+          </Split>
+        </>
+      )}
+      {due > 0 && (
+        <Row
+          title={`${due} review${due > 1 ? 's' : ''} due`}
+          subtitle="Explain a past lesson without notes"
+          leading={<Icon name="refresh" />}
+          onPress={() => router.navigate('/progress')}
+        />
+      )}
+      {Platform.OS !== 'web' && (
+        <Row
+          title="Study reminders"
+          subtitle="Pick times that fit your day"
+          leading={<Icon name="notifications-outline" />}
+          onPress={() => router.push('/settings')}
+          last
+        />
+      )}
     </Screen>
   );
 }
