@@ -84,3 +84,29 @@ export const TRACK_LABEL: Record<TrackId | 'undecided', string> = {
   mlops: 'MLOps Engineer',
   undecided: 'Shared trunk (role not chosen yet)',
 };
+
+/**
+ * Hours of planned work still open in a week: each unpassed unit contributes its
+ * allocation for this week (or its full hours) scaled by the steps not yet done.
+ */
+export function weekHoursLeft(
+  week: Week | undefined,
+  hoursOf: (id: string) => number | undefined,
+  state: LearningState,
+  fractionDone: (id: string) => number,
+) {
+  if (!week) return 0;
+  let left = 0;
+  for (const id of week.units) {
+    if (isPassed(id, state)) continue;
+    const h = week.allocation?.[id] ?? hoursOf(id) ?? 0;
+    left += h * (1 - Math.max(0, Math.min(1, fractionDone(id))));
+  }
+  return Math.round(left * 2) / 2;
+}
+
+/** "Week 3 of 12 · 4 h left this week" */
+export function weekLabel(weekNo: number, totalWeeks: number, hoursLeft: number) {
+  const h = hoursLeft === 0 ? 'nothing left this week' : `${hoursLeft} h left this week`;
+  return `Week ${weekNo} of ${totalWeeks} · ${h}`;
+}
