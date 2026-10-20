@@ -20,10 +20,39 @@ import {
 } from '../components/ui';
 import { useAuth } from '../lib/auth';
 import { useLearning } from '../lib/store';
-import { allUnits, conceptCount, modules, phases, resources, tracks } from '../lib/content';
+import {
+  allUnits,
+  conceptCount,
+  hasV2,
+  modules,
+  phases,
+  resources,
+  tracks,
+  v2CoreHours,
+  v2Modules,
+  v2Phases,
+  weeks,
+} from '../lib/content';
 import type { Activity } from '../lib/types';
 
-const TOTAL_HOURS = modules.reduce((n, m) => n + m.hours, 0);
+const TOTAL_HOURS = hasV2 ? v2CoreHours : modules.reduce((n, m) => n + m.hours, 0);
+const years = (perWeek: number) => TOTAL_HOURS / perWeek / 52;
+const yearsText = (perWeek: number) => {
+  const y = years(perWeek);
+  return y < 2 ? 'under two years' : `about ${Math.round(y * 2) / 2} years`;
+};
+/** Roadmap groups: the v2 phases when the v2 curriculum is bundled, else the legacy camps. */
+const ROADMAP: { title: string; caption: string; items: { id: string; title: string }[] }[] = hasV2
+  ? v2Phases.map(p => ({
+      title: p.title.replace(/^(P\d+)\s+/, '$1 · ').toUpperCase(),
+      caption: p.title.replace(/^P\d+\s+/, ''),
+      items: p.modules.map(m => ({ id: m.id, title: m.title })),
+    }))
+  : phases.map((p, i) => ({
+      title: ['BASE CAMP', 'CAMP 1', 'CAMP 2', 'SUMMIT RIDGE'][i],
+      caption: p.caption,
+      items: p.ids.map(id => ({ id, title: modules.find(m => m.id === id)?.title ?? id })),
+    }));
 
 const FAQ = [
   [
@@ -32,7 +61,7 @@ const FAQ = [
   ],
   [
     'How long will it take?',
-    `The core path is about ${TOTAL_HOURS.toLocaleString()} hours. At 10 hours a week that is roughly three and a half years of evenings; at 20 hours, under two. Your weekly plan and projected finish update to the hours you choose, and the placement check lets you skip what you already know.`,
+    `The core path is about ${TOTAL_HOURS.toLocaleString()} hours${hasV2 ? `, laid out as a ${weeks.length}-week plan` : ''}. At 10 hours a week that is ${yearsText(10)} of evenings; at 20 hours, ${yearsText(20)}. Your weekly plan and projected finish update to the hours you choose, and the placement check lets you skip what you already know.`,
   ],
   [
     'Do I need a CS degree, a GPU or paid API keys?',
@@ -40,7 +69,7 @@ const FAQ = [
   ],
   [
     'Which role should I pick?',
-    'AI Engineer builds LLM apps, retrieval and agents. Forward Deployed Engineer takes those systems into customer environments. MLOps Engineer trains, ships and runs models. All three share the same fundamentals; you can start undecided and choose at Camp 2.',
+    'AI Engineer builds LLM apps, retrieval and agents. Forward Deployed Engineer takes those systems into customer environments. MLOps Engineer trains, ships and runs models. All three share the same fundamentals; you can start undecided and choose once the fundamentals are done.',
   ],
   [
     'Does it work offline and on Android?',
@@ -83,9 +112,10 @@ function demoNodes(): MapNode[] {
     'locked',
     'locked',
   ];
-  return modules.slice(0, 9).map((m, i) => ({
+  const source = hasV2 ? v2Modules : modules;
+  return source.slice(0, 9).map((m, i) => ({
     id: m.id,
-    kind: i === 4 ? 'capstone' : 'module',
+    kind: 'module',
     title: m.title,
     moduleId: m.id,
     moduleTitle: m.title,
@@ -299,9 +329,9 @@ export default function Landing() {
             </View>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: 22, rowGap: 8, paddingTop: 8 }}>
               {[
-                `${modules.length} modules`,
-                `~${TOTAL_HOURS.toLocaleString()} h`,
-                `${conceptCount} concepts`,
+                ...(hasV2
+                  ? [`${v2Modules.length} modules`, `${allUnits.length} units`, `~${TOTAL_HOURS.toLocaleString()} h core`]
+                  : [`${modules.length} modules`, `~${TOTAL_HOURS.toLocaleString()} h`, `${conceptCount} concepts`]),
                 '100% free resources',
                 'Works offline',
               ].map(f => (
@@ -384,25 +414,25 @@ export default function Landing() {
         >
           <SectionHead
             eyebrow="The roadmap"
-            title="Four camps from base to summit."
+            title={hasV2 ? `${ROADMAP.length} phases from base to summit.` : 'Four camps from base to summit.'}
             body="Every role climbs the same trunk of fundamentals, then branches near the top. Browse the whole map without an account."
           />
           <Grid min={260} gap={16}>
-            {phases.map((p, i) => (
-              <Panel key={p.title} style={{ gap: 10, minHeight: 280 }}>
+            {ROADMAP.map(p => (
+              <Panel key={p.title} style={{ gap: 10, minHeight: 220 }}>
                 <Txt size={13} weight="600" color={c.faint}>
-                  {['BASE CAMP', 'CAMP 1', 'CAMP 2', 'SUMMIT RIDGE'][i]} · {p.ids.length} MODULES
+                  {p.title} · {p.items.length} MODULE{p.items.length === 1 ? '' : 'S'}
                 </Txt>
                 <Txt size={19} weight="700">
                   {p.caption}
                 </Txt>
-                {p.ids.map(id => (
-                  <View key={id} style={{ flexDirection: 'row', gap: 10 }}>
+                {p.items.map(m => (
+                  <View key={m.id} style={{ flexDirection: 'row', gap: 10 }}>
                     <Txt size={13} weight="600" color={c.faint} style={{ width: 32 }}>
-                      {id}
+                      {m.id}
                     </Txt>
                     <Txt size={14} color={c.muted} style={{ flex: 1 }}>
-                      {modules.find(m => m.id === id)?.title}
+                      {m.title}
                     </Txt>
                   </View>
                 ))}

@@ -15,7 +15,7 @@ import {
   usePalette,
   useWide,
 } from '../../components/ui';
-import { findUnit, unitIds } from '../../lib/content';
+import { findUnit, unitIds, unitWeek } from '../../lib/content';
 import {
   bestAttempt,
   canPass,
@@ -24,6 +24,7 @@ import {
   isPassed,
   mcqOf,
   missingForPass,
+  optionOrder,
   MIN_SHORT_ANSWER,
   PASS_MARK,
   shortOf,
@@ -206,7 +207,8 @@ function Quiz({
             <Txt size={15} weight="600">
               {qi + 1}. {q.prompt}
             </Txt>
-            {q.options.map((opt, oi) => {
+            {optionOrder(q.id, q.options.length).map(oi => {
+              const opt = q.options[oi];
               const chosen = answers[qi] === oi;
               const isAnswer = !!grade && oi === q.answer;
               const wrongPick = !!grade && chosen && oi !== q.answer;
@@ -480,7 +482,7 @@ export default function UnitScreen() {
           />
           <Chip text={`${unit.hours} h`} icon="clock" />
           <Chip text={unit.depth === 'core' ? 'Core' : 'Deep dive'} />
-          {unit.week && <Chip text={`Week ${unit.week}`} icon="calendar" />}
+          {!!unitWeek.get(unit.id) && <Chip text={`Week ${unitWeek.get(unit.id)}`} icon="calendar" />}
         </View>
       </View>
       <StepTracker done={done} />

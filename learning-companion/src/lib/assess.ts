@@ -101,3 +101,26 @@ export const stepFraction = (unit: Unit, state: LearningState) => {
   const done = stepsDone(unit, state);
   return (Number(done.learn) + Number(done.read) + Number(done.practice) + Number(done.assess)) / 4;
 };
+
+/**
+ * Stable display order for a question's options. The source data keys most
+ * answers to the second option, so options are shown in a per-question shuffled
+ * order (seeded by the question ID, so it never changes between visits). Answers
+ * are still stored and graded as indices into the original `options` array.
+ */
+export function optionOrder(id: string, count: number): number[] {
+  let h = 2166136261;
+  for (let i = 0; i < id.length; i++) h = Math.imul(h ^ id.charCodeAt(i), 16777619);
+  const rand = () => {
+    h = (h + 0x6d2b79f5) | 0;
+    let t = Math.imul(h ^ (h >>> 15), 1 | h);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const order = Array.from({ length: count }, (_, i) => i);
+  for (let i = count - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}

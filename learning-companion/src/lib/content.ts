@@ -21,6 +21,7 @@ import type {
 } from './types';
 import type { LegacyMap } from './migrate';
 import { normaliseType } from './resource-type';
+import { weekOfUnit } from './path';
 
 export { normaliseType };
 
@@ -78,6 +79,8 @@ export const weeks: Week[] = Array.isArray(rawWeeks)
 export const legacyMap: LegacyMap =
   rawLegacyMap && typeof rawLegacyMap === 'object' ? (rawLegacyMap as LegacyMap) : {};
 export const hasV2 = v2Modules.length > 0;
+/** Unit ID → first week of the weekly plan that schedules it (weeks.json is the source of truth). */
+export const unitWeek = weekOfUnit(weeks);
 
 export const allUnits: { unit: Unit; module: ModuleV2 }[] = v2Modules.flatMap(module =>
   module.submodules.flatMap(s => s.units.map(unit => ({ unit, module }))),
@@ -86,6 +89,19 @@ export const unitIds = new Set(allUnits.map(u => u.unit.id));
 export const findUnit = (id: string) => allUnits.find(u => u.unit.id === id);
 export const findModuleV2 = (id: string) => v2Modules.find(m => m.id === id);
 export const v2TopicIds = allUnits.flatMap(u => u.unit.topics.map(t => t.id));
+/** Core hours: the sum of core unit hours, which is also the total of the weekly plan. */
+export const v2CoreHours = allUnits.filter(u => u.unit.depth === 'core').reduce((n, u) => n + u.unit.hours, 0);
+export const v2DeepHours = allUnits.filter(u => u.unit.depth === 'deep').reduce((n, u) => n + u.unit.hours, 0);
+/** v2 phases ("P1 Foundations" …) with their modules, in module order. */
+export const v2Phases: { title: string; modules: ModuleV2[] }[] = (() => {
+  const out: { title: string; modules: ModuleV2[] }[] = [];
+  for (const m of v2Modules) {
+    const last = out.find(p => p.title === m.phase);
+    if (last) last.modules.push(m);
+    else out.push({ title: m.phase, modules: [m] });
+  }
+  return out.sort((a, b) => a.title.localeCompare(b.title));
+})();
 /** IDs a saved topic tick may use: v2 unit topics plus the legacy topics. */
 export const validTopicIds = new Set([...allTopicIds, ...v2TopicIds]);
 

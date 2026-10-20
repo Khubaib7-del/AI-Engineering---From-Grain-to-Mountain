@@ -94,7 +94,7 @@ export default function Today() {
   const { state } = useLearning();
   const path = usePath();
   const onboarded = !!state.profile?.onboarded;
-  const current = path.current;
+  const current = path.today;
   const week = path.week;
   const sortedWeeks = [...weeks].sort((a, b) => a.week - b.week);
   const upcoming = week ? sortedWeeks.filter(w => w.week > week.week).slice(0, 3) : [];
@@ -129,7 +129,7 @@ export default function Today() {
           {current ? (
             <Panel style={{ gap: 16 }}>
               <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-                <Chip text="Continue" tone="signal" icon="footprints" />
+                <Chip text={current.status === 'in-progress' ? 'Continue' : 'Up next'} tone="signal" icon="footprints" />
                 <Txt size={13} color={c.muted}>
                   {current.module.id} · {current.module.title}
                 </Txt>
@@ -145,7 +145,7 @@ export default function Today() {
               <Meter value={current.progress} label="Steps done in this unit" />
               <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
                 <Button
-                  title={current.progress > 0 ? 'Continue unit' : 'Start unit'}
+                  title={current.status === 'in-progress' ? 'Continue unit' : 'Start unit'}
                   testID="open-lesson"
                   icon="arrow-forward"
                   onPress={() => router.push(`/unit/${current.unit.id}`)}
@@ -174,9 +174,12 @@ export default function Today() {
                 aside={`${weekPassed}/${weekUnits.length} passed`}
               />
               {!!week && (
-                <Txt size={16} weight="600">
-                  {week.title}
-                </Txt>
+                <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <Txt size={16} weight="600" style={{ flexShrink: 1 }}>
+                    {week.title}
+                  </Txt>
+                  {week.provisional && <Chip text="Outline" icon="calendar" />}
+                </View>
               )}
               <Txt size={13} color={c.muted}>
                 Planned {week?.hours ?? 0} h · your goal {path.hoursPerWeek} h/week
@@ -188,7 +191,7 @@ export default function Today() {
                   <Row
                     key={unit.id}
                     title={unit.title}
-                    subtitle={`${module.id} · ${unit.hours} h · ${st === 'in-progress' ? `${Math.round(stepFraction(unit, state) * 100)}% done` : st.replace('-', ' ')}`}
+                    subtitle={`${module.id} · ${week?.allocation?.[unit.id] != null && week.allocation[unit.id] !== unit.hours ? `${week.allocation[unit.id]} of ${unit.hours} h this week` : `${unit.hours} h`} · ${st === 'in-progress' ? `${Math.round(stepFraction(unit, state) * 100)}% done` : st.replace('-', ' ')}`}
                     leading={
                       <Icon name={STATUS_ICON[st]} size={20} color={st === 'locked' ? c.faint : c.ink} />
                     }
@@ -197,6 +200,32 @@ export default function Today() {
                   />
                 );
               })}
+              {!!week?.detail?.length && (
+                <View style={{ gap: 8, paddingTop: 8 }}>
+                  <Txt size={12} weight="700" color={c.muted} style={{ letterSpacing: 1 }}>
+                    DAY BY DAY
+                  </Txt>
+                  {week.detail.map((line, i) => {
+                    const m = /^(Day \d+)(?: \(([^)]*)\))?:\s*(.*)$/.exec(line);
+                    return (
+                      <View key={i} style={{ flexDirection: 'row', gap: 10, alignItems: 'flex-start' }}>
+                        <Txt size={13} weight="600" color={c.faint} style={{ width: 52 }}>
+                          {m ? m[1] : `·`}
+                        </Txt>
+                        <Txt size={14} color={c.muted} style={{ flex: 1 }}>
+                          {m ? (m[2] ? `${m[2][0].toUpperCase()}${m[2].slice(1)} — ${m[3]}` : m[3]) : line}
+                        </Txt>
+                      </View>
+                    );
+                  })}
+                </View>
+              )}
+              {week?.provisional && (
+                <Txt size={13} color={c.faint}>
+                  This week is an outline grouped from the unit order; its day-by-day plan is not written yet.
+                  Each unit page has the exact lecture slice and practice.
+                </Txt>
+              )}
             </Panel>
             <Panel style={{ flex: 1 }}>
               <Section title="Coming up" />

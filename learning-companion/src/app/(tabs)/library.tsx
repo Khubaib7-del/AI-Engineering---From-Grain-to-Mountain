@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Linking, Pressable, TextInput, View } from 'react-native';
+import { Linking, Pressable, TextInput, View, type ViewStyle } from 'react-native';
 import { router } from 'expo-router';
 import { resources, unitsUsing } from '../../lib/content';
 import type { Resource } from '../../lib/types';
@@ -34,12 +34,23 @@ const ICON: Record<string, string> = {
   article: 'document-text-outline',
 };
 
-function ResourceCard({ resource: r, onOpen }: { resource: Resource; onOpen: (url: string) => void }) {
+const LANGUAGE: Record<string, string> = { en: 'English', hi: 'Hindi', ur: 'Urdu', 'hi/ur': 'Hindi/Urdu' };
+
+function ResourceCard({
+  resource: r,
+  onOpen,
+  style,
+}: {
+  resource: Resource;
+  onOpen: (url: string) => void;
+  /** Set by Grid so cards in one row share a height. */
+  style?: ViewStyle;
+}) {
   const c = usePalette();
   const [open, setOpen] = useState(false);
   const used = unitsUsing(r);
   return (
-    <Panel style={{ gap: 12, minHeight: 168 }}>
+    <Panel style={{ gap: 12, minHeight: 168, ...style }}>
       <Pressable
         accessibilityRole="link"
         accessibilityLabel={`Open ${r.title}`}
@@ -64,7 +75,9 @@ function ResourceCard({ resource: r, onOpen }: { resource: Resource; onOpen: (ur
         </Txt>
         {!!(r.author || r.language) && (
           <Txt size={13} color={c.muted}>
-            {[r.author, r.language].filter(Boolean).join(' · ')}
+            {[r.author, r.language && (LANGUAGE[r.language.toLowerCase()] ?? r.language)]
+              .filter(Boolean)
+              .join(' · ')}
           </Txt>
         )}
       </Pressable>

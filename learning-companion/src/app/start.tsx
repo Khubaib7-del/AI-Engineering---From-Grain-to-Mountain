@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { router } from 'expo-router';
 import Animated, { FadeIn, FadeInRight } from 'react-native-reanimated';
@@ -8,7 +8,8 @@ import { useAuth } from '../lib/auth';
 import { useLearning } from '../lib/store';
 import { tracks, v2Modules } from '../lib/content';
 import { pathModules, pathUnits, projectedFinish, TRACK_LABEL } from '../lib/path';
-import { placementQuestions, placementResult } from '../lib/placement';
+import { buildPlacement, placementResult } from '../lib/placement';
+import { optionOrder } from '../lib/assess';
 import type { Level, Profile, TrackId } from '../lib/types';
 
 const ROLES: { id: TrackId | 'undecided'; title: string; body: string; icon: string }[] = [
@@ -149,6 +150,17 @@ export default function Start() {
   };
 
   const total = 4;
+  // Placement covers every module, in the order of the chosen role.
+  const placementModules = useMemo(
+    () => (track === 'undecided' ? v2Modules : pathModules(v2Modules, tracks, track)),
+    [track],
+  );
+  const placementQuestions = useMemo(() => buildPlacement(placementModules), [placementModules]);
+  const placementModuleIds = useMemo(
+    () => [...new Set(placementQuestions.map(q => q.module))],
+    [placementQuestions],
+  );
+  const grade = (a: (number | undefined)[]) => setResult(placementResult(placementQuestions, a, v2Modules));
   const units = pathUnits(pathModules(v2Modules, tracks, track)).filter(u => u.unit.depth === 'core');
   const tested = new Set(result?.testedOut ?? []);
   const hoursLeft = units.filter(u => !tested.has(u.unit.id)).reduce((n, u) => n + u.unit.hours, 0);
@@ -255,9 +267,10 @@ export default function Start() {
               Want to skip what you already know?
             </Txt>
             <Txt color={c.muted}>
-              An optional {placementQuestions.length}-question check (about 3 minutes) across the terminal,
-              Git, Python, maths and ML basics. Get every question in a module right and its core units are
-              marked as tested out — you can still revisit them.
+              An optional check with {placementQuestions.length} questions — up to three from each of the{' '}
+              {placementModuleIds.length} modules, taken from the units themselves. Get every question in a
+              module right and its core units are marked as tested out (you can still revisit them). Skip a
+              module you are new to, and stop whenever the questions get unfamiliar.
             </Txt>
             <Button
               title="Take the placement check"
@@ -279,18 +292,34 @@ export default function Start() {
           answers.length > 0 &&
           (() => {
             const q = placementQuestions[quizIndex];
+            const last = quizIndex >= placementQuestions.length - 1;
+            const moduleIndex = placementModuleIds.indexOf(q.module);
+            const moduleTitle = v2Modules.find(m => m.id === q.module)?.title ?? q.module;
+            const advance = (n: (number | undefined)[]) => {
+              if (!last) setQuizIndex(i => i + 1);
+              else grade(n);
+            };
+            const skipModule = () => {
+              const n = [...answers];
+              let i = quizIndex;
+              while (i < placementQuestions.length && placementQuestions[i].module === q.module) n[i++] = -1;
+              setAnswers(n);
+              if (i < placementQuestions.length) setQuizIndex(i);
+              else grade(n);
+            };
             return (
               <>
                 <Txt size={13} weight="600" color={c.muted}>
-                  Question {quizIndex + 1} of {placementQuestions.length}
+                  Module {moduleIndex + 1} of {placementModuleIds.length} · {q.module} {moduleTitle} · question{' '}
+                  {quizIndex + 1} of {placementQuestions.length}
                 </Txt>
                 <Txt size={wide ? 26 : 22} weight="700" accessibilityRole="header">
                   {q.prompt}
                 </Txt>
-                {q.options.map((opt, oi) => (
+                {optionOrder(q.id, q.options.length).map(oi => (
                   <Option
                     key={oi}
-                    title={opt}
+                    title={q.options[oi]}
                     selected={answers[quizIndex] === oi}
                     onPress={() =>
                       setAnswers(a => {
@@ -301,30 +330,34 @@ export default function Start() {
                     }
                   />
                 ))}
-                <View style={{ flexDirection: 'row', gap: 10 }}>
-                  <Button
-                    title="I don’t know"
-                    secondary
-                    onPress={() => {
-                      const n = [...answers];
-                      n[quizIndex] = -1;
-                      setAnswers(n);
-                      if (quizIndex < placementQuestions.length - 1) setQuizIndex(i => i + 1);
-                      else setResult(placementResult(n, v2Modules));
-                    }}
-                  />
-                  <View style={{ flex: 1 }}>
-                    <Button
-                      title={quizIndex < placementQuestions.length - 1 ? 'Next' : 'See my result'}
-                      full
-                      disabled={answers[quizIndex] === undefined}
-                      onPress={() => {
-                        if (quizIndex < placementQuestions.length - 1) setQuizIndex(i => i + 1);
-                        else setResult(placementResult(answers, v2Modules));
-                      }}
-                    />
-                  </View>
-                </View>
+                {!result && (
+                  <>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                      <Button
+                        title="I don’t know"
+                        secondary
+                        onPress={() => {
+                          const n = [...answers];
+                          n[quizIndex] = -1;
+                          setAnswers(n);
+                          advance(n);
+                        }}
+                      />
+                      <View style={{ flex: 1 }}>
+                        <Button
+                          title={last ? 'See my result' : 'Next'}
+                          full
+                          disabled={answers[quizIndex] === undefined}
+                          onPress={() => advance(answers)}
+                        />
+                      </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+                      <Button title={`New to ${q.module} — skip it`} ghost compact onPress={skipModule} />
+                      <Button title="Stop here and see my result" ghost compact onPress={() => grade(answers)} />
+                    </View>
+                  </>
+                )}
                 {result && (
                   <Panel>
                     <Txt weight="700">

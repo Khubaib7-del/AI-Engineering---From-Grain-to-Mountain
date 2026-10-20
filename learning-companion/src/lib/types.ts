@@ -128,7 +128,18 @@ export type Track = {
   moduleOrder: string[];
   portfolio: string[];
 };
-export type Week = { week: number; title: string; units: string[]; hours: number };
+export type Week = {
+  week: number;
+  title: string;
+  units: string[];
+  hours: number;
+  /** Auto-grouped week whose day-by-day detail is not written yet. */
+  provisional?: boolean;
+  /** Day-by-day lines ("Day 1: M00.U06 — …") for fully planned weeks. */
+  detail?: string[];
+  /** Hours this week gives to each unit (a unit can span weeks). */
+  allocation?: Record<string, number>;
+};
 export type ResourceV2 = {
   id: string;
   type: ResourceType;

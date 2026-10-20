@@ -30,6 +30,8 @@ export type MapNode = {
   /** 0–1, drawn as a segmented ring for in-progress units. */
   progress: number;
   hours?: number;
+  /** Units inside a collapsed module node. */
+  count?: number;
 };
 
 const VW = 1000;
@@ -139,6 +141,55 @@ function NodeShape({
           strokeLinejoin="round"
         />
         {selected && <Circle cx={x} cy={y} r={R + 9} fill="none" stroke={c.signal} strokeWidth={1.5} />}
+      </G>
+    );
+  }
+  if (node.kind === 'module') {
+    const s = R + 2;
+    const locked = node.status === 'locked';
+    return (
+      <G>
+        <Rect
+          x={x - s}
+          y={y - s}
+          width={s * 2}
+          height={s * 2}
+          rx={10}
+          fill={node.status === 'passed' ? c.accent : c.bg}
+          stroke={locked ? c.faint : c.ink}
+          strokeWidth={node.status === 'available' ? 2.2 : 1.8}
+          strokeDasharray={locked ? '4 5' : undefined}
+        />
+        <Path
+          d={`M${x - 11} ${y + 8} L${x - 3} ${y - 6} L${x + 2} ${y + 2} L${x + 5} ${y - 2} L${x + 12} ${y + 8} Z`}
+          fill={node.status === 'passed' ? c.onAccent : locked ? c.faint : c.ink}
+        />
+        {node.status === 'in-progress' && (
+          <>
+            <Line x1={x - s + 6} y1={y + s - 6} x2={x + s - 6} y2={y + s - 6} stroke={c.line} strokeWidth={3} />
+            <Line
+              x1={x - s + 6}
+              y1={y + s - 6}
+              x2={x - s + 6 + Math.max(2, (s * 2 - 12) * node.progress)}
+              y2={y + s - 6}
+              stroke={c.ink}
+              strokeWidth={3}
+              strokeLinecap="round"
+            />
+          </>
+        )}
+        {(current || selected) && (
+          <Rect
+            x={x - s - 8}
+            y={y - s - 8}
+            width={s * 2 + 16}
+            height={s * 2 + 16}
+            rx={16}
+            fill="none"
+            stroke={c.signal}
+            strokeWidth={selected ? 1.5 : 2}
+          />
+        )}
       </G>
     );
   }
@@ -265,9 +316,15 @@ export function MountainMap({
   height = 640,
   selectedId,
   onSelect,
+  focusId,
+  onExpand,
 }: {
   nodes: MapNode[];
+  /** Open a collapsed module node into its units on the map. */
+  onExpand?: (node: MapNode) => void;
   currentId?: string;
+  /** Node to centre on when it changes (e.g. a module that was just opened); defaults to "you". */
+  focusId?: string;
   onOpen?: (node: MapNode) => void;
   interactive?: boolean;
   height?: number;
@@ -307,13 +364,14 @@ export function MountainMap({
     });
   };
 
-  // Start centred on "you".
+  const focusIndex = focusId ? nodes.findIndex(n => n.id === focusId) : -1;
+  // Start centred on "you" (or on the node just focused).
   useEffect(() => {
     // Re-centre when the viewport or your position changes (a layout sync, not derived state).
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (size.w) centerOn(currentIndex, 1);
+    if (size.w) centerOn(focusIndex >= 0 ? focusIndex : currentIndex, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size.w, size.h, currentIndex, nodes.length]);
+  }, [size.w, size.h, currentIndex, focusIndex, nodes.length]);
 
   const zoomAt = (factor: number) =>
     setView(v => zoomView(v, factor, size.w / 2, size.h / 2, { w: size.w, h: size.h, fit, H, vw }));
@@ -372,10 +430,139 @@ export function MountainMap({
   );
 
   const scale = fit * view.s;
-  const trail = smoothPath(points);
-  const done = smoothPath(points.slice(0, currentIndex + 1));
-  const summit = { x: vw / 2, y: 54 };
   const firstOfModule = nodes.map((n, i) => i === 0 || nodes[i - 1].moduleId !== n.moduleId);
+  // Everything inside the pan/zoom transform depends only on content, layout and selection,
+  // so it is built once per change; dragging re-renders just the transform attribute.
+  const scene = useMemo(() => {
+    const trail = smoothPath(points);
+    const done = smoothPath(points.slice(0, currentIndex + 1));
+    const summit = { x: vw / 2, y: 54 };
+    return (
+      <>
+        {/* Mountain body and contour lines */}
+        <Path
+          d={`M${-200} ${H + 600} L${vw / 2 - 60} ${summit.y + 30} L${vw / 2} ${summit.y} L${vw / 2 + 80} ${summit.y + 46} L${vw + 200} ${H + 600} Z`}
+          fill={c.surface}
+        />
+        {Array.from({ length: Math.max(4, Math.ceil(H / 160)) }, (_, i) => {
+          const yy = summit.y + 90 + i * 160;
+          const spread = 120 + (yy - summit.y) * 0.62;
+          return (
+            <Path
+              key={i}
+              d={`M${vw / 2 - spread} ${yy + 30} Q${vw / 2 - spread / 3} ${yy - 24} ${vw / 2} ${yy} T${vw / 2 + spread} ${yy + 22}`}
+              stroke={c.line}
+              strokeWidth={1}
+              fill="none"
+              opacity={0.7}
+            />
+          );
+        })}
+        {/* Summit flag */}
+        <Line
+          x1={summit.x}
+          y1={summit.y}
+          x2={summit.x}
+          y2={summit.y - 40}
+          stroke={c.ink}
+          strokeWidth={2}
+        />
+        <Path
+          d={`M${summit.x} ${summit.y - 40} L${summit.x + 26} ${summit.y - 32} L${summit.x} ${summit.y - 24} Z`}
+          fill={c.ink}
+        />
+        <SvgText
+          x={summit.x}
+          y={summit.y + 26}
+          fontSize={13}
+          fontWeight="700"
+          fill={c.muted}
+          textAnchor="middle"
+          letterSpacing={2}
+        >
+          JOB-READY
+        </SvgText>
+        {/* Trail: full route dashed, travelled route solid */}
+        <Path
+          d={trail}
+          stroke={c.faint}
+          strokeWidth={2}
+          strokeDasharray="2 8"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <Path d={done} stroke={c.ink} strokeWidth={3} strokeLinecap="round" fill="none" />
+        {/* Module labels */}
+        {nodes.map((n, i) =>
+          firstOfModule[i] && n.kind !== 'module' ? (
+            <G key={`label-${n.moduleId}`}>
+              <Line
+                x1={40}
+                y1={points[i].y + 50}
+                x2={vw - 40}
+                y2={points[i].y + 50}
+                stroke={c.line}
+                strokeWidth={1}
+                strokeDasharray="1 6"
+              />
+              <SvgText
+                x={40}
+                y={points[i].y + 42}
+                fontSize={12}
+                fontWeight="700"
+                fill={c.faint}
+                letterSpacing={1.5}
+              >
+                {`${n.moduleId} · ${n.moduleTitle}`.toUpperCase().slice(0, Math.floor(vw / 9))}
+              </SvgText>
+            </G>
+          ) : null,
+        )}
+        {/* Nodes */}
+        {nodes.map((n, i) => {
+          const p = points[i];
+          const right = p.x < vw / 2;
+          const current = i === currentIndex && n.status !== 'passed';
+          return (
+            <G
+              key={n.id}
+              onPress={interactive ? () => onSelect?.(selectedId === n.id ? undefined : n) : undefined}
+              accessibilityLabel={`${n.title}, ${n.status.replace('-', ' ')}`}
+            >
+              <Circle cx={p.x} cy={p.y} r={R + 16} fill="transparent" />
+              {current && <Pulse x={p.x} y={p.y} color={c.signal} />}
+              <NodeShape node={n} p={p} c={c} current={current} selected={selectedId === n.id} />
+              <SvgText
+                x={right ? p.x + R + 16 : p.x - R - 16}
+                y={p.y + (current && right ? 24 : 0) - 2}
+                fontSize={15}
+                fontWeight="600"
+                fill={n.status === 'locked' ? c.faint : c.ink}
+                textAnchor={right ? 'start' : 'end'}
+              >
+                {n.title.length > maxChars ? `${n.title.slice(0, maxChars - 1)}…` : n.title}
+              </SvgText>
+              <SvgText
+                x={right ? p.x + R + 16 : p.x - R - 16}
+                y={p.y + (current && right ? 24 : 0) + 16}
+                fontSize={12}
+                fill={c.muted}
+                textAnchor={right ? 'start' : 'end'}
+              >
+                {n.kind === 'module' && n.count
+                  ? `${n.id} · ${n.count} units${n.hours ? ` · ${n.hours} h` : ''}`
+                  : `${n.kind === 'capstone' ? 'Capstone' : n.id}${n.hours ? ` · ${n.hours} h` : ''}`}
+              </SvgText>
+            </G>
+          );
+        })}
+        {nodes[currentIndex] && nodes[currentIndex].status !== 'passed' && (
+          <Climber p={points[currentIndex]} c={c} />
+        )}
+      </>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes, points, currentIndex, selectedId, vw, H, c, maxChars, interactive]);
 
   return (
     <View
@@ -398,124 +585,7 @@ export function MountainMap({
       {size.w > 0 && (
         <Svg width={size.w} height={size.h}>
           <G transform={`translate(${view.tx.toFixed(1)} ${view.ty.toFixed(1)}) scale(${scale.toFixed(4)})`}>
-            {/* Mountain body and contour lines */}
-            <Path
-              d={`M${-200} ${H + 40} L${vw / 2 - 60} ${summit.y + 30} L${vw / 2} ${summit.y} L${vw / 2 + 80} ${summit.y + 46} L${vw + 200} ${H + 40} Z`}
-              fill={c.surface}
-            />
-            {Array.from({ length: Math.max(4, Math.ceil(H / 160)) }, (_, i) => {
-              const yy = summit.y + 90 + i * 160;
-              const spread = 120 + (yy - summit.y) * 0.62;
-              return (
-                <Path
-                  key={i}
-                  d={`M${vw / 2 - spread} ${yy + 30} Q${vw / 2 - spread / 3} ${yy - 24} ${vw / 2} ${yy} T${vw / 2 + spread} ${yy + 22}`}
-                  stroke={c.line}
-                  strokeWidth={1}
-                  fill="none"
-                  opacity={0.7}
-                />
-              );
-            })}
-            {/* Summit flag */}
-            <Line
-              x1={summit.x}
-              y1={summit.y}
-              x2={summit.x}
-              y2={summit.y - 40}
-              stroke={c.ink}
-              strokeWidth={2}
-            />
-            <Path
-              d={`M${summit.x} ${summit.y - 40} L${summit.x + 26} ${summit.y - 32} L${summit.x} ${summit.y - 24} Z`}
-              fill={c.ink}
-            />
-            <SvgText
-              x={summit.x}
-              y={summit.y + 26}
-              fontSize={13}
-              fontWeight="700"
-              fill={c.muted}
-              textAnchor="middle"
-              letterSpacing={2}
-            >
-              JOB-READY
-            </SvgText>
-            {/* Trail: full route dashed, travelled route solid */}
-            <Path
-              d={trail}
-              stroke={c.faint}
-              strokeWidth={2}
-              strokeDasharray="2 8"
-              strokeLinecap="round"
-              fill="none"
-            />
-            <Path d={done} stroke={c.ink} strokeWidth={3} strokeLinecap="round" fill="none" />
-            {/* Module labels */}
-            {nodes.map((n, i) =>
-              firstOfModule[i] ? (
-                <G key={`label-${n.moduleId}`}>
-                  <Line
-                    x1={40}
-                    y1={points[i].y + 50}
-                    x2={vw - 40}
-                    y2={points[i].y + 50}
-                    stroke={c.line}
-                    strokeWidth={1}
-                    strokeDasharray="1 6"
-                  />
-                  <SvgText
-                    x={40}
-                    y={points[i].y + 42}
-                    fontSize={12}
-                    fontWeight="700"
-                    fill={c.faint}
-                    letterSpacing={1.5}
-                  >
-                    {`${n.moduleId} · ${n.moduleTitle}`.toUpperCase().slice(0, Math.floor(vw / 9))}
-                  </SvgText>
-                </G>
-              ) : null,
-            )}
-            {/* Nodes */}
-            {nodes.map((n, i) => {
-              const p = points[i];
-              const right = p.x < vw / 2;
-              const current = i === currentIndex && n.status !== 'passed';
-              return (
-                <G
-                  key={n.id}
-                  onPress={interactive ? () => onSelect?.(selectedId === n.id ? undefined : n) : undefined}
-                  accessibilityLabel={`${n.title}, ${n.status.replace('-', ' ')}`}
-                >
-                  <Circle cx={p.x} cy={p.y} r={R + 16} fill="transparent" />
-                  {current && <Pulse x={p.x} y={p.y} color={c.signal} />}
-                  <NodeShape node={n} p={p} c={c} current={current} selected={selectedId === n.id} />
-                  <SvgText
-                    x={right ? p.x + R + 16 : p.x - R - 16}
-                    y={p.y + (current && right ? 24 : 0) - 2}
-                    fontSize={15}
-                    fontWeight="600"
-                    fill={n.status === 'locked' ? c.faint : c.ink}
-                    textAnchor={right ? 'start' : 'end'}
-                  >
-                    {n.title.length > maxChars ? `${n.title.slice(0, maxChars - 1)}…` : n.title}
-                  </SvgText>
-                  <SvgText
-                    x={right ? p.x + R + 16 : p.x - R - 16}
-                    y={p.y + (current && right ? 24 : 0) + 16}
-                    fontSize={12}
-                    fill={c.muted}
-                    textAnchor={right ? 'start' : 'end'}
-                  >
-                    {`${n.kind === 'capstone' ? 'Capstone' : n.id}${n.hours ? ` · ${n.hours} h` : ''}`}
-                  </SvgText>
-                </G>
-              );
-            })}
-            {nodes[currentIndex] && nodes[currentIndex].status !== 'passed' && (
-              <Climber p={points[currentIndex]} c={c} />
-            )}
+            {scene}
           </G>
         </Svg>
       )}
@@ -535,6 +605,7 @@ export function MountainMap({
             <NodeSheet
               node={n}
               onOpen={() => onOpen(n)}
+              onExpand={onExpand && n.kind === 'module' ? () => onExpand(n) : undefined}
               onClose={() => onSelect?.(undefined)}
               wide={size.w >= 760}
             />
@@ -554,11 +625,13 @@ const STATUS_TEXT: Record<MapNodeStatus, string> = {
 function NodeSheet({
   node,
   onOpen,
+  onExpand,
   onClose,
   wide,
 }: {
   node: MapNode;
   onOpen: () => void;
+  onExpand?: () => void;
   onClose: () => void;
   wide: boolean;
 }) {
@@ -596,13 +669,19 @@ function NodeSheet({
         </Pressable>
       </View>
       <Txt size={13} color={c.muted}>
-        {node.kind === 'capstone' ? 'Module capstone project' : STATUS_TEXT[node.status]}
+        {node.kind === 'capstone'
+          ? 'Module capstone project'
+          : node.kind === 'module' && node.count
+            ? `${node.count} units · ${Math.round(node.progress * 100)}% passed`
+            : STATUS_TEXT[node.status]}
         {node.hours ? ` · about ${node.hours} h` : ''}
-        {node.status === 'in-progress' ? ` · ${Math.round(node.progress * 100)}% of steps` : ''}
+        {node.status === 'in-progress' && node.kind !== 'module'
+          ? ` · ${Math.round(node.progress * 100)}% of steps`
+          : ''}
       </Txt>
       <Pressable
         accessibilityRole="button"
-        onPress={onOpen}
+        onPress={onExpand ?? onOpen}
         style={({ pressed }) => ({
           minHeight: 44,
           borderRadius: 12,
@@ -615,10 +694,37 @@ function NodeSheet({
         })}
       >
         <Txt size={15} weight="600" color={c.onAccent}>
-          {node.status === 'passed' ? 'Review' : node.status === 'in-progress' ? 'Continue' : 'Open'}
+          {onExpand
+            ? 'Show its units on the map'
+            : node.kind === 'module'
+              ? 'Open module'
+              : node.status === 'passed'
+                ? 'Review'
+                : node.status === 'in-progress'
+                  ? 'Continue'
+                  : 'Open'}
         </Txt>
-        <Icon name="arrow-forward" size={16} color={c.onAccent} />
+        <Icon name={onExpand ? 'chevron-down' : 'arrow-forward'} size={16} color={c.onAccent} />
       </Pressable>
+      {onExpand && (
+        <Pressable
+          accessibilityRole="button"
+          onPress={onOpen}
+          style={({ pressed }) => ({
+            minHeight: 40,
+            borderRadius: 12,
+            borderWidth: 1,
+            borderColor: c.line,
+            alignItems: 'center',
+            justifyContent: 'center',
+            opacity: pressed ? 0.7 : 1,
+          })}
+        >
+          <Txt size={14} weight="600">
+            Module page
+          </Txt>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -650,6 +756,18 @@ export function MapLegend() {
     [
       'Locked',
       { id: 'd', kind: 'unit', title: '', moduleId: '', moduleTitle: '', status: 'locked', progress: 0 },
+    ],
+    [
+      'Module',
+      {
+        id: 'm',
+        kind: 'module',
+        title: '',
+        moduleId: '',
+        moduleTitle: '',
+        status: 'in-progress',
+        progress: 0.4,
+      },
     ],
     [
       'Capstone',

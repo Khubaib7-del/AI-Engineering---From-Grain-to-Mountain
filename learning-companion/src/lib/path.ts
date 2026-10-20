@@ -30,8 +30,18 @@ export function pathUnits(modules: ModuleV2[], includeDeep = true): PathUnit[] {
   return out;
 }
 
-export const currentUnit = (units: PathUnit[], state: LearningState) =>
-  units.find(u => !isPassed(u.unit.id, state));
+/**
+ * The unit to work on next: the first unpassed unit whose prerequisites are passed.
+ * A unit can depend on one later in the role order (e.g. a DB-backed API unit that
+ * needs the SQL module), so a locked unit is skipped rather than shown as "next".
+ * `known` lists every unit ID so prerequisites missing from the content never block.
+ */
+export function currentUnit(units: PathUnit[], state: LearningState, known?: Set<string>) {
+  const open = (u: PathUnit) =>
+    u.unit.prerequisites.filter(id => !known || known.has(id)).every(id => isPassed(id, state));
+  const pending = units.filter(u => !isPassed(u.unit.id, state));
+  return pending.find(open) ?? pending[0];
+}
 
 export function remainingHours(units: PathUnit[], state: LearningState) {
   return units
@@ -50,6 +60,22 @@ export function projectedFinish(hoursLeft: number, hoursPerWeek: number, now = n
 export function currentWeek(weeks: Week[], state: LearningState) {
   const sorted = [...weeks].sort((a, b) => a.week - b.week);
   return sorted.find(w => w.units.some(id => !isPassed(id, state))) ?? sorted[sorted.length - 1];
+}
+
+/** Unit ID → the first week of the weekly plan that schedules it. */
+export function weekOfUnit(weeks: Week[]) {
+  const out = new Map<string, number>();
+  for (const w of [...weeks].sort((a, b) => a.week - b.week))
+    for (const id of w.units) if (!out.has(id)) out.set(id, w.week);
+  return out;
+}
+
+/** The unit to open from a week: first unpassed, unlocked unit in the week's own order. */
+export function nextInWeek(week: Week | undefined, units: PathUnit[], state: LearningState, known?: Set<string>) {
+  if (!week) return undefined;
+  const byId = new Map(units.map(u => [u.unit.id, u]));
+  const inWeek = week.units.map(id => byId.get(id)).filter((u): u is PathUnit => !!u);
+  return currentUnit(inWeek, state, known);
 }
 
 export const TRACK_LABEL: Record<TrackId | 'undecided', string> = {

@@ -4,6 +4,7 @@ import { stepFraction, unitStatus, type UnitStatus } from './assess';
 import {
   currentUnit,
   currentWeek,
+  nextInWeek,
   pathModules,
   pathUnits,
   projectedFinish,
@@ -25,17 +26,20 @@ export function usePath() {
       status: unitStatus(u.unit, state, unitIds),
       progress: stepFraction(u.unit, state),
     }));
-    const current = currentUnit(units, state) as PathEntry | undefined;
+    const current = currentUnit(units, state, unitIds) as PathEntry | undefined;
     const hoursLeft = remainingHours(units, state);
     const hoursPerWeek = state.profile?.hoursPerWeek ?? 8;
     const finish = projectedFinish(hoursLeft, hoursPerWeek);
     const week = weeks.length ? currentWeek(weeks, state) : undefined;
+    // Today follows the weekly plan: the next open unit of this week, else the next on your role path.
+    const today = (nextInWeek(week, units, state, unitIds) as PathEntry | undefined) ?? current;
     const passed = units.filter(u => u.status === 'passed').length;
     return {
       hasV2,
       modules: mods,
       units,
       current,
+      today,
       hoursLeft,
       hoursPerWeek,
       finish,
