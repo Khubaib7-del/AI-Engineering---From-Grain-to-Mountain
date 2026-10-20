@@ -1,10 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import ts from 'typescript';
 import fs from 'node:fs';
-const source = fs.readFileSync('src/lib/planner.ts', 'utf8');
-const compiled = ts.transpile(source, { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 });
-const p = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+import { load } from './helpers/load.mjs';
+const p = await load('planner');
 const lessons = JSON.parse(fs.readFileSync('src/content/first-28-days.json')).days;
 const modules = JSON.parse(fs.readFileSync('src/content/curriculum.json')).modules;
 const topics = modules.flatMap(m => m.groups.flatMap((g, gi) => g.topics.map((_, ti) => `${m.id}.${String(gi+1).padStart(2,'0')}.${String(ti+1).padStart(2,'0')}`)));

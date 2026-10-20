@@ -1,4 +1,6 @@
-import type { LearningState, Lesson, LessonWork } from './types';
+import { backfillActivity, ACTIVITY_CAP } from './activity';
+import { migrateTopicIds, type LegacyMap } from './migrate';
+import type { Activity, CapstoneWork, LearningState, Lesson, LessonWork, Profile, UnitWork } from './types';
 export const emptyWork = (): LessonWork => ({ tasks: [false, false, false], evidence: '', reviews: [] });
 export const initialState = (): LearningState => ({
   version: 1,
@@ -70,6 +72,7 @@ export function parseBackup(
   lessonIds: string[],
   topicIds: string[],
   moduleIds: string[],
+  legacyMap: LegacyMap = {},
 ): LearningState {
   if (text.length > 2_000_000) throw new Error('Backup is too large.');
   const v = JSON.parse(text);
@@ -134,12 +137,164 @@ export function parseBackup(
     };
   }
   for (const [id, value] of Object.entries(v.topics)) {
-    if (!topicIds.includes(id) || typeof value !== 'boolean') throw new Error(`Invalid topic: ${id}`);
+    if (typeof value !== 'boolean') throw new Error(`Invalid topic: ${id}`);
     clean.topics[id] = value;
   }
+  if (object(v.archivedTopics))
+    for (const [id, value] of Object.entries(v.archivedTopics))
+      if (typeof value === 'boolean') (clean.archivedTopics ??= {})[id] = value;
   for (const [id, value] of Object.entries(v.verified)) {
     if (!moduleIds.includes(id) || !iso(value)) throw new Error(`Invalid assessment: ${id}`);
     clean.verified[id] = value as string;
   }
-  return clean;
+  const profile = parseProfile(v.profile, iso);
+  if (profile) clean.profile = profile;
+  if (v.units !== undefined) {
+    if (!object(v.units)) throw new Error('Invalid unit records.');
+    clean.units = {};
+    for (const [id, value] of Object.entries(v.units)) clean.units[id] = parseUnitWork(id, value, iso);
+  }
+  if (v.capstones !== undefined) {
+    if (!object(v.capstones)) throw new Error('Invalid capstone records.');
+    clean.capstones = {};
+    for (const [id, value] of Object.entries(v.capstones)) {
+      const c = value as CapstoneWork;
+      if (
+        !object(c) ||
+        typeof c.url !== 'string' ||
+        c.url.length > 2000 ||
+        !Array.isArray(c.scores) ||
+        !c.scores.every(n => Number.isInteger(n) && n >= 0 && n <= 3) ||
+        (c.submittedAt !== undefined && !iso(c.submittedAt))
+      )
+        throw new Error(`Invalid capstone: ${id}`);
+      clean.capstones[id] = {
+        url: c.url,
+        scores: [...c.scores],
+        ...(c.submittedAt ? { submittedAt: c.submittedAt } : {}),
+      };
+    }
+  }
+  if (v.activity !== undefined) {
+    if (!Array.isArray(v.activity)) throw new Error('Invalid activity log.');
+    const kinds = ['topic', 'unit', 'quiz', 'practice', 'capstone', 'lesson', 'step', 'review'];
+    clean.activity = (v.activity as Activity[])
+      .filter(
+        e =>
+          object(e) && iso(e.at) && kinds.includes(e.kind) && typeof e.id === 'string' && e.id.length < 200,
+      )
+      .map(e => ({
+        at: e.at,
+        kind: e.kind,
+        id: e.id,
+        ...(typeof e.score === 'number' ? { score: e.score } : {}),
+      }))
+      .sort((a, b) => a.at.localeCompare(b.at))
+      .slice(-ACTIVITY_CAP);
+  }
+  return normaliseState(clean, new Set(topicIds), legacyMap);
+}
+
+/** Migrate topic IDs and backfill the activity log. Idempotent. */
+export function normaliseState(state: LearningState, validTopics: Set<string>, legacyMap: LegacyMap = {}) {
+  return backfillActivity(migrateTopicIds(state, legacyMap, validTopics));
+}
+
+const LEVELS = ['new', 'some-python', 'cs-student', 'developer'];
+const TRACKS = ['ai-engineer', 'fde', 'mlops', 'undecided'];
+function parseProfile(p: unknown, iso: (x: unknown) => boolean): Profile | undefined {
+  if (p === undefined || p === null) return undefined;
+  const v = p as Profile;
+  if (
+    typeof p !== 'object' ||
+    !TRACKS.includes(v.track) ||
+    !LEVELS.includes(v.level) ||
+    typeof v.hoursPerWeek !== 'number' ||
+    v.hoursPerWeek < 1 ||
+    v.hoursPerWeek > 80 ||
+    !Array.isArray(v.testedOut) ||
+    !v.testedOut.every(x => typeof x === 'string') ||
+    !iso(v.startedAt) ||
+    typeof v.onboarded !== 'boolean'
+  )
+    throw new Error('Invalid learner profile.');
+  const placement =
+    v.placement &&
+    Number.isInteger(v.placement.score) &&
+    Number.isInteger(v.placement.max) &&
+    iso(v.placement.at)
+      ? { score: v.placement.score, max: v.placement.max, at: v.placement.at }
+      : undefined;
+  return {
+    track: v.track,
+    level: v.level,
+    hoursPerWeek: v.hoursPerWeek,
+    testedOut: [...v.testedOut],
+    startedAt: v.startedAt,
+    onboarded: v.onboarded,
+    ...(placement ? { placement } : {}),
+  };
+}
+
+function parseUnitWork(id: string, value: unknown, iso: (x: unknown) => boolean): UnitWork {
+  const w = value as UnitWork;
+  const fail = () => {
+    throw new Error(`Invalid unit record: ${id}`);
+  };
+  if (
+    !w ||
+    typeof w !== 'object' ||
+    typeof w.steps !== 'object' ||
+    !Array.isArray(w.attempts) ||
+    typeof w.short !== 'object'
+  )
+    fail();
+  const steps: UnitWork['steps'] = {};
+  for (const key of ['learn', 'read', 'practice', 'assess'] as const)
+    if (w.steps[key] !== undefined) {
+      if (!iso(w.steps[key])) fail();
+      steps[key] = w.steps[key];
+    }
+  const attempts = w.attempts.map(a => {
+    if (
+      !iso(a.at) ||
+      !Number.isInteger(a.score) ||
+      !Number.isInteger(a.max) ||
+      a.max < 1 ||
+      a.score < 0 ||
+      a.score > a.max ||
+      !Array.isArray(a.answers)
+    )
+      fail();
+    return {
+      at: a.at,
+      score: a.score,
+      max: a.max,
+      answers: a.answers.map(n => (Number.isInteger(n) ? n : -1)),
+    };
+  });
+  const short: UnitWork['short'] = {};
+  for (const [qid, ans] of Object.entries(w.short)) {
+    if (
+      !ans ||
+      typeof ans.text !== 'string' ||
+      ans.text.length > 20000 ||
+      !Array.isArray(ans.checks) ||
+      !iso(ans.at)
+    )
+      fail();
+    short[qid] = { text: ans.text, checks: ans.checks.map(Boolean), at: ans.at };
+  }
+  if (
+    (w.evidence !== undefined && (typeof w.evidence !== 'string' || w.evidence.length > 20000)) ||
+    (w.passedAt !== undefined && !iso(w.passedAt))
+  )
+    fail();
+  return {
+    steps,
+    attempts,
+    short,
+    ...(w.evidence ? { evidence: w.evidence } : {}),
+    ...(w.passedAt ? { passedAt: w.passedAt } : {}),
+  };
 }

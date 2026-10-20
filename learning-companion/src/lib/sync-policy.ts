@@ -1,11 +1,15 @@
 import type { LearningState } from './types';
-export type ProgressPayload = Pick<LearningState, 'version' | 'lessons' | 'topics' | 'verified'>;
-export const progressOnly = ({ version, lessons, topics, verified }: LearningState): ProgressPayload => ({
-  version,
-  lessons,
-  topics,
-  verified,
-});
+
+/** Everything except device settings (theme, reminders) goes to the cloud notebook. */
+export type ProgressPayload = Omit<LearningState, 'settings'>;
+
+export function progressOnly(state: LearningState): ProgressPayload {
+  const { settings: _settings, ...rest } = state;
+  void _settings;
+  // Drop undefined keys so the JSON payload stays minimal and stable.
+  return Object.fromEntries(Object.entries(rest).filter(([, v]) => v !== undefined)) as ProgressPayload;
+}
+
 export function syncDecision(
   dirty: boolean,
   localRevision: number,
