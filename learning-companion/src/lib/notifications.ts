@@ -51,7 +51,7 @@ export async function testReminder() {
   if (!(await requestReminders())) throw new Error('Notification permission was not granted.');
   await Notifications.scheduleNotificationAsync({
     identifier: 'learning-test',
-    content: { title: 'Your learning reminder', body: 'Open AI Learning to watch, build and recall.' },
+    content: { title: 'Your learning reminder', body: 'Open Grain to Mountain for your next step.' },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
       seconds: 10,

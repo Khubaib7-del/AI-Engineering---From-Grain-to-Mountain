@@ -16,6 +16,7 @@ import {
 import { lessons } from '../../lib/content';
 import { canComplete, emptyWork, reviewDue } from '../../lib/planner';
 import { useLearning } from '../../lib/store';
+import { logActivity } from '../../lib/activity';
 export default function Session() {
   const { id, review } = useLocalSearchParams<{ id: string; review?: string }>(),
     { state, update } = useLearning(),
@@ -30,6 +31,8 @@ export default function Session() {
   const evidence = draft.value;
   const setEvidence = (value: string) => setDraft(d => ({ ...d, value }));
   if (!lesson) return <Screen back title="Lesson not found." />;
+  const nextLesson =
+    lessons.find(l => l.prerequisites.includes(lesson.id)) ?? lessons.find(l => l.day === lesson.day + 1);
   const ready = lesson.prerequisites.every(p => state.lessons[p]?.completedAt),
     complete = !!saved.completedAt;
   const save = async (finish = false) => {
@@ -43,17 +46,20 @@ export default function Session() {
       return;
     }
     setBusy(true);
-    const ok = await update(s => ({
-      ...s,
-      lessons: {
-        ...s.lessons,
-        [id]: {
-          ...(s.lessons[id] ?? emptyWork()),
-          evidence,
-          ...(finish ? { completedAt: saved.completedAt ?? new Date().toISOString() } : {}),
+    const ok = await update(s => {
+      const next = {
+        ...s,
+        lessons: {
+          ...s.lessons,
+          [id]: {
+            ...(s.lessons[id] ?? emptyWork()),
+            evidence,
+            ...(finish ? { completedAt: saved.completedAt ?? new Date().toISOString() } : {}),
+          },
         },
-      },
-    }));
+      };
+      return finish && !saved.completedAt ? logActivity(next, { kind: 'lesson', id }) : next;
+    });
     setBusy(false);
     if (ok) {
       setMessage(finish ? 'Work saved. You built another piece.' : 'Notes saved.');
@@ -75,7 +81,14 @@ export default function Session() {
     if (ok && Platform.OS !== 'web') void Haptics.selectionAsync().catch(() => {});
   };
   return (
-    <Screen back title={lesson.title} subtitle={`Day ${lesson.day} · ${lesson.estimatedMinutes} minutes`}>
+    <Screen
+      back
+      docTitle={lesson.title}
+      title={lesson.title}
+      eyebrow={`Guided day ${lesson.day} of ${lessons.length}`}
+      subtitle={`${lesson.estimatedMinutes} minutes · Watch, build, recall`}
+      width={880}
+    >
       {!ready && (
         <View style={{ padding: 20, backgroundColor: c.soft, borderRadius: 20, gap: 8 }}>
           <Txt weight="700">Preview this lesson</Txt>
@@ -106,13 +119,16 @@ export default function Session() {
             onPress={() => {
               void update(s => {
                 const w = s.lessons[id];
-                return {
-                  ...s,
-                  lessons: {
-                    ...s.lessons,
-                    [id]: { ...w, reviews: [...w.reviews, new Date().toISOString()] },
+                return logActivity(
+                  {
+                    ...s,
+                    lessons: {
+                      ...s.lessons,
+                      [id]: { ...w, reviews: [...w.reviews, new Date().toISOString()] },
+                    },
                   },
-                };
+                  { kind: 'review', id },
+                );
               }).then(ok => {
                 if (ok)
                   setMessage(
@@ -236,10 +252,8 @@ export default function Session() {
         />
       ) : (
         <Button
-          title={lesson.day < 28 ? 'Open next lesson' : 'Continue in Path'}
-          onPress={() =>
-            lesson.day < 28 ? router.push(`/session/${lessons[lesson.day].id}`) : router.push('/path')
-          }
+          title={nextLesson ? 'Open next lesson' : 'Continue on the map'}
+          onPress={() => (nextLesson ? router.push(`/session/${nextLesson.id}`) : router.navigate('/map'))}
           icon="arrow-forward"
         />
       )}

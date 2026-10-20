@@ -1,142 +1,145 @@
 import { useMemo, useState } from 'react';
-import { Linking, TextInput, View } from 'react-native';
-import { resources } from '../../lib/content';
+import { Linking, Pressable, TextInput, View } from 'react-native';
+import { router } from 'expo-router';
+import { resources, unitsUsing } from '../../lib/content';
 import type { Resource } from '../../lib/types';
 import {
   Button,
-  Eyebrow,
+  Chip,
+  Grid,
   Icon,
-  inputStyle,
   Panel,
   Screen,
   Tag,
   Txt,
+  inputStyle,
   usePalette,
-  useWide,
-  dark,
 } from '../../components/ui';
-import { MotionPress, Morph, Reveal } from '../../components/motion';
-import { Segments } from '../../components/workshop';
+
+const FILTERS = [
+  { label: 'All', types: [] as string[] },
+  { label: 'Courses', types: ['course'] },
+  { label: 'Books', types: ['book'] },
+  { label: 'Papers', types: ['paper'] },
+  { label: 'Videos', types: ['video'] },
+  { label: 'Docs', types: ['doc', 'repo', 'article'] },
+];
+const ICON: Record<string, string> = {
+  course: 'school-outline',
+  book: 'book-outline',
+  paper: 'document-text-outline',
+  video: 'play-circle-outline',
+  doc: 'document-text-outline',
+  repo: 'git',
+  article: 'document-text-outline',
+};
+
 function ResourceCard({ resource: r, onOpen }: { resource: Resource; onOpen: (url: string) => void }) {
-  const c = usePalette(),
-    wide = useWide(),
-    [expanded, setExpanded] = useState(false),
-    types = ['course', 'book', 'paper', 'video'],
-    i = Math.max(0, types.indexOf(r.type)),
-    tints =
-      c === dark
-        ? ['#191919', '#202020', '#181818', '#242424']
-        : ['#E6E6E6', '#EEEEEE', '#E2E2E2', '#F0F0F0'];
+  const c = usePalette();
+  const [open, setOpen] = useState(false);
+  const used = unitsUsing(r);
   return (
-    <Morph style={{ width: wide ? '48.9%' : '100%' }}>
-      <Panel style={{ padding: 0, overflow: 'hidden', gap: 0 }}>
-        <View
-          style={{
-            backgroundColor: tints[i],
-            padding: 22,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottomWidth: 1,
-            borderColor: c.line,
-          }}
-        >
-          <View style={{ gap: 4 }}>
-            <Txt size={11} weight="700" color={c.muted} style={{ letterSpacing: 2 }}>
-              {r.type.toUpperCase()} / {r.id}
-            </Txt>
-            <Txt size={17} weight="500">
-              {
-                [
-                  'A guided way in.',
-                  'Room for deep thought.',
-                  'An idea worth testing.',
-                  'See it, then build it.',
-                ][i]
-              }
-            </Txt>
-          </View>
-          <Icon
-            name={['school-outline', 'book-outline', 'document-text-outline', 'play-circle-outline'][i]}
-            size={32}
-          />
+    <Panel style={{ gap: 12, minHeight: 168 }}>
+      <Pressable
+        accessibilityRole="link"
+        accessibilityLabel={`Open ${r.title}`}
+        onPress={() => onOpen(r.url)}
+        style={({ pressed }) => ({ gap: 10, opacity: pressed ? 0.6 : 1 })}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Icon name={ICON[r.type] ?? 'document-text-outline'} size={16} color={c.muted} />
+          <Txt
+            size={12}
+            weight="600"
+            color={c.muted}
+            style={{ letterSpacing: 1, textTransform: 'uppercase' }}
+          >
+            {r.type}
+          </Txt>
+          <View style={{ flex: 1 }} />
+          <Icon name="arrow-up-outline" size={16} color={c.muted} />
         </View>
-        <View style={{ padding: 22, gap: 16 }}>
-          <MotionPress
+        <Txt size={17} weight="600">
+          {r.title}
+        </Txt>
+        {!!(r.author || r.language) && (
+          <Txt size={13} color={c.muted}>
+            {[r.author, r.language].filter(Boolean).join(' · ')}
+          </Txt>
+        )}
+      </Pressable>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+        {(r.modules ?? '')
+          .split('/')
+          .filter(Boolean)
+          .slice(0, 4)
+          .map(m => (
+            <Chip key={m} text={m} />
+          ))}
+        {used.map(id => (
+          <Pressable
+            key={id}
+            accessibilityRole="link"
+            accessibilityLabel={`Used in unit ${id}`}
+            onPress={() => router.push(`/unit/${id}`)}
+          >
+            <Chip text={`Used in ${id}`} tone="signal" icon="link" />
+          </Pressable>
+        ))}
+      </View>
+      <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
+        {!!r.notes && (
+          <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`Open ${r.title}`}
-            onPress={() => onOpen(r.url)}
-            style={{ gap: 10, minHeight: 70 }}
+            accessibilityState={{ expanded: open }}
+            onPress={() => setOpen(v => !v)}
+            style={{ minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 4 }}
           >
-            <Txt size={21} weight="600">
-              {r.title}
+            <Txt size={13} weight="600" color={c.muted}>
+              {open ? 'Hide details' : 'Details'}
             </Txt>
-            <Txt size={12} color={c.muted}>
-              {[r.language, r.modules].filter(Boolean).join(' · ')}
-            </Txt>
-          </MotionPress>
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}
+            <Icon name="chevron-down" size={14} color={c.muted} />
+          </Pressable>
+        )}
+        {!!r.video && (
+          <Pressable
+            accessibilityRole="link"
+            onPress={() => onOpen(r.video!)}
+            style={{ minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 4 }}
           >
-            <MotionPress
-              accessibilityRole="button"
-              accessibilityLabel={`Explore ${r.title}`}
-              onPress={() => onOpen(r.url)}
-              style={{ minHeight: 44, flexDirection: 'row', gap: 8, alignItems: 'center' }}
-            >
-              <Txt size={14} color={c.accent} weight="600">
-                Explore
-              </Txt>
-              <Icon name="arrow-up-outline" size={17} color={c.accent} />
-            </MotionPress>
-            {r.notes && (
-              <MotionPress
-                accessibilityRole="button"
-                accessibilityLabel={`${expanded ? 'Hide' : 'Show'} details for ${r.title}`}
-                accessibilityState={{ expanded }}
-                onPress={() => setExpanded(v => !v)}
-                style={{
-                  minHeight: 44,
-                  minWidth: 44,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 22,
-                  backgroundColor: c.bg,
-                }}
-              >
-                <Icon name={expanded ? 'minus' : 'plus'} size={18} />
-              </MotionPress>
-            )}
-          </View>
-          {expanded && (
-            <Reveal>
-              <Txt size={14} color={c.muted}>
-                {r.notes}
-              </Txt>
-            </Reveal>
-          )}
-          {r.video && <Tag text="Open video playlist" onPress={() => onOpen(r.video!)} />}
-        </View>
-      </Panel>
-    </Morph>
+            <Icon name="play-circle-outline" size={14} color={c.muted} />
+            <Txt size={13} weight="600" color={c.muted}>
+              Video playlist
+            </Txt>
+          </Pressable>
+        )}
+      </View>
+      {open && (
+        <Txt size={14} color={c.muted}>
+          {r.notes}
+        </Txt>
+      )}
+    </Panel>
   );
 }
+
 export default function Library() {
-  const c = usePalette(),
-    [query, setQuery] = useState(''),
-    [filter, setFilter] = useState(0),
-    [limit, setLimit] = useState(12),
-    [error, setError] = useState(''),
-    types = ['all', 'course', 'book', 'paper', 'video'];
-  const selectedType = types[filter];
-  const items = useMemo(
-    () =>
-      resources.filter(
-        r =>
-          (filter === 0 || r.type === selectedType) &&
-          `${r.title} ${r.notes ?? ''} ${r.modules ?? ''}`.toLowerCase().includes(query.toLowerCase()),
-      ),
-    [query, filter, selectedType],
+  const c = usePalette();
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState(0);
+  const [limit, setLimit] = useState(12);
+  const [error, setError] = useState('');
+  const items = useMemo(() => {
+    const types = FILTERS[filter].types;
+    const q = query.trim().toLowerCase();
+    return resources.filter(
+      r =>
+        (!types.length || types.includes(r.type)) &&
+        `${r.title} ${r.author ?? ''} ${r.notes ?? ''} ${r.modules ?? ''}`.toLowerCase().includes(q),
+    );
+  }, [query, filter]);
+  const counts = FILTERS.map(f =>
+    f.types.length ? resources.filter(r => f.types.includes(r.type)).length : resources.length,
   );
   const open = async (url: string) => {
     try {
@@ -147,64 +150,66 @@ export default function Library() {
   };
   return (
     <Screen
-      title="The curiosity shelf."
-      subtitle="Collected for the things you want to understand, build, and question."
+      title="Library"
+      subtitle={`${resources.length} free courses, books, papers, videos and docs used across the path.`}
+      docTitle="Library"
     >
-      <View style={{ gap: 16 }}>
-        <View style={{ position: 'relative' }}>
+      <View style={{ gap: 12 }}>
+        <View>
           <TextInput
             accessibilityLabel="Search resources"
-            placeholder="Pull on a thread. Python, agents, Karpathy…"
-            placeholderTextColor={c.muted}
+            placeholder="Search courses, books, papers…"
+            placeholderTextColor={c.faint}
             value={query}
             onChangeText={v => {
               setQuery(v);
               setLimit(12);
             }}
-            style={[inputStyle(c), { paddingLeft: 52, borderRadius: 20 }]}
+            style={[inputStyle(c), { paddingLeft: 46 }]}
           />
-          <View pointerEvents="none" style={{ position: 'absolute', left: 18, top: 16 }}>
-            <Icon name="search-outline" color={c.muted} />
+          <View pointerEvents="none" style={{ position: 'absolute', left: 16, top: 15 }}>
+            <Icon name="search-outline" size={18} color={c.faint} />
           </View>
         </View>
-        <Segments
-          options={['All', 'Courses', 'Books', 'Papers', 'Videos']}
-          value={filter}
-          onChange={v => {
-            setFilter(v);
-            setLimit(12);
-          }}
-        />
-      </View>
-      {!!error && <Txt color={c.danger}>{error}</Txt>}
-      <Eyebrow>{items.length} RESOURCES / CHOOSE A THREAD</Eyebrow>
-      <Reveal identity={`${filter}-${query}`}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
-          {items.slice(0, limit).map(r => (
-            <ResourceCard key={r.id} resource={r} onOpen={url => void open(url)} />
+        <View accessibilityRole="tablist" style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+          {FILTERS.map((f, i) => (
+            <Tag
+              key={f.label}
+              text={`${f.label} · ${counts[i]}`}
+              active={filter === i}
+              onPress={() => {
+                setFilter(i);
+                setLimit(12);
+              }}
+            />
           ))}
         </View>
-      </Reveal>
+      </View>
+      {!!error && <Txt color={c.danger}>{error}</Txt>}
+      <Txt size={13} color={c.muted}>
+        {items.length} result{items.length === 1 ? '' : 's'}
+      </Txt>
+      <Grid min={320}>
+        {items.slice(0, limit).map(r => (
+          <ResourceCard key={r.id + r.url} resource={r} onOpen={url => void open(url)} />
+        ))}
+      </Grid>
       {items.length > limit && (
         <Button
-          title={`Explore more · ${items.length - limit} remaining`}
+          title={`Show more · ${items.length - limit} remaining`}
           secondary
-          onPress={() => setLimit(v => v + 12)}
           icon="plus"
+          onPress={() => setLimit(v => v + 12)}
         />
       )}
       {!items.length && (
         <Panel>
-          <Icon name="search-outline" size={32} />
-          <Txt size={22} weight="600">
-            Try another thread.
+          <Txt size={18} weight="600">
+            Nothing matches that yet.
           </Txt>
-          <Txt color={c.muted}>Search for Python, RAG or CampusX, or switch to All.</Txt>
+          <Txt color={c.muted}>Try “Python”, “RAG” or “CampusX”, or switch to All.</Txt>
         </Panel>
       )}
-      <Txt size={13} color={c.muted}>
-        Original sources, opened in your browser. Your notes stay in your workshop.
-      </Txt>
     </Screen>
   );
 }

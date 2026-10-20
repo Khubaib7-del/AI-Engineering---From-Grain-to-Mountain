@@ -4,15 +4,17 @@ import { useState } from 'react';
 import { Button, Panel, Screen, Txt, usePalette } from '../components/ui';
 const apk =
   'https://github.com/Khubaib7-del/AI-Engineering---From-Grain-to-Mountain/releases/download/v1.2.0-preview.1/AI-Learning-1.2.0-android-arm64.apk';
+// The published 1.2 preview keeps its old file name; the next release ships as Grain-to-Mountain-<version>.apk.
 export default function Download() {
   const c = usePalette(),
     [error, setError] = useState('');
   return (
     <Screen
       back
-      title="Take the next step with you."
-      subtitle="One learning path. Choose where you work."
-      action={false}
+      docTitle="Download"
+      title="Grain to Mountain on Android"
+      subtitle="The same path and notebook as the website, in your pocket — and it works offline."
+      width={760}
     >
       <Panel>
         <Txt size={26} weight="600">

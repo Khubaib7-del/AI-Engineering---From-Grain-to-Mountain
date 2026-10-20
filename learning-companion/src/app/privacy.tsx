@@ -1,7 +1,7 @@
 import { Screen, Panel, Txt } from '../components/ui';
 export default function Privacy() {
   return (
-    <Screen back action={false} title="Your learning. Your data.">
+    <Screen back docTitle="Privacy" title="Your learning. Your data." width={760}>
       <Panel>
         <Txt weight="600">Local notebooks</Txt>
         <Txt>

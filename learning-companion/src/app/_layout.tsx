@@ -1,58 +1,66 @@
-import { Stack, router } from 'expo-router';
+import { Stack, router, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useEffect } from 'react';
-import { Platform, View, Text } from 'react-native';
-import { AuthProvider, useAuth } from '../lib/auth';
+import { Platform, View } from 'react-native';
+import { AuthProvider } from '../lib/auth';
 import { LearningProvider } from '../lib/store';
 import { listenForLessons } from '../lib/notifications';
-import { usePalette, dark } from '../components/ui';
-function Navigation() {
-  const c = usePalette();
+import { initialAuthLink } from '../lib/supabase';
+import { ToastHost, dark, usePalette } from '../components/ui';
+
+function useWebStyles() {
   useEffect(() => {
     if (Platform.OS !== 'web') return;
     const style = document.createElement('style');
-    style.textContent = `:focus-visible { outline: 3px solid #898989 !important; outline-offset: 4px; }
+    style.textContent = `
+      html, body { background: #000; }
+      :focus-visible { outline: 2px solid #C9D6E3 !important; outline-offset: 3px; }
       input:focus-visible, textarea:focus-visible { outline-offset: 1px; }
-      @media (prefers-reduced-transparency: reduce) { [style*="backdrop-filter"] { backdrop-filter: none !important; background: Canvas !important; } }
+      @media (prefers-reduced-transparency: reduce) { [style*="backdrop-filter"] { backdrop-filter: none !important; } }
       @media (prefers-contrast: more) { [role="button"], [role="tab"] { outline: 1px solid currentColor; } }
       ::selection { background: #C8C8C8; color: #111111; }`;
     document.head.appendChild(style);
     return () => style.remove();
   }, []);
+}
+
+function Navigation() {
+  const c = usePalette();
+  const pathname = usePathname();
+  useWebStyles();
   useEffect(() => listenForLessons(id => router.push(`/session/${id}`)), []);
+  // A confirmation link that fell back to the Site URL still lands on the confirmed screen.
+  useEffect(() => {
+    if ((initialAuthLink.type === 'signup' || initialAuthLink.type === 'email') && pathname !== '/welcome')
+      router.replace('/welcome?confirmed=1');
+    // Run once for the link that opened the page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (Platform.OS === 'web') document.body.style.background = c.bg;
+  }, [c.bg]);
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: c.bg }}>
       <StatusBar style={c === dark ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg } }}>
+        <Stack.Screen name="index" />
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="session/[id]" />
-        <Stack.Screen name="module/[id]" />
-        <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="settings" />
       </Stack>
-    </>
+      <ToastHost />
+    </View>
   );
 }
-function AccountNotebook() {
-  const { session, ready } = useAuth();
-  if (!ready)
-    return (
-      <View style={{ flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: '#fff' }}>Opening your notebook…</Text>
-      </View>
-    );
-  const scope = session?.user.id ?? 'guest';
-  return (
-    <LearningProvider key={scope} scope={scope}>
-      <Navigation />
-    </LearningProvider>
-  );
-}
+
+/** One auth provider and one notebook provider for the life of the app: auth changes never remount the router. */
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <AccountNotebook />
+        <LearningProvider>
+          <Navigation />
+        </LearningProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );
