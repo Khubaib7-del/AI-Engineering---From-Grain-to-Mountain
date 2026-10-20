@@ -27,22 +27,36 @@ const seeded = {
   activity,
 };
 
+// [name, route, state, optional step run after load]
+const clickText = text => async page => {
+  await page.getByText(text, { exact: false }).first().click();
+  await page.waitForTimeout(700);
+};
 const screens = [
   ['landing', '/', null],
-  ['start', '/start', null],
+  ['onboarding', '/start', null],
+  [
+    'placement',
+    '/start',
+    null,
+    async page => {
+      for (let i = 0; i < 3; i++) await clickText('Continue')(page);
+      await clickText('Take the placement check')(page);
+    },
+  ],
   ['today', '/today', seeded],
   ['map', '/map', seeded],
-  ['unit', '/unit/M00.U02', seeded],
-  ['module', '/module/M00', seeded],
+  ['unit', '/unit/M01.U01', seeded], // CS50P Lecture 0 with gap fill-ins
+  ['module', '/module/M01', seeded],
   ['progress', '/progress', seeded],
-  ['library', '/library', seeded],
+  ['library-books', '/library', seeded, clickText('Books ·')],
   ['signin', '/signin', seeded],
   ['settings', '/settings', seeded],
 ].filter(([n]) => !only || only.includes(n));
 
 const problems = [];
 for (const [w, h] of [[1440, 1000], [390, 844]]) {
-  for (const [name, route, state] of screens) {
+  for (const [name, route, state, step] of screens) {
     const context = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
     const page = await context.newPage();
     page.on('pageerror', e => problems.push(`${name}@${w}: ${e.message}`));
@@ -54,6 +68,7 @@ for (const [w, h] of [[1440, 1000], [390, 844]]) {
     }, state);
     await page.goto(base + route, { waitUntil: 'networkidle' });
     await page.waitForTimeout(900);
+    if (step) await step(page);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
     if (overflow) problems.push(`${name}@${w}: horizontal overflow`);
     const title = await page.title();
