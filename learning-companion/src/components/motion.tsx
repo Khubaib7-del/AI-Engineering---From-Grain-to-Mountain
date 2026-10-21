@@ -14,6 +14,7 @@ import Animated, {
   withTiming,
   FadeIn,
   FadeInDown,
+  FadeOut,
   LinearTransition,
 } from 'react-native-reanimated';
 export const spring = { stiffness: 380, damping: 30, mass: 0.7 };
@@ -139,5 +140,48 @@ export function MovingProgress({ value, color, track }: { value: number; color: 
     >
       <Animated.View style={[{ height: 6, borderRadius: 6, backgroundColor: color }, style]} />
     </View>
+  );
+}
+
+/** A chevron that turns smoothly when its section opens (down → up, or right → down). */
+export function Chevron({
+  open,
+  turn = 180,
+  children,
+}: {
+  open: boolean;
+  /** Degrees to rotate when open: 180 for ⌄ → ⌃, 90 for › → ⌄. */
+  turn?: number;
+  children: React.ReactNode;
+}) {
+  const reduced = useReduced();
+  const r = useSharedValue(open ? turn : 0);
+  useEffect(() => {
+    r.set(reduced ? (open ? turn : 0) : withSpring(open ? turn : 0, { stiffness: 260, damping: 24 }));
+  }, [open, turn, reduced, r]);
+  const style = useAnimatedStyle(() => ({ transform: [{ rotate: `${r.get()}deg` }] }));
+  return <Animated.View style={style}>{children}</Animated.View>;
+}
+
+/** Content that fades and slides in when a section opens, and fades out when it closes. */
+export function Collapse({
+  open,
+  children,
+  style,
+}: {
+  open: boolean;
+  children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+}) {
+  const reduced = useReduced();
+  if (!open) return null;
+  return (
+    <Animated.View
+      entering={reduced ? undefined : FadeInDown.duration(220)}
+      exiting={reduced ? undefined : FadeOut.duration(120)}
+      style={style}
+    >
+      {children}
+    </Animated.View>
   );
 }

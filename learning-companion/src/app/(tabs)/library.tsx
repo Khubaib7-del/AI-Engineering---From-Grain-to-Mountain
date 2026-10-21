@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { resources, unitsUsing } from '../../lib/content';
 import type { Resource } from '../../lib/types';
 import { NextStepCard } from '../../components/next-step';
+import { Chevron, Collapse } from '../../components/motion';
 import { usePath } from '../../lib/use-path';
 import {
   Button,
@@ -95,12 +96,14 @@ function ResourceCard({
             accessibilityRole="button"
             accessibilityState={{ expanded: open }}
             onPress={() => setOpen(v => !v)}
-            style={{ minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 4 }}
+            style={{ minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 8, marginLeft: -8, borderRadius: 8 }}
           >
             <Txt size={15} raw weight="600" color={c.ink}>
               {open ? 'Hide details' : 'Details'}
             </Txt>
-            <Icon name="chevron-down" size={14} color={c.ink} />
+            <Chevron open={open}>
+              <Icon name="chevron-down" size={14} color={c.ink} />
+            </Chevron>
           </Pressable>
         )}
         {!!r.video && (
@@ -116,11 +119,11 @@ function ResourceCard({
           </Pressable>
         )}
       </View>
-      {open && (
+      <Collapse open={open}>
         <Txt size={14} color={c.muted}>
           {r.notes}
         </Txt>
-      )}
+      </Collapse>
     </Panel>
   );
 }

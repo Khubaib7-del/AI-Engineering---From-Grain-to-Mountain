@@ -126,7 +126,7 @@ export const terminal: Palette = {
   art: '#FFFFFF',
   artSoft: '#4A4A4A',
   heat: ['#161616', '#3A3A3A', '#6E6E6E', '#ABABAB', '#F4F4F4'],
-  mote: ['#FFFFFF', '#BDBDBD', '#6B6B6B'],
+  mote: ['#F3D9A4', '#D9B26C', '#9C7838'],
 };
 
 export const contrastMode: Palette = {

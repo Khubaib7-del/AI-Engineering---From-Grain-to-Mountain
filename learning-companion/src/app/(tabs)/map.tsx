@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { router } from 'expo-router';
+import Animated, { LinearTransition } from 'react-native-reanimated';
+import { Collapse } from '../../components/motion';
 import { MapLegend, RouteBoard, STATUS_TEXT, Station, type MapNode } from '../../components/route-board';
-import { Button, Icon, Label, Panel, Row, Screen, Segmented, Txt, usePalette } from '../../components/ui';
+import { Button, Label, Panel, RoundIconButton, Row, Screen, Segmented, Txt, usePalette } from '../../components/ui';
 import { clusteredNodes, legacyNodes, v2Nodes } from '../../lib/map-nodes';
 import { useLearning } from '../../lib/store';
 import { usePath } from '../../lib/use-path';
@@ -22,6 +24,13 @@ export default function MapScreen() {
   );
   const allNodes = useMemo(() => (path.hasV2 ? v2Nodes(path.units, state) : nodes), [path, state, nodes]);
   const [listOpen, setListOpen] = useState<Set<string>>(() => new Set(currentModule ? [currentModule] : []));
+  const toggleModule = (id: string) =>
+    setListOpen(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   const currentId = path.hasV2 ? currentModule : nodes.find(n => n.status !== 'passed')?.id;
   const open = (n: MapNode) => router.push(n.kind === 'unit' ? `/unit/${n.id}` : `/module/${n.moduleId}`);
   const unitsOf = (moduleId: string) => allNodes.filter(n => n.moduleId === moduleId);
@@ -108,23 +117,26 @@ export default function MapScreen() {
             const total = units.filter(n => n.kind === 'unit').length;
             const isOpen = listOpen.has(m.id);
             return (
-              <Panel key={m.id} style={{ gap: 0, paddingVertical: 6 }}>
+              <Animated.View key={m.id} layout={LinearTransition.duration(240)}>
+              <Panel style={{ gap: 0, paddingVertical: 6 }}>
                 <Row
-                  title={`${m.id} · ${m.title}`}
+                  title={m.title}
                   subtitle={`${passed}/${total} units done · ${m.phase}${m.id === currentModule ? ' · you are here' : ''}`}
-                  leading={<Icon name={isOpen ? 'chevron-down' : 'chevron-forward'} size={18} />}
-                  onPress={() =>
-                    setListOpen(prev => {
-                      const next = new Set(prev);
-                      if (next.has(m.id)) next.delete(m.id);
-                      else next.add(m.id);
-                      return next;
-                    })
+                  leading={m.id}
+                  trailing={
+                    <RoundIconButton
+                      icon="chevron-down"
+                      turn={isOpen ? 180 : 0}
+                      active={isOpen}
+                      label={isOpen ? `Collapse ${m.title}` : `Expand ${m.title}`}
+                      onPress={() => toggleModule(m.id)}
+                    />
                   }
+                  onPress={() => toggleModule(m.id)}
                   last={!isOpen}
                 />
-                {isOpen &&
-                  units.map((n, i) => (
+                <Collapse open={isOpen}>
+                  {units.map((n, i) => (
                     <Row
                       key={n.id}
                       title={n.title}
@@ -134,7 +146,9 @@ export default function MapScreen() {
                       last={i === units.length - 1}
                     />
                   ))}
+                </Collapse>
               </Panel>
+              </Animated.View>
             );
           })}
         </View>

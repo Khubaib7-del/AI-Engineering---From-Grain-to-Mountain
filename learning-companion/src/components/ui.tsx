@@ -105,7 +105,7 @@ import {
 } from 'lucide-react-native';
 import { BrandMark } from './brand';
 import { Backdrop } from './art';
-import { MotionPress, MovingProgress } from './motion';
+import { Chevron, Collapse, MotionPress, MovingProgress } from './motion';
 import { useLearning } from '../lib/store';
 import { PALETTES, type Palette } from '../lib/palettes';
 import { resolveTheme, type ResolvedMode } from '../lib/theme';
@@ -982,17 +982,7 @@ export function Screen({
       {!desktopNav && (
         <View style={styles.row}>
           {back ? (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Back"
-              onPress={() => (router.canGoBack() ? router.back() : router.replace('/today'))}
-              style={[styles.iconButton, { flexDirection: 'row', paddingRight: 12, gap: 4, marginLeft: -6 }]}
-            >
-              <Icon name="chevron-back" size={20} />
-              <Txt size={15} weight="500">
-                Back
-              </Txt>
-            </Pressable>
+            <BackButton fallback="/today" />
           ) : (
             <BrandLink size={16} />
           )}
@@ -1012,24 +1002,7 @@ export function Screen({
         </View>
       )}
       {desktopNav && back && (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Back"
-          onPress={() => (router.canGoBack() ? router.back() : router.replace('/map'))}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 4,
-            minHeight: 36,
-            alignSelf: 'flex-start',
-            marginLeft: -6,
-          }}
-        >
-          <Icon name="chevron-back" size={18} color={c.muted} />
-          <Txt size={14} color={c.muted}>
-            Back
-          </Txt>
-        </Pressable>
+        <BackButton fallback="/map" small />
       )}
       {!!title && (
         <View style={{ gap: 8, maxWidth: 760 }}>
@@ -1176,16 +1149,18 @@ export function Row({
       accessibilityLabel={subtitle ? `${title}. ${subtitle}` : title}
       onPress={onPress}
       testID={testID}
-      style={({ pressed }) => ({
+      style={{
         flexDirection: 'row',
         alignItems: 'center',
         gap: 16,
         paddingVertical: 16,
+        paddingHorizontal: 12,
+        marginHorizontal: -12,
+        borderRadius: 12,
         borderBottomWidth: last ? 0 : 1,
         borderColor: c.line,
         minHeight: 68,
-        opacity: pressed ? 0.6 : 1,
-      })}
+      }}
     >
       {typeof leading === 'string' ? (
         <View
@@ -1216,7 +1191,7 @@ export function Row({
           </Txt>
         )}
       </View>
-      {trailing ?? <Icon name="chevron-forward" size={18} color={c.muted} />}
+      {trailing ?? <RoundIconButton icon="chevron-forward" label={`Open ${title}`} onPress={onPress} />}
     </Pressable>
   );
 }
@@ -1333,14 +1308,16 @@ export function Disclosure({
         accessibilityState={{ expanded: open }}
         accessibilityLabel={`${title}${hint ? `, ${hint}` : ''}`}
         onPress={() => setOpen(o => !o)}
-        style={({ pressed }) => ({
+        style={{
           flexDirection: 'row',
           alignItems: 'center',
           gap: 12,
           minHeight: 56,
           paddingVertical: 12,
-          opacity: pressed ? 0.7 : 1,
-        })}
+          paddingHorizontal: 12,
+          marginHorizontal: -12,
+          borderRadius: 12,
+        }}
       >
         <View style={{ flex: 1, gap: 2 }}>
           <Txt size={16} weight="600">
@@ -1352,21 +1329,17 @@ export function Disclosure({
             </Txt>
           )}
         </View>
-        <View
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 16,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: c.soft,
-            transform: [{ rotate: open ? '180deg' : '0deg' }],
-          }}
-        >
-          <Icon name="chevron-down" size={18} color={c.ink} />
-        </View>
+        <RoundIconButton
+          icon="chevron-down"
+          turn={open ? 180 : 0}
+          active={open}
+          label={open ? `Collapse ${title}` : `Expand ${title}`}
+          onPress={() => setOpen(o => !o)}
+        />
       </Pressable>
-      {open && <View style={{ gap: 12, paddingBottom: 16 }}>{children}</View>}
+      <Collapse open={open} style={{ gap: 12, paddingBottom: 16 }}>
+        {children}
+      </Collapse>
     </View>
   );
 }
@@ -1428,5 +1401,111 @@ export function Segmented<T extends string>({
         );
       })}
     </View>
+  );
+}
+
+/** Back link: a rounded pill whose arrow nudges left on hover and press. */
+export function BackButton({ fallback, small = false }: { fallback: string; small?: boolean }) {
+  const c = usePalette();
+  const [hover, setHover] = useState(false);
+  const x = useSharedValue(0);
+  const arrow = useAnimatedStyle(() => ({ transform: [{ translateX: x.get() }] }));
+  const nudge = (to: number) => x.set(withTiming(to, { duration: 180, easing: Easing.out(Easing.cubic) }));
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Back"
+      onPress={() => (router.canGoBack() ? router.back() : router.replace(fallback as never))}
+      onHoverIn={() => {
+        setHover(true);
+        nudge(-3);
+      }}
+      onHoverOut={() => {
+        setHover(false);
+        nudge(0);
+      }}
+      onPressIn={() => nudge(-4)}
+      onPressOut={() => nudge(hover ? -3 : 0)}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+        minHeight: small ? 36 : 44,
+        paddingLeft: 6,
+        paddingRight: 12,
+        marginLeft: -6,
+        borderRadius: 999,
+        alignSelf: 'flex-start',
+      }}
+    >
+      <Animated.View style={arrow}>
+        <Icon name="chevron-back" size={small ? 18 : 20} color={small && !hover ? c.muted : c.ink} />
+      </Animated.View>
+      <Txt size={small ? 14 : 15} weight="500" color={small && !hover ? c.muted : c.ink}>
+        Back
+      </Txt>
+    </Pressable>
+  );
+}
+
+/**
+ * Round icon button for row arrows and toggles. Its own tap target, with hover
+ * and press states; pressed (or active) it inverts: white on dark, black on light.
+ */
+export function RoundIconButton({
+  icon,
+  label,
+  onPress,
+  active = false,
+  turn,
+  size = 36,
+}: {
+  icon: string;
+  label: string;
+  onPress: () => void;
+  active?: boolean;
+  /** Rotate the glyph smoothly (degrees), e.g. 180 when a section is open. */
+  turn?: number;
+  size?: number;
+}) {
+  const c = usePalette();
+  const [hover, setHover] = useState(false);
+  const [down, setDown] = useState(false);
+  const inverted = down || active;
+  const glyph = <Icon name={icon} size={18} color={inverted ? c.bg : hover ? c.ink : c.muted} />;
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={turn !== undefined ? { expanded: active } : undefined}
+      hitSlop={6}
+      onPress={e => {
+        e?.stopPropagation?.();
+        onPress();
+      }}
+      onPressIn={() => setDown(true)}
+      onPressOut={() => setDown(false)}
+      onHoverIn={() => setHover(true)}
+      onHoverOut={() => setHover(false)}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: inverted ? c.ink : hover ? c.edge : c.line,
+        backgroundColor: inverted ? c.ink : hover ? c.soft : 'transparent',
+        transform: [{ scale: down ? 0.92 : 1 }],
+      }}
+    >
+      {turn !== undefined ? (
+        <Chevron open={turn !== 0} turn={turn || 180}>
+          {glyph}
+        </Chevron>
+      ) : (
+        glyph
+      )}
+    </Pressable>
   );
 }
