@@ -17,6 +17,7 @@ import {
   useWide,
 } from '../../components/ui';
 import { NextStepCard } from '../../components/next-step';
+import { Chevron, Collapse } from '../../components/motion';
 import { findUnit, unitIds, unitWeek } from '../../lib/content';
 import {
   bestAttempt,
@@ -120,7 +121,15 @@ function Block({
         accessibilityState={{ expanded: open }}
         accessibilityLabel={`Step ${index}: ${title}${done ? ', done' : ''}`}
         onPress={onToggle}
-        style={{ flexDirection: 'row', alignItems: 'center', gap: 14, minHeight: 44 }}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 14,
+          minHeight: 44,
+          padding: 8,
+          margin: -8,
+          borderRadius: 14,
+        }}
       >
         <View
           style={{
@@ -152,11 +161,13 @@ function Block({
             </Txt>
           )}
         </View>
-        <View style={{ transform: [{ rotate: open ? '180deg' : '0deg' }] }}>
+        <Chevron open={open}>
           <Icon name="chevron-down" size={20} color={c.muted} />
-        </View>
+        </Chevron>
       </Pressable>
-      {open && children}
+      <Collapse open={open} style={{ gap: 16 }}>
+        {children}
+      </Collapse>
     </Panel>
   );
 }

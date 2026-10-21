@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { router } from 'expo-router';
+import Animated, { LinearTransition } from 'react-native-reanimated';
+import { Chevron, Collapse } from '../../components/motion';
 import { MapLegend, RouteBoard, STATUS_TEXT, Station, type MapNode } from '../../components/route-board';
 import { Button, Icon, Label, Panel, Row, Screen, Segmented, Txt, usePalette } from '../../components/ui';
 import { clusteredNodes, legacyNodes, v2Nodes } from '../../lib/map-nodes';
@@ -108,11 +110,17 @@ export default function MapScreen() {
             const total = units.filter(n => n.kind === 'unit').length;
             const isOpen = listOpen.has(m.id);
             return (
-              <Panel key={m.id} style={{ gap: 0, paddingVertical: 6 }}>
+              <Animated.View key={m.id} layout={LinearTransition.duration(240)}>
+              <Panel style={{ gap: 0, paddingVertical: 6 }}>
                 <Row
-                  title={`${m.id} · ${m.title}`}
+                  title={m.title}
                   subtitle={`${passed}/${total} units done · ${m.phase}${m.id === currentModule ? ' · you are here' : ''}`}
-                  leading={<Icon name={isOpen ? 'chevron-down' : 'chevron-forward'} size={18} />}
+                  leading={m.id}
+                  trailing={
+                    <Chevron open={isOpen}>
+                      <Icon name="chevron-down" size={18} color={c.muted} />
+                    </Chevron>
+                  }
                   onPress={() =>
                     setListOpen(prev => {
                       const next = new Set(prev);
@@ -123,8 +131,8 @@ export default function MapScreen() {
                   }
                   last={!isOpen}
                 />
-                {isOpen &&
-                  units.map((n, i) => (
+                <Collapse open={isOpen}>
+                  {units.map((n, i) => (
                     <Row
                       key={n.id}
                       title={n.title}
@@ -134,7 +142,9 @@ export default function MapScreen() {
                       last={i === units.length - 1}
                     />
                   ))}
+                </Collapse>
               </Panel>
+              </Animated.View>
             );
           })}
         </View>
