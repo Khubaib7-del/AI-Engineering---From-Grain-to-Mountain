@@ -15,6 +15,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
 import { router, useFocusEffect, usePathname } from 'expo-router';
 import {
@@ -84,6 +85,23 @@ import {
   X,
   ZoomIn,
   ZoomOut,
+  ArrowUp as LArrowUp,
+  ArrowDown as LArrowDown,
+  History as LHistory,
+  Trash2 as LTrash,
+  Copy as LCopy,
+  Minimize2 as LMinimize,
+  Maximize2 as LMaximize2,
+  SquarePen as LSquarePen,
+  AtSign as LAtSign,
+  KeyRound as LKey,
+  Unplug as LUnplug,
+  Zap as LZap,
+  Eye as LEye,
+  Cpu as LCpu,
+  ChevronUp as LChevronUp,
+  MessagesSquare as LMessages,
+  PanelRightClose as LPanelClose,
 } from 'lucide-react-native';
 import { BrandMark } from './brand';
 import { Backdrop } from './art';
@@ -278,6 +296,23 @@ const iconMap: Record<string, typeof ArrowRight> = {
   target: Target,
   plus: Plus,
   minus: Minus,
+  'arrow-up': LArrowUp,
+  'arrow-down': LArrowDown,
+  history: LHistory,
+  trash: LTrash,
+  copy: LCopy,
+  minimize: LMinimize,
+  'maximize-2': LMaximize2,
+  'new-chat': LSquarePen,
+  at: LAtSign,
+  key: LKey,
+  unplug: LUnplug,
+  zap: LZap,
+  eye: LEye,
+  cpu: LCpu,
+  'chevron-up': LChevronUp,
+  messages: LMessages,
+  'panel-close': LPanelClose,
   timer: Timer,
   flask: FlaskConical,
   warning: TriangleAlert,
@@ -1041,6 +1076,7 @@ export function Screen({
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>
       <Backdrop />
+      <ScreenFade>
       {desktopNav && (
         <View style={{ paddingTop: insets.top }}>
           <TopNav />
@@ -1071,8 +1107,30 @@ export function Screen({
           )}
         </View>
       )}
+      </ScreenFade>
     </View>
   );
+}
+
+/** Pages fade and settle in every time they come into focus (tabs included). */
+function ScreenFade({ children }: { children: React.ReactNode }) {
+  const o = useSharedValue(1);
+  const ty = useSharedValue(0);
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    void AccessibilityInfo.isReduceMotionEnabled().then(setReduced);
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      if (reduced) return;
+      o.set(0);
+      ty.set(10);
+      o.set(withTiming(1, { duration: 260, easing: Easing.out(Easing.cubic) }));
+      ty.set(withTiming(0, { duration: 320, easing: Easing.out(Easing.cubic) }));
+    }, [reduced, o, ty]),
+  );
+  const style = useAnimatedStyle(() => ({ opacity: o.get(), transform: [{ translateY: ty.get() }] }));
+  return <Animated.View style={[{ flex: 1 }, style]}>{children}</Animated.View>;
 }
 
 export function Section({

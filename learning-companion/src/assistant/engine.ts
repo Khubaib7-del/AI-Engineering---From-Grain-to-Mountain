@@ -145,6 +145,40 @@ export function createEngine(deps: EngineDeps) {
       .catch(() => undefined);
   }
 
+  /** Re-read the models the saved key can use (new models appear without reconnecting). */
+  async function refreshModels() {
+    await load();
+    const c = snap.config;
+    if (!c || secret === null) return;
+    try {
+      const found = await validateKey(deps.env, c.provider, secret);
+      set({ models: found.models });
+      await deps.localSet(CONFIG_KEY, JSON.stringify({ provider: c.provider, model: c.model, models: found.models }));
+    } catch {
+      // Keep the list we have; the chat still works.
+    }
+  }
+
+  /** Saved threads on this device, newest first: one per unit plus the general one. */
+  async function threads() {
+    const keys = (await deps.localKeys()).filter(k => k.startsWith('assistant-chat:'));
+    const out: { unitId?: string; messages: ChatMessage[] }[] = [];
+    for (const k of keys) {
+      const id = k.slice('assistant-chat:'.length);
+      const messages = parseHistory(await deps.localGet(k).catch(() => null));
+      if (messages.length) out.push({ unitId: id === 'general' ? undefined : id, messages });
+    }
+    return out.sort((a, b) => (b.messages.at(-1)?.at ?? '').localeCompare(a.messages.at(-1)?.at ?? ''));
+  }
+
+  async function deleteThread(unitId?: string) {
+    await deps.localRemove(threadKey(unitId)).catch(() => undefined);
+    if (unitId === snap.unitId) {
+      abort?.abort();
+      set({ messages: [], streaming: false });
+    }
+  }
+
   async function send(text: string, system: string) {
     await load();
     const c = snap.config;
@@ -224,6 +258,9 @@ export function createEngine(deps: EngineDeps) {
     connect,
     disconnect,
     setModel,
+    refreshModels,
+    threads,
+    deleteThread,
     send,
     stop,
     clear,
