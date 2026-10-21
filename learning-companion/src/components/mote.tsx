@@ -1,4 +1,4 @@
-// Mote: a round little grain of sand. Smooth vector art (crisp at any size),
+// Mote: a round little grain that has sprouted. Smooth vector art (crisp at any size),
 // big glossy eyes that follow the pointer, blinking, breathing squash-and-stretch,
 // and moods: idle, happy, thinking, talking, celebrate, sleepy. Original design.
 import { useEffect, useId, useState } from 'react';
@@ -42,18 +42,36 @@ const SPECKS: [number, number, number][] = [
 
 type Tone = { hi: string; mid: string; lo: string; rim: string; eye: string; cheek: string; speck: string };
 
-function tones(mode: string, dark: boolean, mote: [string, string, string]): Tone {
-  // Mote keeps the same warm sand colour in every theme, so it reads as one character.
+function tones(mode: string, dark: boolean, _mote?: [string, string, string]): Tone {
+  // Mote is a bright mint sprout in every theme: one vivid, energetic character.
   const contrast = mode === 'contrast';
   return {
-    hi: '#FFF1D2',
-    mid: mote[0] ?? '#F3D9A4',
-    lo: mote[1] ?? '#D9B26C',
-    rim: contrast ? (dark ? '#FFFFFF' : '#000000') : dark ? '#E9C989' : '#B4874A',
-    eye: '#2A1D10',
-    cheek: '#F29AA5',
-    speck: mote[2] ?? '#9C7838',
+    hi: '#D4FFE6',
+    mid: '#3FE38E',
+    lo: '#10B862',
+    rim: contrast ? (dark ? '#FFFFFF' : '#000000') : dark ? '#7DFFB6' : '#0A8446',
+    eye: '#0B2618',
+    cheek: '#FF6F9F',
+    speck: '#B8FFD6',
   };
+}
+
+/** Two little leaves on top: Mote is a grain that has started to sprout. */
+function Sprout({ t, perk }: { t: Tone; perk: boolean }) {
+  const tilt = perk ? 8 : 0;
+  return (
+    <G>
+      <Path d="M50 15.5Q49.4 10 50.6 5.5" stroke={t.rim} strokeWidth={2.6} strokeLinecap="round" fill="none" />
+      <G rotation={-tilt} origin="50.4, 7">
+        <Path d="M50.4 7.5C46 0.5 37 0.8 33.5 5.5C38.5 10.5 46.5 10.5 50.4 7.5Z" fill="#5BF29E" stroke={t.rim} strokeWidth={2} strokeLinejoin="round" />
+        <Path d="M49 7.2Q42 5.2 37 5.6" stroke={t.lo} strokeWidth={1.2} strokeLinecap="round" fill="none" />
+      </G>
+      <G rotation={tilt} origin="50.4, 7">
+        <Path d="M50.4 7.5C54.8 0.5 63.8 0.8 67.3 5.5C62.3 10.5 54.3 10.5 50.4 7.5Z" fill="#5BF29E" stroke={t.rim} strokeWidth={2} strokeLinejoin="round" />
+        <Path d="M51.8 7.2Q58.8 5.2 63.8 5.6" stroke={t.lo} strokeWidth={1.2} strokeLinecap="round" fill="none" />
+      </G>
+    </G>
+  );
 }
 
 const HEART = (x: number, y: number, k = 1) =>
@@ -291,7 +309,7 @@ export function Mote({
               bottom: size * 0.04,
               height: size * 0.07,
               borderRadius: size,
-              backgroundColor: c.dark ? '#000' : '#3B2C14',
+              backgroundColor: c.dark ? '#000' : '#0B3D24',
             },
             shadow,
           ]}
@@ -313,9 +331,10 @@ export function Mote({
           {/* Little feet */}
           <Ellipse cx={39} cy={88.5} rx={7.5} ry={4.2} fill={t.lo} stroke={t.rim} strokeWidth={2} />
           <Ellipse cx={61} cy={88.5} rx={7.5} ry={4.2} fill={t.lo} stroke={t.rim} strokeWidth={2} />
+          <Sprout t={t} perk={mood === 'happy' || mood === 'celebrate' || mood === 'love' || mood === 'surprised' || mood === 'wave'} />
           <Path d={BODY} fill={`url(#b${uid})`} stroke={t.rim} strokeWidth={2.4} />
           {SPECKS.map(([x, yy, r]) => (
-            <Circle key={`${x}-${yy}`} cx={x} cy={yy} r={r} fill={t.speck} opacity={0.45} />
+            <Circle key={`${x}-${yy}`} cx={x} cy={yy} r={r} fill={t.speck} opacity={0.55} />
           ))}
           {/* Shine */}
           <Path d="M27 34C30 24 40 18.5 49 18.5C42 22 35 28 31.5 37C30 40.5 25.8 38.5 27 34Z" fill={`url(#s${uid})`} />
@@ -352,7 +371,6 @@ export function Mote({
             <G stroke={c.dark ? '#FFFFFF' : '#5A6170'} strokeWidth={2.4} strokeLinecap="round">
               <Path d="M14 22L19 28" />
               <Path d="M86 22L81 28" />
-              <Path d="M50 4V10" />
             </G>
           )}
           {mood === 'sleepy' && (
