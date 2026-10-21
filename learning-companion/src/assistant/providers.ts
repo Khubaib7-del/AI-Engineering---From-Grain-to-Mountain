@@ -14,7 +14,7 @@ type Spec = ProviderInfo & {
 };
 
 const NOT_CHAT =
-  /embed|whisper|tts|transcrib|audio|realtime|live|image|banana|veo|omni|moderation|guard|safeguard|ocr|rerank|dall-e|sora|lyria|robotics|search|deep-research|computer-use|:batch|orpheus|voxtral|timestral|shieldstral|codestral/i;
+  /embed|whisper|tts|transcrib|audio|realtime|live|image|banana|veo|omni|moderation|guard|safeguard|ocr|rerank|dall-e|sora|lyria|robotics|search|deep-research|computer-use|:batch|orpheus|voxtral|timestral|shieldstral|codestral-embed|mistral-embed/i;
 
 export const PROVIDER_SPECS: Record<ProviderId, Spec> = {
   openai: {
@@ -80,10 +80,23 @@ export const PROVIDER_SPECS: Record<ProviderId, Spec> = {
   mistral: {
     id: 'mistral',
     name: 'Mistral',
-    keyHint: 'Paste your Mistral key (no fixed prefix)',
+    keyHint: 'Paste your Mistral key',
     docsUrl: 'https://console.mistral.ai/api-keys',
     defaultModel: 'mistral-small-latest',
-    models: ['mistral-small-latest', 'mistral-medium-latest', 'ministral-8b-latest'],
+    models: [
+      'mistral-small-latest',
+      'mistral-medium-latest',
+      'mistral-large-latest',
+      'magistral-medium-latest',
+      'magistral-small-latest',
+      'codestral-latest',
+      'devstral-medium-latest',
+      'devstral-small-latest',
+      'ministral-8b-latest',
+      'ministral-3b-latest',
+      'pixtral-large-latest',
+      'open-mistral-nemo',
+    ],
     needsKey: true,
     prefer: ['mistral-small-latest', /^mistral-small/, /^ministral-.*latest$/, /^mistral-medium-latest$/],
     exclude: NOT_CHAT,
@@ -166,7 +179,7 @@ export function chooseModel(provider: ProviderId, available: string[]): string {
 }
 
 /** Chat-capable models from a list, preferred ones first, capped for a picker. */
-export function pickerModels(provider: ProviderId, available: string[], cap = 40): string[] {
+export function pickerModels(provider: ProviderId, available: string[], cap = 120): string[] {
   const spec = PROVIDER_SPECS[provider];
   const usable = [...new Set(available)].filter(id => !spec.exclude || !spec.exclude.test(id));
   const top: string[] = [];
@@ -224,14 +237,36 @@ export const openRouterModelsUrl = 'https://openrouter.ai/api/v1/models';
 
 /** Model IDs from a models-list response body. */
 export function parseModels(provider: ProviderId, body: unknown): string[] {
-  const b = body as { data?: { id?: string }[]; models?: { name?: string; supportedGenerationMethods?: string[] }[] };
+  const b = body as {
+    data?: { id?: string; capabilities?: { completion_chat?: boolean } }[];
+    models?: { name?: string; supportedGenerationMethods?: string[] }[];
+  };
   if (provider === 'gemini')
     return (b.models ?? [])
       .filter(m => !m.supportedGenerationMethods || m.supportedGenerationMethods.includes('generateContent'))
       .map(m => (m.name ?? '').replace(/^models\//, ''))
       .filter(Boolean);
-  return (b.data ?? []).map(m => m.id ?? '').filter(Boolean);
+  return (b.data ?? [])
+    .filter(m => provider !== 'mistral' || m.capabilities?.completion_chat !== false)
+    .map(m => m.id ?? '')
+    .filter(Boolean);
 }
+
+export type ModelGroup = 'General' | 'Coding' | 'Reasoning' | 'Fast' | 'Vision';
+export const MODEL_GROUPS: ModelGroup[] = ['General', 'Coding', 'Reasoning', 'Fast', 'Vision'];
+
+/** A rough family for a model ID, for grouping the picker. */
+export function modelGroup(id: string): ModelGroup {
+  const m = id.toLowerCase();
+  if (/codestral|devstral|coder|code|starcoder/.test(m)) return 'Coding';
+  if (/magistral|reason|thinking|\br1\b|-r1|deepseek-r|qwq|\bo\d|\/o\d|-pro\b|opus/.test(m)) return 'Reasoning';
+  if (/pixtral|vision|-vl\b|llava/.test(m)) return 'Vision';
+  if (/ministral|mini|small|flash|lite|haiku|instant|nano|luna|\b\d+b\b|-\d+b\b|tiny|gemma/.test(m)) return 'Fast';
+  return 'General';
+}
+
+/** Dated snapshots (e.g. mistral-small-2506) that sit behind a -latest alias. */
+export const isSnapshot = (id: string) => /-(\d{4}|\d{2}-\d{2}|\d{4}-\d{2}-\d{2}|\d{8})$/.test(id);
 
 // Generous because current models may spend part of it on hidden reasoning.
 export const MAX_OUTPUT_TOKENS = 4096;

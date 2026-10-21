@@ -66,7 +66,7 @@ function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
 export default function TabLayout() {
   return (
-    <Tabs tabBar={props => <TabBar {...props} />} screenOptions={{ headerShown: false }}>
+    <Tabs tabBar={props => <TabBar {...props} />} screenOptions={{ headerShown: false, animation: 'fade' }}>
       <Tabs.Screen name="today" options={{ title: 'Today' }} />
       <Tabs.Screen name="map" options={{ title: 'Map' }} />
       <Tabs.Screen name="progress" options={{ title: 'Progress' }} />

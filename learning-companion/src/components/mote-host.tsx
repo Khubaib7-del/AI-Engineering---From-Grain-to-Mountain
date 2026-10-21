@@ -103,7 +103,8 @@ export function MoteHost() {
     return () => clearTimeout(t);
   }, [stepKey, pathname]);
   const viewKey = `${stepKey}|${pathname}`;
-  const collapsed = foldedFor === viewKey && unfoldFor !== viewKey;
+  // On the map the route board already shows the next step, so tips start folded (they overlapped its buttons).
+  const collapsed = (foldedFor === viewKey || pathname.startsWith('/map')) && unfoldFor !== viewKey;
   const setCollapsed = (v: boolean) => {
     setFoldedFor(v ? viewKey : null);
     setUnfoldFor(v ? null : viewKey);

@@ -19,7 +19,7 @@ export function nextStepBubbles(
   return out;
 }
 
-export type MoteMood = 'idle' | 'celebrate' | 'sleepy';
+export type MoteMood = 'idle' | 'celebrate' | 'sleepy' | 'happy' | 'thinking' | 'talking';
 export const SLEEP_AFTER_MS = 90_000;
 /** Celebrate wins over everything; sleepy after a quiet spell; otherwise idle. */
 export function moteMood(now: number, lastActive: number, celebrateUntil = 0): MoteMood {

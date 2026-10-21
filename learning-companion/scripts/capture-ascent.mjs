@@ -58,7 +58,6 @@ const screens = [
     await page.waitForTimeout(300);
     await click('[data-testid="assistant-connect"]')(page);
     await page.waitForTimeout(900);
-    await page.getByRole('button', { name: 'Start chatting' }).click();
     await page.waitForTimeout(400);
     await page.getByRole('button', { name: /Explain/ }).first().click();
     await page.waitForTimeout(3500);
