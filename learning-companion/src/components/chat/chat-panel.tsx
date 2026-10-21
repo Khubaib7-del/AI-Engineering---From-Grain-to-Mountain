@@ -441,9 +441,9 @@ function EmptyState({ onPick, wide }: { onPick: (t: string) => void; wide: boole
   const c = usePalette();
   const a = useAssistant();
   const prompts = useMemo(() => promptsFor(a.context.unitId), [a.context.unitId]);
-  const [mood, setMood] = useState<MoteMood>('happy');
+  const [mood, setMood] = useState<MoteMood>('wave');
   useEffect(() => {
-    const t = setTimeout(() => setMood('idle'), 1200);
+    const t = setTimeout(() => setMood('idle'), 1600);
     return () => clearTimeout(t);
   }, []);
   return (
@@ -510,7 +510,15 @@ export function ChatPanel({ draft, docked = false }: { draft?: string; docked?: 
   const visible = a.messages.filter(m => m.role !== 'system');
   const lastMsg = visible.at(-1);
   const connected = !!a.config && a.status !== 'unconfigured';
-  const mood: MoteMood = a.streaming ? (lastMsg?.text ? 'talking' : 'thinking') : a.status === 'checking' ? 'thinking' : 'idle';
+  const mood: MoteMood = a.streaming
+    ? lastMsg?.text
+      ? 'talking'
+      : 'thinking'
+    : a.status === 'checking'
+      ? 'thinking'
+      : lastMsg?.status === 'error'
+        ? 'oops'
+        : 'idle';
 
   useEffect(() => {
     if (stick.current) scroll.current?.scrollToEnd({ animated: !a.streaming });

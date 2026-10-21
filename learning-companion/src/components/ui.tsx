@@ -1191,7 +1191,7 @@ export function Row({
           </Txt>
         )}
       </View>
-      {trailing ?? <Icon name="chevron-forward" size={18} color={c.muted} />}
+      {trailing ?? <RoundIconButton icon="chevron-forward" label={`Open ${title}`} onPress={onPress} />}
     </Pressable>
   );
 }
@@ -1329,20 +1329,13 @@ export function Disclosure({
             </Txt>
           )}
         </View>
-        <View
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 16,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: c.soft,
-          }}
-        >
-          <Chevron open={open}>
-            <Icon name="chevron-down" size={18} color={c.ink} />
-          </Chevron>
-        </View>
+        <RoundIconButton
+          icon="chevron-down"
+          turn={open ? 180 : 0}
+          active={open}
+          label={open ? `Collapse ${title}` : `Expand ${title}`}
+          onPress={() => setOpen(o => !o)}
+        />
       </Pressable>
       <Collapse open={open} style={{ gap: 12, paddingBottom: 16 }}>
         {children}
@@ -1451,6 +1444,68 @@ export function BackButton({ fallback, small = false }: { fallback: string; smal
       <Txt size={small ? 14 : 15} weight="500" color={small && !hover ? c.muted : c.ink}>
         Back
       </Txt>
+    </Pressable>
+  );
+}
+
+/**
+ * Round icon button for row arrows and toggles. Its own tap target, with hover
+ * and press states; pressed (or active) it inverts: white on dark, black on light.
+ */
+export function RoundIconButton({
+  icon,
+  label,
+  onPress,
+  active = false,
+  turn,
+  size = 36,
+}: {
+  icon: string;
+  label: string;
+  onPress: () => void;
+  active?: boolean;
+  /** Rotate the glyph smoothly (degrees), e.g. 180 when a section is open. */
+  turn?: number;
+  size?: number;
+}) {
+  const c = usePalette();
+  const [hover, setHover] = useState(false);
+  const [down, setDown] = useState(false);
+  const inverted = down || active;
+  const glyph = <Icon name={icon} size={18} color={inverted ? c.bg : hover ? c.ink : c.muted} />;
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={turn !== undefined ? { expanded: active } : undefined}
+      hitSlop={6}
+      onPress={e => {
+        e?.stopPropagation?.();
+        onPress();
+      }}
+      onPressIn={() => setDown(true)}
+      onPressOut={() => setDown(false)}
+      onHoverIn={() => setHover(true)}
+      onHoverOut={() => setHover(false)}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: inverted ? c.ink : hover ? c.edge : c.line,
+        backgroundColor: inverted ? c.ink : hover ? c.soft : 'transparent',
+        transform: [{ scale: down ? 0.92 : 1 }],
+      }}
+    >
+      {turn !== undefined ? (
+        <Chevron open={turn !== 0} turn={turn || 180}>
+          {glyph}
+        </Chevron>
+      ) : (
+        glyph
+      )}
     </Pressable>
   );
 }

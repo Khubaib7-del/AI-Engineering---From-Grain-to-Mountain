@@ -19,7 +19,19 @@ export function nextStepBubbles(
   return out;
 }
 
-export type MoteMood = 'idle' | 'celebrate' | 'sleepy' | 'happy' | 'thinking' | 'talking';
+export type MoteMood =
+  | 'idle'
+  | 'celebrate'
+  | 'sleepy'
+  | 'happy'
+  | 'thinking'
+  | 'talking'
+  | 'wave'
+  | 'surprised'
+  | 'love'
+  | 'oops';
+/** Little reactions Mote plays when you tap it. */
+export const TAP_MOODS: MoteMood[] = ['surprised', 'love', 'wave', 'happy'];
 export const SLEEP_AFTER_MS = 90_000;
 /** Celebrate wins over everything; sleepy after a quiet spell; otherwise idle. */
 export function moteMood(now: number, lastActive: number, celebrateUntil = 0): MoteMood {

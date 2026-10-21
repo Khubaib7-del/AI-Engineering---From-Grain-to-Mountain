@@ -43,27 +43,60 @@ const SPECKS: [number, number, number][] = [
 type Tone = { hi: string; mid: string; lo: string; rim: string; eye: string; cheek: string; speck: string };
 
 function tones(mode: string, dark: boolean, mote: [string, string, string]): Tone {
-  if (mode === 'terminal')
-    return { hi: '#FFFFFF', mid: '#E6E6E6', lo: '#BDBDBD', rim: '#FFFFFF', eye: '#000000', cheek: '#9A9A9A', speck: '#8A8A8A' };
-  if (mode === 'contrast')
-    return { hi: '#FFE9B8', mid: '#F2C477', lo: '#C98F3E', rim: dark ? '#FFFFFF' : '#000000', eye: '#111111', cheek: '#E77F8B', speck: '#9E6C2B' };
+  // Mote keeps the same warm sand colour in every theme, so it reads as one character.
+  const contrast = mode === 'contrast';
   return {
-    hi: '#FFEFCB',
+    hi: '#FFF1D2',
     mid: mote[0] ?? '#F3D9A4',
     lo: mote[1] ?? '#D9B26C',
-    rim: dark ? '#6E4E22' : '#B4874A',
+    rim: contrast ? (dark ? '#FFFFFF' : '#000000') : dark ? '#E9C989' : '#B4874A',
     eye: '#2A1D10',
     cheek: '#F29AA5',
     speck: mote[2] ?? '#9C7838',
   };
 }
 
+const HEART = (x: number, y: number, k = 1) =>
+  `M${x} ${y + 3.2 * k}C${x - 7 * k} ${y - 2 * k} ${x - 3.5 * k} ${y - 7.5 * k} ${x} ${y - 3.6 * k}C${x + 3.5 * k} ${y - 7.5 * k} ${x + 7 * k} ${y - 2 * k} ${x} ${y + 3.2 * k}Z`;
+
 function Eyes({ mood, blink, gx, gy, t }: { mood: MoteMood; blink: boolean; gx: number; gy: number; t: Tone }) {
   const dx = Math.max(-1, Math.min(1, gx)) * 3.2;
   const dy = Math.max(-1, Math.min(1, gy)) * 2.6 + (mood === 'thinking' ? -3 : 0);
   const pos = [36.5, 63.5];
   const stroke = { stroke: t.eye, strokeWidth: 3.4, strokeLinecap: 'round' as const, fill: 'none' };
-  if (mood === 'happy' || mood === 'celebrate')
+  if (mood === 'love')
+    return (
+      <G>
+        {pos.map(x => (
+          <Path key={x} d={HEART(x, 51.5, 1.25)} fill="#E8495F" />
+        ))}
+      </G>
+    );
+  if (mood === 'surprised')
+    return (
+      <G>
+        {pos.map(x => (
+          <G key={x}>
+            <Circle cx={x} cy={50.5} r={7.4} fill="#FFFFFF" stroke={t.eye} strokeWidth={2.2} />
+            <Circle cx={x} cy={51} r={3.4} fill={t.eye} />
+            <Circle cx={x + 1.3} cy={49.6} r={1.1} fill="#FFFFFF" />
+          </G>
+        ))}
+      </G>
+    );
+  if (mood === 'oops')
+    return (
+      <G>
+        {pos.map((x, i) => (
+          <G key={x}>
+            <Path d={i === 0 ? `M${x - 6} 41.5L${x + 4} 44` : `M${x - 4} 44L${x + 6} 41.5`} {...stroke} strokeWidth={2.6} />
+            <Ellipse cx={x + dx} cy={52 + dy} rx={4.6} ry={5.6} fill={t.eye} />
+            <Circle cx={x + dx + 1.6} cy={50 + dy} r={1.8} fill="#FFFFFF" />
+          </G>
+        ))}
+      </G>
+    );
+  if (mood === 'happy' || mood === 'celebrate' || mood === 'wave')
     return (
       <G>
         {pos.map(x => (
@@ -107,6 +140,16 @@ function Mouth({ mood, open, t }: { mood: MoteMood; open: boolean; t: Tone }) {
       <Path d="M46 64.5Q50 67.5 54 64.5" stroke={t.eye} strokeWidth={2.6} strokeLinecap="round" fill="none" />
     );
   if (mood === 'thinking') return <Circle cx={53} cy={65.5} r={2.2} fill={t.eye} />;
+  if (mood === 'surprised') return <Ellipse cx={50} cy={67} rx={3.4} ry={4.4} fill={t.eye} />;
+  if (mood === 'oops')
+    return <Path d="M43.5 67Q46.75 63.5 50 67Q53.25 70.5 56.5 67" stroke={t.eye} strokeWidth={2.6} strokeLinecap="round" fill="none" />;
+  if (mood === 'love' || mood === 'wave')
+    return (
+      <G>
+        <Path d="M43.5 62.5Q50 72 56.5 62.5Z" fill={t.eye} />
+        <Path d="M46.5 66.8Q50 69.2 53.5 66.8Q50 65.2 46.5 66.8Z" fill="#F07C8A" />
+      </G>
+    );
   if (mood === 'sleepy') return <Ellipse cx={50} cy={65.5} rx={2.3} ry={1.6} fill={t.eye} />;
   return <Path d="M45 63.6Q50 68.8 55 63.6" stroke={t.eye} strokeWidth={2.8} strokeLinecap="round" fill="none" />;
 }
@@ -138,7 +181,7 @@ export function Mote({
 
   // Blink at a natural, irregular rhythm (sometimes a double blink).
   useEffect(() => {
-    if (reduced || mood === 'sleepy' || mood === 'happy' || mood === 'celebrate') return;
+    if (reduced || ['sleepy', 'happy', 'celebrate', 'wave', 'love', 'surprised'].includes(mood)) return;
     let timer: ReturnType<typeof setTimeout>;
     const loop = () => {
       timer = setTimeout(
@@ -196,6 +239,21 @@ export function Mote({
     } else if (mood === 'talking') {
       y.set(withRepeat(withTiming(-size * 0.035, { duration: 300, easing: ease }), -1, true));
       sy.set(withRepeat(withTiming(1.025, { duration: 300, easing: ease }), -1, true));
+    } else if (mood === 'surprised') {
+      y.set(withSequence(withTiming(-size * 0.14, { duration: 130, easing: Easing.out(Easing.quad) }), withSpring(0, { stiffness: 320, damping: 11 })));
+      sy.set(withSequence(withTiming(1.12, { duration: 130 }), withSpring(1, { stiffness: 300, damping: 9 })));
+      sx.set(withSequence(withTiming(0.9, { duration: 130 }), withSpring(1, { stiffness: 300, damping: 9 })));
+    } else if (mood === 'love') {
+      sx.set(withRepeat(withSequence(withTiming(1.07, { duration: 160 }), withTiming(1, { duration: 220 })), 3));
+      sy.set(withRepeat(withSequence(withTiming(1.07, { duration: 160 }), withTiming(1, { duration: 220 })), 3));
+      rot.set(withSequence(withTiming(6, { duration: 300, easing: ease }), withTiming(0, { duration: 500, easing: ease })));
+    } else if (mood === 'wave') {
+      rot.set(withRepeat(withSequence(withTiming(-5, { duration: 220, easing: ease }), withTiming(5, { duration: 220, easing: ease })), 3, true));
+      y.set(withSequence(withSpring(-size * 0.06, { stiffness: 380, damping: 12 }), withSpring(0, { stiffness: 260, damping: 14 })));
+    } else if (mood === 'oops') {
+      rot.set(withSequence(withTiming(-7, { duration: 90 }), withTiming(7, { duration: 90 }), withTiming(-5, { duration: 90 }), withTiming(4, { duration: 90 }), withSpring(0, { stiffness: 200, damping: 10 })));
+      sy.set(withTiming(0.95, { duration: 300 }));
+      sx.set(withTiming(1.04, { duration: 300 }));
     } else if (mood === 'happy') {
       y.set(withSequence(withSpring(-size * 0.1, { stiffness: 400, damping: 12 }), withSpring(0, { stiffness: 300, damping: 14 })));
       rot.set(withSequence(withTiming(-7, { duration: 160 }), withSpring(0, { stiffness: 220, damping: 8 })));
@@ -262,7 +320,7 @@ export function Mote({
           {/* Shine */}
           <Path d="M27 34C30 24 40 18.5 49 18.5C42 22 35 28 31.5 37C30 40.5 25.8 38.5 27 34Z" fill={`url(#s${uid})`} />
           {mood !== 'sleepy' && (
-            <G opacity={c.mode === 'terminal' ? 0.5 : 0.6}>
+            <G opacity={0.6}>
               <Ellipse cx={25.5} cy={62} rx={6} ry={3.6} fill={t.cheek} />
               <Ellipse cx={74.5} cy={62} rx={6} ry={3.6} fill={t.cheek} />
             </G>
@@ -270,16 +328,31 @@ export function Mote({
           <Eyes mood={mood} blink={blink} gx={gazeX} gy={gazeY} t={t} />
           <Mouth mood={mood} open={mood === 'talking' ? mouthOpen : mood === 'celebrate'} t={t} />
           {mood === 'celebrate' && (
-            <G fill={c.mode === 'terminal' ? '#FFFFFF' : '#FFC94A'}>
+            <G fill="#FFC94A">
               <Path d="M10 18l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" />
               <Path d="M88 12l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z" />
               <Circle cx={92} cy={40} r={2} />
             </G>
           )}
           {mood === 'thinking' && (
-            <G fill={c.mode === 'terminal' ? '#FFFFFF' : c.dark ? '#DCE3EE' : '#5A6170'}>
+            <G fill={c.dark ? '#DCE3EE' : '#5A6170'}>
               <Circle cx={82} cy={20} r={2.4} />
               <Circle cx={89} cy={12} r={3.2} />
+            </G>
+          )}
+          {mood === 'oops' && <Path d="M80 30C83 35 84.5 37.5 84.5 39.5A4.5 4.5 0 0 1 75.5 39.5C75.5 37.5 77 35 80 30Z" fill="#8FD3FF" stroke="#3E9BD6" strokeWidth={1.2} />}
+          {mood === 'love' && (
+            <G>
+              <Path d={HEART(86, 16, 0.9)} fill="#E8495F" />
+              <Path d={HEART(13, 26, 0.6)} fill="#F58A9B" />
+            </G>
+          )}
+          {mood === 'wave' && <WaveArm t={t} />}
+          {mood === 'surprised' && (
+            <G stroke={c.dark ? '#FFFFFF' : '#5A6170'} strokeWidth={2.4} strokeLinecap="round">
+              <Path d="M14 22L19 28" />
+              <Path d="M86 22L81 28" />
+              <Path d="M50 4V10" />
             </G>
           )}
           {mood === 'sleepy' && (
@@ -290,6 +363,27 @@ export function Mote({
         </Svg>
       </Animated.View>
     </View>
+  );
+}
+
+/** A little arm that waves hello beside Mote. */
+function WaveArm({ t }: { t: Tone }) {
+  const [up, setUp] = useState(false);
+  useEffect(() => {
+    const i = setInterval(() => setUp(u => !u), 180);
+    return () => clearInterval(i);
+  }, []);
+  return (
+    <G>
+      <Path
+        d={up ? 'M84 56Q93 46 92 34' : 'M84 56Q96 50 98 40'}
+        stroke={t.rim}
+        strokeWidth={7}
+        strokeLinecap="round"
+        fill="none"
+      />
+      <Path d={up ? 'M84 56Q93 46 92 34' : 'M84 56Q96 50 98 40'} stroke={t.mid} strokeWidth={4.4} strokeLinecap="round" fill="none" />
+    </G>
   );
 }
 

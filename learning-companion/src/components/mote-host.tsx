@@ -4,7 +4,7 @@ import { Platform, Pressable, View, useWindowDimensions } from 'react-native';
 import { router, usePathname } from 'expo-router';
 import Animated, { FadeInDown, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { gaze, moteMood, nextStepBubbles, type Bubble, type MoteMood } from '../lib/bubbles';
+import { TAP_MOODS, gaze, moteMood, nextStepBubbles, type Bubble, type MoteMood } from '../lib/bubbles';
 import { useLearning } from '../lib/store';
 import { useNextSteps } from '../ui/assistant-api';
 import { Mote } from './mote';
@@ -74,6 +74,7 @@ export function MoteHost() {
   const [unfoldFor, setUnfoldFor] = useState<string | null>(null);
   const [look, setLook] = useState({ x: 0 as -1 | 0 | 1, y: 0 as -1 | 0 | 1 });
   const [mood, setMood] = useState<MoteMood>('idle');
+  const reactTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const lastActive = useRef(0);
   const celebrateUntil = useRef(0);
   const passedCount = useMemo(
@@ -271,7 +272,10 @@ export function MoteHost() {
         }
         onPress={() => {
           lastActive.current = Date.now();
-          setMood(m => (m === 'sleepy' ? 'idle' : m));
+          const react = TAP_MOODS[Math.floor(Math.random() * TAP_MOODS.length)];
+          setMood(react);
+          if (reactTimer.current) clearTimeout(reactTimer.current);
+          reactTimer.current = setTimeout(() => setMood(m => (m === react ? 'idle' : m)), 1400);
           if (collapsed || !full) {
             setDismissed(undefined);
             setCollapsed(false);
